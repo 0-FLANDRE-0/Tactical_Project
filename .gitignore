@@ -1,0 +1,15 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Tooling
+node_modules/
+__pycache__/
+*.pyc
+
+# Local packaging output (builds live in dist/, old builds in archive/)
+*_source_and_map.zip
+/out/

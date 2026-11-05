@@ -1,0 +1,12 @@
+*.tif  binary
+*.jpg  binary
+*.png  binary
+*.zip  binary
+# Generated / embedded data: keep diffs and language stats readable
+src/battlefield-data.js  linguist-generated=true -diff
+src/contour-data.js      linguist-generated=true -diff
+data/rasdorf_4km.json    linguist-generated=true -diff
+data/contours.json       linguist-generated=true -diff
+data/raw/*.json          linguist-generated=true -diff
+dist/**                  linguist-generated=true -diff
+archive/**               linguist-generated=true -diff

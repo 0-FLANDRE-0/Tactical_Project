@@ -1,0 +1,20 @@
+{
+  "version": "0.4-WIP05",
+  "passed": 9,
+  "failed": 0,
+  "evidence": [
+    {
+      "test": "0-20mph",
+      "seconds": 7.199999999999982,
+      "speedMps": 8.940799999999998
+    },
+    {
+      "test": "road cap",
+      "speedKmh": 67.592448
+    },
+    {
+      "test": "reverse cap",
+      "speedKmh": 40.2336
+    }
+  ]
+}

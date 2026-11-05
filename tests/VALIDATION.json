@@ -1,0 +1,36 @@
+{
+  "version": "0.4-WIP04",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "navigationContract": "nav16-M1A2-r4.62-long0.60-side0.40-v2",
+  "gameTests": 16,
+  "inputTests": 16,
+  "visibilityTests": 12,
+  "vehicleTests": 9,
+  "sourceTests": 7,
+  "totalPassed": 60,
+  "totalFailed": 0,
+  "browserApplicationErrors": 0,
+  "browserChecks": [
+    "M1A2 dimension and mobility profile shown in collapsible UI",
+    "CITV 2.65m view; 4km LOS preview displayed and released",
+    "expanded 32px/m vector model; full hull touch selection",
+    "native map command creates route and speed changes",
+    "mobile 844x390 and portrait 390x844 no horizontal overflow",
+    "mobile roster selection and 4km sight hold",
+    "independent hull/turret SVG transforms",
+    "same-scale comparison against M1A1 common-family planform; M1A2 photo detail cross-check",
+    "corrected broad roof, longer bustle, two roof panels and covered track runs"
+  ],
+  "initialTargetObservation": {
+    "target": "T01",
+    "hullPercent": 50,
+    "turretPercent": 100
+  },
+  "limits": [
+    "CITV optical-axis height 2.65m is an exterior estimate",
+    "Observation cap 4000m and engagement reference 3000m are game settings",
+    "Tank exterior is a photo/planform-informed vector approximation, not a precision M1A2 engineering model",
+    "No actual Android/iOS device performance or hardware multi-touch test",
+    "No active firing, armour or ammunition-type simulation"
+  ]
+}

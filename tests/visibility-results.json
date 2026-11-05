@@ -1,0 +1,47 @@
+{
+  "version": "0.4-WIP05",
+  "passed": 12,
+  "failed": 0,
+  "measurements": [
+    {
+      "observer": {
+        "x": 550,
+        "y": 2750
+      },
+      "matched": 1420,
+      "total": 1424,
+      "agreement": 0.9971910112359551,
+      "computeMs": 497.53560300000004,
+      "rayCount": 1974,
+      "loops": 134
+    },
+    {
+      "observer": {
+        "x": 2808,
+        "y": 1800
+      },
+      "matched": 1604,
+      "total": 1615,
+      "agreement": 0.993188854489164,
+      "computeMs": 372.9741449999999,
+      "rayCount": 1920,
+      "loops": 24
+    },
+    {
+      "observer": {
+        "x": 3200,
+        "y": 2100
+      },
+      "matched": 1498,
+      "total": 1511,
+      "agreement": 0.9913964262078094,
+      "computeMs": 372.38482899999985,
+      "rayCount": 1980,
+      "loops": 103
+    },
+    {
+      "contourSamples": 2813,
+      "maxElevationError": 0.0003108978271484375
+    }
+  ]
+}

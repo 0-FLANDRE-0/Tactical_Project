@@ -1,0 +1,38 @@
+{
+  "passed": 7,
+  "failed": 0,
+  "results": [
+    {
+      "name": "source DEM projection and metre crop",
+      "status": "PASS"
+    },
+    {
+      "name": "height encoding has complete cell-centre rows",
+      "status": "PASS"
+    },
+    {
+      "name": "game height smoothing remains within 0.5m plus quantisation",
+      "status": "PASS",
+      "maxErrorMetres": 0.5499938964844091
+    },
+    {
+      "name": "all four million stored heights match the fixed game-height preparation",
+      "status": "PASS",
+      "maxQuantisationErrorMetres": 0.050024414062534106
+    },
+    {
+      "name": "all selected buildings preserve source positions and footprints",
+      "status": "PASS",
+      "buildingsChecked": 375,
+      "maxSymmetricDifferenceSquareMetres": 0.39706176803036897
+    },
+    {
+      "name": "raw source checksums match provenance manifest",
+      "status": "PASS"
+    },
+    {
+      "name": "navigation is attached to this exact baked terrain revision",
+      "status": "PASS"
+    }
+  ]
+}

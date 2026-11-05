@@ -1,0 +1,12 @@
+const fs=require('fs'),path=require('path');
+const root=path.resolve(__dirname,'..'),mapPath=path.join(root,'data/rasdorf_4km.json');
+const map=JSON.parse(fs.readFileSync(mapPath,'utf8'));delete map.navigation;
+const moduleHolder={exports:{}};
+const start=performance.now();
+const profiles=require('../src/vehicle-profiles.js');
+const C=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','module',fs.readFileSync(path.join(root,'src/sim-core.js'),'utf8')+'\nreturn module.exports;')(map,profiles,moduleHolder);
+const n=C.bakeNavigation();
+map.navigation={contract:n.contract,sourceHash:map.meta.mapHash,cols:n.cols,rows:n.rows,costs:Buffer.from(n.costs.buffer).toString('base64'),edges:Buffer.from(n.edges.buffer).toString('base64')};
+const json=JSON.stringify(map);
+fs.writeFileSync(mapPath,json);fs.writeFileSync(path.join(root,'src/battlefield-data.js'),'const BATTLEFIELD_DATA = '+json+';\n');
+console.log(JSON.stringify({bakeMs:Math.round(performance.now()-start),nodes:n.costs.length,passable:Array.from(n.costs).filter(Number.isFinite).length,mapBytes:Buffer.byteLength(json),sourceHash:map.meta.mapHash}));
