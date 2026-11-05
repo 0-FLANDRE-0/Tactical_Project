@@ -154,3 +154,13 @@ node tests/vehicle.test.cjs
 
 - 고도: Hessische Verwaltung für Bodenmanagement und Geoinformation, DGM1. 공식 공개 데이터 및 WCS. 원본 요청은 `data/raw/bounds.json`에 기록되어 있다.
 - 도로·건물·숲·토지 이용·수계: © OpenStreetMap contributors. 지리 데이터 이용 조건은 `DATA_LICENSES.md`를 참조한다.
+
+## UI 갱신 성능 정리
+
+목록 갱신에서 ID별 반복 검색을 한 번의 인덱스 구성으로 바꾸고, 같은 DOM 값의 재할당과 반복 하위 요소 검색을 줄였다. 초기화 시 같은 ID의 새 객체를 사용해도 이전 값이 남지 않는다. 시뮬레이션·관측 계산·입력 규칙은 변경하지 않았다.
+
+- 새 UI 회귀 검사: `node --test tests/ui-cache.test.cjs`
+- 50/100개 합성 목록 비교: `node scripts/benchmark_ui.cjs`
+- 측정 방법·결과·한계: [`docs/UI_PERFORMANCE.md`](docs/UI_PERFORMANCE.md)
+
+이 측정은 목록 UI의 합성 마이크로벤치마크이며 게임 전체 FPS나 실기기 성능을 뜻하지 않는다. 기존 JavaScript 검사 53개와 새 검사 12개를 통과했다.

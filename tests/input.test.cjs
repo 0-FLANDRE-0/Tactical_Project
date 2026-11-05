@@ -5,6 +5,7 @@ class El{
  constructor(id=''){this.id=id;this.handlers={};this.children=[];this.attrs={};this.style={};this.dataset={};this.textContent='';this._classes=new Set();this.classList={add:n=>this._classes.add(n),remove:n=>this._classes.delete(n),contains:n=>this._classes.has(n),toggle:(n,v)=>{v=v===undefined?!this._classes.has(n):!!v;v?this._classes.add(n):this._classes.delete(n);return v}}}
  addEventListener(n,fn){(this.handlers[n]??=[]).push(fn)}
  fire(type,props={}){const e={type,preventDefault(){},button:0,pointerType:'touch',...props};for(const fn of this.handlers[type]||[])fn(e)}
+ getAttribute(k){return this.attrs[k]??null}
  setAttribute(k,v){this.attrs[k]=String(v)}
  appendChild(x){this.children.push(x)}
  querySelector(){return this.child??=new El()}
@@ -17,6 +18,7 @@ const els=new Map(),get=id=>{if(!els.has(id))els.set(id,new El(id));return els.g
 const document=new El('document');Object.assign(document,{hidden:false,getElementById:get,createElement:()=>new El(),documentElement:new El('html')});
 const window=new El('window'),context={document,window,console,Math,Buffer,DataView,performance:{now:()=>100},devicePixelRatio:1,requestAnimationFrame(){},ResizeObserver:class{observe(){}},HTMLButtonElement:El,setTimeout:()=>{},TacticalRenderer:class{},CONTOUR_DATA:{},TacticalVisibility:{},TacticalVisibilityClient:class{cancel(){}},module:{exports:{}}};
 vm.createContext(context);vm.runInContext(html.match(/<script id="battlefield-data">([\s\S]*?)<\/script>/)[1],context);vm.runInContext(html.match(/<script id="vehicle-profiles">([\s\S]*?)<\/script>/)[1],context);vm.runInContext(html.match(/<script id="sim-core">([\s\S]*?)<\/script>/)[1],context);
+vm.runInContext(html.match(/<script id="ui-cache">([\s\S]*?)<\/script>/)[1],context);
 // Geometry rendering is orthogonal to event semantics; renderer class is stubbed.
 const app=html.match(/<script id="app-code">([\s\S]*?)<\/script>/)[1];
 vm.runInContext(app,context);const api=window.__TACTICAL__,sight=get('sight'),canvas=get('map');let passed=0;
