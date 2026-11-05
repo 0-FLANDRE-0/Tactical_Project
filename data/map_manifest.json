@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "id": "rasdorf-west-4km-v1",
+    "version": 1,
+    "name": "RASDORF",
+    "subtitle": "라스도르프 서부 · 독일 헤센",
+    "width": 4000,
+    "height": 4000,
+    "epsg": 25832,
+    "originE": 560500,
+    "originN": 5620500,
+    "northUp": true,
+    "originalDemSpacing": 1,
+    "gameHeightSpacing": 2,
+    "surfaceSpacing": 4,
+    "heightProcessing": {
+      "filter": "separable-binomial-5",
+      "sigmaApproxMetres": 2,
+      "maxAdjustmentMetres": 0.5,
+      "meanAbsoluteAdjustmentMetres": 0.0216
+    },
+    "contourInterval": 10,
+    "majorContourInterval": 50,
+    "heightRange": [
+      290.86,
+      506.92
+    ],
+    "sourceBuildingCount": 1039,
+    "selectedBuildingCount": 375,
+    "roads": 522,
+    "forestAreas": 34,
+    "waterways": 94,
+    "syntheticTreeCount": 4023,
+    "attribution": "고도: HVBG DGM1 · 도로/건물/숲: © OpenStreetMap contributors · ODbL",
+    "osmLicense": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "demSource": "https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle",
+    "osmSource": "https://www.openstreetmap.org/copyright",
+    "edits": [
+      "건물은 원래 좌표·외곽선을 유지하고 작은 부속시설과 일부 주거 건물을 선별 생략",
+      "도로 폭은 OSM width 태그가 없을 때 종류별 게임용 추정값 사용",
+      "건물 높이는 height 태그가 없을 때 게임용 추정값 사용",
+      "숲 경계는 OSM, 개별 나무 배치는 고정 합성값",
+      "작은 실개천은 감속 통과, 면 수역은 통행 차단; 실제 수심 자료 미사용",
+      "게임용 고도는 미세 요철만 완만하게 정리하며 표본별 변화는 최대 ±0.5m로 제한",
+      "큰 능선·계곡과 실제 높이 단위를 유지하고 고도 과장이나 인공 노이즈는 추가하지 않음"
+    ],
+    "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801"
+  },
+  "raw_files": {
+    "rasdorf_osm.json": "b5ff4d45dc9b5b80e42901520ad0544058836423e491a192b6b4015298ab5cea",
+    "rasdorf_dgm1.tif": "4a60f2e5d95a4e7960b92c7b7f4aaacb7950133244c39535d19f9db334c45dee",
+    "osm_source.json": "40f52dea4f0016fba96b60da19418e97bac3f04496b7b42f922033aad2a2d2f5",
+    "bounds.json": "b2a817cf1e4b947f559f12499ca922a88d04dc9a547e175834922f67ea831199",
+    "overpass_query.txt": "af2880a9eec526159f184d28f5ea2812f7ebf96b497a083df2f9a089571a528d"
+  },
+  "encodedHeightBytes": 4002000,
+  "surfaceCounts": {
+    "grass": 538842,
+    "field": 272082,
+    "forest": 101838,
+    "settlement": 44705,
+    "scrub": 3692,
+    "water": 725,
+    "stream": 1995,
+    "road": 31000,
+    "bridge": 6,
+    "building": 5115
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "reference": "MCWP 3-12 A-3 M1A1 common-family planform",
+  "referenceCropPx": [
+    130,
+    275,
+    1110,
+    650
+  ],
+  "normalization": {
+    "hullX": [
+      335,
+      1095
+    ],
+    "hullY": [
+      285,
+      641
+    ],
+    "hullLengthM": 7.9248,
+    "hullWidthM": 3.6576,
+    "rotationDeg": 180
+  },
+  "M1A2DetailReference": "DVIDS 3055956",
+  "artApproximation": {
+    "turretBodyLengthM": 4.75,
+    "turretStowageWidthM": 3.28,
+    "turretWithBasketLengthM": 5.3
+  },
+  "note": "These are visual model dimensions and a common-family comparison, not certified M1A2 turret measurements."
+}
