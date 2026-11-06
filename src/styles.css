@@ -849,3 +849,9 @@ footer{
 .vehicle-specs{margin:0 0 16px;border:1px solid #50604b66;border-radius:4px;padding:10px 12px;font-size:10px;color:#b9c4ab}.vehicle-specs summary{cursor:pointer;color:#cbd6b8}.vehicle-specs dl{margin:10px 0}.vehicle-specs dl>div{display:flex;justify-content:space-between;gap:8px;margin:7px 0}.vehicle-specs dt{color:#9eab94}.vehicle-specs dd{margin:0;text-align:right;font-family:ui-monospace,monospace}.vehicle-specs p{font-size:9px;line-height:1.6;color:#a0ae94}.vehicle-specs a{color:#aabf98}
 
 .tank-profile svg{width:200px;height:83px;fill:initial;stroke:none;stroke-width:0}
+
+/* Look controls are in the map so they remain reachable in portrait/focus mode. */
+.look-panel{position:absolute;left:16px;top:108px;z-index:4;max-width:calc(100% - 76px);padding:9px 10px;border:1px solid #7eacb57a;border-radius:7px;background:#142b2bed;color:#d6e9e7;font-size:10px;box-shadow:0 3px 14px #0003}
+.look-title{display:flex;align-items:center;gap:10px;font-weight:600}.look-title output{color:#b7d9d7;font-size:10px;font-weight:400}.look-controls{display:flex;align-items:center;gap:6px;margin-top:7px}.look-controls button,.look-controls select{min-height:36px;border:1px solid #63858c;border-radius:4px;background:#253f43;color:#e0f0ee;padding:5px 7px;font:inherit}.look-controls button.active{background:#49777c;border-color:#b1e6e8}.look-controls button:focus-visible,.look-controls select:focus-visible{outline:2px solid #c9f8ff;outline-offset:2px}.look-duration{display:flex;align-items:center;gap:4px}.look-panel p{margin:6px 0 0;color:#a9bfc1;font-size:9px}.look-picking canvas{cursor:crosshair}.sight-on .look-panel{top:145px}
+@media(max-height:560px) and (orientation:landscape){.look-panel{top:82px;left:13px;padding:7px 8px}.sight-on .look-panel{top:125px}}
+@media(orientation:portrait){.look-panel{top:142px;left:13px}.sight-on .look-panel{top:185px}.look-controls{gap:4px}.look-controls button,.look-controls select{padding:5px}}
