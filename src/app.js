@@ -7,6 +7,7 @@
   ,trails=[],pointers=new Map();
   let gesture=null,dragged=false,clickStart=null;
   const selectedUnit=()=>sim.units.find(u=>u.id===selected);
+  const ui=TacticalUICache,updateRoster=ui.createListUpdater(v=>v.state+' · '+Math.round(v.speed*3.6)+' km/h','.unit-sub');
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA);
   let visibility=null,visibilityPath=null;
   const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
@@ -400,26 +401,21 @@
   }
   function updateUI(){
     const u=selectedUnit();
-    $('unitName').textContent=u.name;
-    $('velocity').textContent=Math.round(u.speed*3.6);
-    $('motionState').textContent=u.state;
-    $('elevation').textContent=C.heightAt(u.x,u.y).toFixed(1)+' m';
-    $('slope').textContent=(Math.atan(C.slopeAt(u.x,u.y))*180/Math.PI).toFixed(1)+'°';
-    $('heading').textContent=((Math.round(u.heading*180/Math.PI)+90)%360+360)%360+'°';
-    $('surface').textContent=({
+    ui.setText($('unitName'),u.name);
+    ui.setText($('velocity'),Math.round(u.speed*3.6));
+    ui.setText($('motionState'),u.state);
+    ui.setText($('elevation'),C.heightAt(u.x,u.y).toFixed(1)+' m');
+    ui.setText($('slope'),(Math.atan(C.slopeAt(u.x,u.y))*180/Math.PI).toFixed(1)+'°');
+    ui.setText($('heading'),((Math.round(u.heading*180/Math.PI)+90)%360+360)%360+'°');
+    ui.setText($('surface'),({
       grass:'초지',field:'농경지',settlement:'취락',scrub:'관목지',stream:'실개천',road:'도로',forest:'숲',bridge:'교량',water:'수역',obstacle:'건물'
     }
-    )[C.surfaceAt(u.x,u.y)];
+    )[C.surfaceAt(u.x,u.y)]);
     const dist=C.routeDistance(u);
-    $('routeInfo').innerHTML=u.path.length?'<strong>'+(u.reverse?'후진':'이동')+' 경로</strong> · 남은 거리 '+Math.round(dist)+'m':'지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.';
-    $('clock').textContent='T+ '+String(Math.floor(sim.time/60)).padStart(2,'0')+':'+String(Math.floor(sim.time%60)).padStart(2,'0');
-    $('simState').textContent=paused?'일시정지':'기동 시험';
-    for(const b of $('roster').children){
-      const v=sim.units.find(v=>v.id===b.dataset.id);
-      b.classList.toggle('active',v.id===selected);
-      b.querySelector('.unit-sub').textContent=v.state+' · '+Math.round(v.speed*3.6)+' km/h';
-      b.setAttribute('aria-pressed',v.id===selected)
-    }
+    ui.setHTML($('routeInfo'),u.path.length?'<strong>'+(u.reverse?'후진':'이동')+' 경로</strong> · 남은 거리 '+Math.round(dist)+'m':'지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.');
+    ui.setText($('clock'),'T+ '+String(Math.floor(sim.time/60)).padStart(2,'0')+':'+String(Math.floor(sim.time%60)).padStart(2,'0'));
+    ui.setText($('simState'),paused?'일시정지':'기동 시험');
+    updateRoster($('roster').children,sim.units,selected);
     const target=sim.units.find(v=>v.id===targetId);
     $('targetPanel').classList.toggle('visible',!!target);
     if(target){
@@ -573,7 +569,7 @@
     ctx.strokeRect(p.x,p.y,ww,hh);
     const desired=100/camera.zoom,power=10**Math.floor(Math.log10(desired)),scale=[1,2,5,10].map(v=>v*power).reduce((a,b)=>Math.abs(a-desired)<Math.abs(b-desired)?a:b);
     $('scaleLine').style.width=scale*camera.zoom+'px';
-    $('scaleText').textContent=scale+' m';
+    ui.setText($('scaleText'),scale+' m');
     canvas.dataset.view=sightHeld?(visibilityPath?'sight':'sight-pending'):'map';
     if(now>toastUntil)$('toast').classList.remove('show')
   }
