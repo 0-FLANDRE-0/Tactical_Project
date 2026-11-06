@@ -8,6 +8,10 @@
   let gesture=null,dragged=false,clickStart=null;
   const selectedUnit=()=>sim.units.find(u=>u.id===selected);
   const ui=TacticalUICache,updateRoster=ui.createListUpdater(v=>v.state+' · '+Math.round(v.speed*3.6)+' km/h','.unit-sub');
+  const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
+  const lookAnimation=TacticalLookAnimation.create({reducedMotion:reducedMotion?.matches});
+  reducedMotion?.addEventListener('change',e=>lookAnimation.setReducedMotion(e.matches));
+  let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA);
   let visibility=null,visibilityPath=null;
   const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
@@ -66,7 +70,21 @@
     $('move').classList.toggle('active',!v);
     $('move').setAttribute('aria-pressed',!v)
   }
+  function setLookPicking(value){
+    if(lookPicking!==!!value&&pointers.size){clickStart=null;dragged=true;}
+    lookPicking=!!value;
+    $('lookDirection').classList.toggle('active',lookPicking);
+    $('lookDirection').setAttribute('aria-pressed',lookPicking);
+    wrap.classList.toggle('look-picking',lookPicking);
+  }
+  function toggleLookPicking(){
+    setLookPicking(!lookPicking);
+    toast(lookPicking?'지도에서 바라볼 방향을 탭해줘 · Esc 취소':'시선 방향 지정 취소');
+  }
+  $('lookDirection').onclick=toggleLookPicking;
+  $('lookResume').onclick=()=>{setLookPicking(false);lookAnimation.resume(selectedUnit());updateUI();};
   function select(id){
+    setLookPicking(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     selected=id;
     targetId=null;
@@ -132,6 +150,16 @@
   }
   function tap(sx,sy){
     const p=toWorld(sx,sy);
+    if(lookPicking){
+      const u=selectedUnit(),dx=p.x-u.x,dy=p.y-u.y;
+      if(Math.hypot(dx,dy)<1e-6){toast('전차 중심에서 떨어진 방향을 탭해줘');return;}
+      const duration=Number($('lookDuration').value)||10;
+      lookAnimation.focus(u,Math.atan2(dy,dx),duration);
+      setLookPicking(false);
+      updateUI();
+      toast(duration+'초 동안 같은 지도 방향을 바라봄');
+      return;
+    }
     let best=null,bd=Infinity;
     for(const u of sim.units){
       if(u.team==='red'&&!canTeamSee(u))continue;
@@ -237,11 +265,13 @@
   );
   canvas.addEventListener('contextmenu',e=>e.preventDefault());
   $('move').onclick=()=>{
+    setLookPicking(false);
     setReverse(false);
     toast('이동할 지면을 탭해줘')
   }
   ;
   $('reverse').onclick=()=>{
+    setLookPicking(false);
     setReverse(!reverseMode);
     toast(reverseMode?'후진할 지면을 탭해줘':'전진 이동 모드')
   }
@@ -302,11 +332,13 @@
   $('fullscreen').onclick=toggleFullscreen;
   document.addEventListener('fullscreenchange',()=>{
     releaseSight();
+    setLookPicking(false);
     $('fullscreen').classList.toggle('active',!!document.fullscreenElement);
     setTimeout(()=>resize(),80)
   }
   );
   $('reset').onclick=()=>{
+    lookAnimation.reset();setLookPicking(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     sim=C.createScenario();
     selected='A11';
@@ -324,6 +356,9 @@
   }
   ;
   window.addEventListener('keydown',e=>{
+    if(['INPUT','SELECT','TEXTAREA'].includes(e.target?.tagName)||e.target?.isContentEditable)return;
+    if(e.code==='Escape'){setLookPicking(false);return;}
+    if(e.code==='KeyL'&&!e.repeat){e.preventDefault();toggleLookPicking();return;}
     if(e.target instanceof HTMLButtonElement&&['Space','Enter'].includes(e.code))return;
     if(e.code==='KeyV'){
       e.preventDefault();
@@ -335,7 +370,7 @@
         e.preventDefault();
         setPaused(!paused)
       }
-      if(e.code==='KeyR')setReverse(!reverseMode);
+      if(e.code==='KeyR'){setLookPicking(false);setReverse(!reverseMode);}
       if(e.code==='KeyX')C.stop(selectedUnit());
       if(e.code==='KeyF')toggleFullscreen();
       if(e.code==='Home')fitCamera()
@@ -351,6 +386,7 @@
   );
   window.addEventListener('blur',()=>{
     releaseSight();
+    setLookPicking(false);
     pointers.clear();
     clickStart=null;
     gesture=null;
@@ -360,6 +396,7 @@
   );
   document.addEventListener('visibilitychange',()=>{
     releaseSight();
+    setLookPicking(false);
     pointers.clear();
     clickStart=null;
     gesture=null;
@@ -401,6 +438,8 @@
   }
   function updateUI(){
     const u=selectedUnit();
+    const look=lookAnimation.view(u),bearing=look.direction===null?null:((Math.round(look.direction*180/Math.PI)+90)%360+360)%360;
+    ui.setText($('lookStatus'),look.mode==='fixed'?bearing+'° · '+Math.ceil(look.remaining)+'초':'좌우 둘러보기');
     ui.setText($('unitName'),u.name);
     ui.setText($('velocity'),Math.round(u.speed*3.6));
     ui.setText($('motionState'),u.state);
@@ -456,7 +495,15 @@
       ctx.fillStyle='#e0edb5';ctx.beginPath();ctx.moveTo(0,-ring-3);ctx.lineTo(-4,-ring-9);ctx.lineTo(4,-ring-9);ctx.fill();
     }
     if(u.id===targetId){ctx.strokeStyle='#ffd19b';ctx.lineWidth=1.5;ctx.strokeRect(-ring,-ring,ring*2,ring*2);}
-    M1A2Art.draw(ctx,u,z,model);
+    const look=u.team==='blue'?lookAnimation.view(u):null;
+    // Only the drawing receives a shallow pose copy. Core turret state is untouched.
+    M1A2Art.draw(ctx,look?{...u,turret:look.turret}:u,z,model);
+    if(look&&isSelected){
+      // Fixed CSS-pixel cursor, not an observation sector or range display.
+      ctx.save();ctx.rotate(look.gaze);ctx.strokeStyle='#93e9f0';ctx.fillStyle='#93e9f0';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(ring+3,0);ctx.lineTo(ring+19,0);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ring+24,0);ctx.lineTo(ring+16,-4);ctx.lineTo(ring+16,4);ctx.closePath();ctx.fill();ctx.restore();
+    }
     if(z<1){ctx.fillStyle=enemy?'#eab17c':'#a5e1c5';ctx.strokeStyle='#253c30';ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fill();ctx.stroke();}
     ctx.font='600 10px ui-monospace,monospace';ctx.textAlign='center';const text=enemy?u.id:u.name,tw=ctx.measureText(text).width,labelY=ring+7;
     ctx.fillStyle='#12271fe8';ctx.fillRect(-tw/2-5,labelY,tw+10,17);ctx.fillStyle=enemy?'#f0bd86':'#e3edcc';ctx.fillText(text,0,labelY+12);ctx.restore();
@@ -577,6 +624,7 @@
     const elapsed=Math.min(.12,(now-last)/1000);
     last=now;
     if(!paused&&!document.hidden){
+      lookAnimation.advance(elapsed*timeScale);
       accumulator+=elapsed*timeScale;
       let steps=0;
       while(accumulator>=.05&&steps<6){
@@ -611,7 +659,7 @@
   // Read-only snapshot plus explicit commands for deterministic development checks.
   window.__TACTICAL__={
     version:'0.4-WIP05',core:C,snapshot:()=>JSON.parse(JSON.stringify({
-      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units,frameCount
+      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units,frameCount,lookPicking,look:lookAnimation.view(selectedUnit())
     }
     )),command:(x,y,reverse=false)=>{
       setReverse(reverse);

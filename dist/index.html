@@ -858,6 +858,12 @@ footer{
 
 .tank-profile svg{width:200px;height:83px;fill:initial;stroke:none;stroke-width:0}
 
+/* Look controls are in the map so they remain reachable in portrait/focus mode. */
+.look-panel{position:absolute;left:16px;top:108px;z-index:4;max-width:calc(100% - 76px);padding:9px 10px;border:1px solid #7eacb57a;border-radius:7px;background:#142b2bed;color:#d6e9e7;font-size:10px;box-shadow:0 3px 14px #0003}
+.look-title{display:flex;align-items:center;gap:10px;font-weight:600}.look-title output{color:#b7d9d7;font-size:10px;font-weight:400}.look-controls{display:flex;align-items:center;gap:6px;margin-top:7px}.look-controls button,.look-controls select{min-height:36px;border:1px solid #63858c;border-radius:4px;background:#253f43;color:#e0f0ee;padding:5px 7px;font:inherit}.look-controls button.active{background:#49777c;border-color:#b1e6e8}.look-controls button:focus-visible,.look-controls select:focus-visible{outline:2px solid #c9f8ff;outline-offset:2px}.look-duration{display:flex;align-items:center;gap:4px}.look-panel p{margin:6px 0 0;color:#a9bfc1;font-size:9px}.look-picking canvas{cursor:crosshair}.sight-on .look-panel{top:145px}
+@media(max-height:560px) and (orientation:landscape){.look-panel{top:82px;left:13px;padding:7px 8px}.sight-on .look-panel{top:125px}}
+@media(orientation:portrait){.look-panel{top:142px;left:13px}.sight-on .look-panel{top:185px}.look-controls{gap:4px}.look-controls button,.look-controls select{padding:5px}}
+
 </style>
 </head>
 <body>
@@ -871,6 +877,11 @@ footer{
 <div class="portrait-tip">가로로 돌리면 전차 정보와 지도를 함께 볼 수 있음 ↻</div>
 <div class="map-tools"><div class="north">N</div><button id="zoomIn" aria-label="지도 확대"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button><button id="zoomOut" aria-label="지도 축소"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/></svg></button></div>
 <div class="visibility-key"><b>선택 전차의 관측 범위</b><div class="keys"><span><i class="dot" style="background:#8bedd0"></i> 보이는 곳</span><span><i class="dot" style="background:#d89579"></i> 가려진 곳</span></div><div class="note" id="sightNote">CITV 2.65m · 지면 위 1.5m 표적<br>관측 상한 4km · 주포 교전 기준 3km</div></div>
+<section class="look-panel" aria-label="시선 애니메이션">
+<div class="look-title">시선 연출 <output id="lookStatus">좌우 둘러보기</output></div>
+<div class="look-controls"><button id="lookDirection" aria-pressed="false" title="지도에서 시선 방향 지정 · L">방향 지정</button><label class="look-duration">유지 <select id="lookDuration" aria-label="시선 방향 유지 시간"><option value="5">5초</option><option value="10" selected>10초</option><option value="30">30초</option></select></label><button id="lookResume">둘러보기</button></div>
+<p>포탑·전차장 시선의 화면 연출</p>
+</section>
 <div class="pause-tag">일시정지</div>
 <div class="map-legend"><span class="legend-item"><i class="dot" style="background:#247e99"></i>아군</span><span class="legend-item"><i class="dot" style="background:#b9683d"></i>관측 표적</span><span class="legend-item"><i class="dot" style="background:#3b6242"></i>숲</span><span class="legend-item">등고선 10m</span></div>
 <div class="scale"><div class="scale-line" id="scaleLine"></div><span id="scaleText">200m</span></div>
@@ -1896,6 +1907,55 @@ const TacticalUICache = (() => {
 if (typeof module !== 'undefined') module.exports = TacticalUICache;
 
 </script>
+<script id="look-animation">
+// Cosmetic animation only. This module never reads terrain, targets, visibility,
+// vehicle specifications, or weapons, and never writes to a simulation object.
+const TacticalLookAnimation = (() => {
+  const TAU = Math.PI * 2, BLEND_SECONDS = 0.45;
+  const wrap = angle => ((angle + Math.PI) % TAU + TAU) % TAU - Math.PI;
+  const mix = (from, to, weight) => wrap(from + wrap(to - from) * weight);
+  const ease = value => { const t = Math.max(0, Math.min(1, value)); return t * t * (3 - 2 * t); };
+  function create({ reducedMotion = false } = {}) {
+    let time = 0, states = new WeakMap();
+    function view(avatar) {
+      const phase = reducedMotion ? 0 : time * TAU / 8;
+      // Deliberately artistic angles/timing, not physical traverse capabilities.
+      const idle = { turret: wrap(avatar.heading + Math.sin(phase) * Math.PI / 9),
+        gaze: wrap(avatar.heading + Math.sin(phase) * Math.PI * 5 / 18) };
+      let state = states.get(avatar);
+      if (state?.mode === 'fixed' && time >= state.expiresAt) {
+        state = { mode: 'idle', startedAt: state.expiresAt, fromTurret: state.angle, fromGaze: state.angle };
+        states.set(avatar, state);
+      }
+      const fixed = state?.mode === 'fixed', target = fixed ? { turret: state.angle, gaze: state.angle } : idle;
+      const weight = state && !reducedMotion ? ease((time - state.startedAt) / BLEND_SECONDS) : 1;
+      return { mode: fixed ? 'fixed' : 'idle', turret: state ? mix(state.fromTurret, target.turret, weight) : target.turret,
+        gaze: state ? mix(state.fromGaze, target.gaze, weight) : target.gaze,
+        direction: fixed ? state.angle : null, remaining: fixed ? Math.max(0, state.expiresAt - time) : 0 };
+    }
+    return Object.freeze({
+      view,
+      setReducedMotion(value) { reducedMotion = !!value; },
+      advance(seconds) { if (Number.isFinite(seconds) && seconds > 0) time += seconds; },
+      focus(avatar, angle, duration = 10) {
+        if (!Number.isFinite(angle) || !Number.isFinite(duration) || duration <= 0) return false;
+        const from = view(avatar);
+        states.set(avatar, { mode: 'fixed', angle: wrap(angle), startedAt: time, expiresAt: time + duration,
+          fromTurret: from.turret, fromGaze: from.gaze });
+        return true;
+      },
+      resume(avatar) {
+        const from = view(avatar);
+        states.set(avatar, { mode: 'idle', startedAt: time, fromTurret: from.turret, fromGaze: from.gaze });
+      },
+      reset() { time = 0; states = new WeakMap(); }
+    });
+  }
+  return Object.freeze({ create });
+})();
+if (typeof module !== 'undefined') module.exports = TacticalLookAnimation;
+
+</script>
 <script id="app-code">
 (() => {
   const C=TacticalCore,$=id=>document.getElementById(id),canvas=$('map'),ctx=canvas.getContext('2d'),wrap=$('mapWrap');
@@ -1907,6 +1967,10 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   let gesture=null,dragged=false,clickStart=null;
   const selectedUnit=()=>sim.units.find(u=>u.id===selected);
   const ui=TacticalUICache,updateRoster=ui.createListUpdater(v=>v.state+' · '+Math.round(v.speed*3.6)+' km/h','.unit-sub');
+  const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
+  const lookAnimation=TacticalLookAnimation.create({reducedMotion:reducedMotion?.matches});
+  reducedMotion?.addEventListener('change',e=>lookAnimation.setReducedMotion(e.matches));
+  let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA);
   let visibility=null,visibilityPath=null;
   const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
@@ -1965,7 +2029,21 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
     $('move').classList.toggle('active',!v);
     $('move').setAttribute('aria-pressed',!v)
   }
+  function setLookPicking(value){
+    if(lookPicking!==!!value&&pointers.size){clickStart=null;dragged=true;}
+    lookPicking=!!value;
+    $('lookDirection').classList.toggle('active',lookPicking);
+    $('lookDirection').setAttribute('aria-pressed',lookPicking);
+    wrap.classList.toggle('look-picking',lookPicking);
+  }
+  function toggleLookPicking(){
+    setLookPicking(!lookPicking);
+    toast(lookPicking?'지도에서 바라볼 방향을 탭해줘 · Esc 취소':'시선 방향 지정 취소');
+  }
+  $('lookDirection').onclick=toggleLookPicking;
+  $('lookResume').onclick=()=>{setLookPicking(false);lookAnimation.resume(selectedUnit());updateUI();};
   function select(id){
+    setLookPicking(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     selected=id;
     targetId=null;
@@ -2031,6 +2109,16 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   }
   function tap(sx,sy){
     const p=toWorld(sx,sy);
+    if(lookPicking){
+      const u=selectedUnit(),dx=p.x-u.x,dy=p.y-u.y;
+      if(Math.hypot(dx,dy)<1e-6){toast('전차 중심에서 떨어진 방향을 탭해줘');return;}
+      const duration=Number($('lookDuration').value)||10;
+      lookAnimation.focus(u,Math.atan2(dy,dx),duration);
+      setLookPicking(false);
+      updateUI();
+      toast(duration+'초 동안 같은 지도 방향을 바라봄');
+      return;
+    }
     let best=null,bd=Infinity;
     for(const u of sim.units){
       if(u.team==='red'&&!canTeamSee(u))continue;
@@ -2136,11 +2224,13 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   );
   canvas.addEventListener('contextmenu',e=>e.preventDefault());
   $('move').onclick=()=>{
+    setLookPicking(false);
     setReverse(false);
     toast('이동할 지면을 탭해줘')
   }
   ;
   $('reverse').onclick=()=>{
+    setLookPicking(false);
     setReverse(!reverseMode);
     toast(reverseMode?'후진할 지면을 탭해줘':'전진 이동 모드')
   }
@@ -2201,11 +2291,13 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   $('fullscreen').onclick=toggleFullscreen;
   document.addEventListener('fullscreenchange',()=>{
     releaseSight();
+    setLookPicking(false);
     $('fullscreen').classList.toggle('active',!!document.fullscreenElement);
     setTimeout(()=>resize(),80)
   }
   );
   $('reset').onclick=()=>{
+    lookAnimation.reset();setLookPicking(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     sim=C.createScenario();
     selected='A11';
@@ -2223,6 +2315,9 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   }
   ;
   window.addEventListener('keydown',e=>{
+    if(['INPUT','SELECT','TEXTAREA'].includes(e.target?.tagName)||e.target?.isContentEditable)return;
+    if(e.code==='Escape'){setLookPicking(false);return;}
+    if(e.code==='KeyL'&&!e.repeat){e.preventDefault();toggleLookPicking();return;}
     if(e.target instanceof HTMLButtonElement&&['Space','Enter'].includes(e.code))return;
     if(e.code==='KeyV'){
       e.preventDefault();
@@ -2234,7 +2329,7 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
         e.preventDefault();
         setPaused(!paused)
       }
-      if(e.code==='KeyR')setReverse(!reverseMode);
+      if(e.code==='KeyR'){setLookPicking(false);setReverse(!reverseMode);}
       if(e.code==='KeyX')C.stop(selectedUnit());
       if(e.code==='KeyF')toggleFullscreen();
       if(e.code==='Home')fitCamera()
@@ -2250,6 +2345,7 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   );
   window.addEventListener('blur',()=>{
     releaseSight();
+    setLookPicking(false);
     pointers.clear();
     clickStart=null;
     gesture=null;
@@ -2259,6 +2355,7 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   );
   document.addEventListener('visibilitychange',()=>{
     releaseSight();
+    setLookPicking(false);
     pointers.clear();
     clickStart=null;
     gesture=null;
@@ -2300,6 +2397,8 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   }
   function updateUI(){
     const u=selectedUnit();
+    const look=lookAnimation.view(u),bearing=look.direction===null?null:((Math.round(look.direction*180/Math.PI)+90)%360+360)%360;
+    ui.setText($('lookStatus'),look.mode==='fixed'?bearing+'° · '+Math.ceil(look.remaining)+'초':'좌우 둘러보기');
     ui.setText($('unitName'),u.name);
     ui.setText($('velocity'),Math.round(u.speed*3.6));
     ui.setText($('motionState'),u.state);
@@ -2355,7 +2454,15 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
       ctx.fillStyle='#e0edb5';ctx.beginPath();ctx.moveTo(0,-ring-3);ctx.lineTo(-4,-ring-9);ctx.lineTo(4,-ring-9);ctx.fill();
     }
     if(u.id===targetId){ctx.strokeStyle='#ffd19b';ctx.lineWidth=1.5;ctx.strokeRect(-ring,-ring,ring*2,ring*2);}
-    M1A2Art.draw(ctx,u,z,model);
+    const look=u.team==='blue'?lookAnimation.view(u):null;
+    // Only the drawing receives a shallow pose copy. Core turret state is untouched.
+    M1A2Art.draw(ctx,look?{...u,turret:look.turret}:u,z,model);
+    if(look&&isSelected){
+      // Fixed CSS-pixel cursor, not an observation sector or range display.
+      ctx.save();ctx.rotate(look.gaze);ctx.strokeStyle='#93e9f0';ctx.fillStyle='#93e9f0';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(ring+3,0);ctx.lineTo(ring+19,0);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ring+24,0);ctx.lineTo(ring+16,-4);ctx.lineTo(ring+16,4);ctx.closePath();ctx.fill();ctx.restore();
+    }
     if(z<1){ctx.fillStyle=enemy?'#eab17c':'#a5e1c5';ctx.strokeStyle='#253c30';ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fill();ctx.stroke();}
     ctx.font='600 10px ui-monospace,monospace';ctx.textAlign='center';const text=enemy?u.id:u.name,tw=ctx.measureText(text).width,labelY=ring+7;
     ctx.fillStyle='#12271fe8';ctx.fillRect(-tw/2-5,labelY,tw+10,17);ctx.fillStyle=enemy?'#f0bd86':'#e3edcc';ctx.fillText(text,0,labelY+12);ctx.restore();
@@ -2476,6 +2583,7 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
     const elapsed=Math.min(.12,(now-last)/1000);
     last=now;
     if(!paused&&!document.hidden){
+      lookAnimation.advance(elapsed*timeScale);
       accumulator+=elapsed*timeScale;
       let steps=0;
       while(accumulator>=.05&&steps<6){
@@ -2510,7 +2618,7 @@ if (typeof module !== 'undefined') module.exports = TacticalUICache;
   // Read-only snapshot plus explicit commands for deterministic development checks.
   window.__TACTICAL__={
     version:'0.4-WIP05',core:C,snapshot:()=>JSON.parse(JSON.stringify({
-      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units,frameCount
+      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units,frameCount,lookPicking,look:lookAnimation.view(selectedUnit())
     }
     )),command:(x,y,reverse=false)=>{
       setReverse(reverse);
