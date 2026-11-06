@@ -658,7 +658,7 @@
   requestAnimationFrame(loop);
   // Read-only snapshot plus explicit commands for deterministic development checks.
   window.__TACTICAL__={
-    version:'0.4-WIP05',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP06',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units,frameCount,lookPicking,look:lookAnimation.view(selectedUnit())
     }
     )),command:(x,y,reverse=false)=>{

@@ -1,0 +1,64 @@
+{
+  "version": "0.4-WIP06",
+  "sourceCommit": "4eaedbe6dd1d7eb4f2799b3b629ac9a6aa419402",
+  "verifiedAtUtc": "2026-11-06T02:22:28.389036+00:00",
+  "environment": {
+    "node": "v24.22.1",
+    "python": "3.12.14",
+    "platform": "Linux x64"
+  },
+  "html": {
+    "bytes": 8232258,
+    "sha256": "b091f0455051677aab416e551edd5532cf1d0ab6674559814ff122e2aaa214a6",
+    "gitBlobSha1": "82c85a625e2a487100b38417d8e1ffc9bea21352",
+    "copies": [
+      "Tactical_v0.4_WIP06.html",
+      "dist/index.html",
+      "archive/Tactical_v0.4_WIP06.html"
+    ]
+  },
+  "checks": [
+    {
+      "command": "node --test tests/look-animation.test.cjs tests/ui-cache.test.cjs",
+      "passed": 26,
+      "failed": 0
+    },
+    {
+      "command": "node tests/input.test.cjs",
+      "passed": 30,
+      "failed": 0
+    },
+    {
+      "command": "node tests/map.test.cjs",
+      "passed": 16,
+      "failed": 0
+    },
+    {
+      "command": "node tests/visibility.test.cjs",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "command": "node tests/vehicle.test.cjs",
+      "passed": 9,
+      "failed": 0
+    }
+  ],
+  "totalPassed": 93,
+  "totalFailed": 0,
+  "syntaxCheckFileCount": 21,
+  "buildPassed": true,
+  "deterministicRebuild": true,
+  "sameBytesAcrossHtmlCopies": true,
+  "versionStringOnlyDeltaFromSource": true,
+  "versionStringReplacementCount": 4,
+  "legacyTestOutputLabels": "Some existing test scripts still print 0.4-WIP05. All checks above were rerun against this WIP06 build. Old result JSON files are not republished as new evidence.",
+  "notRun": [
+    "Browser visual QA",
+    "Mobile viewport QA",
+    "Physical-device touch and performance QA",
+    "Raw-source/GDAL quality suite",
+    "Performance benchmark"
+  ],
+  "deploymentPerformed": false
+}

@@ -1,0 +1,3 @@
+b091f0455051677aab416e551edd5532cf1d0ab6674559814ff122e2aaa214a6  Tactical_v0.4_WIP06.html
+dad5994becf38d9109f41ebbc7020d74c3f22fa99f5f4489d3fe89659555fb6c  TACTICAL_RELEASE_WIP06.md
+e1d4c90b0fcbbab7a614bba998d779e875b6ecaee3d430dd91a6f6205a318b8f  tests/releases/WIP06-validation.json

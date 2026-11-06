@@ -1,8 +1,16 @@
-# TACTICAL v0.4 WIP05 — M1A2 제원·CITV 관측·상부 벡터 도안
+# TACTICAL v0.4 WIP06 — UI 갱신 정리·시선 둘러보기 연출
+
+## WIP06 버전 파일과 검증
+
+- 기준 소스: 병합된 main [`4eaedbe6dd1d7eb4f2799b3b629ac9a6aa419402`](https://github.com/0-FLANDRE-0/Tactical_Project/commit/4eaedbe6dd1d7eb4f2799b3b629ac9a6aa419402). PR #1의 UI 갱신 정리와 PR #2의 시선 둘러보기 연출을 포함한다.
+- 이번 정리는 버전 표기 4곳과 배포 문서·파일을 정리한 것이다. 병합본의 게임 로직과 데이터는 바꾸지 않았다.
+- 루트의 버전 HTML, `dist/index.html`, [`archive/Tactical_v0.4_WIP06.html`](archive/Tactical_v0.4_WIP06.html)은 같은 바이트다. 기존 archive 파일은 보존했다. 병합본을 과거 WIP05 원본으로 취급하지 않는다.
+- 현재 버전 재검사: JavaScript **93/93 통과**. 단일 파일 재빌드·구문·체크섬 검사를 통과했다. 브라우저 시각 검사, 실기기 터치/성능과 원본 데이터/GDAL 대조 검사는 이번 정리에서 실행하지 않았다.
+- [버전 노트·검증 범위](TACTICAL_RELEASE_WIP06.md) · [SHA-256 체크섬](SHA256SUMS_WIP06.txt) · [기계 판독용 검증 기록](tests/releases/WIP06-validation.json)
 
 ## 실행과 조작
 
-배포 HTML `Tactical_v0.4_WIP05.html`을 브라우저에서 연다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+배포 HTML [`Tactical_v0.4_WIP06.html`](Tactical_v0.4_WIP06.html)을 내려받아 브라우저에서 연다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -75,7 +83,7 @@
 
 | 경로 | 내용 |
 |---|---|
-| `dist/index.html` | 단일 실행 HTML |
+| `Tactical_v0.4_WIP06.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/vehicle-profiles.js` | M1A2 기본형의 치수·기동·관측·무장 메타데이터 |
 | `src/m1a2-art.js` | 독립 차체·포탑 벡터 도안과 SVG 내보내기 |
@@ -96,7 +104,7 @@
 | `scripts/build_contours.py` | 동일한 게임용 고도에서 벡터 등고선 제작 |
 | `scripts/bake_navigation.cjs` | 지도별 길찾기 비용·연결 사전 계산 |
 | `tests/` | 게임·입력·실제 자료 대조 검사와 결과 |
-| `archive/` | 직전 HTML과 직전 원본/소스 백업 ZIP |
+| `archive/` | 이전 보관 파일과 이름이 고정된 WIP06 HTML 스냅샷 |
 
 ## 빌드
 
@@ -107,6 +115,8 @@ node scripts/export_vehicle_profile.cjs
 python3 build.py
 node --check src/sim-core.js
 node --check src/app.js
+node --check src/look-animation.js
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
@@ -130,7 +140,9 @@ node tests/vehicle.test.cjs
 
 차량의 반경·경사 한계나 길찾기 격자를 변경할 때도 캐시를 다시 제작하고 계약 버전을 올린다. 지도 변경은 원본과 게임 편집 규칙을 수정해 제작하며 `dist/index.html`만 직접 고치지 않는다.
 
-## 검증
+## 과거 검증 기록 (WIP04/WIP05)
+
+아래는 기존 버전의 기록이다. WIP06에서 다시 실행한 항목과 실행하지 않은 항목은 상단의 버전 노트에서 구분한다. 과거 Chromium·모바일 viewport 결과를 현재 시선 연출 UI의 브라우저 검증으로 해석하지 않는다.
 
 - 게임/지도 16개, 입력 16개, 시야·벡터 등고선 12개, 전차·비동기 시야 9개, 실제 자료 대조 7개: **60/60 통과**.
 - WIP05(외형만 변경): 게임/지도·입력·시야·전차 JS 검사 53/53 재통과. 지도·고도 원본은 건드리지 않았으므로 실제 자료 대조 7개(GDAL 필요)는 WIP04 결과를 유지한다. 새 도안은 USMC A-3 평면도와 같은 축척으로 겹쳐 외곽·해치·포신 위치를 확인했고, Chromium에서 3~32px/m 확대 및 포탑 선회 상태를 확인했다.
