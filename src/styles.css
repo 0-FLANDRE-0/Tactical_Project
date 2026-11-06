@@ -855,3 +855,10 @@ footer{
 .look-title{display:flex;align-items:center;gap:10px;font-weight:600}.look-title output{color:#b7d9d7;font-size:10px;font-weight:400}.look-controls{display:flex;align-items:center;gap:6px;margin-top:7px}.look-controls button,.look-controls select{min-height:36px;border:1px solid #63858c;border-radius:4px;background:#253f43;color:#e0f0ee;padding:5px 7px;font:inherit}.look-controls button.active{background:#49777c;border-color:#b1e6e8}.look-controls button:focus-visible,.look-controls select:focus-visible{outline:2px solid #c9f8ff;outline-offset:2px}.look-duration{display:flex;align-items:center;gap:4px}.look-panel p{margin:6px 0 0;color:#a9bfc1;font-size:9px}.look-picking canvas{cursor:crosshair}.sight-on .look-panel{top:145px}
 @media(max-height:560px) and (orientation:landscape){.look-panel{top:82px;left:13px;padding:7px 8px}.sight-on .look-panel{top:125px}}
 @media(orientation:portrait){.look-panel{top:142px;left:13px}.sight-on .look-panel{top:185px}.look-controls{gap:4px}.look-controls button,.look-controls select{padding:5px}}
+
+/* WIP07 observation commands */
+.look-panel{max-width:calc(100% - 80px)}
+.look-controls{flex-wrap:wrap}
+.look-controls select,.look-panel button,.target-panel button{font:inherit;background:#22382f;color:#deead5;border:1px solid #6c8565;border-radius:4px;padding:5px}
+.look-panel p{margin:5px 0}
+#targetDetails{font-size:11px;color:#c2cbb7}

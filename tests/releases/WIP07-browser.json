@@ -1,0 +1,21 @@
+{
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+  "fileURL": "blocked by administrator policy; not verified",
+  "checks": [
+    "single HTML starts offline with actual canvas",
+    "guard world point input, actual turret pose and pause",
+    "terrain hold runs real embedded Worker and composes sectors",
+    "silhouette reuses artwork but contains only black opaque pixels",
+    "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+    "identified and remembered contacts update panel permissions then expire selection",
+    "mobile viewport 844×390 has no horizontal overflow and controls stay in map",
+    "mobile viewport 390×844 has no horizontal overflow and controls stay in map",
+    "reduced-motion and normal views keep same actual observation state",
+    "no application page errors"
+  ],
+  "passed": 10,
+  "failed": 0,
+  "errors": [],
+  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected to test UI permissions. Not Android hardware or real thermal/ballistic validation."
+}

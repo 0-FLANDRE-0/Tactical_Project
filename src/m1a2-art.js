@@ -4,7 +4,7 @@
  * Hull, fender decks and turret are separate layers. No exposed upper track runs.
  * Exterior details are visual approximations, never an armour/collision model. */
 const M1A2Art=(()=>{
-  const hull=[],turret=[],compiled=new Map();let active=hull;
+  const hull=[],turret=[],citv=[],compiled=new Map();let active=hull;
   const add=(d,fill='body',stroke='seam',w=.025,lod=0)=>active.push({d,fill,stroke,w,lod});
   const rect=(x,y,w,h,fill='deck',stroke='seam',line=.02,lod=1)=>add(`M${x} ${y}h${w}v${h}h${-w}Z`,fill,stroke,line,lod);
   // Corner form: box(x0,y0,x1,y1) avoids sign mistakes on mirrored (+y/-y) parts.
@@ -121,8 +121,10 @@ const M1A2Art=(()=>{
   box(.72,.56,.84,1.04,'glass','shadow',.022,2);line('M.45 .50V1.10M.58 .50V1.10','light',.016,3);
   // M1A2 Commander's Independent Thermal Viewer ahead of the loader's hatch.
   circle(.424,-.673,.27,'shadow','seam',.03,1);circle(.424,-.673,.21,'deck','metal',.02,1);
+  active=citv;
   add('M.30 -.82H.56Q.64 -.82 .64 -.74V-.60Q.64 -.53 .56 -.53H.30Z','body','shadow',.022,1);
   box(.60,-.78,.68,-.57,'glass','shadow',.018,2);
+  active=turret;
   // Roof weapons: commander's M2 over the GPS, loader's M240 beside the hatch.
   box(-.12,.40,.36,.56,'gunMetal','shadow',.015,2);line('M.36 .48H1.38','gunMetal',.05,2);box(-.08,.58,.20,.74,'ammo','shadow',.015,2);
   box(-.34,-1.05,.02,-.92,'gunMetal','shadow',.015,2);line('M.02 -.985H.46','gunMetal',.04,2);box(-.28,-1.17,-.04,-1.05,'ammo','shadow',.015,3);
@@ -142,28 +144,29 @@ const M1A2Art=(()=>{
     olive:{body:'#69745a',deck:'#7b8468',fender:'#727d61',glacis:'#788366',roof:'#828b70',bustle:'#687258',leftCheek:'#7d886b',rightCheek:'#606d52',shadow:'#384633',seam:'#44503a',light:'#a0a98a',grille:'#293628',rib:'#66725a',rubber:'#232a23',trackEdge:'#697363',metal:'#9ba38e',glass:'#243b3d',lamp:'#d4d9bb',basket:'#56634b',gunMetal:'#2a3430',ammo:'#566048',barrel:'#778367',barrelLight:'#a8b091',canvas:'#6c735e',strap:'#454b3c',mesh:'#2c3828'},
     sand:{body:'#ad9d78',deck:'#b9ac87',fender:'#ac9c77',glacis:'#bbad87',roof:'#c2b48f',bustle:'#a29372',leftCheek:'#c2b18b',rightCheek:'#a08f6c',shadow:'#625c46',seam:'#776d52',light:'#d9cba6',grille:'#4c4b3c',rib:'#9a8e6c',rubber:'#30332b',trackEdge:'#7f806b',metal:'#c8bea2',glass:'#2c4140',lamp:'#e3dfc6',basket:'#8c8265',gunMetal:'#333a33',ammo:'#8c8668',barrel:'#b6a57f',barrelLight:'#dfcca4',canvas:'#8e8b6c',strap:'#5a5c46',mesh:'#5a5543'}
   };
-  function drawLayer(g,items,palette,lod){
-    for(const part of items){if(part.lod>lod)continue;
+  function drawLayer(g,items,palette,lod,silhouette=false){
+    for(const part of items){if(silhouette){if(!part.fill)continue;}else if(part.lod>lod)continue;
       let p=compiled.get(part);if(!p){p=new Path2D(part.d);compiled.set(part,p);}
-      if(part.fill){g.fillStyle=palette[part.fill]||part.fill;g.fill(p);}
-      if(part.stroke){g.strokeStyle=palette[part.stroke]||part.stroke;g.lineWidth=part.w;g.stroke(p);}
+      if(part.fill){g.fillStyle=silhouette?'#000000':palette[part.fill]||part.fill;g.fill(p);}
+      if(part.stroke&&!silhouette){g.strokeStyle=palette[part.stroke]||part.stroke;g.lineWidth=part.w;g.stroke(p);}
     }
   }
   const TURRET_SHADOW=typeof Path2D!=='undefined'?new Path2D('M2.33 -.31H2.13L2.06 -.66L1.31 -1.56L-1.25 -1.57L-2.29 -1.43H-2.97V1.58H-2.29L.06 1.71L1.65 1.67L2.04 .78L2.13 .31H2.33ZM2.33 -.12H5.72V.12H2.33Z'):null;
-  function draw(g,u,zoom,model){
+  function draw(g,u,zoom,model,{silhouette=false}={}){
     const palette=palettes[u.team==='red'?'sand':'olive'],lod=zoom>16?3:zoom>6?2:zoom>2?1:0;
     g.save();g.scale(zoom,zoom);g.lineJoin='round';g.lineCap='round';
-    g.save();g.rotate(u.heading);g.fillStyle='#17201745';g.fillRect(-model.hullLength/2+.14,-model.width/2+.18,model.hullLength,model.width);drawLayer(g,hull,palette,lod);g.restore();
+    g.save();g.rotate(u.heading);if(!silhouette){g.fillStyle='#17201745';g.fillRect(-model.hullLength/2+.14,-model.width/2+.18,model.hullLength,model.width);}drawLayer(g,hull,palette,lod,silhouette);g.restore();
     g.save();g.rotate(u.turret);g.translate(model.turretCenter,0);
-    g.save();g.translate(.11,.13);g.fillStyle='#15201345';g.fill(TURRET_SHADOW);g.restore();
-    drawLayer(g,turret,palette,lod);g.restore();g.restore();
+    if(!silhouette){g.save();g.translate(.11,.13);g.fillStyle='#15201345';g.fill(TURRET_SHADOW);g.restore();}
+    drawLayer(g,turret,palette,lod,silhouette);
+    g.translate(.424,-.673);g.rotate((u.commander??u.turret)-u.turret);g.translate(-.424,.673);drawLayer(g,citv,palette,lod,silhouette);g.restore();g.restore();
   }
   const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
   function toSVG({heading=0,turretHeading=0,palette='olive'}={}){
     const colors=palettes[palette],layer=items=>items.map(p=>`<path d="${escape(p.d)}" fill="${p.fill?colors[p.fill]||p.fill:'none'}"${p.stroke?` stroke="${colors[p.stroke]||p.stroke}" stroke-width="${p.w}"`:' stroke="none"'}/>`).join('\n');
     const rotated=Math.abs(heading)+Math.abs(turretHeading)>.001,size=rotated?'width="1000" height="1000" viewBox="-6.5 -6.5 13 13"':'width="1440" height="720" viewBox="-5 -2.5 12 5"';
-    return `<svg xmlns="http://www.w3.org/2000/svg" ${size} role="img" aria-label="M1A2 Abrams top view"><title>M1A2 Abrams · top view</title><desc>Original vector interpretation based on US Army DVIDS 3055956. Planform traced from USMC MCWP 3-12 A-3; blunt turret face, bustle rack, side skirts, engine-deck grilles, CITV, GPS, hatches and M256. Exterior detail is approximate.</desc><g stroke-linejoin="round" stroke-linecap="round"><g transform="rotate(${heading*180/Math.PI})">${layer(hull)}</g><g transform="rotate(${turretHeading*180/Math.PI}) translate(.15 0)">${layer(turret)}</g></g></svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" ${size} role="img" aria-label="M1A2 Abrams top view"><title>M1A2 Abrams · top view</title><desc>Original vector interpretation based on US Army DVIDS 3055956. Planform traced from USMC MCWP 3-12 A-3; blunt turret face, bustle rack, side skirts, engine-deck grilles, CITV, GPS, hatches and M256. Exterior detail is approximate.</desc><g stroke-linejoin="round" stroke-linecap="round"><g transform="rotate(${heading*180/Math.PI})">${layer(hull)}</g><g transform="rotate(${turretHeading*180/Math.PI}) translate(.15 0)">${layer(turret)}${layer(citv)}</g></g></svg>`;
   }
-  return {draw,toSVG,palettes,geometry:{hull,turret}};
+  return {draw,toSVG,palettes,geometry:{hull,turret,citv}};
 })();
 if(typeof module!=='undefined')module.exports=M1A2Art;

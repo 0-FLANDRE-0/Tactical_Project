@@ -1,23 +1,23 @@
-# TACTICAL v0.4 WIP06 — UI 갱신 정리·시선 둘러보기 연출
+# TACTICAL v0.4 WIP07 — 방향별 관측·접촉·독립 선회
 
-## WIP06 버전 파일과 검증
+WIP06 main `5eea28cf80deaa1ffdf9494090d3e2e3f621e636`에서 이어서 구현했다. 실제 전차장/포탑 선회, 주변·전차장·포수 관측, 탐지/식별과 기억, 자동/지점 경계, 헌터킬러 지정 전달과 포수 자체 확보가 작동한다. 지도·기동 반경·길찾기 계약은 유지한다.
 
-- 기준 소스: 병합된 main [`4eaedbe6dd1d7eb4f2799b3b629ac9a6aa419402`](https://github.com/0-FLANDRE-0/Tactical_Project/commit/4eaedbe6dd1d7eb4f2799b3b629ac9a6aa419402). PR #1의 UI 갱신 정리와 PR #2의 시선 둘러보기 연출을 포함한다.
-- 이번 정리는 버전 표기 4곳과 배포 문서·파일을 정리한 것이다. 병합본의 게임 로직과 데이터는 바꾸지 않았다.
-- 루트의 버전 HTML, `dist/index.html`, [`archive/Tactical_v0.4_WIP06.html`](archive/Tactical_v0.4_WIP06.html)은 같은 바이트다. 기존 archive 파일은 보존했다. 병합본을 과거 WIP05 원본으로 취급하지 않는다.
-- 현재 버전 재검사: JavaScript **93/93 통과**. 단일 파일 재빌드·구문·체크섬 검사를 통과했다. 브라우저 시각 검사, 실기기 터치/성능과 원본 데이터/GDAL 대조 검사는 이번 정리에서 실행하지 않았다.
-- [버전 노트·검증 범위](TACTICAL_RELEASE_WIP06.md) · [SHA-256 체크섬](SHA256SUMS_WIP06.txt) · [기계 판독용 검증 기록](tests/releases/WIP06-validation.json)
+- 현재 단일 실행 파일: [Tactical_v0.4_WIP07.html](Tactical_v0.4_WIP07.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [구현 상태와 튜닝값](docs/OBSERVATION_WIP07.md) · [릴리스·검증 결과](TACTICAL_RELEASE_WIP07.md) · [SHA-256](SHA256SUMS_WIP07.txt).
+- WIP06 파일과 archive는 보존했다. [이전 릴리스 기록](TACTICAL_RELEASE_WIP06.md)은 과거 기준선이다.
 
 ## 실행과 조작
 
-배포 HTML [`Tactical_v0.4_WIP06.html`](Tactical_v0.4_WIP06.html)을 내려받아 브라우저에서 연다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+배포 HTML [`Tactical_v0.4_WIP07.html`](Tactical_v0.4_WIP07.html)을 내려받아 브라우저에서 연다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
 - 정지: 경로 취소 후 감속한다.
 - 시야 버튼 홀드 또는 V 키 홀드: 선택 전차의 가시·차폐 영역을 표시한다.
 - 드래그: 지도 이동. 핀치·휠: 확대/축소. 우측 맞춤 버튼: 전체 4km 지도 보기.
-- 관측 표적 탭: 차체·포탑의 관측 표본 비율. 명중 확률이 아니다.
+- 관측 표적 탭: 미식별 실루엣은 일반 정보만, 식별한 현재 접촉은 차종·부위 관측 비율을 표시한다. 흐린 잔상은 마지막 관측 위치다.
+- 전차장/포수 선택 → 지점 경계(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 자동 경계 버튼으로 해당 명령 해제. Esc는 새 입력만 취소한다.
+- 표적 패널의 포수 직접 지정과 인계 취소를 사용할 수 있다. 지정 전달과 포수 확보는 별도 상태다.
 - Space: 일시정지. R: 후진 모드. X: 정지. F: 전체화면. Home: 전체 지도.
 - 전체화면 요청이 거절되거나 지원되지 않으면 지도 집중 모드로 전환한다.
 
@@ -67,7 +67,7 @@
 - 도로 67.6km/h, 야지 48.3km/h 상한. 후진 40.2km/h는 같은 계열·SEP 교범에서 가져온 가정이다. 실제 속도는 지표·경사·선회·감속에 따라 달라진다.
 - 평지에서 0→20mph(32.2km/h) 7.2초를 맞춘 단순 가속 모델이다. 질량·출력은 프로파일에 기록하되 정밀 구동계 물리를 주장하지 않는다.
 - 관측점은 사용자가 지정한 **전차장 CITV 수준, 지면 위 2.65m**다. 광학축 높이는 공개 실측치를 확인하지 못해 외형 근사로 분류했다. 포수 조준경 시점으로 바꾸지 않는다.
-- 관측 계산 상한 **4km**, 주포 교전 기준 **3km**를 분리했다. 두 거리는 게임 설정이다. 주포 교전 기준 밖도 지형이 허용하면 관측된다. 사격·탄종은 비활성 상태다.
+- 관측은 주변 **200m/360°(실루엣까지만)**, 전차장 **2500m/90°**, 포수 **2000m/60°**다. 실제 선회는 전차장 50°/s, 포탑 40°/s이며 프로파일 게임 설정이다. 4km는 표시용 기하 조회 상한, 3km는 비활성 주포 메타데이터다.
 - 이동은 60% 종방향·40% 횡방향 경사를 구분한다. 60도/40도가 아니다. 차체 여유 반경 4.62m에 맞춰 길찾기 캐시를 다시 제작했다.
 - 상부 외형은 미 육군 DVIDS 3055956 사진으로 장비 배치를 확인하고, USMC의 M1A1 공통 차체·포탑 도면과 동일 축척으로 비교했다. M1A1 도면을 M1A2의 정확한 세부 도면으로 취급하지 않는다.
 - WIP05: 상부 외곽을 USMC A-3 평면도에 동일 축척으로 겹쳐 다시 그렸다. 포탑 전면은 포방패 옆이 거의 횡방향인 뭉툭한 면과 짧은 사선 측면으로 바꿨고(이전의 뾰족한 화살촉형 제거), 도면대로 좌측(장전수) 측면 사선이 우측보다 길다. 포탑 본체 길이 4.75m, 수납함 포함 폭 3.28m, 뒤 바스켓 포함 약 5.30m는 **외형 근사값**이다.
@@ -83,8 +83,9 @@
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP06.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP07.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
+| `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | M1A2 기본형의 치수·기동·관측·무장 메타데이터 |
 | `src/m1a2-art.js` | 독립 차체·포탑 벡터 도안과 SVG 내보내기 |
 | `src/visibility-client.js` | 내장 시야 Worker와 오류 시 동일 계산 대체 실행 |
@@ -116,11 +117,14 @@ python3 build.py
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
 node tests/vehicle.test.cjs
+# Playwright 개발 의존성과 시스템 Chromium이 있는 환경:
+node tests/browser.test.cjs
+node scripts/benchmark_observation.cjs
 ```
 
 전장 데이터를 다시 만들 때는 원본을 보존한 상태에서 다음 순서로 실행한다. GDAL·NumPy·Pillow가 필요하다. 이 환경에서는 `/usr/bin/python3`에 설치되어 있다.
@@ -177,8 +181,8 @@ node tests/vehicle.test.cjs
 
 이 측정은 목록 UI의 합성 마이크로벤치마크이며 게임 전체 FPS나 실기기 성능을 뜻하지 않는다. 기존 JavaScript 검사 53개와 새 검사 12개를 통과했다.
 
-## 시선 둘러보기 연출
+## WIP07 관측 상태
 
-아군 포탑 도안은 좌우로 움직이고, 선택 전차의 하늘색 시선 커서는 더 넓게 움직인다. 지도 위 `방향 지정` 또는 L을 누른 뒤 방향을 탭하면 같은 지도 방위를 5/10/30초 동안 유지한다. 시간이 끝나면 둘러보기로 돌아온다. Esc로 입력 취소, `둘러보기`로 즉시 해제가 가능하다.
+화면용 시선 연출을 실제 관측으로 교체했다. 모션 줄이기·선택·카메라는 결과에 영향을 주지 않는다. seed가 같은 0.05초 스텝은 1×/2× 프레임 묶음에서도 같은 접촉 결과를 만든다. 미탐지는 숨기고, 미식별은 실제 외곽의 검은 실루엣, 식별은 정상 외형, 상실은 고정된 마지막 자세의 흐린 기억으로 표시한다.
 
-일시정지·숨겨진 탭에서는 남은 시간이 멈추고 게임 배속을 따른다. 이 연출은 이동·관측 판정이나 원본 포탑 상태를 바꾸지 않는다. 사용법, 구현 범위와 검증 한계는 [시선 연출 문서](docs/LOOK_ANIMATION.md)에 기록했다.
+전차장 독립 시야와 헌터킬러는 별도 프로파일 기능이다. 헌터킬러가 없어도 직접 지정과 포수 자체 관측이 가능하다. 포수 거리 밖 인계는 대기/만료하며 범위를 늘리지 않는다. [구현 문서](docs/OBSERVATION_WIP07.md)에 정보 공개·기억·경계 우선·캐시 유효성·인계 상태와 모든 초깃값을 기록했다.

@@ -9,7 +9,7 @@ const TacticalCore = (() => {
   const WORLD = {w:M.width,h:M.height,step:2,nav:16};
   const PROFILE=VEHICLE_PROFILES.M1A2;
   const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
-  const profileOf=u=>VEHICLE_PROFILES[u?.profileId||'M1A2'];
+  const profileOf=u=>u?.profileOverride||VEHICLE_PROFILES[u?.profileId||'M1A2'];
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const mix=(a,b,t)=>a+(b-a)*t;
   const angleDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
@@ -47,7 +47,7 @@ const TacticalCore = (() => {
   }
   const names=['grass','field','forest','settlement','scrub','water','stream','road','bridge','obstacle'];
   const surfaceAt=(x,y)=>names[surfaceCode(x,y)];
-  const forestAt=(x,y)=>surfaceCode(x,y)===2?.9:surfaceCode(x,y)===4?.22:0;
+  const forestAt=(x,y)=>{const code=surfaceCode(x,y);return code===2?.9:code===4?.22:0;};
   const waterAt=(x,y)=>surfaceCode(x,y)===5;
   const bridgeAt=(x,y)=>surfaceCode(x,y)===8;
   function slopeAt(x,y) {
@@ -214,7 +214,8 @@ const TacticalCore = (() => {
     return {ok:true,points:points.slice(1),visits,cost:dist[g]};
   }
   function makeTank(id,name,x,y,heading,team='blue') {
-    return {id,name,profileId:'M1A2',x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
+    const u={id,name,profileId:'M1A2',x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
+    TacticalObservation.init(u);return u;
   }
   function legalNear(x,y,units=[]) {
     for(let r=0;r<150;r+=8) for(let a=0;a<Math.PI*2;a+=Math.PI/8) {
@@ -223,13 +224,13 @@ const TacticalCore = (() => {
     }
     throw Error('배치 가능한 위치가 없음');
   }
-  function createScenario() {
+  function createScenario(seed=7) {
     const units=[];
     for(const [id,name,x,y,h,team] of [
       ['A11','ALPHA 11',550,2750,-.45,'blue'],['A12','ALPHA 12',780,3060,-.45,'blue'],
       ['T01','관측 표적 01',1150,2330,2.4,'red'],['T02','관측 표적 02',1800,1650,2.5,'red'],['T03','관측 표적 03',3020,2060,2.8,'red']
     ]) {const p=legalNear(x,y,units);units.push(makeTank(id,name,p.x,p.y,h,team));}
-    return {time:0,units};
+    return {time:0,seed,units};
   }
   function issueMove(u,goal,reverse,units) {
     const r=planPath(u,goal,units,u);if(!r.ok)return r;
@@ -271,38 +272,68 @@ const TacticalCore = (() => {
     const sign=u.reverse?-1:1,next={x:u.x+Math.cos(u.heading)*u.speed*sign*dt,y:u.y+Math.sin(u.heading)*u.speed*sign*dt};
     if(u.speed>0&&segmentClear(u,next,units,u)){u.distanceTravelled+=u.speed*dt;u.x=next.x;u.y=next.y;}
     else if(u.speed>0){u.speed=0;u.state='경로 대기';if(u.goal&&u.replanTimer<=0){const r=planPath(u,u.goal,units,u);if(r.ok)u.path=r.points;u.replanTimer=1.5;}}
-    u.turret+=clamp(angleDiff(u.heading,u.turret),-motion.turretRate*dt,motion.turretRate*dt);
   }
-  function step(s,dt){s.time+=dt;for(const u of s.units)stepTank(u,dt,s.units);}
+  const observationRuntimes=new WeakMap();
+  function observationFor(s){
+    if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7}));
+    return observationRuntimes.get(s);
+  }
+  function step(s,dt){s.time+=dt;for(const u of s.units)stepTank(u,dt,s.units);observationFor(s).advance(s.units,dt,s.time);}
+  const contacts=(s,team='blue')=>observationFor(s).contacts(team);
+  const guard=(s,u,ch,point,duration=0)=>!!profileOf(u).sensors[ch]?.enabled&&(ch!=='commander'||profileOf(u).sensors.commander.independent)&&TacticalObservation.guard(u,ch,point,duration,s.time);
+  const resumeObservation=(s,u,ch)=>TacticalObservation.resume(u,ch,s.time);
+  const designate=(s,u,key)=>observationFor(s).direct(u,key);
+  const cancelDesignation=(s,u)=>TacticalObservation.cancel(u,s.time);
+  const observationView=(s,u,ch='commander')=>TacticalObservation.view(u,ch,s.time);
+  const observationStats=s=>({...observationFor(s).stats});
   const roofGrid=new Float32Array(TH.columns*TH.rows);
   for(const b of buildings) for(let y=Math.max(0,Math.floor(b.minY/4));y<=Math.min(999,Math.floor(b.maxY/4));y++) for(let x=Math.max(0,Math.floor(b.minX/4));x<=Math.min(999,Math.floor(b.maxX/4));x++) {
     if(insideBuilding(x*4+2,y*4+2,b))roofGrid[y*1000+x]=Math.max(roofGrid[y*1000+x],b.roof);
   }
   function roofAt(x,y){return roofGrid[clamp(Math.floor(y/4),0,999)*1000+clamp(Math.floor(x/4),0,999)];}
-  function lineOfSight(observer,target,targetHeight=1.5,fast=false) {
+  // LOS needs only a single spatial bucket and no clearance/duplicate set.
+  // Keep exact polygon checks, including structures thinner than the roof atlas.
+  function sightRoofBlocked(x,y,ray){
+    const candidates=buildingBuckets.get(Math.floor(y/64)*bucketCols+Math.floor(x/64));
+    if(!candidates)return false;
+    for(const b of candidates)if(b.roof>ray&&x>=b.minX&&x<=b.maxX&&y>=b.minY&&y<=b.maxY&&insideBuilding(x,y,b))return true;
+    return false;
+  }
+  function lineOfSight(observer,target,targetHeight=1.5,fast=false,eyeHeight=null) {
     const d=Math.hypot(target.x-observer.x,target.y-observer.y);
     const sensor=profileOf(observer).sensors;
     if(d>sensor.observationLimit)return {visible:false,reason:'range',forestDepth:0};
-    const start=heightAt(observer.x,observer.y)+sensor.eyeHeight,end=heightAt(target.x,target.y)+targetHeight,n=Math.max(2,Math.ceil(d/(fast?6:2)));
+    const start=heightAt(observer.x,observer.y)+(eyeHeight??sensor.eyeHeight),end=heightAt(target.x,target.y)+targetHeight,n=Math.max(2,Math.ceil(d/(fast?6:2)));
     let optical=0;
     for(let i=1;i<n;i++) {
       const t=i/n,x=mix(observer.x,target.x,t),y=mix(observer.y,target.y,t),ray=mix(start,end,t),ground=heightAt(x,y);
       if(ground>ray+.06)return {visible:false,reason:'terrain',forestDepth:optical};
-      const roof=roofAt(x,y);
-      if(fast&&roof>ray)return {visible:false,reason:'building',forestDepth:optical};
+      if(fast&&roofAt(x,y)>ray)return {visible:false,reason:'building',forestDepth:optical};
       // Exact polygon fallback guards thin buildings missed by the preview atlas.
-      if(!fast){const b=buildingAt(x,y);if(b&&b.roof>ray)return {visible:false,reason:'building',forestDepth:optical};}
+      if(!fast&&sightRoofBlocked(x,y,ray))return {visible:false,reason:'building',forestDepth:optical};
       if(ray<ground+15)optical+=forestAt(x,y)*d/n/85;
       if(optical>1)return {visible:false,reason:'forest',forestDepth:optical};
     }
     return {visible:true,reason:'clear',forestDepth:optical};
   }
-  function exposure(observer,target) {
-    let hull=0,turret=0;const fx=Math.cos(target.heading),fy=Math.sin(target.heading),e=profileOf(target).exposure;
-    for(const along of e.hullAlong)for(const z of e.hullHeights)if(lineOfSight(observer,{x:target.x+fx*along,y:target.y+fy*along},z).visible)hull++;
-    for(const along of e.turretAlong)if(lineOfSight(observer,{x:target.x+fx*along,y:target.y+fy*along},e.turretHeight).visible)turret++;
-    return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0};
+  function exposure(observer,target,eyeHeight=null,cache=null) {
+    let hull=0,turret=0,depth=0,rayQueries=0,rayCacheHits=0;const eye=eyeHeight??profileOf(observer).sensors.eyeHeight,e=profileOf(target).exposure,samples=[];
+    function sample(along,z,angle,part){
+      const x=target.x+Math.cos(angle)*along,y=target.y+Math.sin(angle)*along;
+      const previous=cache?.samples[samples.length];
+      // Reuse only exactly unchanged endpoints/eye/sample height on the frozen
+      // map, and for at most 0.5 simulated seconds. Turning hull/turret or moving
+      // either unit invalidates affected samples immediately.
+      let los;
+      if(previous&&previous.x===x&&previous.y===y&&previous.z===z&&previous.ox===observer.x&&previous.oy===observer.y&&previous.eye===eye&&cache.time-previous.at<=cache.maxAge){los=previous.los;rayCacheHits++;}
+      else{los=lineOfSight(observer,{x,y},z,false,eye);rayQueries++;if(cache)cache.samples[samples.length]={x,y,z,ox:observer.x,oy:observer.y,eye,at:cache.time,los};}
+      samples.push({x,y,part,visible:los.visible,forestDepth:los.forestDepth});
+      if(los.visible){if(part==='hull')hull++;else turret++;depth+=los.forestDepth;}
+    }
+    for(const along of e.hullAlong)for(const z of e.hullHeights)sample(along,z,target.heading,'hull');
+    for(const along of e.turretAlong)sample(along,e.turretHeight,target.turret??target.heading,'turret');
+    return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

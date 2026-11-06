@@ -1,0 +1,46 @@
+{
+  "node": "v24.22.1",
+  "platform": "linux",
+  "arch": "x64",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "seed": 407,
+  "fixture": "grid: x=200+(i%10)*360; y=300+floor(i/10)*320; heading=(i%8)*pi/4; teams alternate; stationary; both teams sense",
+  "warmupSteps": 20,
+  "stepSeconds": 0.05,
+  "queryHz": 10,
+  "notes": "One run of 100 timed fixed steps after 20 warmup. Includes control, spatial filtering, exact terrain LOS, evidence, team merge and mobility idle. Contacts read is detached snapshot creation. Not comparable to old per-frame display loop numbers; not FPS or mobile performance.",
+  "cases": [
+    {
+      "count": 50,
+      "blue": 25,
+      "red": 25,
+      "steps": 100,
+      "simulatedSeconds": 5,
+      "medianStepMs": 5.031727999999987,
+      "p95StepMs": 10.102817000000073,
+      "maxStepMs": 12.684439999999995,
+      "medianTeamReadMs": 0.016054000000053747,
+      "queries": 2500,
+      "candidatePairs": 17446,
+      "geometryRequests": 17446,
+      "exactRayQueries": 43998,
+      "unchangedRayCacheHits": 113016
+    },
+    {
+      "count": 100,
+      "blue": 50,
+      "red": 50,
+      "steps": 100,
+      "simulatedSeconds": 5,
+      "medianStepMs": 21.118151000000125,
+      "p95StepMs": 49.657424999999876,
+      "maxStepMs": 86.24495200000001,
+      "medianTeamReadMs": 0.03188799999998082,
+      "queries": 5000,
+      "candidatePairs": 56017,
+      "geometryRequests": 56017,
+      "exactRayQueries": 131504,
+      "unchangedRayCacheHits": 372649
+    }
+  ]
+}
