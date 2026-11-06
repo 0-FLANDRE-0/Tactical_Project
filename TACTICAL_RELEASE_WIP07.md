@@ -8,6 +8,8 @@ main `5eea28cf80deaa1ffdf9494090d3e2e3f621e636`에서 시작했다. 원격 main�
 
 ## 실행 파일
 
+- 권장 다운로드: [Tactical_v0.4_WIP07.zip](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07.zip) — **1,603,496바이트**. 실행 HTML 하나만 포함한다. ZIP CRC와 압축 해제한 HTML의 SHA-256/바이트 일치를 확인했다. 게임 소스와 HTML 내용은 바꾸지 않았다.
+- ZIP SHA-256: `8ba5e4c1231d705db148c5966ad0575c4cb3ba55b1d68b65f44cac2244d9c4b5`.
 - [Tactical_v0.4_WIP07.html](Tactical_v0.4_WIP07.html)과 [dist/index.html](dist/index.html)은 **8,251,170바이트**, 완전히 같은 바이트다.
 - SHA-256: `60748e83cb4720f692906467da767acf8912cacac8cc2ec7b61668bf18b19a5b`.
 - [체크섬 파일](SHA256SUMS_WIP07.txt), [기계 판독 검증 기록](tests/releases/WIP07-validation.json).

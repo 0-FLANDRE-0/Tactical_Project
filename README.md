@@ -2,13 +2,14 @@
 
 WIP06 main `5eea28cf80deaa1ffdf9494090d3e2e3f621e636`에서 이어서 구현했다. 실제 전차장/포탑 선회, 주변·전차장·포수 관측, 탐지/식별과 기억, 자동/지점 경계, 헌터킬러 지정 전달과 포수 자체 확보가 작동한다. 지도·기동 반경·길찾기 계약은 유지한다.
 
+- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07.zip). 압축을 풀면 `Tactical_v0.4_WIP07.html` 한 파일이 나온다.
 - 현재 단일 실행 파일: [Tactical_v0.4_WIP07.html](Tactical_v0.4_WIP07.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [구현 상태와 튜닝값](docs/OBSERVATION_WIP07.md) · [릴리스·검증 결과](TACTICAL_RELEASE_WIP07.md) · [SHA-256](SHA256SUMS_WIP07.txt).
 - WIP06 파일과 archive는 보존했다. [이전 릴리스 기록](TACTICAL_RELEASE_WIP06.md)은 과거 기준선이다.
 
 ## 실행과 조작
 
-배포 HTML [`Tactical_v0.4_WIP07.html`](Tactical_v0.4_WIP07.html)을 내려받아 브라우저에서 연다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP07.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.

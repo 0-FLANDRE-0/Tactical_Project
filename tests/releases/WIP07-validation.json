@@ -100,5 +100,18 @@
     "src/page.html": "4f13bc3c8b799d227113999f99edd6545ec23c62dbbc8ef7e0964c385684bfb3",
     "src/styles.css": "b3c0583231c4e827b1736546ef0ffe51973ed3eddac295bf9ce186fba5e96241",
     "build.py": "f659a618685b156c55e5e0cb83c14dcf6ace2191e6071fa1cbc64b4693fc98a7"
+  },
+  "zipArtifact": {
+    "file": "Tactical_v0.4_WIP07.zip",
+    "bytes": 1603496,
+    "sha256": "8ba5e4c1231d705db148c5966ad0575c4cb3ba55b1d68b65f44cac2244d9c4b5",
+    "members": [
+      "Tactical_v0.4_WIP07.html"
+    ],
+    "crcCheck": "passed",
+    "extractedHTMLBytes": 8251170,
+    "extractedHTMLSHA256": "60748e83cb4720f692906467da767acf8912cacac8cc2ec7b61668bf18b19a5b",
+    "extractedMatchesDist": true,
+    "note": "Packaging-only follow-up. Runtime HTML and previous functional test results unchanged."
   }
 }
