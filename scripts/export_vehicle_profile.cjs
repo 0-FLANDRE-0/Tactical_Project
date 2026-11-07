@@ -26,11 +26,14 @@ const record={profile,baseline:'M1A2 basic; not M1A2 SEP v2/v3',reviewed:'2026-1
   'sensors.ambient,sensors.commander,sensors.gunner,sensors.hunterKiller,sensors.tuning':{status:'fictional game tuning',note:'WIP07A channel provenance, forward reciprocal scans and independent evidence decay; 200m silhouette-only, commander 2500m 90deg 50deg/s, gunner 2000m 30deg 40deg/s. Equipment flags independent of hunter-killer. See docs/OBSERVATION_WIP07A.md for evidence, memory and designation defaults.'},
   'sensors.observationLimit':{status:'game tuning',value:4000,note:'Observation computation cap; not an actual guaranteed detection or identification distance'},
   'weapons.mainGun.referenceEngagementRange':{status:'game tuning',value:3000,note:'Future engagement reference only; not a ballistic maximum and does not limit LOS'},
-  'weapons.mainGun.ammunitionCapacity':{status:'published capacity only',source:'GDLS',value:42,note:'No ammo split, reload, damage, penetration or firing implemented'},
+  'artId':{status:'explicit artwork reference',note:'Vehicle registry IDs and artwork IDs are independent; this stage supports M1A2 artwork only'},
+  'fireControl':{status:'fictional game tuning',note:'WIP08 abstract aim readiness, hit/conditional-zone rolls, 2.2m game firing viewpoint, test rounds and one-second anti-repeat interval. Not measured M1A2 fire control, ballistics or real weapon accuracy.'},
+  'weapons.mainGun.ammunitionCapacity':{status:'published capacity only',source:'GDLS',value:42,note:'Test-round counter and abstract manual firing active; no ammo split, loading transport, ballistic/penetration/damage model'},
   'exposure':{status:'game geometry samples',note:'Hull/turret sample locations follow model heights; not a hit probability model'},
   'navigation':{status:'derived conservative clearance',formula:'ceil((hypot(hullLength/2,width/2)+0.25)*100)/100 = 4.62m',note:'Cannon tube does not collide; 16m navigation nodes and conservative circle are retained'}
- },limits:['Mass and engine rating are profile metadata, not a full powertrain simulation','Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model','No SEP armour values or specific ammunition performance are inferred']};
+ },limits:['Mass and engine rating are profile metadata, not a full powertrain simulation','Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model','No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities']};
 fs.writeFileSync(path.join(sourceDir,'M1A2.json'),JSON.stringify(record,null,2)+'\n');console.log('Exported M1A2 values and per-field provenance');
+fs.writeFileSync(path.join(sourceDir,'registry.json'),JSON.stringify({schemaVersion:1,ids:require('../src/vehicle-profiles.js').registry.ids(),artIds:['M1A2'],note:'Registry profiles are isolated immutable snapshots. Combat archive catalogs are not imported as active runtime profiles.'},null,2)+'\n');
 
 const art=require('../src/m1a2-art.js'),svg=art.toSVG();
 fs.writeFileSync(path.join(sourceDir,'M1A2_top_view.svg'),svg);

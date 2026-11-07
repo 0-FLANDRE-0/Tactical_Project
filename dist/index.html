@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP07B</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP08</title>
 <style>
 :root{
   color-scheme:dark;
@@ -873,11 +873,16 @@ footer{
 
 #targetOwnStatus{font-size:10px;color:#a7d1cc;line-height:1.5}
 
+/* WIP08 manual firing controls */
+.command:disabled{opacity:.4;cursor:default}.command.fire:not(:disabled){color:#ffdfa0;border-color:#bd9b5d}
+.look-title{flex-wrap:wrap;gap:6px}#fireState{color:#f2d496}#fireDetails,#shotDetails{font-size:10px;line-height:1.6;color:#d9ceaa}
+@media(max-width:600px){.dock{gap:2px;padding:4px}.command{min-width:42px;padding:7px 5px;font-size:9px}}
+
 </style>
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP07B</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP08</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -887,7 +892,7 @@ footer{
 <div class="map-tools"><div class="north">N</div><button id="zoomIn" aria-label="지도 확대"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button><button id="zoomOut" aria-label="지도 축소"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/></svg></button></div>
 <div class="visibility-key"><b>선택 전차의 관측 범위</b><div class="keys"><span><i class="dot" style="background:#8bedd0"></i> 보이는 곳</span><span><i class="dot" style="background:#d89579"></i> 가려진 곳</span></div><div class="note" id="sightNote">지형 가능 영역 · 실제 탐지와 다름<br>주변 200m · 전차장 2500m · 포수 2000m</div></div>
 <section class="look-panel" aria-label="관측 명령">
-<div class="look-title">관측 <output id="lookStatus">자동 경계</output></div>
+<div class="look-title">관측 <output id="lookStatus">자동 경계</output><output id="fireState">표적 미확보</output></div>
 <div class="look-controls"><select id="lookChannel" aria-label="제어할 관측 장비"><option value="commander">전차장</option><option value="gunner">포수</option></select><button id="lookDirection" aria-pressed="false" title="지도에서 경계할 지점 지정 · L">지점 경계</button><label class="look-duration">유지 <select id="lookDuration" aria-label="지점 경계 유지 시간"><option value="0" selected>해제까지</option><option value="5">5초</option><option value="10">10초</option><option value="30">30초</option></select></label><button id="lookResume">자동 경계</button></div>
 <p>전차장과 포수 개별 제어 · Esc는 입력만 취소</p>
 <p id="equipmentStatus"></p><p>인계: <output id="designationStatus">없음</output> <button id="cancelDesignation">인계 취소</button></p>
@@ -901,11 +906,12 @@ footer{
 <button class="command" id="reverse" aria-pressed="false" title="후진 이동 · R"><svg viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></svg><span>후진</span></button>
 <button class="command" id="stop" title="정지 · X"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><span>정지</span></button><div class="dock-sep"></div>
 <button class="command sight" id="sight" aria-pressed="false" aria-label="누르는 동안 선택 전차 시야 표시" title="누르는 동안 시야 표시 · V"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>시야 · 홀드</span></button>
+<button class="command fire" id="fire" disabled aria-label="선택 표적 단발 발사" title="조준 완료 후 선택 표적에 단발 발사 · G"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path d="M12 2v6m0 8v6M2 12h6m8 0h6"/></svg><span>발사 · G</span></button>
 <button class="command active" id="contours" aria-pressed="true" title="등고선 표시"><svg viewBox="0 0 24 24"><path d="m2 18 5-6 4 3 5-10 6 13M3 21h18M8 9l3-5 3 2"/></svg><span>등고선</span></button>
 </nav></main>
 <aside class="sidebar">
 <div class="section-label"><span>기동 분대</span><span class="count">02</span></div><div class="roster" id="roster"></div>
-<div class="selected-heading"><div class="eyebrow" style="color:#9db48e">SELECTED VEHICLE</div><h2 id="unitName">ALPHA 11</h2><p>M1A2 Abrams · 120mm M256</p></div>
+<div class="selected-heading"><div class="eyebrow" style="color:#9db48e">SELECTED VEHICLE</div><h2 id="unitName">ALPHA 11</h2><p id="unitType">M1A2 Abrams · 120mm M256</p></div>
 <div class="tank-profile" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="-5 -2.5 12 5" role="img" aria-label="M1A2 Abrams top view"><title>M1A2 Abrams · top view</title><desc>Original vector interpretation based on US Army DVIDS 3055956. Planform traced from USMC MCWP 3-12 A-3; blunt turret face, bustle rack, side skirts, engine-deck grilles, CITV, GPS, hatches and M256. Exterior detail is approximate.</desc><g stroke-linejoin="round" stroke-linecap="round"><g transform="rotate(0)"><path d="M-3.9624 -1.7888Q-3.9624 -1.8288 -3.9224 -1.8288H3.9224Q3.9624 -1.8288 3.9624 -1.7888V1.7888Q3.9624 1.8288 3.9224 1.8288H-3.9224Q-3.9624 1.8288 -3.9624 1.7888Z" fill="#69745a" stroke="#384633" stroke-width="0.045"/>
 <path d="M-3.92 -1.8h6.32v0.75h-6.32Z" fill="#727d61" stroke="#44503a" stroke-width="0.028"/>
 <path d="M-3.88 -1.765H2.36" fill="none" stroke="#a0a98a" stroke-width="0.022"/>
@@ -1059,11 +1065,11 @@ footer{
 <path d="M0.6 -0.78h0.08000000000000007v0.21000000000000008h-0.08000000000000007Z" fill="#243b3d" stroke="#384633" stroke-width="0.018"/></g></g></svg></div>
 <div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
 <div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">차체 방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
-<details class="vehicle-specs"><summary>M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>사격·탄종·장갑 판정은 후속 구현.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
+<details class="vehicle-specs"><summary id="profileTitle">M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>게임식 단발 발사·명중/부위 추첨 지원.<br>탄도·관통·피해·상세 장전은 후속 구현.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
-<div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
-<div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>실루엣은 미식별 · 흐린 잔상은 마지막 관측 기억.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY & OBSERVATION / WIP07B</div>
+<div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
+<div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>표적 탭 → 포수 직접 지정 → 조준 완료 후 발사/G.<br>실루엣은 미식별 · 흐린 잔상은 마지막 관측 기억.</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · FIRE / WIP08</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -1080,7 +1086,7 @@ const VEHICLE_PROFILES=(()=>{
   const mph=v=>v*.44704,inch=v=>v*.0254;
   const M1A2={
     id:'M1A2',name:'M1A2 Abrams',variant:'M1A2 기본형',crew:4,
-    massKg:69.54*907.18474,engineHp:1500,
+    artId:'M1A2',massKg:69.54*907.18474,engineHp:1500,
     model:{hullLength:inch(312),width:inch(144),overallLength:inch(387),roofHeight:inch(93.5),groundClearance:inch(19),barrelTip:inch(387)-inch(312)/2,turretLength:4.75,turretWidth:3.28,turretCenter:.15},
     mobility:{roadSpeed:mph(42),crossCountrySpeed:mph(30),reverseSpeed:mph(25),accelerationReferenceSpeed:mph(20),accelerationReferenceSeconds:7.2,brakeDeceleration:3,maxLongitudinalGrade:.60,maxSideGrade:.40,pivotRate:Math.PI/6,turretRate:40*Math.PI/180,
       gradeSpeedPoints:[[0,mph(42)],[.10,mph(17)],[.60,mph(4.1)]],
@@ -1093,13 +1099,40 @@ const VEHICLE_PROFILES=(()=>{
       tuning:{queryPeriod:.1,geometryMaxAge:.5,detectThreshold:[.35,1.1],identifyThreshold:[1.4,3],
         evidenceHalfLife:8,memorySeconds:30,knowledgeSeconds:120,lossGrace:1.2,
         focusSeconds:2,focusLimit:8,revisitSeconds:12,designationSeconds:18,designationStale:6,acquireSeconds:.4}},
-    weapons:{mainGun:{name:'M256',calibreMm:120,ammunitionCapacity:42,referenceEngagementRange:3000,enabled:false},coax:{name:'M240',calibreMm:7.62},commander:{name:'M2',calibreMm:12.7}},
+    weapons:{mainGun:{name:'M256',calibreMm:120,ammunitionCapacity:42,referenceEngagementRange:3000,enabled:true},coax:{name:'M240',calibreMm:7.62},commander:{name:'M2',calibreMm:12.7}},
+    // Fictional game tuning, not measured real fire-control/ballistic data.
+    fireControl:{enabled:true,aimSeconds:1.2,alignmentTolerance:1.5*Math.PI/180,
+      maxRange:2000,fireHeight:2.2,shotIntervalSeconds:1,testRounds:42,
+      accuracyNear:.88,accuracyFar:.55,selfMotionPenalty:.35,targetMotionPenalty:.25,
+      motionReference:20,zoneWeights:{hull:.65,turret:.35}},
     exposure:{hullAlong:[-2.8,0,2.8],hullHeights:[.80,1.40],turretAlong:[-1,0,1],turretHeight:2.20},
     navigation:{clearanceMargin:.25,contract:'nav16-M1A2-r4.62-long0.60-side0.40-v2'}
   };
   M1A2.navigation.radius=Math.ceil((Math.hypot(M1A2.model.hullLength/2,M1A2.model.width/2)+M1A2.navigation.clearanceMargin)*100)/100;
+  function clone(o){if(Array.isArray(o))return o.map(clone);if(o&&typeof o==='object')return Object.fromEntries(Object.entries(o).map(([k,v])=>[k,clone(v)]));return o;}
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
-  return freeze({M1A2});
+  function createRegistry(entries){
+    const profiles=Object.create(null);
+    for(const input of entries){
+      const p=clone(input),id=p?.id;
+      if(typeof id!=='string'||!/^[A-Z][A-Z0-9_]*$/.test(id))throw Error('잘못된 차량 프로파일 ID');
+      if(Object.hasOwn(profiles,id))throw Error('중복 차량 프로파일: '+id);
+      if(p.artId!=='M1A2')throw Error('지원하지 않는 차량 도안: '+p.artId);
+      for(const section of ['model','mobility','sensors','navigation','exposure','fireControl','weapons'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
+      const f=p.fireControl;
+      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','motionReference'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
+      for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty'])if(!Number.isFinite(f[field])||f[field]<0||f[field]>1)throw Error('확률 프로파일 값 오류: '+id+'.'+field);
+      if(!Number.isInteger(f.testRounds)||f.zoneWeights.hull<0||f.zoneWeights.turret<0||!Number.isFinite(f.zoneWeights.hull+f.zoneWeights.turret)||f.zoneWeights.hull+f.zoneWeights.turret<=0)throw Error('시험탄/구역 가중치 오류: '+id);
+      profiles[id]=freeze(p);
+    }
+    const ids=Object.freeze(Object.keys(profiles));
+    const registry=Object.freeze({ids:()=>ids,list:()=>ids.map(id=>profiles[id]),has:id=>Object.hasOwn(profiles,id),
+      get(id){if(!Object.hasOwn(profiles,id))throw Error('등록되지 않은 차량: '+id);return profiles[id];},create:createRegistry});
+    // Preserve the legacy M1A2 lookup for old tools/oracle; runtime uses registry.
+    Object.defineProperty(profiles,'registry',{value:registry,enumerable:false});
+    return Object.freeze(profiles);
+  }
+  return createRegistry([M1A2]);
 })();
 if(typeof module!=='undefined')module.exports=VEHICLE_PROFILES;
 
@@ -1248,7 +1281,7 @@ const TacticalObservation=(()=>{
         }
         if(c.detected){
           c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,barrelTip:tp.model.barrelTip,turretCenter:tp.model.turretCenter}};
-          const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};
+          const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};c.gunnerExposure=result.gunner?{hull:result.gunner.hull,turret:result.gunner.turret}:{hull:0,turret:0};
           if(c.identified&&identify>0){c.known={name:target.name,type:tp.name};c.knowledgeAt=now;}
         }
       }
@@ -1354,6 +1387,114 @@ const TacticalObservation=(()=>{
 if(typeof module!=='undefined')module.exports=TacticalObservation;
 
 </script>
+<script id="fire-control">
+'use strict';
+/* Abstract video-game firing states and independent hit/part rolls. No real
+ * fire-control solution, projectile trajectory, armour penetration or damage. */
+const TacticalFireControl=(()=>{
+  const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
+  function random(text,seed){let n=(2166136261^seed^0x51f15e)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
+  const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
+  function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
+  function init(u,p){
+    return u.fireControl??={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,ammo:p.fireControl.testRounds,
+      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0};
+  }
+  function distribution(observer,pose,exposure,f){
+    const result=Object.fromEntries(zones.map(z=>[z,0])),hull=clamp(exposure.hull,0,1)*f.zoneWeights.hull,turret=clamp(exposure.turret,0,1)*f.zoneWeights.turret,total=hull+turret;
+    if(!(total>0))return result;
+    const incoming=Math.atan2(observer.y-pose.y,observer.x-pose.x);
+    function group(prefix,heading,amount){
+      const a=diff(incoming,heading),front=Math.max(0,Math.cos(a)),side=Math.abs(Math.sin(a)),rear=Math.max(0,-Math.cos(a)),sum=front+side+rear;
+      result[prefix+'Front']=amount/total*front/sum;result[prefix+'Side']=amount/total*side/sum;result[prefix+'Rear']=amount/total*rear/sum;
+    }
+    group('hull',pose.heading,hull);group('turret',pose.turret,turret);
+    // Upper is reserved: there is no elevation/top-attack model in this stage.
+    return result;
+  }
+  function estimate(observer,pose,exposure,f,targetMotion=0){
+    const distance=Math.hypot(pose.x-observer.x,pose.y-observer.y),weight=f.zoneWeights.hull+f.zoneWeights.turret;
+    const visible=(clamp(exposure.hull,0,1)*f.zoneWeights.hull+clamp(exposure.turret,0,1)*f.zoneWeights.turret)/weight;
+    const accuracy=f.accuracyNear+(f.accuracyFar-f.accuracyNear)*clamp(distance/f.maxRange,0,1);
+    const own=1-f.selfMotionPenalty*clamp(Math.abs(observer.speed||0)/f.motionReference,0,1),moving=1-f.targetMotionPenalty*clamp(targetMotion/f.motionReference,0,1);
+    return{hitChance:distance<=f.maxRange?clamp(accuracy*own*moving*visible,0,1):0,zoneProbabilities:distribution(observer,pose,exposure,f)};
+  }
+  function resolve(hitChance,probabilities,hitRoll,zoneRoll){
+    if(!(hitRoll<hitChance))return{hit:false,zone:null};
+    let cumulative=0,last=null;for(const z of zones){if(probabilities[z]>0)last=z;cumulative+=probabilities[z];if(zoneRoll<cumulative)return{hit:true,zone:z};}
+    return last?{hit:true,zone:last}:{hit:false,zone:null};
+  }
+  function create({profileOf,freshSight,seed=7}){
+    const events=[];
+    function inspect(u,now){
+      const p=profileOf(u),f=p.fireControl,s=init(u,p),d=mission(u),c=d?u.observation.contacts[d.target]:null;
+      if(!f.enabled||!p.weapons.mainGun.enabled||!p.sensors.gunner.enabled)return{reason:'disabled'};
+      if(!d)return{reason:'no-target'};
+      if(d.status!=='acquired')return{reason:'not-acquired',d,c};
+      if(!c?.identified||!c.enemyConfirmed)return{reason:'unidentified',d,c};
+      if(!c.sources.gunner.current||now-c.sources.gunner.lastSeen>p.sensors.tuning.queryPeriod+1e-6||!c.pose)return{reason:'own-sight-lost',d,c};
+      const distance=Math.hypot(c.pose.x-u.x,c.pose.y-u.y);
+      if(distance>f.maxRange||distance>p.sensors.gunner.range)return{reason:'range',d,c};
+      const error=Math.abs(diff(Math.atan2(c.pose.y-u.y,c.pose.x-u.x),u.turret));
+      if(error>f.alignmentTolerance)return{reason:'aligning',d,c};
+      if(s.ammo<=0)return{reason:'out-of-ammo',d,c};
+      if(now<s.nextShotAt)return{reason:'interval',d,c};
+      return{reason:null,d,c};
+    }
+    function step(units,dt,now){
+      for(const u of units){
+        const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
+        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.aimElapsed=0;s.aimProgress=0;s.previousSample=null;s.targetMotion=0;}
+        if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
+          const previous=s.previousSample;
+          if(previous&&c.sources.gunner.lastSeen>previous.time)s.targetMotion=Math.hypot(c.pose.x-previous.x,c.pose.y-previous.y)/(c.sources.gunner.lastSeen-previous.time);
+          s.previousSample={x:c.pose.x,y:c.pose.y,time:c.sources.gunner.lastSeen};
+        }
+        if(check.reason){s.status=check.reason==='interval'?'interval':check.reason==='aligning'?'aligning':'blocked';if(check.reason==='no-target')s.status='no-target';s.reason=check.reason;s.aimElapsed=0;s.aimProgress=0;s.hitChance=null;s.zoneProbabilities=null;}
+        else{
+          s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
+          s.status=s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=null;
+          const ex=c.gunnerExposure||{hull:0,turret:0},preview=estimate(u,c.pose,ex,f,s.targetMotion);s.hitChance=preview.hitChance;s.zoneProbabilities=preview.zoneProbabilities;
+        }
+        if(!s.pending)continue;
+        const request=s.pending;s.pending=null;
+        if(s.status!=='ready'||request.key!==s.targetKey){s.lastRejection=check.reason||'target-changed';continue;}
+        // A fire command must recheck its own current range/FOV/terrain samples;
+        // an old 10Hz contact or team knowledge cannot authorize a shot.
+        const sight=freshSight(u,d.target);
+        if(!sight?.visible){s.status='blocked';s.reason=sight?.reason||'fresh-sight-failed';s.aimElapsed=0;s.aimProgress=0;s.lastRejection=s.reason;s.hitChance=null;s.zoneProbabilities=null;continue;}
+        const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
+        if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';s.aimElapsed=0;s.aimProgress=0;s.hitChance=null;s.zoneProbabilities=null;continue;}
+        const chance=estimate(u,pose,sight,f,s.targetMotion),number=s.shotCount+1;
+        const result=resolve(chance.hitChance,chance.zoneProbabilities,random(u.id+':'+number+':hit',seed),random(u.id+':'+number+':zone',seed));
+        const shot={id:u.id+'-shot-'+number,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:d.source,
+          origin:{x:u.x+Math.cos(u.turret)*p.model.barrelTip,y:u.y+Math.sin(u.turret)*p.model.barrelTip},
+          targetPose:{x:pose.x,y:pose.y,heading:pose.heading,turret:pose.turret},...chance,...result,ammoRemaining:s.ammo-1};
+        events.push(shot);if(events.length>200)events.shift();s.shotCount=number;s.ammo--;s.lastShot=shot;s.nextShotAt=now+f.shotIntervalSeconds;s.aimElapsed=0;s.aimProgress=0;s.status='interval';s.reason='interval';
+      }
+    }
+    function request(u,key,now){
+      const s=init(u,profileOf(u)),check=inspect(u,now);
+      if(s.pending)return{ok:false,reason:'pending'};
+      if(check.reason||s.status!=='ready'||key!==s.targetKey)return{ok:false,reason:check.reason||'not-ready'};
+      s.pending={key};return{ok:true};
+    }
+    function view(u,key=null){
+      const s=init(u,profileOf(u)),same=!key||key===s.targetKey;
+      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,ammo:s.ammo,pending:!!s.pending,
+        canFire:same&&s.status==='ready'&&!s.pending,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
+        shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
+    }
+    function cancel(u){const s=init(u,profileOf(u));s.pending=null;s.aimElapsed=0;s.aimProgress=0;s.status='blocked';s.reason='cancelled';s.hitChance=null;s.zoneProbabilities=null;}
+    const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
+    return{step,request,view,cancel,events:publicEvents};
+  }
+  return Object.freeze({create,init,estimate,distribution,resolve,zones:Object.freeze(zones)});
+})();
+if(typeof module!=='undefined')module.exports=TacticalFireControl;
+
+</script>
 <script id="sim-core">
 'use strict';
 /* Metres / seconds / radians. Fixed, measured terrain; UI never owns world state.
@@ -1366,7 +1507,8 @@ const TacticalCore = (() => {
   const WORLD = {w:M.width,h:M.height,step:2,nav:16};
   const PROFILE=VEHICLE_PROFILES.M1A2;
   const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
-  const profileOf=u=>u?.profileOverride||VEHICLE_PROFILES[u?.profileId||'M1A2'];
+  const registry=VEHICLE_PROFILES.registry;
+  const profileOf=u=>{const p=registry.get(u?.profileId??'M1A2');return u?.profileOverride||p;};
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const mix=(a,b,t)=>a+(b-a)*t;
   const angleDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
@@ -1570,9 +1712,10 @@ const TacticalCore = (() => {
     }
     return {ok:true,points:points.slice(1),visits,cost:dist[g]};
   }
-  function makeTank(id,name,x,y,heading,team='blue') {
-    const u={id,name,profileId:'M1A2',x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
-    TacticalObservation.init(u);return u;
+  function makeTank(id,name,x,y,heading,team='blue',profileId='M1A2') {
+    registry.get(profileId);
+    const u={id,name,profileId,x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
+    TacticalObservation.init(u);TacticalFireControl.init(u,profileOf(u));return u;
   }
   function legalNear(x,y,units=[]) {
     for(let r=0;r<150;r+=8) for(let a=0;a<Math.PI*2;a+=Math.PI/8) {
@@ -1635,15 +1778,33 @@ const TacticalCore = (() => {
     if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
     return observationRuntimes.get(s);
   }
-  function step(s,dt){s.time+=dt;for(const u of s.units)stepTank(u,dt,s.units);observationFor(s).advance(s.units,dt,s.time);}
+  function step(s,dt){s.time+=dt;for(const u of s.units)stepTank(u,dt,s.units);observationFor(s).advance(s.units,dt,s.time);fireFor(s).step(s.units,dt,s.time);}
   const contacts=(s,team='blue')=>observationFor(s).contacts(team);
   const guard=(s,u,ch,point,duration=0)=>!!profileOf(u).sensors[ch]?.enabled&&(ch!=='commander'||profileOf(u).sensors.commander.independent)&&TacticalObservation.guard(u,ch,point,duration,s.time);
   const resumeObservation=(s,u,ch)=>TacticalObservation.resume(u,ch,s.time);
   const designate=(s,u,key)=>observationFor(s).direct(u,key);
-  const cancelDesignation=(s,u)=>TacticalObservation.cancel(u,s.time);
+  const cancelDesignation=(s,u)=>{TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);};
   const observationView=(s,u,ch='commander')=>TacticalObservation.view(u,ch,s.time);
   const ownObservation=(s,u,key=null)=>observationFor(s).ownStatus(u,key);
   const observationStats=s=>({...observationFor(s).stats});
+  const fireRuntimes=new WeakMap();
+  function fireFor(s){
+    if(!fireRuntimes.has(s))fireRuntimes.set(s,TacticalFireControl.create({profileOf,seed:s.seed??7,freshSight:(u,id)=>{
+      const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'target-unavailable'};
+      const p=profileOf(u),sensor=p.sensors.gunner,optical=exposure(u,target,sensor.eyeHeight),weapon=p.fireControl.fireHeight===sensor.eyeHeight?optical:exposure(u,target,p.fireControl.fireHeight);
+      let hull=0,turret=0,gunnerVisible=false;
+      for(let i=0;i<optical.samples.length;i++){
+        const v=optical.samples[i],d=Math.hypot(v.x-u.x,v.y-u.y),angle=Math.abs(angleDiff(Math.atan2(v.y-u.y,v.x-u.x),u.turret));
+        if(!v.visible||d>sensor.range||angle>sensor.fov/2)continue;gunnerVisible=true;
+        if(weapon.samples[i].visible){if(v.part==='hull')hull++;else turret++;}
+      }
+      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret}};
+    }}));
+    return fireRuntimes.get(s);
+  }
+  const fireStatus=(s,u,key=null)=>fireFor(s).view(u,key);
+  const requestFire=(s,u,key)=>fireFor(s).request(u,key,s.time);
+  const fireEvents=(s,team='blue',since=-Infinity)=>fireFor(s).events(team,since);
   const roofGrid=new Float32Array(TH.columns*TH.rows);
   for(const b of buildings) for(let y=Math.max(0,Math.floor(b.minY/4));y<=Math.min(999,Math.floor(b.maxY/4));y++) for(let x=Math.max(0,Math.floor(b.minX/4));x<=Math.min(999,Math.floor(b.maxX/4));x++) {
     if(insideBuilding(x*4+2,y*4+2,b))roofGrid[y*1000+x]=Math.max(roofGrid[y*1000+x],b.roof);
@@ -1739,7 +1900,7 @@ const TacticalCore = (() => {
     for(const along of e.turretAlong)sample(along,e.turretHeight,target.turret??target.heading,'turret');
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,requestFire,fireEvents,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -2281,7 +2442,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA);
   let visibility=null,visibilityPath=null;
-  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','observation','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
+  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
   let sightRevision=0;
   function fitCamera(){
@@ -2352,6 +2513,14 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   $('lookResume').onclick=()=>{setLookPicking(false);C.resumeObservation(sim,selectedUnit(),$('lookChannel').value||'commander');updateUI();};
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{if(targetId&&C.designate(sim,selectedUnit(),targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
+  const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
+  function fireSelected(){
+    if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
+    if(!targetId){toast('관측 중인 표적을 먼저 탭해줘');return;}
+    const r=C.requestFire(sim,selectedUnit(),targetId);toast(r.ok?'단발 발사 입력':fireReasons[r.reason]||'현재 표적에 발사할 수 없음');updateUI();
+  }
+  $('fire').onclick=fireSelected;
   $('cancelDesignation').onclick=()=>{C.cancelDesignation(sim,selectedUnit());updateUI();};
   function select(id){
     setLookPicking(false);
@@ -2637,6 +2806,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
       }
       if(e.code==='KeyR'){setLookPicking(false);setReverse(!reverseMode);}
       if(e.code==='KeyX')C.stop(selectedUnit());
+      if(e.code==='KeyG'){e.preventDefault();fireSelected();}
       if(e.code==='KeyF')toggleFullscreen();
       if(e.code==='Home')fitCamera()
     }
@@ -2713,9 +2883,13 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   }
   function updateUI(){
     const u=selectedUnit();
+    const firing=C.fireStatus(sim,u,targetId),fireText=firing.status==='ready'?'조준 완료':firing.status==='aiming'?'조준 '+Math.round(firing.aimProgress*100)+'%':fireReasons[firing.reason]||'표적 미확보';
+    ui.setText($('fireState'),fireText+' · 시험탄 '+firing.ammo);
+    $('fire').disabled=paused||!targetId||!firing.canFire;
+    $('fire').setAttribute('aria-disabled',String($('fire').disabled));
     const look=lookView(),bearing=look.direction===null?null:((Math.round(look.direction*180/Math.PI)+90)%360+360)%360;
     ui.setText($('lookStatus'),look.mode==='fixed'?bearing+'° · '+(look.remaining===null?'해제까지':Math.ceil(look.remaining)+'초'):'자동 경계');
-    ui.setText($('unitName'),u.name);
+    ui.setText($('unitName'),u.name);updateVehicleSpecs(u);
     ui.setText($('velocity'),Math.round(u.speed*3.6));
     ui.setText($('motionState'),u.state);
     ui.setText($('elevation'),C.heightAt(u.x,u.y).toFixed(1)+' m');
@@ -2728,7 +2902,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     const dist=C.routeDistance(u);
     ui.setHTML($('routeInfo'),u.path.length?'<strong>'+(u.reverse?'후진':'이동')+' 경로</strong> · 남은 거리 '+Math.round(dist)+'m':'지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.');
     ui.setText($('clock'),'T+ '+String(Math.floor(sim.time/60)).padStart(2,'0')+':'+String(Math.floor(sim.time%60)).padStart(2,'0'));
-    ui.setText($('simState'),paused?'일시정지':'기동 시험');
+    ui.setText($('simState'),paused?'일시정지':'기동·관측·사격 시험');
     updateRoster($('roster').children,sim.units,selected);
     const own=C.ownObservation(sim,u),d=own,status={idle:'없음',designated:'지정 전달',waiting:'확보 대기',acquiring:'포수 확인 중',acquired:'포수 확보',expired:'지정 만료',cancelled:'지정 취소',lost:'표적 유지 해제'};
     ui.setText($('designationStatus'),(d.source==='gunner'?'포수 자체 · ':d.source==='commander'?'전차장 인계 · ':d.source==='manual'?'직접 지정 · ':'')+(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':'')+(own.pending?' · 후보 '+own.pending:''));
@@ -2741,6 +2915,11 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
       const ownTarget=C.ownObservation(sim,u,target.key),channelNames={ambient:'주변',commander:'전차장',gunner:'포수'};
       ui.setText($('targetOwnStatus'),'팀 '+(target.current?'관측':'기억')+' · 선택 차량 '+(ownTarget.current?ownTarget.channels.map(ch=>channelNames[ch]).join('/'):'자체 관측 없음')+' · '+(ownTarget.acquired?'포수 확보':'포수 미확보'));
       ui.setText($('targetDetails'),target.memory?'마지막 관측 '+target.age.toFixed(1)+'초 전 · '+(target.identified?target.type:'미식별 표적'):target.identified?target.type:'미식별 표적 · 상세정보 없음');
+      const fc=C.fireStatus(sim,u,target.key);
+      const probabilities=fc.zoneProbabilities;
+      ui.setText($('fireDetails'),(!target.identified||!target.current||fc.hitChance===null)?'발사: '+(fireReasons[fc.reason]||'현재 포수 표적 아님'):'예상 명중 '+Math.round(fc.hitChance*100)+'% · 명중 시 부위: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '));
+      const lastShot=target.identified&&fc.lastShot?.targetKey===target.key?fc.lastShot:null;
+      ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.hit?'명중 · '+zoneNames[lastShot.zone]:'빗나감')+' · 피해 판정 없음':'');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
       for(const part of ['hull','turret']){
         const value=target.identified&&target.current?Math.round((target.exposure?.[part]||0)*100)+'%':'—';
@@ -2748,8 +2927,12 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
       }
     }else targetId=null;
   }
-  const vehicle=C.PROFILE,model=vehicle.model,motion=vehicle.mobility;
-  $('vehicleSpecs').innerHTML=[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['0 → 32.2km/h',motion.accelerationReferenceSeconds+' 초'],['관측 기준 높이','CITV '+vehicle.sensors.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 200 / 전차장 2500 / 포수 2000 m'],['시야각 · 선회','전차장 90° · 50°/s / 포수 30° · 40°/s'],['주포 교전 기준','3,000 m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join('');
+  function updateVehicleSpecs(u){
+    const vehicle=C.profileOf(u),model=vehicle.model,motion=vehicle.mobility,s=vehicle.sensors,degrees=r=>Math.round(r*180/Math.PI);
+    ui.setText($('unitType'),vehicle.name+' · '+vehicle.weapons.mainGun.calibreMm+'mm '+vehicle.weapons.mainGun.name);
+    ui.setText($('profileTitle'),vehicle.id+' 제원 · 적용값');
+    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
+  }
   for(const u of sim.units.filter(u=>u.team==='blue')){
     const b=document.createElement('button');
     b.className='unit-card';
@@ -2779,7 +2962,8 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
       ctx.fillStyle='#e0edb5';ctx.beginPath();ctx.moveTo(0,-ring-3);ctx.lineTo(-4,-ring-9);ctx.lineTo(4,-ring-9);ctx.fill();
     }
     if(u.key&&u.key===targetId){ctx.strokeStyle='#ffd19b';ctx.lineWidth=1.5;ctx.strokeRect(-ring,-ring,ring*2,ring*2);}
-    M1A2Art.draw(ctx,u,z,model,{silhouette:unknown});
+    const artId=enemy?'M1A2':C.profileOf(u).artId;
+    ({M1A2:M1A2Art})[artId].draw(ctx,u,z,model,{silhouette:unknown});
     if(!enemy&&isSelected){
       ctx.save();ctx.rotate(u.commander);ctx.strokeStyle='#93e9f0';ctx.fillStyle='#93e9f0';ctx.lineWidth=2;
       ctx.beginPath();ctx.moveTo(ring+3,0);ctx.lineTo(ring+19,0);ctx.stroke();
@@ -2788,6 +2972,14 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     if(z<1){ctx.fillStyle=unknown?'#050505':enemy?'#eab17c':'#a5e1c5';ctx.strokeStyle='#253c30';ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fill();ctx.stroke();}
     ctx.font='600 10px ui-monospace,monospace';ctx.textAlign='center';const text=enemy?u.label+(u.memory?' · 기억':''):u.name,tw=ctx.measureText(text).width,labelY=ring+7;
     ctx.fillStyle='#12271fe8';ctx.fillRect(-tw/2-5,labelY,tw+10,17);ctx.fillStyle=enemy?'#f0bd86':'#e3edcc';ctx.fillText(text,0,labelY+12);ctx.restore();
+  }
+  function drawShots(){
+    for(const shot of C.fireEvents(sim,'blue',sim.time-1.2)){
+      const age=sim.time-shot.time;if(age<0||age>1.2)continue;
+      const a=toScreen(shot.origin.x,shot.origin.y),b=toScreen(shot.targetPose.x,shot.targetPose.y);
+      ctx.save();ctx.globalAlpha=Math.max(0,1-age/1.2);ctx.strokeStyle=shot.hit?'#ffe5a0':'#dfaa88';ctx.lineWidth=2;ctx.setLineDash(shot.hit?[]:[4,5]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      ctx.fillStyle='#fff1bd';ctx.beginPath();ctx.arc(a.x,a.y,Math.max(2,7*(1-age/1.2)),0,Math.PI*2);ctx.fill();ctx.font='600 11px system-ui';ctx.fillText(shot.hit?'명중 · '+zoneNames[shot.zone]:'빗나감',b.x,b.y-20);ctx.restore();
+    }
   }
   function drawRoute(u){
     if(!u.path.length)return;
@@ -2893,6 +3085,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     for(const u of sim.units)if(u.team==='blue')drawRoute(u);
     for(const u of sim.units)if(u.team==='blue')drawTank(u);
     for(const contact of C.contacts(sim))drawTank(contact);
+    drawShots();
     ctx.strokeStyle='#e3e6c155';
     ctx.lineWidth=1;
     ctx.strokeRect(p.x,p.y,ww,hh);
@@ -2946,8 +3139,8 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP07B',core:C,snapshot:()=>JSON.parse(JSON.stringify({
-      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView()
+    version:'0.4-WIP08',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView(),firing:C.fireStatus(sim,selectedUnit(),targetId),shots:C.fireEvents(sim,'blue')
     }
     )),command:(x,y,reverse=false)=>{
       setReverse(reverse);
@@ -2956,7 +3149,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
       }
       ,reverse,sim.units)
     }
-    ,select,own:(key)=>C.ownObservation(sim,selectedUnit(),key),contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen
+    ,select,fire:()=>{if(paused||!targetId)return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},own:(key)=>C.ownObservation(sim,selectedUnit(),key),contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen
   }
   ;
 }

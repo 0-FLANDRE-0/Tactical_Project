@@ -4,6 +4,7 @@
     "name": "M1A2 Abrams",
     "variant": "M1A2 기본형",
     "crew": 4,
+    "artId": "M1A2",
     "massKg": 63085.62681960001,
     "engineHp": 1500,
     "model": {
@@ -114,7 +115,7 @@
         "calibreMm": 120,
         "ammunitionCapacity": 42,
         "referenceEngagementRange": 3000,
-        "enabled": false
+        "enabled": true
       },
       "coax": {
         "name": "M240",
@@ -123,6 +124,24 @@
       "commander": {
         "name": "M2",
         "calibreMm": 12.7
+      }
+    },
+    "fireControl": {
+      "enabled": true,
+      "aimSeconds": 1.2,
+      "alignmentTolerance": 0.02617993877991494,
+      "maxRange": 2000,
+      "fireHeight": 2.2,
+      "shotIntervalSeconds": 1,
+      "testRounds": 42,
+      "accuracyNear": 0.88,
+      "accuracyFar": 0.55,
+      "selfMotionPenalty": 0.35,
+      "targetMotionPenalty": 0.25,
+      "motionReference": 20,
+      "zoneWeights": {
+        "hull": 0.65,
+        "turret": 0.35
       }
     },
     "exposure": {
@@ -280,11 +299,19 @@
       "value": 3000,
       "note": "Future engagement reference only; not a ballistic maximum and does not limit LOS"
     },
+    "artId": {
+      "status": "explicit artwork reference",
+      "note": "Vehicle registry IDs and artwork IDs are independent; this stage supports M1A2 artwork only"
+    },
+    "fireControl": {
+      "status": "fictional game tuning",
+      "note": "WIP08 abstract aim readiness, hit/conditional-zone rolls, 2.2m game firing viewpoint, test rounds and one-second anti-repeat interval. Not measured M1A2 fire control, ballistics or real weapon accuracy."
+    },
     "weapons.mainGun.ammunitionCapacity": {
       "status": "published capacity only",
       "source": "GDLS",
       "value": 42,
-      "note": "No ammo split, reload, damage, penetration or firing implemented"
+      "note": "Test-round counter and abstract manual firing active; no ammo split, loading transport, ballistic/penetration/damage model"
     },
     "exposure": {
       "status": "game geometry samples",
@@ -299,6 +326,6 @@
   "limits": [
     "Mass and engine rating are profile metadata, not a full powertrain simulation",
     "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
-    "No SEP armour values or specific ammunition performance are inferred"
+    "No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities"
   ]
 }

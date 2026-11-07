@@ -1,15 +1,15 @@
-# TACTICAL v0.4 WIP07B — 판정 유지 LOS 최적화
+# TACTICAL v0.4 WIP08 — 프로파일 레지스트리·조준·단발 발사
 
-WIP07A `e9f037c`의 관측 규칙을 유지하며 32m 지형·건물·숲 상한으로 확실히 빈 구간만 생략하는 LOS 가속을 추가했다. 실제 지도와 원본 코어의 판정을 정확히 대조하고, 정지·이동 50/100대 최종 상태가 같은지 별도 프로세스로 확인했다. 기존 PR #3 브랜치를 이어서 작업하며 main의 추가 설계 아카이브는 보존했다. 지도·기동 반경·길찾기 계약은 유지한다.
+최신 main `a832a89`의 아카이브 변경을 확인하고 WIP07B 관측/LOS 기반에 표적 확보 → 실제 포탑 정렬 → 조준 완료 → 수동 단발 발사를 연결했다. 명중 여부와 명중 시 부위를 별도 게임 확률로 계산한다. M1A2 프로파일은 불변 ID 레지스트리에 보관하며 차량별 조준·시험탄 상태와 분리한다. 지도·차량 반경·길찾기 계약은 유지한다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07B.zip). 압축을 풀면 `Tactical_v0.4_WIP07B.html` 한 파일이 나온다.
-- 현재 단일 실행 파일: [Tactical_v0.4_WIP07B.html](Tactical_v0.4_WIP07B.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [LOS 최적화](docs/LOS_OPTIMIZATION_WIP07B.md) · [관측 설정](docs/OBSERVATION_WIP07A.md) · [릴리스·검증 결과](TACTICAL_RELEASE_WIP07B.md) · [SHA-256](SHA256SUMS_WIP07B.txt).
-- WIP06/WIP07/WIP07A 실행 파일·ZIP·과거 검증과 archive는 보존했다. [이전 릴리스 기록](TACTICAL_RELEASE_WIP06.md)은 과거 기준선이다.
+- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip08-aim-fire/Tactical_v0.4_WIP08.zip). 압축을 풀면 `Tactical_v0.4_WIP08.html` 한 파일이 나온다.
+- 현재 단일 실행 파일: [Tactical_v0.4_WIP08.html](Tactical_v0.4_WIP08.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [사격 상태·초깃값·레지스트리](docs/FIRE_CONTROL_WIP08.md) · [관측 설정](docs/OBSERVATION_WIP07A.md) · [릴리스·검증](TACTICAL_RELEASE_WIP08.md) · [SHA-256](SHA256SUMS_WIP08.txt).
+- 이전 실행 파일·ZIP·검증 자료와 archive는 보존했다. WIP07B PR #3은 앞선 사용자 요청으로 main에 병합되었다. 이번 WIP08은 별도 검토 브랜치이며 main 병합·공개 배포하지 않는다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07B.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP07B.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip08-aim-fire/Tactical_v0.4_WIP08.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP08.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -19,6 +19,7 @@ WIP07A `e9f037c`의 관측 규칙을 유지하며 32m 지형·건물·숲 상한
 - 관측 표적 탭: 미식별 실루엣은 일반 정보만, 식별한 현재 접촉은 차종·부위 관측 비율을 표시한다. 흐린 잔상은 마지막 관측 위치다.
 - 전차장/포수 선택 → 지점 경계(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 자동 경계 버튼으로 해당 명령 해제. Esc는 새 입력만 취소한다.
 - 표적 패널의 포수 직접 지정과 인계 취소를 사용할 수 있다. 지정 전달과 포수 확보는 별도 상태다.
+- 표적 탭 → 필요하면 포수 직접 지정 → 자체 확보/조준 완료 → **발사 버튼 또는 G**. 단발 명중/부위 결과와 시험탄 수를 표시한다. 맞아도 피해/파괴는 아직 없다.
 - Space: 일시정지. R: 후진 모드. X: 정지. F: 전체화면. Home: 전체 지도.
 - 전체화면 요청이 거절되거나 지원되지 않으면 지도 집중 모드로 전환한다.
 
@@ -56,7 +57,7 @@ WIP07A `e9f037c`의 관측 규칙을 유지하며 32m 지형·건물·숲 상한
 - 홀드 표시: 지면 위 1.5m 표적 기준. 720개 기본 방위와 건물 윤곽 방향의 추가 가시선(총 최대 1,980개)을 따라 2m 간격으로 지형·지붕 수평선을 계산한다. 숲은 시선 높이에 따른 광학 깊이로 누적한다. 4m 거리 표본 사이의 가시 경계를 보간·연결해 벡터 폐곡선으로 표시한다. 25m 표시 격자는 제거했다.
 - 능선이나 건물 바로 뒤가 가려져도, 더 먼 높은 지형이 다시 보이면 별도의 가시 영역으로 남는다. 숲 위를 지나는 시선도 구분한다.
 - 시야 영역은 화면용 근사치다. 차체·포탑 노출 판정은 기존의 개별 가시선을 계속 사용한다. 경계나 얇은 구조물 부근은 두 판정의 표본 차이가 남을 수 있다.
-- 차체·포탑: 각각 6개/3개 높이 표본. 현재는 관측 비율만 제공한다.
+- 차체·포탑: 각각 6개/3개 높이 표본. 관측 비율과 단발의 게임 노출 가중치에 사용한다.
 
 길찾기 캐시는 전장 revision hash와 차량 반경·경사 한계·격자 규격 계약에 묶인다. 지도나 계약이 달라지면 다시 제작해야 한다. 고정 지도에서 매 실행마다 전체 연결을 재계산하는 비용을 없앴다.
 
@@ -68,7 +69,7 @@ WIP07A `e9f037c`의 관측 규칙을 유지하며 32m 지형·건물·숲 상한
 - 도로 67.6km/h, 야지 48.3km/h 상한. 후진 40.2km/h는 같은 계열·SEP 교범에서 가져온 가정이다. 실제 속도는 지표·경사·선회·감속에 따라 달라진다.
 - 평지에서 0→20mph(32.2km/h) 7.2초를 맞춘 단순 가속 모델이다. 질량·출력은 프로파일에 기록하되 정밀 구동계 물리를 주장하지 않는다.
 - 관측점은 사용자가 지정한 **전차장 CITV 수준, 지면 위 2.65m**다. 광학축 높이는 공개 실측치를 확인하지 못해 외형 근사로 분류했다. 포수 조준경 시점으로 바꾸지 않는다.
-- 관측은 주변 **200m/360°(실루엣까지만)**, 전차장 **2500m/90°**, 포수 **2000m/30°**다. 실제 선회는 전차장 50°/s, 포탑 40°/s이며 프로파일 게임 설정이다. 4km는 표시용 기하 조회 상한, 3km는 비활성 주포 메타데이터다.
+- 관측은 주변 **200m/360°(실루엣까지만)**, 전차장 **2500m/90°**, 포수 **2000m/30°**다. 실제 선회는 전차장 50°/s, 포탑 40°/s이며 프로파일 게임 설정이다. 4km는 표시용 기하 조회 상한, 3km는 주포 참고 메타데이터이고 이번 시험 사격은 2km 한도다.
 - 이동은 60% 종방향·40% 횡방향 경사를 구분한다. 60도/40도가 아니다. 차체 여유 반경 4.62m에 맞춰 길찾기 캐시를 다시 제작했다.
 - 상부 외형은 미 육군 DVIDS 3055956 사진으로 장비 배치를 확인하고, USMC의 M1A1 공통 차체·포탑 도면과 동일 축척으로 비교했다. M1A1 도면을 M1A2의 정확한 세부 도면으로 취급하지 않는다.
 - WIP05: 상부 외곽을 USMC A-3 평면도에 동일 축척으로 겹쳐 다시 그렸다. 포탑 전면은 포방패 옆이 거의 횡방향인 뭉툭한 면과 짧은 사선 측면으로 바꿨고(이전의 뾰족한 화살촉형 제거), 도면대로 좌측(장전수) 측면 사선이 우측보다 길다. 포탑 본체 길이 4.75m, 수납함 포함 폭 3.28m, 뒤 바스켓 포함 약 5.30m는 **외형 근사값**이다.
@@ -84,10 +85,11 @@ WIP07A `e9f037c`의 관측 규칙을 유지하며 32m 지형·건물·숲 상한
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP07B.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP08.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
-| `src/vehicle-profiles.js` | M1A2 기본형의 치수·기동·관측·무장 메타데이터 |
+| `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
+| `src/fire-control.js` | 자체 확보·정렬·조준·단발 명중/조건부 부위 판정과 팀별 이벤트 |
 | `src/m1a2-art.js` | 독립 차체·포탑 벡터 도안과 SVG 내보내기 |
 | `src/visibility-client.js` | 내장 시야 Worker와 오류 시 동일 계산 대체 실행 |
 | `data/vehicles/` | 적용값·필드별 근거·외형 SVG·참고 자료 |
@@ -115,11 +117,11 @@ WIP07A `e9f037c`의 관측 규칙을 유지하며 32m 지형·건물·숲 상한
 ```sh
 node scripts/export_vehicle_profile.cjs
 python3 build.py
-python3 scripts/package_release.py WIP07B
+python3 scripts/package_release.py WIP08
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
@@ -165,9 +167,9 @@ node tests/vehicle.test.cjs
 
 ## 현재 범위
 
-이번 버전은 실제 지도와 기동·관측을 연결한 기반이다. 사격·관통·장갑·피해·보병은 활성 기능에 포함하지 않았다. 관측 표적은 이동·사격하지 않는다.
+이번 버전은 실제 지도와 기동·관측·수동 단발 사격을 연결한 시험장이다. 표적 확보와 조준 완료를 구분하고 게임 명중/부위를 기록한다. 적 전술 AI·자동 사격·관통·장갑·피해·상세 장전·보병은 구현하지 않았다. 기본 적 표적은 정지 상태다.
 
-향후 전투는 합의한 물리 조건 기반 확률 모델로 추가한다. 차체·포탑의 노출률과 각 방향의 대표 방호값을 사용하고, 세부 부위를 나중에 확장할 수 있도록 한다. 실제 탄퍼짐 원이나 정밀 탄체 충돌을 이번 지형 작업에 추가하지 않았다.
+명중과 조건부 부위 선택은 현재 관측 노출과 실제 방향을 사용하는 추상 게임 모델이다. 사통장치 수치는 시험용 튜닝이며 실차 성능 재현값이 아니다. archive의 차량/탄약/장갑 설계는 런타임에 자동 적용하지 않는다. 상세 범위와 초깃값은 WIP08 상태 문서에 기록했다. Node 187개·실제 Chromium 14개·구문 41개/2개를 통과했다. file:// 실행은 환경 정책으로 차단되어 같은 HTML을 로컬 HTTP로 검증했다.
 
 ## 출처
 
