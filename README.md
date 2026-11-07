@@ -1,15 +1,15 @@
-# TACTICAL v0.4 WIP07A — 방향별 관측·접촉·독립 선회
+# TACTICAL v0.4 WIP07B — 판정 유지 LOS 최적화
 
-WIP07 `a2dd770`에서 관측을 보정했다. 시작 시 main `c99a21c`와 마무리 시 main `09580a3`의 별도 설계 아카이브 변경은 기존 PR #3 브랜치에 동기화해 보존했다. 실제 전차장/포탑 선회, 주변·전차장·포수 관측, 탐지/식별과 기억, 자동/지점 경계, 헌터킬러 지정 전달과 포수 자체 확보가 작동한다. 지도·기동 반경·길찾기 계약은 유지한다.
+WIP07A `e9f037c`의 관측 규칙을 유지하며 32m 지형·건물·숲 상한으로 확실히 빈 구간만 생략하는 LOS 가속을 추가했다. 실제 지도와 원본 코어의 판정을 정확히 대조하고, 정지·이동 50/100대 최종 상태가 같은지 별도 프로세스로 확인했다. 기존 PR #3 브랜치를 이어서 작업하며 main의 추가 설계 아카이브는 보존했다. 지도·기동 반경·길찾기 계약은 유지한다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07A.zip). 압축을 풀면 `Tactical_v0.4_WIP07A.html` 한 파일이 나온다.
-- 현재 단일 실행 파일: [Tactical_v0.4_WIP07A.html](Tactical_v0.4_WIP07A.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [구현 상태와 튜닝값](docs/OBSERVATION_WIP07A.md) · [릴리스·검증 결과](TACTICAL_RELEASE_WIP07A.md) · [SHA-256](SHA256SUMS_WIP07A.txt).
-- WIP06/WIP07 실행 파일·ZIP·과거 검증과 archive는 보존했다. [이전 릴리스 기록](TACTICAL_RELEASE_WIP06.md)은 과거 기준선이다.
+- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07B.zip). 압축을 풀면 `Tactical_v0.4_WIP07B.html` 한 파일이 나온다.
+- 현재 단일 실행 파일: [Tactical_v0.4_WIP07B.html](Tactical_v0.4_WIP07B.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [LOS 최적화](docs/LOS_OPTIMIZATION_WIP07B.md) · [관측 설정](docs/OBSERVATION_WIP07A.md) · [릴리스·검증 결과](TACTICAL_RELEASE_WIP07B.md) · [SHA-256](SHA256SUMS_WIP07B.txt).
+- WIP06/WIP07/WIP07A 실행 파일·ZIP·과거 검증과 archive는 보존했다. [이전 릴리스 기록](TACTICAL_RELEASE_WIP06.md)은 과거 기준선이다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07A.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP07A.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip07-observation/Tactical_v0.4_WIP07B.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP07B.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -84,7 +84,7 @@ WIP07 `a2dd770`에서 관측을 보정했다. 시작 시 main `c99a21c`와 마�
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP07A.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP07B.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | M1A2 기본형의 치수·기동·관측·무장 메타데이터 |
@@ -115,11 +115,11 @@ WIP07 `a2dd770`에서 관측을 보정했다. 시작 시 main `c99a21c`와 마�
 ```sh
 node scripts/export_vehicle_profile.cjs
 python3 build.py
-python3 scripts/package_release.py WIP07A
+python3 scripts/package_release.py WIP07B
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
@@ -127,6 +127,7 @@ node tests/vehicle.test.cjs
 # Playwright 개발 의존성과 시스템 Chromium이 있는 환경:
 node tests/browser.test.cjs
 node scripts/benchmark_observation.cjs
+node scripts/benchmark_los_compare.cjs
 ```
 
 전장 데이터를 다시 만들 때는 원본을 보존한 상태에서 다음 순서로 실행한다. GDAL·NumPy·Pillow가 필요하다. 이 환경에서는 `/usr/bin/python3`에 설치되어 있다.
@@ -194,3 +195,9 @@ node tests/vehicle.test.cjs
 전차장은 전방 ±45°를 20초 주기로, 포수는 전방 ±15°를 12초 주기로 왕복 수색한다. 순간 시야각은 전차장 90°·포수 30°다. 포수는 자기 장비로 발견한 접촉을 직접 확인하고 유지하며, 전차장 단독 미식별 접촉 때문에 식별·인계 전에 돌아가지 않는다. 확보한 포수 표적은 새 자동 후보가 덮어쓰지 않는다. 전차장은 다음 후보를 저장하고 수색한다.
 
 주변 탐지와 미완료 식별 감쇠를 분리했다. 팀 화면 정보와 선택 차량의 자체 관측·확보도 별도로 표시한다. 움직이는 표적의 건물·능선·숲 차폐, 기억 고정, 양 끝점/자세 변화의 캐시 무효화를 실제 코어로 검사한다. [현재 상태·출처·우선순위](docs/OBSERVATION_WIP07A.md), [작업지시서](docs/TACTICAL_WIP07A_OBSERVATION_CORRECTION_INSTRUCTIONS.md), [수정 전·후 및 검증 결과](TACTICAL_RELEASE_WIP07A.md)를 참조한다.
+
+## WIP07B 최적화
+
+32m 구역에 지형 보간 상한·건물 높이·숲 유무를 한 번 요약한다. 차폐와 숲 감쇠가 없다고 증명되는 구간만 건너뛰고 애매한 구간은 기존 2m 검사로 처리한다. 관측 주기·확률·9개 표본·광선 캐시·관측 출처와 표적 유지 동작은 바꾸지 않았다. 요약 자료는 코어당 265,625바이트다.
+
+[알고리즘과 보수적 조건](docs/LOS_OPTIMIZATION_WIP07B.md), [원본 대조와 성능·전체 검증](TACTICAL_RELEASE_WIP07B.md), [3회 별도 프로세스 비교](tests/releases/WIP07B-comparison.json)를 참조한다. CPU 시간의 개선을 전체 FPS로 해석하지 않는다.

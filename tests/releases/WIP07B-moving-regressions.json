@@ -1,0 +1,1193 @@
+{
+  "kind": "actual core/real sample LOS; explicitly synthetic terrain; no UI mock contacts",
+  "seed": 17,
+  "originalMapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "evidence": [
+    {
+      "id": "R14",
+      "fixture": "flat",
+      "trajectory": "radius 700m, bearing -25 to +25 deg over 40s; fixed gunner guard east",
+      "seen": [
+        {
+          "time": 0.05,
+          "angle": -24.9375,
+          "current": false
+        },
+        {
+          "time": 1.0500000000000003,
+          "angle": -23.687499999999993,
+          "current": false
+        },
+        {
+          "time": 2.0500000000000007,
+          "angle": -22.437499999999993,
+          "current": false
+        },
+        {
+          "time": 3.049999999999997,
+          "angle": -21.187500000000007,
+          "current": false
+        },
+        {
+          "time": 4.049999999999994,
+          "angle": -19.93750000000001,
+          "current": false
+        },
+        {
+          "time": 5.04999999999999,
+          "angle": -18.687500000000018,
+          "current": false
+        },
+        {
+          "time": 6.0499999999999865,
+          "angle": -17.437500000000014,
+          "current": false
+        },
+        {
+          "time": 7.049999999999983,
+          "angle": -16.187500000000025,
+          "current": false
+        },
+        {
+          "time": 8.04999999999998,
+          "angle": -14.937500000000028,
+          "current": false
+        },
+        {
+          "time": 9.049999999999994,
+          "angle": -13.687500000000012,
+          "current": false
+        },
+        {
+          "time": 10.050000000000008,
+          "angle": -12.437499999999995,
+          "current": false
+        },
+        {
+          "time": 11.050000000000022,
+          "angle": -11.187499999999966,
+          "current": false
+        },
+        {
+          "time": 12.050000000000036,
+          "angle": -9.93749999999996,
+          "current": true
+        },
+        {
+          "time": 13.05000000000005,
+          "angle": -8.68749999999994,
+          "current": true
+        },
+        {
+          "time": 14.050000000000065,
+          "angle": -7.43749999999992,
+          "current": true
+        },
+        {
+          "time": 15.050000000000079,
+          "angle": -6.187499999999899,
+          "current": true
+        },
+        {
+          "time": 16.050000000000093,
+          "angle": -4.937499999999883,
+          "current": true
+        },
+        {
+          "time": 17.050000000000107,
+          "angle": -3.687499999999867,
+          "current": true
+        },
+        {
+          "time": 18.05000000000012,
+          "angle": -2.4374999999998477,
+          "current": true
+        },
+        {
+          "time": 19.050000000000136,
+          "angle": -1.1874999999998272,
+          "current": true
+        },
+        {
+          "time": 20.05000000000015,
+          "angle": 0.06250000000018689,
+          "current": true
+        },
+        {
+          "time": 21.050000000000164,
+          "angle": 1.3125000000002016,
+          "current": true
+        },
+        {
+          "time": 22.05000000000018,
+          "angle": 2.562500000000222,
+          "current": true
+        },
+        {
+          "time": 23.050000000000193,
+          "angle": 3.8125000000002487,
+          "current": true
+        },
+        {
+          "time": 24.050000000000207,
+          "angle": 5.062500000000256,
+          "current": true
+        },
+        {
+          "time": 25.05000000000022,
+          "angle": 6.3125000000002744,
+          "current": true
+        },
+        {
+          "time": 26.050000000000235,
+          "angle": 7.562500000000289,
+          "current": true
+        },
+        {
+          "time": 27.05000000000025,
+          "angle": 8.812500000000318,
+          "current": true
+        },
+        {
+          "time": 28.050000000000264,
+          "angle": 10.062500000000329,
+          "current": true
+        },
+        {
+          "time": 29.050000000000278,
+          "angle": 11.31250000000034,
+          "current": true
+        },
+        {
+          "time": 30.050000000000292,
+          "angle": 12.562500000000366,
+          "current": true
+        },
+        {
+          "time": 31.050000000000306,
+          "angle": 13.81250000000038,
+          "current": true
+        },
+        {
+          "time": 32.05000000000032,
+          "angle": 15.0625000000004,
+          "current": true
+        },
+        {
+          "time": 33.05000000000026,
+          "angle": 16.312500000000334,
+          "current": false
+        },
+        {
+          "time": 34.0500000000002,
+          "angle": 17.56250000000027,
+          "current": false
+        },
+        {
+          "time": 35.050000000000146,
+          "angle": 18.81250000000019,
+          "current": false
+        },
+        {
+          "time": 36.05000000000009,
+          "angle": 20.06250000000012,
+          "current": false
+        },
+        {
+          "time": 37.05000000000003,
+          "angle": 21.312500000000036,
+          "current": false
+        },
+        {
+          "time": 38.049999999999976,
+          "angle": 22.562499999999968,
+          "current": false
+        },
+        {
+          "time": 39.04999999999992,
+          "angle": 23.81249999999991,
+          "current": false
+        }
+      ]
+    },
+    {
+      "id": "R15/R20",
+      "fixture": "20m roof x980..1020/y900..1100; observer500/1000; target1500/1300 to1500/1000 then1508/700",
+      "samples": [
+        {
+          "hiddenPose": {
+            "x": 1500,
+            "y": 1206.9999999999993,
+            "heading": 1.1100000000000023,
+            "turret": 3.3457098329703903,
+            "commander": 1.5771128106209038
+          },
+          "reappeared": {
+            "x": 1508.0000000000018,
+            "y": 700
+          }
+        }
+      ],
+      "events": [
+        {
+          "time": 1.0000000000000002,
+          "observer": "A",
+          "type": "detected",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0.2914567944778671,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 1.0000000000000002,
+          "observer": "A",
+          "type": "channel-seen",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0.2914567944778671,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 1.0000000000000002,
+          "observer": "A",
+          "type": "channel-seen",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0.2914567944778671,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 3.1999999999999966,
+          "observer": "A",
+          "type": "identified",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.2914567944778671,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "commander",
+          "enemyConfirmed": true
+        },
+        {
+          "time": 3.1999999999999966,
+          "observer": "A",
+          "type": "candidate-queued",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.2914567944778671,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 7.99999999999998,
+          "observer": "A",
+          "type": "team-designation-received",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.2914567944778671,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "source": "manual"
+        },
+        {
+          "time": 7.99999999999998,
+          "observer": "A",
+          "type": "designated",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.2914567944778671,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "source": "manual",
+          "status": "designated"
+        },
+        {
+          "time": 8.04999999999998,
+          "observer": "A",
+          "type": "target-acquired",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.2914567944778671,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "source": "manual",
+          "status": "acquired"
+        },
+        {
+          "time": 8.349999999999984,
+          "observer": "T",
+          "type": "detected",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.2327977667762626,
+          "commander": 2.572061127068567,
+          "heading": 0.8349999999999984,
+          "channel": "gunner"
+        },
+        {
+          "time": 8.349999999999984,
+          "observer": "T",
+          "type": "channel-seen",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.2327977667762626,
+          "commander": 2.572061127068567,
+          "heading": 0.8349999999999984,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 8.399999999999984,
+          "observer": "T",
+          "type": "focus",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.2327977667762626,
+          "commander": 2.5539711576786095,
+          "heading": 0.8399999999999985,
+          "channel": "gunner"
+        },
+        {
+          "time": 10.450000000000014,
+          "observer": "T",
+          "type": "identified",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.3643343580724956,
+          "commander": 1.8122824126903527,
+          "heading": 1.0450000000000015,
+          "channel": "gunner",
+          "enemyConfirmed": true
+        },
+        {
+          "time": 10.450000000000014,
+          "observer": "T",
+          "type": "gunner-own-target",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.3643343580724956,
+          "commander": 1.8122824126903527,
+          "heading": 1.0450000000000015,
+          "channel": "gunner",
+          "source": "gunner"
+        },
+        {
+          "time": 10.500000000000014,
+          "observer": "T",
+          "type": "target-acquired",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.3629070959375844,
+          "commander": 1.7941924433003953,
+          "heading": 1.0500000000000014,
+          "source": "gunner",
+          "status": "acquired"
+        },
+        {
+          "time": 11.150000000000023,
+          "observer": "T",
+          "type": "channel-lost",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": false,
+          "turret": 3.3442710381777427,
+          "commander": 1.5590228412309461,
+          "heading": 1.1150000000000024,
+          "channel": "gunner",
+          "channelCurrent": false
+        },
+        {
+          "time": 11.200000000000024,
+          "observer": "A",
+          "type": "channel-lost",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": false,
+          "turret": 0.20411717938059631,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": false
+        },
+        {
+          "time": 11.200000000000024,
+          "observer": "A",
+          "type": "channel-lost",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": false,
+          "turret": 0.20411717938059631,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "gunner",
+          "channelCurrent": false
+        },
+        {
+          "time": 12.250000000000039,
+          "observer": "T",
+          "type": "target-lost",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": false,
+          "turret": 3.312411582101296,
+          "commander": 1.7745151371940613,
+          "heading": 1.225000000000004,
+          "source": "gunner",
+          "status": "lost",
+          "reason": "own-observation-lost"
+        },
+        {
+          "time": 12.30000000000004,
+          "observer": "A",
+          "type": "target-lost",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": false,
+          "turret": 0.20411717938059631,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "source": "manual",
+          "status": "lost",
+          "reason": "own-observation-lost"
+        },
+        {
+          "time": 29.000000000000277,
+          "observer": "A",
+          "type": "channel-seen",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.054959371920586336,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 29.000000000000277,
+          "observer": "A",
+          "type": "channel-seen",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.054959371920586336,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 29.000000000000277,
+          "observer": "A",
+          "type": "candidate-queued",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.054959371920586336,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 29.000000000000277,
+          "observer": "A",
+          "type": "gunner-own-target",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0.054959371920586336,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "channel": "gunner",
+          "source": "gunner"
+        },
+        {
+          "time": 29.050000000000278,
+          "observer": "T",
+          "type": "channel-seen",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 2.2339668566986637,
+          "commander": 2.2206547832200507,
+          "heading": 2.4000000000000066,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 29.050000000000278,
+          "observer": "T",
+          "type": "candidate-queued",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 2.2339668566986637,
+          "commander": 2.2206547832200507,
+          "heading": 2.4000000000000066,
+          "channel": "commander"
+        },
+        {
+          "time": 29.050000000000278,
+          "observer": "T",
+          "type": "designated",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 2.2339668566986637,
+          "commander": 2.2206547832200507,
+          "heading": 2.4000000000000066,
+          "source": "commander",
+          "status": "designated"
+        },
+        {
+          "time": 29.10000000000028,
+          "observer": "T",
+          "type": "focus",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 2.2339668566986637,
+          "commander": 2.2206547832200507,
+          "heading": 2.4000000000000066,
+          "channel": "commander"
+        },
+        {
+          "time": 29.400000000000283,
+          "observer": "A",
+          "type": "target-acquired",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": -0.2139371199909994,
+          "commander": 0.2914567944778671,
+          "heading": 0,
+          "source": "gunner",
+          "status": "acquired"
+        },
+        {
+          "time": 29.750000000000288,
+          "observer": "T",
+          "type": "channel-seen",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 2.7226590472570766,
+          "commander": 2.8315200214180654,
+          "heading": 2.4000000000000066,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 30.150000000000293,
+          "observer": "T",
+          "type": "target-acquired",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "gunner",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 2.9036289578195715,
+          "commander": 2.726800266298405,
+          "heading": 2.4000000000000066,
+          "source": "commander",
+          "status": "acquired"
+        }
+      ]
+    },
+    {
+      "id": "R15-ridge",
+      "fixture": "triangular crest centred x1000, height40m; target750 to1300 at22m/s",
+      "lastSeen": 19.600000000000144,
+      "events": [
+        {
+          "time": 0.9000000000000002,
+          "observer": "A",
+          "type": "detected",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 0.9000000000000002,
+          "observer": "A",
+          "type": "channel-seen",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 0.9000000000000002,
+          "observer": "A",
+          "type": "channel-seen",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 1.3500000000000005,
+          "observer": "T",
+          "type": "detected",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.7881634800609394,
+          "heading": 3.141592653589793,
+          "channel": "commander"
+        },
+        {
+          "time": 1.3500000000000005,
+          "observer": "T",
+          "type": "channel-seen",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.7881634800609394,
+          "heading": 3.141592653589793,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 1.3500000000000005,
+          "observer": "T",
+          "type": "channel-seen",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.7881634800609394,
+          "heading": 3.141592653589793,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 1.4000000000000006,
+          "observer": "T",
+          "type": "focus",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.7881634800609394,
+          "heading": 3.141592653589793,
+          "channel": "commander"
+        },
+        {
+          "time": 1.4000000000000006,
+          "observer": "T",
+          "type": "focus",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.8317967113607976,
+          "heading": 3.141592653589793,
+          "channel": "gunner"
+        },
+        {
+          "time": 2.8999999999999977,
+          "observer": "A",
+          "type": "identified",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander",
+          "enemyConfirmed": true
+        },
+        {
+          "time": 2.8999999999999977,
+          "observer": "A",
+          "type": "candidate-queued",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 3.149999999999997,
+          "observer": "T",
+          "type": "identified",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.141592653589793,
+          "commander": 3.141592653589793,
+          "heading": 3.141592653589793,
+          "channel": "gunner",
+          "enemyConfirmed": true
+        },
+        {
+          "time": 3.149999999999997,
+          "observer": "T",
+          "type": "candidate-queued",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.141592653589793,
+          "commander": 3.141592653589793,
+          "heading": 3.141592653589793,
+          "channel": "commander"
+        },
+        {
+          "time": 3.149999999999997,
+          "observer": "T",
+          "type": "gunner-own-target",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.141592653589793,
+          "commander": 3.141592653589793,
+          "heading": 3.141592653589793,
+          "channel": "gunner",
+          "source": "gunner"
+        },
+        {
+          "time": 3.1999999999999966,
+          "observer": "T",
+          "type": "target-acquired",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.141592653589793,
+          "commander": 3.1285026841998356,
+          "heading": 3.141592653589793,
+          "source": "gunner",
+          "status": "acquired"
+        },
+        {
+          "time": 19.700000000000145,
+          "observer": "A",
+          "type": "channel-lost",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": false,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": false
+        },
+        {
+          "time": 19.700000000000145,
+          "observer": "A",
+          "type": "channel-lost",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": false,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "gunner",
+          "channelCurrent": false
+        },
+        {
+          "time": 19.750000000000146,
+          "observer": "T",
+          "type": "channel-lost",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": false,
+          "turret": 3.141592653589793,
+          "commander": 3.1498160055894218,
+          "heading": 3.141592653589793,
+          "channel": "commander",
+          "channelCurrent": false
+        },
+        {
+          "time": 19.750000000000146,
+          "observer": "T",
+          "type": "channel-lost",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": false,
+          "turret": 3.141592653589793,
+          "commander": 3.1498160055894218,
+          "heading": 3.141592653589793,
+          "channel": "gunner",
+          "channelCurrent": false
+        },
+        {
+          "time": 20.85000000000016,
+          "observer": "T",
+          "type": "target-lost",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": false,
+          "turret": 3.141592653589793,
+          "commander": 2.883300290134783,
+          "heading": 3.141592653589793,
+          "source": "gunner",
+          "status": "lost",
+          "reason": "own-observation-lost"
+        }
+      ]
+    },
+    {
+      "id": "R16",
+      "fixture": "forest x800..900, density0.9; target750 eastward20m/s",
+      "initialDepth": 0,
+      "middleDepth": 0.4148306875139164,
+      "lastSeen": 15.400000000000084,
+      "events": [
+        {
+          "time": 0.9000000000000002,
+          "observer": "A",
+          "type": "detected",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 0.9000000000000002,
+          "observer": "A",
+          "type": "channel-seen",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 0.9000000000000002,
+          "observer": "A",
+          "type": "channel-seen",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 1.3500000000000005,
+          "observer": "T",
+          "type": "detected",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.7881634800609394,
+          "heading": 3.141592653589793,
+          "channel": "commander"
+        },
+        {
+          "time": 1.3500000000000005,
+          "observer": "T",
+          "type": "channel-seen",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.7881634800609394,
+          "heading": 3.141592653589793,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 1.3500000000000005,
+          "observer": "T",
+          "type": "channel-seen",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.7881634800609394,
+          "heading": 3.141592653589793,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 1.4000000000000006,
+          "observer": "T",
+          "type": "focus",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.7881634800609394,
+          "heading": 3.141592653589793,
+          "channel": "commander"
+        },
+        {
+          "time": 1.4000000000000006,
+          "observer": "T",
+          "type": "focus",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": 3.012122738307268,
+          "commander": 2.8317967113607976,
+          "heading": 3.141592653589793,
+          "channel": "gunner"
+        },
+        {
+          "time": 2.8999999999999977,
+          "observer": "A",
+          "type": "identified",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander",
+          "enemyConfirmed": true
+        },
+        {
+          "time": 2.8999999999999977,
+          "observer": "A",
+          "type": "candidate-queued",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 3.149999999999997,
+          "observer": "T",
+          "type": "identified",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.141592653589793,
+          "commander": 3.141592653589793,
+          "heading": 3.141592653589793,
+          "channel": "gunner",
+          "enemyConfirmed": true
+        },
+        {
+          "time": 3.149999999999997,
+          "observer": "T",
+          "type": "candidate-queued",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.141592653589793,
+          "commander": 3.141592653589793,
+          "heading": 3.141592653589793,
+          "channel": "commander"
+        },
+        {
+          "time": 3.149999999999997,
+          "observer": "T",
+          "type": "gunner-own-target",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.141592653589793,
+          "commander": 3.141592653589793,
+          "heading": 3.141592653589793,
+          "channel": "gunner",
+          "source": "gunner"
+        },
+        {
+          "time": 3.1999999999999966,
+          "observer": "T",
+          "type": "target-acquired",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": true,
+          "turret": 3.141592653589793,
+          "commander": 3.1285026841998356,
+          "heading": 3.141592653589793,
+          "source": "gunner",
+          "status": "acquired"
+        },
+        {
+          "time": 15.350000000000083,
+          "observer": "T",
+          "type": "channel-lost",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": false,
+          "turret": 3.141592653589793,
+          "commander": 3.9145778696632414,
+          "heading": 3.141592653589793,
+          "channel": "commander",
+          "channelCurrent": false
+        },
+        {
+          "time": 15.350000000000083,
+          "observer": "T",
+          "type": "channel-lost",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": false,
+          "turret": 3.141592653589793,
+          "commander": 3.9145778696632414,
+          "heading": 3.141592653589793,
+          "channel": "gunner",
+          "channelCurrent": false
+        },
+        {
+          "time": 15.500000000000085,
+          "observer": "A",
+          "type": "channel-lost",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": false,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": false
+        },
+        {
+          "time": 15.500000000000085,
+          "observer": "A",
+          "type": "channel-lost",
+          "key": "접촉-162ecet",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": false,
+          "turret": 0,
+          "commander": 0,
+          "heading": 0,
+          "channel": "gunner",
+          "channelCurrent": false
+        },
+        {
+          "time": 16.4500000000001,
+          "observer": "T",
+          "type": "target-lost",
+          "key": "접촉-xmfyvu",
+          "detectedBy": "commander",
+          "identifiedBy": "gunner",
+          "current": false,
+          "turret": 3.141592653589793,
+          "commander": 3.8217668311384774,
+          "heading": 3.141592653589793,
+          "source": "gunner",
+          "status": "lost",
+          "reason": "own-observation-lost"
+        }
+      ]
+    },
+    {
+      "id": "R18",
+      "trajectory": "observer(+1,+0.5)m/s, target(+2,+0.8)m/s for8s",
+      "rayQueries": 1440,
+      "rayCacheHits": 0
+    }
+  ]
+}
