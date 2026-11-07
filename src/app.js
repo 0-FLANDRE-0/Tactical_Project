@@ -84,7 +84,7 @@
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{if(targetId&&C.designate(sim,selectedUnit(),targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
-  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
   function fireSelected(){
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
     if(!targetId){toast('관측 중인 표적을 먼저 탭해줘');return;}
@@ -488,6 +488,8 @@
       const fc=C.fireStatus(sim,u,target.key);
       const probabilities=fc.zoneProbabilities;
       ui.setText($('fireDetails'),(!target.identified||!target.current||fc.hitChance===null)?'발사: '+(fireReasons[fc.reason]||'현재 포수 표적 아님'):'예상 명중 '+Math.round(fc.hitChance*100)+'% · 명중 시 부위: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '));
+      const b=fc.breakdown,rects=b?.rects||[],w=rects.length?Math.max(...rects.map(r=>r.x2))-Math.min(...rects.map(r=>r.x1)):0,h=rects.length?Math.max(...rects.map(r=>r.z2))-Math.min(...rects.map(r=>r.z1)):0;
+      ui.setText($('hitSummary'),target.identified&&target.current&&b?'예상 명중률 '+Math.round(fc.hitChance*100)+'% · 오차 '+Math.max(b.sigma.x,b.sigma.z).toFixed(2)+'밀 · 보이는 표적 '+w.toFixed(1)+'×'+h.toFixed(1)+'m · 차체/포탑 '+Math.round(b.pHull*100)+'/'+Math.round(b.pTurret*100)+'%':'');
       const lastShot=target.identified&&fc.lastShot?.targetKey===target.key?fc.lastShot:null;
       ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.hit?'명중 · '+zoneNames[lastShot.zone]:'빗나감')+' · 피해 판정 없음':'');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
@@ -713,7 +715,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP08A',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP09',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView(),firing:C.fireStatus(sim,selectedUnit(),targetId),shots:C.fireEvents(sim,'blue')
     }
     )),command:(x,y,reverse=false)=>{

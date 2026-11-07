@@ -9,27 +9,68 @@ const TacticalFireControl=(()=>{
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   function init(u,p){
-    return u.fireControl??={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,ammo:p.fireControl.testRounds,
-      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0};
+    return u.fireControl??={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
+      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null};
   }
-  function distribution(observer,pose,exposure,f){
-    const result=Object.fromEntries(zones.map(z=>[z,0])),hull=clamp(exposure.hull,0,1)*f.zoneWeights.hull,turret=clamp(exposure.turret,0,1)*f.zoneWeights.turret,total=hull+turret;
+  // Fictional RTS error budget. These coefficients are game tuning, not
+  // measured weapon/FCS performance; this module never computes a firing
+  // solution, trajectory or impact coordinates.
+  function normalCdf(x){
+    if(x===0)return .5;
+    const v=Math.abs(x)/Math.SQRT2,t=1/(1+.3275911*v);
+    const erf=1-(((((1.061405429*t-1.453152027)*t+1.421413741)*t-.284496736)*t+.254829592)*t)*Math.exp(-v*v);
+    return clamp(.5*(1+(x<0?-erf:erf)),0,1);
+  }
+  function errorBudget(observer,pose,f,targetVelocity={x:0,y:0},layTime=0){
+    const dx=pose.x-observer.x,dy=pose.y-observer.y,range=Math.hypot(dx,dy),safeRange=Math.max(1e-9,range),beta=Math.atan2(dy,dx);
+    const vx=targetVelocity.x||0,vy=targetVelocity.y||0,speed=Math.hypot(vx,vy),cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=range/(f.muzzleVelocity*f.velocityRetention);
+    const disp=f.dispersionMrad,lay=f.layMinMrad+(f.layStartMrad-f.layMinMrad)*Math.exp(-Math.max(0,layTime)/f.layTauSeconds);
+    const rng=1000*9.81*f.rangeErrorM/(2*f.muzzleVelocity**2),lead=1000*f.leadResidual*cross*tof/safeRange;
+    const man=1000*.5*f.maneuverAccel*tof**2/safeRange*Math.min(1,speed/f.maneuverReferenceSpeed),own=f.stabMradPerMps*Math.abs(observer.speed||0);
+    return{range,tof,sigma:{disp,lay,rng,lead,man,own,x:Math.hypot(disp,lay,lead,man,own),z:Math.hypot(disp,lay,rng,own)}};
+  }
+  function presentedRects(observer,pose,exposure,f){
+    const m=pose.model,band=exposure.presented||f.presented,samples=exposure.samples||[],rects=[];
+    if(!m)return rects;
+    const beta=Math.atan2(pose.y-observer.y,pose.x-observer.x),h=pose.heading-beta,t=pose.turret-beta;
+    const hull=samples.filter(v=>v.part==='hull'),visibleHull=hull.filter(v=>v.visible),visibleTurret=samples.filter(v=>v.part==='turret'&&v.visible);
+    function rect(part,c,width,z1,z2){if(width>0&&z2>z1)rects.push({part,x1:c-width/2,x2:c+width/2,z1,z2});}
+    if(visibleHull.length){
+      const cols=new Map(visibleHull.map(v=>[v.col,v.along])),rows=[...new Set(visibleHull.map(v=>v.row))],levels=[...new Map(hull.map(v=>[v.row,v.z]))].sort((a,b)=>a[0]-b[0]);
+      const bands=new Map(levels.map(([row,z],i)=>[row,[i?(levels[i-1][1]+z)/2:band.hullBottom,i+1<levels.length?(z+levels[i+1][1])/2:band.hullTop]]));
+      const c=[...cols.values()].reduce((sum,along)=>sum+along*Math.sin(h),0)/cols.size,width=(m.hullLength*Math.abs(Math.sin(h))+m.width*Math.abs(Math.cos(h)))*cols.size/3;
+      rect('hull',c,width,Math.min(...rows.map(r=>bands.get(r)[0])),Math.max(...rows.map(r=>bands.get(r)[1])));
+    }
+    if(visibleTurret.length){
+      const [px,py]=m.turretPivot,offset=px*Math.sin(h)+py*Math.cos(h),c=offset+visibleTurret.reduce((sum,v)=>sum+v.along*Math.sin(t),0)/visibleTurret.length;
+      const width=(m.turretLength*Math.abs(Math.sin(t))+m.turretWidth*Math.abs(Math.cos(t)))*visibleTurret.length/3;
+      rect('turret',c,width,band.hullTop,band.turretTop);
+    }
+    return rects;
+  }
+  function rectProbability(rect,aim,sx,sz){
+    const x=Math.max(1e-9,sx),z=Math.max(1e-9,sz);
+    return clamp((normalCdf((rect.x2-aim.x)/x)-normalCdf((rect.x1-aim.x)/x))*(normalCdf((rect.z2-aim.z)/z)-normalCdf((rect.z1-aim.z)/z)),0,1);
+  }
+  function distribution(observer,pose,{pHull=0,pTurret=0}){
+    const result=Object.fromEntries(zones.map(z=>[z,0])),total=pHull+pTurret;
     if(!(total>0))return result;
     const incoming=Math.atan2(observer.y-pose.y,observer.x-pose.x);
     function group(prefix,heading,amount){
       const a=diff(incoming,heading),front=Math.max(0,Math.cos(a)),side=Math.abs(Math.sin(a)),rear=Math.max(0,-Math.cos(a)),sum=front+side+rear;
       result[prefix+'Front']=amount/total*front/sum;result[prefix+'Side']=amount/total*side/sum;result[prefix+'Rear']=amount/total*rear/sum;
     }
-    group('hull',pose.heading,hull);group('turret',pose.turret,turret);
-    // Upper is reserved: there is no elevation/top-attack model in this stage.
+    group('hull',pose.heading,pHull);group('turret',pose.turret,pTurret);
     return result;
   }
-  function estimate(observer,pose,exposure,f,targetMotion=0){
-    const distance=Math.hypot(pose.x-observer.x,pose.y-observer.y),weight=f.zoneWeights.hull+f.zoneWeights.turret;
-    const visible=(clamp(exposure.hull,0,1)*f.zoneWeights.hull+clamp(exposure.turret,0,1)*f.zoneWeights.turret)/weight;
-    const accuracy=f.accuracyNear+(f.accuracyFar-f.accuracyNear)*clamp(distance/f.maxRange,0,1);
-    const own=1-f.selfMotionPenalty*clamp(Math.abs(observer.speed||0)/f.motionReference,0,1),moving=1-f.targetMotionPenalty*clamp(targetMotion/f.motionReference,0,1);
-    return{hitChance:distance<=f.maxRange?clamp(accuracy*own*moving*visible,0,1):0,zoneProbabilities:distribution(observer,pose,exposure,f)};
+  function estimate(observer,pose,exposure,f,targetVelocity={x:0,y:0},layTime=0){
+    const budget=errorBudget(observer,pose,f,targetVelocity,layTime),rects=presentedRects(observer,pose,exposure,f);
+    const area=r=>(r.x2-r.x1)*(r.z2-r.z1),total=rects.reduce((sum,r)=>sum+area(r),0);
+    const aim=total?{x:rects.reduce((sum,r)=>sum+(r.x1+r.x2)/2*area(r),0)/total,z:rects.reduce((sum,r)=>sum+(r.z1+r.z2)/2*area(r),0)/total}:{x:0,z:0};
+    let pHull=0,pTurret=0;
+    if(budget.range<=f.maxRange)for(const r of rects){const p=rectProbability(r,aim,budget.sigma.x/1000*budget.range,budget.sigma.z/1000*budget.range);if(r.part==='hull')pHull=p;else pTurret=p;}
+    const hitChance=clamp(pHull+pTurret,0,1),breakdown={...budget,rects,aim,pHull,pTurret};
+    return{hitChance,zoneProbabilities:distribution(observer,pose,breakdown),breakdown};
   }
   function resolve(hitChance,probabilities,hitRoll,zoneRoll){
     if(!(hitRoll<hitChance))return{hit:false,zone:null};
@@ -38,6 +79,10 @@ const TacticalFireControl=(()=>{
   }
   function create({profileOf,freshSight,seed=7}){
     const events=[];
+    function resetAim(s){s.aimElapsed=0;s.aimProgress=0;s.layTime=0;s.previousSample=null;s.targetMotion=0;s.targetVelocity={x:0,y:0};}
+    function clearPreview(s){s.hitChance=null;s.zoneProbabilities=null;s.breakdown=null;}
+    function preview(s,value){s.hitChance=value.hitChance;s.zoneProbabilities=value.zoneProbabilities;s.breakdown=value.breakdown;}
+
     function inspect(u,now){
       const p=profileOf(u),f=p.fireControl,s=init(u,p),d=mission(u),c=d?u.observation.contacts[d.target]:null;
       if(!f.enabled||!p.weapons.mainGun.enabled||!p.sensors.gunner.enabled)return{reason:'disabled'};
@@ -56,17 +101,19 @@ const TacticalFireControl=(()=>{
     function step(units,dt,now){
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
-        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.aimElapsed=0;s.aimProgress=0;s.previousSample=null;s.targetMotion=0;}
+        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;resetAim(s);}
         if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
           const previous=s.previousSample;
-          if(previous&&c.sources.gunner.lastSeen>previous.time)s.targetMotion=Math.hypot(c.pose.x-previous.x,c.pose.y-previous.y)/(c.sources.gunner.lastSeen-previous.time);
+          const elapsed=previous?c.sources.gunner.lastSeen-previous.time:0;
+          s.targetVelocity=elapsed>0&&elapsed<=p.sensors.tuning.queryPeriod*5+1e-9?{x:(c.pose.x-previous.x)/elapsed,y:(c.pose.y-previous.y)/elapsed}:{x:0,y:0};
+          s.targetMotion=Math.hypot(s.targetVelocity.x,s.targetVelocity.y);
           s.previousSample={x:c.pose.x,y:c.pose.y,time:c.sources.gunner.lastSeen};
         }
-        if(check.reason){s.status=check.reason==='interval'?'interval':check.reason==='aligning'?'aligning':'blocked';if(check.reason==='no-target')s.status='no-target';s.reason=check.reason;s.aimElapsed=0;s.aimProgress=0;s.hitChance=null;s.zoneProbabilities=null;}
+        if(check.reason){s.status=check.reason==='interval'?'interval':check.reason==='aligning'?'aligning':'blocked';if(check.reason==='no-target')s.status='no-target';s.reason=check.reason;resetAim(s);clearPreview(s);}
         else{
-          s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
+          s.layTime+=dt;s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
           s.status=s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=null;
-          const ex=c.gunnerExposure||{hull:0,turret:0},preview=estimate(u,c.pose,ex,f,s.targetMotion);s.hitChance=preview.hitChance;s.zoneProbabilities=preview.zoneProbabilities;
+          const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,f,s.targetVelocity,s.layTime));
         }
         if(!s.pending)continue;
         const request=s.pending;s.pending=null;
@@ -74,33 +121,35 @@ const TacticalFireControl=(()=>{
         // A fire command must recheck its own current range/FOV/terrain samples;
         // an old 10Hz contact or team knowledge cannot authorize a shot.
         const sight=freshSight(u,d.target);
-        if(!sight?.visible){s.status='blocked';s.reason=sight?.reason||'fresh-sight-failed';s.aimElapsed=0;s.aimProgress=0;s.lastRejection=s.reason;s.hitChance=null;s.zoneProbabilities=null;continue;}
+        if(!sight?.visible){s.status='blocked';s.reason=sight?.reason||'fresh-sight-failed';resetAim(s);s.lastRejection=s.reason;clearPreview(s);continue;}
         const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
-        if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';s.aimElapsed=0;s.aimProgress=0;s.hitChance=null;s.zoneProbabilities=null;continue;}
-        const chance=estimate(u,pose,sight,f,s.targetMotion),number=s.shotCount+1;
+        if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
+        const chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime),number=s.shotCount+1;
+        if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
         const result=resolve(chance.hitChance,chance.zoneProbabilities,random(u.id+':'+number+':hit',seed),random(u.id+':'+number+':zone',seed));
         const shot={id:u.id+'-shot-'+number,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:d.source,
           origin:G.muzzleWorld(u,p.model),muzzleHeading:u.turret,
           targetPose:{x:pose.x,y:pose.y,heading:pose.heading,turret:pose.turret},...chance,...result,ammoRemaining:s.ammo-1};
-        events.push(shot);if(events.length>200)events.shift();s.shotCount=number;s.ammo--;s.lastShot=shot;s.nextShotAt=now+f.shotIntervalSeconds;s.aimElapsed=0;s.aimProgress=0;s.status='interval';s.reason='interval';
+        events.push(shot);if(events.length>200)events.shift();s.shotCount=number;s.ammo--;s.lastShot=shot;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
       }
     }
     function request(u,key,now){
       const s=init(u,profileOf(u)),check=inspect(u,now);
       if(s.pending)return{ok:false,reason:'pending'};
+      if(s.hitChance===0)return{ok:false,reason:'no-presented-target'};
       if(check.reason||s.status!=='ready'||key!==s.targetKey)return{ok:false,reason:check.reason||'not-ready'};
       s.pending={key};return{ok:true};
     }
     function view(u,key=null){
       const s=init(u,profileOf(u)),same=!key||key===s.targetKey;
-      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,ammo:s.ammo,pending:!!s.pending,
-        canFire:same&&s.status==='ready'&&!s.pending,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
-        shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
+      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,pending:!!s.pending,
+        canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
+        breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
-    function cancel(u){const s=init(u,profileOf(u));s.pending=null;s.aimElapsed=0;s.aimProgress=0;s.status='blocked';s.reason='cancelled';s.hitChance=null;s.zoneProbabilities=null;}
+    function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     return{step,request,view,cancel,events:publicEvents};
   }
-  return Object.freeze({create,init,estimate,distribution,resolve,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,resolve,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;

@@ -23,8 +23,10 @@ const VEHICLE_PROFILES=(()=>{
     // Fictional game tuning, not measured real fire-control/ballistic data.
     fireControl:{enabled:true,aimSeconds:1.2,alignmentTolerance:1.5*Math.PI/180,
       maxRange:2000,fireHeight:2.2,shotIntervalSeconds:1,testRounds:42,
-      accuracyNear:.88,accuracyFar:.55,selfMotionPenalty:.35,targetMotionPenalty:.25,
-      motionReference:20,zoneWeights:{hull:.65,turret:.35}},
+      dispersionMrad:.25,layStartMrad:1.5,layMinMrad:.10,layTauSeconds:.6,
+      rangeErrorM:5,muzzleVelocity:1650,velocityRetention:.94,leadResidual:.10,
+      maneuverAccel:1,maneuverReferenceSpeed:5,stabMradPerMps:.03,
+      presented:{hullBottom:inch(19),hullTop:1.65,turretTop:inch(93.5)}},
     exposure:{hullAlong:[-2.8,0,2.8],hullHeights:[.80,1.40],turretAlong:[-1,0,1],turretHeight:2.20},
     navigation:{clearanceMargin:.25,contract:'nav16-M1A2-r4.62-long0.60-side0.40-v2'}
   };
@@ -42,9 +44,11 @@ const VEHICLE_PROFILES=(()=>{
       for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
       if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
       const f=p.fireControl;
-      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','motionReference'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
-      for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty'])if(!Number.isFinite(f[field])||f[field]<0||f[field]>1)throw Error('확률 프로파일 값 오류: '+id+'.'+field);
-      if(!Number.isInteger(f.testRounds)||f.zoneWeights.hull<0||f.zoneWeights.turret<0||!Number.isFinite(f.zoneWeights.hull+f.zoneWeights.turret)||f.zoneWeights.hull+f.zoneWeights.turret<=0)throw Error('시험탄/구역 가중치 오류: '+id);
+      for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
+      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention','maneuverAccel','maneuverReferenceSpeed'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
+      for(const field of ['leadResidual','stabMradPerMps'])if(!Number.isFinite(f[field])||f[field]<0)throw Error('사격 오차 값 오류: '+id+'.'+field);
+      const band=f.presented;
+      if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
       profiles[id]=freeze(p);
     }
     const ids=Object.freeze(Object.keys(profiles));

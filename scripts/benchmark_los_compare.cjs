@@ -5,7 +5,7 @@ const {run,median}=require('./observation-benchmark-fixture.cjs');
 const root=path.resolve(__dirname,'..'),oracle=require('../tests/helpers/los-reference.cjs');
 if(process.argv[2]==='--worker'){
  const variant=process.argv[3],out=process.argv[4],started=performance.now();
- const C=variant==='baseline'?oracle.load(JSON.parse(fs.readFileSync(path.join(root,'data/rasdorf_4km.json'),'utf8'))):require('../tests/load.cjs')();
+ const C=variant==='baseline'?oracle.load(JSON.parse(fs.readFileSync(path.join(root,'data/rasdorf_4km.json'),'utf8')),{observationMetadata:true}):require('../tests/load.cjs')();
  // Keep the immutable oracle's original terrain/LOS, but run the same new
  // game firing-state work in both variants. This fixture never requests a shot.
  if(variant==='baseline'){
@@ -32,7 +32,7 @@ if(process.argv[2]==='--worker'){
    return{mode:c.mode,count:c.count,baseline,optimized,reductionPercent:100*(1-optimized.medianStepMs/baseline.medianStepMs),finalStateSHA256:c.finalStateSHA256,finalStatesEqual:true,candidatePairs:c.candidatePairs,exactRayQueries:c.exactRayQueries,unchangedRayCacheHits:c.unchangedRayCacheHits};
   });
   const compact={};for(const variant of ['baseline','optimized'])compact[variant]=runs[variant].map(r=>({...r,cases:r.cases.map(({state,...c})=>c)}));
-  const report={version:'0.4-WIP08A',date:'2026-11-07',baselineCommit:'e9f037cc6edca994e3f19297d3e0aa6c491be164',referenceSourceSHA256:oracle.sha256,node:process.version,cpu:os.cpus()[0]?.model,platform:process.platform,arch:process.arch,seed:407,stepSeconds:.05,queryHz:10,warmupSteps:20,measuredSteps:100,trials:3,notes:'Frozen original geometry plus identical current observation and firing-state rules in both variants; no manual shots. Sequential fresh processes, order alternated by trial. Summary median/p95 are medians of the corresponding per-process statistic; maximum is the largest observed step across all trials. Init times use different loading pipelines and are not compared as summary-build cost. State JSON compared byte-for-byte, including observer records, team contacts and query/cache counts. CPU steps, not FPS. Trajectory generation excluded. Fixture is shared with the ordinary benchmark.',cases,runs:compact};
-  fs.writeFileSync(path.join(root,'tests/releases/WIP08A-comparison.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({...report,runs:undefined},null,2));
+  const report={version:'0.4-WIP09',date:'2026-11-07',baselineCommit:'e9f037cc6edca994e3f19297d3e0aa6c491be164',referenceSourceSHA256:oracle.sha256,node:process.version,cpu:os.cpus()[0]?.model,platform:process.platform,arch:process.arch,seed:407,stepSeconds:.05,queryHz:10,warmupSteps:20,measuredSteps:100,trials:3,notes:'Frozen original geometry with additive sample-index metadata at the observation boundary, plus identical current observation and firing-state rules in both variants; no manual shots. Sequential fresh processes, order alternated by trial. Summary median/p95 are medians of the corresponding per-process statistic; maximum is the largest observed step across all trials. Init times use different loading pipelines and are not compared as summary-build cost. State JSON compared byte-for-byte, including observer records, team contacts and query/cache counts. CPU steps, not FPS. Trajectory generation excluded. Fixture is shared with the ordinary benchmark.',cases,runs:compact};
+  fs.writeFileSync(path.join(root,'tests/releases/WIP09-comparison.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({...report,runs:undefined},null,2));
  }finally{fs.rmSync(dir,{recursive:true,force:true});}
 }

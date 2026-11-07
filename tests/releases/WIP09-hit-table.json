@@ -1,0 +1,380 @@
+{
+ "params": {
+  "dispersionMrad": 0.25,
+  "layStartMrad": 1.5,
+  "layMinMrad": 0.1,
+  "layTauSeconds": 0.6,
+  "rangeErrorM": 5,
+  "muzzleVelocity": 1650,
+  "velocityRetention": 0.94,
+  "leadResidual": 0.1,
+  "maneuverAccel": 1.0,
+  "maneuverReferenceSpeed": 5,
+  "stabMradPerMps": 0.03
+ },
+ "model": {
+  "L": 7.9248,
+  "B": 3.6576,
+  "Lt": 4.75,
+  "Bt": 3.28,
+  "zb": 0.4826,
+  "zh": 1.65,
+  "zt": 2.3749,
+  "pivot": [
+   0.66,
+   0
+  ]
+ },
+ "rows": [
+  {
+   "range": 500,
+   "case": "정면·완전노출·정지",
+   "hit": 1.0,
+   "hull": 0.9001,
+   "turret": 0.0999,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.322
+  },
+  {
+   "range": 500,
+   "case": "정면·차체 상단만",
+   "hit": 0.9991,
+   "hull": 0.356,
+   "turret": 0.6431,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.322
+  },
+  {
+   "range": 500,
+   "case": "정면·포탑만(헐다운)",
+   "hit": 0.9419,
+   "hull": 0,
+   "turret": 0.9419,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.322
+  },
+  {
+   "range": 500,
+   "case": "측면·횡단 10m/s",
+   "hit": 1.0,
+   "hull": 0.9563,
+   "turret": 0.0437,
+   "sigmaX": 0.7568,
+   "sigmaZ": 0.3826,
+   "tof": 0.322
+  },
+  {
+   "range": 500,
+   "case": "정면·자차 10m/s 기동",
+   "hit": 0.9999,
+   "hull": 0.8434,
+   "turret": 0.1564,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 0.322
+  },
+  {
+   "range": 500,
+   "case": "정면·조준 0.4s",
+   "hit": 0.9726,
+   "hull": 0.701,
+   "turret": 0.2716,
+   "sigmaX": 0.8561,
+   "sigmaZ": 0.8561,
+   "tof": 0.322
+  },
+  {
+   "range": 500,
+   "case": "정면·조준 3s",
+   "hit": 1.0,
+   "hull": 0.9638,
+   "turret": 0.0362,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 0.322
+  },
+  {
+   "range": 1000,
+   "case": "정면·완전노출·정지",
+   "hit": 0.9864,
+   "hull": 0.7313,
+   "turret": 0.2551,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.645
+  },
+  {
+   "range": 1000,
+   "case": "정면·차체 상단만",
+   "hit": 0.904,
+   "hull": 0.3746,
+   "turret": 0.5293,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.645
+  },
+  {
+   "range": 1000,
+   "case": "정면·포탑만(헐다운)",
+   "hit": 0.6565,
+   "hull": 0,
+   "turret": 0.6565,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.645
+  },
+  {
+   "range": 1000,
+   "case": "측면·횡단 10m/s",
+   "hit": 0.9815,
+   "hull": 0.7897,
+   "turret": 0.1919,
+   "sigmaX": 0.7779,
+   "sigmaZ": 0.3826,
+   "tof": 0.645
+  },
+  {
+   "range": 1000,
+   "case": "정면·자차 10m/s 기동",
+   "hit": 0.9477,
+   "hull": 0.664,
+   "turret": 0.2837,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 0.645
+  },
+  {
+   "range": 1000,
+   "case": "정면·조준 0.4s",
+   "hit": 0.701,
+   "hull": 0.4566,
+   "turret": 0.2443,
+   "sigmaX": 0.8561,
+   "sigmaZ": 0.8561,
+   "tof": 0.645
+  },
+  {
+   "range": 1000,
+   "case": "정면·조준 3s",
+   "hit": 0.9994,
+   "hull": 0.8151,
+   "turret": 0.1843,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 0.645
+  },
+  {
+   "range": 1500,
+   "case": "정면·완전노출·정지",
+   "hit": 0.8984,
+   "hull": 0.6105,
+   "turret": 0.2878,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.967
+  },
+  {
+   "range": 1500,
+   "case": "정면·차체 상단만",
+   "hit": 0.7309,
+   "hull": 0.3109,
+   "turret": 0.4199,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.967
+  },
+  {
+   "range": 1500,
+   "case": "정면·포탑만(헐다운)",
+   "hit": 0.4703,
+   "hull": 0,
+   "turret": 0.4703,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.967
+  },
+  {
+   "range": 1500,
+   "case": "측면·횡단 10m/s",
+   "hit": 0.8768,
+   "hull": 0.6433,
+   "turret": 0.2335,
+   "sigmaX": 0.8119,
+   "sigmaZ": 0.3826,
+   "tof": 0.967
+  },
+  {
+   "range": 1500,
+   "case": "정면·자차 10m/s 기동",
+   "hit": 0.7921,
+   "hull": 0.5222,
+   "turret": 0.2698,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 0.967
+  },
+  {
+   "range": 1500,
+   "case": "정면·조준 0.4s",
+   "hit": 0.4461,
+   "hull": 0.287,
+   "turret": 0.1591,
+   "sigmaX": 0.8561,
+   "sigmaZ": 0.8561,
+   "tof": 0.967
+  },
+  {
+   "range": 1500,
+   "case": "정면·조준 3s",
+   "hit": 0.9789,
+   "hull": 0.7132,
+   "turret": 0.2657,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 0.967
+  },
+  {
+   "range": 2000,
+   "case": "정면·완전노출·정지",
+   "hit": 0.7662,
+   "hull": 0.503,
+   "turret": 0.2631,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.289
+  },
+  {
+   "range": 2000,
+   "case": "정면·차체 상단만",
+   "hit": 0.5799,
+   "hull": 0.2503,
+   "turret": 0.3296,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.289
+  },
+  {
+   "range": 2000,
+   "case": "정면·포탑만(헐다운)",
+   "hit": 0.3526,
+   "hull": 0,
+   "turret": 0.3526,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.289
+  },
+  {
+   "range": 2000,
+   "case": "측면·횡단 10m/s",
+   "hit": 0.7223,
+   "hull": 0.518,
+   "turret": 0.2043,
+   "sigmaX": 0.8572,
+   "sigmaZ": 0.3826,
+   "tof": 1.289
+  },
+  {
+   "range": 2000,
+   "case": "정면·자차 10m/s 기동",
+   "hit": 0.6215,
+   "hull": 0.4024,
+   "turret": 0.2191,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 1.289
+  },
+  {
+   "range": 2000,
+   "case": "정면·조준 0.4s",
+   "hit": 0.2914,
+   "hull": 0.1871,
+   "turret": 0.1043,
+   "sigmaX": 0.8561,
+   "sigmaZ": 0.8561,
+   "tof": 1.289
+  },
+  {
+   "range": 2000,
+   "case": "정면·조준 3s",
+   "hit": 0.9153,
+   "hull": 0.6272,
+   "turret": 0.2881,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 1.289
+  },
+  {
+   "range": 3000,
+   "case": "정면·완전노출·정지",
+   "hit": 0.5156,
+   "hull": 0.3323,
+   "turret": 0.1833,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.934
+  },
+  {
+   "range": 3000,
+   "case": "정면·차체 상단만",
+   "hit": 0.3645,
+   "hull": 0.161,
+   "turret": 0.2035,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.934
+  },
+  {
+   "range": 3000,
+   "case": "정면·포탑만(헐다운)",
+   "hit": 0.2099,
+   "hull": 0,
+   "turret": 0.2099,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.934
+  },
+  {
+   "range": 3000,
+   "case": "측면·횡단 10m/s",
+   "hit": 0.4332,
+   "hull": 0.3131,
+   "turret": 0.1201,
+   "sigmaX": 0.9751,
+   "sigmaZ": 0.3826,
+   "tof": 1.934
+  },
+  {
+   "range": 3000,
+   "case": "정면·자차 10m/s 기동",
+   "hit": 0.3728,
+   "hull": 0.2395,
+   "turret": 0.1333,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 1.934
+  },
+  {
+   "range": 3000,
+   "case": "정면·조준 0.4s",
+   "hit": 0.1454,
+   "hull": 0.0933,
+   "turret": 0.052,
+   "sigmaX": 0.8561,
+   "sigmaZ": 0.8561,
+   "tof": 1.934
+  },
+  {
+   "range": 3000,
+   "case": "정면·조준 3s",
+   "hit": 0.7274,
+   "hull": 0.4751,
+   "turret": 0.2522,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 1.934
+  }
+ ]
+}
