@@ -34,15 +34,17 @@
 
 ## 2. 미국 120mm 탄약
 
-| 탄약 | 분류 | 2,000m/0° 수치 | 상태 |
-|---|---|---:|---|
-| M829 | APFSDS | KE 450 | M1A1 기본 |
-| M829A1 | APFSDS | KE 560 | M1A1 HA 기본 |
-| M829A2 | APFSDS | **KE 635** | **1994** · 신규 목록 등록, 기본탄/적재 프리셋 미지정 |
-| M830 | HEAT-MP | CE 480 | M1A1 및 HA 기본 다목적탄 |
-| M830A1 | HEAT-MP (MPAT) | **CE 460** | **1994** · 신규 목록 등록, 기본탄/적재 프리셋 미지정 |
+| 탄약 | 분류 | 2,000m/0° 게임 관통력 | **포구초속 (m/s)** | 상태 |
+|---|---|---:|---:|---|
+| M829 | APFSDS | KE 450 | **1,670** | M1A1 기본 |
+| M829A1 | APFSDS | KE 560 | **1,575** | M1A1 HA 기본 |
+| M829A2 | APFSDS | **KE 635** | **1,680** | **1994 · 데이터만 사전 등록 / 현재 게임 미사용** |
+| M830 | HEAT-MP | CE 480 | **1,140** | M1A1 및 HA 기본 다목적탄 |
+| M830A1 | HEAT-MP (MPAT) | **CE 460** | **1,410** | **1994 · 데이터만 사전 등록 / 현재 게임 미사용** |
 
-
+- **포구초속 1순위 근거 (공개 미군 자료):** [USMC *MCWP 3-12 Marine Corps Tank Employment* (2005), Appendix D](https://www.marines.mil/Portals/1/Publications/MCWP%203-12%20Marine%20Corps%20Tank%20Employment.pdf)는 M829 **1,670**, M829A1 **1,575**, M829A2 **1,680**, M830A1 **1,410m/s**를 제시한다. [미 육군 *Direct Fire Ammunition Handbook* (2021), pp. 113·116·118](https://jpeoaa.army.mil/Portals/94/MAS/Documents/MASHandbook_2021.pdf)은 M830A1 **1,410**, M830 **약 1,140(1,139.9)**, M829A2 **1,680m/s**를 확인한다. [Jane's Ammunition Handbook (2001–2002)](https://index.crashjb.site.nfoservers.com/Boogaloo2020/Marksmanship%20%26%20Ballistics/Ballistics/Jane%27s%20Ammunition%20Handbook.pdf)도 M829 **1,670m/s**를 제시한다.
+- **출처 충돌 처리:** USMC *MCWP 3-12*의 M830 도판에는 **1,410m/s**가 기재되지만, 독립적인 미 육군 2021 핸드북 및 *FM 3-20.12*의 M830 수치는 **1,140m/s**이다. 본 게임 기준값은 **1,140m/s**로 채택하며 도판의 불일치를 기록한다. **M830과 M830A1은 서로 다른 탄**이므로 같은 초속으로 처리하지 않는다.
+- **M829A2 / M830A1 운용 상태:** **현재 TACTICAL에서 사용하지 않는다.** 1994년 이후 시대를 위한 **탄종 데이터·포구초속·기존 게임용 관통력만 사전 등록**한 상태다. **1989년 본편 전차의 기본탄, 96개 적재 프리셋, 플레이어 선택 목록, AI 자동 선택, 전투 중 재보급 후보에는 넣지 않는다.** 추후 별도의 채택 결정 없이는 사용 가능 탄종으로 취급하지 않는다. 실제 역사에서는 이후 생산·배치된 탄이라는 사실과, **현재 게임 미사용** 상태를 구분한다.
 - M830 등 HEAT계 탄약의 거리별 관통력 감쇠 규칙은 KE탄과 별도로 처리할 예정이며 세부표 미정.
 
 
@@ -65,17 +67,21 @@
 
 ## 4. 서독 120mm 탄약
 
-| 탄약 | 분류 | 2,000m/0° 수치 | 메모 |
-|---|---|---:|---|
-| DM13 (120mm) | APFSDS | KE 355 | 구형 |
-| DM23 (120mm) | APFSDS | KE 380 | 별도 선택 탄약 |
-| DM23A1 (120mm) | APFSDS | KE 410 | **DM23과 별도 선택**; DM33 부족 시 화력 유지용 |
-| DM33 (120mm) | APFSDS | KE 450 | 상대적으로 재고가 풍부한 이전형/대체탄(게임 설정) |
-| DM33A1 (120mm) | APFSDS | KE 470 | Leopard 2 기본 최신 주력탄, 보급 부족 가능 |
-| DM43 (120mm) | APFSDS | KE 505 | 1989년 전시 개발 가속·시험탄 선행배치 **가상 설정** |
-| DM12 (120mm) | HEAT-MP | CE 480 | 상대적으로 저렴한 구형 다목적탄 |
-| DM12A1 (120mm) | HEAT-MP | CE 480 | Leopard 2 기본 다목적탄 |
+| 탄약 | 분류 | 2,000m/0° 게임 관통력 | **포구초속 (m/s)** | 메모 |
+|---|---|---:|---:|---|
+| DM13 (120mm) | APFSDS | KE 355 | **1,650** | 구형 · 미 육군 교범 근거 |
+| DM23 (120mm) | APFSDS | KE 380 | **1,650** | 별도 선택 탄약 · 미 육군 교범 근거 |
+| DM23A1 (120mm) | APFSDS | KE 410 | **1,650** | **DM23과 별도 선택**; 독일 전문자료 근거, 게임상 별도 레코드 |
+| DM33 (120mm) | APFSDS | KE 450 | **1,650** | 이전형/대체탄 · Jane's 근거 |
+| DM33A1 (120mm) | APFSDS | KE 470 | **1,650** | Leopard 2 기본 최신 주력탄 · 독일 전문자료 근거 |
+| DM43 (120mm) | APFSDS | KE 505 | **1,660** | **워썬더 잠정값** · 1989년 전시 개발 가속·시험탄 선행배치 가상 설정 |
+| DM12 (120mm) | HEAT-MP | CE 480 | **1,140** | 구형 다목적탄 · Jane's 근거 |
+| DM12A1 (120mm) | HEAT-MP | CE 480 | **1,140** | Leopard 2 기본 다목적탄 · 독일 전문자료/워썬더 교차 확인 |
 
+- **서독 포구초속 제1순위:** 미 육군 [*TM 43-0001-28-3* (1986), pp. 2-17~2-18](https://www.bulletpicker.com/pdf/TM-43-0001-28-3.pdf)은 Rheinmetall **DM13·DM23 120mm를 함께 기술하며 1,650m/s**를 명시한다. [*Jane's Armoured Fighting Vehicle Retrofit Systems 1993–94*](https://www.scribd.com/document/695307933/Jane-s-Armoured-Fighting-Vehicle-Retrofit-Systems-1993-94)는 **DM33 1,650m/s**, **DM12 1,140m/s**를 명시한다.
+- **서독 전문 2차 자료:** [Das Panzerdetail — Rheinmetall 120mm](https://www.kotsch88.de/m_120_mm.htm)는 **DM23A1 및 DM33A1 각각 1,650m/s**, **DM12A1 1,140m/s**로 제시한다. 이 값은 실제 군/제조사 원문의 별도 각 형식별 탄속 확인 수준은 아니므로, **2차 검증값**으로 분류한다.
+- **워썬더와 자료가 충돌할 경우:** [War Thunder Rh120 L/44 탄약표](https://old-wiki.warthunder.com/Rh120_L/44_%28120_mm%29/Ammunition)에는 **DM23·DM33 1,640m/s**가 나오지만, 위 **교범·Jane's의 1,650m/s를 우선**했다. 워썬더의 DM13 1,650, DM12/DM12A1 1,140은 본 표와 같다.
+- **DM43 명칭 혼동 주의:** 본 게임 탄종명은 **DM43**(1989년 전시 조기투입 가정)이고, Jane's 2001–2002의 **1,740m/s는 별도 명칭인 DM43A1**의 제원이다([Jane's Ammunition Handbook](https://index.crashjb.site.nfoservers.com/Boogaloo2020/Marksmanship%20%26%20Ballistics/Ballistics/Jane%27s%20Ammunition%20Handbook.pdf)). 서로 자동 동일시하지 않고, **DM43 자체 수치는 워썬더의 1,660m/s를 임시 채택**한다. 명확한 원형 DM43의 신빙성 높은 제원이 확인되면 이 항목부터 재검증한다.
 - DM23과 DM23A1의 **현실 제식명·개량형 구분에는 사료상 불확실성이 있다는 논의가 있었으나**, 게임에서는 서로 다른 수치/재고의 별도 탄약으로 유지하기로 함.
 - 120mm DM33은 **KE 450**, DM33A1은 **KE 470**의 별도 게임 탄종이다. 역사적으로 서로 다른 실측 관통력을 확정했다는 주장이 아니며, 게임상 재고·보급을 구분하기 위한 독립 레코드다.
 - DM12와 DM12A1은 **대장갑 관통력 동일(CE 480)**. A1의 파편 슬리브에 따른 **대인 파편 효과 강화**로 선택 가치를 구분하고, DM12는 낮은 가격/구형 재고로 구분.
