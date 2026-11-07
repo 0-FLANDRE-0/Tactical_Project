@@ -1,0 +1,139 @@
+{
+  "version": "0.4-WIP07B",
+  "date": "2026-11-07",
+  "baseline": "e9f037cc6edca994e3f19297d3e0aa6c491be164",
+  "mainAtStart": "776f02cd7c4bffe65a24f9c13478b590cabe1a93",
+  "branch": "feat/wip07-observation",
+  "PR": 3,
+  "initialWorktree": "clean; no AGENTS.md",
+  "node": "v24.22.1",
+  "python": "3.12.14",
+  "checks": [
+    {
+      "command": "node --test tests/look-animation.test.cjs tests/ui-cache.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs",
+      "passed": 88,
+      "failed": 0,
+      "kind": "observation/actual core/LOS oracle and UI cache"
+    },
+    {
+      "command": "node tests/input.test.cjs",
+      "passed": 35,
+      "failed": 0,
+      "kind": "fake DOM/input"
+    },
+    {
+      "command": "node tests/map.test.cjs",
+      "passed": 16,
+      "failed": 0,
+      "kind": "actual map/mobility"
+    },
+    {
+      "command": "node tests/visibility.test.cjs",
+      "passed": 12,
+      "failed": 0,
+      "kind": "geometry/mask/map"
+    },
+    {
+      "command": "node tests/vehicle.test.cjs",
+      "passed": 9,
+      "failed": 0,
+      "kind": "profiles/mobility/actual Node Worker/stale response"
+    }
+  ],
+  "nodePassed": 160,
+  "nodeFailed": 0,
+  "browser": {
+    "browser": "156.0.8078.79",
+    "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+    "checks": [
+      "single HTML starts offline with actual canvas",
+      "guard world point input, actual turret pose and pause",
+      "terrain hold runs real embedded Worker and composes sectors",
+      "silhouette reuses artwork but contains only black opaque pixels",
+      "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+      "identified and remembered contacts update panel permissions then expire selection",
+      "mobile viewport 844×390 has no horizontal overflow and controls stay in map",
+      "mobile viewport 390×844 has no horizontal overflow and controls stay in map",
+      "reduced-motion and normal views keep same actual observation state",
+      "actual core team contact stays distinct from selected vehicle observation and direct acquisition",
+      "actual browser command cancellation and automatic return respect separate guard orders",
+      "no application page errors"
+    ],
+    "passed": 12,
+    "failed": 0,
+    "errors": [],
+    "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected only for UI privacy checks. Additional team-sharing test runs actual core on the original map with deterministic scenario/profile setup; no contact injection. Not Android hardware or real thermal/ballistic validation."
+  },
+  "syntax": {
+    "jsCjs": 37,
+    "python": 2,
+    "failed": 0
+  },
+  "losEquivalence": {
+    "file": "WIP07B-los-equivalence.json",
+    "rays": 13805,
+    "exposures": 1000,
+    "exact": true,
+    "sourceSHA256": "ab70525f12138b068daf00198bd49611d883c940cd8ac8c6fcfeac5a55f2e49c"
+  },
+  "scenarios": {
+    "file": "WIP07B-comparison.json",
+    "scenarios": 4,
+    "trialsPerVariant": 3,
+    "separateProcesses": 6,
+    "comparedCompleteStateOutputs": 24,
+    "allStateStringsExactlyEqual": true
+  },
+  "artifact": {
+    "html": "Tactical_v0.4_WIP07B.html",
+    "htmlBytes": 8262184,
+    "htmlSHA256": "6d5ed68a48309f1cc503f96174c527fd1135723f507bd8c03d80304466dcc34c",
+    "zip": "Tactical_v0.4_WIP07B.zip",
+    "zipBytes": 1606413,
+    "zipSHA256": "63435fa9d29549c7380df144ada5602845905c082503b25d1fdfe48904f00bd0",
+    "extractedMatchesDist": true
+  },
+  "zipCRC": "passed",
+  "summaryBytes": 265625,
+  "failed": [],
+  "blocked": [
+    {
+      "check": "file://",
+      "reason": "ERR_BLOCKED_BY_ADMINISTRATOR"
+    }
+  ],
+  "notRun": [
+    "physical Android touch/memory/heat/sustained FPS",
+    "whole-game 100 moving vehicle sustained FPS",
+    "original DEM/GDAL source cross-check"
+  ],
+  "unchanged": {
+    "src/observation.js": "fc7fbd8375579369c8c03c6be9c662626816adca4f60c7d0dcb488f0fd5a7bd4",
+    "src/vehicle-profiles.js": "031b0325529fecd778473fc928a7d1338da012dd0479c0362bddeb6b1c55f677",
+    "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7",
+    "src/contour-data.js": "1a32d18742382c7ad18446adb69e5ab346c20c83481790dbae727ab0cd095ba2",
+    "data/rasdorf_4km.json": "034b6749eccfe23ead935dd6d2db62fa0064e2eeb539a22b479638a9de0a87ce",
+    "Tactical_v0.4_WIP07A.html": "abd2f38b4984e2312aad22a1c5e79c93ae092403785ea3c4592d7c5829b5a500",
+    "Tactical_v0.4_WIP07A.zip": "4da317d290f4e1123903161cca9ef953fb0b2cce3bc79d857255691b1ef8bc9a",
+    "tests/releases/WIP07A-validation.json": "7e9f3e71fd9c78c1ec7a1bf05e28431579a2f50b1fd85c8bd2fe544e089dbc23",
+    "tests/releases/WIP07A-benchmark.json": "1c1d8e3ae2eb8b32cd29e8068f5febef3028fb0720316ef3ba59e2b0fdda7c79"
+  },
+  "sourceSHA256": {
+    "src/map-renderer.js": "998c9cc2f1b3a177badf57a8dc2f2c8c7d8ecfa27c42d6b799f7f0dabb5137d9",
+    "src/app.js": "930ce425042feb1b2f07392abcb5f9f1902431a5fc87ff8bc7cf6af25a92fed2",
+    "src/look-animation.js": "1695d4e6464da0dea26285dae7a24ef61266df200065055f2f1916a0f547abf0",
+    "src/visibility.js": "30a27ce5fbdb97a281cf1b4fe3c72d6e63309193358a6efbe279a33df345c46b",
+    "src/observation.js": "fc7fbd8375579369c8c03c6be9c662626816adca4f60c7d0dcb488f0fd5a7bd4",
+    "src/visibility-client.js": "614904e6c3625a8fb032a103f4c14a911438afa4e21273d37fc0e90951ac7001",
+    "src/contour-data.js": "1a32d18742382c7ad18446adb69e5ab346c20c83481790dbae727ab0cd095ba2",
+    "src/vehicle-profiles.js": "031b0325529fecd778473fc928a7d1338da012dd0479c0362bddeb6b1c55f677",
+    "src/sim-core.js": "2aac88564c88a83b7449264372ab61333010c86e4f8740cae6aa2c4bd10a1897",
+    "src/ui-cache.js": "cf7f5c60154c6b7534b11eda20e782b8d956e809a015d9fa30c6a2eeb762709c",
+    "src/m1a2-art.js": "ab988218e32ee7cd10e535ff6b9ee2d9c1675e133dc25287b2fe23383df97358",
+    "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7",
+    "src/page.html": "527597ccb3a25702a56e5d1e6566b0fd91047e8d35e796a301d16aa70ddb2477",
+    "src/styles.css": "150767fe7344072a14afa2fa85994dcf32826e76af75fcf42d6fef084aa16082",
+    "build.py": "f659a618685b156c55e5e0cb83c14dcf6ace2191e6071fa1cbc64b4693fc98a7"
+  }
+}

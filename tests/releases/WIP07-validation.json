@@ -1,0 +1,117 @@
+{
+  "version": "0.4-WIP07",
+  "date": "2026-11-06",
+  "baseMain": "5eea28cf80deaa1ffdf9494090d3e2e3f621e636",
+  "branch": "feat/wip07-observation",
+  "initialWorktree": "clean fresh clone; no AGENTS.md",
+  "node": "v24.22.1",
+  "python": "3.12.14",
+  "artifact": {
+    "files": [
+      "Tactical_v0.4_WIP07.html",
+      "dist/index.html"
+    ],
+    "bytes": 8251170,
+    "sha256": "60748e83cb4720f692906467da767acf8912cacac8cc2ec7b61668bf18b19a5b",
+    "equal": true
+  },
+  "checks": [
+    {
+      "command": "node --test tests/look-animation.test.cjs tests/ui-cache.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs",
+      "passed": 55,
+      "failed": 0,
+      "kind": "Node pure + actual core/flat/real-map tests"
+    },
+    {
+      "command": "node tests/input.test.cjs",
+      "passed": 35,
+      "failed": 0,
+      "kind": "fake DOM and renderer"
+    },
+    {
+      "command": "node tests/map.test.cjs",
+      "passed": 16,
+      "failed": 0,
+      "kind": "actual map and mobility"
+    },
+    {
+      "command": "node tests/visibility.test.cjs",
+      "passed": 12,
+      "failed": 0,
+      "kind": "geometry and coverage fixture"
+    },
+    {
+      "command": "node tests/vehicle.test.cjs",
+      "passed": 9,
+      "failed": 0,
+      "kind": "mobility/profile + actual Node worker and fake stale-response worker"
+    }
+  ],
+  "nodeTotal": 127,
+  "syntaxFiles": 28,
+  "browser": {
+    "browser": "156.0.8078.79",
+    "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+    "fileURL": "blocked by administrator policy; not verified",
+    "checks": [
+      "single HTML starts offline with actual canvas",
+      "guard world point input, actual turret pose and pause",
+      "terrain hold runs real embedded Worker and composes sectors",
+      "silhouette reuses artwork but contains only black opaque pixels",
+      "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+      "identified and remembered contacts update panel permissions then expire selection",
+      "mobile viewport 844×390 has no horizontal overflow and controls stay in map",
+      "mobile viewport 390×844 has no horizontal overflow and controls stay in map",
+      "reduced-motion and normal views keep same actual observation state",
+      "no application page errors"
+    ],
+    "passed": 10,
+    "failed": 0,
+    "errors": [],
+    "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected to test UI permissions. Not Android hardware or real thermal/ballistic validation."
+  },
+  "benchmark": "WIP07-benchmark.json",
+  "failed": [],
+  "blocked": [
+    {
+      "check": "file:// double-click path",
+      "reason": "ERR_BLOCKED_BY_ADMINISTRATOR in system Chromium; identical standalone HTML tested over local HTTP"
+    }
+  ],
+  "notRun": [
+    "physical Android multitouch/fullscreen/orientation/heat/sustained performance",
+    "original DEM/GDAL cross-check",
+    "moving 100-unit sustained browser FPS"
+  ],
+  "navigationContract": "nav16-M1A2-r4.62-long0.60-side0.40-v2 unchanged",
+  "sourceSHA256": {
+    "src/map-renderer.js": "998c9cc2f1b3a177badf57a8dc2f2c8c7d8ecfa27c42d6b799f7f0dabb5137d9",
+    "src/app.js": "ed3d9f6bf158d0f766871723af919ba1add06b56c67803f7b36e8594a4ea04ec",
+    "src/look-animation.js": "1695d4e6464da0dea26285dae7a24ef61266df200065055f2f1916a0f547abf0",
+    "src/visibility.js": "30a27ce5fbdb97a281cf1b4fe3c72d6e63309193358a6efbe279a33df345c46b",
+    "src/observation.js": "bcea9ab36b1a813c8c6729516f9e750edb240259d3c8c3e3089909272ab3a2ce",
+    "src/visibility-client.js": "614904e6c3625a8fb032a103f4c14a911438afa4e21273d37fc0e90951ac7001",
+    "src/contour-data.js": "1a32d18742382c7ad18446adb69e5ab346c20c83481790dbae727ab0cd095ba2",
+    "src/vehicle-profiles.js": "dd25c659b1d2f4ad799c2fa53438c5b3faf372db55587c53afd278c4a029b55c",
+    "src/sim-core.js": "90cf7ea69af89ad1ee607357948dc83c42a98a37f1c9540ccbe6edc5b957338e",
+    "src/ui-cache.js": "cf7f5c60154c6b7534b11eda20e782b8d956e809a015d9fa30c6a2eeb762709c",
+    "src/m1a2-art.js": "ab988218e32ee7cd10e535ff6b9ee2d9c1675e133dc25287b2fe23383df97358",
+    "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7",
+    "src/page.html": "4f13bc3c8b799d227113999f99edd6545ec23c62dbbc8ef7e0964c385684bfb3",
+    "src/styles.css": "b3c0583231c4e827b1736546ef0ffe51973ed3eddac295bf9ce186fba5e96241",
+    "build.py": "f659a618685b156c55e5e0cb83c14dcf6ace2191e6071fa1cbc64b4693fc98a7"
+  },
+  "zipArtifact": {
+    "file": "Tactical_v0.4_WIP07.zip",
+    "bytes": 1603496,
+    "sha256": "8ba5e4c1231d705db148c5966ad0575c4cb3ba55b1d68b65f44cac2244d9c4b5",
+    "members": [
+      "Tactical_v0.4_WIP07.html"
+    ],
+    "crcCheck": "passed",
+    "extractedHTMLBytes": 8251170,
+    "extractedHTMLSHA256": "60748e83cb4720f692906467da767acf8912cacac8cc2ec7b61668bf18b19a5b",
+    "extractedMatchesDist": true,
+    "note": "Packaging-only follow-up. Runtime HTML and previous functional test results unchanged."
+  }
+}

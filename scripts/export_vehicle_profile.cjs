@@ -1,6 +1,6 @@
 const fs=require('fs'),path=require('path'),profile=require('../src/vehicle-profiles.js').M1A2;
 const sourceDir=path.join(__dirname,'../data/vehicles');fs.mkdirSync(sourceDir,{recursive:true});
-const record={profile,baseline:'M1A2 basic; not M1A2 SEP v2/v3',reviewed:'2026-11-05',
+const record={profile,baseline:'M1A2 basic; not M1A2 SEP v2/v3',reviewed:'2026-11-07',
  sources:[
   {id:'GDLS',title:'Abrams M1A2 — Features & Specifications',url:'https://international.gdls.com/english/products/ABRAMS/M1A2.pdf',page:2,scope:'M1A2 dimensions, nominal weight, propulsion, forward performance, acceleration, ammunition'},
   {id:'DOD1993',title:'DoD IG Report 93-130, Appendix A — M1A2 characteristics',url:'https://media.defense.gov/1993/Jun/25/2001714749/-1/-1/1/93-130.pdf',scope:'Contemporaneous M1A2 cross-check; indexed extract available, PDF fetch returned 403'},
@@ -23,12 +23,13 @@ const record={profile,baseline:'M1A2 basic; not M1A2 SEP v2/v3',reviewed:'2026-1
   'mobility.maxLongitudinalGrade,mobility.maxSideGrade':{status:'family/SEP assumption',sources:['GDLS','USArmyTC'],original:'60% longitudinal, 40% side grade; combined inclines handled conservatively'},
   'mobility.pivotRate,mobility.turretRate,mobility.brakeDeceleration,mobility.surfaceSpeed':{status:'game tuning',note:'No measured timing/traction/braking curves claimed'},
   'sensors.eyeHeight':{status:'geometry estimate',value:2.65,note:'User-selected CITV-level viewpoint above ground; NOT turret-roof height and NOT an exact published optical-axis measurement'},
+  'sensors.ambient,sensors.commander,sensors.gunner,sensors.hunterKiller,sensors.tuning':{status:'fictional game tuning',note:'WIP07A channel provenance, forward reciprocal scans and independent evidence decay; 200m silhouette-only, commander 2500m 90deg 50deg/s, gunner 2000m 30deg 40deg/s. Equipment flags independent of hunter-killer. See docs/OBSERVATION_WIP07A.md for evidence, memory and designation defaults.'},
   'sensors.observationLimit':{status:'game tuning',value:4000,note:'Observation computation cap; not an actual guaranteed detection or identification distance'},
   'weapons.mainGun.referenceEngagementRange':{status:'game tuning',value:3000,note:'Future engagement reference only; not a ballistic maximum and does not limit LOS'},
   'weapons.mainGun.ammunitionCapacity':{status:'published capacity only',source:'GDLS',value:42,note:'No ammo split, reload, damage, penetration or firing implemented'},
   'exposure':{status:'game geometry samples',note:'Hull/turret sample locations follow model heights; not a hit probability model'},
   'navigation':{status:'derived conservative clearance',formula:'ceil((hypot(hullLength/2,width/2)+0.25)*100)/100 = 4.62m',note:'Cannon tube does not collide; 16m navigation nodes and conservative circle are retained'}
- },limits:['Mass and engine rating are profile metadata, not a full powertrain simulation','Observation is a 360-degree aggregate with terrain/building/forest LOS, without sensor scan timing, weather or detection probability','No SEP armour values or specific ammunition performance are inferred']};
+ },limits:['Mass and engine rating are profile metadata, not a full powertrain simulation','Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model','No SEP armour values or specific ammunition performance are inferred']};
 fs.writeFileSync(path.join(sourceDir,'M1A2.json'),JSON.stringify(record,null,2)+'\n');console.log('Exported M1A2 values and per-field provenance');
 
 const art=require('../src/m1a2-art.js'),svg=art.toSVG();

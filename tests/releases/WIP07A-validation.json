@@ -1,0 +1,156 @@
+{
+  "version": "0.4-WIP07A",
+  "date": "2026-11-07",
+  "baseline": "a2dd77012a514b9499d8ca28a7d7671a983ff193",
+  "initialMain": "c99a21c476746f2395e3b0282c29e8695479993e",
+  "syncedMain": "09580a30fd9ec81cb44e9845d6d8cabd8396e9af",
+  "branch": "feat/wip07-observation",
+  "PR": 3,
+  "node": "v24.22.1",
+  "python": "3.12.14",
+  "checks": [
+    {
+      "command": "node --test tests/look-animation.test.cjs tests/ui-cache.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs",
+      "passed": 81,
+      "failed": 0,
+      "kind": "pure + actual core; synthetic and actual map fixtures"
+    },
+    {
+      "command": "node tests/input.test.cjs",
+      "passed": 35,
+      "failed": 0,
+      "kind": "fake DOM and renderer"
+    },
+    {
+      "command": "node tests/map.test.cjs",
+      "passed": 16,
+      "failed": 0,
+      "kind": "actual map/mobility"
+    },
+    {
+      "command": "node tests/visibility.test.cjs",
+      "passed": 12,
+      "failed": 0,
+      "kind": "visibility geometry and map"
+    },
+    {
+      "command": "node tests/vehicle.test.cjs",
+      "passed": 9,
+      "failed": 0,
+      "kind": "profile/mobility/actual Node Worker/stale response adapter"
+    }
+  ],
+  "nodePassed": 153,
+  "nodeFailed": 0,
+  "browser": {
+    "browser": "156.0.8078.79",
+    "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+    "checks": [
+      "single HTML starts offline with actual canvas",
+      "guard world point input, actual turret pose and pause",
+      "terrain hold runs real embedded Worker and composes sectors",
+      "silhouette reuses artwork but contains only black opaque pixels",
+      "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+      "identified and remembered contacts update panel permissions then expire selection",
+      "mobile viewport 844×390 has no horizontal overflow and controls stay in map",
+      "mobile viewport 390×844 has no horizontal overflow and controls stay in map",
+      "reduced-motion and normal views keep same actual observation state",
+      "actual core team contact stays distinct from selected vehicle observation and direct acquisition",
+      "actual browser command cancellation and automatic return respect separate guard orders",
+      "no application page errors"
+    ],
+    "passed": 12,
+    "failed": 0,
+    "errors": [],
+    "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected only for UI privacy checks. Additional team-sharing test runs actual core on the original map with deterministic scenario/profile setup; no contact injection. Not Android hardware or real thermal/ballistic validation."
+  },
+  "syntax": {
+    "jsCjs": 32,
+    "python": 2,
+    "failed": 0
+  },
+  "artifact": {
+    "html": "Tactical_v0.4_WIP07A.html",
+    "htmlBytes": 8258144,
+    "htmlSHA256": "abd2f38b4984e2312aad22a1c5e79c93ae092403785ea3c4592d7c5829b5a500",
+    "zip": "Tactical_v0.4_WIP07A.zip",
+    "zipBytes": 1605270,
+    "zipSHA256": "4da317d290f4e1123903161cca9ef953fb0b2cce3bc79d857255691b1ef8bc9a",
+    "extractedMatchesDist": true
+  },
+  "zipCRC": "passed",
+  "R01_R22": {
+    "R01": "tests/observation-correction.test.cjs",
+    "R02": "tests/observation-correction.test.cjs",
+    "R03": "tests/observation-correction.test.cjs",
+    "R04": "tests/observation-correction.test.cjs",
+    "R05": "tests/observation-correction.test.cjs",
+    "R06": "tests/observation-correction.test.cjs",
+    "R07": "tests/observation-correction.test.cjs",
+    "R08": "tests/observation-correction.test.cjs",
+    "R09": "tests/observation-correction.test.cjs",
+    "R10": "tests/observation-correction.test.cjs",
+    "R11": "tests/observation-moving.test.cjs",
+    "R12": "tests/observation-moving.test.cjs",
+    "R13": "tests/observation-correction.test.cjs",
+    "R14": "tests/observation-moving.test.cjs",
+    "R15": "tests/observation-moving.test.cjs",
+    "R16": "tests/observation-moving.test.cjs",
+    "R17": "tests/observation-moving.test.cjs",
+    "R18": "tests/observation-moving.test.cjs",
+    "R19": "tests/observation-moving.test.cjs",
+    "R20": "tests/observation-moving.test.cjs",
+    "R21": "tests/observation-moving.test.cjs",
+    "R22": "tests/observation-correction.test.cjs"
+  },
+  "reproduction": {
+    "before": "WIP07A-before.json",
+    "after": "WIP07A-after.json",
+    "kind": "synthetic nine-sample LOS fixture; actual source loaded at baseline via git show"
+  },
+  "movingRegressions": "WIP07A-moving-regressions.json",
+  "benchmark": "WIP07A-benchmark.json",
+  "failed": [],
+  "blocked": [
+    {
+      "check": "file:// launch",
+      "reason": "ERR_BLOCKED_BY_ADMINISTRATOR"
+    }
+  ],
+  "notRun": [
+    "physical Android multitouch/fullscreen/orientation/thermal/sustained FPS",
+    "original DEM/GDAL source cross-check",
+    "sustained whole-game FPS at 100 moving vehicles"
+  ],
+  "remaining": [
+    {
+      "problem": "100 moving vehicles exceed 50ms CPU step budget",
+      "medianStepMs": 65.24689800000124,
+      "nextEntry": "src/sim-core.js exposure/lineOfSight exact ray batching and deterministic sampling scheduler; retain 10Hz semantics and no stale evidence"
+    }
+  ],
+  "unchanged": [
+    "map raw data and original heightfield",
+    "4.62m footprint and navigation contract",
+    "WIP07 HTML/ZIP and prior tests/releases/WIP07-* artifacts",
+    "archive design documents preserved from main"
+  ],
+  "sourceSHA256": {
+    "src/map-renderer.js": "998c9cc2f1b3a177badf57a8dc2f2c8c7d8ecfa27c42d6b799f7f0dabb5137d9",
+    "src/app.js": "133d477b7afb23fc6b16bfe4eceb32e710598a8c8441491906c07d7f517f582f",
+    "src/look-animation.js": "1695d4e6464da0dea26285dae7a24ef61266df200065055f2f1916a0f547abf0",
+    "src/visibility.js": "30a27ce5fbdb97a281cf1b4fe3c72d6e63309193358a6efbe279a33df345c46b",
+    "src/observation.js": "fc7fbd8375579369c8c03c6be9c662626816adca4f60c7d0dcb488f0fd5a7bd4",
+    "src/visibility-client.js": "614904e6c3625a8fb032a103f4c14a911438afa4e21273d37fc0e90951ac7001",
+    "src/contour-data.js": "1a32d18742382c7ad18446adb69e5ab346c20c83481790dbae727ab0cd095ba2",
+    "src/vehicle-profiles.js": "031b0325529fecd778473fc928a7d1338da012dd0479c0362bddeb6b1c55f677",
+    "src/sim-core.js": "ab70525f12138b068daf00198bd49611d883c940cd8ac8c6fcfeac5a55f2e49c",
+    "src/ui-cache.js": "cf7f5c60154c6b7534b11eda20e782b8d956e809a015d9fa30c6a2eeb762709c",
+    "src/m1a2-art.js": "ab988218e32ee7cd10e535ff6b9ee2d9c1675e133dc25287b2fe23383df97358",
+    "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7",
+    "src/page.html": "5bee9cd25e26e7804b06880bd137d126821191c53e6f3591dfd0d4aba728484b",
+    "src/styles.css": "150767fe7344072a14afa2fa85994dcf32826e76af75fcf42d6fef084aa16082",
+    "build.py": "f659a618685b156c55e5e0cb83c14dcf6ace2191e6071fa1cbc64b4693fc98a7"
+  }
+}

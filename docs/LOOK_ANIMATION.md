@@ -1,3 +1,5 @@
+> WIP06의 과거 화면 연출 문서다. WIP07에서는 실제 관측 상태로 교체했다. 현재 사용법과 동작은 [OBSERVATION_WIP07.md](OBSERVATION_WIP07.md)를 참조한다.
+
 # 시선 연출
 
 ## 사용법

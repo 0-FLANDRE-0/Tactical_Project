@@ -130,8 +130,6 @@
 <path d="M.45 .50V1.10M.58 .50V1.10" fill="none" stroke="#a0a98a" stroke-width="0.016"/>
 <path d="M0.694 -0.673a0.27 0.27 0 1 0 -0.54 0a0.27 0.27 0 1 0 0.54 0Z" fill="#384633" stroke="#44503a" stroke-width="0.03"/>
 <path d="M0.634 -0.673a0.21 0.21 0 1 0 -0.42 0a0.21 0.21 0 1 0 0.42 0Z" fill="#7b8468" stroke="#9ba38e" stroke-width="0.02"/>
-<path d="M.30 -.82H.56Q.64 -.82 .64 -.74V-.60Q.64 -.53 .56 -.53H.30Z" fill="#69745a" stroke="#384633" stroke-width="0.022"/>
-<path d="M0.6 -0.78h0.08000000000000007v0.21000000000000008h-0.08000000000000007Z" fill="#243b3d" stroke="#384633" stroke-width="0.018"/>
 <path d="M-0.12 0.4h0.48v0.16000000000000003h-0.48Z" fill="#2a3430" stroke="#384633" stroke-width="0.015"/>
 <path d="M.36 .48H1.38" fill="none" stroke="#2a3430" stroke-width="0.05"/>
 <path d="M-0.08 0.58h0.28v0.16000000000000003h-0.28Z" fill="#566048" stroke="#384633" stroke-width="0.015"/>
@@ -149,4 +147,5 @@
 <path d="M2.72 -.125V.125M2.77 -.125V.125M2.82 -.125V.125" fill="none" stroke="#384633" stroke-width="0.02"/>
 <path d="M3.12 -.16V.16M3.85 -.16V.16M4.45 -.10V.10M4.95 -.10V.10" fill="none" stroke="#44503a" stroke-width="0.022"/>
 <path d="M5.43 -0.06h0.1299999999999999v0.12h-0.1299999999999999Z" fill="#7b8468" stroke="#384633" stroke-width="0.015"/>
-<path d="M5.7 -0.07h0.01699999999999946v0.14h-0.01699999999999946Z" fill="#232a23" stroke="none"/></g></g></svg>
+<path d="M5.7 -0.07h0.01699999999999946v0.14h-0.01699999999999946Z" fill="#232a23" stroke="none"/><path d="M.30 -.82H.56Q.64 -.82 .64 -.74V-.60Q.64 -.53 .56 -.53H.30Z" fill="#69745a" stroke="#384633" stroke-width="0.022"/>
+<path d="M0.6 -0.78h0.08000000000000007v0.21000000000000008h-0.08000000000000007Z" fill="#243b3d" stroke="#384633" stroke-width="0.018"/></g></g></svg>

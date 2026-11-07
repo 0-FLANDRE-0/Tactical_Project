@@ -1,0 +1,23 @@
+{
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+  "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+  "checks": [
+    "single HTML starts offline with actual canvas",
+    "guard world point input, actual turret pose and pause",
+    "terrain hold runs real embedded Worker and composes sectors",
+    "silhouette reuses artwork but contains only black opaque pixels",
+    "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+    "identified and remembered contacts update panel permissions then expire selection",
+    "mobile viewport 844×390 has no horizontal overflow and controls stay in map",
+    "mobile viewport 390×844 has no horizontal overflow and controls stay in map",
+    "reduced-motion and normal views keep same actual observation state",
+    "actual core team contact stays distinct from selected vehicle observation and direct acquisition",
+    "actual browser command cancellation and automatic return respect separate guard orders",
+    "no application page errors"
+  ],
+  "passed": 12,
+  "failed": 0,
+  "errors": [],
+  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected only for UI privacy checks. Additional team-sharing test runs actual core on the original map with deterministic scenario/profile setup; no contact injection. Not Android hardware or real thermal/ballistic validation."
+}

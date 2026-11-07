@@ -52,7 +52,61 @@
       "name": "CITV",
       "eyeHeight": 2.65,
       "observationLimit": 4000,
-      "targetReferenceHeight": 1.5
+      "targetReferenceHeight": 1.5,
+      "hunterKiller": true,
+      "ambient": {
+        "enabled": true,
+        "range": 200,
+        "fov": 6.283185307179586,
+        "eyeHeight": 2.65
+      },
+      "commander": {
+        "enabled": true,
+        "independent": true,
+        "range": 2500,
+        "fov": 1.5707963267948966,
+        "rate": 0.8726646259971648,
+        "eyeHeight": 2.65,
+        "scan": {
+          "amplitude": 0.7853981633974483,
+          "period": 20,
+          "rate": 0.2617993877991494
+        }
+      },
+      "gunner": {
+        "enabled": true,
+        "range": 2000,
+        "fov": 0.5235987755982988,
+        "rate": 0.6981317007977318,
+        "eyeHeight": 2.65,
+        "scan": {
+          "amplitude": 0.2617993877991494,
+          "period": 12,
+          "rate": 0.13962634015954636
+        }
+      },
+      "tuning": {
+        "queryPeriod": 0.1,
+        "geometryMaxAge": 0.5,
+        "detectThreshold": [
+          0.35,
+          1.1
+        ],
+        "identifyThreshold": [
+          1.4,
+          3
+        ],
+        "evidenceHalfLife": 8,
+        "memorySeconds": 30,
+        "knowledgeSeconds": 120,
+        "lossGrace": 1.2,
+        "focusSeconds": 2,
+        "focusLimit": 8,
+        "revisitSeconds": 12,
+        "designationSeconds": 18,
+        "designationStale": 6,
+        "acquireSeconds": 0.4
+      }
     },
     "weapons": {
       "mainGun": {
@@ -95,7 +149,7 @@
     }
   },
   "baseline": "M1A2 basic; not M1A2 SEP v2/v3",
-  "reviewed": "2026-11-05",
+  "reviewed": "2026-11-07",
   "sources": [
     {
       "id": "GDLS",
@@ -212,6 +266,10 @@
       "value": 2.65,
       "note": "User-selected CITV-level viewpoint above ground; NOT turret-roof height and NOT an exact published optical-axis measurement"
     },
+    "sensors.ambient,sensors.commander,sensors.gunner,sensors.hunterKiller,sensors.tuning": {
+      "status": "fictional game tuning",
+      "note": "WIP07A channel provenance, forward reciprocal scans and independent evidence decay; 200m silhouette-only, commander 2500m 90deg 50deg/s, gunner 2000m 30deg 40deg/s. Equipment flags independent of hunter-killer. See docs/OBSERVATION_WIP07A.md for evidence, memory and designation defaults."
+    },
     "sensors.observationLimit": {
       "status": "game tuning",
       "value": 4000,
@@ -240,7 +298,7 @@
   },
   "limits": [
     "Mass and engine rating are profile metadata, not a full powertrain simulation",
-    "Observation is a 360-degree aggregate with terrain/building/forest LOS, without sensor scan timing, weather or detection probability",
+    "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
     "No SEP armour values or specific ammunition performance are inferred"
   ]
 }
