@@ -867,5 +867,5 @@ footer{
 
 /* WIP08 manual firing controls */
 .command:disabled{opacity:.4;cursor:default}.command.fire:not(:disabled){color:#ffdfa0;border-color:#bd9b5d}
-.look-title{flex-wrap:wrap;gap:6px}#fireState{color:#f2d496}#fireDetails,#shotDetails{font-size:10px;line-height:1.6;color:#d9ceaa}
+.look-title{flex-wrap:wrap;gap:6px}#fireState{color:#f2d496}#fireDetails,#shotDetails,#hitSummary{font-size:10px;line-height:1.6;color:#d9ceaa}
 @media(max-width:600px){.dock{gap:2px;padding:4px}.command{min-width:42px;padding:7px 5px;font-size:9px}}

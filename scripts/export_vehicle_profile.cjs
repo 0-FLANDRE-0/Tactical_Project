@@ -2,6 +2,7 @@ const fs=require('fs'),path=require('path'),profile=require('../src/vehicle-prof
 const sourceDir=path.join(__dirname,'../data/vehicles');fs.mkdirSync(sourceDir,{recursive:true});
 const record={profile,baseline:'M1A2 basic; not M1A2 SEP v2/v3',reviewed:'2026-11-07',
  sources:[
+  {id:'USER_WIP09',title:'TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md',path:'../../docs/TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md',scope:'Fictional game error-budget coefficients, presented-height bands and reference table; not real weapon performance'},
   {id:'USER_TOP_VIEW',title:'M1_Abrams_TopView.html (user supplied)',path:'references/M1_Abrams_TopView.html',scope:'M1A2 exterior vectors and separate art origin/ring pivot; supplied visual approximation, not independently verified measurement'},
   {id:'GDLS',title:'Abrams M1A2 — Features & Specifications',url:'https://international.gdls.com/english/products/ABRAMS/M1A2.pdf',page:2,scope:'M1A2 dimensions, nominal weight, propulsion, forward performance, acceleration, ammunition'},
   {id:'DOD1993',title:'DoD IG Report 93-130, Appendix A — M1A2 characteristics',url:'https://media.defense.gov/1993/Jun/25/2001714749/-1/-1/1/93-130.pdf',scope:'Contemporaneous M1A2 cross-check; indexed extract available, PDF fetch returned 403'},
@@ -29,7 +30,7 @@ const record={profile,baseline:'M1A2 basic; not M1A2 SEP v2/v3',reviewed:'2026-1
   'sensors.observationLimit':{status:'game tuning',value:4000,note:'Observation computation cap; not an actual guaranteed detection or identification distance'},
   'weapons.mainGun.referenceEngagementRange':{status:'game tuning',value:3000,note:'Future engagement reference only; not a ballistic maximum and does not limit LOS'},
   'artId':{status:'explicit artwork reference',note:'Vehicle registry IDs and artwork IDs are independent; this stage supports M1A2 artwork only'},
-  'fireControl':{status:'fictional game tuning',note:'WIP08 abstract aim readiness, hit/conditional-zone rolls, 2.2m game firing height at the transformed muzzle, test rounds and one-second anti-repeat interval. Not measured M1A2 fire control, ballistics or real weapon accuracy.'},
+  'fireControl':{status:'fictional game tuning',source:'USER_WIP09',note:'WIP09 fictional RTS error budget and presented rectangles; continuous game laying, observed velocity vector, independent hit/conditional-zone rolls. All coefficients including muzzleVelocity are uncalibrated game tuning, not measured M1A2 fire-control or ammunition data. 2.2m game firing height and one-second input interval remain unchanged. See docs/FIRE_CONTROL_WIP09.md.'},
   'weapons.mainGun.ammunitionCapacity':{status:'published capacity only',source:'GDLS',value:42,note:'Test-round counter and abstract manual firing active; no ammo split, loading transport, ballistic/penetration/damage model'},
   'exposure':{status:'game geometry samples',note:'Hull/turret sample locations follow model heights; not a hit probability model'},
   'navigation':{status:'derived conservative clearance',formula:'ceil((hypot(hullLength/2,width/2)+0.25)*100)/100 = 4.62m',note:'Cannon tube does not collide; 16m navigation nodes and conservative circle are retained'}

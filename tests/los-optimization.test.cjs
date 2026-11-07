@@ -18,7 +18,7 @@ test('12000 real-map LOS results exactly match baseline, including reason/optica
 test('1000 real-map nine-point exposure records exactly match at independent hull/turret angles',()=>{
  for(let i=0;i<1000;i++){
   const o=C.makeTank('A','A',C.hash(i,711)*4000,C.hash(i,712)*4000,i),t=C.makeTank('T','T',C.hash(i,713)*4000,C.hash(i,714)*4000,i*.27,'red');t.turret=i*.39;
-  assert.deepEqual(C.exposure(o,t,[2.65,1.4,10][i%3]),B.exposure(o,t,[2.65,1.4,10][i%3]),'exposure '+i);report.exposures++;
+  const ex=C.exposure(o,t,[2.65,1.4,10][i%3]);assert.deepEqual({...ex,samples:ex.samples.map(({along,z,col,row,...v})=>v)},B.exposure(o,t,[2.65,1.4,10][i%3]),'prior exposure fields '+i);report.exposures++;
  }
  report.cases.push('1000 exposure records (9000 rays), independent poses');
 });
@@ -51,4 +51,4 @@ test('forest/scrub prefix and canopy boundaries preserve exact optical accumulat
  for(const eye of [1.4,14.99999999,15,15.00000001,30])for(const height of [.8,2.2,15,30])for(const fast of [false,true])for(const [x0,x1]of [[0,31.9],[0,64],[0,160],[160,0],[32,128],[128,32],[32,32]])equal(A,B,{x:x0,y:1000},{x:x1,y:1000},height,fast,eye);
  assert(equal(A,B,{x:0,y:1000},{x:64,y:1000},1.5).forestDepth>0);report.cases.push('scrub + forest prefix, 15m canopy boundary, both directions');
 });
-test.after(()=>fs.writeFileSync(path.resolve(__dirname,'releases/WIP08A-los-equivalence.json'),JSON.stringify(report,null,2)+'\n'));
+test.after(()=>fs.writeFileSync(path.resolve(__dirname,'releases/WIP09-los-equivalence.json'),JSON.stringify(report,null,2)+'\n'));
