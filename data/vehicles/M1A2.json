@@ -143,6 +143,8 @@
       "fireHeight": 2.2,
       "shotIntervalSeconds": 1,
       "testRounds": 42,
+      "flightSeconds": 0.8,
+      "effectSeconds": 2,
       "dispersionMrad": 0.25,
       "layStartMrad": 1.5,
       "layMinMrad": 0.1,
@@ -340,6 +342,10 @@
       "status": "fictional game tuning",
       "source": "USER_WIP09",
       "note": "WIP09 fictional RTS error budget and presented rectangles; continuous game laying, observed velocity vector, independent hit/conditional-zone rolls. All coefficients including muzzleVelocity are uncalibrated game tuning, not measured M1A2 fire-control or ammunition data. 2.2m game firing height and one-second input interval remain unchanged. See docs/FIRE_CONTROL_WIP09.md."
+    },
+    "fireControl.flightSeconds,fireControl.effectSeconds": {
+      "status": "nonphysical game timing",
+      "note": "WIP10 game-only subset: fixed 0.8s delayed decision and 2s screen effects; neither value is calculated from velocity, range or gravity. WIP09 probability tuning including maneuver terms is retained."
     },
     "weapons.mainGun.ammunitionCapacity": {
       "status": "published capacity only",

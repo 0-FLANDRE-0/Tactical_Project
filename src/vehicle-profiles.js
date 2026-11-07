@@ -22,7 +22,7 @@ const VEHICLE_PROFILES=(()=>{
     weapons:{mainGun:{name:'M256',calibreMm:120,ammunitionCapacity:42,referenceEngagementRange:3000,enabled:true},coax:{name:'M240',calibreMm:7.62},commander:{name:'M2',calibreMm:12.7}},
     // Fictional game tuning, not measured real fire-control/ballistic data.
     fireControl:{enabled:true,aimSeconds:1.2,alignmentTolerance:1.5*Math.PI/180,
-      maxRange:2000,fireHeight:2.2,shotIntervalSeconds:1,testRounds:42,
+      maxRange:2000,fireHeight:2.2,shotIntervalSeconds:1,testRounds:42,flightSeconds:.8,effectSeconds:2,
       dispersionMrad:.25,layStartMrad:1.5,layMinMrad:.10,layTauSeconds:.6,
       rangeErrorM:5,muzzleVelocity:1650,velocityRetention:.94,leadResidual:.10,
       maneuverAccel:1,maneuverReferenceSpeed:5,stabMradPerMps:.03,
@@ -45,8 +45,9 @@ const VEHICLE_PROFILES=(()=>{
       if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
       const f=p.fireControl;
       for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
-      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention','maneuverAccel','maneuverReferenceSpeed'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
+      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','flightSeconds','effectSeconds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention','maneuverAccel','maneuverReferenceSpeed'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
       for(const field of ['leadResidual','stabMradPerMps'])if(!Number.isFinite(f[field])||f[field]<0)throw Error('사격 오차 값 오류: '+id+'.'+field);
+      if(f.flightSeconds<.05||f.flightSeconds>5||f.effectSeconds>5)throw Error('게임 비행/효과 시간 범위 오류: '+id);
       const band=f.presented;
       if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
       profiles[id]=freeze(p);

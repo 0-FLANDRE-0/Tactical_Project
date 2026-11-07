@@ -1,0 +1,24 @@
+{
+  "scope": "game-only subset; not full conformance to the uploaded WIP10 specification",
+  "sources": [
+    {
+      "name": "TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md",
+      "bytes": 18523,
+      "sha256": "4e469d696daed538f2a4587461b42162d5f90574511c19a206b7cc3a0d6be857"
+    },
+    {
+      "name": "wip10_hit_reference.py",
+      "bytes": 4770,
+      "sha256": "142e5001ee9bd4042a88e6011a1342a2b96cc94eb093f9b0faec069c6aaf6dc6"
+    }
+  ],
+  "excluded": [
+    "physical lead/firing-direction prediction",
+    "velocity/gravity-derived flight or terrain-impact calculations",
+    "bias and ballistic-drop reference tables",
+    "post-result physical impact-coordinate generation"
+  ],
+  "alternative": "fixed game flight duration, delayed seeded outcome, existing visibility masks, screen-space visual effects",
+  "referencePythonExecuted": false,
+  "referencePythonRepublished": false
+}

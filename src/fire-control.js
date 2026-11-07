@@ -54,10 +54,10 @@ const TacticalFireControl=(()=>{
   }
   function distribution(observer,pose,{pHull=0,pTurret=0}){
     const result=Object.fromEntries(zones.map(z=>[z,0])),total=pHull+pTurret;
-    if(!(total>0))return result;
+    if(!(total>0)||!pose.model)return result;
     const incoming=Math.atan2(observer.y-pose.y,observer.x-pose.x);
     function group(prefix,heading,amount){
-      const a=diff(incoming,heading),front=Math.max(0,Math.cos(a)),side=Math.abs(Math.sin(a)),rear=Math.max(0,-Math.cos(a)),sum=front+side+rear;
+      const a=diff(incoming,heading),cos=Math.abs(Math.cos(a))<1e-12?0:Math.cos(a),sin=Math.abs(Math.sin(a))<1e-12?0:Math.sin(a),m=pose.model,length=prefix==='hull'?m.hullLength:m.turretLength,width=prefix==='hull'?m.width:m.turretWidth,front=width*Math.max(0,cos),side=length*Math.abs(sin),rear=width*Math.max(0,-cos),sum=front+side+rear;
       result[prefix+'Front']=amount/total*front/sum;result[prefix+'Side']=amount/total*side/sum;result[prefix+'Rear']=amount/total*rear/sum;
     }
     group('hull',pose.heading,pHull);group('turret',pose.turret,pTurret);
@@ -77,12 +77,41 @@ const TacticalFireControl=(()=>{
     let cumulative=0,last=null;for(const z of zones){if(probabilities[z]>0)last=z;cumulative+=probabilities[z];if(zoneRoll<cumulative)return{hit:true,zone:z};}
     return last?{hit:true,zone:last}:{hit:false,zone:null};
   }
-  function create({profileOf,freshSight,seed=7}){
-    const events=[];
-    function resetAim(s){s.aimElapsed=0;s.aimProgress=0;s.layTime=0;s.previousSample=null;s.targetMotion=0;s.targetVelocity={x:0,y:0};}
+  function sideFor(observer,pose,zone){
+    if(!zone?.endsWith('Side'))return null;
+    const incoming=Math.atan2(observer.y-pose.y,observer.x-pose.x),s=Math.sin(diff(incoming,zone.startsWith('hull')?pose.heading:pose.turret));
+    return s>1e-12?'right':s< -1e-12?'left':null;
+  }
+  function create({profileOf,freshSight,impactSight=null,isObserved=()=>true,seed=7,debug=false,onDecisionRoll=null}){
+    const events=[],flights=[],records=[];let currentTime=0;
+    const clone=v=>JSON.parse(JSON.stringify(v));
+    const emit=e=>{events.push(e);if(events.length>200)events.shift();};
+    function resetAim(s){s.aimElapsed=0;s.aimProgress=0;s.layTime=0;}
+    function resetMotion(s){s.previousSample=null;s.targetMotion=0;s.targetVelocity={x:0,y:0};}
     function clearPreview(s){s.hitChance=null;s.zoneProbabilities=null;s.breakdown=null;}
     function preview(s,value){s.hitChance=value.hitChance;s.zoneProbabilities=value.zoneProbabilities;s.breakdown=value.breakdown;}
-
+    function roll(shot,kind){onDecisionRoll?.(kind,shot.id);return random(shot.shooterId+':'+shot.number+':'+kind,seed);}
+    // Fixed GAME latency and visibility-only resolution. No predicted firing
+    // direction, projectile path, gravity march or physical impact coordinates.
+    function finishDue(units,now){
+      flights.sort((a,b)=>a.impactAt-b.impactAt||(a.id<b.id?-1:a.id>b.id?1:0));
+      while(flights.length&&flights[0].impactAt<=now+1e-9){
+        const shot=flights.shift(),sight=impactSight?impactSight(shot):{visible:true,hull:shot.hull,turret:shot.turret,pose:shot.pose};
+        const pose=sight?.pose||shot.pose,pHull=sight?.visible?shot.pHull*Math.min(1,(sight.hull||0)/(shot.hull||1)):0,pTurret=sight?.visible?shot.pTurret*Math.min(1,(sight.turret||0)/(shot.turret||1)):0;
+        const finalHitChance=clamp(pHull+pTurret,0,1),probabilities=distribution(shot.origin,pose,{pHull,pTurret});
+        const result=resolve(finalHitChance,probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,pose,result.zone);
+        const observation=isObserved(shot.team,shot.targetKey),observed=!sight?.gone&&!!observation,anchor=observed?(typeof observation==='object'?{x:observation.x,y:observation.y}:{x:pose.x,y:pose.y}):{...shot.anchor};
+        // These offsets are UI pixels. They are never world-space impact points
+        // and never influence the decision or its conditional zone selection.
+        const visual={anchor,kind:result.hit?'flash':'dust',angle:random(shot.id+':fx:angle',seed)*Math.PI*2,extraPixels:12+random(shot.id+':fx:size',seed)*12,seconds:shot.effectSeconds,model:clone(shot.pose.model)};
+        const publicResult={type:'impact',id:shot.id,time:now,impactAt:shot.impactAt,team:shot.team,shooterId:shot.shooterId,targetKey:shot.targetKey,
+          result:observed?(result.hit?'hit':'miss'):'unobserved',zone:observed?result.zone:null,side:observed?side:null,
+          finalHitChance:observed?finalHitChance:null,hitChanceAtFire:shot.hitChanceAtFire,
+          visual:observed?visual:null,ammoRemaining:shot.ammoRemaining};
+        emit(publicResult);shot.shooter.fireControl.lastShot=clone(publicResult);
+        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance,reason:sight?.gone?'target-gone':!sight?.visible?'occluded':null,origin:{...shot.origin}});if(records.length>200)records.shift();}
+      }
+    }
     function inspect(u,now){
       const p=profileOf(u),f=p.fireControl,s=init(u,p),d=mission(u),c=d?u.observation.contacts[d.target]:null;
       if(!f.enabled||!p.weapons.mainGun.enabled||!p.sensors.gunner.enabled)return{reason:'disabled'};
@@ -99,9 +128,11 @@ const TacticalFireControl=(()=>{
       return{reason:null,d,c};
     }
     function step(units,dt,now){
+      currentTime=now;
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
-        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;resetAim(s);}
+        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;resetAim(s);resetMotion(s);}
+        if(s.previousSample&&now-s.previousSample.time>p.sensors.tuning.queryPeriod*5+1e-9)resetMotion(s);
         if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
           const previous=s.previousSample;
           const elapsed=previous?c.sources.gunner.lastSeen-previous.time:0;
@@ -126,12 +157,17 @@ const TacticalFireControl=(()=>{
         if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
         const chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime),number=s.shotCount+1;
         if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
-        const result=resolve(chance.hitChance,chance.zoneProbabilities,random(u.id+':'+number+':hit',seed),random(u.id+':'+number+':zone',seed));
-        const shot={id:u.id+'-shot-'+number,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:d.source,
-          origin:G.muzzleWorld(u,p.model),muzzleHeading:u.turret,
-          targetPose:{x:pose.x,y:pose.y,heading:pose.heading,turret:pose.turret},...chance,...result,ammoRemaining:s.ammo-1};
-        events.push(shot);if(events.length>200)events.shift();s.shotCount=number;s.ammo--;s.lastShot=shot;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
+        const origin=G.muzzleWorld(u,p.model),id=u.id+'-shot-'+number,impactAt=now+f.flightSeconds;
+        const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,shooter:u,
+          origin,fireEye:sight.fireEye,profileAtFire:clone(p),pose:clone(pose),anchor:{x:pose.x,y:pose.y},
+          hull:sight.hull,turret:sight.turret,pHull:chance.breakdown.pHull,pTurret:chance.breakdown.pTurret,
+          hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1,effectSeconds:f.effectSeconds};
+        flights.push(shot);
+        emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,origin:{...origin},muzzleHeading:u.turret,
+          tof:f.flightSeconds,impactAt,hitChanceAtFire:chance.hitChance,visual:{anchor:{...shot.anchor},model:clone(pose.model)},ammoRemaining:s.ammo-1});
+        s.shotCount=number;s.ammo--;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
       }
+      finishDue(units,now);
     }
     function request(u,key,now){
       const s=init(u,profileOf(u)),check=inspect(u,now);
@@ -144,12 +180,12 @@ const TacticalFireControl=(()=>{
       const s=init(u,profileOf(u)),same=!key||key===s.targetKey;
       return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,pending:!!s.pending,
         canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
-        breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
+        inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
-    return{step,request,view,cancel,events:publicEvents};
+    return{step,request,view,cancel,events:publicEvents,debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,resolve,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,resolve,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;

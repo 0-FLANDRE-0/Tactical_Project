@@ -291,7 +291,12 @@ const TacticalCore = (() => {
   const observationStats=s=>({...observationFor(s).stats});
   const fireRuntimes=new WeakMap();
   function fireFor(s){
-    if(!fireRuntimes.has(s))fireRuntimes.set(s,TacticalFireControl.create({profileOf,seed:s.seed??7,freshSight:(u,id)=>{
+    if(!fireRuntimes.has(s)){
+      let observedAt=-1;const observedTeams=new Map();
+      fireRuntimes.set(s,TacticalFireControl.create({profileOf,seed:s.seed??7,debug:!!s.recordFireEvents,
+      isObserved:(team,key)=>{if(observedAt!==s.time){observedTeams.clear();observedAt=s.time;}if(!observedTeams.has(team))observedTeams.set(team,new Map(contacts(s,team).filter(v=>v.current).map(v=>[v.key,v])));return observedTeams.get(team).get(key)||false;},
+      impactSight:shot=>{const target=s.units.find(v=>v.id===shot.targetId);if(!target)return{visible:false,gone:true};const p=profileOf(target),origin={...shot.origin,profileOverride:shot.profileAtFire};return{...exposure(origin,target,shot.fireEye),pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:p.model.hullLength,width:p.model.width,turretLength:p.model.turretLength,turretWidth:p.model.turretWidth,turretPivot:[...p.model.turretPivot]}}};},
+      freshSight:(u,id)=>{
       const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'target-unavailable'};
       const p=profileOf(u),sensor=p.sensors.gunner,optical=exposure(u,target,sensor.eyeHeight),muzzle={...TacticalVehicleGeometry.muzzleWorld(u,p.model),profileId:u.profileId,profileOverride:u.profileOverride};
       // Keep the game firing height relative to the hull's ground, even when
@@ -306,13 +311,14 @@ const TacticalCore = (() => {
         if(weapon?.samples[i].visible){samples[i].visible=true;if(v.part==='hull')hull++;else turret++;}
       }
       const tp=profileOf(target);
-      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,presented:{...tp.fireControl.presented},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
-    }}));
+      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,fireEye,presented:{...tp.fireControl.presented},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
+    }}));}
     return fireRuntimes.get(s);
   }
   const fireStatus=(s,u,key=null)=>fireFor(s).view(u,key);
   const requestFire=(s,u,key)=>fireFor(s).request(u,key,s.time);
   const fireEvents=(s,team='blue',since=-Infinity)=>fireFor(s).events(team,since);
+  const fireDebugRecords=s=>s.recordFireEvents?fireFor(s).debugRecords():[];
   const roofGrid=new Float32Array(TH.columns*TH.rows);
   for(const b of buildings) for(let y=Math.max(0,Math.floor(b.minY/4));y<=Math.min(999,Math.floor(b.maxY/4));y++) for(let x=Math.max(0,Math.floor(b.minX/4));x<=Math.min(999,Math.floor(b.maxX/4));x++) {
     if(insideBuilding(x*4+2,y*4+2,b))roofGrid[y*1000+x]=Math.max(roofGrid[y*1000+x],b.roof);
@@ -408,6 +414,6 @@ const TacticalCore = (() => {
     for(const [col,along] of e.turretAlong.entries())sample(along,e.turretHeight,target.turret??target.heading,'turret',col,0);
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,requestFire,fireEvents,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,requestFire,fireEvents,fireDebugRecords,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
