@@ -1,0 +1,468 @@
+{
+  "source": "a2dd77012a514b9499d8ca28a7d7671a983ff193",
+  "kind": "synthetic observation fixture",
+  "cases": [
+    {
+      "issue": "commander-only pre-identification gunner focus",
+      "hk": true,
+      "seed": 7,
+      "bearing": 1.5,
+      "events": {
+        "detected": 2.1000000000000005,
+        "gunnerFocus": 2.1500000000000004,
+        "atFocus": {
+          "channels": [
+            "commander"
+          ],
+          "identified": false,
+          "designation": "idle"
+        },
+        "identified": 2.9999999999999973,
+        "designated": 2.9999999999999973,
+        "acquired": 3.949999999999994
+      },
+      "trace": [
+        {
+          "time": 0.05,
+          "turret": 0.03490658503988659,
+          "commander": 0.043633231299858244,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 0.5499999999999999,
+          "turret": 0.20469529024518862,
+          "commander": 0.4799655442984407,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 1.0500000000000003,
+          "turret": 0.1421113908540453,
+          "commander": 0.9162978572970226,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 1.5500000000000007,
+          "turret": 0.07748354194101202,
+          "commander": 1.3526301702956045,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 2.0500000000000007,
+          "turret": 0.011741268297118886,
+          "commander": 1.5,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 2.549999999999999,
+          "turret": 0.3193013507277724,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 3.049999999999997,
+          "turret": 0.6683672011266385,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "waiting"
+        },
+        {
+          "time": 3.5499999999999954,
+          "turret": 1.0174330515255048,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquiring"
+        },
+        {
+          "time": 4.049999999999994,
+          "turret": 1.3664989019243712,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 4.549999999999992,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 5.04999999999999,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 5.549999999999988,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 6.0499999999999865,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 6.549999999999985,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 7.049999999999983,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 7.549999999999981,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 8.04999999999998,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 8.549999999999986,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 9.049999999999994,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 9.55,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        }
+      ],
+      "transitions": []
+    },
+    {
+      "issue": "commander-only pre-identification gunner focus",
+      "hk": false,
+      "seed": 7,
+      "bearing": 1.5,
+      "events": {
+        "detected": 2.1000000000000005,
+        "gunnerFocus": 2.1500000000000004,
+        "atFocus": {
+          "channels": [
+            "commander"
+          ],
+          "identified": false,
+          "designation": "idle"
+        },
+        "identified": 2.9999999999999973
+      },
+      "trace": [
+        {
+          "time": 0.05,
+          "turret": 0.03490658503988659,
+          "commander": 0.043633231299858244,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 0.5499999999999999,
+          "turret": 0.20469529024518862,
+          "commander": 0.4799655442984407,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 1.0500000000000003,
+          "turret": 0.1421113908540453,
+          "commander": 0.9162978572970226,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 1.5500000000000007,
+          "turret": 0.07748354194101202,
+          "commander": 1.3526301702956045,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 2.0500000000000007,
+          "turret": 0.011741268297118886,
+          "commander": 1.5,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 2.549999999999999,
+          "turret": 0.3193013507277724,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 3.049999999999997,
+          "turret": 0.6683672011266385,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 3.5499999999999954,
+          "turret": 1.0174330515255048,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 4.049999999999994,
+          "turret": 1.3664989019243712,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 4.549999999999992,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 5.04999999999999,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 5.549999999999988,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 6.0499999999999865,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 6.549999999999985,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 7.049999999999983,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 7.549999999999981,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 8.04999999999998,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 8.549999999999986,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 9.049999999999994,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 9.55,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "idle"
+        }
+      ],
+      "transitions": []
+    },
+    {
+      "issue": "unfinished identity decay with ambient-only observation",
+      "seed": 7,
+      "initialSeconds": 1.2,
+      "ambientSeconds": 20,
+      "initial": 1.0976239999999997,
+      "threshold": 1.6371332816779613,
+      "identified": false,
+      "after": 1.0976239999999997,
+      "ratio": 1,
+      "expectedRatio": 0.1767766952966369
+    }
+  ]
+}

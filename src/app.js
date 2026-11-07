@@ -461,14 +461,16 @@
     ui.setText($('clock'),'T+ '+String(Math.floor(sim.time/60)).padStart(2,'0')+':'+String(Math.floor(sim.time%60)).padStart(2,'0'));
     ui.setText($('simState'),paused?'일시정지':'기동 시험');
     updateRoster($('roster').children,sim.units,selected);
-    const d=u.observation.designation,status={idle:'없음',designated:'지정 전달',waiting:'확보 대기',acquiring:'포수 확인 중',acquired:'포수 확보',expired:'지정 만료',cancelled:'지정 취소'};
-    ui.setText($('designationStatus'),(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':''));
+    const own=C.ownObservation(sim,u),d=own,status={idle:'없음',designated:'지정 전달',waiting:'확보 대기',acquiring:'포수 확인 중',acquired:'포수 확보',expired:'지정 만료',cancelled:'지정 취소',lost:'표적 유지 해제'};
+    ui.setText($('designationStatus'),(d.source==='gunner'?'포수 자체 · ':d.source==='commander'?'전차장 인계 · ':d.source==='manual'?'직접 지정 · ':'')+(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':'')+(own.pending?' · 후보 '+own.pending:''));
     const sensors=C.profileOf(u).sensors;
     ui.setText($('equipmentStatus'),'전차장 '+(!sensors.commander.enabled?'없음':sensors.commander.independent?'독립':'포탑 연동')+' · 헌터킬러 '+(sensors.hunterKiller?'지원':'없음'));
     const target=C.contacts(sim).find(v=>v.key===targetId);
     $('targetPanel').classList.toggle('visible',!!target);
     if(target){
       ui.setText($('targetTitle'),target.label);
+      const ownTarget=C.ownObservation(sim,u,target.key),channelNames={ambient:'주변',commander:'전차장',gunner:'포수'};
+      ui.setText($('targetOwnStatus'),'팀 '+(target.current?'관측':'기억')+' · 선택 차량 '+(ownTarget.current?ownTarget.channels.map(ch=>channelNames[ch]).join('/'):'자체 관측 없음')+' · '+(ownTarget.acquired?'포수 확보':'포수 미확보'));
       ui.setText($('targetDetails'),target.memory?'마지막 관측 '+target.age.toFixed(1)+'초 전 · '+(target.identified?target.type:'미식별 표적'):target.identified?target.type:'미식별 표적 · 상세정보 없음');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
       for(const part of ['hull','turret']){
@@ -478,7 +480,7 @@
     }else targetId=null;
   }
   const vehicle=C.PROFILE,model=vehicle.model,motion=vehicle.mobility;
-  $('vehicleSpecs').innerHTML=[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['0 → 32.2km/h',motion.accelerationReferenceSeconds+' 초'],['관측 기준 높이','CITV '+vehicle.sensors.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 200 / 전차장 2500 / 포수 2000 m'],['시야각 · 선회','전차장 90° · 50°/s / 포수 60° · 40°/s'],['주포 교전 기준','3,000 m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join('');
+  $('vehicleSpecs').innerHTML=[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['0 → 32.2km/h',motion.accelerationReferenceSeconds+' 초'],['관측 기준 높이','CITV '+vehicle.sensors.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 200 / 전차장 2500 / 포수 2000 m'],['시야각 · 선회','전차장 90° · 50°/s / 포수 30° · 40°/s'],['주포 교전 기준','3,000 m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join('');
   for(const u of sim.units.filter(u=>u.team==='blue')){
     const b=document.createElement('button');
     b.className='unit-card';
@@ -667,13 +669,15 @@
   updateUI();
   requestAnimationFrame(loop);
   function snapshotUnit(u){
-    const o=u.observation,{target,...designation}=o.designation;
+    const o=u.observation;
+    const publicMission=d=>{const {target,...rest}=d;return rest;};
+    const designation=publicMission(o.designation),tracking=publicMission(o.tracking);
     const order=ch=>{const {cooldowns,focus,...rest}=o[ch];return {...rest,focus:focus?o.contacts[focus]?.key??null:null};};
-    return {...u,observation:{commander:order('commander'),gunner:order('gunner'),designation,lastQuery:o.lastQuery}};
+    return {...u,observation:{commander:order('commander'),gunner:order('gunner'),designation,tracking,sensing:C.ownObservation(sim,u,targetId),lastQuery:o.lastQuery}};
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP07',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP07A',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView()
     }
     )),command:(x,y,reverse=false)=>{
@@ -683,7 +687,7 @@
       }
       ,reverse,sim.units)
     }
-    ,select,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen
+    ,select,own:(key)=>C.ownObservation(sim,selectedUnit(),key),contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen
   }
   ;
 }

@@ -60,4 +60,4 @@ test('commander and gunner controls retain separate world points',()=>{get('look
 test('1x and 2x frame batches produce identical sensing at equal simulated time',()=>{get('lookChannel').value='commander';for(let i=0;i<50;i++)frame(.1);const a=api.snapshot();get('reset').onclick();get('speed').onclick();for(let i=0;i<25;i++)frame(.1);const b=api.snapshot();assert.equal(a.time,b.time);assert.deepEqual(a.units,b.units);assert.deepEqual(a.contacts,b.contacts)});
 test('paused rendering and target panel updates never query exposure',()=>{get('pause').onclick();const original=api.core.exposure;api.core.exposure=()=>{throw Error('unexpected render LOS')};try{for(let i=0;i<10;i++)frame();}finally{api.core.exposure=original;}});
 test('development snapshot hides underlying enemy IDs in focus and designation records',()=>{for(let i=0;i<80;i++)frame();const snapshot=JSON.stringify(api.snapshot());for(const id of ['T01','T02','T03'])assert(!snapshot.includes(id));});
-console.log(JSON.stringify({passed,failed:0,version:'0.4-WIP07'}));
+console.log(JSON.stringify({passed,failed:0,version:'0.4-WIP07A'}));

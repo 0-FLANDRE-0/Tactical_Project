@@ -1,0 +1,574 @@
+{
+  "source": "working tree",
+  "kind": "synthetic observation fixture",
+  "cases": [
+    {
+      "issue": "commander-only pre-identification gunner focus",
+      "hk": true,
+      "seed": 7,
+      "bearing": 1.5,
+      "events": {
+        "detected": 2.1000000000000005,
+        "identified": 2.9999999999999973,
+        "designated": 2.9999999999999973,
+        "acquired": 5.649999999999988
+      },
+      "trace": [
+        {
+          "time": 0.05,
+          "turret": 0.006981317007977318,
+          "commander": 0.043633231299858244,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 0.5499999999999999,
+          "turret": 0.05850354343178465,
+          "commander": 0.4799655442984407,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 1.0500000000000003,
+          "turret": -0.009535067509317523,
+          "commander": 0.9162978572970226,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 1.5500000000000007,
+          "turret": -0.0769238793571039,
+          "commander": 1.3526301702956045,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 2.0500000000000007,
+          "turret": -0.13907045594942477,
+          "commander": 1.5,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 2.549999999999999,
+          "turret": -0.191739610793587,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 3.049999999999997,
+          "turret": -0.19314804581166978,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "waiting"
+        },
+        {
+          "time": 3.5499999999999954,
+          "turret": 0.1559178045871961,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "waiting"
+        },
+        {
+          "time": 4.049999999999994,
+          "turret": 0.504983654986062,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "waiting"
+        },
+        {
+          "time": 4.549999999999992,
+          "turret": 0.8540495053849284,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "waiting"
+        },
+        {
+          "time": 5.04999999999999,
+          "turret": 1.2031153557837948,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "waiting"
+        },
+        {
+          "time": 5.549999999999988,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquiring"
+        },
+        {
+          "time": 6.0499999999999865,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 6.549999999999985,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 7.049999999999983,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 7.549999999999981,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 8.04999999999998,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 8.549999999999986,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 9.049999999999994,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        },
+        {
+          "time": 9.55,
+          "turret": 1.5,
+          "commander": 1.5,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "status": "acquired"
+        }
+      ],
+      "transitions": [
+        {
+          "time": 2.1000000000000005,
+          "observer": "observer",
+          "type": "detected",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": -0.1448290293173269,
+          "commander": 1.5,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 2.1000000000000005,
+          "observer": "observer",
+          "type": "channel-seen",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": -0.1448290293173269,
+          "commander": 1.5,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 2.9999999999999973,
+          "observer": "observer",
+          "type": "identified",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": -0.22805463085155636,
+          "commander": 1.5,
+          "heading": 0,
+          "channel": "commander",
+          "enemyConfirmed": true
+        },
+        {
+          "time": 2.9999999999999973,
+          "observer": "observer",
+          "type": "candidate-queued",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": -0.22805463085155636,
+          "commander": 1.5,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 2.9999999999999973,
+          "observer": "observer",
+          "type": "designated",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": -0.22805463085155636,
+          "commander": 1.5,
+          "heading": 0,
+          "source": "commander",
+          "status": "designated"
+        },
+        {
+          "time": 5.1999999999999895,
+          "observer": "observer",
+          "type": "channel-seen",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 1.3078351109034547,
+          "commander": 1.5,
+          "heading": 0,
+          "channel": "gunner",
+          "channelCurrent": true
+        },
+        {
+          "time": 5.649999999999988,
+          "observer": "observer",
+          "type": "target-acquired",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": 1.5,
+          "commander": 1.5,
+          "heading": 0,
+          "source": "commander",
+          "status": "acquired"
+        }
+      ]
+    },
+    {
+      "issue": "commander-only pre-identification gunner focus",
+      "hk": false,
+      "seed": 7,
+      "bearing": 1.5,
+      "events": {
+        "detected": 2.1000000000000005,
+        "identified": 2.9999999999999973
+      },
+      "trace": [
+        {
+          "time": 0.05,
+          "turret": 0.006981317007977318,
+          "commander": 0.043633231299858244,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 0.5499999999999999,
+          "turret": 0.05850354343178465,
+          "commander": 0.4799655442984407,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 1.0500000000000003,
+          "turret": -0.009535067509317523,
+          "commander": 0.9162978572970226,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 1.5500000000000007,
+          "turret": -0.0769238793571039,
+          "commander": 1.3526301702956045,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 2.0500000000000007,
+          "turret": -0.13907045594942477,
+          "commander": 1.5,
+          "channels": [],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 2.549999999999999,
+          "turret": -0.191739610793587,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": false,
+          "status": "idle"
+        },
+        {
+          "time": 3.049999999999997,
+          "turret": -0.23134202802685513,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 3.5499999999999954,
+          "turret": -0.2551788683608708,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 4.049999999999994,
+          "turret": -0.26162569051911205,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 4.549999999999992,
+          "turret": -0.250243154225372,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 5.04999999999999,
+          "turret": -0.22180696051753845,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 5.549999999999988,
+          "turret": -0.1782549890037685,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 6.0499999999999865,
+          "turret": -0.12255523456968906,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 6.549999999999985,
+          "turret": -0.058503543431786494,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 7.049999999999983,
+          "turret": 0.00953506750931505,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 7.549999999999981,
+          "turret": 0.07692387935710132,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 8.04999999999998,
+          "turret": 0.1390704559494222,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 8.549999999999986,
+          "turret": 0.1917396107935857,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 9.049999999999994,
+          "turret": 0.2313420280268549,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        },
+        {
+          "time": 9.55,
+          "turret": 0.255178868360871,
+          "commander": 1.5,
+          "channels": [
+            "commander"
+          ],
+          "identified": true,
+          "status": "idle"
+        }
+      ],
+      "transitions": [
+        {
+          "time": 2.1000000000000005,
+          "observer": "observer",
+          "type": "detected",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": -0.1448290293173269,
+          "commander": 1.5,
+          "heading": 0,
+          "channel": "commander"
+        },
+        {
+          "time": 2.1000000000000005,
+          "observer": "observer",
+          "type": "channel-seen",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": null,
+          "current": true,
+          "turret": -0.1448290293173269,
+          "commander": 1.5,
+          "heading": 0,
+          "channel": "commander",
+          "channelCurrent": true
+        },
+        {
+          "time": 2.9999999999999973,
+          "observer": "observer",
+          "type": "identified",
+          "key": "접촉-1w1jx2n",
+          "detectedBy": "commander",
+          "identifiedBy": "commander",
+          "current": true,
+          "turret": -0.22805463085155636,
+          "commander": 1.5,
+          "heading": 0,
+          "channel": "commander",
+          "enemyConfirmed": true
+        }
+      ]
+    },
+    {
+      "issue": "unfinished identity decay with ambient-only observation",
+      "seed": 7,
+      "initialSeconds": 1.2,
+      "ambientSeconds": 20,
+      "initial": 1.0976239999999997,
+      "threshold": 1.6371332816779613,
+      "identified": false,
+      "after": 0.1940343433982757,
+      "ratio": 0.17677669529663687,
+      "expectedRatio": 0.1767766952966369
+    }
+  ]
+}

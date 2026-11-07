@@ -66,14 +66,24 @@
         "range": 2500,
         "fov": 1.5707963267948966,
         "rate": 0.8726646259971648,
-        "eyeHeight": 2.65
+        "eyeHeight": 2.65,
+        "scan": {
+          "amplitude": 0.7853981633974483,
+          "period": 20,
+          "rate": 0.2617993877991494
+        }
       },
       "gunner": {
         "enabled": true,
         "range": 2000,
-        "fov": 1.0471975511965976,
+        "fov": 0.5235987755982988,
         "rate": 0.6981317007977318,
-        "eyeHeight": 2.65
+        "eyeHeight": 2.65,
+        "scan": {
+          "amplitude": 0.2617993877991494,
+          "period": 12,
+          "rate": 0.13962634015954636
+        }
       },
       "tuning": {
         "queryPeriod": 0.1,
@@ -139,7 +149,7 @@
     }
   },
   "baseline": "M1A2 basic; not M1A2 SEP v2/v3",
-  "reviewed": "2026-11-06",
+  "reviewed": "2026-11-07",
   "sources": [
     {
       "id": "GDLS",
@@ -258,7 +268,7 @@
     },
     "sensors.ambient,sensors.commander,sensors.gunner,sensors.hunterKiller,sensors.tuning": {
       "status": "fictional game tuning",
-      "note": "WIP07 direction/time/seed rules; 200m silhouette-only, commander 2500m 90deg 50deg/s, gunner 2000m 60deg 40deg/s. Equipment flags independent of hunter-killer. See docs/OBSERVATION_WIP07.md for evidence, memory and designation defaults."
+      "note": "WIP07A channel provenance, forward reciprocal scans and independent evidence decay; 200m silhouette-only, commander 2500m 90deg 50deg/s, gunner 2000m 30deg 40deg/s. Equipment flags independent of hunter-killer. See docs/OBSERVATION_WIP07A.md for evidence, memory and designation defaults."
     },
     "sensors.observationLimit": {
       "status": "game tuning",

@@ -862,3 +862,5 @@ footer{
 .look-controls select,.look-panel button,.target-panel button{font:inherit;background:#22382f;color:#deead5;border:1px solid #6c8565;border-radius:4px;padding:5px}
 .look-panel p{margin:5px 0}
 #targetDetails{font-size:11px;color:#c2cbb7}
+
+#targetOwnStatus{font-size:10px;color:#a7d1cc;line-height:1.5}

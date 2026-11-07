@@ -47,22 +47,22 @@
     {
       "name": "four real-map routes arrive with zero collisions",
       "status": "PASS",
-      "ms": 6268
+      "ms": 6441
     },
     {
       "name": "reverse retains hull facing on a rearward route",
       "status": "PASS",
-      "ms": 118
+      "ms": 117
     },
     {
       "name": "stop cancels path and brakes",
       "status": "PASS",
-      "ms": 154
+      "ms": 161
     },
     {
       "name": "fixed physics results match between render batches",
       "status": "PASS",
-      "ms": 1318
+      "ms": 1267
     },
     {
       "name": "observation range is enforced",
