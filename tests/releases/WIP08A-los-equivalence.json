@@ -1,0 +1,30 @@
+{
+  "referenceCommit": "e9f037cc6edca994e3f19297d3e0aa6c491be164",
+  "referenceSourceSHA256": "ab70525f12138b068daf00198bd49611d883c940cd8ac8c6fcfeac5a55f2e49c",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "seed": 707,
+  "summary": {
+    "tileMetres": 32,
+    "tiles": 15625,
+    "summaryBytes": 265625
+  },
+  "rays": 13805,
+  "exposures": 1000,
+  "visible": 6228,
+  "positiveForestDepth": 3356,
+  "reasons": {
+    "terrain": 5685,
+    "forest": 1106,
+    "clear": 6228,
+    "range": 363,
+    "building": 423
+  },
+  "cases": [
+    "12000 real-map, 8000 precise / 4000 preview, varied eye and target heights",
+    "1000 exposure records (9000 rays), independent poses",
+    "tile/world/axis/diagonal/zero-length/outside-map/range boundaries",
+    "thin crossing roof, precise vs preview distinction, courtyard",
+    "interpolation halo, crest, 0.06m grazing tolerance",
+    "scrub + forest prefix, 15m canopy boundary, both directions"
+  ]
+}

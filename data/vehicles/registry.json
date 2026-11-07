@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "ids": [
+    "M1A2"
+  ],
+  "artIds": [
+    "M1A2"
+  ],
+  "note": "Registry profiles are isolated immutable snapshots. Combat archive catalogs are not imported as active runtime profiles."
+}
