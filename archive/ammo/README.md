@@ -117,42 +117,54 @@
 
 **125mm APFSDS — 2,000m/0° KE 관통력 후보 6종**
 
-| 탄약 | KE | 게임 특성 |
-|---|---:|---|
-| 3BM15 | 390 | 구형 |
-| 3BM22 | 425 | 개량형 |
-| 3BM26 | 405 | 경사 대응 강화(각도별 실수치 미정) |
-| 3BM29 | 440 | 개량형 |
-| 3BM32 | 495 | 수직 관통력 강점 |
-| 3BM42 | 465 | 후기형, 복합장갑 대응 차별화 검토 |
+| 탄약 | KE | **포구초속 (m/s)** | 게임 특성 |
+|---|---:|---:|---|
+| 3BM15 | 390 | **1,785** | 구형 · 소련 전문서 인용 |
+| 3BM22 | 425 | **1,760** | 개량형 · 워썬더 잠정 |
+| 3BM26 | 405 | **1,700** | 경사 대응 강화(각도별 실수치 미정) · Fofanov 잠정 |
+| 3BM29 | 440 | **1,760** | 개량형 · Fofanov 잠정 |
+| 3BM32 | 495 | **1,700** | 수직 관통력 강점 · Jane's |
+| 3BM42 | 465 | **1,700** | 후기형, 복합장갑 대응 차별화 검토 · Jane's |
 
 **125mm HEAT — 선택 유지 4종 (CE)**
 
-| 탄약 | CE | 게임 특성 |
-|---|---:|---|
-| 3BK14M | 480 | 구형/대체 |
-| 3BK18M | 550 | 개량형 |
-| 3BK21B | 670 | 높은 관통력. DU 라이너 여부/세부 고증 확인 별도 |
-| 3BK29 | 650 | ERA 대응 특성 |
+| 탄약 | CE | **포구초속 (m/s)** | 게임 특성 |
+|---|---:|---:|---|
+| 3BK14M | 480 | **905** | 구형/대체 · Jane's |
+| 3BK18M | 550 | **905** | 개량형 · Jane's |
+| 3BK21B | 670 | **905** | 높은 관통력. DU 라이너 여부/세부 고증 확인 별도 · 2차 자료 |
+| 3BK29 | 650 | **915** | ERA 대응 특성 · Jane's |
 
 **125mm HE-FRAG / 벌집탄 — 선택 유지 3종**
 
-| 탄약 | 판정 분류 | 값 | 특징 |
-|---|---|---:|---|
-| 3OF19 | CE | 35 | HE-FRAG, 사용자가 TNT 표기 |
-| 3OF26 | CE | 40 | HE-FRAG, 사용자가 A-IX-2 표기 |
-| 3Sh7 | KE | 5 | APERS/벌집탄, 대인 특화 |
+| 탄약 | 판정 분류 | 값 | **포구초속 (m/s)** | 특징 |
+|---|---|---:|---:|---|
+| 3OF19 | CE | 35 | **850** | HE-FRAG, 사용자가 TNT 표기 · 워썬더 |
+| 3OF26 | CE | 40 | **850** | HE-FRAG, 사용자가 A-IX-2 표기 · 제조사 동급/워썬더 |
+| 3Sh7 | KE | 5 | **900** | APERS/벌집탄, 대인 특화 · 2차 자료 잠정 |
 
 **125mm 포발사 ATGM — 2026-11-06 관통력 제안값 (CE)**
 
-| 미사일 | 게임용 CE (mm RHAe) | 1989년 상태 |
-|---|---:|---|
-| 9M112 | **480** | 구형 Kobra 제안 / 재고 후보 |
-| 9M112M | **600** | 기존 선택 유지 |
-| 9M112M2 | **680** | 개선형 / 재도입 선택 후보 |
-| 9M124 | **850** | 매우 높은 관통력 / **채택 여부 미결정, 희귀탄 후보** |
-| 9M119 | **700** | 기존 선택 유지 |
-| 9M119M | **750** | **1992년 도입으로 1989년 목록 제외**; 후기 시나리오용으로 값만 보관 |
+| 미사일 | 게임용 CE (mm RHAe) | **미사일 비행속도 (m/s)** | 1989년 상태 |
+|---|---:|---:|---|
+| 9M112 | **480** | **400** | 구형 Kobra 제안 / 재고 후보 · 상한 근처 대표속도 |
+| 9M112M | **600** | **400** | 기존 선택 유지 · Kobra 계열 게임 추정 |
+| 9M112M2 | **680** | **400** | 개선형 / 재도입 선택 후보 · Kobra 계열 게임 추정 |
+| 9M124 | **850** | **400** | 매우 높은 관통력 / **채택 여부 미결정, 희귀탄 후보** · Kobra 계열 게임 추정 |
+| 9M119 | **700** | **350** | 기존 선택 유지 · Svir 평균속도 근사 |
+| 9M119M | **750** | **350** | **1992년 도입으로 1989년 목록 제외**; 후기 시나리오용으로 값만 보관 · Refleks 평균속도 근사 |
+
+**125mm 속도 출처·적용 원칙 (2026-11-07)**
+
+- **포탄은 포구초속, 포발사 미사일은 비행속도.** 9M 계열은 발사 후 속도가 변화하므로 이 표에서는 대표 비행속도 하나만 사용하는 게임용 단순화다. 이번에 KE/CE 관통력이나 96개 프리셋을 수정하지 않았다.
+- **3BM9·15:** [소련 전차 설계서 P. P. Isakov(1982)를 인용한 Tank Archives](https://www.tankarchives.com/2016/02/penetration-part-10-cold-war-subcaliber.html): 각각 1,800/1,785m/s. **3BM32·42:** [Jane's Ammunition Handbook 2001–2002](https://index.crashjb.site.nfoservers.com/Boogaloo2020/Marksmanship%20%26%20Ballistics/Ballistics/Jane%27s%20Ammunition%20Handbook.pdf): 모두 1,700m/s.
+- **3BM22 (잠정):** [워썬더 2A26 탄약표](https://old-wiki.warthunder.com/2A26_%28125_mm%29/Ammunition)는 1,760m/s, [125mm 탄약 종합자료](https://en.wikipedia.org/wiki/125_mm_smoothbore_ammunition)는 1,785m/s를 기재. 형식별 군 교범 검증 전까지 워썬더 수치를 임시 채택.
+- **3BM26·29 (잠정):** [Fofanov 전문 125mm APFSDS 정리](https://ciar.org/~ttk/mbt/fofanov/armor.kiev.ua/fofanov/Tanks/ARM/apfsds/ammo.html)는 3BM26 1,700 / 3BM29 1,760m/s, [125mm 종합자료](https://en.wikipedia.org/wiki/125_mm_smoothbore_ammunition)는 1,720 / 1,700m/s로 충돌. 전문자료 쪽을 우선한 잠정 게임값이며 추후 재확인 필요.
+- **HEAT:** [Jane's 125mm HEAT 항목](https://index.crashjb.site.nfoservers.com/Boogaloo2020/Marksmanship%20%26%20Ballistics/Ballistics/Jane%27s%20Ammunition%20Handbook.pdf)은 3BK14M·3BK18M 등 905m/s, 3BK29 915m/s를 기재. **3BK21B 905m/s**는 [125mm 종합자료](https://en.wikipedia.org/wiki/125_mm_smoothbore_ammunition) 기반 2차 확인값이다. 보류 후보 3BK12M·3BK14·3BK18·3BK21의 905m/s도 사전기록일 뿐 선택 목록 채택은 아님.
+- **HE/벌집탄:** [워썬더 2A26 탄약표](https://old-wiki.warthunder.com/2A26_%28125_mm%29/Ammunition)의 3OF19·3OF26 850m/s 사용. [Dunarit 제조사 125mm HE 제원](https://www.dunarit.com/wp-content/uploads/2019/10/125-mm-HE-round_eng.pdf)도 동급탄 850m/s 제시. [3Sh7 탄약 일람](https://en.wikipedia.org/wiki/125_mm_smoothbore_ammunition)의 900m/s는 별도 군 교범 확인 전까지 잠정.
+- **9M112 Kobra 계열:** [9K112 Kobra](https://en.wikipedia.org/wiki/9K112_Kobra)는 평균 비행속도 약 350~400m/s, [9M112 제원표](https://ru.wikipedia.org/wiki/9%D0%9C112_%C2%AB%D0%9A%D0%BE%D0%B1%D1%80%D0%B0%C2%BB)는 최대 약 400m/s. **400m/s를 상한에 가까운 게임 대표속도로 채택**. 9M112M·M2·9M124는 각각 따로 실측 확정한 값이 아니라 계열 가정을 잠정 상속.
+- **9M119 Svir/9M119M Refleks:** [9M119 계열 비행 설명](https://en.wikipedia.org/wiki/9M119_Svir/Refleks)과 [9M119M 평균 350m/s 기술 설명](https://gfpstech.com/Perspective/wp-content/uploads/2023/07/T-72B3-Main-Battle-Tank.pdf)을 참조해 **350m/s를 게임용 대표 비행속도로 채택**. 워썬더의 9M119 400m/s와는 차이가 있으며, 실제 가속 곡선 자체를 재현한 것은 아니다. **9M119M은 1989년 게임 미사용**, 9M124는 채택 여부 미결정 상태를 유지한다.
+- **동독 125mm:** 3BM9/15, 3BK12M/14M, 3OF19/26은 소련 탄종과 동일한 속도만 공유하며 **NVA 보급 확실성·게임 사용 목록 상태는 변경하지 않았다**.
 
 - **9M112는 T-64B(1976)·T-80B(1978)용 기본탄으로 채택**(1989년 게임 편성). 9M112M과 9M119도 기본탄에 포함. **9M112M2·9M124의 플레이어 선택 목록 최종 포함 여부는 미정**. 9M119M은 1989년 목록에서 제외 요청됨.
 - **9M124는 Agona(9M128)가 아니라 Kobra 계열 9M112M2의 강화 탄두형**. 관련 문헌상 운용 가능한 계열은 **T-64B/BV, T-80B/BV**, 특히 미사일 데이터베이스에는 T-64BV/BM, T-80B/BV로 기재. T-72A/B·T-80U 일반형은 기존 9M124 선택 대상으로 자동 포함하지 않음.
@@ -161,7 +173,7 @@
 - **9M119M의 1992년 도입**은 여러 자료에서 언급되므로 기본 1989년 전력에서 제외. 후기 연도 확장 시 활성화 후보.
 - 9M112 계열 초기탄 대비 M(20%), M2(40%), 9M124(80%) 개선이라는 역사적 상대적 목표는 참고 가능하나, 이 문서의 480/600/680/850 수치 자체는 **게임 설계값**.
 - 참고 자료: [9K112 Kobra 변형 및 개량 (미 육군 ODIN)](https://odin.t2com.army.mil/WEG/Asset/9K112_Kobra_%28AT-8_Songster%29_Russian_Anti-Tank_Guided_Missile_%28ATGM%29) / [9M112M2·9M124 플랫폼 정보 (Missilery.info)](https://en.missilery.info/missile/cobra/9m124) / [9M119M 후기 시기 (9M119 Svir/Refleks)](https://en.wikipedia.org/wiki/9M119_Svir/Refleks).
-- 나머지 **3BK12M 420, 3BK14 450, 3BK18 500, 3BK21 550**은 이전대로 예비 후보/보류 원안으로 보존.
+- 나머지 **3BK12M 420 (905m/s), 3BK14 450 (905m/s), 3BK18 500 (905m/s), 3BK21 550 (905m/s)**은 예비 후보/보류 원안을 유지한다. 이 포구초속 사전 기입은 게임 사용 승인과 별개다.
 - **탄종별 방호 판정 분류:** APDS/APFSDS = KE; **ATGM, HEAT, HE/HE-FRAG, HEP/HESH = CE; 벌집탄/APERS = KE**. HE/HEP가 실제 성형작약 제트를 사용한다는 뜻이 아니라 **게임 엔진의 저항 참조값**을 통일하는 목적.
 - 위 125mm 탄약의 전차별 기본 대표탄 명칭과 기본·대기갑·화력지원 프리셋의 AP/HEAT/HE/ATGM 발수는 §7·§11에서 확정했다. 같은 범주 안의 세부 HE-FRAG 종류·희귀 미사일 보급 범위 등은 별도 검토이며 주포·유도체계 호환성은 유지한다.
 - 전차의 미사일 사격통제장치/유도기와 호환되는 ATGM만 적재·발사 가능하게 제한할 필요가 있음. 모든 125mm 전차에 모든 125mm ATGM을 자동 허용하지 않음.
@@ -209,7 +221,7 @@
 | BR-412B | APHE | KE 155 | **895** | 포구초속 · 역사 서적·군용표 검증 | 구형탄 후보 |
 | BR-412D | APCBC-HE | KE 170 | **887** | 포구초속 · 군용표/2차 자료 일치 | 구형탄 후보 |
 | 3BM8 | APDS | KE 275 | **1,415** | 포구초속 · 기술 자료·워썬더 일치 | 사용 목록 유지; APFSDS가 아닌 APDS |
-| 3BM20 | APFSDS | **KE 255** | **미확정** | 포구초속 · **1,480 후보, 신뢰도 미달** | 사용 목록 유지; 250에서 수정 |
+| 3BM20 | APFSDS | **KE 255** | **1,480** | 포구초속 · **게임용 잠정 채택, 추가 검증 필요** | 사용 목록 유지; 250에서 수정 |
 | BK-5 | HEAT-FS | CE 380 | **900** | 포구초속 · 러시아 탄약 일람·워썬더 | 사용 목록 유지 |
 | BK-5M | HEAT-FS | CE 390 | **900** | 포구초속 · 러시아 탄약 일람 | NVA 보급 미확인, 후보 |
 | OF-412 | HE-FRAG | CE 25 | **900** | 포구초속 · 생산사·군용표 | 사용 목록 유지 |
@@ -218,21 +230,21 @@
 - **속도 의미:** 위 일반 포탄 **7종은 포구초속**, **9M117은 미사일 비행속도**를 기록한다. 9M117의 포구 이탈 순간 속도를 포탄과 동일한 '포구초속' 열로 취급하거나 게임용 비행속도와 바꿔 사용하지 않는다. 향후 다른 포발사 미사일에도 별도의 **미사일 비행속도**를 적용한다.
 - **BR-412B/BR-412D:** 러시아 장갑차 역사 자료 [*Отечественные бронетанковые машины. XX век*, 3권(2010)](https://djvu.online/file/9rQ0pnA1uJA9v) 및 [T-54A 장전탄 목록](https://military.wikireading.ru/axQty0zDwH)은 BR-412B **895m/s**, BR-412D **887m/s**로 기재하며, [워썬더 D-10T 탄약표](https://old-wiki.warthunder.com/D-10T_%28100_mm%29/Ammunition)와 일치한다. [루마니아 ROMARM의 BR-412B 현재 생산품](https://www.romarm.ro/wp-content/uploads/2021/05/78_-Datasheet-100-mm-ARTILLERY-AMMUNITION-1.pdf)은 **887m/s**로 기재하여 차이가 있다. 본 표는 소련 원형 탄의 대표값인 **895m/s**를 택한다. 실제 생산형·장약 조건 차이는 추후 검증 대상이다.
 - **3BM8:** [러시아 D-10T 자료](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)와 [워썬더 D-10T2S 탄약표](https://old-wiki.warthunder.com/D-10T2S_%28100_mm%29/Ammunition)의 **1,415m/s**를 사용. 일부 전문 사이트 [Das Panzerdetail](https://www.kotsch88.de/m_100mmmun.htm)에는 **1,425m/s**가 나오므로 이견 보존.
-- **3BM20 중요 — 미확정:** 100mm **3UBM8(탄 전체)/3BM20(탄체)** 대응 관계는 [METIS 탄약 데이터](https://metis.fenixinsight.com/munition/projectile/3ubm8)와 [IAA 탄약수집가 토론](https://forum.cartridgecollectors.org/t/help-to-id-two-russian-style-apfsds-t-projectiles/51481)에서 확인된다. 일부 [영어권 D-10 참고표](https://en.wikipedia.org/wiki/D-10_tank_gun)는 **1,480m/s**를 제시하지만, [러시아어 D-10 탄약 제원표](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)에서 해당 포구초속이 비어 있고 워썬더에도 **3BM20 원형의 해당 수치가 없음**. 제3의 다른 APFSDS 또는 미확인 제조사 자료값을 강제로 전용하지 않으며 **일단 속도 미확정**으로 둔다. **KE 255 게임 관통력은 변경하지 않는다.**
+- **3BM20 중요 — 미확정:** 100mm **3UBM8(탄 전체)/3BM20(탄체)** 대응 관계는 [METIS 탄약 데이터](https://metis.fenixinsight.com/munition/projectile/3ubm8)와 [IAA 탄약수집가 토론](https://forum.cartridgecollectors.org/t/help-to-id-two-russian-style-apfsds-t-projectiles/51481)에서 확인된다. 일부 [영어권 D-10 참고표](https://en.wikipedia.org/wiki/D-10_tank_gun)는 **1,480m/s**를 제시하지만, [러시아어 D-10 탄약 제원표](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)에서 해당 포구초속이 비어 있고 워썬더에도 **3BM20 원형의 해당 수치가 없음**. 그 출처만으로 실제 실측 확정값이라 볼 수 없지만 **2026-11-07 사용자 결정으로 1,480m/s를 게임용 잠정 채택**한다. 자료 신뢰도는 낮음/재검증 대상으로 유지하며 **KE 255 게임 관통력은 그대로**다.
 - **BK-5 / BK-5M:** [러시아 D-10 100mm 탄약 제원표](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)는 3UBK4(BK-5)·3UBK4M(BK-5M) **모두 900m/s**로 기재. BK-5는 [워썬더 D-10T 탄약표](https://old-wiki.warthunder.com/D-10T_%28100_mm%29/Ammunition)와도 대조된다. NVA에서 BK-5M 보급 확인 여부는 기존과 같이 별도 문제다.
 - **OF-412:** [ROMARM 100mm 제조사 제원표](https://www.romarm.ro/wp-content/uploads/2021/05/78_-Datasheet-100-mm-ARTILLERY-AMMUNITION-1.pdf) **900m/s**이며, [러시아 D-10 탄약표](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)와 [워썬더](https://old-wiki.warthunder.com/D-10T_%28100_mm%29/Ammunition)도 같은 값을 기록한다.
 - **9M117 — 미사일 비행속도:** [Das Panzerdetail의 9K116 Bastion 자료](https://www.kotsch88.de/f_9k116.htm)는 9M117 **대표 비행속도 370m/s**, [러시아 Bastion 전문자료](https://btvt.narod.ru/4/9k116.htm)도 **비행속도 370m/s**를 명시하며, [워썬더 D-10T2S 미사일 상세표](https://old-wiki.warthunder.com/D-10T2S_%28100_mm%29/Ammunition)도 **370m/s**를 사용한다. [미 육군 ODIN](https://odin.t2com.army.mil/WEG/Asset/9K116_Bastion_%28AT-10_Stabber%29_Russian_Anti-Tank_Guided_Missile_%28ATGM%29)에 기재된 발사 직후 약 **400~500m/s**는 포구 이탈 조건이므로 이 표의 **미사일 비행속도 370m/s와 혼동하지 않는다**. 시간별 가속/감속 곡선은 미정.
 
 **125mm T-72 계열**
 
-| 탄약 | 분류 | 게임 판정/수치 | 게임 사용 목록 상태 |
-|---|---|---:|---|
-| 3BM9 | APFSDS | KE 300 | 사용 목록 유지 |
-| 3BM15 | APFSDS | KE 390 | 소련군 설정과 동일 |
-| 3BK12M | HEAT-FS | CE 420 | NVA 보급 미확인, 후보 |
-| 3BK14M | HEAT-FS | CE 480 | 소련군 설정과 동일 |
-| 3OF19 | HE-FRAG | CE 35 | 소련군 설정과 동일 |
-| 3OF26 | HE-FRAG | CE 40 | 소련군 설정과 동일, **NVA 보급형 특정 불확실** |
+| 탄약 | 분류 | 게임 판정/수치 | **포구초속 (m/s)** | 게임 사용 목록 상태 |
+|---|---|---:|---:|---|
+| 3BM9 | APFSDS | KE 300 | **1,800** | 사용 목록 유지 · 소련 전문서 인용 |
+| 3BM15 | APFSDS | KE 390 | **1,785** | 소련군 설정과 동일 · 소련 전문서 인용 |
+| 3BK12M | HEAT-FS | CE 420 | **905** | NVA 보급 미확인, 후보 · 워썬더 |
+| 3BK14M | HEAT-FS | CE 480 | **905** | 소련군 설정과 동일 · Jane's |
+| 3OF19 | HE-FRAG | CE 35 | **850** | 소련군 설정과 동일 · 워썬더 |
+| 3OF26 | HE-FRAG | CE 40 | **850** | 소련군 설정과 동일, **NVA 보급형 특정 불확실** · 워썬더 |
 
 - **3BM17: 제외**. 수출형 탄이 존재한다는 점과 NVA 보급 사실은 별개이며 현재 게임의 NVA 탄약 목록에 포함하지 않음.
 - **3BM20 수치 255는 고증 실측값이 아니라 사용자 게임 밸런스 최종 선택값**.
