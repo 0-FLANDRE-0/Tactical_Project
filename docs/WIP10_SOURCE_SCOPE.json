@@ -1,0 +1,31 @@
+{
+  "scope": "full WIP10 flight, impact-time probability, and display-impact implementation; damage remains out of scope",
+  "sources": [
+    {
+      "name": "TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md",
+      "bytes": 18523,
+      "sha256": "4e469d696daed538f2a4587461b42162d5f90574511c19a206b7cc3a0d6be857"
+    },
+    {
+      "name": "wip10_hit_reference.py",
+      "bytes": 4770,
+      "sha256": "142e5001ee9bd4042a88e6011a1342a2b96cc94eb093f9b0faec069c6aaf6dc6",
+      "repositoryCopy": "tests/fixtures/wip10_hit_reference.py"
+    }
+  ],
+  "implemented": [
+    "observed-velocity lead and muzzle-direction prediction",
+    "velocity-derived flight time and impact-time actual-pose probability",
+    "box-projected zones and left/right side",
+    "post-result hit point and terrain/building miss-path march",
+    "team-observation information controls",
+    "checksum-pinned reference generation and JavaScript comparison"
+  ],
+  "excludedBySpecification": [
+    "penetration, armour, damage and destruction",
+    "ricochet, fuzes, ERA and detailed sub-parts",
+    "forest projectile collision, ammunition variants and automatic fire"
+  ],
+  "referencePythonExecuted": true,
+  "referencePythonRepublished": true
+}
