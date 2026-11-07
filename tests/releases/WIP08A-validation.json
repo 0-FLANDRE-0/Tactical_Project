@@ -1,0 +1,339 @@
+{
+  "version": "0.4-WIP08A",
+  "date": "2026-11-07",
+  "timezone": "Asia/Seoul",
+  "baseline": "8691824c8a945cc37450333302dba58eb46789a0",
+  "mainAtStart": "a832a89cdc4217d24c208a3430c4b2cde78cf899",
+  "mainAtFinalCheck": "ebe6787c12be9485f288af88555ce1ecbe4d6f18",
+  "mainSyncCommit": "e73ac7d35b335bfbb81067d84a0770c8482dcab8",
+  "branch": "feat/wip08-aim-fire",
+  "PR": 4,
+  "initialWorktree": "clean; no applicable AGENTS.md; continued existing draft PR",
+  "sourceReference": {
+    "file": "data/vehicles/references/M1_Abrams_TopView.html",
+    "SHA256": "f50d80fd9f5e991733d890928a5d0191b7e0bf91f077ee5d6cad86030b7e8ee0",
+    "kind": "user-supplied visual reference; embedded usage examples are not task instructions",
+    "importedVariant": "M1A2",
+    "otherProfilesAndLabUIActivated": false
+  },
+  "checks": [
+    {
+      "command": "node --test tests/look-animation.test.cjs tests/ui-cache.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs",
+      "passed": 123,
+      "failed": 0,
+      "kind": "pure rules, actual core, synthetic terrain, frozen LOS oracle, source vectors and real shot origins"
+    },
+    {
+      "command": "node tests/input.test.cjs",
+      "passed": 35,
+      "failed": 0,
+      "kind": "fake DOM/input"
+    },
+    {
+      "command": "node tests/map.test.cjs",
+      "passed": 16,
+      "failed": 0,
+      "kind": "actual map/mobility"
+    },
+    {
+      "command": "node tests/visibility.test.cjs",
+      "passed": 12,
+      "failed": 0,
+      "kind": "geometry/mask/map"
+    },
+    {
+      "command": "node tests/vehicle.test.cjs",
+      "passed": 9,
+      "failed": 0,
+      "kind": "profiles/mobility/actual Node Worker/stale response"
+    }
+  ],
+  "nodePassed": 195,
+  "nodeFailed": 0,
+  "newNodeTests": 8,
+  "browser": {
+    "browser": "156.0.8078.79",
+    "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+    "checks": [
+      "single HTML starts offline with actual canvas",
+      "guard world point input, actual turret pose and pause",
+      "terrain hold runs real embedded Worker and composes sectors",
+      "silhouette reuses artwork but contains only black opaque pixels",
+      "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+      "identified and remembered contacts update panel permissions then expire selection",
+      "mobile viewport 844×390 has no horizontal overflow and controls stay in map",
+      "mobile viewport 390×844 has no horizontal overflow and controls stay in map",
+      "reduced-motion and normal views keep same actual observation state",
+      "actual core team contact stays distinct from selected vehicle observation and direct acquisition",
+      "actual acquired target aims, fires once and respects interval and paused keyboard input",
+      "actual browser command cancellation and automatic return respect separate guard orders",
+      "reset clears firing events, aim progress and test-round state",
+      "embedded M1A2 Canvas pixels match supplied HTML with fresh Path2D caches at four independent poses",
+      "no application page errors"
+    ],
+    "geometryEvidence": {
+      "muzzle": {
+        "error": 3.5760872045925e-08,
+        "lineAtMuzzle": true,
+        "flashAtMuzzle": true
+      },
+      "art": {
+        "freshPathCaches": true,
+        "poses": 4,
+        "channelDifferences": 0,
+        "details": [
+          {
+            "pose": {
+              "heading": 0,
+              "turret": 0,
+              "commander": 1
+            },
+            "count": 0,
+            "max": 0,
+            "first": []
+          },
+          {
+            "pose": {
+              "heading": 0,
+              "turret": 1.5707963267948966,
+              "commander": -1
+            },
+            "count": 0,
+            "max": 0,
+            "first": []
+          },
+          {
+            "pose": {
+              "heading": 0,
+              "turret": 3.141592653589793,
+              "commander": 0.2
+            },
+            "count": 0,
+            "max": 0,
+            "first": []
+          },
+          {
+            "pose": {
+              "heading": 0.6,
+              "turret": -1,
+              "commander": 2
+            },
+            "count": 0,
+            "max": 0,
+            "first": []
+          }
+        ]
+      }
+    },
+    "passed": 15,
+    "failed": 0,
+    "errors": [],
+    "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected only for UI privacy checks. Additional team-sharing test runs actual core on the original map with deterministic scenario/profile setup; no contact injection. Supplied HTML M1A2 Canvas pixels compared exactly at four poses using fresh source/embedded renderer instances to normalize Path2D cache history; real draw paths/flash use the event muzzle and DOMMatrix agrees with the ring transform. Not Android hardware or real thermal/ballistic validation."
+  },
+  "syntax": {
+    "jsCjs": 43,
+    "python": 3,
+    "failed": 0,
+    "files": [
+      "scripts/bake_navigation.cjs",
+      "scripts/benchmark_los_compare.cjs",
+      "scripts/benchmark_observation.cjs",
+      "scripts/benchmark_ui.cjs",
+      "scripts/export_vehicle_profile.cjs",
+      "scripts/observation-benchmark-fixture.cjs",
+      "scripts/reproduce_observation_issues.cjs",
+      "src/app.js",
+      "src/battlefield-data.js",
+      "src/contour-data.js",
+      "src/fire-control.js",
+      "src/look-animation.js",
+      "src/m1a2-art.js",
+      "src/map-renderer.js",
+      "src/observation.js",
+      "src/sim-core.js",
+      "src/ui-cache.js",
+      "src/vehicle-geometry.js",
+      "src/vehicle-profiles.js",
+      "src/visibility-client.js",
+      "src/visibility.js",
+      "tests/art-muzzle.test.cjs",
+      "tests/browser.test.cjs",
+      "tests/fire-control.test.cjs",
+      "tests/fire-core.test.cjs",
+      "tests/fixtures/sim-core-WIP07A.js",
+      "tests/helpers/los-reference.cjs",
+      "tests/helpers/observation-core-fixture.cjs",
+      "tests/helpers/observation-fixture.cjs",
+      "tests/helpers/ui-fixture.cjs",
+      "tests/input.test.cjs",
+      "tests/load.cjs",
+      "tests/look-animation.test.cjs",
+      "tests/los-optimization.test.cjs",
+      "tests/map.test.cjs",
+      "tests/observation-core.test.cjs",
+      "tests/observation-correction.test.cjs",
+      "tests/observation-moving.test.cjs",
+      "tests/observation.test.cjs",
+      "tests/profile-registry.test.cjs",
+      "tests/ui-cache.test.cjs",
+      "tests/vehicle.test.cjs",
+      "tests/visibility.test.cjs"
+    ],
+    "pythonFiles": [
+      "build.py",
+      "scripts/package_release.py",
+      "scripts/build_vehicle_review.py"
+    ]
+  },
+  "artifact": {
+    "html": "Tactical_v0.4_WIP08A.html",
+    "htmlBytes": 8297948,
+    "htmlSHA256": "4c5e9886f33776cc7dd57e733920e7ca63656b9a29bcf9e2f6d1f955cc26b68e",
+    "zip": "Tactical_v0.4_WIP08A.zip",
+    "zipBytes": 1617804,
+    "zipSHA256": "2b2fd026e2b8814e36c09d78a2c603d43b73ddbcf3f50e2c2357a8d1cfd8611b",
+    "extractedMatchesDist": true
+  },
+  "repeatBuildAndPackage": "byte-identical",
+  "zipCRC": "passed",
+  "losEquivalence": {
+    "file": "WIP08A-los-equivalence.json",
+    "rays": 13805,
+    "exposures": 1000,
+    "exact": true,
+    "sourceSHA256": "ab70525f12138b068daf00198bd49611d883c940cd8ac8c6fcfeac5a55f2e49c"
+  },
+  "scenarios": {
+    "file": "WIP08A-comparison.json",
+    "scenarios": 4,
+    "trialsPerVariant": 3,
+    "separateProcesses": 6,
+    "comparedCompleteStateOutputs": 24,
+    "allStateStringsExactlyEqual": true,
+    "note": "Frozen original terrain/LOS plus identical current observation and firing-state logic; no shots in performance fixture"
+  },
+  "failed": [],
+  "correctedDuringValidation": [
+    {
+      "check": "original/embedded Canvas pixels",
+      "initial": "265 differing channels, max 13, around first-pose CITV with different accumulated Path2D histories",
+      "resolution": "Normalize both source renderer instances to fresh caches; all channels exactly equal in four poses. Keep actual app path/flash and DOMMatrix origin checks separate."
+    }
+  ],
+  "blocked": [
+    {
+      "check": "file://",
+      "reason": "ERR_BLOCKED_BY_ADMINISTRATOR; identical standalone file tested over local HTTP"
+    }
+  ],
+  "notRun": [
+    "physical Android touch/memory/heat/sustained FPS",
+    "whole-game sustained FPS or simultaneous firing performance",
+    "original DEM/GDAL source recheck",
+    "real vehicle measurement or weapon performance certification"
+  ],
+  "scopeLimits": [
+    "Cosmetic 0.35s projectile display; no physical trajectory/elevation/penetration/damage/reload",
+    "Muzzle point geometry/terrain checks added; full gun tube collision remains unimplemented",
+    "No change to 9 observation sample positions, sensor timing/probabilities or mobility/navigation contract"
+  ],
+  "unchanged": {
+    "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7",
+    "src/contour-data.js": "1a32d18742382c7ad18446adb69e5ab346c20c83481790dbae727ab0cd095ba2",
+    "data/rasdorf_4km.json": "034b6749eccfe23ead935dd6d2db62fa0064e2eeb539a22b479638a9de0a87ce",
+    "src/map-renderer.js": "998c9cc2f1b3a177badf57a8dc2f2c8c7d8ecfa27c42d6b799f7f0dabb5137d9",
+    "src/visibility.js": "30a27ce5fbdb97a281cf1b4fe3c72d6e63309193358a6efbe279a33df345c46b",
+    "src/visibility-client.js": "614904e6c3625a8fb032a103f4c14a911438afa4e21273d37fc0e90951ac7001",
+    "tests/fixtures/sim-core-WIP07A.js": "ab70525f12138b068daf00198bd49611d883c940cd8ac8c6fcfeac5a55f2e49c",
+    "Tactical_v0.4_WIP06.html": "b091f0455051677aab416e551edd5532cf1d0ab6674559814ff122e2aaa214a6",
+    "Tactical_v0.4_WIP07.html": "60748e83cb4720f692906467da767acf8912cacac8cc2ec7b61668bf18b19a5b",
+    "Tactical_v0.4_WIP07.zip": "8ba5e4c1231d705db148c5966ad0575c4cb3ba55b1d68b65f44cac2244d9c4b5",
+    "Tactical_v0.4_WIP07A.html": "abd2f38b4984e2312aad22a1c5e79c93ae092403785ea3c4592d7c5829b5a500",
+    "Tactical_v0.4_WIP07A.zip": "4da317d290f4e1123903161cca9ef953fb0b2cce3bc79d857255691b1ef8bc9a",
+    "Tactical_v0.4_WIP07B.html": "6d5ed68a48309f1cc503f96174c527fd1135723f507bd8c03d80304466dcc34c",
+    "Tactical_v0.4_WIP07B.zip": "63435fa9d29549c7380df144ada5602845905c082503b25d1fdfe48904f00bd0",
+    "Tactical_v0.4_WIP08.html": "1747a03cfa1aa34d9b06f723581eca61d5e821459ef0b39f337e61727688b69a",
+    "Tactical_v0.4_WIP08.zip": "6e62c5df58f2d2b27265b84cb8a150ee3d8c94efa1cb6b389ca13f059e1bdf31",
+    "archive/M1A2_WIP04_top_view.svg": "ca784f759bbc235dd7f5b5ad6fe2d1bf01a14e4f9c279bf6219070b8d7cdab1a",
+    "archive/M1A2_before_proportion_fix.svg": "8298d1f86fe079b35a657680e88303d56db4f4066aca3ef623eb97dd4237caa8",
+    "archive/README.md": "b28c5454e0d0eebfa939c93cf0c18f75f892674e5da8540cd516eb800bfe0b36",
+    "archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md": "c2b31bef9bfde160e5803e68b89bc0eefc667511877aaad199cc7b7bae4bbcf2",
+    "archive/Tactical_v0.4_WIP01.html": "49f23a2bb8c7102a547224d8ae56cd03f68ce45daff28bb1c617cb709dd15cd5",
+    "archive/Tactical_v0.4_WIP01_source_and_backup.zip": "8ed9e387991b9b4687d0028bbb8b692f18fcfd201f4c95b4df0a402bc77521b8",
+    "archive/Tactical_v0.4_WIP02.html": "e6a008e99c1358ae1219e41fa7cf5cd4efb06f9414db3aeb8e3b66b61cea225a",
+    "archive/Tactical_v0.4_WIP03.html": "6791c37d680d746a084a7dd5cc54e0657d37cd5ba216e0e724dfd013890622e3",
+    "archive/Tactical_v0.4_WIP04.html": "25f28140ea574fbfd4b671e9695681e4bffd93e98a9d17fbf6db301e3c7142d7",
+    "archive/Tactical_v0.4_WIP06.html": "b091f0455051677aab416e551edd5532cf1d0ab6674559814ff122e2aaa214a6",
+    "archive/WIP02_terrain_renderer.js": "09472789460e10e50303b53c67cab9457c21c0047a71b7e96ac36fbc8ed82fef",
+    "archive/WIP04_initial_m1a2-art.js": "1df7fa3102c6191e61c3acc52e778846f76cc5f6ff278fe215f9854c104917c6",
+    "archive/WIP04_m1a2-art.js": "a9a827195e73e4ab699e3c26cf04145efae5c97a0b058e0e3f50a9f837455425",
+    "archive/ammo/README.md": "b1cf6d6570eb3e8fc66aeab2dea451c7428a24c62f46ba713a090ff14291ebb6",
+    "archive/tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md": "8d43b077bbab8357ddc7a721fe60307ab6652c63e37b41e1e18ec8197d8cb2f5",
+    "archive/tanks/README.md": "372962715983984785d63795dbc16f438f318cb4f14bca8424de7fb15a39e65e",
+    "tests/releases/WIP06-validation.json": "e1d4c90b0fcbbab7a614bba998d779e875b6ecaee3d430dd91a6f6205a318b8f",
+    "tests/releases/WIP07-390x844.png": "9b032dea95f0240845e0905fea74f6a0372be918285245fe814dff2c4ce34469",
+    "tests/releases/WIP07-844x390.png": "d762bc4a94a08f5c733fc16d19f2f72bd13186e64a54e8605ccc77330bc13c5a",
+    "tests/releases/WIP07-benchmark.json": "07fdd6813b8e4be7603e6add683987288ebbbec16c8ebd55ede236cb87d4d58e",
+    "tests/releases/WIP07-browser.json": "e5400a804463f8fd37643fdcb120d0f18e08ed3c959aa60179beb3a70dcdc8d2",
+    "tests/releases/WIP07-desktop.png": "8ec5b2b6a85124b453c95a53197a54bb27366828a459201282aa1749592583de",
+    "tests/releases/WIP07-memory.png": "43a7a52970cba7e9487019fb4ee781df131ab87c6562db5203fff48e12aac36a",
+    "tests/releases/WIP07-silhouette-panel.png": "9e9cea63f2f40bb5ddbea55262074c5ef3d02d2a3112dd6017e50a4b393d02d5",
+    "tests/releases/WIP07-validation.json": "c21378182984a5a4cc20e809d5d154968535a35c41f4b91d2fe7f0a9472e26e0",
+    "tests/releases/WIP07A-390x844.png": "1ec05b50fbb30ef9e4ee62dc76bb4e1000906894cbbc4edd1a9a3be90f734b6c",
+    "tests/releases/WIP07A-844x390.png": "942578aff1f5ac7c8bbb1468dc530e80c263192e687775a6f4a86b5cc80732c9",
+    "tests/releases/WIP07A-after.json": "37ef571d8d8516f4d59f5e306981f649b69d2a71d148f03ee840acc279f03a7b",
+    "tests/releases/WIP07A-before.json": "79c3926180ecfca07fcbb404ed2ba88b92ece85d6885057f34a03dc2e02fea54",
+    "tests/releases/WIP07A-benchmark.json": "1c1d8e3ae2eb8b32cd29e8068f5febef3028fb0720316ef3ba59e2b0fdda7c79",
+    "tests/releases/WIP07A-browser.json": "cb0bb5589e62275fb6281c8c92b0cdd8fb867b078573f375fd69c75dcc43d86f",
+    "tests/releases/WIP07A-desktop.png": "b275bd17b72456b861c2dbcfd1d80c6206e5ed2bb4cd3ad74d6cd1d705c71791",
+    "tests/releases/WIP07A-memory.png": "a74500548b7d850c712c4abd76f8cec575366a9c5688205ba05bd5f1fef26285",
+    "tests/releases/WIP07A-moving-regressions.json": "b9306c0f468e1af66edb6e26371f5f8e27c4b34b79303139d0511875e13c74fa",
+    "tests/releases/WIP07A-silhouette-panel.png": "500112a2c2ab30908174cfde3cc695bd97ff7ffd2863d4760c46d2e923e23bb7",
+    "tests/releases/WIP07A-team-not-own.png": "01290545eaa249aa5cedb9bd0aae95ec3a1a7399f05f54bf2d0562f35a0d6d2a",
+    "tests/releases/WIP07A-validation.json": "7e9f3e71fd9c78c1ec7a1bf05e28431579a2f50b1fd85c8bd2fe544e089dbc23",
+    "tests/releases/WIP07B-390x844.png": "9b032dea95f0240845e0905fea74f6a0372be918285245fe814dff2c4ce34469",
+    "tests/releases/WIP07B-844x390.png": "942578aff1f5ac7c8bbb1468dc530e80c263192e687775a6f4a86b5cc80732c9",
+    "tests/releases/WIP07B-benchmark.json": "a70c7321065c6a12d6e557865c97b4b0d51cb2c6a7a24d5a942f53eceb124613",
+    "tests/releases/WIP07B-browser.json": "cb0bb5589e62275fb6281c8c92b0cdd8fb867b078573f375fd69c75dcc43d86f",
+    "tests/releases/WIP07B-comparison.json": "001e84cf1f67955ea14845fda9c5b24d6bab3623e8ae29b921520a07c4520d21",
+    "tests/releases/WIP07B-desktop.png": "ea9b947be4ae6c215a04c3b49371b49b1d2d353f3f2f2cc9d5221d39324ee734",
+    "tests/releases/WIP07B-los-equivalence.json": "dcd7a4228e2aec834ce2793b6eb25d70e19f5b0abf7d0e896ce9fa6a5d7a2259",
+    "tests/releases/WIP07B-memory.png": "02c6cc58418c724a85228d099e093ab4b26e3f6b498f79a2046cab3ce5b51e83",
+    "tests/releases/WIP07B-moving-regressions.json": "b9306c0f468e1af66edb6e26371f5f8e27c4b34b79303139d0511875e13c74fa",
+    "tests/releases/WIP07B-silhouette-panel.png": "a0afb644aaff6b33765498dc005e0abbb7c47cdcd4d207f59090add9590495f4",
+    "tests/releases/WIP07B-team-not-own.png": "8d9f10e08c0b0c93861df8106109c5f9b05e8864a2ec7e73decf8070dff7e1b0",
+    "tests/releases/WIP07B-validation.json": "7829b1a0ce940a19e5f9fe5b94078af5399233b60347f10f4f1e687defedf89a",
+    "tests/releases/WIP08-390x844.png": "d6dd20ecb6f3d251a39dcd7a909d0ec45e64e091f0b735f631ab34d9cd7f0586",
+    "tests/releases/WIP08-844x390.png": "a54ca6967aa277d5d3f152bccd46aa3642851c59a422ed1dd31192feb9f1f9bb",
+    "tests/releases/WIP08-benchmark.json": "3ec7987d3f14633595506fb2ccb1b4890299911f7d392fa1ac8d04b9f6a56882",
+    "tests/releases/WIP08-browser.json": "6d77586941836cb222dc33395da978736df56d3013a1d4a14948b6629f1e5814",
+    "tests/releases/WIP08-comparison.json": "48679a2e4ee41e246bd6a493ea4688bc4a91f2b109dfadbc3cf9593b537d8b7d",
+    "tests/releases/WIP08-desktop.png": "ec2d81912f65205778c1fb1fb5becd685fd67450dee7769a51adfd38b4eaabef",
+    "tests/releases/WIP08-los-equivalence.json": "dcd7a4228e2aec834ce2793b6eb25d70e19f5b0abf7d0e896ce9fa6a5d7a2259",
+    "tests/releases/WIP08-memory.png": "52a7fe333e7b4f878b5b9a3133ff40b684faecb307f0c6e9298397089dccdd85",
+    "tests/releases/WIP08-moving-regressions.json": "b9306c0f468e1af66edb6e26371f5f8e27c4b34b79303139d0511875e13c74fa",
+    "tests/releases/WIP08-shot.png": "31a57a0104edcfcbd63fbc7148542aa0cf58845a91076e2b263a8f2d0600b446",
+    "tests/releases/WIP08-silhouette-panel.png": "c71ae0d878d26f12a4b6acb45e6be289bde3d3a6cac0b475a55fb9200a8af950",
+    "tests/releases/WIP08-team-not-own.png": "26baf77e0eef7f301b461ff9c1329239f05dfa68dac89897758e6577e649bbfc",
+    "tests/releases/WIP08-validation.json": "69f782116152b165306f0e2989407a4afceb225024a677b41ad0dcf94339ae15"
+  },
+  "sourceSHA256": {
+    "src/styles.css": "b96bdfdb7b4c22c6c1e69741c2c0cad00ca70ef9fcd203cc7f991007c3719ad3",
+    "src/map-renderer.js": "998c9cc2f1b3a177badf57a8dc2f2c8c7d8ecfa27c42d6b799f7f0dabb5137d9",
+    "src/app.js": "83a1ffcb5f69bb9cbf55301bf3868ccfcb5cc518b9f44f34a1da4993b51891cd",
+    "src/look-animation.js": "1695d4e6464da0dea26285dae7a24ef61266df200065055f2f1916a0f547abf0",
+    "src/visibility.js": "30a27ce5fbdb97a281cf1b4fe3c72d6e63309193358a6efbe279a33df345c46b",
+    "src/observation.js": "5790c3db92e62a6b9bd75e3c960156509dab5228f454c519a311c6b412b49cb9",
+    "src/visibility-client.js": "614904e6c3625a8fb032a103f4c14a911438afa4e21273d37fc0e90951ac7001",
+    "src/contour-data.js": "1a32d18742382c7ad18446adb69e5ab346c20c83481790dbae727ab0cd095ba2",
+    "src/vehicle-profiles.js": "532d7ca422c034ded8aed80f70f205774eb2da162c64a38b1ea82afad49db58a",
+    "src/sim-core.js": "27a2a95fb172e0523670f9a875a860548122993993ff8ebab162b16fa831b257",
+    "src/ui-cache.js": "cf7f5c60154c6b7534b11eda20e782b8d956e809a015d9fa30c6a2eeb762709c",
+    "src/fire-control.js": "dedb3628ad5ea47f3ea184a90ff3251d2ed2e6dca8b908da97af020abf93c6b3",
+    "src/page.html": "9d2cb2543cd035b323786c4fe05c77ea2fcd31f4e948f1f5f9b2dde273c79257",
+    "src/m1a2-art.js": "8748f05d057ac0ed2b7d7375e7abaf6c388155d86c12eaab240c20d9682669a5",
+    "src/vehicle-geometry.js": "07e42788305905bd7bcb5382771055813f881193250cf936f7f43a9bdc9a963c",
+    "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7"
+  }
+}

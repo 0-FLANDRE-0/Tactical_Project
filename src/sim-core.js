@@ -293,12 +293,17 @@ const TacticalCore = (() => {
   function fireFor(s){
     if(!fireRuntimes.has(s))fireRuntimes.set(s,TacticalFireControl.create({profileOf,seed:s.seed??7,freshSight:(u,id)=>{
       const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'target-unavailable'};
-      const p=profileOf(u),sensor=p.sensors.gunner,optical=exposure(u,target,sensor.eyeHeight),weapon=p.fireControl.fireHeight===sensor.eyeHeight?optical:exposure(u,target,p.fireControl.fireHeight);
+      const p=profileOf(u),sensor=p.sensors.gunner,optical=exposure(u,target,sensor.eyeHeight),muzzle={...TacticalVehicleGeometry.muzzleWorld(u,p.model),profileId:u.profileId,profileOverride:u.profileOverride};
+      // Keep the game firing height relative to the hull's ground, even when
+      // the barrel tip lies over different terrain. Optics stay on the vehicle.
+      const fireEye=heightAt(u.x,u.y)+p.fireControl.fireHeight-heightAt(muzzle.x,muzzle.y);
+      const muzzleRoof=buildingAt(muzzle.x,muzzle.y)?.roof??-Infinity;
+      const weapon=fireEye>0&&heightAt(u.x,u.y)+p.fireControl.fireHeight>=muzzleRoof?exposure(muzzle,target,fireEye):null;
       let hull=0,turret=0,gunnerVisible=false;
       for(let i=0;i<optical.samples.length;i++){
         const v=optical.samples[i],d=Math.hypot(v.x-u.x,v.y-u.y),angle=Math.abs(angleDiff(Math.atan2(v.y-u.y,v.x-u.x),u.turret));
         if(!v.visible||d>sensor.range||angle>sensor.fov/2)continue;gunnerVisible=true;
-        if(weapon.samples[i].visible){if(v.part==='hull')hull++;else turret++;}
+        if(weapon?.samples[i].visible){if(v.part==='hull')hull++;else turret++;}
       }
       return{visible:hull+turret>0,hull:hull/6,turret:turret/3,reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret}};
     }}));

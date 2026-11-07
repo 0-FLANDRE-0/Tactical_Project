@@ -12,7 +12,7 @@
   let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA);
   let visibility=null,visibilityPath=null;
-  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
+  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
   let sightRevision=0;
   function fitCamera(){
@@ -548,6 +548,10 @@
       const age=sim.time-shot.time;if(age<0||age>1.2)continue;
       const a=toScreen(shot.origin.x,shot.origin.y),b=toScreen(shot.targetPose.x,shot.targetPose.y);
       ctx.save();ctx.globalAlpha=Math.max(0,1-age/1.2);ctx.strokeStyle=shot.hit?'#ffe5a0':'#dfaa88';ctx.lineWidth=2;ctx.setLineDash(shot.hit?[]:[4,5]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      // Cosmetic projectile follows fixed event endpoints. Its display duration
+      // never participates in hit/region resolution or consumes simulation RNG.
+      const phase=Math.min(1,age/.35),px=a.x+(b.x-a.x)*phase,py=a.y+(b.y-a.y)*phase;
+      if(phase<1){ctx.setLineDash([]);ctx.strokeStyle='#fff6d0';ctx.lineWidth=3;const length=Math.hypot(b.x-a.x,b.y-a.y)||1;ctx.beginPath();ctx.moveTo(px-(b.x-a.x)/length*6*phase,py-(b.y-a.y)/length*6*phase);ctx.lineTo(px,py);ctx.stroke();}
       ctx.fillStyle='#fff1bd';ctx.beginPath();ctx.arc(a.x,a.y,Math.max(2,7*(1-age/1.2)),0,Math.PI*2);ctx.fill();ctx.font='600 11px system-ui';ctx.fillText(shot.hit?'명중 · '+zoneNames[shot.zone]:'빗나감',b.x,b.y-20);ctx.restore();
     }
   }
@@ -709,7 +713,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP08',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP08A',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView(),firing:C.fireStatus(sim,selectedUnit(),targetId),shots:C.fireEvents(sim,'blue')
     }
     )),command:(x,y,reverse=false)=>{

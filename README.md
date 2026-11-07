@@ -1,15 +1,15 @@
-# TACTICAL v0.4 WIP08 — 프로파일 레지스트리·조준·단발 발사
+# TACTICAL v0.4 WIP08A — M1A2 도안·포탑 링·포구 발사
 
-최신 main `a832a89`의 아카이브 변경을 확인하고 WIP07B 관측/LOS 기반에 표적 확보 → 실제 포탑 정렬 → 조준 완료 → 수동 단발 발사를 연결했다. 명중 여부와 명중 시 부위를 별도 게임 확률로 계산한다. M1A2 프로파일은 불변 ID 레지스트리에 보관하며 차량별 조준·시험탄 상태와 분리한다. 지도·차량 반경·길찾기 계약은 유지한다.
+첨부 `M1_Abrams_TopView.html`의 M1A2 벡터 형상으로 교체했다. 포탑 도안 원점 +0.15m와 링 회전축 +0.66m를 분리하고, 실제 포탑 방향과 차체 방향으로 포구 월드 좌표를 구한다. 포탄 표시·섬광·발사선은 그 포구에서 시작한다. 기존 프로파일 레지스트리·확보/조준/단발 확률과 지도·기동/길찾기 계약은 보존한다. WIP08 `8691824`에서 이어 작업했으며 최신 main `ebe6787`의 장갑 아카이브 추가도 보존했다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip08-aim-fire/Tactical_v0.4_WIP08.zip). 압축을 풀면 `Tactical_v0.4_WIP08.html` 한 파일이 나온다.
-- 현재 단일 실행 파일: [Tactical_v0.4_WIP08.html](Tactical_v0.4_WIP08.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [사격 상태·초깃값·레지스트리](docs/FIRE_CONTROL_WIP08.md) · [관측 설정](docs/OBSERVATION_WIP07A.md) · [릴리스·검증](TACTICAL_RELEASE_WIP08.md) · [SHA-256](SHA256SUMS_WIP08.txt).
-- 이전 실행 파일·ZIP·검증 자료와 archive는 보존했다. WIP07B PR #3은 앞선 사용자 요청으로 main에 병합되었다. 이번 WIP08은 별도 검토 브랜치이며 main 병합·공개 배포하지 않는다.
+- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip08-aim-fire/Tactical_v0.4_WIP08A.zip). 압축을 풀면 `Tactical_v0.4_WIP08A.html` 한 파일이 나온다.
+- 현재 단일 실행 파일: [Tactical_v0.4_WIP08A.html](Tactical_v0.4_WIP08A.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [도안·링·포구 좌표](docs/M1A2_ART_MUZZLE_WIP08A.md) · [사격 상태·초깃값·레지스트리](docs/FIRE_CONTROL_WIP08.md) · [관측 설정](docs/OBSERVATION_WIP07A.md) · [릴리스·검증](TACTICAL_RELEASE_WIP08A.md) · [SHA-256](SHA256SUMS_WIP08A.txt).
+- 이전 실행 파일·ZIP·검증 자료와 archive는 보존했다. WIP07B PR #3은 앞선 사용자 요청으로 main에 병합되었다. 이번 WIP08A는 초안 PR #4를 갱신한 검토 브랜치이며 main 병합·공개 배포하지 않는다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip08-aim-fire/Tactical_v0.4_WIP08.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP08.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip08-aim-fire/Tactical_v0.4_WIP08A.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP08A.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -73,6 +73,7 @@
 - 이동은 60% 종방향·40% 횡방향 경사를 구분한다. 60도/40도가 아니다. 차체 여유 반경 4.62m에 맞춰 길찾기 캐시를 다시 제작했다.
 - 상부 외형은 미 육군 DVIDS 3055956 사진으로 장비 배치를 확인하고, USMC의 M1A1 공통 차체·포탑 도면과 동일 축척으로 비교했다. M1A1 도면을 M1A2의 정확한 세부 도면으로 취급하지 않는다.
 - WIP05: 상부 외곽을 USMC A-3 평면도에 동일 축척으로 겹쳐 다시 그렸다. 포탑 전면은 포방패 옆이 거의 횡방향인 뭉툭한 면과 짧은 사선 측면으로 바꿨고(이전의 뾰족한 화살촉형 제거), 도면대로 좌측(장전수) 측면 사선이 우측보다 길다. 포탑 본체 길이 4.75m, 수납함 포함 폭 3.28m, 뒤 바스켓 포함 약 5.30m는 **외형 근사값**이다.
+- WIP08A: 제공 HTML의 M1A2 형상·장비 배치로 갱신했다. 링 회전축은 차체 전방 0.66m, 도안 원점은 0.15m로 구분한다. 측면/후방 선회 중에도 포구와 발사 표시가 일치한다.
 - WIP05: M256 포신에 열차폐 고정 링·배연기·포구 칼라·포구 기준 센서를 도면 위치대로 넣었다. 포구 위치는 공개 전장 9.8298m를 유지한다.
 - 상부 궤도 주행부는 사이드스커트·펜더 아래에 모두 숨겼다. 전방 펜더 수납함, 좌측 터빈 흡기 그릴, 엔진 데크 흡기 그릴(사진 기준, 포탑 선회 시 노출), 후방 배기 그릴, 견인 고리, 버슬 랙, 해치·CITV·GPS·기관총·연막탄 발사기·패널·고정구를 벡터로 분리했다. CROWS/TUSK는 기본형에 추가하지 않았다.
 - 차체와 포탑을 서로 독립된 변환으로 그린다. 장비 배치와 세부 체결구는 사진을 참고한 표현이며 장갑·충돌·피해 모델은 아니다.
@@ -85,10 +86,11 @@
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP08.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP08A.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
+| `src/vehicle-geometry.js` | 차체 고정 링·포탑 로컬 점·실제 포구의 공통 2D 변환 |
 | `src/fire-control.js` | 자체 확보·정렬·조준·단발 명중/조건부 부위 판정과 팀별 이벤트 |
 | `src/m1a2-art.js` | 독립 차체·포탑 벡터 도안과 SVG 내보내기 |
 | `src/visibility-client.js` | 내장 시야 Worker와 오류 시 동일 계산 대체 실행 |
@@ -117,11 +119,11 @@
 ```sh
 node scripts/export_vehicle_profile.cjs
 python3 build.py
-python3 scripts/package_release.py WIP08
+python3 scripts/package_release.py WIP08A
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
@@ -169,7 +171,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 실제 지도와 기동·관측·수동 단발 사격을 연결한 시험장이다. 표적 확보와 조준 완료를 구분하고 게임 명중/부위를 기록한다. 적 전술 AI·자동 사격·관통·장갑·피해·상세 장전·보병은 구현하지 않았다. 기본 적 표적은 정지 상태다.
 
-명중과 조건부 부위 선택은 현재 관측 노출과 실제 방향을 사용하는 추상 게임 모델이다. 사통장치 수치는 시험용 튜닝이며 실차 성능 재현값이 아니다. archive의 차량/탄약/장갑 설계는 런타임에 자동 적용하지 않는다. 상세 범위와 초깃값은 WIP08 상태 문서에 기록했다. Node 187개·실제 Chromium 14개·구문 41개/2개를 통과했다. file:// 실행은 환경 정책으로 차단되어 같은 HTML을 로컬 HTTP로 검증했다.
+명중과 조건부 부위 선택은 현재 관측 노출과 실제 방향을 사용하는 추상 게임 모델이다. 사통장치 수치는 시험용 튜닝이며 실차 성능 재현값이 아니다. archive의 차량/탄약/장갑 설계는 런타임에 자동 적용하지 않는다. 사격 초깃값은 WIP08 문서, 새 도안·포구 좌표는 WIP08A 상태 문서에 기록했다. Node 195개·실제 Chromium 15개·구문 43개/3개를 통과했다. file:// 실행은 환경 정책으로 차단되어 같은 HTML을 로컬 HTTP로 검증했다.
 
 ## 출처
 

@@ -2,6 +2,7 @@
 /* Abstract video-game firing states and independent hit/part rolls. No real
  * fire-control solution, projectile trajectory, armour penetration or damage. */
 const TacticalFireControl=(()=>{
+  const G=typeof TacticalVehicleGeometry!=='undefined'?TacticalVehicleGeometry:require('./vehicle-geometry.js');
   const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   function random(text,seed){let n=(2166136261^seed^0x51f15e)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
@@ -79,7 +80,7 @@ const TacticalFireControl=(()=>{
         const chance=estimate(u,pose,sight,f,s.targetMotion),number=s.shotCount+1;
         const result=resolve(chance.hitChance,chance.zoneProbabilities,random(u.id+':'+number+':hit',seed),random(u.id+':'+number+':zone',seed));
         const shot={id:u.id+'-shot-'+number,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:d.source,
-          origin:{x:u.x+Math.cos(u.turret)*p.model.barrelTip,y:u.y+Math.sin(u.turret)*p.model.barrelTip},
+          origin:G.muzzleWorld(u,p.model),muzzleHeading:u.turret,
           targetPose:{x:pose.x,y:pose.y,heading:pose.heading,turret:pose.turret},...chance,...result,ammoRemaining:s.ammo-1};
         events.push(shot);if(events.length>200)events.shift();s.shotCount=number;s.ammo--;s.lastShot=shot;s.nextShotAt=now+f.shotIntervalSeconds;s.aimElapsed=0;s.aimProgress=0;s.status='interval';s.reason='interval';
       }

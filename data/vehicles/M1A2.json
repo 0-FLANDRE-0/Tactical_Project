@@ -16,7 +16,16 @@
       "barrelTip": 5.867399999999999,
       "turretLength": 4.75,
       "turretWidth": 3.28,
-      "turretCenter": 0.15
+      "turretOrigin": 0.15,
+      "turretPivot": [
+        0.66,
+        0
+      ],
+      "turretRingDiameter": 2.159,
+      "muzzleLocal": [
+        5.717,
+        0
+      ]
     },
     "mobility": {
       "roadSpeed": 18.77568,
@@ -171,6 +180,12 @@
   "reviewed": "2026-11-07",
   "sources": [
     {
+      "id": "USER_TOP_VIEW",
+      "title": "M1_Abrams_TopView.html (user supplied)",
+      "path": "references/M1_Abrams_TopView.html",
+      "scope": "M1A2 exterior vectors and separate art origin/ring pivot; supplied visual approximation, not independently verified measurement"
+    },
+    {
       "id": "GDLS",
       "title": "Abrams M1A2 — Features & Specifications",
       "url": "https://international.gdls.com/english/products/ABRAMS/M1A2.pdf",
@@ -236,9 +251,14 @@
       "status": "derived geometry",
       "formula": "overallLength - hullLength/2; hull-centred coordinate origin"
     },
-    "model.turretLength,model.turretWidth,model.turretCenter": {
+    "model.turretLength,model.turretWidth": {
       "status": "visual approximation",
       "note": "Top-view silhouette only, not a measured armour layout"
+    },
+    "model.turretOrigin,model.turretPivot,model.turretRingDiameter,model.muzzleLocal": {
+      "status": "user-supplied visual geometry",
+      "source": "USER_TOP_VIEW",
+      "note": "Art origin +0.15m, ring pivot [+0.66m,0], muzzle tip in art coordinates [5.717m,0]; shared Canvas/SVG/event frame. No real weapon calibration."
     },
     "massKg": {
       "status": "published nominal, converted",
@@ -305,7 +325,7 @@
     },
     "fireControl": {
       "status": "fictional game tuning",
-      "note": "WIP08 abstract aim readiness, hit/conditional-zone rolls, 2.2m game firing viewpoint, test rounds and one-second anti-repeat interval. Not measured M1A2 fire control, ballistics or real weapon accuracy."
+      "note": "WIP08 abstract aim readiness, hit/conditional-zone rolls, 2.2m game firing height at the transformed muzzle, test rounds and one-second anti-repeat interval. Not measured M1A2 fire control, ballistics or real weapon accuracy."
     },
     "weapons.mainGun.ammunitionCapacity": {
       "status": "published capacity only",

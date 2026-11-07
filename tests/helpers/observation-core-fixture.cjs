@@ -15,7 +15,7 @@ function mapFor(kind='flat'){
 }
 function core(kind='flat'){
  if(cache.has(kind))return cache.get(kind);const map=mapFor(kind);
- const C=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','module',source+'\nreturn module.exports;')(map,profiles,O,require('../../src/fire-control.js'),{exports:{}});cache.set(kind,C);return C;
+ const C=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,profiles,O,require('../../src/fire-control.js'),require('../../src/vehicle-geometry.js'),{exports:{}});cache.set(kind,C);return C;
 }
 function fixture(kind='flat',{target={x:1500,y:1300},observer={x:500,y:1000},seed=17}={}){
  const C=core(kind),u=C.makeTank('A','OBSERVER',observer.x,observer.y,0),t=C.makeTank('T','MOVING TARGET',target.x,target.y,Math.PI,'red');

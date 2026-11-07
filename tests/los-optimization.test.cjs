@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path');
 const C=require('./load.cjs')(),reference=require('./helpers/los-reference.cjs'),B=reference.load(C.MAP),{mapFor}=require('./helpers/observation-core-fixture.cjs');
 const source=fs.readFileSync(path.resolve(__dirname,'../src/sim-core.js'),'utf8'),profiles=require('../src/vehicle-profiles.js'),O=require('../src/observation.js');
-const load=map=>new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','module',source+'\nreturn module.exports;')(map,profiles,O,require('../src/fire-control.js'),{exports:{}});
+const load=map=>new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,profiles,O,require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
 const report={referenceCommit:'e9f037cc6edca994e3f19297d3e0aa6c491be164',referenceSourceSHA256:reference.sha256,mapHash:C.MAP.meta.mapHash,seed:707,summary:C.losAccelerationInfo(),rays:0,exposures:0,visible:0,positiveForestDepth:0,reasons:{},cases:[]};
 function equal(A,B,o,t,h=1.5,fast=false,eye=null){const actual=A.lineOfSight(o,t,h,fast,eye),expected=B.lineOfSight(o,t,h,fast,eye);assert.deepEqual(actual,expected,JSON.stringify({o,t,h,fast,eye}));report.rays++;report.visible+=+actual.visible;report.positiveForestDepth+=+(actual.forestDepth>0);report.reasons[actual.reason]=(report.reasons[actual.reason]||0)+1;return actual;}
 function pair(kind,edit=null){const map=mapFor(kind);if(edit)edit(map);return{A:load(map),B:reference.load(map)};}
@@ -51,4 +51,4 @@ test('forest/scrub prefix and canopy boundaries preserve exact optical accumulat
  for(const eye of [1.4,14.99999999,15,15.00000001,30])for(const height of [.8,2.2,15,30])for(const fast of [false,true])for(const [x0,x1]of [[0,31.9],[0,64],[0,160],[160,0],[32,128],[128,32],[32,32]])equal(A,B,{x:x0,y:1000},{x:x1,y:1000},height,fast,eye);
  assert(equal(A,B,{x:0,y:1000},{x:64,y:1000},1.5).forestDepth>0);report.cases.push('scrub + forest prefix, 15m canopy boundary, both directions');
 });
-test.after(()=>fs.writeFileSync(path.resolve(__dirname,'releases/WIP08-los-equivalence.json'),JSON.stringify(report,null,2)+'\n'));
+test.after(()=>fs.writeFileSync(path.resolve(__dirname,'releases/WIP08A-los-equivalence.json'),JSON.stringify(report,null,2)+'\n'));

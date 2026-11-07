@@ -7,7 +7,7 @@ const VEHICLE_PROFILES=(()=>{
   const M1A2={
     id:'M1A2',name:'M1A2 Abrams',variant:'M1A2 기본형',crew:4,
     artId:'M1A2',massKg:69.54*907.18474,engineHp:1500,
-    model:{hullLength:inch(312),width:inch(144),overallLength:inch(387),roofHeight:inch(93.5),groundClearance:inch(19),barrelTip:inch(387)-inch(312)/2,turretLength:4.75,turretWidth:3.28,turretCenter:.15},
+    model:{hullLength:inch(312),width:inch(144),overallLength:inch(387),roofHeight:inch(93.5),groundClearance:inch(19),barrelTip:inch(387)-inch(312)/2,turretLength:4.75,turretWidth:3.28,turretOrigin:.15,turretPivot:[.66,0],turretRingDiameter:2.159,muzzleLocal:[5.717,0]},
     mobility:{roadSpeed:mph(42),crossCountrySpeed:mph(30),reverseSpeed:mph(25),accelerationReferenceSpeed:mph(20),accelerationReferenceSeconds:7.2,brakeDeceleration:3,maxLongitudinalGrade:.60,maxSideGrade:.40,pivotRate:Math.PI/6,turretRate:40*Math.PI/180,
       gradeSpeedPoints:[[0,mph(42)],[.10,mph(17)],[.60,mph(4.1)]],
       surfaceSpeed:{forest:6.5,scrub:8,stream:6/3.6}},
@@ -39,6 +39,8 @@ const VEHICLE_PROFILES=(()=>{
       if(Object.hasOwn(profiles,id))throw Error('중복 차량 프로파일: '+id);
       if(p.artId!=='M1A2')throw Error('지원하지 않는 차량 도안: '+p.artId);
       for(const section of ['model','mobility','sensors','navigation','exposure','fireControl','weapons'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
+      for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
+      if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
       const f=p.fireControl;
       for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','motionReference'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
       for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty'])if(!Number.isFinite(f[field])||f[field]<0||f[field]>1)throw Error('확률 프로파일 값 오류: '+id+'.'+field);

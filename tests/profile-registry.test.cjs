@@ -9,6 +9,6 @@ test('runtime factory and explicit lookup reject unknown vehicle IDs',()=>{const
 test('actual core selects each registered firing profile without sharing state or sensor tuning',()=>{
  const fs=require('fs'),{mapFor}=require('./helpers/observation-core-fixture.cjs'),a=structuredClone(P.M1A2),b=structuredClone(P.M1A2);b.id='TEST_B';b.sensors.gunner.range=650;b.fireControl.testRounds=12;b.fireControl.aimSeconds=3;
  const profiles=P.registry.create([a,b]),source=fs.readFileSync(require.resolve('../src/sim-core.js'),'utf8');
- const C=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','module',source+'\nreturn module.exports;')(mapFor('flat'),profiles,require('../src/observation.js'),require('../src/fire-control.js'),{exports:{}});
+ const C=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(mapFor('flat'),profiles,require('../src/observation.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
  const x=C.makeTank('X','X',500,1000,0,'blue','M1A2'),y=C.makeTank('Y','Y',500,1100,0,'blue','TEST_B');assert.equal(C.profileOf(y).sensors.gunner.range,650);assert.equal(C.profileOf(x).sensors.gunner.range,2000);assert.equal(x.fireControl.ammo,42);assert.equal(y.fireControl.ammo,12);assert.equal(C.profileOf(y).fireControl.aimSeconds,3);y.fireControl.ammo--;assert.equal(x.fireControl.ammo,42);
 });

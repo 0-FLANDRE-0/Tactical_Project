@@ -24,7 +24,7 @@ flatMap.heightmap.data=Buffer.alloc(4000000).toString('base64');
 flatMap.terrain.data=Buffer.alloc(1000000,7).toString('base64');
 flatMap.features={roads:[],forests:[],fields:[],water:[],waterways:[],trees:[],labels:[],buildings:[]};delete flatMap.navigation;
 const holder={exports:{}},profiles=require('../src/vehicle-profiles.js');
-const flat=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','module',fs.readFileSync(path.join(__dirname,'../src/sim-core.js'),'utf8')+'\nreturn module.exports;')(flatMap,profiles,require('../src/observation.js'),require('../src/fire-control.js'),holder);
+const flat=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','TacticalVehicleGeometry','module',fs.readFileSync(path.join(__dirname,'../src/sim-core.js'),'utf8')+'\nreturn module.exports;')(flatMap,profiles,require('../src/observation.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),holder);
 test('actual integrator reaches 20 mph in 7.2 seconds on level road',()=>{
  const u=flat.makeTank('TEST','TEST',500,1000,0),s={time:0,units:[u]};assert(flat.issueMove(u,{x:3500,y:1000},false,s.units).ok);
  for(let i=0;i<144;i++)flat.step(s,.05);close(u.speed,20*.44704,.02);
@@ -58,9 +58,9 @@ async function asyncTests(){
    postMessage(v){this.worker.postMessage(v);}terminate(){this.worker.terminate();}
  }};
  const html=fs.readFileSync(path.join(__dirname,'../dist/index.html'),'utf8'),get=id=>html.match(new RegExp('<script id="'+id+'">([\\s\\S]*?)<\\/script>'))[1];
- const actual=new Client(C,require('../src/visibility.js'),()=>['battlefield-data','vehicle-profiles','observation','fire-control','sim-core','visibility-code'].map(get).join('\n'),nodePlatform);
+ const actual=new Client(C,require('../src/visibility.js'),()=>['battlefield-data','vehicle-profiles','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(get).join('\n'),nodePlatform);
  try{const result=await actual.request({x:550,y:2750,profileId:'M1A2'});assert.equal(result.range,4000);assert(result.loops.length>10);assert.deepEqual(result.origin,{x:550,y:2750});assert(actual.worker,'Real worker must execute without fallback');passed++;console.log('PASS shipped worker bundle loads M1A2 and computes 4km visibility offline');}
  finally{actual.worker?.terminate();actual.releaseURL();}
- const report={version:'0.4-WIP08',passed,failed:0,evidence};fs.writeFileSync(path.join(__dirname,'vehicle-results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+ const report={version:'0.4-WIP08A',passed,failed:0,evidence};fs.writeFileSync(path.join(__dirname,'vehicle-results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
 }
 asyncTests().catch(error=>{console.error(error);process.exitCode=1;});
