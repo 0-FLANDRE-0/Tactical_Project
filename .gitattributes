@@ -9,4 +9,5 @@ data/rasdorf_4km.json    linguist-generated=true -diff
 data/contours.json       linguist-generated=true -diff
 data/raw/*.json          linguist-generated=true -diff
 dist/**                  linguist-generated=true -diff
-archive/**               linguist-generated=true -diff
+archive/*.html           linguist-generated=true -diff
+archive/*.zip            -diff
