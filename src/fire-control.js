@@ -1,10 +1,11 @@
 'use strict';
-/* Abstract video-game firing states and independent hit/part rolls. No real
- * fire-control solution, projectile trajectory, armour penetration or damage. */
+/* Fictional RTS firing/flight states. All coefficients are game tuning; the
+ * generated impact point is a post-result display artifact, never damage or
+ * a claim about measured real weapon performance. */
 const TacticalFireControl=(()=>{
   const G=typeof TacticalVehicleGeometry!=='undefined'?TacticalVehicleGeometry:require('./vehicle-geometry.js');
   const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
-  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
+  const GRAVITY=9.81,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   function random(text,seed){let n=(2166136261^seed^0x51f15e)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
@@ -12,9 +13,8 @@ const TacticalFireControl=(()=>{
     return u.fireControl??={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
       shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null};
   }
-  // Fictional RTS error budget. These coefficients are game tuning, not
-  // measured weapon/FCS performance; this module never computes a firing
-  // solution, trajectory or impact coordinates.
+  // Fictional RTS error budget. Target manoeuvre is represented only by the
+  // difference between predicted and actual pose at impact, never twice here.
   function normalCdf(x){
     if(x===0)return .5;
     const v=Math.abs(x)/Math.SQRT2,t=1/(1+.3275911*v);
@@ -23,11 +23,10 @@ const TacticalFireControl=(()=>{
   }
   function errorBudget(observer,pose,f,targetVelocity={x:0,y:0},layTime=0){
     const dx=pose.x-observer.x,dy=pose.y-observer.y,range=Math.hypot(dx,dy),safeRange=Math.max(1e-9,range),beta=Math.atan2(dy,dx);
-    const vx=targetVelocity.x||0,vy=targetVelocity.y||0,speed=Math.hypot(vx,vy),cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=range/(f.muzzleVelocity*f.velocityRetention);
+    const vx=targetVelocity.x||0,vy=targetVelocity.y||0,cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=range/(f.muzzleVelocity*f.velocityRetention);
     const disp=f.dispersionMrad,lay=f.layMinMrad+(f.layStartMrad-f.layMinMrad)*Math.exp(-Math.max(0,layTime)/f.layTauSeconds);
-    const rng=1000*9.81*f.rangeErrorM/(2*f.muzzleVelocity**2),lead=1000*f.leadResidual*cross*tof/safeRange;
-    const man=1000*.5*f.maneuverAccel*tof**2/safeRange*Math.min(1,speed/f.maneuverReferenceSpeed),own=f.stabMradPerMps*Math.abs(observer.speed||0);
-    return{range,tof,sigma:{disp,lay,rng,lead,man,own,x:Math.hypot(disp,lay,lead,man,own),z:Math.hypot(disp,lay,rng,own)}};
+    const rng=1000*GRAVITY*f.rangeErrorM/(2*f.muzzleVelocity**2),lead=1000*f.leadResidual*cross*tof/safeRange,own=f.stabMradPerMps*Math.abs(observer.speed||0);
+    return{range,tof,sigma:{disp,lay,rng,lead,own,x:Math.hypot(disp,lay,lead,own),z:Math.hypot(disp,lay,rng,own)}};
   }
   function presentedRects(observer,pose,exposure,f){
     const m=pose.model,band=exposure.presented||f.presented,samples=exposure.samples||[],rects=[];
@@ -82,7 +81,49 @@ const TacticalFireControl=(()=>{
     const incoming=Math.atan2(observer.y-pose.y,observer.x-pose.x),s=Math.sin(diff(incoming,zone.startsWith('hull')?pose.heading:pose.turret));
     return s>1e-12?'right':s< -1e-12?'left':null;
   }
-  function create({profileOf,freshSight,impactSight=null,isObserved=()=>true,seed=7,debug=false,onDecisionRoll=null}){
+  function impactEvaluation(shot,sight){
+    const pose=sight?.gone?{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}:sight?.pose||{...shot.pose,x:shot.predicted.x,y:shot.predicted.y};
+    const rects=sight?.gone?[]:presentedRects(shot.origin,pose,sight||shot.fireExposure,shot.fireControl);
+    const ex=Math.cos(shot.beta),ey=Math.sin(shot.beta),px=-ey,py=ex,dx=pose.x-shot.predicted.x,dy=pose.y-shot.predicted.y;
+    const lateral=dx*px+dy*py,radial=dx*ex+dy*ey,range=Math.hypot(pose.x-shot.origin.x,pose.y-shot.origin.y),vavg=shot.fireControl.muzzleVelocity*shot.fireControl.velocityRetention;
+    const dz=-GRAVITY*range*radial/(2*vavg*vavg),mu={x:shot.aim.x-lateral,z:shot.aim.z+dz},sx=shot.sigma.x/1000*range,sz=shot.sigma.z/1000*range;
+    let pHull=0,pTurret=0;
+    for(const rect of rects){const p=rectProbability(rect,mu,sx,sz);if(rect.part==='hull')pHull=p;else pTurret=p;}
+    const finalHitChance=clamp(pHull+pTurret,0,1),probabilities=distribution(shot.origin,pose,{pHull,pTurret});
+    return{pose,rects,bias:{lateral,radial,dz},mu,sx,sz,pHull,pTurret,finalHitChance,probabilities};
+  }
+  function boxMuller(a,b){const radius=Math.sqrt(-2*Math.log(Math.max(Number.MIN_VALUE,a))),angle=2*Math.PI*b;return{x:radius*Math.cos(angle),z:radius*Math.sin(angle)};}
+  function sampleImpactPlane(shot,evaluation,result,seed){
+    const part=result.zone?.startsWith('hull')?'hull':result.zone?.startsWith('turret')?'turret':null,selected=evaluation.rects.find(r=>r.part===part),inside=(p,r)=>p.x>=r.x1&&p.x<=r.x2&&p.z>=r.z1&&p.z<=r.z2;
+    for(let k=0;k<shot.fireControl.impact.rejectionAttempts;k++){
+      const n=boxMuller(random(shot.shooterId+':'+shot.number+':impact:'+k+':a',seed),random(shot.shooterId+':'+shot.number+':impact:'+k+':b',seed));
+      const point={x:evaluation.mu.x+evaluation.sx*n.x,z:evaluation.mu.z+evaluation.sz*n.z};
+      if(result.hit?(selected&&inside(point,selected)):evaluation.rects.every(r=>!inside(point,r)))return{...point,fallback:false,attempt:k+1};
+    }
+    if(result.hit&&selected)return{x:clamp(evaluation.mu.x,selected.x1,selected.x2),z:clamp(evaluation.mu.z,selected.z1,selected.z2),fallback:true,attempt:shot.fireControl.impact.rejectionAttempts};
+    const top=evaluation.rects.length?Math.max(...evaluation.rects.map(r=>r.z2)):evaluation.mu.z;
+    return{x:evaluation.mu.x,z:top+.25*evaluation.sz,fallback:true,attempt:shot.fireControl.impact.rejectionAttempts};
+  }
+  const pathHeight=(h0,hq,s,total,vavg)=>h0+(hq-h0)*s/Math.max(1e-9,total)+GRAVITY*s*(total-s)/(2*vavg*vavg);
+  function marchImpact(shot,pose,point,environment){
+    const heightAt=environment?.heightAt||(()=>0),buildingAt=environment?.buildingAt||(()=>null),world=environment?.world||{w:Infinity,h:Infinity};
+    const px=-Math.sin(shot.beta),py=Math.cos(shot.beta),qx=pose.x+point.x*px,qy=pose.y+point.x*py,dx=qx-shot.origin.x,dy=qy-shot.origin.y,total=Math.hypot(dx,dy),ux=total?dx/total:Math.cos(shot.beta),uy=total?dy/total:Math.sin(shot.beta);
+    const h0=heightAt(shot.origin.x,shot.origin.y)+shot.fireEye,hq=heightAt(pose.x,pose.y)+point.z,vavg=shot.fireControl.muzzleVelocity*shot.fireControl.velocityRetention;
+    const boundary=Math.min(ux>0?(world.w-shot.origin.x)/ux:ux<0?-shot.origin.x/ux:Infinity,uy>0?(world.h-shot.origin.y)/uy:uy<0?-shot.origin.y/uy:Infinity);
+    const requested=total+shot.fireControl.impact.maxBeyondM,limit=Math.max(0,Math.min(requested,boundary));
+    const state=s=>{const x=shot.origin.x+ux*s,y=shot.origin.y+uy*s,z=pathHeight(h0,hq,s,total,vavg),building=buildingAt(x,y);if(building&&building.roof>=z)return{kind:'building',x,y,z};if(z<=heightAt(x,y))return{kind:'ground',x,y,z};return null;};
+    let previous=0,distance=Math.min(10,limit),hit=state(distance);
+    while(!hit&&distance<limit-1e-9){previous=distance;distance=Math.min(limit,distance+shot.fireControl.impact.marchStepM);hit=state(distance);}
+    if(hit){let lo=previous,hi=distance;for(let i=0;i<4;i++){const mid=(lo+hi)/2;if(state(mid))hi=mid;else lo=mid;}const refined=state(hi)||hit;return{...refined,beyond:hi-total};}
+    const x=shot.origin.x+ux*limit,y=shot.origin.y+uy*limit,z=pathHeight(h0,hq,limit,total,vavg),kind=boundary<=requested+1e-9?'out-of-map':'max-distance';
+    return{kind,x,y,z,beyond:limit-total};
+  }
+  function impactLocation(shot,evaluation,result,point,environment){
+    const px=-Math.sin(shot.beta),py=Math.cos(shot.beta),pose=evaluation.pose;
+    if(result.hit)return{kind:'hit',x:pose.x+point.x*px,y:pose.y+point.x*py,z:(environment?.heightAt?.(pose.x,pose.y)||0)+point.z,beyond:0};
+    return marchImpact(shot,pose,point,environment);
+  }
+  function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,seed=7,debug=false,onDecisionRoll=null}){
     const events=[],flights=[],records=[];let currentTime=0;
     const clone=v=>JSON.parse(JSON.stringify(v));
     const emit=e=>{events.push(e);if(events.length>200)events.shift();};
@@ -91,25 +132,19 @@ const TacticalFireControl=(()=>{
     function clearPreview(s){s.hitChance=null;s.zoneProbabilities=null;s.breakdown=null;}
     function preview(s,value){s.hitChance=value.hitChance;s.zoneProbabilities=value.zoneProbabilities;s.breakdown=value.breakdown;}
     function roll(shot,kind){onDecisionRoll?.(kind,shot.id);return random(shot.shooterId+':'+shot.number+':'+kind,seed);}
-    // Fixed GAME latency and visibility-only resolution. No predicted firing
-    // direction, projectile path, gravity march or physical impact coordinates.
     function finishDue(units,now){
       flights.sort((a,b)=>a.impactAt-b.impactAt||(a.id<b.id?-1:a.id>b.id?1:0));
       while(flights.length&&flights[0].impactAt<=now+1e-9){
-        const shot=flights.shift(),sight=impactSight?impactSight(shot):{visible:true,hull:shot.hull,turret:shot.turret,pose:shot.pose};
-        const pose=sight?.pose||shot.pose,pHull=sight?.visible?shot.pHull*Math.min(1,(sight.hull||0)/(shot.hull||1)):0,pTurret=sight?.visible?shot.pTurret*Math.min(1,(sight.turret||0)/(shot.turret||1)):0;
-        const finalHitChance=clamp(pHull+pTurret,0,1),probabilities=distribution(shot.origin,pose,{pHull,pTurret});
-        const result=resolve(finalHitChance,probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,pose,result.zone);
-        const observation=isObserved(shot.team,shot.targetKey),observed=!sight?.gone&&!!observation,anchor=observed?(typeof observation==='object'?{x:observation.x,y:observation.y}:{x:pose.x,y:pose.y}):{...shot.anchor};
-        // These offsets are UI pixels. They are never world-space impact points
-        // and never influence the decision or its conditional zone selection.
-        const visual={anchor,kind:result.hit?'flash':'dust',angle:random(shot.id+':fx:angle',seed)*Math.PI*2,extraPixels:12+random(shot.id+':fx:size',seed)*12,seconds:shot.effectSeconds,model:clone(shot.pose.model)};
+        const shot=flights.shift(),sight=impactSight?impactSight(shot):{...clone(shot.fireExposure),pose:{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}},evaluation=impactEvaluation(shot,sight);
+        const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
+        const observation=isObserved(shot.team,shot.targetKey),observed=!sight?.gone&&!!observation;
+        const publicImpact=observed?clone(impact):result.hit?null:{...clone(impact),beyond:null};
         const publicResult={type:'impact',id:shot.id,time:now,impactAt:shot.impactAt,team:shot.team,shooterId:shot.shooterId,targetKey:shot.targetKey,
           result:observed?(result.hit?'hit':'miss'):'unobserved',zone:observed?result.zone:null,side:observed?side:null,
-          finalHitChance:observed?finalHitChance:null,hitChanceAtFire:shot.hitChanceAtFire,
-          visual:observed?visual:null,ammoRemaining:shot.ammoRemaining};
+          finalHitChance:observed?evaluation.finalHitChance:null,hitChanceAtFire:shot.hitChanceAtFire,bias:observed?clone(evaluation.bias):null,
+          impact:publicImpact,ammoRemaining:shot.ammoRemaining};
         emit(publicResult);shot.shooter.fireControl.lastShot=clone(publicResult);
-        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance,reason:sight?.gone?'target-gone':!sight?.visible?'occluded':null,origin:{...shot.origin}});if(records.length>200)records.shift();}
+        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
       }
     }
     function inspect(u,now){
@@ -157,14 +192,13 @@ const TacticalFireControl=(()=>{
         if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
         const chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime),number=s.shotCount+1;
         if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
-        const origin=G.muzzleWorld(u,p.model),id=u.id+'-shot-'+number,impactAt=now+f.flightSeconds;
+        const origin=G.muzzleWorld(u,p.model),tof=chance.breakdown.tof,predicted={x:pose.x+s.targetVelocity.x*tof,y:pose.y+s.targetVelocity.y*tof},beta=Math.atan2(predicted.y-origin.y,predicted.x-origin.x),id=u.id+'-shot-'+number,impactAt=now+tof;
         const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,shooter:u,
-          origin,fireEye:sight.fireEye,profileAtFire:clone(p),pose:clone(pose),anchor:{x:pose.x,y:pose.y},
-          hull:sight.hull,turret:sight.turret,pHull:chance.breakdown.pHull,pTurret:chance.breakdown.pTurret,
-          hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1,effectSeconds:f.effectSeconds};
+          origin,fireEye:sight.fireEye,profileAtFire:clone(p),fireControl:clone(f),pose:clone(pose),fireExposure:clone(sight),
+          beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1};
         flights.push(shot);
-        emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,origin:{...origin},muzzleHeading:u.turret,
-          tof:f.flightSeconds,impactAt,hitChanceAtFire:chance.hitChance,visual:{anchor:{...shot.anchor},model:clone(pose.model)},ammoRemaining:s.ammo-1});
+        emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,origin:{...origin},muzzleHeading:beta,
+          tof,impactAt,hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1});
         s.shotCount=number;s.ammo--;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
       }
       finishDue(units,now);
@@ -186,6 +220,6 @@ const TacticalFireControl=(()=>{
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     return{step,request,view,cancel,events:publicEvents,debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,resolve,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;

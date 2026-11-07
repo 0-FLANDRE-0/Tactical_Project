@@ -2,490 +2,141 @@
   "version": "0.4-WIP10",
   "date": "2026-11-07",
   "timezone": "Asia/Seoul",
-  "scope": "game-only subset; not full uploaded WIP10 instruction conformance",
-  "fullInstructionConformance": false,
-  "originalWIP10ReferenceRun": false,
-  "originalWIP10ReferenceRepublished": false,
-  "sourceScope": {
-    "scope": "game-only subset; not full conformance to the uploaded WIP10 specification",
-    "sources": [
-      {
-        "name": "TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md",
-        "bytes": 18523,
-        "sha256": "4e469d696daed538f2a4587461b42162d5f90574511c19a206b7cc3a0d6be857"
-      },
-      {
-        "name": "wip10_hit_reference.py",
-        "bytes": 4770,
-        "sha256": "142e5001ee9bd4042a88e6011a1342a2b96cc94eb093f9b0faec069c6aaf6dc6"
-      }
-    ],
-    "excluded": [
-      "physical lead/firing-direction prediction",
-      "velocity/gravity-derived flight or terrain-impact calculations",
-      "bias and ballistic-drop reference tables",
-      "post-result physical impact-coordinate generation"
-    ],
-    "alternative": "fixed game flight duration, delayed seeded outcome, existing visibility masks, screen-space visual effects",
-    "referencePythonExecuted": false,
-    "referencePythonRepublished": false
+  "scope": "observed-velocity lead, velocity-derived flight, impact-time probability, post-result hit point and terrain/building miss impact",
+  "fullInstructionConformance": true,
+  "excludedByInstruction": [
+    "penetration, armour, damage and destruction",
+    "ricochet, fuzes, ERA, detailed sub-parts and ammunition variants",
+    "forest projectile collision, automatic fire and second-shot correction"
+  ],
+  "source": {
+    "instructionBytes": 18523,
+    "instructionSHA256": "4e469d696daed538f2a4587461b42162d5f90574511c19a206b7cc3a0d6be857",
+    "referenceBytes": 4770,
+    "referenceSHA256": "142e5001ee9bd4042a88e6011a1342a2b96cc94eb093f9b0faec069c6aaf6dc6",
+    "referenceRepositoryCopy": "tests/fixtures/wip10_hit_reference.py",
+    "referenceExecuted": true,
+    "referenceRepublished": true,
+    "generatedRows": 46
   },
   "baseline": "04d6d2e85bd4e599332f03f0614989dbbc79990b",
-  "parentPR": 5,
-  "parentPRMergedAtStart": false,
-  "parentPRMergedAtFinalCheck": false,
-  "mainAtStart": "7117fbadabd0493248d328cb8b6fdfa8139d242e",
-  "mainAtFinalCheck": "7117fbadabd0493248d328cb8b6fdfa8139d242e",
-  "mainSyncCommit": "1a95ac5b4197b548950e130a87e8b77ea1571964",
+  "continuationStart": "41f080efd11675f24d23fc0b3547b9f4364e4380",
+  "mainAtFinalFetch": "e2f44d92d06d35782dfa0f5ce81f6c3eb3a77bf6",
+  "mainMergeCommit": "2f12a560d56ffd8bc6025e6a50af6719596a4554",
   "branch": "feat/wip10-flight-impact",
-  "initialWorktree": "clean; no applicable AGENTS.md; WIP09 branch followed by normal merge of archive-only latest main",
+  "initialWorktree": "clean; no applicable AGENTS.md",
   "node": "v24.22.1",
   "checks": [
     {
-      "command": "node --test tests/look-animation.test.cjs tests/ui-cache.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs",
-      "passed": 156,
+      "command": "node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs",
+      "passed": 164,
       "failed": 0,
-      "kind": "pure rules/actual core/synthetic terrain/frozen oracles; WIP09 golden-table regression and game-only WIP10 cases"
+      "kind": "rules, actual core, synthetic terrain, frozen LOS, WIP09 regression and WIP10 reference"
     },
     {
       "command": "node tests/input.test.cjs",
       "passed": 35,
       "failed": 0,
-      "kind": "fake DOM/input"
+      "kind": "fake DOM and input"
     },
     {
       "command": "node tests/map.test.cjs",
       "passed": 16,
       "failed": 0,
-      "kind": "actual map/mobility"
+      "kind": "actual map and mobility"
     },
     {
       "command": "node tests/visibility.test.cjs",
       "passed": 12,
       "failed": 0,
-      "kind": "geometry/mask/map"
+      "kind": "visibility geometry, mask and map"
     },
     {
       "command": "node tests/vehicle.test.cjs",
       "passed": 9,
       "failed": 0,
-      "kind": "profiles/mobility/actual Node Worker/stale responses"
+      "kind": "profiles, mobility, actual Node Worker and stale responses"
     }
   ],
-  "nodePassed": 228,
+  "nodePassed": 236,
   "nodeFailed": 0,
-  "newNodeTests": 17,
+  "wip10SpecificTests": 24,
+  "referenceComparison": {
+    "previewRows": 24,
+    "impactRows": 6,
+    "zoneRows": 11,
+    "dropRows": 5,
+    "impactPointSeeds": 1000,
+    "passed": true
+  },
   "browser": {
+    "report": "tests/releases/WIP10-browser.json",
     "browser": "156.0.8078.79",
-    "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+    "transport": "local HTTP serving standalone dist/index.html",
     "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
-    "checks": [
-      "single HTML starts offline with actual canvas",
-      "guard world point input, actual turret pose and pause",
-      "terrain hold runs real embedded Worker and composes sectors",
-      "silhouette reuses artwork but contains only black opaque pixels",
-      "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
-      "identified and remembered contacts update panel permissions then expire selection",
-      "mobile viewport 844×390 has no horizontal overflow and controls stay in map",
-      "mobile viewport 390×844 has no horizontal overflow and controls stay in map",
-      "reduced-motion and normal views keep same actual observation state",
-      "actual core team contact stays distinct from selected vehicle observation and direct acquisition",
-      "actual acquired target aims, fires once and respects interval and paused keyboard input",
-      "unobserved result is hidden while its game flight still resolves",
-      "actual browser command cancellation and automatic return respect separate guard orders",
-      "reset clears firing events, aim progress and test-round state",
-      "embedded M1A2 Canvas pixels match supplied HTML with fresh Path2D caches at four independent poses",
-      "no application page errors"
-    ],
-    "geometryEvidence": {
-      "muzzle": {
-        "error": 3.5760872045925e-08,
-        "lineAtMuzzle": true,
-        "flashAtMuzzle": true
-      },
-      "art": {
-        "freshPathCaches": true,
-        "poses": 4,
-        "channelDifferences": 0,
-        "details": [
-          {
-            "pose": {
-              "heading": 0,
-              "turret": 0,
-              "commander": 1
-            },
-            "count": 0,
-            "max": 0,
-            "first": []
-          },
-          {
-            "pose": {
-              "heading": 0,
-              "turret": 1.5707963267948966,
-              "commander": -1
-            },
-            "count": 0,
-            "max": 0,
-            "first": []
-          },
-          {
-            "pose": {
-              "heading": 0,
-              "turret": 3.141592653589793,
-              "commander": 0.2
-            },
-            "count": 0,
-            "max": 0,
-            "first": []
-          },
-          {
-            "pose": {
-              "heading": 0.6,
-              "turret": -1,
-              "commander": 2
-            },
-            "count": 0,
-            "max": 0,
-            "first": []
-          }
-        ]
-      }
-    },
     "passed": 16,
-    "failed": 0,
-    "errors": [],
-    "scope": "Game-only subset: fixed latency, no physical trajectory/impact reference validation",
-    "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected only for UI privacy checks. Additional team-sharing test runs actual core on the original map with deterministic scenario/profile setup; no contact injection. Supplied HTML M1A2 Canvas pixels compared exactly at four poses using fresh source/embedded renderer instances to normalize Path2D cache history; real draw paths/flash use the event muzzle and DOMMatrix agrees with the ring transform. Not Android hardware or real thermal/ballistic validation."
+    "failed": 0
   },
   "syntax": {
-    "jsCjs": 48,
-    "python": 5,
-    "failed": 0,
-    "files": [
-      "scripts/bake_navigation.cjs",
-      "scripts/benchmark_los_compare.cjs",
-      "scripts/benchmark_observation.cjs",
-      "scripts/benchmark_ui.cjs",
-      "scripts/export_vehicle_profile.cjs",
-      "scripts/observation-benchmark-fixture.cjs",
-      "scripts/reproduce_observation_issues.cjs",
-      "src/app.js",
-      "src/battlefield-data.js",
-      "src/contour-data.js",
-      "src/fire-control.js",
-      "src/look-animation.js",
-      "src/m1a2-art.js",
-      "src/map-renderer.js",
-      "src/observation.js",
-      "src/sim-core.js",
-      "src/ui-cache.js",
-      "src/vehicle-geometry.js",
-      "src/vehicle-profiles.js",
-      "src/visibility-client.js",
-      "src/visibility.js",
-      "tests/art-muzzle.test.cjs",
-      "tests/browser.test.cjs",
-      "tests/fire-control.test.cjs",
-      "tests/fire-core.test.cjs",
-      "tests/fixtures/observation-WIP08A.js",
-      "tests/fixtures/sim-core-WIP07A.js",
-      "tests/game-flight.test.cjs",
-      "tests/helpers/hit-fixture.cjs",
-      "tests/helpers/los-reference.cjs",
-      "tests/helpers/observation-core-fixture.cjs",
-      "tests/helpers/observation-fixture.cjs",
-      "tests/helpers/ui-fixture.cjs",
-      "tests/hit-model.test.cjs",
-      "tests/input.test.cjs",
-      "tests/load.cjs",
-      "tests/look-animation.test.cjs",
-      "tests/los-optimization.test.cjs",
-      "tests/map.test.cjs",
-      "tests/observation-core.test.cjs",
-      "tests/observation-correction.test.cjs",
-      "tests/observation-metadata.test.cjs",
-      "tests/observation-moving.test.cjs",
-      "tests/observation.test.cjs",
-      "tests/profile-registry.test.cjs",
-      "tests/ui-cache.test.cjs",
-      "tests/vehicle.test.cjs",
-      "tests/visibility.test.cjs"
-    ],
-    "pythonFiles": [
-      "build.py",
-      "scripts/package_release.py",
-      "scripts/build_vehicle_review.py",
-      "scripts/generate_hit_reference.py",
-      "tests/fixtures/wip09_hit_reference.py"
-    ]
+    "jsCjs": 49,
+    "python": 11,
+    "failed": 0
   },
-  "existingWIP09ReferenceRegression": {
-    "rows": 35,
-    "passed": true,
-    "note": "Unchanged WIP09 probability oracle/table checked by tests/hit-model.test.cjs. Not uploaded WIP10 physical reference validation."
-  },
-  "correctedDuringValidation": [
-    "History-cap fixture initially exhausted its 42 rounds; increased only that synthetic fixture to 105 rounds, production remains 42.",
-    "Browser test initially referenced removed duplicate #hitSummary; updated to sole preview #fireDetails.",
-    "Review eliminated outcome inference from hidden hit/miss effect differences; now both publish no visual and byte-identical public result in regression."
-  ],
   "package": {
     "html": "Tactical_v0.4_WIP10.html",
-    "htmlBytes": 8309265,
-    "htmlSHA256": "8ca4c4b36296faa9f9f97ea5a2913a25818abdfda1f5d01415e8d7cb19895ac1",
+    "htmlBytes": 8314287,
+    "htmlSHA256": "017583cd603d8b97de400bf8947d24ae1c73532d06bc830885b453a7a2b518e1",
     "zip": "Tactical_v0.4_WIP10.zip",
-    "zipBytes": 1621553,
-    "zipSHA256": "2f4fe945aca718189262bc6f8c18e620c9dddc5ea61589602c90e190c6f5c8ac",
-    "extractedMatchesDist": true
+    "zipBytes": 1622838,
+    "zipSHA256": "95a8efdb7116029c198b83abbeec01653496dc7b1bea1f229f2efa72c653c0ba",
+    "extractedMatchesDist": true,
+    "repeatBuildByteIdentical": true,
+    "zipCRCChecked": true
   },
-  "repeatBuildByteIdentical": true,
-  "zipCRCChecked": true,
-  "archiveAndOldArtifactsPreserved": true,
-  "preservedFileCount": 132,
-  "preservedSHA256": {
-    "SHA256SUMS_WIP06.txt": "e8685050cb8f1869148a376c97ff60cbebad71b1e21009fa54cd12978c66e126",
-    "SHA256SUMS_WIP07.txt": "82bbba70e15086d74084bb94d78cd66e615616478c724dee0677b0c7717e72d6",
-    "SHA256SUMS_WIP07A.txt": "344f6aadcc80e69f66323a67b6ca5d319961fb153c3741ca6f801dd9547babb9",
-    "SHA256SUMS_WIP07B.txt": "13bd41832ac47202918332bb06f5d276d9ec8251ed203f52fc50d9f5d0974719",
-    "SHA256SUMS_WIP08.txt": "406c20e0d45f334dd8f028901b8a084272b1439caecaa05239ba0178b39a5a8c",
-    "SHA256SUMS_WIP08A.txt": "65f5ccf896225fef279f630e92d7c7cf27d11813c445ae755415e8dd9c7f74d6",
-    "SHA256SUMS_WIP09.txt": "84f0b51ddca35c88c6b8babdfcf67333928b673c99fdb4bbcfe5550df31ebfd7",
-    "Tactical_v0.4_WIP06.html": "b091f0455051677aab416e551edd5532cf1d0ab6674559814ff122e2aaa214a6",
-    "Tactical_v0.4_WIP07.html": "60748e83cb4720f692906467da767acf8912cacac8cc2ec7b61668bf18b19a5b",
-    "Tactical_v0.4_WIP07.zip": "8ba5e4c1231d705db148c5966ad0575c4cb3ba55b1d68b65f44cac2244d9c4b5",
-    "Tactical_v0.4_WIP07A.html": "abd2f38b4984e2312aad22a1c5e79c93ae092403785ea3c4592d7c5829b5a500",
-    "Tactical_v0.4_WIP07A.zip": "4da317d290f4e1123903161cca9ef953fb0b2cce3bc79d857255691b1ef8bc9a",
-    "Tactical_v0.4_WIP07B.html": "6d5ed68a48309f1cc503f96174c527fd1135723f507bd8c03d80304466dcc34c",
-    "Tactical_v0.4_WIP07B.zip": "63435fa9d29549c7380df144ada5602845905c082503b25d1fdfe48904f00bd0",
-    "Tactical_v0.4_WIP08.html": "1747a03cfa1aa34d9b06f723581eca61d5e821459ef0b39f337e61727688b69a",
-    "Tactical_v0.4_WIP08.zip": "6e62c5df58f2d2b27265b84cb8a150ee3d8c94efa1cb6b389ca13f059e1bdf31",
-    "Tactical_v0.4_WIP08A.html": "4c5e9886f33776cc7dd57e733920e7ca63656b9a29bcf9e2f6d1f955cc26b68e",
-    "Tactical_v0.4_WIP08A.zip": "2b2fd026e2b8814e36c09d78a2c603d43b73ddbcf3f50e2c2357a8d1cfd8611b",
-    "Tactical_v0.4_WIP09.html": "5343e3389267ec193dbefd4be66a1508833d7ec6fefdf15222354809f65daffb",
-    "Tactical_v0.4_WIP09.zip": "1b4aab7bd0f34cf68018eccd70c1efa4ecd9041d2255650abab5b2640b1fdbb4",
-    "archive/M1A2_WIP04_top_view.svg": "ca784f759bbc235dd7f5b5ad6fe2d1bf01a14e4f9c279bf6219070b8d7cdab1a",
-    "archive/M1A2_before_proportion_fix.svg": "8298d1f86fe079b35a657680e88303d56db4f4066aca3ef623eb97dd4237caa8",
-    "archive/README.md": "0d2d2c1d414cf0156db538e919d67e52410b60c466827693b811318645ad2321",
-    "archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md": "c2b31bef9bfde160e5803e68b89bc0eefc667511877aaad199cc7b7bae4bbcf2",
-    "archive/Tactical_v0.4_WIP01.html": "49f23a2bb8c7102a547224d8ae56cd03f68ce45daff28bb1c617cb709dd15cd5",
-    "archive/Tactical_v0.4_WIP01_source_and_backup.zip": "8ed9e387991b9b4687d0028bbb8b692f18fcfd201f4c95b4df0a402bc77521b8",
-    "archive/Tactical_v0.4_WIP02.html": "e6a008e99c1358ae1219e41fa7cf5cd4efb06f9414db3aeb8e3b66b61cea225a",
-    "archive/Tactical_v0.4_WIP03.html": "6791c37d680d746a084a7dd5cc54e0657d37cd5ba216e0e724dfd013890622e3",
-    "archive/Tactical_v0.4_WIP04.html": "25f28140ea574fbfd4b671e9695681e4bffd93e98a9d17fbf6db301e3c7142d7",
-    "archive/Tactical_v0.4_WIP06.html": "b091f0455051677aab416e551edd5532cf1d0ab6674559814ff122e2aaa214a6",
-    "archive/WIP02_terrain_renderer.js": "09472789460e10e50303b53c67cab9457c21c0047a71b7e96ac36fbc8ed82fef",
-    "archive/WIP04_initial_m1a2-art.js": "1df7fa3102c6191e61c3acc52e778846f76cc5f6ff278fe215f9854c104917c6",
-    "archive/WIP04_m1a2-art.js": "a9a827195e73e4ab699e3c26cf04145efae5c97a0b058e0e3f50a9f837455425",
-    "archive/ammo/README.md": "b3a4ac61cb1c1e8957ec7cfc17d8564ce49aa3114a75357ef22c2acc30ad32da",
-    "archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md": "e4f64cd6dbd0ed056b94f60ad1c4c731dda8eba1e990c07757c95122dfdcd3f3",
-    "archive/tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md": "11475d20a12f799a6ae7c18fc9c10d940eb1e64c56ab3b25010c2c4631d5b0db",
-    "archive/tanks/README.md": "3bda54c9af9e2cb129db4e38b6886e63aebb5c6d8bf2d713f8ad53de73a8a5de",
-    "build.py": "72805e7cd04ed25bffbae090b7db16fbaba97742fea0616e946ed9f49a7a9713",
-    "data/map_manifest.json": "614cbc31d6e75654aad6194c7b376d5757db36386b2d8d8b0f4d9ad66abfee6a",
-    "data/rasdorf_4km.json": "034b6749eccfe23ead935dd6d2db62fa0064e2eeb539a22b479638a9de0a87ce",
-    "data/vehicles/M1A2_top_view.svg": "085bd6e23472d463933fd0caa23faec0f2e194c27527144f2095e4db1dd2c565",
-    "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7",
-    "src/contour-data.js": "1a32d18742382c7ad18446adb69e5ab346c20c83481790dbae727ab0cd095ba2",
-    "src/look-animation.js": "1695d4e6464da0dea26285dae7a24ef61266df200065055f2f1916a0f547abf0",
-    "src/m1a2-art.js": "8748f05d057ac0ed2b7d7375e7abaf6c388155d86c12eaab240c20d9682669a5",
-    "src/map-renderer.js": "998c9cc2f1b3a177badf57a8dc2f2c8c7d8ecfa27c42d6b799f7f0dabb5137d9",
-    "src/observation.js": "7543c7f6f97d60b22746fe54b41d1160995b1cdb1bef7ee7ff2166f4bfc33116",
-    "src/vehicle-geometry.js": "07e42788305905bd7bcb5382771055813f881193250cf936f7f43a9bdc9a963c",
-    "src/visibility-client.js": "614904e6c3625a8fb032a103f4c14a911438afa4e21273d37fc0e90951ac7001",
-    "src/visibility.js": "30a27ce5fbdb97a281cf1b4fe3c72d6e63309193358a6efbe279a33df345c46b",
-    "tests/fixtures/observation-WIP08A.js": "5790c3db92e62a6b9bd75e3c960156509dab5228f454c519a311c6b412b49cb9",
-    "tests/fixtures/sim-core-WIP07A.js": "ab70525f12138b068daf00198bd49611d883c940cd8ac8c6fcfeac5a55f2e49c",
-    "tests/fixtures/wip09_hit_reference.py": "ec338593640ad406dc529c5759e308ffee57ba55721ddeda61a56ecdc9d483f6",
-    "tests/load.cjs": "e07813f3c692c58b8b0310a3a69d44cabea8ba3fec2adfe641c91f6bd596d55d",
-    "tests/releases/WIP06-validation.json": "e1d4c90b0fcbbab7a614bba998d779e875b6ecaee3d430dd91a6f6205a318b8f",
-    "tests/releases/WIP07-390x844.png": "9b032dea95f0240845e0905fea74f6a0372be918285245fe814dff2c4ce34469",
-    "tests/releases/WIP07-844x390.png": "d762bc4a94a08f5c733fc16d19f2f72bd13186e64a54e8605ccc77330bc13c5a",
-    "tests/releases/WIP07-benchmark.json": "07fdd6813b8e4be7603e6add683987288ebbbec16c8ebd55ede236cb87d4d58e",
-    "tests/releases/WIP07-browser.json": "e5400a804463f8fd37643fdcb120d0f18e08ed3c959aa60179beb3a70dcdc8d2",
-    "tests/releases/WIP07-desktop.png": "8ec5b2b6a85124b453c95a53197a54bb27366828a459201282aa1749592583de",
-    "tests/releases/WIP07-memory.png": "43a7a52970cba7e9487019fb4ee781df131ab87c6562db5203fff48e12aac36a",
-    "tests/releases/WIP07-silhouette-panel.png": "9e9cea63f2f40bb5ddbea55262074c5ef3d02d2a3112dd6017e50a4b393d02d5",
-    "tests/releases/WIP07-validation.json": "c21378182984a5a4cc20e809d5d154968535a35c41f4b91d2fe7f0a9472e26e0",
-    "tests/releases/WIP07A-390x844.png": "1ec05b50fbb30ef9e4ee62dc76bb4e1000906894cbbc4edd1a9a3be90f734b6c",
-    "tests/releases/WIP07A-844x390.png": "942578aff1f5ac7c8bbb1468dc530e80c263192e687775a6f4a86b5cc80732c9",
-    "tests/releases/WIP07A-after.json": "37ef571d8d8516f4d59f5e306981f649b69d2a71d148f03ee840acc279f03a7b",
-    "tests/releases/WIP07A-before.json": "79c3926180ecfca07fcbb404ed2ba88b92ece85d6885057f34a03dc2e02fea54",
-    "tests/releases/WIP07A-benchmark.json": "1c1d8e3ae2eb8b32cd29e8068f5febef3028fb0720316ef3ba59e2b0fdda7c79",
-    "tests/releases/WIP07A-browser.json": "cb0bb5589e62275fb6281c8c92b0cdd8fb867b078573f375fd69c75dcc43d86f",
-    "tests/releases/WIP07A-desktop.png": "b275bd17b72456b861c2dbcfd1d80c6206e5ed2bb4cd3ad74d6cd1d705c71791",
-    "tests/releases/WIP07A-memory.png": "a74500548b7d850c712c4abd76f8cec575366a9c5688205ba05bd5f1fef26285",
-    "tests/releases/WIP07A-moving-regressions.json": "b9306c0f468e1af66edb6e26371f5f8e27c4b34b79303139d0511875e13c74fa",
-    "tests/releases/WIP07A-silhouette-panel.png": "500112a2c2ab30908174cfde3cc695bd97ff7ffd2863d4760c46d2e923e23bb7",
-    "tests/releases/WIP07A-team-not-own.png": "01290545eaa249aa5cedb9bd0aae95ec3a1a7399f05f54bf2d0562f35a0d6d2a",
-    "tests/releases/WIP07A-validation.json": "7e9f3e71fd9c78c1ec7a1bf05e28431579a2f50b1fd85c8bd2fe544e089dbc23",
-    "tests/releases/WIP07B-390x844.png": "9b032dea95f0240845e0905fea74f6a0372be918285245fe814dff2c4ce34469",
-    "tests/releases/WIP07B-844x390.png": "942578aff1f5ac7c8bbb1468dc530e80c263192e687775a6f4a86b5cc80732c9",
-    "tests/releases/WIP07B-benchmark.json": "a70c7321065c6a12d6e557865c97b4b0d51cb2c6a7a24d5a942f53eceb124613",
-    "tests/releases/WIP07B-browser.json": "cb0bb5589e62275fb6281c8c92b0cdd8fb867b078573f375fd69c75dcc43d86f",
-    "tests/releases/WIP07B-comparison.json": "001e84cf1f67955ea14845fda9c5b24d6bab3623e8ae29b921520a07c4520d21",
-    "tests/releases/WIP07B-desktop.png": "ea9b947be4ae6c215a04c3b49371b49b1d2d353f3f2f2cc9d5221d39324ee734",
-    "tests/releases/WIP07B-los-equivalence.json": "dcd7a4228e2aec834ce2793b6eb25d70e19f5b0abf7d0e896ce9fa6a5d7a2259",
-    "tests/releases/WIP07B-memory.png": "02c6cc58418c724a85228d099e093ab4b26e3f6b498f79a2046cab3ce5b51e83",
-    "tests/releases/WIP07B-moving-regressions.json": "b9306c0f468e1af66edb6e26371f5f8e27c4b34b79303139d0511875e13c74fa",
-    "tests/releases/WIP07B-silhouette-panel.png": "a0afb644aaff6b33765498dc005e0abbb7c47cdcd4d207f59090add9590495f4",
-    "tests/releases/WIP07B-team-not-own.png": "8d9f10e08c0b0c93861df8106109c5f9b05e8864a2ec7e73decf8070dff7e1b0",
-    "tests/releases/WIP07B-validation.json": "7829b1a0ce940a19e5f9fe5b94078af5399233b60347f10f4f1e687defedf89a",
-    "tests/releases/WIP08-390x844.png": "d6dd20ecb6f3d251a39dcd7a909d0ec45e64e091f0b735f631ab34d9cd7f0586",
-    "tests/releases/WIP08-844x390.png": "a54ca6967aa277d5d3f152bccd46aa3642851c59a422ed1dd31192feb9f1f9bb",
-    "tests/releases/WIP08-benchmark.json": "3ec7987d3f14633595506fb2ccb1b4890299911f7d392fa1ac8d04b9f6a56882",
-    "tests/releases/WIP08-browser.json": "6d77586941836cb222dc33395da978736df56d3013a1d4a14948b6629f1e5814",
-    "tests/releases/WIP08-comparison.json": "48679a2e4ee41e246bd6a493ea4688bc4a91f2b109dfadbc3cf9593b537d8b7d",
-    "tests/releases/WIP08-desktop.png": "ec2d81912f65205778c1fb1fb5becd685fd67450dee7769a51adfd38b4eaabef",
-    "tests/releases/WIP08-los-equivalence.json": "dcd7a4228e2aec834ce2793b6eb25d70e19f5b0abf7d0e896ce9fa6a5d7a2259",
-    "tests/releases/WIP08-memory.png": "52a7fe333e7b4f878b5b9a3133ff40b684faecb307f0c6e9298397089dccdd85",
-    "tests/releases/WIP08-moving-regressions.json": "b9306c0f468e1af66edb6e26371f5f8e27c4b34b79303139d0511875e13c74fa",
-    "tests/releases/WIP08-shot.png": "31a57a0104edcfcbd63fbc7148542aa0cf58845a91076e2b263a8f2d0600b446",
-    "tests/releases/WIP08-silhouette-panel.png": "c71ae0d878d26f12a4b6acb45e6be289bde3d3a6cac0b475a55fb9200a8af950",
-    "tests/releases/WIP08-team-not-own.png": "26baf77e0eef7f301b461ff9c1329239f05dfa68dac89897758e6577e649bbfc",
-    "tests/releases/WIP08-validation.json": "69f782116152b165306f0e2989407a4afceb225024a677b41ad0dcf94339ae15",
-    "tests/releases/WIP08A-390x844.png": "5ffb8c04355b389702f9490e7d44a4dfefae97c55753de4f16f1a5fbff1e1e7e",
-    "tests/releases/WIP08A-844x390.png": "a54ca6967aa277d5d3f152bccd46aa3642851c59a422ed1dd31192feb9f1f9bb",
-    "tests/releases/WIP08A-art-comparison.png": "1de0824cac488aef5a962089cda0010606a006ad0e15f4c0ecf39e9960512c85",
-    "tests/releases/WIP08A-benchmark.json": "a7321709cd578ef3d6654eaf091b3d062a931b211565bf2c62e8cd41ecb2b397",
-    "tests/releases/WIP08A-browser.json": "af92c3002c63d2fd8fcc3e54abfc280bce686597e81bbbcba4a8cb7c95a685b0",
-    "tests/releases/WIP08A-comparison.json": "ecf8b44d0ec8bdf2acad4430e9f736b0c2e3b9f9b37890e97b7f22c207e4cbdb",
-    "tests/releases/WIP08A-desktop.png": "6f12a2aa26ccaba9fa8b533b9df75478b10b6856eaf49887d17d24e7658bd0ad",
-    "tests/releases/WIP08A-los-equivalence.json": "dcd7a4228e2aec834ce2793b6eb25d70e19f5b0abf7d0e896ce9fa6a5d7a2259",
-    "tests/releases/WIP08A-memory.png": "4f07e00632efd6cb17a50e69026033e78748b06e94a9ee99236db9790ef1cf0f",
-    "tests/releases/WIP08A-moving-regressions.json": "b9306c0f468e1af66edb6e26371f5f8e27c4b34b79303139d0511875e13c74fa",
-    "tests/releases/WIP08A-shot.png": "bfaf2a62785ba1a729fae47e719206bd92254a1b93437b10e1720687d77ecf18",
-    "tests/releases/WIP08A-silhouette-panel.png": "84cbccb6e768cbc700376ccd57952576788192691924834da751e1ca6e69389f",
-    "tests/releases/WIP08A-team-not-own.png": "06ca5ebc626277ac70b92eab4950c80f67b3c63ea211ae243f30af37dd87a691",
-    "tests/releases/WIP08A-validation.json": "f5a11b9ca8572a27dcc3a6e9ccb8cc61d0f9d836a5316dcebcfde83b92f197c4",
-    "tests/releases/WIP09-390x844.png": "d6dd20ecb6f3d251a39dcd7a909d0ec45e64e091f0b735f631ab34d9cd7f0586",
-    "tests/releases/WIP09-844x390.png": "a54ca6967aa277d5d3f152bccd46aa3642851c59a422ed1dd31192feb9f1f9bb",
-    "tests/releases/WIP09-art-comparison.png": "052e0cf6a088d7b51aec59f9e02614673afdbaa8e8b0391009aa300afdfeb5e0",
-    "tests/releases/WIP09-benchmark.json": "e3f231c34f9ae36c362cba762070dd6e7e299600bafa07eafdda1292923e3f20",
-    "tests/releases/WIP09-browser.json": "af92c3002c63d2fd8fcc3e54abfc280bce686597e81bbbcba4a8cb7c95a685b0",
-    "tests/releases/WIP09-comparison.json": "3c26185f7213f603cf0adb4b0dcf4f56cbd0c8975efac75b0dece50ea4033cd9",
-    "tests/releases/WIP09-desktop.png": "29a5619f522a5b9ffa60f08e054d5d3ec7665850107fd4fcd576422a047c96ae",
-    "tests/releases/WIP09-hit-390x844.png": "68f79d6b8b459661c6f18bd0de34b9525ce2bfa56ff8c85529ddd75a94497461",
-    "tests/releases/WIP09-hit-844x390.png": "8a2a8cf9a02dc5a8398b415bbb5b92db662cbf799e5738eaf63b0909ee903910",
-    "tests/releases/WIP09-hit-desktop.png": "2e58f1fec3e84a717510e04241ff8fde0e59eaf740f2e4bd5df2a262317153fe",
-    "tests/releases/WIP09-hit-table.json": "3774971384e7262491d469ce88ef867aab2ecd81d7bd9c6718777263b423b06f",
-    "tests/releases/WIP09-los-equivalence.json": "dcd7a4228e2aec834ce2793b6eb25d70e19f5b0abf7d0e896ce9fa6a5d7a2259",
-    "tests/releases/WIP09-memory.png": "f22a437c8687022abf84b91392a6f5d108f0f11951c3fe99dd3821ff9f3e6675",
-    "tests/releases/WIP09-moving-regressions.json": "b9306c0f468e1af66edb6e26371f5f8e27c4b34b79303139d0511875e13c74fa",
-    "tests/releases/WIP09-shot.png": "88a7bf460fb50327a97ed01241790175543c39a3492fec2791453e11d95868b3",
-    "tests/releases/WIP09-silhouette-panel.png": "6050b689a1e448abbbaf694bdf2234b489c2096d5f4f7ba94f1c1a81537323af",
-    "tests/releases/WIP09-team-not-own.png": "9c8afb0dfd4f792166163e6ef481bbb8abaccf36dff29015fd9fe9a9fa662f1a",
-    "tests/releases/WIP09-validation.json": "dd3f72ccbdef163bfaa41124d604f07310a53ec528a484a9eef7f4ef73b3548d"
-  },
-  "unchangedFunctionSHA256": {
-    "src/sim-core.js:lineOfSight": "89032358ee54d06faae0551c83d0995b6a790e6a1ee5a3ed4494a6d6a70e93d8",
-    "src/sim-core.js:exposure": "a4387562155eb6de4803ddad7055a18a21d1ee3ca9b74065bc841caedeb3d5a0",
-    "src/sim-core.js:stepTank": "518cdd705ab1cb7cb1687602e1ae9b8d0bd91b5bdd581235b463859479094bee",
-    "src/fire-control.js:errorBudget": "544b075f1124c5322c39e50437fb960f4d14d28373bb9349d6e69c3c1a11cd42",
-    "src/fire-control.js:presentedRects": "2d1ef0d2a6ecad7c7b15f3eba2bfc5355bd95ba251da25ee3fb9944d6d5a158f",
-    "src/fire-control.js:rectProbability": "63e8cc9c7325e748eacb6116a1b42e881345754f4432be446ac8188ab7fca58a",
-    "src/fire-control.js:normalCdf": "76c74e6011e7c46c32556841f837fc3d3d1e11f559065236cf6deb9465342d01"
-  },
-  "nonFireControlProfileSectionsUnchanged": true,
-  "WIP09ProbabilityProfileFieldsUnchanged": true,
   "performance": {
     "comparison": "tests/releases/WIP10-comparison.json",
     "benchmark": "tests/releases/WIP10-benchmark.json",
+    "fullStateOutputsEqual": 24,
     "cases": [
       {
         "mode": "stationary",
         "count": 50,
-        "baseline": {
-          "medianStepMs": 3.5642589999999927,
-          "p95StepMs": 8.792990000000032,
-          "maxStepMs": 14.643299000000013
-        },
-        "optimized": {
-          "medianStepMs": 2.2762560000000462,
-          "p95StepMs": 4.976250999999991,
-          "maxStepMs": 11.889023000000009
-        },
-        "reductionPercent": 36.136627557086875,
-        "finalStateSHA256": "36e5ee419d3ff0fa3367743e767bb70b1d7ab5d05d8309735ed2fb2189b27ceb",
-        "finalStatesEqual": true
+        "baselineMedianMs": 3.502546,
+        "optimizedMedianMs": 2.539422,
+        "optimizedP95Ms": 5.363825,
+        "reductionPercent": 27.4978
       },
       {
         "mode": "stationary",
         "count": 100,
-        "baseline": {
-          "medianStepMs": 17.696108000000095,
-          "p95StepMs": 51.77571200000011,
-          "maxStepMs": 59.571871999999985
-        },
-        "optimized": {
-          "medianStepMs": 7.428790999999933,
-          "p95StepMs": 15.05572200000006,
-          "maxStepMs": 32.881811000000084
-        },
-        "reductionPercent": 58.02019856569651,
-        "finalStateSHA256": "e0a1c13aafc81b19efc57303a5b48a11520f64544c050148848ddd5b19a48bfb",
-        "finalStatesEqual": true
+        "baselineMedianMs": 17.868205,
+        "optimizedMedianMs": 7.331424,
+        "optimizedP95Ms": 15.460372,
+        "reductionPercent": 58.9694
       },
       {
         "mode": "moving",
         "count": 50,
-        "baseline": {
-          "medianStepMs": 9.291642999999567,
-          "p95StepMs": 11.018930000000182,
-          "maxStepMs": 15.246390999999676
-        },
-        "optimized": {
-          "medianStepMs": 4.117044000000078,
-          "p95StepMs": 6.0463049999998475,
-          "maxStepMs": 7.95924100000002
-        },
-        "reductionPercent": 55.690893418954325,
-        "finalStateSHA256": "9e6a20ee073bc3cce9510f6de723ca4c726d8071f593418ec5458aef12e9abba",
-        "finalStatesEqual": true
+        "baselineMedianMs": 9.252663,
+        "optimizedMedianMs": 3.716068,
+        "optimizedP95Ms": 5.783588,
+        "reductionPercent": 59.8379
       },
       {
         "mode": "moving",
         "count": 100,
-        "baseline": {
-          "medianStepMs": 65.2941979999996,
-          "p95StepMs": 76.802866,
-          "maxStepMs": 90.45658699999876
-        },
-        "optimized": {
-          "medianStepMs": 16.83730999999989,
-          "p95StepMs": 20.38527400000021,
-          "maxStepMs": 29.245386999999937
-        },
-        "reductionPercent": 74.21316056290333,
-        "finalStateSHA256": "e53a807e5ddbea9199859785fbd164b30c0b070cd825ec8a3c44058bdb044a6b",
-        "finalStatesEqual": true
+        "baselineMedianMs": 66.735713,
+        "optimizedMedianMs": 16.449114,
+        "optimizedP95Ms": 19.188849,
+        "reductionPercent": 75.3519
       }
     ],
-    "fullStateOutputsEqual": 24,
-    "kind": "CPU fixed-step; 6 sequential fresh processes, 3 per variant; no firing inputs; not FPS or concurrent-fire performance"
+    "kind": "CPU fixed-step; observation fixture has no fire commands, so this is not FPS or projectile-impact performance"
   },
   "notRun": [
-    "Uploaded WIP10 physical bias/lead/flight/terrain-impact reference tables and Python (excluded scope).",
-    "file:// launch blocked by ERR_BLOCKED_BY_ADMINISTRATOR; same standalone HTML tested via local HTTP.",
-    "Actual Android multitouch/thermal/memory/sustained FPS.",
-    "Whole-game FPS and concurrent-fire performance benchmark.",
-    "Original DEM/GDAL source-quality rerun."
-  ],
-  "sourceSHA256": {
-    "src/app.js": "45b026f9d61b09a4c58ccd852b929465f2d64dda63fb3e4e29031f579762a0ec",
-    "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7",
-    "src/contour-data.js": "1a32d18742382c7ad18446adb69e5ab346c20c83481790dbae727ab0cd095ba2",
-    "src/fire-control.js": "61fbd34e660eeccc947896b12a7c0a7de7c401923a6f1787bbfc13c91f3fd6a5",
-    "src/look-animation.js": "1695d4e6464da0dea26285dae7a24ef61266df200065055f2f1916a0f547abf0",
-    "src/m1a2-art.js": "8748f05d057ac0ed2b7d7375e7abaf6c388155d86c12eaab240c20d9682669a5",
-    "src/map-renderer.js": "998c9cc2f1b3a177badf57a8dc2f2c8c7d8ecfa27c42d6b799f7f0dabb5137d9",
-    "src/observation.js": "7543c7f6f97d60b22746fe54b41d1160995b1cdb1bef7ee7ff2166f4bfc33116",
-    "src/page.html": "a9b182c89ffa8e6d7e5767837184c618226d7ee95d96463fa7f95e4649d098c5",
-    "src/sim-core.js": "da81a4aafbda283e718f248b3cbd5875c291fbaa7578fbaf410a37ef64e6e157",
-    "src/styles.css": "599c4da0d557c0872ad9f6843b3a0da52bedfc125a9ae3587d44dcbee9ec6c18",
-    "src/ui-cache.js": "cf7f5c60154c6b7534b11eda20e782b8d956e809a015d9fa30c6a2eeb762709c",
-    "src/vehicle-geometry.js": "07e42788305905bd7bcb5382771055813f881193250cf936f7f43a9bdc9a963c",
-    "src/vehicle-profiles.js": "3360ffb46098c82e05790deceb2bf8102390dd5b9b3a0f6e7e2cb1d63bc76fcd",
-    "src/visibility-client.js": "614904e6c3625a8fb032a103f4c14a911438afa4e21273d37fc0e90951ac7001",
-    "src/visibility.js": "30a27ce5fbdb97a281cf1b4fe3c72d6e63309193358a6efbe279a33df345c46b"
-  }
+    "file:// launch: blocked by Chromium environment policy; local HTTP browser run passed",
+    "actual Android multitouch, memory, thermal and sustained FPS",
+    "whole-game FPS and concurrent-fire performance",
+    "original DEM/GDAL source-quality rerun"
+  ]
 }

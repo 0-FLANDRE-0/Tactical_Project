@@ -13,23 +13,23 @@
   "warmupSteps": 20,
   "measuredSteps": 100,
   "trials": 3,
-  "notes": "Frozen original geometry with additive sample-index metadata at the observation boundary, plus identical current observation and firing-state rules in both variants; no manual shots. Sequential fresh processes, order alternated by trial. Summary median/p95 are medians of the corresponding per-process statistic; maximum is the largest observed step across all trials. Init times use different loading pipelines and are not compared as summary-build cost. State JSON compared byte-for-byte, including observer records, team contacts and query/cache counts. CPU steps, not FPS. Trajectory generation excluded. Fixture is shared with the ordinary benchmark.",
+  "notes": "Frozen original geometry with additive sample-index metadata at the observation boundary, plus identical current observation and firing-state rules in both variants; no manual shots. Sequential fresh processes, order alternated by trial. Summary median/p95 are medians of the corresponding per-process statistic; maximum is the largest observed step across all trials. Init times use different loading pipelines and are not compared as summary-build cost. State JSON compared byte-for-byte, including observer records, team contacts and query/cache counts. CPU steps, not FPS. The fixture issues no fire commands, so projectile and impact generation are not exercised by this observation benchmark. Fixture is shared with the ordinary benchmark.",
   "cases": [
     {
       "mode": "stationary",
       "count": 50,
       "baseline": {
-        "medianStepMs": 3.5642589999999927,
-        "p95StepMs": 8.792990000000032,
-        "maxStepMs": 14.643299000000013
+        "medianStepMs": 3.5025459999999384,
+        "p95StepMs": 8.630604000000005,
+        "maxStepMs": 21.01799900000003
       },
       "optimized": {
-        "medianStepMs": 2.2762560000000462,
-        "p95StepMs": 4.976250999999991,
-        "maxStepMs": 11.889023000000009
+        "medianStepMs": 2.5394220000000587,
+        "p95StepMs": 5.36382500000002,
+        "maxStepMs": 10.101835999999992
       },
-      "reductionPercent": 36.136627557086875,
-      "finalStateSHA256": "36e5ee419d3ff0fa3367743e767bb70b1d7ab5d05d8309735ed2fb2189b27ceb",
+      "reductionPercent": 27.497825867237623,
+      "finalStateSHA256": "aebeab548537f80e18912d081687d0303b2e8478200a8e27f7188bd1cce560ad",
       "finalStatesEqual": true,
       "candidatePairs": 14212,
       "exactRayQueries": 37378,
@@ -39,17 +39,17 @@
       "mode": "stationary",
       "count": 100,
       "baseline": {
-        "medianStepMs": 17.696108000000095,
-        "p95StepMs": 51.77571200000011,
-        "maxStepMs": 59.571871999999985
+        "medianStepMs": 17.86820499999976,
+        "p95StepMs": 53.34269999999992,
+        "maxStepMs": 62.99502600000005
       },
       "optimized": {
-        "medianStepMs": 7.428790999999933,
-        "p95StepMs": 15.05572200000006,
-        "maxStepMs": 32.881811000000084
+        "medianStepMs": 7.33142399999997,
+        "p95StepMs": 15.460372000000007,
+        "maxStepMs": 20.45033199999989
       },
-      "reductionPercent": 58.02019856569651,
-      "finalStateSHA256": "e0a1c13aafc81b19efc57303a5b48a11520f64544c050148848ddd5b19a48bfb",
+      "reductionPercent": 58.96944320932032,
+      "finalStateSHA256": "4434488e28ad0ee211c4e7e54389dd492b3f3d8ef267925d9c160522b9dc1d9e",
       "finalStatesEqual": true,
       "candidatePairs": 48682,
       "exactRayQueries": 119827,
@@ -59,17 +59,17 @@
       "mode": "moving",
       "count": 50,
       "baseline": {
-        "medianStepMs": 9.291642999999567,
-        "p95StepMs": 11.018930000000182,
-        "maxStepMs": 15.246390999999676
+        "medianStepMs": 9.252663000000211,
+        "p95StepMs": 10.911916999999448,
+        "maxStepMs": 12.877873999999792
       },
       "optimized": {
-        "medianStepMs": 4.117044000000078,
-        "p95StepMs": 6.0463049999998475,
-        "maxStepMs": 7.95924100000002
+        "medianStepMs": 3.71606799999995,
+        "p95StepMs": 5.783588000000009,
+        "maxStepMs": 8.27725200000009
       },
-      "reductionPercent": 55.690893418954325,
-      "finalStateSHA256": "9e6a20ee073bc3cce9510f6de723ca4c726d8071f593418ec5458aef12e9abba",
+      "reductionPercent": 59.83785424801633,
+      "finalStateSHA256": "1089aa917be34376a889f89878b13bf66b7f7e602e95bf065718ac8613fe2586",
       "finalStatesEqual": true,
       "candidatePairs": 14081,
       "exactRayQueries": 126729,
@@ -79,17 +79,17 @@
       "mode": "moving",
       "count": 100,
       "baseline": {
-        "medianStepMs": 65.2941979999996,
-        "p95StepMs": 76.802866,
-        "maxStepMs": 90.45658699999876
+        "medianStepMs": 66.73571300000003,
+        "p95StepMs": 79.63044300000001,
+        "maxStepMs": 102.39295300000049
       },
       "optimized": {
-        "medianStepMs": 16.83730999999989,
-        "p95StepMs": 20.38527400000021,
-        "maxStepMs": 29.245386999999937
+        "medianStepMs": 16.44911400000001,
+        "p95StepMs": 19.18884900000012,
+        "maxStepMs": 25.006358000000546
       },
-      "reductionPercent": 74.21316056290333,
-      "finalStateSHA256": "e53a807e5ddbea9199859785fbd164b30c0b070cd825ec8a3c44058bdb044a6b",
+      "reductionPercent": 75.35185695850735,
+      "finalStateSHA256": "f7fdc7cbc78b534c259a9448bf759f064abb274f14726c044a1741129d80df01",
       "finalStatesEqual": true,
       "candidatePairs": 48737,
       "exactRayQueries": 438633,
@@ -100,7 +100,7 @@
     "baseline": [
       {
         "variant": "baseline",
-        "initMs": 67.272395,
+        "initMs": 69.23270000000001,
         "summary": null,
         "cases": [
           {
@@ -110,10 +110,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 3.5642589999999927,
-            "p95StepMs": 8.792990000000032,
-            "maxStepMs": 14.643299000000013,
-            "medianTeamReadMs": 0.018778999999994994,
+            "medianStepMs": 3.5025459999999384,
+            "p95StepMs": 8.630604000000005,
+            "maxStepMs": 12.702959999999962,
+            "medianTeamReadMs": 0.018718000000035317,
             "queries": 2500,
             "candidatePairs": 14212,
             "geometryRequests": 14212,
@@ -323,7 +323,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "36e5ee419d3ff0fa3367743e767bb70b1d7ab5d05d8309735ed2fb2189b27ceb"
+            "finalStateSHA256": "aebeab548537f80e18912d081687d0303b2e8478200a8e27f7188bd1cce560ad"
           },
           {
             "mode": "stationary",
@@ -332,10 +332,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 18.192105000000083,
-            "p95StepMs": 54.42212200000017,
-            "maxStepMs": 57.1530130000001,
-            "medianTeamReadMs": 0.03479199999992488,
+            "medianStepMs": 17.86820499999976,
+            "p95StepMs": 53.00866599999972,
+            "maxStepMs": 56.649732000000085,
+            "medianTeamReadMs": 0.03488299999980882,
             "queries": 5000,
             "candidatePairs": 48682,
             "geometryRequests": 48682,
@@ -745,7 +745,7 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e0a1c13aafc81b19efc57303a5b48a11520f64544c050148848ddd5b19a48bfb"
+            "finalStateSHA256": "4434488e28ad0ee211c4e7e54389dd492b3f3d8ef267925d9c160522b9dc1d9e"
           },
           {
             "mode": "moving",
@@ -754,10 +754,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 9.291642999999567,
-            "p95StepMs": 11.018930000000182,
-            "maxStepMs": 14.847128999999768,
-            "medianTeamReadMs": 0.019099000000096567,
+            "medianStepMs": 9.252663000000211,
+            "p95StepMs": 10.72373400000015,
+            "maxStepMs": 12.238288999999895,
+            "medianTeamReadMs": 0.017036000000189233,
             "queries": 2500,
             "candidatePairs": 14081,
             "geometryRequests": 14081,
@@ -967,7 +967,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "9e6a20ee073bc3cce9510f6de723ca4c726d8071f593418ec5458aef12e9abba"
+            "finalStateSHA256": "1089aa917be34376a889f89878b13bf66b7f7e602e95bf065718ac8613fe2586"
           },
           {
             "mode": "moving",
@@ -976,10 +976,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 65.2941979999996,
-            "p95StepMs": 76.802866,
-            "maxStepMs": 82.199971,
-            "medianTeamReadMs": 0.04154299999936484,
+            "medianStepMs": 65.78999499999918,
+            "p95StepMs": 74.78161399999954,
+            "maxStepMs": 81.32386299999962,
+            "medianTeamReadMs": 0.07693699999981618,
             "queries": 5000,
             "candidatePairs": 48737,
             "geometryRequests": 48737,
@@ -1389,13 +1389,13 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e53a807e5ddbea9199859785fbd164b30c0b070cd825ec8a3c44058bdb044a6b"
+            "finalStateSHA256": "f7fdc7cbc78b534c259a9448bf759f064abb274f14726c044a1741129d80df01"
           }
         ]
       },
       {
         "variant": "baseline",
-        "initMs": 63.268734,
+        "initMs": 65.116368,
         "summary": null,
         "cases": [
           {
@@ -1405,10 +1405,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 3.444338000000016,
-            "p95StepMs": 8.482871999999986,
-            "maxStepMs": 12.048744,
-            "medianTeamReadMs": 0.019179000000008273,
+            "medianStepMs": 3.478870000000029,
+            "p95StepMs": 8.443561999999986,
+            "maxStepMs": 21.01799900000003,
+            "medianTeamReadMs": 0.018447999999921194,
             "queries": 2500,
             "candidatePairs": 14212,
             "geometryRequests": 14212,
@@ -1618,7 +1618,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "36e5ee419d3ff0fa3367743e767bb70b1d7ab5d05d8309735ed2fb2189b27ceb"
+            "finalStateSHA256": "aebeab548537f80e18912d081687d0303b2e8478200a8e27f7188bd1cce560ad"
           },
           {
             "mode": "stationary",
@@ -1627,10 +1627,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 17.507262999999966,
-            "p95StepMs": 51.77571200000011,
-            "maxStepMs": 53.972332999999935,
-            "medianTeamReadMs": 0.03513299999985975,
+            "medianStepMs": 17.968816999999945,
+            "p95StepMs": 53.92967599999997,
+            "maxStepMs": 61.54717299999993,
+            "medianTeamReadMs": 0.034742000000278495,
             "queries": 5000,
             "candidatePairs": 48682,
             "geometryRequests": 48682,
@@ -2040,7 +2040,7 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e0a1c13aafc81b19efc57303a5b48a11520f64544c050148848ddd5b19a48bfb"
+            "finalStateSHA256": "4434488e28ad0ee211c4e7e54389dd492b3f3d8ef267925d9c160522b9dc1d9e"
           },
           {
             "mode": "moving",
@@ -2049,10 +2049,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 9.593337999999676,
-            "p95StepMs": 11.25490499999978,
-            "maxStepMs": 15.246390999999676,
-            "medianTeamReadMs": 0.01717599999938102,
+            "medianStepMs": 9.19630799999959,
+            "p95StepMs": 10.911916999999448,
+            "maxStepMs": 12.583990000000085,
+            "medianTeamReadMs": 0.017066000000340864,
             "queries": 2500,
             "candidatePairs": 14081,
             "geometryRequests": 14081,
@@ -2262,7 +2262,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "9e6a20ee073bc3cce9510f6de723ca4c726d8071f593418ec5458aef12e9abba"
+            "finalStateSHA256": "1089aa917be34376a889f89878b13bf66b7f7e602e95bf065718ac8613fe2586"
           },
           {
             "mode": "moving",
@@ -2271,10 +2271,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 63.17547100000047,
-            "p95StepMs": 73.29682800000046,
-            "maxStepMs": 73.98682800000097,
-            "medianTeamReadMs": 0.04281499999888183,
+            "medianStepMs": 66.73571300000003,
+            "p95StepMs": 79.63044300000001,
+            "maxStepMs": 82.4606330000006,
+            "medianTeamReadMs": 0.041441999999733525,
             "queries": 5000,
             "candidatePairs": 48737,
             "geometryRequests": 48737,
@@ -2684,13 +2684,13 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e53a807e5ddbea9199859785fbd164b30c0b070cd825ec8a3c44058bdb044a6b"
+            "finalStateSHA256": "f7fdc7cbc78b534c259a9448bf759f064abb274f14726c044a1741129d80df01"
           }
         ]
       },
       {
         "variant": "baseline",
-        "initMs": 65.22460899999999,
+        "initMs": 67.426785,
         "summary": null,
         "cases": [
           {
@@ -2700,10 +2700,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 3.711320999999998,
-            "p95StepMs": 9.113725000000045,
-            "maxStepMs": 12.309419000000048,
-            "medianTeamReadMs": 0.018457000000012158,
+            "medianStepMs": 3.7670249999999896,
+            "p95StepMs": 10.57404699999995,
+            "maxStepMs": 14.791111,
+            "medianTeamReadMs": 0.017525999999975284,
             "queries": 2500,
             "candidatePairs": 14212,
             "geometryRequests": 14212,
@@ -2913,7 +2913,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "36e5ee419d3ff0fa3367743e767bb70b1d7ab5d05d8309735ed2fb2189b27ceb"
+            "finalStateSHA256": "aebeab548537f80e18912d081687d0303b2e8478200a8e27f7188bd1cce560ad"
           },
           {
             "mode": "stationary",
@@ -2922,10 +2922,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 17.696108000000095,
-            "p95StepMs": 51.66759200000024,
-            "maxStepMs": 59.571871999999985,
-            "medianTeamReadMs": 0.03511300000036499,
+            "medianStepMs": 17.661763000000064,
+            "p95StepMs": 53.34269999999992,
+            "maxStepMs": 62.99502600000005,
+            "medianTeamReadMs": 0.0348030000000108,
             "queries": 5000,
             "candidatePairs": 48682,
             "geometryRequests": 48682,
@@ -3335,7 +3335,7 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e0a1c13aafc81b19efc57303a5b48a11520f64544c050148848ddd5b19a48bfb"
+            "finalStateSHA256": "4434488e28ad0ee211c4e7e54389dd492b3f3d8ef267925d9c160522b9dc1d9e"
           },
           {
             "mode": "moving",
@@ -3344,10 +3344,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 9.076548999999886,
-            "p95StepMs": 10.744447999999466,
-            "maxStepMs": 13.607978000000003,
-            "medianTeamReadMs": 0.017115999999987253,
+            "medianStepMs": 9.535350000000108,
+            "p95StepMs": 11.116616999999678,
+            "maxStepMs": 12.877873999999792,
+            "medianTeamReadMs": 0.01886800000011135,
             "queries": 2500,
             "candidatePairs": 14081,
             "geometryRequests": 14081,
@@ -3557,7 +3557,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "9e6a20ee073bc3cce9510f6de723ca4c726d8071f593418ec5458aef12e9abba"
+            "finalStateSHA256": "1089aa917be34376a889f89878b13bf66b7f7e602e95bf065718ac8613fe2586"
           },
           {
             "mode": "moving",
@@ -3566,10 +3566,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 66.55377100000078,
-            "p95StepMs": 80.84102499999972,
-            "maxStepMs": 90.45658699999876,
-            "medianTeamReadMs": 0.04152299999987008,
+            "medianStepMs": 68.21253100000013,
+            "p95StepMs": 80.09172799999942,
+            "maxStepMs": 102.39295300000049,
+            "medianTeamReadMs": 0.04100100000141538,
             "queries": 5000,
             "candidatePairs": 48737,
             "geometryRequests": 48737,
@@ -3979,7 +3979,7 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e53a807e5ddbea9199859785fbd164b30c0b070cd825ec8a3c44058bdb044a6b"
+            "finalStateSHA256": "f7fdc7cbc78b534c259a9448bf759f064abb274f14726c044a1741129d80df01"
           }
         ]
       }
@@ -3987,7 +3987,7 @@
     "optimized": [
       {
         "variant": "optimized",
-        "initMs": 137.547867,
+        "initMs": 142.48591800000003,
         "summary": {
           "tileMetres": 32,
           "tiles": 15625,
@@ -4001,10 +4001,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 2.2439569999999662,
-            "p95StepMs": 5.732051000000013,
-            "maxStepMs": 10.891558000000032,
-            "medianTeamReadMs": 0.03231899999991583,
+            "medianStepMs": 2.5394220000000587,
+            "p95StepMs": 4.551158000000044,
+            "maxStepMs": 9.853110000000015,
+            "medianTeamReadMs": 0.017606000000000677,
             "queries": 2500,
             "candidatePairs": 14212,
             "geometryRequests": 14212,
@@ -4214,7 +4214,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "36e5ee419d3ff0fa3367743e767bb70b1d7ab5d05d8309735ed2fb2189b27ceb"
+            "finalStateSHA256": "aebeab548537f80e18912d081687d0303b2e8478200a8e27f7188bd1cce560ad"
           },
           {
             "mode": "stationary",
@@ -4223,10 +4223,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 6.9961490000000595,
-            "p95StepMs": 14.559684999999945,
-            "maxStepMs": 17.26347499999997,
-            "medianTeamReadMs": 0.03505300000006173,
+            "medianStepMs": 7.207807999999886,
+            "p95StepMs": 15.233599000000027,
+            "maxStepMs": 16.720544000000018,
+            "medianTeamReadMs": 0.036655000000109794,
             "queries": 5000,
             "candidatePairs": 48682,
             "geometryRequests": 48682,
@@ -4636,7 +4636,7 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e0a1c13aafc81b19efc57303a5b48a11520f64544c050148848ddd5b19a48bfb"
+            "finalStateSHA256": "4434488e28ad0ee211c4e7e54389dd492b3f3d8ef267925d9c160522b9dc1d9e"
           },
           {
             "mode": "moving",
@@ -4645,10 +4645,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 3.632801999999856,
-            "p95StepMs": 5.022119999999859,
-            "maxStepMs": 6.225144999999884,
-            "medianTeamReadMs": 0.017105999999785126,
+            "medianStepMs": 3.71606799999995,
+            "p95StepMs": 4.871401999999989,
+            "maxStepMs": 7.322020000000066,
+            "medianTeamReadMs": 0.017515999999886844,
             "queries": 2500,
             "candidatePairs": 14081,
             "geometryRequests": 14081,
@@ -4858,7 +4858,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "9e6a20ee073bc3cce9510f6de723ca4c726d8071f593418ec5458aef12e9abba"
+            "finalStateSHA256": "1089aa917be34376a889f89878b13bf66b7f7e602e95bf065718ac8613fe2586"
           },
           {
             "mode": "moving",
@@ -4867,10 +4867,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 16.83730999999989,
-            "p95StepMs": 20.30983100000003,
-            "maxStepMs": 22.128426000000218,
-            "medianTeamReadMs": 0.0371660000000702,
+            "medianStepMs": 16.664068000000043,
+            "p95StepMs": 19.18884900000012,
+            "maxStepMs": 21.556626999999935,
+            "medianTeamReadMs": 0.03798700000061217,
             "queries": 5000,
             "candidatePairs": 48737,
             "geometryRequests": 48737,
@@ -5280,13 +5280,13 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e53a807e5ddbea9199859785fbd164b30c0b070cd825ec8a3c44058bdb044a6b"
+            "finalStateSHA256": "f7fdc7cbc78b534c259a9448bf759f064abb274f14726c044a1741129d80df01"
           }
         ]
       },
       {
         "variant": "optimized",
-        "initMs": 141.082499,
+        "initMs": 141.740403,
         "summary": {
           "tileMetres": 32,
           "tiles": 15625,
@@ -5300,10 +5300,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 2.2762560000000462,
-            "p95StepMs": 4.425579999999968,
-            "maxStepMs": 11.889023000000009,
-            "medianTeamReadMs": 0.017826999999897453,
+            "medianStepMs": 2.273571000000004,
+            "p95StepMs": 8.129208000000006,
+            "maxStepMs": 10.101835999999992,
+            "medianTeamReadMs": 0.017737000000010994,
             "queries": 2500,
             "candidatePairs": 14212,
             "geometryRequests": 14212,
@@ -5513,7 +5513,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "36e5ee419d3ff0fa3367743e767bb70b1d7ab5d05d8309735ed2fb2189b27ceb"
+            "finalStateSHA256": "aebeab548537f80e18912d081687d0303b2e8478200a8e27f7188bd1cce560ad"
           },
           {
             "mode": "stationary",
@@ -5522,10 +5522,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 7.619959999999992,
-            "p95StepMs": 15.05572200000006,
-            "maxStepMs": 17.45297000000005,
-            "medianTeamReadMs": 0.03559399999994639,
+            "medianStepMs": 7.33142399999997,
+            "p95StepMs": 15.460372000000007,
+            "maxStepMs": 19.695913999999902,
+            "medianTeamReadMs": 0.03522300000008727,
             "queries": 5000,
             "candidatePairs": 48682,
             "geometryRequests": 48682,
@@ -5935,7 +5935,7 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e0a1c13aafc81b19efc57303a5b48a11520f64544c050148848ddd5b19a48bfb"
+            "finalStateSHA256": "4434488e28ad0ee211c4e7e54389dd492b3f3d8ef267925d9c160522b9dc1d9e"
           },
           {
             "mode": "moving",
@@ -5944,10 +5944,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 4.117044000000078,
-            "p95StepMs": 6.0463049999998475,
-            "maxStepMs": 7.95924100000002,
-            "medianTeamReadMs": 0.017256000000088534,
+            "medianStepMs": 3.6534630000001016,
+            "p95StepMs": 5.783588000000009,
+            "maxStepMs": 8.27725200000009,
+            "medianTeamReadMs": 0.01723600000013903,
             "queries": 2500,
             "candidatePairs": 14081,
             "geometryRequests": 14081,
@@ -6157,7 +6157,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "9e6a20ee073bc3cce9510f6de723ca4c726d8071f593418ec5458aef12e9abba"
+            "finalStateSHA256": "1089aa917be34376a889f89878b13bf66b7f7e602e95bf065718ac8613fe2586"
           },
           {
             "mode": "moving",
@@ -6166,10 +6166,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 16.71939199999997,
-            "p95StepMs": 20.38527400000021,
-            "maxStepMs": 29.245386999999937,
-            "medianTeamReadMs": 0.03735599999981787,
+            "medianStepMs": 16.15093399999978,
+            "p95StepMs": 21.515669999999773,
+            "maxStepMs": 22.67049199999974,
+            "medianTeamReadMs": 0.03760699999929784,
             "queries": 5000,
             "candidatePairs": 48737,
             "geometryRequests": 48737,
@@ -6579,13 +6579,13 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e53a807e5ddbea9199859785fbd164b30c0b070cd825ec8a3c44058bdb044a6b"
+            "finalStateSHA256": "f7fdc7cbc78b534c259a9448bf759f064abb274f14726c044a1741129d80df01"
           }
         ]
       },
       {
         "variant": "optimized",
-        "initMs": 139.199976,
+        "initMs": 137.65611099999998,
         "summary": {
           "tileMetres": 32,
           "tiles": 15625,
@@ -6599,10 +6599,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 2.522837999999979,
-            "p95StepMs": 4.976250999999991,
-            "maxStepMs": 9.138133000000039,
-            "medianTeamReadMs": 0.0167149999999765,
+            "medianStepMs": 2.603539000000012,
+            "p95StepMs": 5.36382500000002,
+            "maxStepMs": 9.47063300000002,
+            "medianTeamReadMs": 0.032448999999928674,
             "queries": 2500,
             "candidatePairs": 14212,
             "geometryRequests": 14212,
@@ -6812,7 +6812,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "36e5ee419d3ff0fa3367743e767bb70b1d7ab5d05d8309735ed2fb2189b27ceb"
+            "finalStateSHA256": "aebeab548537f80e18912d081687d0303b2e8478200a8e27f7188bd1cce560ad"
           },
           {
             "mode": "stationary",
@@ -6821,10 +6821,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 7.428790999999933,
-            "p95StepMs": 16.239667000000054,
-            "maxStepMs": 32.881811000000084,
-            "medianTeamReadMs": 0.034683000000086395,
+            "medianStepMs": 7.990669000000025,
+            "p95StepMs": 16.57828799999993,
+            "maxStepMs": 20.45033199999989,
+            "medianTeamReadMs": 0.03512300000011237,
             "queries": 5000,
             "candidatePairs": 48682,
             "geometryRequests": 48682,
@@ -7234,7 +7234,7 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e0a1c13aafc81b19efc57303a5b48a11520f64544c050148848ddd5b19a48bfb"
+            "finalStateSHA256": "4434488e28ad0ee211c4e7e54389dd492b3f3d8ef267925d9c160522b9dc1d9e"
           },
           {
             "mode": "moving",
@@ -7243,10 +7243,10 @@
             "red": 25,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 4.3048959999998715,
-            "p95StepMs": 6.241428000000042,
-            "maxStepMs": 7.202478999999812,
-            "medianTeamReadMs": 0.017014999999901192,
+            "medianStepMs": 4.024363999999878,
+            "p95StepMs": 5.825450999999703,
+            "maxStepMs": 6.787143000000015,
+            "medianTeamReadMs": 0.01727599999958329,
             "queries": 2500,
             "candidatePairs": 14081,
             "geometryRequests": 14081,
@@ -7456,7 +7456,7 @@
                 "y": 1580
               }
             ],
-            "finalStateSHA256": "9e6a20ee073bc3cce9510f6de723ca4c726d8071f593418ec5458aef12e9abba"
+            "finalStateSHA256": "1089aa917be34376a889f89878b13bf66b7f7e602e95bf065718ac8613fe2586"
           },
           {
             "mode": "moving",
@@ -7465,10 +7465,10 @@
             "red": 50,
             "steps": 100,
             "simulatedSeconds": 5,
-            "medianStepMs": 17.66844200000014,
-            "p95StepMs": 22.017385000000104,
-            "maxStepMs": 26.306267999999363,
-            "medianTeamReadMs": 0.04169300000012299,
+            "medianStepMs": 16.44911400000001,
+            "p95StepMs": 19.139623999999912,
+            "maxStepMs": 25.006358000000546,
+            "medianTeamReadMs": 0.03766600000017206,
             "queries": 5000,
             "candidatePairs": 48737,
             "geometryRequests": 48737,
@@ -7878,7 +7878,7 @@
                 "y": 3180
               }
             ],
-            "finalStateSHA256": "e53a807e5ddbea9199859785fbd164b30c0b070cd825ec8a3c44058bdb044a6b"
+            "finalStateSHA256": "f7fdc7cbc78b534c259a9448bf759f064abb274f14726c044a1741129d80df01"
           }
         ]
       }

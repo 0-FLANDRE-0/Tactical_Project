@@ -1,76 +1,81 @@
-# TACTICAL v0.4 WIP10 — 게임 지연 판정·화면 효과 (부분 구현)
+# TACTICAL v0.4 WIP10 — 예측 사격·비행·착탄
 
-**업로드 WIP10 지시서 전체를 구현한 결과가 아니다.** 이 실행 파일은 고정 게임 지연·상태 분리·공개 정보·부위 투영·화면 효과를 구현한 부분 버전이다. 예측 발사 방향, 실탄속/중력 비행, 편향/낙하, 실제 지형/건물 탄착 탐색과 물리 탄착 좌표는 제외했다. 고정 **0.8초 게임 시간**을 사용하며 기존 WIP09 오차 예산과 기동 항을 유지한다. 제공 WIP10 Python과 물리 기준표는 실행·검증·재배포하지 않았다. [원문 파일 크기/SHA-256/범위](docs/WIP10_SOURCE_SCOPE.json) · [실제 구현과 원문 차이](docs/FIRE_CONTROL_WIP10.md).
+2026-11-07 KST. 발사 시 자기 포수 관측 속도로 선행 위치를 계산하고, 실제 포구에서 그 방향으로 발사한다. 거리와 게임 평균 탄속으로 비행 시간을 정한 뒤 착탄 시점의 실제 표적 위치·차체/포탑 방향·포구 기준 차폐로 최종 확률을 한 번 추첨한다. 결과를 정한 뒤 명중점 또는 지형·건물 빗나감 위치를 만들어 화면과 공개 이벤트에 연결했다. 장갑·관통·피해는 이 버전의 범위가 아니다.
 
-2026-11-07 KST. 시작 커밋 WIP09 `04d6d2e85bd4e599332f03f0614989dbbc79990b`, 깨끗한 작업 트리와 적용 AGENTS.md 없음을 확인했다. `feat/wip10-flight-impact`에서 최신 main `7117fbadabd0493248d328cb8b6fdfa8139d242e`를 `1a95ac5b4197b548950e130a87e8b77ea1571964`로 병합했다. 최종 fetch에서도 main은 같았다. 새 전투/장갑 구역 설계 아카이브 4개 문서의 변경은 보존하며 런타임 데이터로 가져오지 않았다.
+초기 WIP10 작업은 WIP09 `04d6d2e85bd4e599332f03f0614989dbbc79990b`에서 시작했다. 이번 보완은 `feat/wip10-flight-impact`의 `41f080efd11675f24d23fc0b3547b9f4364e4380`에서 시작했고, 최신 main `e2f44d92d06d35782dfa0f5ce81f6c3eb3a77bf6`를 merge commit `2f12a560d56ffd8bc6025e6a50af6719596a4554`로 정상 병합했다. main의 다음 단계·전차·탄약 아카이브와 기존 사용자 변경은 보존했다. 적용 AGENTS.md는 없었다. PR #6은 초안이며 main 병합과 공개 배포는 하지 않는다.
 
-PR #4/#5는 미병합이며 이번 브랜치는 PR #5 위에 쌓은 별도 검토 초안이다. main 병합·공개 배포하지 않는다. 최신 `archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md`의 §7은 WIP06 당시 코드 상태를 서술해 현재 WIP08/09와 다르다. 아카이브 원문을 고치지 않고 여기서 현 상태와 구분한다.
+이전 고정 0.8초 지연과 화면 픽셀 효과만 있던 부분 구현은 제거했다. 제공 지시서의 예측 방향, 실제 ToF, 착탄 시점 확률, 편향, 포물선 지형/건물 탄착과 Python 기준표를 실행 코드와 검사에 모두 연결했다. [구현 식과 공개 규칙](docs/FIRE_CONTROL_WIP10.md) · [입력 파일 체크섬과 범위](docs/WIP10_SOURCE_SCOPE.json).
 
-## 구현 결과와 한계
+## 구현 결과
 
-- 발사 때는 새 자체 관측/정렬/거리/탄수/간격/LOS를 확인하고 탄수·단발 번호·발사 스냅샷만 확정한다. `fired`에 결과/부위가 없고 결정용 난수도 호출하지 않는다.
-- 고정 기한 이후 최초 0.05초 스텝에서 한 번 판정한다. 동시 기한은 ID 순이다. 사수 이동·포탑 선회·관측 상실·선택·입력 취소로 이미 시작한 대기가 취소되지 않는다.
-- 저장 포구에서 현재 표적의 **기존 광학 노출**을 확인한다. 발사 당시 차체/포탑 확률을 노출 감소 비율만큼 낮추고 완전 차폐/표적 삭제는 0으로 처리한다. 이것은 탄체 궤적/충돌이 아니며 발사 후 이동 예측 오차도 계산하지 않는다.
-- 결과 시 기존 명중/구역 해시 두 개를 한 번씩 읽는다. 조준 누적과 관측 이동 벡터의 초기화를 분리했다. 벡터는 표적 키 변경/긴 관측 간격에서 비운다. 숨겨진 실제 속도는 읽지 않는다.
-- 차체/포탑 전·측·후 비중에 각각 박스 길이/폭을 적용하고 측면 좌/우를 기록한다. 상부는 0, 장갑/관통/피해는 미구현이다.
-- 팀이 관측하지 못한 결과는 미확인이다. 부위·좌우·최종 확률·효과를 숨기고, 숨겨진 명중과 빗나감의 공개 이벤트도 동일하다. 내부 위치/ID/기록을 공개 snapshot에 넣지 않는다. 테스트용 내부 기록은 명시적으로 켠 장면에서만 사용한다.
-- 실제 포구에서 알려진 위치까지 중립색 화면 애니메이션을 보여준다. 관측 중 결과만 섬광/화면 픽셀 먼지로 2초 표시한다. 실제 탄착 위치·높이·건물/지면/관통 종류는 생성하지 않는다.
-- 우측 예상 확률/오차/크기/조건부 구역 요약은 한 곳이다. 아군 HUD에 게임 대기 시간/결과 미확인을 표시한다. 미식별/기억 상세정보는 숨기며 렌더링에서 노출을 계산하지 않는다.
+- 발사 승인 시 새 포수/포구 LOS, 정렬, 거리, 탄수와 간격을 확인한다. 발사 이벤트에는 결과가 없고 결정 난수를 사용하지 않는다.
+- `ToF = R0/(muzzleVelocity×velocityRetention)`, `P_pred = pose0+v_obs×ToF`, `β_s = atan2(P_pred−origin)`으로 비행 스냅샷을 만든다. `origin`은 도안과 공유하는 실제 포구 좌표다.
+- 착탄 시 저장한 포구에서 실제 표적의 9개 표본 차폐를 다시 조회한다. 포수 FOV·거리를 다시 적용하지 않으며 사수 이동·선회·관측 상실은 이미 발사된 탄을 바꾸지 않는다.
+- 예측과 실제 위치 차이를 탄 방향의 가로/거리 편향으로 분해하고 중력 세로 편향을 더한다. 현재 보이는 차체/포탑 직사각형에 정규분포를 적분해 최종 확률을 계산한다.
+- WIP09의 `sigma.man`, `maneuverAccel`, `maneuverReferenceSpeed`를 제거했다. 표적 기동은 예측 위치와 착탄 위치 차이로만 반영한다. 관측 속도는 조준 리셋과 분리하고 표적 변경 또는 긴 관측 공백에서만 비운다.
+- 차체와 포탑의 실제 방향과 각 박스의 길이·폭으로 전·측·후 투영 비중을 계산한다. 측면은 표적 기준 좌/우를 별도로 기록한다.
+- 결과 추첨 뒤 독립 Box–Muller 스트림으로 점을 만든다. 명중은 선택 부위 안, 빗나감은 모든 보이는 직사각형 밖에 놓는다. 최대 64회 뒤 안전한 대체값을 쓴다.
+- 빗나감 경로는 포구와 표적 평면점을 잇는 중력 포물선을 10m부터 2m 간격으로 전진한다. 지형 또는 건물 지붕과 만나는 첫 구간을 4회 이분해 `ground`, `building`, `out-of-map`, `max-distance`와 앞·뒤 거리를 기록한다.
+- 팀이 착탄 때 표적을 관측하면 결과·부위·편향·좌표를 공개한다. 미관측 명중 좌표는 숨기고, 미관측 빗나감은 지면/건물 먼지 좌표와 종류만 공개하며 표적 상대 거리 `beyond`는 숨긴다. 내부 표적 ID는 공개 snapshot과 이벤트에 없다.
+- 예광선은 실제 포구에서 발사 방향으로 실제 ToF 동안 진행한다. 결과 뒤 공개 가능한 명중 섬광 또는 빗나감 먼지를 2초 표시한다. 패널의 예상 확률은 한 곳이며 비행 남은 시간과 최근 탄착 종류를 표시한다.
+- 프로파일에 `impact:{rejectionAttempts:64,marchStepM:2,maxBeyondM:3000}`을 추가했다. `flightSeconds`, `effectSeconds`와 통계 기동 필드는 폐기 필드로 거부한다. `data/vehicles/M1A2.json`을 다시 내보냈다.
 
-`flightSeconds=.8`, `effectSeconds=2`는 프로파일 게임 설정이며 유한 수/허용 범위를 검증한다. WIP09 진단 `breakdown.tof`와 새 고정 게임 `fired.tof`는 다른 척도이며 실제 탄도 시간을 뜻하지 않는다. `sigma.man`, `maneuverAccel`, `maneuverReferenceSpeed`도 그대로다. 생산 프로파일 시험탄은 42발이고 105발 설정은 이력 상한 합성 검사에만 사용했다.
+지도·기동·차량 반경·길찾기·관측 주기와 확률·9개 표본·LOS 최적화·M1A2 도안은 유지했다. `archive/combat`의 7절은 WIP06 당시 상태를 설명해 현재 WIP08~10 사격과 다르며 아카이브 원문은 수정하지 않았다.
 
-새 런타임 모듈이 없으므로 build.py·HTML·내장 Worker·Node/입력 로더 순서를 유지한다. 지도·기동·차량 반경·길찾기 계약·관측 확률/주기·9개 관측점·동결 원본·M1A2 외형/포구는 보존했다. 변경 소스는 `fire-control.js`, `sim-core.js`의 연결부, 프로파일/내보내기, UI와 새 지연 판정 검사다.
+## 기준표와 자동 검사
 
-## 검증 결과
+사용자가 제공한 `wip10_hit_reference.py`를 그대로 `tests/fixtures/`에 보관했다. SHA-256은 `142e5001ee9bd4042a88e6011a1342a2b96cc94eb093f9b0faec069c6aaf6dc6`이다. 생성 스크립트가 체크섬을 고정하고 임시 디렉터리에서 원본을 실행해 [46행 JSON](tests/releases/WIP10-reference.json)을 만든다.
 
-**Node 228/228, 실제 Chromium 16/16, JS/CJS 구문 48/48, Python 구문 5/5 통과. 최종 실패 0.** 이 수치는 구현한 게임 부분 범위의 검증이며 전체 WIP10 지시서 적합성 검증이 아니다. [기계 판독 기록](tests/releases/WIP10-validation.json).
+- 발사 미리보기 24행: `sigma.man` 제거 뒤 확률·차체/포탑 질량·오차·ToF
+- 착탄 6행: 계속 횡단, 정지, 가속/감속, 새 출발, 거리 방향 이동의 편향과 최종 확률
+- 구역 11행: 0°~360° 연속성, 차체/포탑 투영, 좌우
+- 경로 5행: 표적 앞·뒤의 포물선 높이
+- 추가 검사: 1000개 seed의 명중점/빗나감점, 강제 대체값, 평지 장·단탄, 건물 충돌
+
+**Node 규칙/코어 236/236, 실제 Chromium 16/16, JS/CJS 구문 49/49, Python 구문 11/11 통과. 최종 실패 0.** [기계 판독 결과](tests/releases/WIP10-validation.json).
 
 | 검사 | 결과 | 구분 |
 |---|---:|---|
-| `node --test` 기존 13개 파일 + `game-flight.test.cjs` | 156/156 | 순수 규칙/실제 코어/합성 지형/동결 원본 |
-| `node tests/input.test.cjs` | 35/35 | 가짜 DOM 입력 |
-| `node tests/map.test.cjs` | 16/16 | 실제 지도/기동 |
-| `node tests/visibility.test.cjs` | 12/12 | 기하/시야/지도 |
-| `node tests/vehicle.test.cjs` | 9/9 | 프로파일/기동/실제 Node Worker/오래된 응답 |
-| `node tests/browser.test.cjs` | 16/16 | 실제 Chromium 156.0.8078.79 DOM/Canvas/내장 Worker, 로컬 HTTP |
-| JS/CJS `node --check` / Python `compile` | 48/48 · 5/5 | 기존 WIP09 oracle 포함, 업로드 WIP10 Python 제외 |
+| 15개 `node --test` 파일 | 164/164 | 관측·사격·실제 코어·동결 LOS·Python 기준표 |
+| `node tests/input.test.cjs` | 35/35 | 가짜 DOM 입력·취소·일시정지 |
+| `node tests/map.test.cjs` | 16/16 | 실제 지도·기동 |
+| `node tests/visibility.test.cjs` | 12/12 | 가시 영역·지도·등고선 |
+| `node tests/vehicle.test.cjs` | 9/9 | 프로파일·기동·실제 Node Worker·오래된 응답 차단 |
+| `node tests/browser.test.cjs` | 16/16 | Chromium 156.0.8078.79 DOM/Canvas/내장 Worker, 로컬 HTTP |
+| `node --check` / Python AST parse | 49/49 · 11/11 | 전체 JS/CJS와 Python |
 
-새 Node 사례는 17개다(지연 판정 16개·프로파일 범위 1개). 발사 때 결과/난수 없음, 정확한 기한/단일 완료, 동시 기한 순서, 사수 이동/취소, 관측 상실/숨겨진 결과의 동일 공개 출력, 완전 차폐, 표적 삭제, 이력 상한, seed/1×·4× 묶음 재현성, 박스 투영/좌우, 벡터 유지/초기화를 검사했다. 기존 드래그·핀치·선택·입력 취소·일시정지·시야 Worker 회귀를 유지했다.
+핵심 통합 검사는 발사 때 난수 0회, 착탄 때 단일 결정, 실제 ToF, 같은 기한의 ID 순서, 횡단 표적의 발사 직후 정지, 착탄 전 완전 차폐, 표적 삭제, 사수 선회·관측 상실, 공개 정보 은폐, 시나리오 초기화, seed와 1×/4× 묶음 재현성을 확인한다. 기존 드래그·핀치·입력 취소·선택 변경·일시정지·관측·Worker 회귀도 그대로 통과했다.
 
-이력 상한 검사의 첫 실행은 합성 차량의 42발을 소진해 실패했다. 해당 검사에서만 105발로 수정했다. 브라우저 검사는 제거한 중복 `hitSummary`를 참조하던 locator를 실제 단일 요약 요소로 갱신했다. 최종 검토에서 숨겨진 빗나감과 명중의 효과 차이가 결과를 암시할 수 있어 둘 다 효과를 숨기고 동일 공개 출력 검사를 추가했다. 수정 후 전체 Node/브라우저를 다시 통과했다.
+실제 Chromium에서는 단일 HTML 부팅, 실제 내장 Worker, 포구와 예광선/섬광의 Canvas 좌표, 비행 중 일시정지, 관측/미관측 결과, 모바일 844×390·390×844, 제공 M1A2 HTML과 네 자세의 픽셀 동일성을 검사했다. [비행 화면](tests/releases/WIP10-flight-desktop.png) · [착탄](tests/releases/WIP10-impact.png) · [미관측](tests/releases/WIP10-unobserved.png) · [브라우저 기록](tests/releases/WIP10-browser.json).
 
-**기존 WIP09 35행 확률표와 원문 수치 비교는 회귀 검사로 통과했다.** 제공 WIP10 Python의 편향/낙하·실제 비행 기준표를 통과했다는 의미가 아니다. 원본 WIP10 Python은 실행하지 않았다.
+## 관측 성능 회귀
 
-동결 LOS 13,805건·노출 1,000건의 기존 필드가 같다. WIP09와 `lineOfSight`, `exposure`, `stepTank`, 오차 예산/제시 직사각형/확률 함수 본문이 바이트 단위로 같다. 프로파일의 기동·센서·노출·모델·길찾기 및 기존 WIP09 사격 계수도 같다. 이전 실행 파일·ZIP·검증 자료와 최신 main 아카이브는 체크섬으로 보존을 확인했다.
+실제 지도, seed 407, 20Hz 스텝·10Hz 관측, 준비 20·측정 100스텝, 50/100대와 정지/이동 조건에서 동결 원본과 현재 LOS를 각각 3개 새 프로세스로 순차 측정했다. **24개 완전 상태 출력이 모두 같다.** Node v24.22.1, AMD EPYC 9V74, Linux x64 결과다.
 
-## 실제 브라우저와 성능
+| 조건 | 원본 중앙값 | 현재 중앙값 | 현재 P95 | 중앙값 감소 |
+|---|---:|---:|---:|---:|
+| 정지 50대 | 3.50ms | 2.54ms | 5.36ms | 27.5% |
+| 정지 100대 | 17.87ms | 7.33ms | 15.46ms | 59.0% |
+| 이동 50대 | 9.25ms | 3.72ms | 5.78ms | 59.8% |
+| 이동 100대 | 66.74ms | 16.45ms | 19.19ms | 75.4% |
 
-포구 선/섬광의 실제 Canvas 위치와 공통 링 변환 일치, 제공 도안과 네 자세의 픽셀 동일성, 대기 중 일시정지/재개, 미관측 결과 숨김, 모바일 화면 넘침/컨트롤 배치를 검사했다. [비행 중 데스크톱](tests/releases/WIP10-flight-desktop.png) · [844×390](tests/releases/WIP10-flight-844x390.png) · [390×844](tests/releases/WIP10-flight-390x844.png) · [관측 중 결과](tests/releases/WIP10-impact.png) · [미관측 결과](tests/releases/WIP10-unobserved.png) · [실제 브라우저 기록](tests/releases/WIP10-browser.json).
+이 fixture는 발사 명령을 내리지 않으므로 새 탄 비행·탄착 생성 비용을 포함하지 않는다. CPU 고정 스텝 측정이며 전체 FPS나 동시 사격 성능이 아니다. [비교 조건과 상태 해시](tests/releases/WIP10-comparison.json) · [현재 일반 측정](tests/releases/WIP10-benchmark.json).
 
-실제 지도/seed 407/20Hz 스텝·10Hz 관측/준비 20·측정 100스텝, 50/100대 절반씩 양 진영, 기존 합성 궤적을 사용했다. Node v24.22.1/AMD EPYC 9V74/Linux x64에서 원본 LOS/현재 최적화 각 3개 새 프로세스를 순차 실행했다. **24개 완전 상태 출력 동일**. 각 프로세스 통계 3개의 중앙값이다.
+## 실행 파일
 
-| 조건 | 원본 LOS 중앙값 | 현재 중앙값 | 현재 P95 |
-|---|---:|---:|---:|
-| 정지 50대 | 3.56ms | 2.28ms | 4.98ms |
-| 정지 100대 | 17.70ms | 7.43ms | 15.06ms |
-| 이동 50대 | 9.29ms | 4.12ms | 6.05ms |
-| 이동 100대 | 65.29ms | 16.84ms | 20.39ms |
-
-발사 입력 없는 CPU 스텝 비용이다. 궤적 생성 비용은 제외하며 전체 FPS·동시 사격 성능으로 해석하지 않는다. 이번에 LOS 알고리즘을 추가 최적화한 수치가 아니라 기존 최적화의 회귀 측정이다. [비교 조건/상태 해시](tests/releases/WIP10-comparison.json) · [일반 측정](tests/releases/WIP10-benchmark.json).
-
-## 다운로드·체크섬
-
-[GitHub 실행 ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip10-flight-impact/Tactical_v0.4_WIP10.zip). 압축을 풀면 HTML 한 파일이다. 파일명 WIP10은 이 문서의 **게임 전용 부분 범위**를 뜻한다.
+[GitHub 실행 ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip10-flight-impact/Tactical_v0.4_WIP10.zip). 압축을 풀면 실행 HTML 한 파일이 나온다.
 
 | 파일 | 바이트 | SHA-256 |
 |---|---:|---|
-| `Tactical_v0.4_WIP10.html` = `dist/index.html` | 8,309,265 | `8ca4c4b36296faa9f9f97ea5a2913a25818abdfda1f5d01415e8d7cb19895ac1` |
-| `Tactical_v0.4_WIP10.zip` | 1,621,553 | `2f4fe945aca718189262bc6f8c18e620c9dddc5ea61589602c90e190c6f5c8ac` |
+| `Tactical_v0.4_WIP10.html` = `dist/index.html` | 8,314,287 | `017583cd603d8b97de400bf8947d24ae1c73532d06bc830885b453a7a2b518e1` |
+| `Tactical_v0.4_WIP10.zip` | 1,622,838 | `95a8efdb7116029c198b83abbeec01653496dc7b1bea1f229f2efa72c653c0ba` |
 
-`node scripts/export_vehicle_profile.cjs` → `python3 build.py` → `python3 scripts/package_release.py WIP10`. 반복 빌드/ZIP 패키징 바이트 동일성, ZIP CRC, 압축 해제 HTML과 dist 바이트 일치를 확인했다. [체크섬 파일](SHA256SUMS_WIP10.txt). 소스 변경과 검사 명령은 README 및 검증 JSON에 기록했다.
+`node scripts/export_vehicle_profile.cjs` → `python3 scripts/generate_wip10_reference.py` → `python3 build.py` → `python3 scripts/package_release.py WIP10` 순으로 제작했다. 반복 빌드와 ZIP이 바이트 단위로 같고, ZIP CRC와 압축 해제 HTML의 dist 일치를 확인했다. [체크섬 파일](SHA256SUMS_WIP10.txt).
 
-## 미실행·남은 문제
+## 미실행과 남은 범위
 
-업로드 지시서의 물리 예측/궤적/지형 탄착/실제 탄착점·편향/낙하 기준표는 제외 범위다. 최종 명중률은 저장 확률과 노출 감소의 단순 게임 규칙으로 실제 탄체/표적 이동 관계를 재현하지 않는다. WIP09 기동 오차 항도 남아 있다. 전체 지시서 완료로 보고하지 않는다.
-
-file:// 실행은 실제로 시도했으나 환경의 `ERR_BLOCKED_BY_ADMINISTRATOR`로 차단됐다. 동일 단일 HTML을 로컬 HTTP로 검증했으며 더블클릭 실행 통과로 기록하지 않는다. 실제 Android 멀티터치·메모리·발열·지속 FPS, 전체 게임 FPS·동시 사격 성능, 원본 DEM/GDAL 재대조는 미실행이다. 관통·장갑·피해·파괴·상세 장전·자동 발사·탄종 다양화·2발째 보정은 추가하지 않았다.
+- `file://` 실행은 Chromium 정책의 `ERR_BLOCKED_BY_ADMINISTRATOR`로 차단됐다. 같은 단일 HTML을 로컬 HTTP로 실제 브라우저 검증했으며 더블클릭 실행 통과로 기록하지 않는다.
+- 실제 Android 멀티터치·메모리·발열·지속 FPS, 전체 게임 FPS와 다수 동시 사격 성능은 측정하지 않았다.
+- 원본 DEM/GDAL 자료 대조는 이번 사격 변경에서 다시 실행하지 않았다. 지도·높이·건물 입력은 변경하지 않았다.
+- 탄속 유지율 하나와 중력 포물선을 쓰는 게임 모델이다. 공기저항·기상·탄종별 탄도·고각·도탄·신관·숲 탄체 충돌을 실제 물리로 검증한 것은 아니다.
+- 관통·장갑·피해·파괴·상세 장전·탄종 다양화·AI 자동 발사·2발째 보정은 지시서대로 후속 범위다.

@@ -1,0 +1,506 @@
+{
+ "preview": [
+  {
+   "range": 500,
+   "case": "정면·완전노출·정지",
+   "hit": 1.0,
+   "hull": 0.9001,
+   "turret": 0.0999,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.3224
+  },
+  {
+   "range": 500,
+   "case": "정면·차체 상단만",
+   "hit": 0.9991,
+   "hull": 0.356,
+   "turret": 0.6431,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.3224
+  },
+  {
+   "range": 500,
+   "case": "정면·포탑만",
+   "hit": 0.9419,
+   "hull": 0,
+   "turret": 0.9419,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.3224
+  },
+  {
+   "range": 500,
+   "case": "측면·횡단 10m/s",
+   "hit": 1.0,
+   "hull": 0.9563,
+   "turret": 0.0437,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 0.3224
+  },
+  {
+   "range": 500,
+   "case": "정면·자차 10m/s",
+   "hit": 0.9999,
+   "hull": 0.8434,
+   "turret": 0.1564,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 0.3224
+  },
+  {
+   "range": 500,
+   "case": "정면·조준 3s",
+   "hit": 1.0,
+   "hull": 0.9638,
+   "turret": 0.0362,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 0.3224
+  },
+  {
+   "range": 1000,
+   "case": "정면·완전노출·정지",
+   "hit": 0.9864,
+   "hull": 0.7313,
+   "turret": 0.2551,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.6447
+  },
+  {
+   "range": 1000,
+   "case": "정면·차체 상단만",
+   "hit": 0.904,
+   "hull": 0.3746,
+   "turret": 0.5293,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.6447
+  },
+  {
+   "range": 1000,
+   "case": "정면·포탑만",
+   "hit": 0.6565,
+   "hull": 0,
+   "turret": 0.6565,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.6447
+  },
+  {
+   "range": 1000,
+   "case": "측면·횡단 10m/s",
+   "hit": 0.9819,
+   "hull": 0.7897,
+   "turret": 0.1922,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 0.6447
+  },
+  {
+   "range": 1000,
+   "case": "정면·자차 10m/s",
+   "hit": 0.9477,
+   "hull": 0.664,
+   "turret": 0.2837,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 0.6447
+  },
+  {
+   "range": 1000,
+   "case": "정면·조준 3s",
+   "hit": 0.9994,
+   "hull": 0.8151,
+   "turret": 0.1843,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 0.6447
+  },
+  {
+   "range": 1500,
+   "case": "정면·완전노출·정지",
+   "hit": 0.8984,
+   "hull": 0.6105,
+   "turret": 0.2878,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.9671
+  },
+  {
+   "range": 1500,
+   "case": "정면·차체 상단만",
+   "hit": 0.7309,
+   "hull": 0.3109,
+   "turret": 0.4199,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.9671
+  },
+  {
+   "range": 1500,
+   "case": "정면·포탑만",
+   "hit": 0.4703,
+   "hull": 0,
+   "turret": 0.4703,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 0.9671
+  },
+  {
+   "range": 1500,
+   "case": "측면·횡단 10m/s",
+   "hit": 0.8818,
+   "hull": 0.6438,
+   "turret": 0.238,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 0.9671
+  },
+  {
+   "range": 1500,
+   "case": "정면·자차 10m/s",
+   "hit": 0.7921,
+   "hull": 0.5222,
+   "turret": 0.2698,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 0.9671
+  },
+  {
+   "range": 1500,
+   "case": "정면·조준 3s",
+   "hit": 0.9789,
+   "hull": 0.7132,
+   "turret": 0.2657,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 0.9671
+  },
+  {
+   "range": 2000,
+   "case": "정면·완전노출·정지",
+   "hit": 0.7662,
+   "hull": 0.503,
+   "turret": 0.2631,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "range": 2000,
+   "case": "정면·차체 상단만",
+   "hit": 0.5799,
+   "hull": 0.2503,
+   "turret": 0.3296,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "range": 2000,
+   "case": "정면·포탑만",
+   "hit": 0.3526,
+   "hull": 0,
+   "turret": 0.3526,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "range": 2000,
+   "case": "측면·횡단 10m/s",
+   "hit": 0.7419,
+   "hull": 0.5248,
+   "turret": 0.217,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "range": 2000,
+   "case": "정면·자차 10m/s",
+   "hit": 0.6215,
+   "hull": 0.4024,
+   "turret": 0.2191,
+   "sigmaX": 0.4861,
+   "sigmaZ": 0.4862,
+   "tof": 1.2895
+  },
+  {
+   "range": 2000,
+   "case": "정면·조준 3s",
+   "hit": 0.9153,
+   "hull": 0.6272,
+   "turret": 0.2881,
+   "sigmaX": 0.2729,
+   "sigmaZ": 0.2731,
+   "tof": 1.2895
+  }
+ ],
+ "impact": [
+  {
+   "case": "계속 등속 (편차 0)",
+   "bias_x": 0,
+   "dR": 0,
+   "hit": 0.7419,
+   "hull": 0.5248,
+   "turret": 0.217,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "case": "발사 직후 정지",
+   "bias_x": -12.8949,
+   "dR": 0,
+   "hit": 0.0,
+   "hull": 0.0,
+   "turret": 0.0,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "case": "발사 직후 1m/s² 가속",
+   "bias_x": 0.8314,
+   "dR": 0,
+   "hit": 0.71,
+   "hull": 0.5216,
+   "turret": 0.1884,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "case": "발사 직후 2m/s² 감속",
+   "bias_x": -1.6628,
+   "dR": 0,
+   "hit": 0.6822,
+   "hull": 0.4878,
+   "turret": 0.1945,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "case": "정지 표적이 발사 직후 10m/s로 출발(가속 2m/s²)",
+   "bias_x": 1.6628,
+   "dR": 0,
+   "hit": 0.6838,
+   "hull": 0.5291,
+   "turret": 0.1547,
+   "sigmaX": 0.3825,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  },
+  {
+   "case": "등속 + 시선 방향 20m 멀어짐",
+   "bias_x": 0,
+   "dR": 20,
+   "hit": 0.7298,
+   "hull": 0.5335,
+   "turret": 0.1964,
+   "sigmaX": 0.7497,
+   "sigmaZ": 0.3826,
+   "tof": 1.2895
+  }
+ ],
+ "zones": [
+  {
+   "angle": 0,
+   "hull": {
+    "front": 1.0,
+    "side": 0.0,
+    "rear": 0.0,
+    "sideHand": null
+   },
+   "turret": {
+    "front": 1.0,
+    "side": 0.0,
+    "rear": 0.0,
+    "sideHand": null
+   }
+  },
+  {
+   "angle": 30,
+   "hull": {
+    "front": 0.4443,
+    "side": 0.5557,
+    "rear": 0.0,
+    "sideHand": "right"
+   },
+   "turret": {
+    "front": 0.5446,
+    "side": 0.4554,
+    "rear": 0.0,
+    "sideHand": "right"
+   }
+  },
+  {
+   "angle": 45,
+   "hull": {
+    "front": 0.3158,
+    "side": 0.6842,
+    "rear": 0.0,
+    "sideHand": "right"
+   },
+   "turret": {
+    "front": 0.4085,
+    "side": 0.5915,
+    "rear": 0.0,
+    "sideHand": "right"
+   }
+  },
+  {
+   "angle": 60,
+   "hull": {
+    "front": 0.2104,
+    "side": 0.7896,
+    "rear": 0.0,
+    "sideHand": "right"
+   },
+   "turret": {
+    "front": 0.285,
+    "side": 0.715,
+    "rear": 0.0,
+    "sideHand": "right"
+   }
+  },
+  {
+   "angle": 90,
+   "hull": {
+    "front": 0.0,
+    "side": 1.0,
+    "rear": 0.0,
+    "sideHand": "right"
+   },
+   "turret": {
+    "front": 0.0,
+    "side": 1.0,
+    "rear": 0.0,
+    "sideHand": "right"
+   }
+  },
+  {
+   "angle": 135,
+   "hull": {
+    "front": 0.0,
+    "side": 0.6842,
+    "rear": 0.3158,
+    "sideHand": "right"
+   },
+   "turret": {
+    "front": 0.0,
+    "side": 0.5915,
+    "rear": 0.4085,
+    "sideHand": "right"
+   }
+  },
+  {
+   "angle": 180,
+   "hull": {
+    "front": 0.0,
+    "side": 0.0,
+    "rear": 1.0,
+    "sideHand": null
+   },
+   "turret": {
+    "front": 0.0,
+    "side": 0.0,
+    "rear": 1.0,
+    "sideHand": null
+   }
+  },
+  {
+   "angle": 225,
+   "hull": {
+    "front": 0.0,
+    "side": 0.6842,
+    "rear": 0.3158,
+    "sideHand": "left"
+   },
+   "turret": {
+    "front": 0.0,
+    "side": 0.5915,
+    "rear": 0.4085,
+    "sideHand": "left"
+   }
+  },
+  {
+   "angle": 315,
+   "hull": {
+    "front": 0.3158,
+    "side": 0.6842,
+    "rear": 0.0,
+    "sideHand": "left"
+   },
+   "turret": {
+    "front": 0.4085,
+    "side": 0.5915,
+    "rear": 0.0,
+    "sideHand": "left"
+   }
+  },
+  {
+   "angle": 359,
+   "hull": {
+    "front": 0.9636,
+    "side": 0.0364,
+    "rear": 0.0,
+    "sideHand": "left"
+   },
+   "turret": {
+    "front": 0.9753,
+    "side": 0.0247,
+    "rear": 0.0,
+    "sideHand": "left"
+   }
+  },
+  {
+   "angle": 360,
+   "hull": {
+    "front": 1.0,
+    "side": 0.0,
+    "rear": 0.0,
+    "sideHand": null
+   },
+   "turret": {
+    "front": 1.0,
+    "side": 0.0,
+    "rear": 0.0,
+    "sideHand": null
+   }
+  }
+ ],
+ "drop": [
+  {
+   "R1": 2000,
+   "s": 2000,
+   "offsetFromChord": 0.0
+  },
+  {
+   "R1": 2000,
+   "s": 2500,
+   "offsetFromChord": -2.5487
+  },
+  {
+   "R1": 2000,
+   "s": 3000,
+   "offsetFromChord": -6.117
+  },
+  {
+   "R1": 1000,
+   "s": 1500,
+   "offsetFromChord": -1.5292
+  },
+  {
+   "R1": 2000,
+   "s": 1000,
+   "offsetFromChord": 2.039
+  }
+ ]
+}

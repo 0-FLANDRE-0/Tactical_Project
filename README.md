@@ -1,11 +1,11 @@
-# TACTICAL v0.4 WIP10 — 게임 지연 판정·화면 효과 (부분 구현)
+# TACTICAL v0.4 WIP10 — 예측 사격·비행·착탄
 
-**업로드 WIP10 지시서 전체를 구현한 버전이 아니다.** 발사·대기·최종 게임 판정을 분리하고, 미관측 결과 비공개·부위 투영/좌우·화면 효과를 연결했다. 이동 표적의 예측 발사 방향, 실탄속/중력 궤적과 실제 지형 탄착은 제외했다. 고정 0.8초 게임 시간을 사용하며 WIP09 오차 예산과 기동 항은 유지한다. 제공 WIP10 Python과 물리 기준표는 실행·검증하지 않았다.
+자기 포수 관측으로 표적 속도를 추정해 실제 포구에서 선행 조준하고, 거리와 게임 탄속으로 비행 시간을 계산한다. 착탄 시점의 실제 표적 위치·방향·차폐로 최종 확률을 한 번 추첨한 뒤 결과와 일치하는 탄착점을 만든다. 빗나감은 포물선을 따라 지형·건물과 처음 만난 위치를 표시한다. 제공 WIP10 Python 46행과 JavaScript 결과를 자동 대조한다. 장갑·관통·피해는 후속 범위다.
 
 - 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip10-flight-impact/Tactical_v0.4_WIP10.zip). 압축을 풀면 `Tactical_v0.4_WIP10.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP10.html](Tactical_v0.4_WIP10.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [현재 구현/제외 범위](docs/FIRE_CONTROL_WIP10.md) · [WIP09 확률 모델](docs/FIRE_CONTROL_WIP09.md) · [도안·포구](docs/M1A2_ART_MUZZLE_WIP08A.md) · [관측](docs/OBSERVATION_WIP07A.md) · [릴리스·검증](TACTICAL_RELEASE_WIP10.md) · [체크섬](SHA256SUMS_WIP10.txt).
-- WIP09 `04d6d2e`에서 이어 최신 main `7117fba`의 아카이브 문서를 보존했다. PR #4/#5는 시작 시 미병합이며 새 브랜치는 PR #5 위의 별도 초안이다. main 병합·공개 배포하지 않았다. 이전 실행 파일/ZIP/검증 자료도 보존했다.
+- WIP09 `04d6d2e`에서 이어 최신 main `e2f44d9`의 다음 단계·전차·탄약 아카이브를 보존했다. PR #4/#5는 시작 시 미병합이며 새 브랜치는 PR #5 위의 별도 초안이다. main 병합·공개 배포하지 않았다. 이전 실행 파일/ZIP/검증 자료도 보존했다.
 
 ## 실행과 조작
 
@@ -19,7 +19,7 @@
 - 관측 표적 탭: 미식별 실루엣은 일반 정보만, 식별한 현재 접촉은 차종·부위 관측 비율을 표시한다. 흐린 잔상은 마지막 관측 위치다.
 - 전차장/포수 선택 → 지점 경계(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 자동 경계 버튼으로 해당 명령 해제. Esc는 새 입력만 취소한다.
 - 표적 패널의 포수 직접 지정과 인계 취소를 사용할 수 있다. 지정 전달과 포수 확보는 별도 상태다.
-- 표적 탭 → 필요하면 포수 직접 지정 → 자체 확보/조준 완료 → **발사 버튼 또는 G**. 고정 게임 시간 0.8초 뒤 단발 명중/부위 결과와 시험탄 수를 표시한다. 관측을 잃으면 결과 미확인으로 표시한다. 맞아도 피해/파괴는 아직 없다.
+- 표적 탭 → 필요하면 포수 직접 지정 → 자체 확보/조준 완료 → **발사 버튼 또는 G**. 실제 포구에서 예측 위치로 발사하며 거리·게임 탄속에 따른 비행 뒤 최종 명중/부위와 지형·건물 탄착을 표시한다. 관측을 잃으면 결과 미확인으로 표시한다. 맞아도 피해/파괴는 아직 없다.
 - Space: 일시정지. R: 후진 모드. X: 정지. F: 전체화면. Home: 전체 지도.
 - 전체화면 요청이 거절되거나 지원되지 않으면 지도 집중 모드로 전환한다.
 
@@ -91,7 +91,7 @@
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
 | `src/vehicle-geometry.js` | 차체 고정 링·포탑 로컬 점·실제 포구의 공통 2D 변환 |
-| `src/fire-control.js` | 자체 확보·정렬·조준·고정 게임 지연 판정·정제된 팀별 이벤트 |
+| `src/fire-control.js` | 자체 확보·조준·예측 발사·착탄 시점 확률·지형/건물 탄착·팀별 공개 이벤트 |
 | `src/m1a2-art.js` | 독립 차체·포탑 벡터 도안과 SVG 내보내기 |
 | `src/visibility-client.js` | 내장 시야 Worker와 오류 시 동일 계산 대체 실행 |
 | `data/vehicles/` | 적용값·필드별 근거·외형 SVG·참고 자료 |
@@ -118,12 +118,13 @@
 
 ```sh
 node scripts/export_vehicle_profile.cjs
+python3 scripts/generate_wip10_reference.py
 python3 build.py
 python3 scripts/package_release.py WIP10
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
@@ -171,7 +172,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 실제 지도와 기동·관측·수동 단발 사격을 연결한 시험장이다. 표적 확보와 조준 완료를 구분하고 게임 명중/부위를 기록한다. 적 전술 AI·자동 사격·관통·장갑·피해·상세 장전·보병은 구현하지 않았다. 기본 적 표적은 정지 상태다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10은 지시서의 부분 구현으로, 고정 게임 지연·정보 공개·화면 효과를 연결했다. 이동 표적 선행 조준·실탄속/중력 궤적·실제 지형 탄착점은 구현하지 않았고 제공 WIP10 Python 기준표도 실행하지 않았다. WIP09 오차 예산과 기동 항은 유지한다. archive의 차량/탄약/장갑 설계를 런타임에 자동 적용하지 않는다. Node 228개·실제 Chromium 16개·구문 48개/5개를 통과했다. file://는 환경 정책으로 차단되어 같은 단일 HTML을 로컬 HTTP로 검증했다. 자세한 범위와 미실행 항목은 WIP10 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10은 관측 속도 기반 선행 조준, 거리·게임 탄속 기반 ToF, 착탄 시점 실제 위치·자세·차폐에 따른 최종 확률, 결과 이후 탄착 좌표와 지형·건물 경로를 연결한다. WIP09 통계 기동 항은 제거해 이동 편차를 중복 적용하지 않는다. 탄착점은 표시용이며 판정을 거꾸로 바꾸거나 피해를 주지 않는다. archive의 차량/탄약/장갑 설계를 런타임에 자동 적용하지 않는다. file://는 환경 정책으로 차단되어 같은 단일 HTML을 로컬 HTTP로 검증했다. 자세한 검사 결과와 미실행 항목은 WIP10 릴리스 문서에 있다.
 
 ## 출처
 

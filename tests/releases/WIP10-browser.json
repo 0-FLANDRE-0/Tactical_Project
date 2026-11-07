@@ -77,6 +77,6 @@
   "passed": 16,
   "failed": 0,
   "errors": [],
-  "scope": "Game-only subset: fixed latency, no physical trajectory/impact reference validation",
-  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected only for UI privacy checks. Additional team-sharing test runs actual core on the original map with deterministic scenario/profile setup; no contact injection. Supplied HTML M1A2 Canvas pixels compared exactly at four poses using fresh source/embedded renderer instances to normalize Path2D cache history; real draw paths/flash use the event muzzle and DOMMatrix agrees with the ring transform. Not Android hardware or real thermal/ballistic validation."
+  "scope": "WIP10 observed-velocity lead, velocity-derived flight, impact-time probability and display-impact UI",
+  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact injected only for UI privacy checks. Additional team-sharing test runs actual core on the original map with deterministic scenario/profile setup; no contact injection. Supplied HTML M1A2 Canvas pixels compared exactly at four poses using fresh source/embedded renderer instances to normalize Path2D cache history; real draw paths/flash use the event muzzle and DOMMatrix agrees with the ring transform. Not Android hardware, real-device performance, penetration, damage, or real ballistic validation."
 }
