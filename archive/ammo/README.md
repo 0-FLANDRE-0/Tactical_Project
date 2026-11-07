@@ -204,16 +204,24 @@
 
 **100mm T-55 계열**
 
-| 탄약 | 분류 | 게임 판정/수치 | 게임 사용 목록 상태 |
-|---|---|---:|---|
-| BR-412B | APHE | KE 155 | 구형탄 후보 |
-| BR-412D | APCBC-HE | KE 170 | 구형탄 후보 |
-| 3BM8 | APDS | KE 275 | 사용 목록 유지; APFSDS가 아닌 APDS |
-| 3BM20 | APFSDS | **KE 255** | 사용 목록 유지; 250에서 수정 |
-| BK-5 | HEAT-FS | CE 380 | 사용 목록 유지 |
-| BK-5M | HEAT-FS | CE 390 | NVA 보급 미확인, 후보 |
-| OF-412 | HE-FRAG | CE 25 | 사용 목록 유지 |
-| 9M117 | 포발사 ATGM | CE 600 | **T-55AM2B에만 유도체계 호환**, 다른 T-55형식에는 기본 적용하지 않음 |
+| 탄약 | 분류 | 게임 판정/수치 | **속도 (m/s)** | **속도 종류·자료 상태** | 게임 사용 목록 상태 |
+|---|---|---:|---:|---|---|
+| BR-412B | APHE | KE 155 | **895** | 포구초속 · 역사 서적·군용표 검증 | 구형탄 후보 |
+| BR-412D | APCBC-HE | KE 170 | **887** | 포구초속 · 군용표/2차 자료 일치 | 구형탄 후보 |
+| 3BM8 | APDS | KE 275 | **1,415** | 포구초속 · 기술 자료·워썬더 일치 | 사용 목록 유지; APFSDS가 아닌 APDS |
+| 3BM20 | APFSDS | **KE 255** | **미확정** | 포구초속 · **1,480 후보, 신뢰도 미달** | 사용 목록 유지; 250에서 수정 |
+| BK-5 | HEAT-FS | CE 380 | **900** | 포구초속 · 러시아 탄약 일람·워썬더 | 사용 목록 유지 |
+| BK-5M | HEAT-FS | CE 390 | **900** | 포구초속 · 러시아 탄약 일람 | NVA 보급 미확인, 후보 |
+| OF-412 | HE-FRAG | CE 25 | **900** | 포구초속 · 생산사·군용표 | 사용 목록 유지 |
+| 9M117 | 포발사 ATGM | CE 600 | **370** | **미사일 비행속도(대표값)** · 전문자료·워썬더 | **T-55AM2B에만 유도체계 호환**, 다른 T-55형식에는 기본 적용하지 않음 |
+
+- **속도 의미:** 위 일반 포탄 **7종은 포구초속**, **9M117은 미사일 비행속도**를 기록한다. 9M117의 포구 이탈 순간 속도를 포탄과 동일한 '포구초속' 열로 취급하거나 게임용 비행속도와 바꿔 사용하지 않는다. 향후 다른 포발사 미사일에도 별도의 **미사일 비행속도**를 적용한다.
+- **BR-412B/BR-412D:** 러시아 장갑차 역사 자료 [*Отечественные бронетанковые машины. XX век*, 3권(2010)](https://djvu.online/file/9rQ0pnA1uJA9v) 및 [T-54A 장전탄 목록](https://military.wikireading.ru/axQty0zDwH)은 BR-412B **895m/s**, BR-412D **887m/s**로 기재하며, [워썬더 D-10T 탄약표](https://old-wiki.warthunder.com/D-10T_%28100_mm%29/Ammunition)와 일치한다. [루마니아 ROMARM의 BR-412B 현재 생산품](https://www.romarm.ro/wp-content/uploads/2021/05/78_-Datasheet-100-mm-ARTILLERY-AMMUNITION-1.pdf)은 **887m/s**로 기재하여 차이가 있다. 본 표는 소련 원형 탄의 대표값인 **895m/s**를 택한다. 실제 생산형·장약 조건 차이는 추후 검증 대상이다.
+- **3BM8:** [러시아 D-10T 자료](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)와 [워썬더 D-10T2S 탄약표](https://old-wiki.warthunder.com/D-10T2S_%28100_mm%29/Ammunition)의 **1,415m/s**를 사용. 일부 전문 사이트 [Das Panzerdetail](https://www.kotsch88.de/m_100mmmun.htm)에는 **1,425m/s**가 나오므로 이견 보존.
+- **3BM20 중요 — 미확정:** 100mm **3UBM8(탄 전체)/3BM20(탄체)** 대응 관계는 [METIS 탄약 데이터](https://metis.fenixinsight.com/munition/projectile/3ubm8)와 [IAA 탄약수집가 토론](https://forum.cartridgecollectors.org/t/help-to-id-two-russian-style-apfsds-t-projectiles/51481)에서 확인된다. 일부 [영어권 D-10 참고표](https://en.wikipedia.org/wiki/D-10_tank_gun)는 **1,480m/s**를 제시하지만, [러시아어 D-10 탄약 제원표](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)에서 해당 포구초속이 비어 있고 워썬더에도 **3BM20 원형의 해당 수치가 없음**. 제3의 다른 APFSDS 또는 미확인 제조사 자료값을 강제로 전용하지 않으며 **일단 속도 미확정**으로 둔다. **KE 255 게임 관통력은 변경하지 않는다.**
+- **BK-5 / BK-5M:** [러시아 D-10 100mm 탄약 제원표](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)는 3UBK4(BK-5)·3UBK4M(BK-5M) **모두 900m/s**로 기재. BK-5는 [워썬더 D-10T 탄약표](https://old-wiki.warthunder.com/D-10T_%28100_mm%29/Ammunition)와도 대조된다. NVA에서 BK-5M 보급 확인 여부는 기존과 같이 별도 문제다.
+- **OF-412:** [ROMARM 100mm 제조사 제원표](https://www.romarm.ro/wp-content/uploads/2021/05/78_-Datasheet-100-mm-ARTILLERY-AMMUNITION-1.pdf) **900m/s**이며, [러시아 D-10 탄약표](https://ru.wikipedia.org/wiki/100-%D0%BC%D0%BC_%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D1%83%D1%88%D0%BA%D0%B0_%D0%94-10)와 [워썬더](https://old-wiki.warthunder.com/D-10T_%28100_mm%29/Ammunition)도 같은 값을 기록한다.
+- **9M117 — 미사일 비행속도:** [Das Panzerdetail의 9K116 Bastion 자료](https://www.kotsch88.de/f_9k116.htm)는 9M117 **대표 비행속도 370m/s**, [러시아 Bastion 전문자료](https://btvt.narod.ru/4/9k116.htm)도 **비행속도 370m/s**를 명시하며, [워썬더 D-10T2S 미사일 상세표](https://old-wiki.warthunder.com/D-10T2S_%28100_mm%29/Ammunition)도 **370m/s**를 사용한다. [미 육군 ODIN](https://odin.t2com.army.mil/WEG/Asset/9K116_Bastion_%28AT-10_Stabber%29_Russian_Anti-Tank_Guided_Missile_%28ATGM%29)에 기재된 발사 직후 약 **400~500m/s**는 포구 이탈 조건이므로 이 표의 **미사일 비행속도 370m/s와 혼동하지 않는다**. 시간별 가속/감속 곡선은 미정.
 
 **125mm T-72 계열**
 
