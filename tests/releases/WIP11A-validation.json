@@ -1,0 +1,73 @@
+{
+  "version": "0.4-WIP11A",
+  "date": "2026-11-08",
+  "baseMain": "33900e6282f111926b167591480b44c4f1343093",
+  "branch": "feat/wip11a-combat-state",
+  "environment": {
+    "node": "v24.22.1",
+    "python": "3.12.14",
+    "platform": "linux x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "browser": "Chromium 156.0.8078.79",
+    "browserURL": "local HTTP, standalone dist/index.html",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR"
+  },
+  "automated": {
+    "nodeRulesAndCore": {"passed": 177, "failed": 0},
+    "input": {"passed": 35, "failed": 0},
+    "map": {"passed": 16, "failed": 0},
+    "visibility": {"passed": 12, "failed": 0},
+    "vehicleAndWorker": {"passed": 9, "failed": 0},
+    "nodeTotal": {"passed": 249, "failed": 0, "legacyWIP10Regression": 236, "newWIP11A": 13},
+    "browser": {"passed": 17, "failed": 0, "actualEmbeddedWorker": true, "desktop": true, "viewport844x390": true, "viewport390x844": true},
+    "javascriptSyntax": {"passed": 54, "failed": 0},
+    "pythonSyntax": {"passed": 13, "failed": 0}
+  },
+  "requirements": {
+    "V01": "PASS — both teams use M1A2_1998/M829A2; max HP 1450 and base damage 405",
+    "V02": "PASS — malformed IDs/profiles reject before mutation",
+    "V03": "PASS — penetration table and A1 multiplier anchors/interpolation/clamp",
+    "V04": "PASS — per-unit HP; immutable shared data",
+    "V05": "PASS — launch keeps HP; impact applies once",
+    "V06": "PASS — duplicate impact and read polling do not add damage or RNG",
+    "V07": "PASS — miss, non-penetration and invalid target paths keep valid HP",
+    "V08": "PASS — unobserved internal damage with public redaction",
+    "V09": "PASS — single destruction transition/count/display and action rejection",
+    "V10": "PASS — launched round survives shooter destruction; wreck target is safe",
+    "V11": "PASS — equal-time caller/fire-control ID order is deterministic; removal safe",
+    "V12": "PASS — seed/fixed-time batching and UI read count reproduce HP/state",
+    "V13": "PASS — reset and replacement objects inherit no combat/flight/contact state",
+    "V14": "PASS — destroyed observation/commands stop; observed wreck remains blocking",
+    "V15": "PASS — 236 WIP10 regression checks retained, including LOS/zone/aim/input",
+    "V16": "PASS — exported data, script order, Worker boundary, HTML and ZIP agree"
+  },
+  "benchmarks": {
+    "observation": "tests/releases/WIP11A-benchmark.json",
+    "moving100MedianStepMs": 16.600511000000097,
+    "moving100P95StepMs": 19.389360000000124,
+    "combat": "tests/releases/WIP11A-combat-benchmark.json",
+    "combatFixture": "10000 resolved impacts plus duplicate replay",
+    "combatMedianMs": 21.066092000000026,
+    "combatP95Ms": 29.146577000000036,
+    "duplicateHpStable": true,
+    "boundedCombatRecords": 200
+  },
+  "package": {
+    "htmlBytes": 8331679,
+    "htmlSHA256": "07eaba90265db0ad60e27531db1492b7c2c52c80ad7b5da2308654e603922e9f",
+    "zipBytes": 1627413,
+    "zipSHA256": "2c26e92e8094f54b626ad7952d0856d26e6bf623f9c6cc78726974d92812e2a7",
+    "zipCRC32": "d3db5f94",
+    "zipEntries": ["Tactical_v0.4_WIP11A.html"],
+    "extractedMatchesDist": true,
+    "repeatPackageByteIdentical": true
+  },
+  "notRun": [
+    "Android or iOS physical-device multitouch, thermal and sustained frame-rate testing"
+  ],
+  "limits": [
+    "Browser mobile checks are Chromium viewports, not physical devices",
+    "CPU timings are fixed-step/synthetic measurements and are not whole-game FPS",
+    "file:// was blocked by environment policy; the exact standalone HTML was tested through local HTTP"
+  ]
+}

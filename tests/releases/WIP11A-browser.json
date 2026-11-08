@@ -1,0 +1,83 @@
+{
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+  "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+  "checks": [
+    "single HTML starts offline with active M1A2 (1998), M829A2 and HP",
+    "guard world point input, actual turret pose and pause",
+    "terrain hold runs real embedded Worker and composes sectors",
+    "silhouette reuses artwork but contains only black opaque pixels",
+    "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+    "identified and remembered contacts update panel permissions then expire selection",
+    "mobile viewport 844×390 has no horizontal overflow and controls stay in map",
+    "mobile viewport 390×844 has no horizontal overflow and controls stay in map",
+    "reduced-motion and normal views keep same actual observation state",
+    "actual core team contact stays distinct from selected vehicle observation and direct acquisition",
+    "actual acquired target aims, fires once and respects interval and paused keyboard input",
+    "unobserved result is hidden while its game flight still resolves",
+    "observed lethal impact creates one wreck and disables destroyed vehicle commands",
+    "actual browser command cancellation and automatic return respect separate guard orders",
+    "reset clears firing events, aim progress and test-round state",
+    "embedded M1A2 Canvas pixels match supplied HTML with fresh Path2D caches at four independent poses",
+    "no application page errors"
+  ],
+  "geometryEvidence": {
+    "muzzle": {
+      "error": 3.5760872045925e-8,
+      "lineAtMuzzle": true,
+      "flashAtMuzzle": true
+    },
+    "art": {
+      "freshPathCaches": true,
+      "poses": 4,
+      "channelDifferences": 0,
+      "details": [
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 0,
+            "commander": 1
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 1.5707963267948966,
+            "commander": -1
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 3.141592653589793,
+            "commander": 0.2
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0.6,
+            "turret": -1,
+            "commander": 2
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        }
+      ]
+    }
+  },
+  "passed": 17,
+  "failed": 0,
+  "errors": [],
+  "scope": "WIP11A active profile, observation, manual fire/flight, abstract penetration damage, destruction and wreck UI",
+  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact is injected only for UI privacy checks. Team-sharing, flight damage and destruction use the actual core and map. Supplied HTML M1A2 Canvas pixels are compared exactly at four poses. file:// is reported separately; mobile checks are Chromium viewports, not Android hardware."
+}

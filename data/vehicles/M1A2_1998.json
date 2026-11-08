@@ -1,0 +1,435 @@
+{
+  "profile": {
+    "id": "M1A2_1998",
+    "name": "M1A2 Abrams (1998)",
+    "variant": "M1A2 (1998) 시험 구성",
+    "crew": 4,
+    "artId": "M1A2",
+    "massKg": 63085.62681960001,
+    "engineHp": 1500,
+    "model": {
+      "hullLength": 7.924799999999999,
+      "width": 3.6576,
+      "overallLength": 9.829799999999999,
+      "roofHeight": 2.3749,
+      "groundClearance": 0.4826,
+      "barrelTip": 5.867399999999999,
+      "turretLength": 4.75,
+      "turretWidth": 3.28,
+      "turretOrigin": 0.15,
+      "turretPivot": [
+        0.66,
+        0
+      ],
+      "turretRingDiameter": 2.159,
+      "muzzleLocal": [
+        5.717,
+        0
+      ]
+    },
+    "mobility": {
+      "roadSpeed": 18.77568,
+      "crossCountrySpeed": 13.4112,
+      "reverseSpeed": 11.176,
+      "accelerationReferenceSpeed": 8.9408,
+      "accelerationReferenceSeconds": 7.2,
+      "brakeDeceleration": 3,
+      "maxLongitudinalGrade": 0.6,
+      "maxSideGrade": 0.4,
+      "pivotRate": 0.5235987755982988,
+      "turretRate": 0.6981317007977318,
+      "gradeSpeedPoints": [
+        [
+          0,
+          18.77568
+        ],
+        [
+          0.1,
+          7.59968
+        ],
+        [
+          0.6,
+          1.8328639999999998
+        ]
+      ],
+      "surfaceSpeed": {
+        "forest": 6.5,
+        "scrub": 8,
+        "stream": 1.6666666666666665
+      }
+    },
+    "sensors": {
+      "name": "CITV",
+      "eyeHeight": 2.65,
+      "observationLimit": 4000,
+      "targetReferenceHeight": 1.5,
+      "hunterKiller": true,
+      "ambient": {
+        "enabled": true,
+        "range": 200,
+        "fov": 6.283185307179586,
+        "eyeHeight": 2.65
+      },
+      "commander": {
+        "enabled": true,
+        "independent": true,
+        "range": 2500,
+        "fov": 1.5707963267948966,
+        "rate": 0.8726646259971648,
+        "eyeHeight": 2.65,
+        "scan": {
+          "amplitude": 0.7853981633974483,
+          "period": 20,
+          "rate": 0.2617993877991494
+        }
+      },
+      "gunner": {
+        "enabled": true,
+        "range": 2000,
+        "fov": 0.5235987755982988,
+        "rate": 0.6981317007977318,
+        "eyeHeight": 2.65,
+        "scan": {
+          "amplitude": 0.2617993877991494,
+          "period": 12,
+          "rate": 0.13962634015954636
+        }
+      },
+      "tuning": {
+        "queryPeriod": 0.1,
+        "geometryMaxAge": 0.5,
+        "detectThreshold": [
+          0.35,
+          1.1
+        ],
+        "identifyThreshold": [
+          1.4,
+          3
+        ],
+        "evidenceHalfLife": 8,
+        "memorySeconds": 30,
+        "knowledgeSeconds": 120,
+        "lossGrace": 1.2,
+        "focusSeconds": 2,
+        "focusLimit": 8,
+        "revisitSeconds": 12,
+        "designationSeconds": 18,
+        "designationStale": 6,
+        "acquireSeconds": 0.4
+      }
+    },
+    "weapons": {
+      "mainGun": {
+        "name": "M256",
+        "calibreMm": 120,
+        "ammunitionCapacity": 42,
+        "referenceEngagementRange": 3000,
+        "enabled": true,
+        "ammunitionId": "M829A2",
+        "ammunitionName": "M829A2"
+      },
+      "coax": {
+        "name": "M240",
+        "calibreMm": 7.62
+      },
+      "commander": {
+        "name": "M2",
+        "calibreMm": 12.7
+      }
+    },
+    "fireControl": {
+      "enabled": true,
+      "aimSeconds": 1.2,
+      "alignmentTolerance": 0.02617993877991494,
+      "maxRange": 2000,
+      "fireHeight": 2.2,
+      "shotIntervalSeconds": 1,
+      "testRounds": 42,
+      "dispersionMrad": 0.25,
+      "layStartMrad": 1.5,
+      "layMinMrad": 0.1,
+      "layTauSeconds": 0.6,
+      "rangeErrorM": 5,
+      "muzzleVelocity": 1680,
+      "velocityRetention": 0.94,
+      "leadResidual": 0.1,
+      "stabMradPerMps": 0.03,
+      "impact": {
+        "rejectionAttempts": 64,
+        "marchStepM": 2,
+        "maxBeyondM": 3000
+      },
+      "presented": {
+        "hullBottom": 0.4826,
+        "hullTop": 1.65,
+        "turretTop": 2.3749
+      }
+    },
+    "exposure": {
+      "hullAlong": [
+        -2.8,
+        0,
+        2.8
+      ],
+      "hullHeights": [
+        0.8,
+        1.4
+      ],
+      "turretAlong": [
+        -1,
+        0,
+        1
+      ],
+      "turretHeight": 2.2
+    },
+    "navigation": {
+      "clearanceMargin": 0.25,
+      "contract": "nav16-M1A2-r4.62-long0.60-side0.40-v2",
+      "radius": 4.62
+    },
+    "combat": {
+      "maxHp": 1450,
+      "armor": {
+        "hullFront": {
+          "ke": 390,
+          "ce": 720
+        },
+        "hullSide": {
+          "ke": 120,
+          "ce": 280
+        },
+        "hullRear": {
+          "ke": 40,
+          "ce": 40
+        },
+        "turretFront": {
+          "ke": 720,
+          "ce": 1150
+        },
+        "turretSide": {
+          "ke": 340,
+          "ce": 630
+        },
+        "turretRear": {
+          "ke": 55,
+          "ce": 55
+        },
+        "upper": {
+          "ke": 40,
+          "ce": 40
+        }
+      }
+    }
+  },
+  "baseline": "Active symmetric WIP11A game fixture: M1A2 (1998) / M829A2",
+  "reviewed": "2026-11-08",
+  "sources": [
+    {
+      "id": "USER_WIP09",
+      "title": "TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md",
+      "path": "../../docs/TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md",
+      "scope": "Fictional game error-budget coefficients, presented-height bands and reference table; not real weapon performance"
+    },
+    {
+      "id": "USER_WIP10",
+      "title": "TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md and wip10_hit_reference.py",
+      "path": "../../docs/WIP10_SOURCE_SCOPE.json",
+      "scope": "Fictional game prediction, two-stage probability, post-result impact display and reference tables; not real weapon performance"
+    },
+    {
+      "id": "USER_TOP_VIEW",
+      "title": "M1_Abrams_TopView.html (user supplied)",
+      "path": "references/M1_Abrams_TopView.html",
+      "scope": "M1A2 exterior vectors and separate art origin/ring pivot; supplied visual approximation, not independently verified measurement"
+    },
+    {
+      "id": "GDLS",
+      "title": "Abrams M1A2 — Features & Specifications",
+      "url": "https://international.gdls.com/english/products/ABRAMS/M1A2.pdf",
+      "page": 2,
+      "scope": "M1A2 dimensions, nominal weight, propulsion, forward performance, acceleration, ammunition"
+    },
+    {
+      "id": "DOD1993",
+      "title": "DoD IG Report 93-130, Appendix A — M1A2 characteristics",
+      "url": "https://media.defense.gov/1993/Jun/25/2001714749/-1/-1/1/93-130.pdf",
+      "scope": "Contemporaneous M1A2 cross-check; indexed extract available, PDF fetch returned 403"
+    },
+    {
+      "id": "USMC",
+      "title": "MCWP 3-12 Marine Corps Tank Employment (2005)",
+      "url": "https://www.marines.mil/Portals/1/Publications/MCWP%203-12%20Marine%20Corps%20Tank%20Employment.pdf",
+      "pages": [
+        "A-1",
+        "A-2",
+        "A-3"
+      ],
+      "scope": "M1A1 shared-family hull dimensions and reverse-speed reference, explicitly inherited rather than M1A2-specific measurement"
+    },
+    {
+      "id": "USArmyTC",
+      "title": "TC 21-306 Tracked Combat Vehicle Driver Training (June 2019)",
+      "url": "https://www.scribd.com/document/509307797/ARN17893-TC-21-306-FINAL-Web-3",
+      "pages": [
+        "A-4",
+        "A-5"
+      ],
+      "scope": "Army-authored public manual mirror: M1A2 SEP reverse 25mph, longitudinal 60% and side slope 40%; used as family-level assumptions"
+    },
+    {
+      "id": "USArmyATP",
+      "title": "ATP 3-20.15 Tank Platoon",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/2F4F8430-78F6-459A-A9A5-DFC8E73007E0-1356018579249/atp3_20x15.pdf",
+      "scope": "CITV independent commander observation role; no exact optical-axis height specified"
+    },
+    {
+      "id": "USER_WIP11A",
+      "title": "TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md and current archive game tables",
+      "path": "../../docs/TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md",
+      "scope": "User-confirmed abstract HP, armour and M829A2 game data; not independently verified real equipment performance"
+    }
+  ],
+  "fieldEvidence": {
+    "model.overallLength": {
+      "status": "published",
+      "source": "GDLS",
+      "original": "387 in, gun forward"
+    },
+    "model.width": {
+      "status": "published",
+      "source": "GDLS",
+      "original": "144 in"
+    },
+    "model.roofHeight": {
+      "status": "published",
+      "source": "GDLS",
+      "original": "93.5 in turret height; excludes viewer/weapon overall height"
+    },
+    "model.hullLength": {
+      "status": "shared-family approximation",
+      "source": "USMC",
+      "original": "312 in M1A1 side-view hull drawing; inherited chassis envelope"
+    },
+    "model.barrelTip": {
+      "status": "derived geometry",
+      "formula": "overallLength - hullLength/2; hull-centred coordinate origin"
+    },
+    "model.turretLength,model.turretWidth": {
+      "status": "visual approximation",
+      "note": "Top-view silhouette only, not a measured armour layout"
+    },
+    "model.turretOrigin,model.turretPivot,model.turretRingDiameter,model.muzzleLocal": {
+      "status": "user-supplied visual geometry",
+      "source": "USER_TOP_VIEW",
+      "note": "Art origin +0.15m, ring pivot [+0.66m,0], muzzle tip in art coordinates [5.717m,0]; shared Canvas/SVG/event frame. No real weapon calibration."
+    },
+    "massKg": {
+      "status": "published nominal, converted",
+      "source": "GDLS",
+      "original": "69.54 US short tons (manufacturer labels curb weight)"
+    },
+    "mobility.roadSpeed,mobility.crossCountrySpeed": {
+      "status": "published",
+      "source": "GDLS",
+      "original": "42 mph governed / 30 mph cross-country"
+    },
+    "mobility.reverseSpeed": {
+      "status": "shared-family assumption",
+      "sources": [
+        "USMC",
+        "USArmyTC"
+      ],
+      "original": "25 mph paved level surface; family and SEP manual reference"
+    },
+    "mobility.accelerationReferenceSpeed,mobility.accelerationReferenceSeconds": {
+      "status": "published average acceleration target",
+      "source": "GDLS",
+      "original": "0–20 mph in 7.2 s; simplified integrator calibrated to this endpoint"
+    },
+    "mobility.gradeSpeedPoints": {
+      "status": "published anchors plus game interpolation",
+      "source": "GDLS",
+      "original": "10% grade 17 mph, 60% grade 4.1 mph; downhill symmetry is tuning"
+    },
+    "mobility.maxLongitudinalGrade,mobility.maxSideGrade": {
+      "status": "family/SEP assumption",
+      "sources": [
+        "GDLS",
+        "USArmyTC"
+      ],
+      "original": "60% longitudinal, 40% side grade; combined inclines handled conservatively"
+    },
+    "mobility.pivotRate,mobility.turretRate,mobility.brakeDeceleration,mobility.surfaceSpeed": {
+      "status": "game tuning",
+      "note": "No measured timing/traction/braking curves claimed"
+    },
+    "sensors.eyeHeight": {
+      "status": "geometry estimate",
+      "value": 2.65,
+      "note": "User-selected CITV-level viewpoint above ground; NOT turret-roof height and NOT an exact published optical-axis measurement"
+    },
+    "sensors.ambient,sensors.commander,sensors.gunner,sensors.hunterKiller,sensors.tuning": {
+      "status": "fictional game tuning",
+      "note": "WIP07A channel provenance, forward reciprocal scans and independent evidence decay; 200m silhouette-only, commander 2500m 90deg 50deg/s, gunner 2000m 30deg 40deg/s. Equipment flags independent of hunter-killer. See docs/OBSERVATION_WIP07A.md for evidence, memory and designation defaults."
+    },
+    "sensors.observationLimit": {
+      "status": "game tuning",
+      "value": 4000,
+      "note": "Observation computation cap; not an actual guaranteed detection or identification distance"
+    },
+    "weapons.mainGun.referenceEngagementRange": {
+      "status": "game tuning",
+      "value": 3000,
+      "note": "Future engagement reference only; not a ballistic maximum and does not limit LOS"
+    },
+    "artId": {
+      "status": "explicit artwork reference",
+      "note": "Vehicle registry IDs and artwork IDs are independent; this stage supports M1A2 artwork only"
+    },
+    "fireControl": {
+      "status": "fictional game tuning",
+      "sources": [
+        "USER_WIP09",
+        "USER_WIP10"
+      ],
+      "note": "WIP10 retains the fictional RTS dispersion/lay/range/lead/stabilization budget, removes the duplicate statistical manoeuvre term, predicts from observed velocity, and delays the single roll by range divided by the fictional average velocity. Values are not measured M1A2 fire-control or ammunition data. See docs/FIRE_CONTROL_WIP10.md."
+    },
+    "fireControl.impact": {
+      "status": "fictional display tuning",
+      "source": "USER_WIP10",
+      "note": "64 rejection samples, 2m terrain/building march and 3000m beyond-target cap generate a post-result visual point. The point never determines hit, penetration or damage."
+    },
+    "weapons.mainGun.ammunitionCapacity": {
+      "status": "published capacity only",
+      "source": "GDLS",
+      "value": 42,
+      "note": "Test-round counter and abstract manual firing active; no ammo split, loading transport, ballistic/penetration/damage model"
+    },
+    "exposure": {
+      "status": "game geometry samples",
+      "note": "Hull/turret sample locations follow model heights; not a hit probability model"
+    },
+    "navigation": {
+      "status": "derived conservative clearance",
+      "formula": "ceil((hypot(hullLength/2,width/2)+0.25)*100)/100 = 4.62m",
+      "note": "Cannon tube does not collide; 16m navigation nodes and conservative circle are retained"
+    },
+    "combat": {
+      "status": "user game data",
+      "source": "USER_WIP11A",
+      "note": "1450 abstract HP and KE/CE zone values; WIP11A uses KE only and no module/crew damage"
+    },
+    "weapons.mainGun.ammunitionId": {
+      "status": "user game data",
+      "source": "USER_WIP11A",
+      "value": "M829A2",
+      "note": "Single symmetric trial ammunition"
+    }
+  },
+  "limits": [
+    "Mass and engine rating are profile metadata, not a full powertrain simulation",
+    "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
+    "No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities",
+    "WIP11A penetration and damage are abstract game tables; no ricochet, module, crew, fire or ammunition-rack model"
+  ]
+}

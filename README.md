@@ -1,15 +1,15 @@
-# TACTICAL v0.4 WIP10 — 예측 사격·비행·착탄
+# TACTICAL v0.4 WIP11A — M1A2 (1998) 피해·격파
 
-자기 포수 관측으로 표적 속도를 추정해 실제 포구에서 선행 조준하고, 거리와 게임 탄속으로 비행 시간을 계산한다. 착탄 시점의 실제 표적 위치·방향·차폐로 최종 확률을 한 번 추첨한 뒤 결과와 일치하는 탄착점을 만든다. 빗나감은 포물선을 따라 지형·건물과 처음 만난 위치를 표시한다. 제공 WIP10 Python 46행과 JavaScript 결과를 자동 대조한다. 장갑·관통·피해는 후속 범위다.
+WIP10의 관측·예측 사격·비행·착탄을 유지하면서 양측 활성 차량을 `M1A2_1998`, 시험탄을 `M829A2`로 연결했다. 착탄 때 확정된 명중 구역과 방향에 게임 장갑표·거리/입사각 관통표·A1 피해 곡선을 적용한다. 차량은 1,450 HP를 개별 보유하며 HP가 0이면 한 번만 격파되고 이동·관측·새 사격을 멈춘다. 이미 발사한 탄은 계속 비행한다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip10-flight-impact/Tactical_v0.4_WIP10.zip). 압축을 풀면 `Tactical_v0.4_WIP10.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP10.html](Tactical_v0.4_WIP10.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [현재 구현/제외 범위](docs/FIRE_CONTROL_WIP10.md) · [WIP09 확률 모델](docs/FIRE_CONTROL_WIP09.md) · [도안·포구](docs/M1A2_ART_MUZZLE_WIP08A.md) · [관측](docs/OBSERVATION_WIP07A.md) · [릴리스·검증](TACTICAL_RELEASE_WIP10.md) · [체크섬](SHA256SUMS_WIP10.txt).
-- WIP09 `04d6d2e`에서 이어 최신 main `e2f44d9`의 다음 단계·전차·탄약 아카이브를 보존했다. PR #4/#5는 시작 시 미병합이며 새 브랜치는 PR #5 위의 별도 초안이다. main 병합·공개 배포하지 않았다. 이전 실행 파일/ZIP/검증 자료도 보존했다.
+- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip11a-combat-state/Tactical_v0.4_WIP11A.zip). 압축을 풀면 `Tactical_v0.4_WIP11A.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP11A.html](Tactical_v0.4_WIP11A.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [피해·격파 구현](docs/COMBAT_STATE_WIP11A.md) · [사격/비행](docs/FIRE_CONTROL_WIP10.md) · [관측](docs/OBSERVATION_WIP07A.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11A.md) · [체크섬](SHA256SUMS_WIP11A.txt).
+- 최신 main `33900e6`에서 `feat/wip11a-combat-state` 브랜치를 만들었다. 이전 실행 파일·ZIP·검증 자료와 WIP10 호환 fixture `M1A2`를 보존한다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip10-flight-impact/Tactical_v0.4_WIP10.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP10.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip11a-combat-state/Tactical_v0.4_WIP11A.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11A.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -19,7 +19,7 @@
 - 관측 표적 탭: 미식별 실루엣은 일반 정보만, 식별한 현재 접촉은 차종·부위 관측 비율을 표시한다. 흐린 잔상은 마지막 관측 위치다.
 - 전차장/포수 선택 → 지점 경계(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 자동 경계 버튼으로 해당 명령 해제. Esc는 새 입력만 취소한다.
 - 표적 패널의 포수 직접 지정과 인계 취소를 사용할 수 있다. 지정 전달과 포수 확보는 별도 상태다.
-- 표적 탭 → 필요하면 포수 직접 지정 → 자체 확보/조준 완료 → **발사 버튼 또는 G**. 실제 포구에서 예측 위치로 발사하며 거리·게임 탄속에 따른 비행 뒤 최종 명중/부위와 지형·건물 탄착을 표시한다. 관측을 잃으면 결과 미확인으로 표시한다. 맞아도 피해/파괴는 아직 없다.
+- 표적 탭 → 필요하면 포수 직접 지정 → 자체 확보/조준 완료 → **발사 버튼 또는 G**. 실제 포구에서 예측 위치로 발사하며 착탄 때 명중 구역의 게임식 관통·HP 피해를 적용한다. 관측을 잃으면 공개 결과는 미확인으로 유지되지만 내부 피해는 정상 처리한다.
 - Space: 일시정지. R: 후진 모드. X: 정지. F: 전체화면. Home: 전체 지도.
 - 전체화면 요청이 거절되거나 지원되지 않으면 지도 집중 모드로 전환한다.
 
@@ -63,7 +63,7 @@
 
 ## M1A2 제원과 상부 도안
 
-기본형 M1A2를 대상으로 한다. 공개 제원·계열에서 가져온 값·외형 근사·게임 조정값을 구분했으며, 상세 근거는 `data/vehicles/README_KO.md`와 `M1A2.json`에 있다.
+활성 시험 구성은 양측 모두 M1A2 (1998)이며, 기존 기본형 `M1A2` 프로파일은 WIP10 역사 검사 호환용으로 남겼다. 새로 정하지 않은 치수·기동·센서·도안은 기존 게임 설정을 이어 쓰며 1998년형의 새 실측값으로 취급하지 않는다. 상세 데이터는 `data/vehicles/M1A2_1998.json`과 `data/ammunition/M829A2.json`에 있다.
 
 - 포 전방 전장 9.8298m, 차체 7.9248×3.6576m, 포탑 지붕 2.3749m. 차체 길이는 M1 계열 도면의 근사값이다.
 - 도로 67.6km/h, 야지 48.3km/h 상한. 후진 40.2km/h는 같은 계열·SEP 교범에서 가져온 가정이다. 실제 속도는 지표·경사·선회·감속에 따라 달라진다.
@@ -86,15 +86,16 @@
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP10.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP11A.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
 | `src/vehicle-geometry.js` | 차체 고정 링·포탑 로컬 점·실제 포구의 공통 2D 변환 |
 | `src/fire-control.js` | 자체 확보·조준·예측 발사·착탄 시점 확률·지형/건물 탄착·팀별 공개 이벤트 |
+| `src/combat-state.js` | M829A2 게임 표·관통/피해 순수 계산·착탄 ID별 HP/격파 상태 전이 |
 | `src/m1a2-art.js` | 독립 차체·포탑 벡터 도안과 SVG 내보내기 |
 | `src/visibility-client.js` | 내장 시야 Worker와 오류 시 동일 계산 대체 실행 |
-| `data/vehicles/` | 적용값·필드별 근거·외형 SVG·참고 자료 |
+| `data/vehicles/`, `data/ammunition/` | 적용 차량·탄약 게임 데이터, 필드별 근거·외형 SVG·참고 자료 |
 | `scripts/export_vehicle_profile.cjs`, `scripts/build_vehicle_review.py` | 제원·도안 내보내기와 동일 축척 비교 화면 제작 |
 | `src/map-renderer.js` | 화면 해상도에 맞춘 벡터 지형 렌더러·표시 캐시 |
 | `src/visibility.js` | 지형·건물·수관에 대한 방사형 가시선 계산과 벡터 경계 연결 |
@@ -120,11 +121,12 @@
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP10
+python3 scripts/package_release.py WIP11A
+node --check src/combat-state.js
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs tests/combat-state.test.cjs tests/combat-core.test.cjs tests/combat-build.test.cjs
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
@@ -132,6 +134,7 @@ node tests/vehicle.test.cjs
 # Playwright 개발 의존성과 시스템 Chromium이 있는 환경:
 node tests/browser.test.cjs
 node scripts/benchmark_observation.cjs
+node scripts/benchmark_combat.cjs
 node scripts/benchmark_los_compare.cjs
 ```
 
@@ -170,9 +173,9 @@ node tests/vehicle.test.cjs
 
 ## 현재 범위
 
-이번 버전은 실제 지도와 기동·관측·수동 단발 사격을 연결한 시험장이다. 표적 확보와 조준 완료를 구분하고 게임 명중/부위를 기록한다. 적 전술 AI·자동 사격·관통·장갑·피해·상세 장전·보병은 구현하지 않았다. 기본 적 표적은 정지 상태다.
+이번 버전은 실제 지도와 기동·관측·수동 단발 사격·기본 HP 전투를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2 한 종류와 1,450 HP를 사용한다. 비관통 피해는 0, 추가 탄속 피해 배율은 1이며 표 밖 관통값은 끝값으로 고정한다. 적 전술 AI·자동 사격·탄종 선택·모듈/승무원 피해·화재·유폭·수리·상세 장전·보병은 구현하지 않았다. 기본 적 표적은 정지 상태다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10은 관측 속도 기반 선행 조준, 거리·게임 탄속 기반 ToF, 착탄 시점 실제 위치·자세·차폐에 따른 최종 확률, 결과 이후 탄착 좌표와 지형·건물 경로를 연결한다. WIP09 통계 기동 항은 제거해 이동 편차를 중복 적용하지 않는다. 탄착점은 표시용이며 판정을 거꾸로 바꾸거나 피해를 주지 않는다. archive의 차량/탄약/장갑 설계를 런타임에 자동 적용하지 않는다. file://는 환경 정책으로 차단되어 같은 단일 HTML을 로컬 HTTP로 검증했다. 자세한 검사 결과와 미실행 항목은 WIP10 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP11A 피해는 그 내부 명중/구역 결과를 받아 별도로 적용하므로 표시 좌표가 판정을 바꾸지 않는다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP11A 릴리스 문서에 있다.
 
 ## 출처
 

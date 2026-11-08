@@ -493,6 +493,16 @@ header{
   color:var(--accent);
   padding-bottom:3px
 }
+.combat-summary{
+  margin:-2px 0 12px;
+  padding:7px 9px;
+  border:1px solid #53664c;
+  border-radius:4px;
+  background:#1b2b24;
+  color:#dce9c9;
+  font:11px ui-monospace,monospace
+}
+.combat-summary.destroyed{color:#f0b08e;border-color:#805343;background:#38271f}
 .metrics{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -698,7 +708,17 @@ footer{
   .speed{
     font-size:29px
   }
-  .metrics{
+  .combat-summary{
+  margin:-2px 0 12px;
+  padding:7px 9px;
+  border:1px solid #53664c;
+  border-radius:4px;
+  background:#1b2b24;
+  color:#dce9c9;
+  font:11px ui-monospace,monospace
+}
+.combat-summary.destroyed{color:#f0b08e;border-color:#805343;background:#38271f}
+.metrics{
     gap:9px;
     padding:9px 0;
     margin-bottom:10px

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP10</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP11A</title>
 <style>
 :root{
   color-scheme:dark;
@@ -501,6 +501,16 @@ header{
   color:var(--accent);
   padding-bottom:3px
 }
+.combat-summary{
+  margin:-2px 0 12px;
+  padding:7px 9px;
+  border:1px solid #53664c;
+  border-radius:4px;
+  background:#1b2b24;
+  color:#dce9c9;
+  font:11px ui-monospace,monospace
+}
+.combat-summary.destroyed{color:#f0b08e;border-color:#805343;background:#38271f}
 .metrics{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -706,7 +716,17 @@ footer{
   .speed{
     font-size:29px
   }
-  .metrics{
+  .combat-summary{
+  margin:-2px 0 12px;
+  padding:7px 9px;
+  border:1px solid #53664c;
+  border-radius:4px;
+  background:#1b2b24;
+  color:#dce9c9;
+  font:11px ui-monospace,monospace
+}
+.combat-summary.destroyed{color:#f0b08e;border-color:#805343;background:#38271f}
+.metrics{
     gap:9px;
     padding:9px 0;
     margin-bottom:10px
@@ -882,7 +902,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP10</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP11A</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -914,12 +934,13 @@ footer{
 <div class="selected-heading"><div class="eyebrow" style="color:#9db48e">SELECTED VEHICLE</div><h2 id="unitName">ALPHA 11</h2><p id="unitType">M1A2 Abrams · 120mm M256</p></div>
 <div class="tank-profile" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="-5 -2.5 12 5" role="img" aria-label="M1A2 Abrams top view"><title>M1A2 Abrams · top view</title><desc>Original vector interpretation. Planform traced from USMC MCWP 3-12 A-3; M1A2 fittings from US Army DVIDS 3055956. Exterior detail is approximate.</desc><g stroke-linejoin="round" stroke-linecap="round" transform="rotate(0)"><path d="M-3.8 -1.8288H3.9624V1.8288H-3.8V1.13H-3.9624V-1.13H-3.8Z" transform="translate(.14 .18)" fill="#17201745"/><g class="hull"><path d="M-3.8 -1.8288H3.9224Q3.9624 -1.8288 3.9624 -1.7888V1.7888Q3.9624 1.8288 3.9224 1.8288H-3.8V1.13H-3.9624V-1.13H-3.8Z" fill="#69745a" stroke="#384633" stroke-width="0.045"/><path d="M-3.78 -1.8h6.18v0.75h-6.18Z" fill="#727d61" stroke="#44503a" stroke-width="0.028"/><path d="M-3.74 -1.765H2.36" fill="none" stroke="#a0a98a" stroke-width="0.022"/><path d="M1.42 -1.07V-1.79M0.3 -1.07V-1.79M-0.82 -1.07V-1.79M-1.94 -1.07V-1.79M-3.06 -1.07V-1.79" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M3.02 -1.81h0.87v0.77h-0.87Z" fill="#7b8468" stroke="#384633" stroke-width="0.03"/><path d="M3.89 -1.8h0.07v0.75h-0.07Z" fill="#232a23" stroke="#384633" stroke-width="0.015"/><path d="M3.82 -1.13H3.20M3.13 -1.12V-1.72" fill="none" stroke="#44503a" stroke-width="0.02"/><path d="M3.73 -1.63a0.17 0.13 0 1 0 -0.34 0a0.17 0.13 0 1 0 0.34 0Z" fill="#69745a" stroke="#384633" stroke-width="0.022"/><path d="M3.46 -1.55L3.66 -1.71M3.46 -1.71L3.66 -1.55" fill="none" stroke="#a0a98a" stroke-width="0.02"/><path d="M3.877 -1.16a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.28a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.4a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.52a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.64a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.76a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M2.4 -1.78h0.62v0.72h-0.62Z" fill="#7b8468" stroke="#44503a" stroke-width="0.025"/><path d="M2.45 -1.1V-1.74" fill="none" stroke="#44503a" stroke-width="0.018"/><path d="M3.00 -1.1V-1.7" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M3.032 -1.1a0.032 0.032 0 1 0 -0.064 0a0.032 0.032 0 1 0 0.064 0ZM3.032 -1.7a0.032 0.032 0 1 0 -0.064 0a0.032 0.032 0 1 0 0.064 0Z" fill="#9ba38e"/><path d="M2.30 -1.82V-1.66M2.24 -1.66H2.36" fill="none" stroke="#384633" stroke-width="0.03"/><path d="M-3.78 1.05h6.18v0.75h-6.18Z" fill="#727d61" stroke="#44503a" stroke-width="0.028"/><path d="M-3.74 1.765H2.36" fill="none" stroke="#a0a98a" stroke-width="0.022"/><path d="M1.42 1.07V1.79M0.3 1.07V1.79M-0.82 1.07V1.79M-1.94 1.07V1.79M-3.06 1.07V1.79" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M3.02 1.04h0.87v0.77h-0.87Z" fill="#7b8468" stroke="#384633" stroke-width="0.03"/><path d="M3.89 1.05h0.07v0.75h-0.07Z" fill="#232a23" stroke="#384633" stroke-width="0.015"/><path d="M3.82 1.13H3.20M3.13 1.12V1.72" fill="none" stroke="#44503a" stroke-width="0.02"/><path d="M3.73 1.63a0.17 0.13 0 1 0 -0.34 0a0.17 0.13 0 1 0 0.34 0Z" fill="#69745a" stroke="#384633" stroke-width="0.022"/><path d="M3.46 1.55L3.66 1.71M3.46 1.71L3.66 1.55" fill="none" stroke="#a0a98a" stroke-width="0.02"/><path d="M3.877 1.16a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.28a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.4a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.52a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.64a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.76a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M2.4 1.06h0.62v0.72h-0.62Z" fill="#7b8468" stroke="#44503a" stroke-width="0.025"/><path d="M2.45 1.1V1.74" fill="none" stroke="#44503a" stroke-width="0.018"/><path d="M3.00 1.1V1.7" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M3.032 1.1a0.032 0.032 0 1 0 -0.064 0a0.032 0.032 0 1 0 0.064 0ZM3.032 1.7a0.032 0.032 0 1 0 -0.064 0a0.032 0.032 0 1 0 0.064 0Z" fill="#9ba38e"/><path d="M2.30 1.82V1.66M2.24 1.66H2.36" fill="none" stroke="#384633" stroke-width="0.03"/><path d="M2.55 -1.52L2.66 -1.62" fill="none" stroke="#384633" stroke-width="0.07"/><path d="M2.55 -1.52L2.66 -1.62" fill="none" stroke="#9ba38e" stroke-width="0.035"/><path d="M2.4 -1.04h1.53v2.08h-1.53Z" fill="#788366" stroke="#44503a" stroke-width="0.03"/><path d="M3.44 -1.0V1.0" fill="none" stroke="#a0a98a" stroke-width="0.025"/><path d="M3.90 -.70V.70" fill="none" stroke="#384633" stroke-width="0.03"/><path d="M2.391 -0.103Q2.5 0 2.391 0.103L2.159 0.322Q2.05 0.425 2.05 0.275L2.05 -0.275Q2.05 -0.425 2.159 -0.322Z" fill="#69745a" stroke="#384633" stroke-width="0.03"/><path d="M2.349 -0.071Q2.42 0 2.349 0.071L2.171 0.249Q2.1 0.32 2.1 0.22L2.1 -0.22Q2.1 -0.32 2.171 -0.249Z" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M2.34 -0.075L2.44 -0.075L2.44 0.075L2.34 0.075ZM2.298 0.122L2.368 0.192L2.262 0.298L2.192 0.228ZM2.192 -0.228L2.262 -0.298L2.368 -0.192L2.298 -0.122Z" fill="#243b3d" stroke="#384633" stroke-width="0.02"/><path d="M2.12 0.1v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M2.145 0.09v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M2.28 -0.83a0.09 0.09 0 1 0 -0.18 0a0.09 0.09 0 1 0 0.18 0Z" fill="#7b8468" stroke="#384633" stroke-width="0.02"/><path d="M2.23 -0.83a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="none" stroke="#9ba38e" stroke-width="0.014"/><path d="M2.28 0.83a0.09 0.09 0 1 0 -0.18 0a0.09 0.09 0 1 0 0.18 0Z" fill="#7b8468" stroke="#384633" stroke-width="0.02"/><path d="M2.23 0.83a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="none" stroke="#9ba38e" stroke-width="0.014"/><path d="M3.75 -1.03h0.21v0.31h-0.21Z" fill="#384633" stroke="#44503a" stroke-width="0.02"/><path d="M3.79 -0.75V-1M3.83 -0.75V-1M3.87 -0.75V-1" fill="none" stroke="#a0a98a" stroke-width="0.014"/><path d="M3.92 -0.99h0.04v0.23h-0.04Z" fill="#d4d9bb"/><path d="M3.55 -1.01h0.07v0.29h-0.07Z" fill="#69745a" stroke="#44503a" stroke-width="0.018"/><path d="M3.755 -0.87a0.075 0.075 0 1 0 -0.15 0a0.075 0.075 0 1 0 0.15 0Z" fill="#69745a" stroke="#384633" stroke-width="0.02"/><path d="M3.72 -0.87a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="none" stroke="#9ba38e" stroke-width="0.015"/><path d="M3.75 0.72h0.21v0.31h-0.21Z" fill="#384633" stroke="#44503a" stroke-width="0.02"/><path d="M3.79 0.75V1M3.83 0.75V1M3.87 0.75V1" fill="none" stroke="#a0a98a" stroke-width="0.014"/><path d="M3.92 0.76h0.04v0.23h-0.04Z" fill="#d4d9bb"/><path d="M3.55 0.72h0.07v0.29h-0.07Z" fill="#69745a" stroke="#44503a" stroke-width="0.018"/><path d="M3.755 0.87a0.075 0.075 0 1 0 -0.15 0a0.075 0.075 0 1 0 0.15 0Z" fill="#69745a" stroke="#384633" stroke-width="0.02"/><path d="M3.72 0.87a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="none" stroke="#9ba38e" stroke-width="0.015"/><path d="M-3.74 -1.05h6.14v2.1h-6.14Z" fill="#7b8468" stroke="#44503a" stroke-width="0.03"/><path d="M-.98 -1.03V1.03" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M-2.55 -0.56h0.67v0.53h-0.67Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-2.515 -0.53v0.47M-2.445 -0.53v0.47M-2.375 -0.53v0.47M-2.305 -0.53v0.47M-2.235 -0.53v0.47M-2.165 -0.53v0.47M-2.095 -0.53v0.47M-2.025 -0.53v0.47M-1.955 -0.53v0.47" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-2.525 -0.535h0.62v0.48h-0.62Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/><path d="M-2.55 0.03h0.67v0.53h-0.67Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-2.515 0.06v0.47M-2.445 0.06v0.47M-2.375 0.06v0.47M-2.305 0.06v0.47M-2.235 0.06v0.47M-2.165 0.06v0.47M-2.095 0.06v0.47M-2.025 0.06v0.47M-1.955 0.06v0.47" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-2.525 0.055h0.62v0.48h-0.62Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/><path d="M-2.78 -1h0.68v0.38h-0.68Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-2.745 -0.97v0.32M-2.675 -0.97v0.32M-2.605 -0.97v0.32M-2.535 -0.97v0.32M-2.465 -0.97v0.32M-2.395 -0.97v0.32M-2.325 -0.97v0.32M-2.255 -0.97v0.32M-2.185 -0.97v0.32M-2.115 -0.97v0.32" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-2.755 -0.975h0.63v0.33h-0.63Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/><path d="M-2.27 -1.74h1.17v0.29h-1.17Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-2.25 -1.53L-2.19 -1.47M-2.25 -1.66L-2.19 -1.72M-2.25 -1.59L-2.13 -1.47M-2.25 -1.6L-2.13 -1.72M-2.25 -1.65L-2.07 -1.47M-2.25 -1.54L-2.07 -1.72M-2.25 -1.71L-2.01 -1.47M-2.25 -1.48L-2.01 -1.72M-2.2 -1.72L-1.95 -1.47M-2.2 -1.47L-1.95 -1.72M-2.14 -1.72L-1.89 -1.47M-2.14 -1.47L-1.89 -1.72M-2.08 -1.72L-1.83 -1.47M-2.08 -1.47L-1.83 -1.72M-2.02 -1.72L-1.77 -1.47M-2.02 -1.47L-1.77 -1.72M-1.96 -1.72L-1.71 -1.47M-1.96 -1.47L-1.71 -1.72M-1.9 -1.72L-1.65 -1.47M-1.9 -1.47L-1.65 -1.72M-1.84 -1.72L-1.59 -1.47M-1.84 -1.47L-1.59 -1.72M-1.78 -1.72L-1.53 -1.47M-1.78 -1.47L-1.53 -1.72M-1.72 -1.72L-1.47 -1.47M-1.72 -1.47L-1.47 -1.72M-1.66 -1.72L-1.41 -1.47M-1.66 -1.47L-1.41 -1.72M-1.6 -1.72L-1.35 -1.47M-1.6 -1.47L-1.35 -1.72M-1.54 -1.72L-1.29 -1.47M-1.54 -1.47L-1.29 -1.72M-1.48 -1.72L-1.23 -1.47M-1.48 -1.47L-1.23 -1.72M-1.42 -1.72L-1.17 -1.47M-1.42 -1.47L-1.17 -1.72M-1.36 -1.72L-1.12 -1.48M-1.36 -1.47L-1.12 -1.71M-1.3 -1.72L-1.12 -1.54M-1.3 -1.47L-1.12 -1.65M-1.24 -1.72L-1.12 -1.6M-1.24 -1.47L-1.12 -1.59M-1.18 -1.72L-1.12 -1.66M-1.18 -1.47L-1.12 -1.53" fill="none" stroke="#66725a" stroke-width="0.014"/><path d="M-2.84 -1.12H-3.76V1.12H-2.84Z" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M-3.64 -1.02h0.37v0.43h-0.37Z" fill="#69745a" stroke="#44503a" stroke-width="0.025"/><path d="M-3.52 -0.77v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-3.495 -0.78v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-3.3 -0.8a0.02 0.02 0 1 0 -0.04 0a0.02 0.02 0 1 0 0.04 0Z" fill="#9ba38e"/><path d="M-2.908 -1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.378 -1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.698 -1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.698 -1.17a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-3.41 -1.57a0.11 0.11 0 1 0 -0.22 0a0.11 0.11 0 1 0 0.22 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.02"/><path d="M-3.46 -1.57a0.06 0.06 0 1 0 -0.12 0a0.06 0.06 0 1 0 0.12 0Z" fill="none" stroke="#9ba38e" stroke-width="0.016"/><path d="M-3.60 -1.49L-3.44 -1.65" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M-3.96 -1.75h0.16v0.23h-0.16Z" fill="#384633" stroke="#44503a" stroke-width="0.02"/><path d="M-3.95 -1.71h0.05v0.15h-0.05Z" fill="#7c3a2c"/><path d="M-3.64 0.59h0.37v0.43h-0.37Z" fill="#69745a" stroke="#44503a" stroke-width="0.025"/><path d="M-3.52 0.87v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-3.495 0.86v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-3.3 0.8a0.02 0.02 0 1 0 -0.04 0a0.02 0.02 0 1 0 0.04 0Z" fill="#9ba38e"/><path d="M-2.908 1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.378 1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.698 1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.698 1.17a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-3.41 1.57a0.11 0.11 0 1 0 -0.22 0a0.11 0.11 0 1 0 0.22 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.02"/><path d="M-3.46 1.57a0.06 0.06 0 1 0 -0.12 0a0.06 0.06 0 1 0 0.12 0Z" fill="none" stroke="#9ba38e" stroke-width="0.016"/><path d="M-3.60 1.49L-3.44 1.65" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M-3.96 1.52h0.16v0.23h-0.16Z" fill="#384633" stroke="#44503a" stroke-width="0.02"/><path d="M-3.95 1.56h0.05v0.15h-0.05Z" fill="#7c3a2c"/><path d="M-2.86 1.41H-3.78" fill="none" stroke="#9ba38e" stroke-width="0.035"/><path d="M-3.17 1.36h0.04v0.11h-0.04Z" fill="#384633"/><path d="M-3.49 1.36h0.04v0.11h-0.04Z" fill="#384633"/><path d="M-3.96 -1.12h0.2v0.79h-0.2Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-3.93 -1.065h0.14M-3.93 -0.955h0.14M-3.93 -0.845h0.14M-3.93 -0.735h0.14M-3.93 -0.625h0.14M-3.93 -0.515h0.14M-3.93 -0.405h0.14" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-3.935 -1.095h0.15v0.74h-0.15Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/><path d="M-3.96 -0.29h0.2v1.34h-0.2Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-3.93 -0.235h0.14M-3.93 -0.125h0.14M-3.93 -0.015h0.14M-3.93 0.095h0.14M-3.93 0.205h0.14M-3.93 0.315h0.14M-3.93 0.425h0.14M-3.93 0.535h0.14M-3.93 0.645h0.14M-3.93 0.755h0.14M-3.93 0.865h0.14M-3.93 0.975h0.14" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-3.935 -0.265h0.15v1.29h-0.15Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/></g><g class="race" transform="translate(0.66 0)"><circle r="1.18" fill="#384633" stroke="#44503a" stroke-width=".04"/><circle r="1.08" fill="#69745a" stroke="#9ba38e" stroke-width=".025"/></g><g class="turret" transform="translate(0.66 0) rotate(0) translate(-0.51 0)"><path d="M2.33 -.31H2.13L2.06 -.66L1.31 -1.56L-1.25 -1.57L-2.29 -1.43H-2.97V1.58H-2.29L.06 1.71L1.65 1.67L2.04 .78L2.13 .31H2.33ZM2.33 -.12H5.72V.12H2.33Z" transform="translate(.11 .13)" fill="#15201345"/><path d="M-2.25 -1.43H-2.79Q-2.97 -1.43 -2.97 -1.25V1.40Q-2.97 1.58 -2.79 1.58H-2.25Z" fill="#56634b" stroke="#384633" stroke-width="0.03"/><path d="M-2.95 1.45L-2.85 1.55M-2.95 -1.3L-2.85 -1.4M-2.95 1.35L-2.75 1.55M-2.95 -1.2L-2.75 -1.4M-2.95 1.25L-2.65 1.55M-2.95 -1.1L-2.65 -1.4M-2.95 1.15L-2.55 1.55M-2.95 -1L-2.55 -1.4M-2.95 1.05L-2.45 1.55M-2.95 -0.9L-2.45 -1.4M-2.95 0.95L-2.4 1.5M-2.95 -0.8L-2.4 -1.35M-2.95 0.85L-2.4 1.4M-2.95 -0.7L-2.4 -1.25M-2.95 0.75L-2.4 1.3M-2.95 -0.6L-2.4 -1.15M-2.95 0.65L-2.4 1.2M-2.95 -0.5L-2.4 -1.05M-2.95 0.55L-2.4 1.1M-2.95 -0.4L-2.4 -0.95M-2.95 0.45L-2.4 1M-2.95 -0.3L-2.4 -0.85M-2.95 0.35L-2.4 0.9M-2.95 -0.2L-2.4 -0.75M-2.95 0.25L-2.4 0.8M-2.95 -0.1L-2.4 -0.65M-2.95 0.15L-2.4 0.7M-2.95 0L-2.4 -0.55M-2.95 0.05L-2.4 0.6M-2.95 0.1L-2.4 -0.45M-2.95 -0.05L-2.4 0.5M-2.95 0.2L-2.4 -0.35M-2.95 -0.15L-2.4 0.4M-2.95 0.3L-2.4 -0.25M-2.95 -0.25L-2.4 0.3M-2.95 0.4L-2.4 -0.15M-2.95 -0.35L-2.4 0.2M-2.95 0.5L-2.4 -0.05M-2.95 -0.45L-2.4 0.1M-2.95 0.6L-2.4 0.05M-2.95 -0.55L-2.4 0M-2.95 0.7L-2.4 0.15M-2.95 -0.65L-2.4 -0.1M-2.95 0.8L-2.4 0.25M-2.95 -0.75L-2.4 -0.2M-2.95 0.9L-2.4 0.35M-2.95 -0.85L-2.4 -0.3M-2.95 1L-2.4 0.45M-2.95 -0.95L-2.4 -0.4M-2.95 1.1L-2.4 0.55M-2.95 -1.05L-2.4 -0.5M-2.95 1.2L-2.4 0.65M-2.95 -1.15L-2.4 -0.6M-2.95 1.3L-2.4 0.75M-2.95 -1.25L-2.4 -0.7M-2.95 1.4L-2.4 0.85M-2.95 -1.35L-2.4 -0.8M-2.95 1.5L-2.4 0.95M-2.9 -1.4L-2.4 -0.9M-2.9 1.55L-2.4 1.05M-2.8 -1.4L-2.4 -1M-2.8 1.55L-2.4 1.15M-2.7 -1.4L-2.4 -1.1M-2.7 1.55L-2.4 1.25M-2.6 -1.4L-2.4 -1.2M-2.6 1.55L-2.4 1.35M-2.5 -1.4L-2.4 -1.3M-2.5 1.55L-2.4 1.45" fill="none" stroke="#2c3828" stroke-width="0.014"/><path d="M-2.25 -1.43H-2.79Q-2.97 -1.43 -2.97 -1.25V1.40Q-2.97 1.58 -2.79 1.58H-2.25M-2.95 -.92H-2.42M-2.95 -.25H-2.42M-2.95 .08H-2.42M-2.95 .57H-2.42M-2.95 1.06H-2.42" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M-2.95 -0.9h0.5v0.63h-0.5Z" fill="#687258" stroke="#384633" stroke-width="0.022"/><path d="M-2.90 -.585H-2.50" fill="none" stroke="#44503a" stroke-width="0.018"/><path d="M-2.9 0.62h0.32v0.8h-0.32Z" fill="#6c735e" stroke="#384633" stroke-width="0.022"/><path d="M-2.86 0.75H-2.62M-2.86 1.29H-2.62" fill="none" stroke="#454b3c" stroke-width="0.032"/><path d="M-2.88 -0.2h0.36v0.7h-0.36Z" fill="#6c735e" stroke="#384633" stroke-width="0.022"/><path d="M-2.84 -0.07H-2.56M-2.84 0.37H-2.56" fill="none" stroke="#454b3c" stroke-width="0.032"/><path d="M2.13 0.31L2.04 0.78L1.65 1.67L0.06 1.71L-2.29 1.6L-2.42 1.42L-2.42 -1.3L-2.29 -1.43L-1.25 -1.57L1.31 -1.56L2.06 -0.66L2.13 -0.31Z" fill="#69745a" stroke="#384633" stroke-width="0.045"/><path d="M2.13 0.31L2.04 0.78L1.65 1.67L1.44 1.33L1.87 0.31Z" fill="#606d52" stroke="#44503a" stroke-width="0.022"/><path d="M2.13 -0.31L2.06 -0.66L1.31 -1.56L1.1 -1.21L1.87 -0.31Z" fill="#7d886b" stroke="#44503a" stroke-width="0.022"/><path d="M1.87 0.31L1.44 1.33L-1.24 1.29L-2.28 1.24L-2.28 -1.12L-0.2 -1.21L1.1 -1.21L1.87 -0.31Z" fill="#828b70" stroke="#44503a" stroke-width="0.025"/><path d="M1.84 .40L1.46 1.29M1.84 -.40L1.13 -1.17" fill="none" stroke="#a0a98a" stroke-width="0.022"/><path d="M0.06 1.335L0.06 1.7L-1.95 1.625L-1.95 1.275Z" fill="#687258" stroke="#384633" stroke-width="0.028"/><path d="M0.06 -1.215L0.06 -1.565L-1.25 -1.57L-1.95 -1.476L-1.95 -1.155Z" fill="#687258" stroke="#384633" stroke-width="0.028"/><path d="M-.62 1.33V1.68M-1.30 1.30V1.65M-.62 -1.21V-1.57M-1.30 -1.19V-1.55" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M.02 1.645L-1.91 1.575M.02 -1.515H-1.25L-1.91 -1.43" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M0.022 1.683a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.278 1.672a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.578 1.661a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.878 1.649a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.178 1.638a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.478 1.627a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.778 1.616a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM0.022 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.278 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.578 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.878 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.178 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-0.38 1.55v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-0.355 1.54v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-1.06 1.52v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.035 1.51v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-1.68 1.5v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.655 1.49v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-0.38 -1.34v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-0.355 -1.35v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-1.06 -1.33v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.035 -1.34v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-1.68 -1.28v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.655 -1.29v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M0.27 -1.53h0.34v0.32h-0.34Z" fill="#384633" stroke="#44503a" stroke-width="0.022"/><path d="M0.385 -1.3a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.485 -1.3a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.585 -1.3a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.425 -1.44a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.525 -1.44a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.625 -1.44a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0Z" fill="#232a23" stroke="#9ba38e" stroke-width="0.014"/><path d="M0.27 1.36h0.34v0.32h-0.34Z" fill="#384633" stroke="#44503a" stroke-width="0.022"/><path d="M0.385 1.45a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.485 1.45a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.585 1.45a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.425 1.59a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.525 1.59a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.625 1.59a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0Z" fill="#232a23" stroke="#9ba38e" stroke-width="0.014"/><path d="M-2.22 -0.75h1.105v0.795h-1.105Z" fill="#7b8468" stroke="#44503a" stroke-width="0.03"/><path d="M-2.118 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-2.118 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.882 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.882 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.646 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.646 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.409 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.409 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.173 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.173 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-1.81 -0.53a0.07 0.07 0 1 0 -0.14 0a0.07 0.07 0 1 0 0.14 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.015"/><path d="M-1.81 -0.175a0.07 0.07 0 1 0 -0.14 0a0.07 0.07 0 1 0 0.14 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.015"/><path d="M-1.42 -0.302v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.395 -0.312v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-2.22 0.075h1.105v0.825h-1.105Z" fill="#7b8468" stroke="#44503a" stroke-width="0.03"/><path d="M-2.118 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-2.118 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.882 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.882 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.646 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.646 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.409 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.409 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.173 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.173 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-1.81 0.295a0.07 0.07 0 1 0 -0.14 0a0.07 0.07 0 1 0 0.14 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.015"/><path d="M-1.81 0.68a0.07 0.07 0 1 0 -0.14 0a0.07 0.07 0 1 0 0.14 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.015"/><path d="M-1.42 0.538v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.395 0.528v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-2.205 1.19a0.085 0.085 0 1 0 -0.17 0a0.085 0.085 0 1 0 0.17 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.018"/><path d="M-2.35 1.19H-2.23M-2.29 1.13V1.25" fill="none" stroke="#9ba38e" stroke-width="0.016"/><path d="M-2.21 -1.03a0.08 0.08 0 1 0 -0.16 0a0.08 0.08 0 1 0 0.16 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.018"/><path d="M-2.25 -1.03a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="#69745a" stroke="#9ba38e" stroke-width="0.012"/><path d="M-2.59 0.08h0.23v0.18h-0.23Z" fill="#69745a" stroke="#384633" stroke-width="0.018"/><path d="M-2.445 0.17a0.055 0.055 0 1 0 -0.11 0a0.055 0.055 0 1 0 0.11 0Z" fill="#7b8468" stroke="#384633" stroke-width="0.012"/><path d="M-0.04 -0.406a0.42 0.42 0 1 0 -0.84 0a0.42 0.42 0 1 0 0.84 0Z" fill="#384633" stroke="#44503a" stroke-width="0.03"/><path d="M-0.11 -0.406a0.35 0.35 0 1 0 -0.7 0a0.35 0.35 0 1 0 0.7 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.025"/><path d="M-.76 -.43H-.16M-.46 -.70V-.11" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M-0.52 -0.3v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-0.495 -0.31v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-0.005 0.534a0.52 0.52 0 1 0 -1.04 0a0.52 0.52 0 1 0 1.04 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.025"/><path d="M-0.065 0.534a0.46 0.46 0 1 0 -0.92 0a0.46 0.46 0 1 0 0.92 0Z" fill="#69745a" stroke="#44503a" stroke-width="0.02"/><path d="M-0.175 0.534a0.35 0.35 0 1 0 -0.7 0a0.35 0.35 0 1 0 0.7 0Z" fill="#7b8468" stroke="#44503a" stroke-width="0.025"/><path d="M-0.245 0.534a0.28 0.28 0 1 0 -0.56 0a0.28 0.28 0 1 0 0.56 0Z" fill="none" stroke="#a0a98a" stroke-width="0.02"/><path d="M-0.585 0.61v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-0.56 0.6v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-0.154 0.617L-0.098 0.64L-0.148 0.761L-0.203 0.738ZM-0.321 0.856L-0.298 0.911L-0.419 0.961L-0.442 0.905ZM-0.608 0.905L-0.631 0.961L-0.752 0.911L-0.729 0.856ZM-0.847 0.738L-0.902 0.761L-0.952 0.64L-0.896 0.617ZM-0.896 0.451L-0.952 0.428L-0.902 0.307L-0.847 0.33ZM-0.729 0.212L-0.752 0.157L-0.631 0.107L-0.608 0.163ZM-0.442 0.163L-0.419 0.107L-0.298 0.157L-0.321 0.212ZM-0.203 0.33L-0.148 0.307L-0.098 0.428L-0.154 0.451Z" fill="#243b3d" stroke="#384633" stroke-width="0.012"/><path d="M-0.12 0.4h0.48v0.16h-0.48Z" fill="#2a3430" stroke="#384633" stroke-width="0.015"/><path d="M.36 .48H1.38" fill="none" stroke="#2a3430" stroke-width="0.05"/><path d="M-0.08 0.58h0.28v0.16h-0.28Z" fill="#566048" stroke="#384633" stroke-width="0.015"/><path d="M-0.34 -1.05h0.36v0.13h-0.36Z" fill="#2a3430" stroke="#384633" stroke-width="0.015"/><path d="M.02 -.985H.46" fill="none" stroke="#2a3430" stroke-width="0.04"/><path d="M-0.28 -1.17h0.24v0.12h-0.24Z" fill="#566048" stroke="#384633" stroke-width="0.015"/><path d="M0.31 0.44h0.49v0.72h-0.49Z" fill="#7b8468" stroke="#384633" stroke-width="0.035"/><path d="M0.37 0.5h0.33v0.6h-0.33Z" fill="#828b70" stroke="#44503a" stroke-width="0.02"/><path d="M.62 .50V1.10M.37 .80H.70" fill="none" stroke="#44503a" stroke-width="0.016"/><path d="M0.68 0.62a0.02 0.02 0 1 0 -0.04 0a0.02 0.02 0 1 0 0.04 0ZM0.68 0.98a0.02 0.02 0 1 0 -0.04 0a0.02 0.02 0 1 0 0.04 0Z" fill="#9ba38e"/><path d="M0.72 0.56h0.12v0.48h-0.12Z" fill="#243b3d" stroke="#384633" stroke-width="0.022"/><path d="M.45 .50V1.10" fill="none" stroke="#a0a98a" stroke-width="0.016"/><path d="M0.694 -0.673a0.27 0.27 0 1 0 -0.54 0a0.27 0.27 0 1 0 0.54 0Z" fill="#384633" stroke="#44503a" stroke-width="0.03"/><path d="M0.634 -0.673a0.21 0.21 0 1 0 -0.42 0a0.21 0.21 0 1 0 0.42 0Z" fill="#7b8468" stroke="#9ba38e" stroke-width="0.02"/><path d="M1.78 -0.31h0.55v0.62h-0.55Z" fill="#69745a" stroke="#384633" stroke-width="0.03"/><path d="M1.83 -0.26h0.27v0.52h-0.27Z" fill="#7b8468" stroke="#44503a" stroke-width="0.02"/><path d="M1.902 0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM1.902 -0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM1.962 0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM1.962 -0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM2.022 0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM2.022 -0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM2.082 0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM2.082 -0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M1.8 0.215h0.06v0.05h-0.06Z" fill="#9ba38e" stroke="#384633" stroke-width="0.012"/><path d="M1.8 -0.145h0.06v0.05h-0.06Z" fill="#9ba38e" stroke="#384633" stroke-width="0.012"/><path d="M2.13 -0.29h0.2v0.58h-0.2Z" fill="#828b70" stroke="#44503a" stroke-width="0.02"/><path d="M2.13 -.17H2.25Q2.33 -.17 2.33 0Q2.33 .17 2.25 .17H2.13Z" fill="#69745a" stroke="#384633" stroke-width="0.018"/><path d="M2.3 0.235h0.06v0.07h-0.06Z" fill="#384633"/><path d="M2.33 .27H2.70" fill="none" stroke="#2a3430" stroke-width="0.04"/><path d="M2.30 -.117H3.03L3.12 -.165H3.85L3.94 -.105H5.30V-.122H5.37V-.092H5.717V.092H5.37V.122H5.30V.105H3.94L3.85 .165H3.12L3.03 .117H2.30Z" fill="#778367" stroke="#384633" stroke-width="0.025"/><path d="M2.36 -.05H3.08M3.16 -.085H3.82M3.98 -.045H5.68" fill="none" stroke="#a8b091" stroke-width="0.035"/><path d="M2.72 -.125V.125M2.77 -.125V.125M2.82 -.125V.125" fill="none" stroke="#384633" stroke-width="0.02"/><path d="M3.12 -.16V.16M3.85 -.16V.16M4.45 -.10V.10M4.95 -.10V.10" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M5.43 -0.06h0.13v0.12h-0.13Z" fill="#7b8468" stroke="#384633" stroke-width="0.015"/><path d="M5.7 -0.07h0.017v0.14h-0.017Z" fill="#232a23"/><g class="citv" transform="rotate(0 0.424 -0.673)"><path d="M.30 -.82H.56Q.64 -.82 .64 -.74V-.60Q.64 -.53 .56 -.53H.30Z" fill="#69745a" stroke="#384633" stroke-width="0.022"/><path d="M.36 -.80V-.55" fill="none" stroke="#44503a" stroke-width="0.016"/><path d="M0.6 -0.78h0.08v0.21h-0.08Z" fill="#243b3d" stroke="#384633" stroke-width="0.018"/></g></g></g></svg></div>
 <div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
+<div class="combat-summary" id="combatSummary">M829A2 · HP 1,450 / 1,450 · 생존</div>
 <div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">차체 방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
-<details class="vehicle-specs"><summary id="profileTitle">M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>게임식 예측 발사·비행·탄착 표시 지원.<br>관통·피해·상세 장전은 후속 구현.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
+<details class="vehicle-specs"><summary id="profileTitle">M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>게임식 예측 발사·비행·탄착·피해 지원.<br>HP와 격파만 적용 · 모듈 피해와 상세 장전은 후속.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
 <div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
-<div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>표적 탭 → 포수 직접 지정 → 조준 완료 후 발사/G.<br>실루엣은 미식별 · 흐린 잔상은 마지막 관측 기억.<br>게임 탄속으로 비행하며 탄착점은 판정 뒤 표시용으로 생성.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · FIRE / WIP10</div>
+<div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>표적 탭 → 포수 직접 지정 → 조준 완료 후 발사/G.<br>실루엣은 미식별 · 흐린 잔상은 마지막 관측 기억.<br>게임 탄속으로 비행하며 착탄 시 게임식 관통·HP 피해를 적용.</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · FIRE · DAMAGE / WIP11A</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -962,6 +983,16 @@ const VEHICLE_PROFILES=(()=>{
   };
   M1A2.navigation.radius=Math.ceil((Math.hypot(M1A2.model.hullLength/2,M1A2.model.width/2)+M1A2.navigation.clearanceMargin)*100)/100;
   function clone(o){if(Array.isArray(o))return o.map(clone);if(o&&typeof o==='object')return Object.fromEntries(Object.entries(o).map(([k,v])=>[k,clone(v)]));return o;}
+  // Active symmetric WIP11A trial configuration. Unchanged dimensions,
+  // mobility, sensors and artwork are explicit inherited game settings.
+  const M1A2_1998=clone(M1A2);
+  Object.assign(M1A2_1998,{id:'M1A2_1998',name:'M1A2 Abrams (1998)',variant:'M1A2 (1998) 시험 구성'});
+  Object.assign(M1A2_1998.weapons.mainGun,{ammunitionId:'M829A2',ammunitionName:'M829A2'});
+  M1A2_1998.fireControl.muzzleVelocity=1680;
+  M1A2_1998.combat={maxHp:1450,armor:{
+    hullFront:{ke:390,ce:720},hullSide:{ke:120,ce:280},hullRear:{ke:40,ce:40},
+    turretFront:{ke:720,ce:1150},turretSide:{ke:340,ce:630},turretRear:{ke:55,ce:55},upper:{ke:40,ce:40}
+  }};
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
   function createRegistry(entries){
     const profiles=Object.create(null);
@@ -980,6 +1011,11 @@ const VEHICLE_PROFILES=(()=>{
       if(!f.impact||!Number.isInteger(f.impact.rejectionAttempts)||!['rejectionAttempts','marchStepM','maxBeyondM'].every(field=>Number.isFinite(f.impact[field])&&f.impact[field]>0))throw Error('탄착 프로파일 값 오류: '+id+'.impact');
       const band=f.presented;
       if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
+      if(p.combat){
+        if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
+        if(typeof p.weapons.mainGun.ammunitionId!=='string'||!p.weapons.mainGun.ammunitionId)throw Error('탄약 ID 누락: '+id);
+        for(const zone of ['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'])for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
+      }
       profiles[id]=freeze(p);
     }
     const ids=Object.freeze(Object.keys(profiles));
@@ -989,7 +1025,7 @@ const VEHICLE_PROFILES=(()=>{
     Object.defineProperty(profiles,'registry',{value:registry,enumerable:false});
     return Object.freeze(profiles);
   }
-  return createRegistry([M1A2]);
+  return createRegistry([M1A2,M1A2_1998]);
 })();
 if(typeof module!=='undefined')module.exports=VEHICLE_PROFILES;
 
@@ -1268,6 +1304,119 @@ const TacticalObservation=(()=>{
 if(typeof module!=='undefined')module.exports=TacticalObservation;
 
 </script>
+<script id="combat-state">
+'use strict';
+/* WIP11A abstract game damage. This module consumes the already-resolved hit
+ * and zone; it never rolls hit, zone, penetration, damage or destruction. */
+const TacticalCombatState=(()=>{
+  const ZONES=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
+  const clone=v=>JSON.parse(JSON.stringify(v));
+  function deepFreeze(o){for(const v of Object.values(o))if(v&&typeof v==='object'&&!Object.isFrozen(v))deepFreeze(v);return Object.freeze(o);}
+  const AMMUNITION=deepFreeze({
+    M829A2:{
+      id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],outsidePolicy:'clamp'},
+      damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'}
+    }
+  });
+  const ammunitionRegistry=Object.freeze({
+    ids:()=>Object.freeze(Object.keys(AMMUNITION)),
+    has:id=>Object.hasOwn(AMMUNITION,id),
+    get(id){if(!Object.hasOwn(AMMUNITION,id))throw Error('등록되지 않은 탄약: '+id);return AMMUNITION[id];}
+  });
+  function finitePositive(v,label){if(!Number.isFinite(v)||v<=0)throw Error(label+' 값 오류');return v;}
+  function validateProfile(p){
+    if(!p?.combat)throw Error('차량 전투 프로파일 누락');
+    finitePositive(p.combat.maxHp,'최대 HP');
+    if(!p.weapons?.mainGun?.ammunitionId)throw Error('주포 탄약 ID 누락');
+    ammunitionRegistry.get(p.weapons.mainGun.ammunitionId);
+    for(const zone of ZONES){const a=p.combat.armor?.[zone];if(!a||!Number.isFinite(a.ke)||a.ke<0)throw Error('장갑 값 오류: '+zone);}
+    return p;
+  }
+  function initUnit(u,p){
+    validateProfile(p);
+    if(u.combat)return u.combat;
+    u.combat={maxHp:p.combat.maxHp,hp:p.combat.maxHp,status:'alive',ammoId:p.weapons.mainGun.ammunitionId,destroyedAt:null,lastDamage:null};
+    return u.combat;
+  }
+  function interval(nodes,value){
+    if(value<=nodes[0])return{lo:0,hi:0,t:0,clamped:value<nodes[0]};
+    const last=nodes.length-1;if(value>=nodes[last])return{lo:last,hi:last,t:0,clamped:value>nodes[last]};
+    for(let i=0;i<last;i++)if(value<=nodes[i+1])return{lo:i,hi:i+1,t:(value-nodes[i])/(nodes[i+1]-nodes[i]),clamped:false};
+  }
+  function penetrationAt(ammo,rangeM,angleDeg){
+    finitePositive(rangeM,'사거리');if(!Number.isFinite(angleDeg)||angleDeg<0)throw Error('입사각 값 오류');
+    const t=ammo.penetration,r=interval(t.rangesM,rangeM),a=interval(t.anglesDeg,angleDeg),row=i=>t.values[i][a.lo]+(t.values[i][a.hi]-t.values[i][a.lo])*a.t;
+    return{value:row(r.lo)+(row(r.hi)-row(r.lo))*r.t,rangeClamped:r.clamped,angleClamped:a.clamped,rangeUsed:clamp(rangeM,t.rangesM[0],t.rangesM.at(-1)),angleUsed:clamp(angleDeg,t.anglesDeg[0],t.anglesDeg.at(-1))};
+  }
+  function multiplierAt(ammo,residualRatio){
+    if(!Number.isFinite(residualRatio)||residualRatio<0)throw Error('잔여 관통비 값 오류');
+    const points=ammo.damageMultiplier.points;
+    if(residualRatio<=points[0][0])return points[0][1];
+    for(let i=1;i<points.length;i++)if(residualRatio<=points[i][0]){const[a,x]=points[i-1],[b,y]=points[i];return x+(y-x)*(residualRatio-a)/(b-a);}
+    return points.at(-1)[1];
+  }
+  function faceHeading(pose,zone,side){
+    const heading=zone.startsWith('turret')?pose.turret:pose.heading;
+    if(zone.endsWith('Front'))return heading;
+    if(zone.endsWith('Rear'))return heading+Math.PI;
+    if(zone.endsWith('Side')){if(!['left','right'].includes(side))throw Error('측면 좌우 값 오류');return heading+(side==='right'?Math.PI/2:-Math.PI/2);}
+    return heading;
+  }
+  function incidenceDeg(origin,pose,zone,side){
+    if(!origin||!pose||![origin.x,origin.y,pose.x,pose.y,pose.heading,pose.turret].every(Number.isFinite))throw Error('착탄 자세 값 오류');
+    if(zone==='upper')return 0;
+    const incoming=Math.atan2(origin.y-pose.y,origin.x-pose.x);
+    return Math.abs(diff(incoming,faceHeading(pose,zone,side)))*180/Math.PI;
+  }
+  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId}){
+    if(typeof hit!=='boolean')throw Error('명중 결과 누락');
+    if(!hit)return Object.freeze({hit:false,penetrated:false,damage:0,reason:'miss'});
+    validateProfile(profile);
+    if(!ZONES.includes(zone))throw Error('지원하지 않는 피격 구역: '+zone);
+    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone].ke;
+    const penetrated=pen.value>=protection,residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0,damage=penetrated?ammo.baseDamage*multiplier:0;
+    if(!Number.isFinite(damage)||damage<0)throw Error('피해 계산 오류');
+    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,penetration:pen.value,protection,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
+  }
+  function create({profileOf,onDestroyed=null,recordLimit=200,idLimit=4096}={}){
+    if(typeof profileOf!=='function')throw Error('profileOf 필요');
+    if(!Number.isInteger(recordLimit)||recordLimit<1)throw Error('전투 기록 제한 오류');
+    if(!Number.isInteger(idLimit)||idLimit<1)throw Error('착탄 ID 기록 제한 오류');
+    // Runtime IDs are <shooter>-shot-<monotonic number>. Compress their exact
+    // once-only history to one watermark plus the small out-of-order flight gap
+    // per shooter. Synthetic/non-runtime IDs use a bounded recent-ID fallback.
+    const sequences=new Map(),recent=new Set(),recentQueue=[],records=[];let destroyedCount=0,appliedCount=0;
+    const parsed=id=>{const m=id.match(/^(.*)-shot-([1-9][0-9]*)$/);return m?{shooter:m[1],number:Number(m[2])}:null;};
+    function duplicate(id){const p=parsed(id);if(!p)return recent.has(id);const s=sequences.get(p.shooter);return!!s&&(p.number<=s.contiguous||s.pending.has(p.number));}
+    function mark(id){const p=parsed(id);if(!p){recent.add(id);recentQueue.push(id);if(recentQueue.length>idLimit)recent.delete(recentQueue.shift());appliedCount++;return;}
+      let s=sequences.get(p.shooter);if(!s){s={contiguous:0,pending:new Set()};sequences.set(p.shooter,s);}s.pending.add(p.number);while(s.pending.delete(s.contiguous+1))s.contiguous++;appliedCount++;}
+    const remember=r=>{records.push(r);if(records.length>recordLimit)records.shift();return r;};
+    function apply(event,target,now=0){
+      const id=event?.id;if(typeof id!=='string'||!id)throw Error('착탄 ID 누락');
+      if(duplicate(id))return{applied:false,reason:'duplicate',id};
+      if(!target){mark(id);return remember({applied:false,reason:'target-unavailable',id,time:now});}
+      const profile=validateProfile(profileOf(target)),state=initUnit(target,profile);
+      if(state.status==='destroyed'){mark(id);return remember({applied:false,reason:'target-destroyed',id,time:now,targetId:target.id,hpBefore:state.hp,hpAfter:state.hp,damage:0,destroyed:false});}
+      const result=evaluate({...event,profile,ammoId:event.ammoId||profile.weapons.mainGun.ammunitionId});
+      mark(id);
+      const hpBefore=state.hp,damage=Math.min(hpBefore,result.damage),hpAfter=clamp(hpBefore-damage,0,state.maxHp),destroyed=hpAfter<=0&&state.status!=='destroyed';
+      state.hp=hpAfter;
+      const record={applied:true,id,time:now,targetId:target.id,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,protection:result.protection??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,damage,hpBefore,hpAfter,maxHp:state.maxHp,destroyed};
+      state.lastDamage={...record};
+      if(destroyed){state.status='destroyed';state.destroyedAt=now;destroyedCount++;onDestroyed?.(target,record);}
+      return remember(record);
+    }
+    return Object.freeze({apply,records:()=>clone(records),stats:()=>({applied:appliedCount,records:records.length,destroyed:destroyedCount,sequenceShooters:sequences.size,recentIds:recent.size})});
+  }
+  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
+  return Object.freeze({create,initUnit,validateProfile,evaluate,penetrationAt,multiplierAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES});
+})();
+if(typeof module!=='undefined')module.exports=TacticalCombatState;
+
+</script>
 <script id="fire-control">
 'use strict';
 /* Fictional RTS firing/flight states. All coefficients are game tuning; the
@@ -1394,7 +1543,7 @@ const TacticalFireControl=(()=>{
     if(result.hit)return{kind:'hit',x:pose.x+point.x*px,y:pose.y+point.x*py,z:(environment?.heightAt?.(pose.x,pose.y)||0)+point.z,beyond:0};
     return marchImpact(shot,pose,point,environment);
   }
-  function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,seed=7,debug=false,onDecisionRoll=null}){
+  function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,onImpactResolved=null,seed=7,debug=false,onDecisionRoll=null}){
     const events=[],flights=[],records=[];let currentTime=0;
     const clone=v=>JSON.parse(JSON.stringify(v));
     const emit=e=>{events.push(e);if(events.length>200)events.shift();};
@@ -1409,17 +1558,21 @@ const TacticalFireControl=(()=>{
         const shot=flights.shift(),sight=impactSight?impactSight(shot):{...clone(shot.fireExposure),pose:{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}},evaluation=impactEvaluation(shot,sight);
         const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
         const observation=isObserved(shot.team,shot.targetKey),observed=!sight?.gone&&!!observation;
+        // Damage consumes the private resolved result exactly here, before any
+        // public redaction. It must not infer a hit from the display point.
+        const combat=onImpactResolved?.({id:shot.id,time:now,team:shot.team,shooterId:shot.shooterId,targetId:shot.targetId,targetKey:shot.targetKey,ammoId:shot.ammoId,hit:result.hit,zone:result.zone,side,origin:clone(shot.origin),pose:clone(evaluation.pose),rangeM:Math.hypot(evaluation.pose.x-shot.origin.x,evaluation.pose.y-shot.origin.y),impact:clone(impact),observed,observation:observation?clone(observation):null})??null;
         const publicImpact=observed?clone(impact):result.hit?null:{...clone(impact),beyond:null};
         const publicResult={type:'impact',id:shot.id,time:now,impactAt:shot.impactAt,team:shot.team,shooterId:shot.shooterId,targetKey:shot.targetKey,
           result:observed?(result.hit?'hit':'miss'):'unobserved',zone:observed?result.zone:null,side:observed?side:null,
           finalHitChance:observed?evaluation.finalHitChance:null,hitChanceAtFire:shot.hitChanceAtFire,bias:observed?clone(evaluation.bias):null,
-          impact:publicImpact,ammoRemaining:shot.ammoRemaining};
+          impact:publicImpact,ammoRemaining:shot.ammoRemaining,combat:observed&&combat?clone(combat):null};
         emit(publicResult);shot.shooter.fireControl.lastShot=clone(publicResult);
-        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
+        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),combat:combat?clone(combat):null,reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
       }
     }
     function inspect(u,now){
       const p=profileOf(u),f=p.fireControl,s=init(u,p),d=mission(u),c=d?u.observation.contacts[d.target]:null;
+      if(u.combat?.status==='destroyed')return{reason:'destroyed'};
       if(!f.enabled||!p.weapons.mainGun.enabled||!p.sensors.gunner.enabled)return{reason:'disabled'};
       if(!d)return{reason:'no-target'};
       if(d.status!=='acquired')return{reason:'not-acquired',d,c};
@@ -1464,7 +1617,7 @@ const TacticalFireControl=(()=>{
         const chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime),number=s.shotCount+1;
         if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
         const origin=G.muzzleWorld(u,p.model),tof=chance.breakdown.tof,predicted={x:pose.x+s.targetVelocity.x*tof,y:pose.y+s.targetVelocity.y*tof},beta=Math.atan2(predicted.y-origin.y,predicted.x-origin.x),id=u.id+'-shot-'+number,impactAt=now+tof;
-        const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,shooter:u,
+        const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,ammoId:p.weapons.mainGun.ammunitionId??null,shooter:u,
           origin,fireEye:sight.fireEye,profileAtFire:clone(p),fireControl:clone(f),pose:clone(pose),fireExposure:clone(sight),
           beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1};
         flights.push(shot);
@@ -1506,10 +1659,11 @@ const TacticalCore = (() => {
   const MAP = BATTLEFIELD_DATA, M = MAP.meta;
   if (M.width !== 4000 || M.height !== 4000 || MAP.heightmap.spacing !== 2) throw Error('전장 규격 오류');
   const WORLD = {w:M.width,h:M.height,step:2,nav:16};
-  const PROFILE=VEHICLE_PROFILES.M1A2;
-  const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
   const registry=VEHICLE_PROFILES.registry;
-  const profileOf=u=>{const p=registry.get(u?.profileId??'M1A2');return u?.profileOverride||p;};
+  const ACTIVE_PROFILE_ID=registry.has('M1A2_1998')?'M1A2_1998':'M1A2';
+  const PROFILE=registry.get(ACTIVE_PROFILE_ID);
+  const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
+  const profileOf=u=>{const p=registry.get(u?.profileId??ACTIVE_PROFILE_ID);return u?.profileOverride||p;};
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const mix=(a,b,t)=>a+(b-a)*t;
   const angleDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
@@ -1713,10 +1867,10 @@ const TacticalCore = (() => {
     }
     return {ok:true,points:points.slice(1),visits,cost:dist[g]};
   }
-  function makeTank(id,name,x,y,heading,team='blue',profileId='M1A2') {
+  function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID) {
     registry.get(profileId);
     const u={id,name,profileId,x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
-    TacticalObservation.init(u);TacticalFireControl.init(u,profileOf(u));return u;
+    const p=profileOf(u);TacticalObservation.init(u);TacticalFireControl.init(u,p);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
   }
   function legalNear(x,y,units=[]) {
     for(let r=0;r<150;r+=8) for(let a=0;a<Math.PI*2;a+=Math.PI/8) {
@@ -1734,10 +1888,11 @@ const TacticalCore = (() => {
     return {time:0,seed,units};
   }
   function issueMove(u,goal,reverse,units) {
+    if(u?.combat?.status==='destroyed')return{ok:false,reason:'격파 차량은 이동할 수 없음',points:[]};
     const r=planPath(u,goal,units,u);if(!r.ok)return r;
     u.path=r.points;u.goal={...goal};u.reverse=reverse;u.state=reverse?'후진 이동':'이동';return r;
   }
-  function stop(u){u.path=[];u.goal=null;u.state=u.speed>.15?'감속':'대기';}
+  function stop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.state=u.speed>.15?'감속':'대기';return true;}
   function routeDistance(u){let d=0,p=u;for(const q of u.path){d+=Math.hypot(q.x-p.x,q.y-p.y);p=q;}return d;}
   function mobilityLimit(type,along,side,reverse=false,p=PROFILE){
     const m=p.mobility,base=type==='road'||type==='bridge'?m.roadSpeed:Math.min(m.crossCountrySpeed,m.surfaceSpeed[type]??Infinity);
@@ -1752,6 +1907,7 @@ const TacticalCore = (() => {
   }
   function driveAcceleration(speed,p=PROFILE){const m=p.mobility;return m.accelerationReferenceSpeed/m.accelerationReferenceSeconds*Math.min(1,m.accelerationReferenceSpeed/Math.max(speed,.01));}
   function stepTank(u,dt,units) {
+    if(u.combat?.status==='destroyed'){u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
     if(u.team!=='blue')return;
     const pVehicle=profileOf(u),motion=pVehicle.mobility;
     u.replanTimer=Math.max(0,u.replanTimer-dt);
@@ -1779,15 +1935,35 @@ const TacticalCore = (() => {
     if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
     return observationRuntimes.get(s);
   }
-  function step(s,dt){s.time+=dt;for(const u of s.units)stepTank(u,dt,s.units);observationFor(s).advance(s.units,dt,s.time);fireFor(s).step(s.units,dt,s.time);}
-  const contacts=(s,team='blue')=>observationFor(s).contacts(team);
-  const guard=(s,u,ch,point,duration=0)=>!!profileOf(u).sensors[ch]?.enabled&&(ch!=='commander'||profileOf(u).sensors.commander.independent)&&TacticalObservation.guard(u,ch,point,duration,s.time);
-  const resumeObservation=(s,u,ch)=>TacticalObservation.resume(u,ch,s.time);
-  const designate=(s,u,key)=>observationFor(s).direct(u,key);
-  const cancelDesignation=(s,u)=>{TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);};
+  function step(s,dt){s.time+=dt;for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}const alive=s.units.filter(u=>u.combat?.status!=='destroyed');observationFor(s).advance(alive,dt,s.time);fireFor(s).step(s.units,dt,s.time);}
+  const wreckRuntimes=new WeakMap();
+  function wreckMap(s,team){if(!wreckRuntimes.has(s))wreckRuntimes.set(s,new Map());const all=wreckRuntimes.get(s);if(!all.has(team))all.set(team,new Map());return all.get(team);}
+  function contacts(s,team='blue'){
+    const base=observationFor(s).contacts(team),wrecks=wreckMap(s,team),result=[],seen=new Set();
+    for(const c of base){const w=wrecks.get(c.key);result.push(w?JSON.parse(JSON.stringify(w)):c);seen.add(c.key);}
+    for(const [key,w]of wrecks)if(!seen.has(key))result.push(JSON.parse(JSON.stringify(w)));
+    return result;
+  }
+  const aliveCommand=u=>u&&u.combat?.status!=='destroyed';
+  function deadContact(s,key){for(const observer of s.units)for(const[id,c]of Object.entries(observer.observation?.contacts||{}))if(c.key===key)return s.units.find(u=>u.id===id)?.combat?.status==='destroyed';return false;}
+  const guard=(s,u,ch,point,duration=0)=>aliveCommand(u)&&!!profileOf(u).sensors[ch]?.enabled&&(ch!=='commander'||profileOf(u).sensors.commander.independent)&&TacticalObservation.guard(u,ch,point,duration,s.time);
+  const resumeObservation=(s,u,ch)=>aliveCommand(u)&&TacticalObservation.resume(u,ch,s.time);
+  const designate=(s,u,key)=>aliveCommand(u)&&!wreckMap(s,u.team).has(key)&&!deadContact(s,key)&&observationFor(s).direct(u,key);
+  const cancelDesignation=(s,u)=>{if(!aliveCommand(u))return false;TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);return true;};
   const observationView=(s,u,ch='commander')=>TacticalObservation.view(u,ch,s.time);
   const ownObservation=(s,u,key=null)=>observationFor(s).ownStatus(u,key);
   const observationStats=s=>({...observationFor(s).stats});
+  const combatRuntimes=new WeakMap();
+  function combatFor(s){
+    if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,onDestroyed:(target)=>{
+      target.speed=0;target.path=[];target.goal=null;target.reverse=false;target.state='격파';
+      TacticalObservation.cancel(target,s.time,'destroyed');fireFor(s).cancel(target);
+    }}));
+    return combatRuntimes.get(s);
+  }
+  const combatView=u=>u?.combat?{maxHp:u.combat.maxHp,hp:u.combat.hp,status:u.combat.status,ammoId:u.combat.ammoId,destroyedAt:u.combat.destroyedAt,lastDamage:u.combat.lastDamage?JSON.parse(JSON.stringify(u.combat.lastDamage)):null}:null;
+  const combatEvents=s=>s.recordFireEvents?combatFor(s).records():[];
+  const combatStats=s=>combatFor(s).stats();
   const fireRuntimes=new WeakMap();
   function fireFor(s){
     if(!fireRuntimes.has(s)){
@@ -1796,8 +1972,21 @@ const TacticalCore = (() => {
       isObserved:(team,key)=>{if(observedAt!==s.time){observedTeams.clear();observedAt=s.time;}if(!observedTeams.has(team))observedTeams.set(team,new Map(contacts(s,team).filter(v=>v.current).map(v=>[v.key,v])));return observedTeams.get(team).get(key)||false;},
       impactEnvironment:{heightAt,buildingAt,world:WORLD},
       impactSight:shot=>{const target=s.units.find(v=>v.id===shot.targetId);if(!target)return{visible:false,gone:true};const p=profileOf(target),origin={...shot.origin,profileOverride:shot.profileAtFire};return{...exposure(origin,target,shot.fireEye),presented:{...p.fireControl.presented},pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:p.model.hullLength,width:p.model.width,turretLength:p.model.turretLength,turretWidth:p.model.turretWidth,turretPivot:[...p.model.turretPivot]}}};},
+      onImpactResolved:event=>{
+        const target=s.units.find(v=>v.id===event.targetId),p=target?profileOf(target):null;
+        const record=p?.combat?combatFor(s).apply(event,target,s.time):{applied:false,reason:target?'unsupported-profile':'target-unavailable',damage:0,destroyed:false};
+        if(record.destroyed&&event.observed&&event.observation){
+          const c=event.observation,w={key:c.key,x:event.pose.x,y:event.pose.y,heading:event.pose.heading,turret:event.pose.turret,commander:event.pose.commander??event.pose.turret,model:{...c.model,turretPivot:c.model?.turretPivot?.slice(),muzzleLocal:c.model?.muzzleLocal?.slice()},team:target.team,identified:true,current:false,memory:false,wreck:true,destroyed:true,observedAt:s.time,age:0,label:'격파 잔해',name:c.name??target.name,type:c.type??p.name};
+          wreckMap(s,event.team).set(c.key,w);
+          for(const observer of s.units.filter(u=>u.team===event.team)){
+            const mission=[observer.observation?.designation,observer.observation?.tracking].find(d=>['designated','waiting','acquiring','acquired'].includes(d?.status));
+            if(mission?.target===target.id){TacticalObservation.cancel(observer,s.time,'target-destroyed');fireFor(s).cancel(observer);}
+          }
+        }
+        return TacticalCombatState.publicRecord(record);
+      },
       freshSight:(u,id)=>{
-      const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'target-unavailable'};
+      const target=s.units.find(v=>v.id===id);if(!target||target.combat?.status==='destroyed')return{visible:false,reason:'target-unavailable'};
       const p=profileOf(u),sensor=p.sensors.gunner,optical=exposure(u,target,sensor.eyeHeight),muzzle={...TacticalVehicleGeometry.muzzleWorld(u,p.model),profileId:u.profileId,profileOverride:u.profileOverride};
       // Keep the game firing height relative to the hull's ground, even when
       // the barrel tip lies over different terrain. Optics stay on the vehicle.
@@ -1816,7 +2005,13 @@ const TacticalCore = (() => {
     return fireRuntimes.get(s);
   }
   const fireStatus=(s,u,key=null)=>fireFor(s).view(u,key);
-  const requestFire=(s,u,key)=>fireFor(s).request(u,key,s.time);
+  const requestFire=(s,u,key)=>{
+    if(!aliveCommand(u))return{ok:false,reason:'destroyed'};
+    const mission=[u.observation?.designation,u.observation?.tracking].find(d=>['designated','waiting','acquiring','acquired'].includes(d?.status));
+    const target=mission?s.units.find(v=>v.id===mission.target):null;
+    if(target?.combat?.status==='destroyed')return{ok:false,reason:'target-unavailable'};
+    return fireFor(s).request(u,key,s.time);
+  };
   const fireEvents=(s,team='blue',since=-Infinity)=>fireFor(s).events(team,since);
   const fireDebugRecords=s=>s.recordFireEvents?fireFor(s).debugRecords():[];
   const roofGrid=new Float32Array(TH.columns*TH.rows);
@@ -1914,7 +2109,7 @@ const TacticalCore = (() => {
     for(const [col,along] of e.turretAlong.entries())sample(along,e.turretHeight,target.turret??target.heading,'turret',col,0);
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,requestFire,fireEvents,fireDebugRecords,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,requestFire,fireEvents,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -2671,7 +2866,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{if(targetId&&C.designate(sim,selectedUnit(),targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
-  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
   function fireSelected(){
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
     if(!targetId){toast('관측 중인 표적을 먼저 탭해줘');return;}
@@ -3040,16 +3235,20 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   }
   function updateUI(){
     const u=selectedUnit();
+    const combat=C.combatView(u),destroyed=combat?.status==='destroyed';
     const firing=C.fireStatus(sim,u,targetId),fireText=firing.status==='ready'?'조준 완료':firing.status==='aiming'?'조준 '+Math.round(firing.aimProgress*100)+'%':fireReasons[firing.reason]||'표적 미확보';
     ui.setText($('fireState'),fireText+' · 시험탄 '+firing.ammo);
     const activeFlight=firing.inFlight[0];ui.setText($('flightState'),activeFlight?'비행 중'+(firing.inFlight.length>1?' '+firing.inFlight.length+'발':'')+' · 착탄까지 '+activeFlight.remaining.toFixed(1)+'초':firing.lastShot?.result==='unobserved'?'최근 단발: 결과 미확인':'');
-    $('fire').disabled=paused||!targetId||!firing.canFire;
+    $('fire').disabled=paused||destroyed||!targetId||!firing.canFire;
     $('fire').setAttribute('aria-disabled',String($('fire').disabled));
     const look=lookView(),bearing=look.direction===null?null:((Math.round(look.direction*180/Math.PI)+90)%360+360)%360;
     ui.setText($('lookStatus'),look.mode==='fixed'?bearing+'° · '+(look.remaining===null?'해제까지':Math.ceil(look.remaining)+'초'):'자동 경계');
     ui.setText($('unitName'),u.name);updateVehicleSpecs(u);
     ui.setText($('velocity'),Math.round(u.speed*3.6));
     ui.setText($('motionState'),u.state);
+    ui.setText($('combatSummary'),combat?combat.ammoId+' · HP '+Math.round(combat.hp).toLocaleString()+' / '+Math.round(combat.maxHp).toLocaleString()+' · '+(destroyed?'격파':'생존'):'피해 모델 비활성');
+    $('combatSummary').classList.toggle('destroyed',destroyed);
+    for(const id of ['move','reverse','stop','lookDirection','lookResume','designateTarget','cancelDesignation'])$(id).disabled=destroyed;
     ui.setText($('elevation'),C.heightAt(u.x,u.y).toFixed(1)+' m');
     ui.setText($('slope'),(Math.atan(C.slopeAt(u.x,u.y))*180/Math.PI).toFixed(1)+'°');
     ui.setText($('heading'),((Math.round(u.heading*180/Math.PI)+90)%360+360)%360+'°');
@@ -3058,7 +3257,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     }
     )[C.surfaceAt(u.x,u.y)]);
     const dist=C.routeDistance(u);
-    ui.setHTML($('routeInfo'),u.path.length?'<strong>'+(u.reverse?'후진':'이동')+' 경로</strong> · 남은 거리 '+Math.round(dist)+'m':'지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.');
+    ui.setHTML($('routeInfo'),destroyed?'<strong>격파</strong> · 잔해는 차량 통행을 막음':u.path.length?'<strong>'+(u.reverse?'후진':'이동')+' 경로</strong> · 남은 거리 '+Math.round(dist)+'m':'지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.');
     ui.setText($('clock'),'T+ '+String(Math.floor(sim.time/60)).padStart(2,'0')+':'+String(Math.floor(sim.time%60)).padStart(2,'0'));
     ui.setText($('simState'),paused?'일시정지':'기동·관측·사격 시험');
     updateRoster($('roster').children,sim.units,selected);
@@ -3069,16 +3268,18 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     const target=C.contacts(sim).find(v=>v.key===targetId);
     $('targetPanel').classList.toggle('visible',!!target);
     if(target){
+      $('designateTarget').disabled=destroyed||!!target.wreck;
       ui.setText($('targetTitle'),target.label);
       const ownTarget=C.ownObservation(sim,u,target.key),channelNames={ambient:'주변',commander:'전차장',gunner:'포수'};
       ui.setText($('targetOwnStatus'),'팀 '+(target.current?'관측':'기억')+' · 선택 차량 '+(ownTarget.current?ownTarget.channels.map(ch=>channelNames[ch]).join('/'):'자체 관측 없음')+' · '+(ownTarget.acquired?'포수 확보':'포수 미확보'));
-      ui.setText($('targetDetails'),target.memory?'마지막 관측 '+target.age.toFixed(1)+'초 전 · '+(target.identified?target.type:'미식별 표적'):target.identified?target.type:'미식별 표적 · 상세정보 없음');
+      ui.setText($('targetDetails'),target.wreck?'관측된 격파 잔해 · '+target.type:target.memory?'마지막 관측 '+target.age.toFixed(1)+'초 전 · '+(target.identified?target.type:'미식별 표적'):target.identified?target.type:'미식별 표적 · 상세정보 없음');
       const fc=C.fireStatus(sim,u,target.key);
       const probabilities=fc.zoneProbabilities;
       const b=fc.breakdown,rects=b?.rects||[],w=rects.length?Math.max(...rects.map(r=>r.x2))-Math.min(...rects.map(r=>r.x1)):0,h=rects.length?Math.max(...rects.map(r=>r.z2))-Math.min(...rects.map(r=>r.z1)):0;
       ui.setText($('fireDetails'),target.identified&&target.current&&b?'예상 명중 '+Math.round(fc.hitChance*100)+'% (발사 시) · 오차 '+Math.max(b.sigma.x,b.sigma.z).toFixed(2)+'밀 · 표적 '+w.toFixed(1)+'×'+h.toFixed(1)+'m · 명중 시: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '):'');
       const lastShot=target.identified&&target.current&&fc.lastShot?.targetKey===target.key?fc.lastShot:null,impactKind={ground:'지면',building:'건물','out-of-map':'지도 밖','max-distance':'최대 거리'},missText=lastShot?.impact?(lastShot.impact.beyond>=0?'표적 너머 ':'표적 앞 ')+Math.round(Math.abs(lastShot.impact.beyond))+'m '+(impactKind[lastShot.impact.kind]||lastShot.impact.kind):'탄착점 없음';
-      ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.result==='unobserved'?'결과 미확인':lastShot.result==='hit'?'명중 · '+zoneNames[lastShot.zone]+(lastShot.side?'('+({right:'우',left:'좌'})[lastShot.side]+')':''):'빗나감 · '+missText)+' · 피해 판정 없음':'');
+      const hitDamage=lastShot?.combat,lastDamage=hitDamage?(hitDamage.penetrated?'관통 · 피해 '+Math.round(hitDamage.damage)+(hitDamage.destroyed?' · 격파':' · HP '+Math.round(hitDamage.hpAfter)):'비관통 · 피해 0'):'';
+      ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.result==='unobserved'?'결과 미확인':lastShot.result==='hit'?'명중 · '+zoneNames[lastShot.zone]+(lastShot.side?'('+({right:'우',left:'좌'})[lastShot.side]+')':'')+(lastDamage?' · '+lastDamage:''):'빗나감 · '+missText):'');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
       for(const part of ['hull','turret']){
         const value=target.identified&&target.current?Math.round((target.exposure?.[part]||0)*100)+'%':'—';
@@ -3090,7 +3291,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     const vehicle=C.profileOf(u),model=vehicle.model,motion=vehicle.mobility,s=vehicle.sensors,degrees=r=>Math.round(r*180/Math.PI);
     ui.setText($('unitType'),vehicle.name+' · '+vehicle.weapons.mainGun.calibreMm+'mm '+vehicle.weapons.mainGun.name);
     ui.setText($('profileTitle'),vehicle.id+' 제원 · 적용값');
-    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
+    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
   }
   for(const u of sim.units.filter(u=>u.team==='blue')){
     const b=document.createElement('button');
@@ -3108,7 +3309,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     $('roster').appendChild(b)
   }
   function drawTank(u){
-    const p=toScreen(u.x,u.y),isSelected=u.id===selected,enemy=u.team==='red',z=camera.zoom;
+    const p=toScreen(u.x,u.y),isSelected=u.id===selected,enemy=u.team==='red',z=camera.zoom,destroyed=u.destroyed||u.wreck||u.combat?.status==='destroyed';
     const model=u.model||C.profileOf(u).model,half=model.hullLength/2,width=model.width,ring=Math.max(15,Math.hypot(half,width/2)*z+6);
     const margin=(model.barrelTip+.5)*z+30;
     if(p.x < -margin || p.y < -margin || p.x > camera.w+margin || p.y > camera.h+margin)return;
@@ -3122,14 +3323,16 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     }
     if(u.key&&u.key===targetId){ctx.strokeStyle='#ffd19b';ctx.lineWidth=1.5;ctx.strokeRect(-ring,-ring,ring*2,ring*2);}
     const artId=enemy?'M1A2':C.profileOf(u).artId;
-    ({M1A2:M1A2Art})[artId].draw(ctx,u,z,model,{silhouette:unknown});
+    if(destroyed)ctx.globalAlpha=Math.min(ctx.globalAlpha,.58);
+    ({M1A2:M1A2Art})[artId].draw(ctx,u,z,model,{silhouette:unknown||destroyed});
+    if(destroyed){ctx.globalAlpha=1;ctx.strokeStyle='#e09572';ctx.lineWidth=2;const d=Math.max(8,ring*.55);ctx.beginPath();ctx.moveTo(-d,-d);ctx.lineTo(d,d);ctx.moveTo(d,-d);ctx.lineTo(-d,d);ctx.stroke();}
     if(!enemy&&isSelected){
       ctx.save();ctx.rotate(u.commander);ctx.strokeStyle='#93e9f0';ctx.fillStyle='#93e9f0';ctx.lineWidth=2;
       ctx.beginPath();ctx.moveTo(ring+3,0);ctx.lineTo(ring+19,0);ctx.stroke();
       ctx.beginPath();ctx.moveTo(ring+24,0);ctx.lineTo(ring+16,-4);ctx.lineTo(ring+16,4);ctx.closePath();ctx.fill();ctx.restore();
     }
     if(z<1){ctx.fillStyle=unknown?'#050505':enemy?'#eab17c':'#a5e1c5';ctx.strokeStyle='#253c30';ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fill();ctx.stroke();}
-    ctx.font='600 10px ui-monospace,monospace';ctx.textAlign='center';const text=enemy?u.label+(u.memory?' · 기억':''):u.name,tw=ctx.measureText(text).width,labelY=ring+7;
+    ctx.font='600 10px ui-monospace,monospace';ctx.textAlign='center';const text=enemy?u.label+(u.memory?' · 기억':''):u.name+(destroyed?' · 격파':''),tw=ctx.measureText(text).width,labelY=ring+7;
     ctx.fillStyle='#12271fe8';ctx.fillRect(-tw/2-5,labelY,tw+10,17);ctx.fillStyle=enemy?'#f0bd86':'#e3edcc';ctx.fillText(text,0,labelY+12);ctx.restore();
   }
   function drawShots(){
@@ -3307,7 +3510,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP10',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP11A',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView(),firing:C.fireStatus(sim,selectedUnit(),targetId),shots:C.fireEvents(sim,'blue')
     }
     )),command:(x,y,reverse=false)=>{
