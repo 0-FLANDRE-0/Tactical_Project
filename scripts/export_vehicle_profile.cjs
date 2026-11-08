@@ -1,4 +1,4 @@
-const fs=require('fs'),path=require('path'),profile=require('../src/vehicle-profiles.js').M1A2;
+const fs=require('fs'),path=require('path'),profiles=require('../src/vehicle-profiles.js'),profile=profiles.M1A2,combat=require('../src/combat-state.js');
 const sourceDir=path.join(__dirname,'../data/vehicles');fs.mkdirSync(sourceDir,{recursive:true});
 const record={profile,baseline:'M1A2 basic; not M1A2 SEP v2/v3',reviewed:'2026-11-07',
  sources:[
@@ -38,7 +38,16 @@ const record={profile,baseline:'M1A2 basic; not M1A2 SEP v2/v3',reviewed:'2026-1
   'navigation':{status:'derived conservative clearance',formula:'ceil((hypot(hullLength/2,width/2)+0.25)*100)/100 = 4.62m',note:'Cannon tube does not collide; 16m navigation nodes and conservative circle are retained'}
  },limits:['Mass and engine rating are profile metadata, not a full powertrain simulation','Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model','No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities']};
 fs.writeFileSync(path.join(sourceDir,'M1A2.json'),JSON.stringify(record,null,2)+'\n');console.log('Exported M1A2 values and per-field provenance');
-fs.writeFileSync(path.join(sourceDir,'registry.json'),JSON.stringify({schemaVersion:1,ids:require('../src/vehicle-profiles.js').registry.ids(),artIds:['M1A2'],note:'Registry profiles are isolated immutable snapshots. Combat archive catalogs are not imported as active runtime profiles.'},null,2)+'\n');
+const active=structuredClone(record);active.profile=profiles.M1A2_1998;active.baseline='Active symmetric WIP11A game fixture: M1A2 (1998) / M829A2';active.reviewed='2026-11-08';
+active.sources.push({id:'USER_WIP11A',title:'TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md and current archive game tables',path:'../../docs/TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md',scope:'User-confirmed abstract HP, armour and M829A2 game data; not independently verified real equipment performance'});
+active.fieldEvidence.combat={status:'user game data',source:'USER_WIP11A',note:'1450 abstract HP and KE/CE zone values; WIP11A uses KE only and no module/crew damage'};
+active.fieldEvidence['weapons.mainGun.ammunitionId']={status:'user game data',source:'USER_WIP11A',value:'M829A2',note:'Single symmetric trial ammunition'};
+active.limits.push('WIP11A penetration and damage are abstract game tables; no ricochet, module, crew, fire or ammunition-rack model');
+fs.writeFileSync(path.join(sourceDir,'M1A2_1998.json'),JSON.stringify(active,null,2)+'\n');
+const ammoDir=path.join(__dirname,'../data/ammunition');fs.mkdirSync(ammoDir,{recursive:true});
+fs.writeFileSync(path.join(ammoDir,'M829A2.json'),JSON.stringify({ammunition:combat.AMMUNITION.M829A2,status:'active WIP11A game data',source:'archive/ammo and archive/combat tables cited by WIP11A instructions',limits:['Table interpolation with endpoint clamp','Non-penetration damage 0','No additional velocity damage multiplier']},null,2)+'\n');
+fs.writeFileSync(path.join(sourceDir,'registry.json'),JSON.stringify({schemaVersion:2,activeProfileId:'M1A2_1998',ids:profiles.registry.ids(),artIds:['M1A2'],ammunitionIds:combat.ammunitionRegistry.ids(),note:'M1A2 is a frozen WIP10 compatibility fixture; M1A2_1998 is the active symmetric WIP11A scenario profile.'},null,2)+'\n');
+console.log('Exported active M1A2_1998 and M829A2 game data');
 
 const art=require('../src/m1a2-art.js'),svg=art.toSVG();
 fs.writeFileSync(path.join(sourceDir,'M1A2_top_view.svg'),svg);

@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path');
 const C=require('./load.cjs')(),reference=require('./helpers/los-reference.cjs'),B=reference.load(C.MAP),{mapFor}=require('./helpers/observation-core-fixture.cjs');
 const source=fs.readFileSync(path.resolve(__dirname,'../src/sim-core.js'),'utf8'),profiles=require('../src/vehicle-profiles.js'),O=require('../src/observation.js');
-const load=map=>new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,profiles,O,require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
+const load=map=>new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,profiles,O,require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
 const report={referenceCommit:'e9f037cc6edca994e3f19297d3e0aa6c491be164',referenceSourceSHA256:reference.sha256,mapHash:C.MAP.meta.mapHash,seed:707,summary:C.losAccelerationInfo(),rays:0,exposures:0,visible:0,positiveForestDepth:0,reasons:{},cases:[]};
 function equal(A,B,o,t,h=1.5,fast=false,eye=null){const actual=A.lineOfSight(o,t,h,fast,eye),expected=B.lineOfSight(o,t,h,fast,eye);assert.deepEqual(actual,expected,JSON.stringify({o,t,h,fast,eye}));report.rays++;report.visible+=+actual.visible;report.positiveForestDepth+=+(actual.forestDepth>0);report.reasons[actual.reason]=(report.reasons[actual.reason]||0)+1;return actual;}
 function pair(kind,edit=null){const map=mapFor(kind);if(edit)edit(map);return{A:load(map),B:reference.load(map)};}
@@ -17,7 +17,7 @@ test('12000 real-map LOS results exactly match baseline, including reason/optica
 });
 test('1000 real-map nine-point exposure records exactly match at independent hull/turret angles',()=>{
  for(let i=0;i<1000;i++){
-  const o=C.makeTank('A','A',C.hash(i,711)*4000,C.hash(i,712)*4000,i),t=C.makeTank('T','T',C.hash(i,713)*4000,C.hash(i,714)*4000,i*.27,'red');t.turret=i*.39;
+  const o=C.makeTank('A','A',C.hash(i,711)*4000,C.hash(i,712)*4000,i,'blue',undefined,'hold'),t=C.makeTank('T','T',C.hash(i,713)*4000,C.hash(i,714)*4000,i*.27,'red',undefined,'hold');t.turret=i*.39;
   const ex=C.exposure(o,t,[2.65,1.4,10][i%3]);assert.deepEqual({...ex,samples:ex.samples.map(({along,z,col,row,...v})=>v)},B.exposure(o,t,[2.65,1.4,10][i%3]),'prior exposure fields '+i);report.exposures++;
  }
  report.cases.push('1000 exposure records (9000 rays), independent poses');

@@ -32,6 +32,16 @@ const VEHICLE_PROFILES=(()=>{
   };
   M1A2.navigation.radius=Math.ceil((Math.hypot(M1A2.model.hullLength/2,M1A2.model.width/2)+M1A2.navigation.clearanceMargin)*100)/100;
   function clone(o){if(Array.isArray(o))return o.map(clone);if(o&&typeof o==='object')return Object.fromEntries(Object.entries(o).map(([k,v])=>[k,clone(v)]));return o;}
+  // Active symmetric WIP11A trial configuration. Unchanged dimensions,
+  // mobility, sensors and artwork are explicit inherited game settings.
+  const M1A2_1998=clone(M1A2);
+  Object.assign(M1A2_1998,{id:'M1A2_1998',name:'M1A2 Abrams (1998)',variant:'M1A2 (1998) 시험 구성'});
+  Object.assign(M1A2_1998.weapons.mainGun,{ammunitionId:'M829A2',ammunitionName:'M829A2'});
+  M1A2_1998.fireControl.muzzleVelocity=1680;
+  M1A2_1998.combat={maxHp:1450,armor:{
+    hullFront:{ke:390,ce:720},hullSide:{ke:120,ce:280},hullRear:{ke:40,ce:40},
+    turretFront:{ke:720,ce:1150},turretSide:{ke:340,ce:630},turretRear:{ke:55,ce:55},upper:{ke:40,ce:40}
+  }};
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
   function createRegistry(entries){
     const profiles=Object.create(null);
@@ -50,6 +60,11 @@ const VEHICLE_PROFILES=(()=>{
       if(!f.impact||!Number.isInteger(f.impact.rejectionAttempts)||!['rejectionAttempts','marchStepM','maxBeyondM'].every(field=>Number.isFinite(f.impact[field])&&f.impact[field]>0))throw Error('탄착 프로파일 값 오류: '+id+'.impact');
       const band=f.presented;
       if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
+      if(p.combat){
+        if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
+        if(typeof p.weapons.mainGun.ammunitionId!=='string'||!p.weapons.mainGun.ammunitionId)throw Error('탄약 ID 누락: '+id);
+        for(const zone of ['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'])for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
+      }
       profiles[id]=freeze(p);
     }
     const ids=Object.freeze(Object.keys(profiles));
@@ -59,6 +74,6 @@ const VEHICLE_PROFILES=(()=>{
     Object.defineProperty(profiles,'registry',{value:registry,enumerable:false});
     return Object.freeze(profiles);
   }
-  return createRegistry([M1A2]);
+  return createRegistry([M1A2,M1A2_1998]);
 })();
 if(typeof module!=='undefined')module.exports=VEHICLE_PROFILES;

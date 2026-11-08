@@ -1,0 +1,224 @@
+{
+  "date": "2026-11-08",
+  "baselineCommit": "a037774a8348378563d1d3ddb7822a20eab19890",
+  "baselineVersion": "0.4-WIP11C",
+  "currentVersion": "0.4-WIP11D",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "zones": [
+    {
+      "id": "west-forest-ridge",
+      "x": 800,
+      "y": 1500,
+      "zoom": 0.8,
+      "description": "숲 속 능선"
+    },
+    {
+      "id": "open-hill",
+      "x": 1000,
+      "y": 3400,
+      "zoom": 0.8,
+      "description": "개활지 언덕"
+    },
+    {
+      "id": "rasdorf-slope",
+      "x": 2800,
+      "y": 1550,
+      "zoom": 0.8,
+      "description": "마을 주변 사면"
+    },
+    {
+      "id": "south-east-valley",
+      "x": 3250,
+      "y": 3250,
+      "zoom": 0.8,
+      "description": "남동쪽 낮은 골짜기"
+    }
+  ],
+  "records": [
+    {
+      "zone": "west-forest-ridge",
+      "description": "숲 속 능선",
+      "variant": "before",
+      "camera": {
+        "x": 800,
+        "y": 1500,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-west-forest-ridge-before.png",
+      "sha256": "55eb789187991cf8da8eb16d3ee9bbc90c9db4410ea4455b91b112aa8599ce7d"
+    },
+    {
+      "zone": "open-hill",
+      "description": "개활지 언덕",
+      "variant": "before",
+      "camera": {
+        "x": 1000,
+        "y": 3400,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-open-hill-before.png",
+      "sha256": "9ccba8fe7d6ac1ff73d16635345ac80d1e7ea168f45fd2338a16274910a0aecd"
+    },
+    {
+      "zone": "rasdorf-slope",
+      "description": "마을 주변 사면",
+      "variant": "before",
+      "camera": {
+        "x": 2800,
+        "y": 1550,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-rasdorf-slope-before.png",
+      "sha256": "5314cfc3258fea39099326d2e82150e71a0034cbc9d4f2081f4eb04f786faa2a"
+    },
+    {
+      "zone": "south-east-valley",
+      "description": "남동쪽 낮은 골짜기",
+      "variant": "before",
+      "camera": {
+        "x": 3250,
+        "y": 3250,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-south-east-valley-before.png",
+      "sha256": "04c308c6a15dc1fd2ef8bd5a63ac4acb715082a6a93abd3bbdf9c40eda0ae79f"
+    },
+    {
+      "zone": "west-forest-ridge",
+      "description": "숲 속 능선",
+      "variant": "normal",
+      "camera": {
+        "x": 800,
+        "y": 1500,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-west-forest-ridge-normal.png",
+      "sha256": "6547ea39e92f72a3adbfb47000c79c35a8019fe8b08093a02a20faf90094604e"
+    },
+    {
+      "zone": "open-hill",
+      "description": "개활지 언덕",
+      "variant": "normal",
+      "camera": {
+        "x": 1000,
+        "y": 3400,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-open-hill-normal.png",
+      "sha256": "d6b6000d225106f8fdffdda3cae84e4c402a33ae1585ab49bf1875439dc5dc8a"
+    },
+    {
+      "zone": "rasdorf-slope",
+      "description": "마을 주변 사면",
+      "variant": "normal",
+      "camera": {
+        "x": 2800,
+        "y": 1550,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-rasdorf-slope-normal.png",
+      "sha256": "8fc51455b97ee832a0a58a3f070612ca0c26ca2f95e116a84202ad522f02fd0b"
+    },
+    {
+      "zone": "south-east-valley",
+      "description": "남동쪽 낮은 골짜기",
+      "variant": "normal",
+      "camera": {
+        "x": 3250,
+        "y": 3250,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-south-east-valley-normal.png",
+      "sha256": "6de80c6d5791a0bd1efc30dc0b3379de9132d5a7ac02e5ce4ce58602d01f4558"
+    },
+    {
+      "zone": "west-forest-ridge",
+      "description": "숲 속 능선",
+      "variant": "terrain",
+      "camera": {
+        "x": 800,
+        "y": 1500,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-west-forest-ridge-terrain.png",
+      "sha256": "428e6fef25964af39d02ab516ece26b77886ab0d65c8d15f61b1868d738551ff"
+    },
+    {
+      "zone": "open-hill",
+      "description": "개활지 언덕",
+      "variant": "terrain",
+      "camera": {
+        "x": 1000,
+        "y": 3400,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-open-hill-terrain.png",
+      "sha256": "d7d7a881d6631b7b68f3f7bf86ca10496b83dc7c320369d8d6b8144c57b5e1cc"
+    },
+    {
+      "zone": "rasdorf-slope",
+      "description": "마을 주변 사면",
+      "variant": "terrain",
+      "camera": {
+        "x": 2800,
+        "y": 1550,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-rasdorf-slope-terrain.png",
+      "sha256": "cd8e6559a16d1914420e75091e8ab8d7e31bed06141c027e2d88f09b7828ce61"
+    },
+    {
+      "zone": "south-east-valley",
+      "description": "남동쪽 낮은 골짜기",
+      "variant": "terrain",
+      "camera": {
+        "x": 3250,
+        "y": 3250,
+        "zoom": 0.8,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "file": "tests/releases/WIP11D-south-east-valley-terrain.png",
+      "sha256": "3472c91ca68d76dc110bf50317d1b8ebf823da37e9d46f7f8ec42ac626d2b28c"
+    }
+  ],
+  "notes": "Before, normal, and terrain variants use the exact recorded camera returned by the same mapView path. Chromium viewport evidence, not a physical-device test."
+}

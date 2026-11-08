@@ -1,0 +1,309 @@
+{
+  "version": "0.4-WIP11D",
+  "sourceMapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "method": {
+    "algorithm": "inverted-d8-cross-relief",
+    "algorithmVersion": "1.0.0",
+    "analysisSpacingMetres": 20,
+    "smoothingSigmaMetres": 40,
+    "flowAccumulationCells": 120,
+    "crossSectionOffsetMetres": 60,
+    "minimumCrossReliefMetres": 0.5,
+    "minimumLengthMetres": 180,
+    "boundaryMarginMetres": 60
+  },
+  "lineCounts": {
+    "ridge": 47,
+    "valley": 59
+  },
+  "zones": [
+    {
+      "id": "west-forest-ridge",
+      "centre": [
+        800,
+        1500
+      ],
+      "halfSize": [
+        600,
+        450
+      ],
+      "lineCounts": {
+        "ridge": 6,
+        "valley": 4
+      },
+      "profiles": [
+        {
+          "kind": "ridge",
+          "point": [
+            250.0,
+            1470.0
+          ],
+          "leftCentreRightSmoothedMetres": [
+            367.431,
+            368.2,
+            368.181
+          ],
+          "leftCentreRightOriginalMetres": [
+            367.35,
+            368.075,
+            368.15
+          ],
+          "signedCrossReliefMetres": 0.394,
+          "contourBracketMetres": [
+            360,
+            370
+          ],
+          "nearestMappedWaterwayMetres": 459.0,
+          "mappedWaterwayWithin40Metres": false,
+          "lineLengthMetres": 800.0,
+          "lineStoredSupportMetres": 0.514
+        },
+        {
+          "kind": "valley",
+          "point": [
+            1242.5,
+            1750.0
+          ],
+          "leftCentreRightSmoothedMetres": [
+            335.304,
+            335.065,
+            335.283
+          ],
+          "leftCentreRightOriginalMetres": [
+            335.709,
+            334.7,
+            334.6
+          ],
+          "signedCrossReliefMetres": 0.228,
+          "contourBracketMetres": [
+            330,
+            340
+          ],
+          "nearestMappedWaterwayMetres": 33.0,
+          "mappedWaterwayWithin40Metres": true,
+          "lineLengthMetres": 459.5,
+          "lineStoredSupportMetres": 0.571
+        }
+      ]
+    },
+    {
+      "id": "open-hill",
+      "centre": [
+        1000,
+        3400
+      ],
+      "halfSize": [
+        600,
+        450
+      ],
+      "lineCounts": {
+        "ridge": 7,
+        "valley": 3
+      },
+      "profiles": [
+        {
+          "kind": "ridge",
+          "point": [
+            750.0,
+            2737.5
+          ],
+          "leftCentreRightSmoothedMetres": [
+            360.182,
+            361.593,
+            360.359
+          ],
+          "leftCentreRightOriginalMetres": [
+            360.752,
+            362.275,
+            359.737
+          ],
+          "signedCrossReliefMetres": 1.322,
+          "contourBracketMetres": [
+            360,
+            370
+          ],
+          "nearestMappedWaterwayMetres": 110.5,
+          "mappedWaterwayWithin40Metres": false,
+          "lineLengthMetres": 1399.2,
+          "lineStoredSupportMetres": 0.891
+        },
+        {
+          "kind": "valley",
+          "point": [
+            931.25,
+            2832.5
+          ],
+          "leftCentreRightSmoothedMetres": [
+            361.239,
+            360.269,
+            360.958
+          ],
+          "leftCentreRightOriginalMetres": [
+            361.426,
+            359.675,
+            360.547
+          ],
+          "signedCrossReliefMetres": 0.829,
+          "contourBracketMetres": [
+            360,
+            370
+          ],
+          "nearestMappedWaterwayMetres": 60.6,
+          "mappedWaterwayWithin40Metres": false,
+          "lineLengthMetres": 960.4,
+          "lineStoredSupportMetres": 0.805
+        }
+      ]
+    },
+    {
+      "id": "rasdorf-slope",
+      "centre": [
+        2800,
+        1550
+      ],
+      "halfSize": [
+        600,
+        450
+      ],
+      "lineCounts": {
+        "ridge": 6,
+        "valley": 8
+      },
+      "profiles": [
+        {
+          "kind": "ridge",
+          "point": [
+            3290.0,
+            2382.5
+          ],
+          "leftCentreRightSmoothedMetres": [
+            375.147,
+            378.687,
+            379.82
+          ],
+          "leftCentreRightOriginalMetres": [
+            375.011,
+            378.7,
+            379.425
+          ],
+          "signedCrossReliefMetres": 1.203,
+          "contourBracketMetres": [
+            370,
+            380
+          ],
+          "nearestMappedWaterwayMetres": 562.7,
+          "mappedWaterwayWithin40Metres": false,
+          "lineLengthMetres": 918.3,
+          "lineStoredSupportMetres": 0.722
+        },
+        {
+          "kind": "valley",
+          "point": [
+            2251.25,
+            2152.5
+          ],
+          "leftCentreRightSmoothedMetres": [
+            332.753,
+            329.902,
+            331.638
+          ],
+          "leftCentreRightOriginalMetres": [
+            332.298,
+            327.097,
+            331.126
+          ],
+          "signedCrossReliefMetres": 2.294,
+          "contourBracketMetres": [
+            320,
+            330
+          ],
+          "nearestMappedWaterwayMetres": 0.9,
+          "mappedWaterwayWithin40Metres": true,
+          "lineLengthMetres": 873.5,
+          "lineStoredSupportMetres": 2.293
+        }
+      ]
+    },
+    {
+      "id": "south-east-valley",
+      "centre": [
+        3250,
+        3250
+      ],
+      "halfSize": [
+        600,
+        450
+      ],
+      "lineCounts": {
+        "ridge": 1,
+        "valley": 7
+      },
+      "profiles": [
+        {
+          "kind": "ridge",
+          "point": [
+            3448.75,
+            3067.5
+          ],
+          "leftCentreRightSmoothedMetres": [
+            398.255,
+            398.889,
+            398.235
+          ],
+          "leftCentreRightOriginalMetres": [
+            398.203,
+            398.9,
+            398.605
+          ],
+          "signedCrossReliefMetres": 0.644,
+          "contourBracketMetres": [
+            390,
+            400
+          ],
+          "nearestMappedWaterwayMetres": 317.6,
+          "mappedWaterwayWithin40Metres": false,
+          "lineLengthMetres": 631.2,
+          "lineStoredSupportMetres": 0.775
+        },
+        {
+          "kind": "valley",
+          "point": [
+            2788.75,
+            2772.5
+          ],
+          "leftCentreRightSmoothedMetres": [
+            363.561,
+            359.456,
+            364.266
+          ],
+          "leftCentreRightOriginalMetres": [
+            363.523,
+            354.462,
+            365.25
+          ],
+          "signedCrossReliefMetres": 4.458,
+          "contourBracketMetres": [
+            350,
+            360
+          ],
+          "nearestMappedWaterwayMetres": 19.7,
+          "mappedWaterwayWithin40Metres": true,
+          "lineLengthMetres": 806.4,
+          "lineStoredSupportMetres": 3.533
+        }
+      ]
+    }
+  ],
+  "profileCount": 8,
+  "allProfilesMatchKind": true,
+  "valleyWaterwayContext": {
+    "mappedWithin40Metres": 47,
+    "dryBeyond100Metres": 9,
+    "note": "Mapped-water proximity is reported after extraction and is not an extraction criterion or ground truth."
+  },
+  "limits": [
+    "20 m analysis and 40 m Gaussian sigma intentionally omit narrow micro-relief",
+    "D8/inverted-D8 centre lines may omit broad flat divides and closed depressions",
+    "Interpretation vectors are display-only and never feed movement, LOS, collision, or path finding"
+  ]
+}

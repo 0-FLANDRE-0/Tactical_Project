@@ -1,10 +1,15 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "activeProfileId": "M1A2_1998",
   "ids": [
-    "M1A2"
+    "M1A2",
+    "M1A2_1998"
   ],
   "artIds": [
     "M1A2"
   ],
-  "note": "Registry profiles are isolated immutable snapshots. Combat archive catalogs are not imported as active runtime profiles."
+  "ammunitionIds": [
+    "M829A2"
+  ],
+  "note": "M1A2 is a frozen WIP10 compatibility fixture; M1A2_1998 is the active symmetric WIP11A scenario profile."
 }

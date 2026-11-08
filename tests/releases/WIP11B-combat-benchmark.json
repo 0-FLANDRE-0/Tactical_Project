@@ -1,0 +1,19 @@
+{
+  "version": "0.4-WIP11B",
+  "date": "2026-11-08",
+  "node": "v24.22.1",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "fixture": "10,000 independent M1A2_1998 targets; 80% hit inputs alternating hullFront/turretFront at 1000m; one deterministic pass plus duplicate replay",
+  "impactCount": 10000,
+  "rounds": 15,
+  "warmupRounds": 3,
+  "medianMs": 19.20016899999999,
+  "p95Ms": 26.915442999999982,
+  "minMs": 17.028301,
+  "maxMs": 26.915442999999982,
+  "boundedRecords": 200,
+  "duplicateHpStable": true,
+  "notes": "CPU time for resolved game damage/state application only. Excludes observation, hit/zone resolution, flight, rendering, pathfinding and whole-game FPS."
+}

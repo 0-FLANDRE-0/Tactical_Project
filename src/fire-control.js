@@ -9,9 +9,10 @@ const TacticalFireControl=(()=>{
   function random(text,seed){let n=(2166136261^seed^0x51f15e)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
-  function init(u,p){
-    return u.fireControl??={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
-      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null};
+  function init(u,p,mode='auto'){
+    if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
+      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0};
+    u.fireControl.fireMode??=mode;u.fireControl.lineProbeTarget??=null;u.fireControl.lineProbePose??=null;u.fireControl.lineProbeBlocked??=false;u.fireControl.lineProbeCandidateRevision??=null;u.fireControl.lineProbeQueries??=0;return u.fireControl;
   }
   // Fictional RTS error budget. Target manoeuvre is represented only by the
   // difference between predicted and actual pose at impact, never twice here.
@@ -123,7 +124,7 @@ const TacticalFireControl=(()=>{
     if(result.hit)return{kind:'hit',x:pose.x+point.x*px,y:pose.y+point.x*py,z:(environment?.heightAt?.(pose.x,pose.y)||0)+point.z,beyond:0};
     return marchImpact(shot,pose,point,environment);
   }
-  function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,seed=7,debug=false,onDecisionRoll=null}){
+  function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,onImpactResolved=null,onFireBlocked=null,seed=7,debug=false,onDecisionRoll=null}){
     const events=[],flights=[],records=[];let currentTime=0;
     const clone=v=>JSON.parse(JSON.stringify(v));
     const emit=e=>{events.push(e);if(events.length>200)events.shift();};
@@ -138,17 +139,21 @@ const TacticalFireControl=(()=>{
         const shot=flights.shift(),sight=impactSight?impactSight(shot):{...clone(shot.fireExposure),pose:{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}},evaluation=impactEvaluation(shot,sight);
         const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
         const observation=isObserved(shot.team,shot.targetKey),observed=!sight?.gone&&!!observation;
+        // Damage consumes the private resolved result exactly here, before any
+        // public redaction. It must not infer a hit from the display point.
+        const combat=onImpactResolved?.({id:shot.id,time:now,team:shot.team,shooterId:shot.shooterId,targetId:shot.targetId,targetKey:shot.targetKey,ammoId:shot.ammoId,hit:result.hit,zone:result.zone,side,origin:clone(shot.origin),pose:clone(evaluation.pose),rangeM:Math.hypot(evaluation.pose.x-shot.origin.x,evaluation.pose.y-shot.origin.y),impact:clone(impact),observed,observation:observation?clone(observation):null})??null;
         const publicImpact=observed?clone(impact):result.hit?null:{...clone(impact),beyond:null};
         const publicResult={type:'impact',id:shot.id,time:now,impactAt:shot.impactAt,team:shot.team,shooterId:shot.shooterId,targetKey:shot.targetKey,
           result:observed?(result.hit?'hit':'miss'):'unobserved',zone:observed?result.zone:null,side:observed?side:null,
           finalHitChance:observed?evaluation.finalHitChance:null,hitChanceAtFire:shot.hitChanceAtFire,bias:observed?clone(evaluation.bias):null,
-          impact:publicImpact,ammoRemaining:shot.ammoRemaining};
+          impact:publicImpact,ammoRemaining:shot.ammoRemaining,combat:observed&&combat?clone(combat):null};
         emit(publicResult);shot.shooter.fireControl.lastShot=clone(publicResult);
-        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
+        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),combat:combat?clone(combat):null,reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
       }
     }
     function inspect(u,now){
       const p=profileOf(u),f=p.fireControl,s=init(u,p),d=mission(u),c=d?u.observation.contacts[d.target]:null;
+      if(u.combat?.status==='destroyed')return{reason:'destroyed'};
       if(!f.enabled||!p.weapons.mainGun.enabled||!p.sensors.gunner.enabled)return{reason:'disabled'};
       if(!d)return{reason:'no-target'};
       if(d.status!=='acquired')return{reason:'not-acquired',d,c};
@@ -166,7 +171,7 @@ const TacticalFireControl=(()=>{
       currentTime=now;
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
-        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;resetAim(s);resetMotion(s);}
+        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
         if(s.previousSample&&now-s.previousSample.time>p.sensors.tuning.queryPeriod*5+1e-9)resetMotion(s);
         if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
           const previous=s.previousSample;
@@ -181,23 +186,53 @@ const TacticalFireControl=(()=>{
           s.status=s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=null;
           const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,f,s.targetVelocity,s.layTime));
         }
+        // Normal units default to auto. Both modes retain a blocked weapon-line
+        // result until the geometry changes; a new commander candidate can use
+        // that result for retargeting without running the same LOS again.
+        const linePose=c?.pose?[u.x,u.y,u.heading,u.turret,c.pose.x,c.pose.y,c.pose.heading,c.pose.turret]:null;
+        const changedLine=!linePose||!s.lineProbePose||linePose.some((v,i)=>v!==s.lineProbePose[i]);
+        const candidateRevision=u.observation?.candidateRevision??0,candidatesChanged=s.lineProbeCandidateRevision!==candidateRevision;
+        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto'&&s.lineProbeBlocked&&s.lineProbeTarget===s.targetKey&&!changedLine){
+          s.lineProbeCandidateRevision=candidateRevision;
+          if(candidatesChanged&&onFireBlocked?.(u,d.target,'fire-line-blocked',now)){
+            s.status='blocked';s.reason='retargeted';resetAim(s);clearPreview(s);continue;
+          }
+          s.status='blocked';s.reason='fire-line-blocked';clearPreview(s);continue;
+        }
+        // Auto creates the same queued request consumed below and never
+        // overwrites a manual request already present for this step.
+        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto')s.pending={key:s.targetKey,source:'auto'};
+        // Hold still probes the real line and participates in hunter-killer
+        // switching, while never creating an automatic firing request.
+        if(s.status==='ready'&&!s.pending&&s.fireMode==='hold'&&(s.lineProbeTarget!==s.targetKey||changedLine||candidatesChanged)){
+          if(s.lineProbeTarget!==s.targetKey||changedLine){s.lineProbeQueries++;const probe=freshSight(u,d.target);s.lineProbeBlocked=!probe?.visible&&probe?.reason==='fire-line-blocked';}
+          s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeCandidateRevision=candidateRevision;
+          if(s.lineProbeBlocked&&onFireBlocked?.(u,d.target,'fire-line-blocked',now)){
+            s.status='blocked';s.reason='retargeted';resetAim(s);clearPreview(s);continue;
+          }
+        }
         if(!s.pending)continue;
         const request=s.pending;s.pending=null;
         if(s.status!=='ready'||request.key!==s.targetKey){s.lastRejection=check.reason||'target-changed';continue;}
         // A fire command must recheck its own current range/FOV/terrain samples;
         // an old 10Hz contact or team knowledge cannot authorize a shot.
-        const sight=freshSight(u,d.target);
-        if(!sight?.visible){s.status='blocked';s.reason=sight?.reason||'fresh-sight-failed';resetAim(s);s.lastRejection=s.reason;clearPreview(s);continue;}
+        s.lineProbeQueries++;const sight=freshSight(u,d.target);
+        if(!sight?.visible){
+          const blocked=sight?.reason||'fresh-sight-failed',switched=blocked==='fire-line-blocked'&&onFireBlocked?.(u,d.target,blocked,now);
+          if(blocked==='fire-line-blocked'){s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=true;s.lineProbeCandidateRevision=candidateRevision;}
+          s.status='blocked';s.reason=switched?'retargeted':blocked;resetAim(s);s.lastRejection=s.reason;clearPreview(s);continue;
+        }
+        s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=candidateRevision;
         const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
         if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
         const chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime),number=s.shotCount+1;
         if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
         const origin=G.muzzleWorld(u,p.model),tof=chance.breakdown.tof,predicted={x:pose.x+s.targetVelocity.x*tof,y:pose.y+s.targetVelocity.y*tof},beta=Math.atan2(predicted.y-origin.y,predicted.x-origin.x),id=u.id+'-shot-'+number,impactAt=now+tof;
-        const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,shooter:u,
+        const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,ammoId:p.weapons.mainGun.ammunitionId??null,shooter:u,
           origin,fireEye:sight.fireEye,profileAtFire:clone(p),fireControl:clone(f),pose:clone(pose),fireExposure:clone(sight),
           beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1};
         flights.push(shot);
-        emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,origin:{...origin},muzzleHeading:beta,
+        emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:request.source,origin:{...origin},muzzleHeading:beta,
           tof,impactAt,hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1});
         s.shotCount=number;s.ammo--;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
       }
@@ -208,17 +243,23 @@ const TacticalFireControl=(()=>{
       if(s.pending)return{ok:false,reason:'pending'};
       if(s.hitChance===0)return{ok:false,reason:'no-presented-target'};
       if(check.reason||s.status!=='ready'||key!==s.targetKey)return{ok:false,reason:check.reason||'not-ready'};
-      s.pending={key};return{ok:true};
+      s.pending={key,source:'manual'};return{ok:true};
+    }
+    function setMode(u,mode){
+      if(!['auto','hold'].includes(mode))return false;
+      const s=init(u,profileOf(u));s.fireMode=mode;
+      if(mode==='hold'&&s.pending?.source==='auto')s.pending=null;
+      return true;
     }
     function view(u,key=null){
       const s=init(u,profileOf(u)),same=!key||key===s.targetKey;
-      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,pending:!!s.pending,
+      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
         canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
-    return{step,request,view,cancel,events:publicEvents,debugRecords:()=>debug?clone(records):[]};
+    return{step,request,setMode,view,cancel,events:publicEvents,debugRecords:()=>debug?clone(records):[]};
   }
   return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
