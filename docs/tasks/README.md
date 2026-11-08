@@ -6,13 +6,14 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
+| WIP11E 9표본 LOS 중복 조회 최적화 | [작업 지시서](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | 사용자 선택 · 지시서 작성 완료 · 구현 대기 |
 | WIP11D 지형 판독성 개선·WIP11C 공개 체력 병합 검증 | [완료 지시서](../../archive/instructions/TACTICAL_WIP11D_TERRAIN_READABILITY.md) | 구현·재검증 완료 · main 통합 |
 
-현재 대기 중인 새 지시서는 없다. WIP11D는 [구현 문서](../TERRAIN_READABILITY_WIP11D.md)와 [병합 검토](../reviews/WIP11D_MERGE_REVIEW_2026-11-08.md)를 확인한다. 완료한 지시서를 다시 구현하지 않는다.
+다음 작업은 WIP11E다. 현재 main을 기준으로 새 작업 브랜치에서 진행하며, 완료한 PR #9의 옛 브랜치를 재사용하지 않는다. WIP11D는 [구현 문서](../TERRAIN_READABILITY_WIP11D.md)와 [병합 검토](../reviews/WIP11D_MERGE_REVIEW_2026-11-08.md)를 참고하고 다시 구현하지 않는다.
 
 ## 작업 AI에게 전달할 문구
 
-> `docs/tasks/README.md`에서 예정·진행 중인 작업을 확인하고 해당 지시서를 읽어줘. 완료 작업은 다시 실행하지 말고, 새 작업은 실제 코드와 브랜치 상태부터 확인해줘.
+> 최신 main의 `docs/tasks/TACTICAL_WIP11E_LOS_OPTIMIZATION.md`를 읽고 새 작업 브랜치에서 진행해줘. 기존 9표본·관측 주기·판정 결과를 유지하고, 독립 기준 대조와 반복 성능 측정으로 실제 개선을 확인해줘. 완료한 WIP11D는 다시 구현하지 마.
 
 ## 관리 방법
 
