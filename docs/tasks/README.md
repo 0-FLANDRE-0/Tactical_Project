@@ -6,6 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
+| WIP12 사격 이펙트·미관측 사격 표시·입사각/도탄 확장 | [작업 지시서](TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) | 사용자 확정 · 지시서 작성 완료 · 구현 대기 |
 | WIP11E 9표본 LOS 중복 조회 최적화 | [완료 안내](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | 재검증 통과 · PR #10 main 통합 |
 | WIP11D 지형 판독성 개선·WIP11C 공개 체력 병합 검증 | [완료 지시서](../../archive/instructions/TACTICAL_WIP11D_TERRAIN_READABILITY.md) | 구현·재검증 완료 · main 통합 |
 
@@ -13,7 +14,11 @@ WIP11E는 main `a01ae8b`에서 만든 새 브랜치에서 구현하고 재검증
 
 ## 다음 작업
 
-WIP11E 이후 작업은 아직 이 폴더에 지시서로 확정하지 않았다. 입사각·도탄 설계와 다른 장기 제안은 아카이브의 참고 자료이며 별도 요청 없이 구현 범위로 간주하지 않는다.
+다음 작업은 **WIP12**다. 최신 main에서 새 브랜치를 만들고 위 지시서를 따른다. 확정 판정을 이펙트가 표현하며, 미관측 적 사격도 표시한다. 도탄 후 탄광/파티클은 추가 피해를 주지 않는다. 다른 탄종·신관·전체 장갑/파편 물리는 이번 범위가 아니다.
+
+작업 AI에게 전달할 문구:
+
+> 최신 main의 `docs/tasks/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md`를 읽고 새 WIP12 브랜치에서 진행해줘. 확률 판정과 이펙트를 분리하고, 미관측 적 사격 표시와 도탄 후 추가 피해 없음을 실제 코어·화면에서 검증해줘.
 
 ## 관리 방법
 
