@@ -6,7 +6,9 @@
 
 | 데이터 범위 | 최신 정리 문서 | 내용 |
 |---|---|---|
-| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | WIP 진행 현황, 다음 작업 순서, 결정 대기 항목, 아카이브 정리 목록. **새 수치 확정 없음** |
+| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | WIP 진행 현황(WIP10 검토 통과), 다음 작업 순서, 결정 대기 항목, 정보 공개 방향, 아카이브 정리 목록. **새 수치 확정 없음** (최종 갱신 2026-11-08) |
+| **작업 지시서 백업** | [instructions/](instructions/) | WIP09·WIP10 지시서와 기준표 Python 스크립트 원본 |
+| **M1 계열 상면도 뷰어** | [art/M1_Abrams_TopView.html](art/M1_Abrams_TopView.html) | M1A2/M1A1/M1A1 HA 단독 뷰어·삽입용 HTML, 원본 JS, 포탑 링 실측 확인 이미지 |
 | **전차 방호력·차량 HP (본편 32종 + 확장 2종)** | [tanks/README.md](tanks/README.md) | 7구역 KE(CE), ERA/BDD/D-Tech, **§9 차량 최대 HP 34종**, 계열·연식별 구분. **HP 확정 데이터 / 피해량·모듈 HP 미정** |
 | **관통·피해·모듈 HP 설계** | [combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md](combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) | M829A1 영거리 380·10m KE598~2km KE560 거리표·연속 치명/과관통 및 근접 비관통 시험값 기록. M830 435·폭발 1m 시험 후보. 착탄속도 감쇠 계수 미정 |
 | **전투 판정 2단계 설계 메모 (미구현)** | [combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md](combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md) | 발사·착탄 상태 평가, 최종 명중 추첨 1회 권장, 360° 구역 확률, 선택 면의 LOS/관통 판정 구상. **세부 공식·수치 미확정** |
