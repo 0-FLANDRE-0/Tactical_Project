@@ -9,7 +9,8 @@ const TacticalCore = (() => {
   const WORLD = {w:M.width,h:M.height,step:2,nav:16};
   const PROFILE=VEHICLE_PROFILES.M1A2;
   const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
-  const profileOf=u=>u?.profileOverride||VEHICLE_PROFILES[u?.profileId||'M1A2'];
+  const registry=VEHICLE_PROFILES.registry;
+  const profileOf=u=>{const p=registry.get(u?.profileId??'M1A2');return u?.profileOverride||p;};
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const mix=(a,b,t)=>a+(b-a)*t;
   const angleDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
@@ -213,9 +214,10 @@ const TacticalCore = (() => {
     }
     return {ok:true,points:points.slice(1),visits,cost:dist[g]};
   }
-  function makeTank(id,name,x,y,heading,team='blue') {
-    const u={id,name,profileId:'M1A2',x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
-    TacticalObservation.init(u);return u;
+  function makeTank(id,name,x,y,heading,team='blue',profileId='M1A2') {
+    registry.get(profileId);
+    const u={id,name,profileId,x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
+    TacticalObservation.init(u);TacticalFireControl.init(u,profileOf(u));return u;
   }
   function legalNear(x,y,units=[]) {
     for(let r=0;r<150;r+=8) for(let a=0;a<Math.PI*2;a+=Math.PI/8) {
@@ -278,15 +280,38 @@ const TacticalCore = (() => {
     if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
     return observationRuntimes.get(s);
   }
-  function step(s,dt){s.time+=dt;for(const u of s.units)stepTank(u,dt,s.units);observationFor(s).advance(s.units,dt,s.time);}
+  function step(s,dt){s.time+=dt;for(const u of s.units)stepTank(u,dt,s.units);observationFor(s).advance(s.units,dt,s.time);fireFor(s).step(s.units,dt,s.time);}
   const contacts=(s,team='blue')=>observationFor(s).contacts(team);
   const guard=(s,u,ch,point,duration=0)=>!!profileOf(u).sensors[ch]?.enabled&&(ch!=='commander'||profileOf(u).sensors.commander.independent)&&TacticalObservation.guard(u,ch,point,duration,s.time);
   const resumeObservation=(s,u,ch)=>TacticalObservation.resume(u,ch,s.time);
   const designate=(s,u,key)=>observationFor(s).direct(u,key);
-  const cancelDesignation=(s,u)=>TacticalObservation.cancel(u,s.time);
+  const cancelDesignation=(s,u)=>{TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);};
   const observationView=(s,u,ch='commander')=>TacticalObservation.view(u,ch,s.time);
   const ownObservation=(s,u,key=null)=>observationFor(s).ownStatus(u,key);
   const observationStats=s=>({...observationFor(s).stats});
+  const fireRuntimes=new WeakMap();
+  function fireFor(s){
+    if(!fireRuntimes.has(s))fireRuntimes.set(s,TacticalFireControl.create({profileOf,seed:s.seed??7,freshSight:(u,id)=>{
+      const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'target-unavailable'};
+      const p=profileOf(u),sensor=p.sensors.gunner,optical=exposure(u,target,sensor.eyeHeight),muzzle={...TacticalVehicleGeometry.muzzleWorld(u,p.model),profileId:u.profileId,profileOverride:u.profileOverride};
+      // Keep the game firing height relative to the hull's ground, even when
+      // the barrel tip lies over different terrain. Optics stay on the vehicle.
+      const fireEye=heightAt(u.x,u.y)+p.fireControl.fireHeight-heightAt(muzzle.x,muzzle.y);
+      const muzzleRoof=buildingAt(muzzle.x,muzzle.y)?.roof??-Infinity;
+      const weapon=fireEye>0&&heightAt(u.x,u.y)+p.fireControl.fireHeight>=muzzleRoof?exposure(muzzle,target,fireEye):null;
+      let hull=0,turret=0,gunnerVisible=false;
+      for(let i=0;i<optical.samples.length;i++){
+        const v=optical.samples[i],d=Math.hypot(v.x-u.x,v.y-u.y),angle=Math.abs(angleDiff(Math.atan2(v.y-u.y,v.x-u.x),u.turret));
+        if(!v.visible||d>sensor.range||angle>sensor.fov/2)continue;gunnerVisible=true;
+        if(weapon?.samples[i].visible){if(v.part==='hull')hull++;else turret++;}
+      }
+      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret}};
+    }}));
+    return fireRuntimes.get(s);
+  }
+  const fireStatus=(s,u,key=null)=>fireFor(s).view(u,key);
+  const requestFire=(s,u,key)=>fireFor(s).request(u,key,s.time);
+  const fireEvents=(s,team='blue',since=-Infinity)=>fireFor(s).events(team,since);
   const roofGrid=new Float32Array(TH.columns*TH.rows);
   for(const b of buildings) for(let y=Math.max(0,Math.floor(b.minY/4));y<=Math.min(999,Math.floor(b.maxY/4));y++) for(let x=Math.max(0,Math.floor(b.minX/4));x<=Math.min(999,Math.floor(b.maxX/4));x++) {
     if(insideBuilding(x*4+2,y*4+2,b))roofGrid[y*1000+x]=Math.max(roofGrid[y*1000+x],b.roof);
@@ -382,6 +407,6 @@ const TacticalCore = (() => {
     for(const along of e.turretAlong)sample(along,e.turretHeight,target.turret??target.heading,'turret');
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,requestFire,fireEvents,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

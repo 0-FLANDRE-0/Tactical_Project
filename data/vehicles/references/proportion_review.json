@@ -20,6 +20,18 @@
     "rotationDeg": 180
   },
   "M1A2DetailReference": "DVIDS 3055956",
+  "userTopViewReference": "M1_Abrams_TopView.html",
+  "turretFrame": {
+    "originM": 0.15,
+    "pivotM": [
+      0.66,
+      0
+    ],
+    "muzzleLocalM": [
+      5.717,
+      0
+    ]
+  },
   "artApproximation": {
     "turretBodyLengthM": 4.75,
     "turretStowageWidthM": 3.28,

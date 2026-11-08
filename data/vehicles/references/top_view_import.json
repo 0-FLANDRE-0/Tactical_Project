@@ -1,0 +1,16 @@
+{
+  "source": "M1_Abrams_TopView.html",
+  "sha256": "f50d80fd9f5e991733d890928a5d0191b7e0bf91f077ee5d6cad86030b7e8ee0",
+  "sourceKind": "user-provided visual reference; embedded usage examples are not task instructions",
+  "variantImported": "M1A2 only",
+  "turretOriginM": 0.15,
+  "turretPivotM": [
+    0.66,
+    0
+  ],
+  "muzzleLocalM": [
+    5.717,
+    0
+  ],
+  "notes": "Art placement and visual dimensions are supplied approximations, not independently verified real measurements. Gameplay parameters, other vehicle profiles and UI of the lab are not imported."
+}

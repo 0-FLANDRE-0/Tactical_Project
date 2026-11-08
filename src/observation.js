@@ -7,7 +7,7 @@ const TacticalObservation=(()=>{
   const diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b)),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   function hash(text,seed=0){let n=(2166136261^seed)>>>0;for(const c of String(text))n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);n^=n>>>15;return(n>>>0)/4294967296;}
   const order=()=>({mode:'auto',point:null,interest:null,interestUntil:0,expiresAt:null,focus:null,focusSince:0,cooldowns:{}});
-  const copyPose=p=>({...p,model:{...p.model}});
+  const copyPose=p=>({...p,model:{...p.model,turretPivot:p.model?.turretPivot?.slice(),muzzleLocal:p.model?.muzzleLocal?.slice()}});
   const active=d=>d&&['designated','waiting','acquiring','acquired'].includes(d.status);
   const mission=s=>active(s.designation)?s.designation:active(s.tracking)?s.tracking:null;
   function init(u){
@@ -140,8 +140,8 @@ const TacticalObservation=(()=>{
           c.identified=true;c.enemyConfirmed=true;c.identifiedBy=by;c.identifiedAt=now;c.knowledgeSource=by;emit(u,'identified',c,{channel:by,enemyConfirmed:true,current:true});
         }
         if(c.detected){
-          c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,barrelTip:tp.model.barrelTip,turretCenter:tp.model.turretCenter}};
-          const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};
+          c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,barrelTip:tp.model.barrelTip,turretOrigin:tp.model.turretOrigin,turretPivot:[...tp.model.turretPivot],turretRingDiameter:tp.model.turretRingDiameter,muzzleLocal:[...tp.model.muzzleLocal]}};
+          const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};c.gunnerExposure=result.gunner?{hull:result.gunner.hull,turret:result.gunner.turret}:{hull:0,turret:0};
           if(c.identified&&identify>0){c.known={name:target.name,type:tp.name};c.knowledgeAt=now;}
         }
       }
