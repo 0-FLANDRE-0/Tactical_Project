@@ -1,0 +1,76 @@
+{
+  "version": "0.4-WIP13",
+  "date": "2026-11-09",
+  "baselineCommit": "a789d5383903a6104ee368c1c57fce3ae327b54f",
+  "node": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "fixedTickSeconds": 0.05,
+  "mobilityOnly": [
+    {
+      "vehicles": 1,
+      "tickMedianMs": 0.000294774999999845,
+      "tickP95Ms": 0.0007867069999997512,
+      "rounds": 51,
+      "ticksPerRound": 1000
+    },
+    {
+      "vehicles": 100,
+      "tickMedianMs": 0.01682690700000012,
+      "tickP95Ms": 0.01792347399999926,
+      "rounds": 51,
+      "ticksPerRound": 1000
+    }
+  ],
+  "actualMap": [
+    {
+      "variant": "baseline",
+      "vehicles": 1,
+      "tickMedianMs": 0.006658550000000219,
+      "tickP95Ms": 0.021012920000000008,
+      "rounds": 21,
+      "ticksPerRound": 100,
+      "pathSearches": 0,
+      "distanceTravelledM": 177.6072886605457,
+      "scope": "actual map full C.step: drivetrain, terrain, collision, observation and fire-control; goals injected after placement so path search is excluded"
+    },
+    {
+      "variant": "WIP13",
+      "vehicles": 1,
+      "tickMedianMs": 0.006980729999999653,
+      "tickP95Ms": 0.022630550000000086,
+      "rounds": 21,
+      "ticksPerRound": 100,
+      "pathSearches": 0,
+      "distanceTravelledM": 179.2219670210946,
+      "scope": "actual map full C.step: drivetrain, terrain, collision, observation and fire-control; goals injected after placement so path search is excluded"
+    },
+    {
+      "variant": "baseline",
+      "vehicles": 100,
+      "tickMedianMs": 0.6570024600000011,
+      "tickP95Ms": 1.203788850000001,
+      "rounds": 21,
+      "ticksPerRound": 100,
+      "pathSearches": 0,
+      "distanceTravelledM": 17150.39355928179,
+      "scope": "actual map full C.step: drivetrain, terrain, collision, observation and fire-control; goals injected after placement so path search is excluded"
+    },
+    {
+      "variant": "WIP13",
+      "vehicles": 100,
+      "tickMedianMs": 0.584709340000004,
+      "tickP95Ms": 1.3060702300000002,
+      "rounds": 21,
+      "ticksPerRound": 100,
+      "pathSearches": 0,
+      "distanceTravelledM": 17445.859226152497,
+      "scope": "actual map full C.step: drivetrain, terrain, collision, observation and fire-control; goals injected after placement so path search is excluded"
+    }
+  ],
+  "notes": [
+    "Mobility-only times exclude path search, collision, terrain, observation and rendering.",
+    "Actual-map baseline/current use the same map, placements, direct goals, 100 warmup and 21×100 measured fixed ticks. Same-team units create no enemy LOS rays; rendering is measured separately in Chromium.",
+    "Trajectories intentionally differ because WIP13 applies finite drivetrain and arrival behavior; full-tick differences must not be attributed entirely to the drivetrain.",
+    "These are CPU measurements in this environment, not mobile-device FPS."
+  ]
+}

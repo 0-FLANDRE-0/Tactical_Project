@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP12</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP13</title>
 <style>
 :root{
   color-scheme:dark;
@@ -914,7 +914,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP12</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP13</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -960,7 +960,7 @@ footer{
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
 <div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
 <div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · AUTO FIRE · EFFECTS / WIP12</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · AUTO FIRE · EFFECTS / WIP13</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -982,7 +982,19 @@ const VEHICLE_PROFILES=(()=>{
     model:{hullLength:inch(312),width:inch(144),overallLength:inch(387),roofHeight:inch(93.5),groundClearance:inch(19),barrelTip:inch(387)-inch(312)/2,turretLength:4.75,turretWidth:3.28,turretOrigin:.15,turretPivot:[.66,0],turretRingDiameter:2.159,muzzleLocal:[5.717,0]},
     mobility:{roadSpeed:mph(42),crossCountrySpeed:mph(30),reverseSpeed:mph(25),accelerationReferenceSpeed:mph(20),accelerationReferenceSeconds:7.2,brakeDeceleration:3,maxLongitudinalGrade:.60,maxSideGrade:.40,pivotRate:Math.PI/6,turretRate:40*Math.PI/180,
       gradeSpeedPoints:[[0,mph(42)],[.10,mph(17)],[.60,mph(4.1)]],
-      surfaceSpeed:{forest:6.5,scrub:8,stream:6/3.6}},
+      surfaceSpeed:{forest:6.5,scrub:8,stream:6/3.6},
+      // X1100 range ratios are an adopted public-reference profile. Force,
+      // shift schedule, steering and interlock values are lightweight game
+      // approximations calibrated only to the published 0-20 mph endpoint.
+      powertrain:{referenceMassKg:69.54*907.18474,referenceEngineHp:1500,efficiency:.90,
+        forwardRatios:[5.877,3.021,1.891,1.278],reverseRatios:[8.305,2.354],
+        forwardUpshiftMps:[4.2,8.1,13.2],forwardDownshiftMps:[3.4,7.1,11.8],
+        reverseUpshiftMps:[5.2],reverseDownshiftMps:[4.2],
+        shiftSeconds:.42,shiftDwellSeconds:1.20,minimumGearHoldSeconds:.65,rangeEngageSeconds:.28,
+        directionStopSpeed:.25,directionSettleSeconds:.18,holdSpeed:.08,zeroSpeedEpsilon:.015,targetSpeedTolerance:.015,
+        launchAcceleration:1.645,launchPowerExponent:.35,gearForceExponent:.22,powerFloorSpeed:4,
+        rollingDeceleration:.035,shiftDriveFraction:.12,lateralAcceleration:1.8,pivotMaxSpeed:1.2,
+        arrivalRadius:.8,arrivalSpeed:.18}},
     sensors:{name:'CITV',eyeHeight:2.65,observationLimit:4000,targetReferenceHeight:1.5,
       hunterKiller:true,
       ambient:{enabled:true,range:200,fov:Math.PI*2,eyeHeight:2.65},
@@ -1023,6 +1035,12 @@ const VEHICLE_PROFILES=(()=>{
       if(Object.hasOwn(profiles,id))throw Error('중복 차량 프로파일: '+id);
       if(p.artId!=='M1A2')throw Error('지원하지 않는 차량 도안: '+p.artId);
       for(const section of ['model','mobility','sensors','navigation','exposure','fireControl','weapons'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
+      const pt=p.mobility.powertrain;
+      if(!pt||!['forwardRatios','reverseRatios','forwardUpshiftMps','forwardDownshiftMps','reverseUpshiftMps','reverseDownshiftMps'].every(k=>Array.isArray(pt[k])))throw Error('구동 프로파일 누락: '+id);
+      if(pt.forwardRatios.length!==4||pt.reverseRatios.length!==2||pt.forwardUpshiftMps.length!==3||pt.forwardDownshiftMps.length!==3||pt.reverseUpshiftMps.length!==1||pt.reverseDownshiftMps.length!==1)throw Error('변속 표 길이 오류: '+id);
+      if(![...pt.forwardRatios,...pt.reverseRatios,...pt.forwardUpshiftMps,...pt.forwardDownshiftMps,...pt.reverseUpshiftMps,...pt.reverseDownshiftMps].every(v=>Number.isFinite(v)&&v>0))throw Error('변속 표 값 오류: '+id);
+      if(!pt.forwardUpshiftMps.every((v,i)=>v>pt.forwardDownshiftMps[i])||!pt.reverseUpshiftMps.every((v,i)=>v>pt.reverseDownshiftMps[i]))throw Error('변속 히스테리시스 오류: '+id);
+      for(const k of ['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','holdSpeed','zeroSpeedEpsilon','targetSpeedTolerance','launchAcceleration','launchPowerExponent','gearForceExponent','powerFloorSpeed','rollingDeceleration','shiftDriveFraction','lateralAcceleration','pivotMaxSpeed','arrivalRadius','arrivalSpeed'])if(!Number.isFinite(pt[k])||pt[k]<0||(['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','launchAcceleration','powerFloorSpeed','lateralAcceleration','arrivalRadius','arrivalSpeed'].includes(k)&&pt[k]===0))throw Error('구동 값 오류: '+id+'.'+k);
       for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
       if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
       const f=p.fireControl;
@@ -1049,6 +1067,112 @@ const VEHICLE_PROFILES=(()=>{
   return createRegistry([M1A2,M1A2_1998]);
 })();
 if(typeof module!=='undefined')module.exports=VEHICLE_PROFILES;
+
+</script>
+<script id="mobility">
+'use strict';
+/* Lightweight, deterministic longitudinal drivetrain for the 0.05 s tactical
+ * simulation tick. It models direction interlock, automatic ranges, finite
+ * drive/brake force and speed-aware steering. Terrain/path/collision remain in
+ * sim-core; this module performs no world queries and allocates nothing per tick. */
+const TacticalMobility=(()=>{
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const sign=v=>v>0?1:v<0?-1:0;
+  function create(){return{velocity:0,requestedDirection:0,selectedDirection:0,pendingDirection:0,
+    mode:'hold',gear:0,fromGear:0,shiftRemaining:0,shiftCooldown:0,gearHold:0,directionWait:0,
+    shiftCount:0,lastAcceleration:0,driveForceN:0};}
+  function reset(state=create()){Object.assign(state,create());return state;}
+  function gearTable(profile,direction){return direction<0?profile.mobility.powertrain.reverseRatios:profile.mobility.powertrain.forwardRatios;}
+  function speedTable(profile,direction,kind){const p=profile.mobility.powertrain,prefix=direction<0?'reverse':'forward';return p[prefix+(kind==='up'?'UpshiftMps':'DownshiftMps')];}
+  function selectGearForSpeed(profile,direction,speed){
+    const up=speedTable(profile,direction,'up');let gear=1;
+    while(gear<=up.length&&speed>=up[gear-1])gear++;
+    return Math.min(gear,gearTable(profile,direction).length);
+  }
+  function beginRange(state,direction,profile,speed){
+    state.selectedDirection=direction;state.pendingDirection=0;state.directionWait=0;
+    state.gear=selectGearForSpeed(profile,direction,speed);state.fromGear=0;
+    state.shiftRemaining=profile.mobility.powertrain.rangeEngageSeconds;
+    state.shiftCooldown=profile.mobility.powertrain.shiftDwellSeconds;state.gearHold=0;state.mode=direction<0?'reverse':'forward';
+  }
+  function startInterlock(state,direction){
+    state.selectedDirection=0;state.pendingDirection=direction;state.directionWait=0;
+    state.fromGear=state.gear;state.gear=0;state.shiftRemaining=0;state.mode='direction-brake';
+  }
+  function updateRange(state,request,profile,dt){
+    const p=profile.mobility.powertrain,v=state.velocity,moving=sign(Math.abs(v)>p.directionStopSpeed?v:0);
+    state.requestedDirection=request;state.shiftRemaining=Math.max(0,state.shiftRemaining-dt);
+    state.shiftCooldown=Math.max(0,state.shiftCooldown-dt);state.gearHold+=dt;
+    if(request===0){state.pendingDirection=0;state.directionWait=0;state.selectedDirection=0;state.gear=0;state.shiftRemaining=0;state.mode=Math.abs(v)>p.holdSpeed?'braking':'hold';return;}
+    if(state.pendingDirection&&request!==state.pendingDirection){
+      if(request===moving){beginRange(state,request,profile,Math.abs(v));return;}
+      state.pendingDirection=request;state.directionWait=0;
+    }
+    if(moving&&moving!==request){if(state.pendingDirection!==request)startInterlock(state,request);return;}
+    if(state.pendingDirection){
+      state.mode='direction-wait';
+      if(Math.abs(v)<=p.directionStopSpeed){state.directionWait+=dt;if(state.directionWait+1e-9>=p.directionSettleSeconds)beginRange(state,state.pendingDirection,profile,0);}
+      else state.directionWait=0;
+      return;
+    }
+    if(state.selectedDirection!==request){
+      if(state.selectedDirection&&state.selectedDirection!==request)startInterlock(state,request);
+      else if(Math.abs(v)>p.directionStopSpeed)startInterlock(state,request);else beginRange(state,request,profile,Math.abs(v));
+      return;
+    }
+    state.mode=request<0?'reverse':'forward';
+  }
+  function updateGear(state,profile,dt){
+    const direction=state.selectedDirection;if(!direction||!state.gear||state.shiftRemaining>0)return;
+    const p=profile.mobility.powertrain,ratios=gearTable(profile,direction),speed=Math.abs(state.velocity),up=speedTable(profile,direction,'up'),down=speedTable(profile,direction,'down');
+    let next=state.gear;
+    if(state.shiftCooldown<=0&&state.gearHold>=p.minimumGearHoldSeconds){
+      if(state.gear<ratios.length&&speed>up[state.gear-1])next++;
+      else if(state.gear>1&&speed<down[state.gear-2])next--;
+    }
+    if(next!==state.gear){state.fromGear=state.gear;state.gear=next;state.shiftRemaining=p.shiftSeconds;state.shiftCooldown=p.shiftDwellSeconds;state.gearHold=0;state.shiftCount++;}
+  }
+  function driveAcceleration(state,profile){
+    const m=profile.mobility,p=m.powertrain,direction=state.selectedDirection,ratios=gearTable(profile,direction),ratio=ratios[Math.max(0,state.gear-1)]||ratios[0];
+    const speed=Math.abs(state.velocity),power=profile.engineHp*745.6998715822702*p.efficiency;
+    const engineScale=Math.pow(profile.engineHp/p.referenceEngineHp,p.launchPowerExponent);
+    const gearFactor=Math.pow(ratio/ratios[0],p.gearForceExponent);
+    const traction=p.launchAcceleration*engineScale*(p.referenceMassKg/profile.massKg)*gearFactor;
+    const powerLimited=power/(profile.massKg*Math.max(speed,p.powerFloorSpeed));
+    const connected=state.shiftRemaining>0?p.shiftDriveFraction:1;
+    const acceleration=Math.max(0,Math.min(traction,powerLimited)*connected-p.rollingDeceleration);
+    state.driveForceN=acceleration*profile.massKg;return acceleration;
+  }
+  function approachZero(v,amount){return v>0?Math.max(0,v-amount):v<0?Math.min(0,v+amount):0;}
+  function step(state,input,profile,dt){
+    const request=clamp(Math.trunc(input.direction||0),-1,1),target=Math.max(0,Number(input.targetSpeed)||0),before=state.velocity,p=profile.mobility.powertrain;
+    updateRange(state,request,profile,dt);
+    const mustBrake=!state.selectedDirection||state.pendingDirection||request===0||sign(state.velocity)&&sign(state.velocity)!==state.selectedDirection;
+    if(mustBrake){state.velocity=approachZero(state.velocity,profile.mobility.brakeDeceleration*dt);state.driveForceN=0;}
+    else{
+      updateGear(state,profile,dt);
+      const direction=state.selectedDirection,signedTarget=direction*target,speed=Math.abs(state.velocity);
+      if(speed>target+p.targetSpeedTolerance)state.velocity=approachZero(state.velocity,profile.mobility.brakeDeceleration*dt);
+      else if(target>p.holdSpeed&&speed<target-p.targetSpeedTolerance){
+        const a=driveAcceleration(state,profile);state.velocity+=direction*Math.min(a*dt,Math.max(0,target-speed));
+      }else{state.driveForceN=0;if(target<=p.holdSpeed)state.velocity=approachZero(state.velocity,profile.mobility.brakeDeceleration*dt);}
+      if((direction>0&&state.velocity<0)||(direction<0&&state.velocity>0))state.velocity=0;
+      if(Math.abs(state.velocity)>Math.abs(signedTarget)&&Math.abs(state.velocity)-Math.abs(signedTarget)<p.targetSpeedTolerance)state.velocity=signedTarget;
+    }
+    if(Math.abs(state.velocity)<p.zeroSpeedEpsilon)state.velocity=0;
+    state.lastAcceleration=(state.velocity-before)/dt;
+    return state;
+  }
+  function turnRate(speed,profile){const m=profile.mobility,p=m.powertrain,s=Math.abs(speed);return s<=p.pivotMaxSpeed?m.pivotRate:Math.min(m.pivotRate,p.lateralAcceleration/Math.max(s,.01));}
+  function directionLabel(state){
+    if(state.mode==='direction-brake')return state.pendingDirection<0?'감속 · 후진 대기':'감속 · 전진 대기';
+    if(state.mode==='direction-wait')return state.pendingDirection<0?'정차 · 후진 연결':'정차 · 전진 연결';
+    if(state.mode==='braking')return '감속';if(state.mode==='hold')return '대기';return state.selectedDirection<0?'후진 이동':'이동';
+  }
+  function gearLabel(state){if(state.pendingDirection)return 'N → '+(state.pendingDirection<0?'R':'D');if(!state.selectedDirection||!state.gear)return 'N';return(state.selectedDirection<0?'R':'D')+state.gear+(state.shiftRemaining>0?' 변속':'');}
+  return{create,reset,step,turnRate,directionLabel,gearLabel,selectGearForSpeed};
+})();
+if(typeof module!=='undefined')module.exports=TacticalMobility;
 
 </script>
 <script id="vehicle-geometry">
@@ -1992,7 +2116,7 @@ const TacticalCore = (() => {
   }
   function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID,fireMode='auto') {
     registry.get(profileId);
-    const u={id,name,profileId,x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
+    const u={id,name,profileId,x,y,heading,turret:heading,speed:0,drive:TacticalMobility.create(),path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
     const p=profileOf(u);TacticalObservation.init(u);TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
   }
   function legalNear(x,y,units=[]) {
@@ -2017,9 +2141,9 @@ const TacticalCore = (() => {
   function issueMove(u,goal,reverse,units) {
     if(u?.combat?.status==='destroyed')return{ok:false,reason:'격파 차량은 이동할 수 없음',points:[]};
     const r=planPath(u,goal,units,u);if(!r.ok)return r;
-    u.path=r.points;u.goal={...goal};u.reverse=reverse;u.state=reverse?'후진 이동':'이동';return r;
+    u.path=r.points;u.goal={...goal};u.reverse=reverse;u.drive.requestedDirection=reverse?-1:1;return r;
   }
-  function stop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.state=u.speed>.15?'감속':'대기';return true;}
+  function stop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.reverse=false;u.drive.requestedDirection=0;u.drive.pendingDirection=0;u.state=u.speed>.15?'감속':'대기';return true;}
   function routeDistance(u){let d=0,p=u;for(const q of u.path){d+=Math.hypot(q.x-p.x,q.y-p.y);p=q;}return d;}
   function mobilityLimit(type,along,side,reverse=false,p=PROFILE){
     const m=p.mobility,base=type==='road'||type==='bridge'?m.roadSpeed:Math.min(m.crossCountrySpeed,m.surfaceSpeed[type]??Infinity);
@@ -2032,30 +2156,44 @@ const TacticalCore = (() => {
     if(!gradePassable(along,side,p))return 0;
     return Math.min(base,gradeCap,reverse?m.reverseSpeed:Infinity)*(1-.35*clamp(Math.abs(side)/m.maxSideGrade,0,1));
   }
-  function driveAcceleration(speed,p=PROFILE){const m=p.mobility;return m.accelerationReferenceSpeed/m.accelerationReferenceSeconds*Math.min(1,m.accelerationReferenceSpeed/Math.max(speed,.01));}
+  function driveAcceleration(speed,p=PROFILE){const q=p.mobility.powertrain,ratio=q.forwardRatios[TacticalMobility.selectGearForSpeed(p,1,Math.abs(speed))-1];return Math.max(0,Math.min(q.launchAcceleration*(q.referenceMassKg/p.massKg)*Math.pow(p.engineHp/q.referenceEngineHp,q.launchPowerExponent)*Math.pow(ratio/q.forwardRatios[0],q.gearForceExponent),p.engineHp*745.6998715822702*q.efficiency/(p.massKg*Math.max(Math.abs(speed),q.powerFloorSpeed)))-q.rollingDeceleration);}
+  function ensureDrive(u){
+    if(u.drive)return u.drive;
+    u.drive=TacticalMobility.create();u.drive.velocity=(u.reverse?-1:1)*(Number(u.speed)||0);u.speed=Math.abs(u.drive.velocity);return u.drive;
+  }
+  function mobilityView(u){
+    const d=ensureDrive(u),requested=d.requestedDirection<0?'후진':d.requestedDirection>0?'전진':'정지',actualDirection=Math.abs(d.velocity)>.015?Math.sign(d.velocity):d.selectedDirection;
+    const actual=Math.abs(d.velocity)>.015?(d.velocity<0?'실제 후진':'실제 전진'):TacticalMobility.directionLabel(d);
+    return{requested,actual,requestMatches:!d.pendingDirection&&d.requestedDirection===actualDirection,gear:TacticalMobility.gearLabel(d),velocity:d.velocity,mode:d.mode,shiftCount:d.shiftCount};
+  }
   function stepTank(u,dt,units) {
-    if(u.combat?.status==='destroyed'){u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
+    const drive=ensureDrive(u);
+    if(u.combat?.status==='destroyed'){TacticalMobility.reset(drive);u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
     if(u.team!=='blue')return;
     const pVehicle=profileOf(u),motion=pVehicle.mobility;
     u.replanTimer=Math.max(0,u.replanTimer-dt);
     while(u.path.length>1&&Math.hypot(u.path[0].x-u.x,u.path[0].y-u.y)<4)u.path.shift();
-    let desired=0;
+    let desired=0,request=0,err=0;
     if(u.path.length) {
       const p=u.path[0],d=Math.hypot(p.x-u.x,p.y-u.y);
-      if(u.path.length===1&&d<2.5){u.path=[];u.goal=null;u.state='대기';u.speed=0;return;}
-      const aim=Math.atan2(p.y-u.y,p.x-u.x)+(u.reverse?Math.PI:0),err=angleDiff(aim,u.heading);
-      const turnLimit=motion.pivotRate/(1+u.speed*.12)*dt;
+      if(u.path.length===1&&d<=motion.powertrain.arrivalRadius&&Math.abs(drive.velocity)<=motion.powertrain.arrivalSpeed){u.path=[];u.goal=null;u.reverse=false;}
+    }
+    if(u.path.length) {
+      request=u.reverse?-1:1;
+      const p=u.path[0],d=Math.hypot(p.x-u.x,p.y-u.y),actualDirection=Math.abs(drive.velocity)>motion.powertrain.directionStopSpeed?Math.sign(drive.velocity):(drive.pendingDirection||drive.selectedDirection||request);
+      const aim=Math.atan2(p.y-u.y,p.x-u.x)+(actualDirection<0?Math.PI:0);err=angleDiff(aim,u.heading);
+      const turnLimit=TacticalMobility.turnRate(drive.velocity,pVehicle)*dt;
       u.heading+=clamp(err,-turnLimit,turnLimit);
-      const type=surfaceAt(u.x,u.y),grade=gradeAt(u.x,u.y,u.heading),base=mobilityLimit(type,grade.along,grade.side,u.reverse,pVehicle),corner=Math.max(0,Math.cos(err));
-      desired=Math.min(base*corner*corner,Math.sqrt(Math.max(0,2*motion.brakeDeceleration*(routeDistance(u)-1))));
+      const type=surfaceAt(u.x,u.y),grade=gradeAt(u.x,u.y,u.heading),base=mobilityLimit(type,grade.along,grade.side,request<0,pVehicle),corner=Math.max(0,Math.cos(err));
+      desired=Math.min(base*corner*corner,Math.sqrt(Math.max(0,2*motion.brakeDeceleration*(routeDistance(u)-motion.powertrain.arrivalRadius))));
       if(u.path.length>1&&d<24){const q=u.path[1],turn=Math.abs(angleDiff(Math.atan2(q.y-p.y,q.x-p.x),Math.atan2(p.y-u.y,p.x-u.x)));if(turn>.5)desired=Math.min(desired,2.5+Math.max(0,d-5)*.35);}
       if(Math.abs(err)>1.15)desired=0;
-      u.state=desired<.2?'선회':u.reverse?'후진 이동':'이동';
-    } else u.state=u.speed>.1?'감속':'대기';
-    u.speed+=clamp(desired-u.speed,-motion.brakeDeceleration*dt,driveAcceleration(u.speed,pVehicle)*dt);if(u.speed<.025)u.speed=0;
-    const sign=u.reverse?-1:1,next={x:u.x+Math.cos(u.heading)*u.speed*sign*dt,y:u.y+Math.sin(u.heading)*u.speed*sign*dt};
+    }
+    TacticalMobility.step(drive,{direction:request,targetSpeed:desired},pVehicle,dt);u.speed=Math.abs(drive.velocity);
+    u.state=TacticalMobility.directionLabel(drive);if(u.path.length&&desired<.2&&u.speed<.3&&!drive.pendingDirection)u.state='선회';
+    const next={x:u.x+Math.cos(u.heading)*drive.velocity*dt,y:u.y+Math.sin(u.heading)*drive.velocity*dt};
     if(u.speed>0&&segmentClear(u,next,units,u)){u.distanceTravelled+=u.speed*dt;u.x=next.x;u.y=next.y;}
-    else if(u.speed>0){u.speed=0;u.state='경로 대기';if(u.goal&&u.replanTimer<=0){const r=planPath(u,u.goal,units,u);if(r.ok)u.path=r.points;u.replanTimer=1.5;}}
+    else if(u.speed>0){drive.velocity=0;drive.selectedDirection=0;drive.gear=0;u.speed=0;u.state='경로 대기';if(u.goal&&u.replanTimer<=0){const r=planPath(u,u.goal,units,u);if(r.ok)u.path=r.points;u.replanTimer=1.5;}}
   }
   const observationRuntimes=new WeakMap();
   function observationFor(s){
@@ -2110,7 +2248,7 @@ const TacticalCore = (() => {
   const combatRuntimes=new WeakMap();
   function combatFor(s){
     if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,onDestroyed:(target)=>{
-      target.speed=0;target.path=[];target.goal=null;target.reverse=false;target.state='격파';
+      target.speed=0;if(target.drive)TacticalMobility.reset(target.drive);target.path=[];target.goal=null;target.reverse=false;target.state='격파';
       TacticalObservation.cancel(target,s.time,'destroyed');fireFor(s).cancel(target);
     }}));
     return combatRuntimes.get(s);
@@ -2343,7 +2481,7 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -3183,7 +3321,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   const effectRenderer=TacticalEffects.create(),reducedMotionMedia=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
   let effectsEnabled=true,effectQuality=1,reducedMotionOverride=null;
   let visibility=null,visibilityPath=null;
-  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
+  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','mobility','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
   let sightRevision=0;
   function fitCamera(){
@@ -3719,7 +3857,8 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     }
     )[C.surfaceAt(u.x,u.y)]);
     const dist=C.routeDistance(u);
-    ui.setHTML($('routeInfo'),destroyed?'<strong>격파</strong> · 잔해는 차량 통행을 막음':u.path.length?'<strong>'+(u.reverse?'후진':'이동')+' 경로</strong> · 남은 거리 '+Math.round(dist)+'m':'지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.');
+    const drive=C.mobilityView(u),driveText='<strong>'+drive.gear+'</strong> · '+drive.actual+(!drive.requestMatches?' · 요청 '+drive.requested:'');
+    ui.setHTML($('routeInfo'),destroyed?'<strong>격파</strong> · 잔해는 차량 통행을 막음':u.path.length?'<strong>'+(u.reverse?'후진':'이동')+' 경로</strong> · 남은 거리 '+Math.round(dist)+'m · '+driveText:'지면을 탭해서 <strong>이동 경로</strong>를 지정해봐. · '+driveText);
     ui.setText($('clock'),'T+ '+String(Math.floor(sim.time/60)).padStart(2,'0')+':'+String(Math.floor(sim.time%60)).padStart(2,'0'));
     ui.setText($('simState'),paused?'일시정지':'기동·관측·사격 시험');
     const own=C.ownObservation(sim,u),d=own,status={idle:'없음',designated:'지정 전달',waiting:'확보 대기',acquiring:'포수 확인 중',acquired:'포수 확보',expired:'지정 만료',cancelled:'지정 취소',lost:'표적 유지 해제'};
@@ -3752,7 +3891,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     const vehicle=C.profileOf(u),model=vehicle.model,motion=vehicle.mobility,s=vehicle.sensors,degrees=r=>Math.round(r*180/Math.PI);
     ui.setText($('unitType'),vehicle.name+' · '+vehicle.weapons.mainGun.calibreMm+'mm '+vehicle.weapons.mainGun.name);
     ui.setText($('profileTitle'),vehicle.id+' 제원 · 적용값');
-    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
+    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['자동변속',motion.powertrain.forwardRatios.length+'단 전진 · '+motion.powertrain.reverseRatios.length+'단 후진'],['방향 전환',motion.powertrain.directionSettleSeconds.toFixed(2)+' 초 정차 확인'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
   }
   for(const u of sim.units.filter(u=>u.team==='blue')){
     const b=document.createElement('button');
@@ -3966,7 +4105,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP12',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP13',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

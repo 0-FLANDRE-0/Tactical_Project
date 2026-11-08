@@ -5,8 +5,8 @@ const {run,median}=require('./observation-benchmark-fixture.cjs'),root=path.reso
 const sourceHash=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 function loadCurrent(map){
  const source=fs.readFileSync(path.join(root,'src/sim-core.js'),'utf8'),profiles=require('../src/vehicle-profiles.js'),O=require('../src/observation.js');
- return new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(
-  map,profiles,O,require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
+ return new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalMobility','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(
+  map,profiles,require('../src/mobility.js'),O,require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
 }
 if(process.argv[2]==='--worker'){
  const variant=process.argv[3],out=process.argv[4],map=JSON.parse(fs.readFileSync(path.join(root,'data/rasdorf_4km.json'),'utf8'));

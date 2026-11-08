@@ -1,0 +1,151 @@
+{
+  "version": "0.4-WIP13",
+  "date": "2026-11-09",
+  "baselineCommit": "a789d5383903a6104ee368c1c57fce3ae327b54f",
+  "browser": "system Chromium",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "viewport": "1440x900 DPR1",
+  "fixture": "actual Rasdorf map, 50 moving blue + 50 stationary red M1A2_1998, hold fire, direct 180m goals, 80 warmup + 600 measured 0.05s frames per trial",
+  "trials": 3,
+  "baseline": {
+    "frameMedianMs": 20.600000023841858,
+    "frameP95Ms": 29.400000005960464,
+    "maxMs": 61
+  },
+  "WIP13": {
+    "frameMedianMs": 20.5,
+    "frameP95Ms": 29.599999994039536,
+    "maxMs": 57.099999994039536
+  },
+  "runs": {
+    "baseline": [
+      {
+        "trial": 0,
+        "frameMedianMs": 20,
+        "frameP95Ms": 27.400000005960464,
+        "maxMs": 45.80000001192093,
+        "simulatedSeconds": 34.000000000000206,
+        "contacts": 47,
+        "distanceTravelledM": 8408.894797355444,
+        "renderer": {
+          "key": "2000|2000|0.19082|1188|812|1|true|false|false|1.0.0|1.0.0",
+          "rebuildCount": 1,
+          "cacheHits": 679,
+          "lastRebuildMs": 0,
+          "rebuildTimes": [
+            0
+          ],
+          "terrainValid": true,
+          "terrainLines": 106
+        }
+      },
+      {
+        "trial": 1,
+        "frameMedianMs": 20.69999998807907,
+        "frameP95Ms": 29.400000005960464,
+        "maxMs": 61,
+        "simulatedSeconds": 34.000000000000206,
+        "contacts": 47,
+        "distanceTravelledM": 8408.894797355444,
+        "renderer": {
+          "key": "2000|2000|0.19082|1188|812|1|true|false|false|1.0.0|1.0.0",
+          "rebuildCount": 1,
+          "cacheHits": 679,
+          "lastRebuildMs": 0,
+          "rebuildTimes": [
+            0
+          ],
+          "terrainValid": true,
+          "terrainLines": 106
+        }
+      },
+      {
+        "trial": 2,
+        "frameMedianMs": 20.600000023841858,
+        "frameP95Ms": 30,
+        "maxMs": 58.89999997615814,
+        "simulatedSeconds": 34.000000000000206,
+        "contacts": 47,
+        "distanceTravelledM": 8408.894797355444,
+        "renderer": {
+          "key": "2000|2000|0.19082|1188|812|1|true|false|false|1.0.0|1.0.0",
+          "rebuildCount": 1,
+          "cacheHits": 679,
+          "lastRebuildMs": 0,
+          "rebuildTimes": [
+            0
+          ],
+          "terrainValid": true,
+          "terrainLines": 106
+        }
+      }
+    ],
+    "WIP13": [
+      {
+        "trial": 0,
+        "frameMedianMs": 20.5,
+        "frameP95Ms": 30.69999998807907,
+        "maxMs": 48,
+        "simulatedSeconds": 34.000000000000206,
+        "contacts": 47,
+        "distanceTravelledM": 8478.828036271409,
+        "renderer": {
+          "key": "2000|2000|0.19082|1188|812|1|true|false|false|1.0.0|1.0.0",
+          "rebuildCount": 1,
+          "cacheHits": 679,
+          "lastRebuildMs": 0,
+          "rebuildTimes": [
+            0
+          ],
+          "terrainValid": true,
+          "terrainLines": 106
+        }
+      },
+      {
+        "trial": 1,
+        "frameMedianMs": 20.69999998807907,
+        "frameP95Ms": 29.5,
+        "maxMs": 57.099999994039536,
+        "simulatedSeconds": 34.000000000000206,
+        "contacts": 47,
+        "distanceTravelledM": 8478.828036271409,
+        "renderer": {
+          "key": "2000|2000|0.19082|1188|812|1|true|false|false|1.0.0|1.0.0",
+          "rebuildCount": 1,
+          "cacheHits": 679,
+          "lastRebuildMs": 0,
+          "rebuildTimes": [
+            0
+          ],
+          "terrainValid": true,
+          "terrainLines": 106
+        }
+      },
+      {
+        "trial": 2,
+        "frameMedianMs": 20.5,
+        "frameP95Ms": 29.599999994039536,
+        "maxMs": 52.89999997615814,
+        "simulatedSeconds": 34.000000000000206,
+        "contacts": 47,
+        "distanceTravelledM": 8478.828036271409,
+        "renderer": {
+          "key": "2000|2000|0.19082|1188|812|1|true|false|false|1.0.0|1.0.0",
+          "rebuildCount": 1,
+          "cacheHits": 679,
+          "lastRebuildMs": 0,
+          "rebuildTimes": [
+            0
+          ],
+          "terrainValid": true,
+          "terrainLines": 106
+        }
+      }
+    ]
+  },
+  "notes": [
+    "Frame CPU includes one full fixed simulation tick, observation/LOS work, UI scheduling and actual canvas rendering. Initial legal placement is outside the measurement; path search count is zero because direct goals are injected.",
+    "Trajectories and resulting public contacts intentionally differ after the new drivetrain; the total frame delta is not solely drivetrain cost.",
+    "Headless server Chromium on this host; not mobile-device FPS or thermal evidence."
+  ]
+}

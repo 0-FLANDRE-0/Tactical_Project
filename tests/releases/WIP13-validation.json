@@ -1,0 +1,75 @@
+{
+  "version": "0.4-WIP13",
+  "date": "2026-11-09",
+  "baseCommit": "a789d5383903a6104ee368c1c57fce3ae327b54f",
+  "branch": "feat/wip13-lightweight-mobility",
+  "environment": {
+    "node": "v24.22.1",
+    "browser": "Chromium 156.0.8078.79",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "platform": "Linux x86_64"
+  },
+  "checks": [
+    {"name": "JavaScript syntax and Python build/package syntax", "status": "passed"},
+    {"name": "all non-browser Node test files", "status": "passed", "passed": 239, "failed": 0},
+    {"name": "legacy input assertions within input.test.cjs", "status": "passed", "passed": 42, "failed": 0},
+    {"name": "new WIP13 mobility tests", "status": "passed", "passed": 8, "failed": 0},
+    {"name": "actual Chromium application tests", "status": "passed", "passed": 28, "failed": 0, "evidence": "tests/releases/WIP13-browser.json"},
+    {"name": "WIP12 actual Chromium effects/ricochet regression", "status": "passed", "passed": 18, "failed": 0, "note": "Prior WIP12 evidence files were restored after the rerun so historical artifacts remain unchanged."},
+    {"name": "terrain readability Python unittest", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "source quality with system GDAL Python", "status": "passed", "passed": 7, "failed": 0, "note": "The default python3 attempt could not import osgeo; /usr/bin/python3 has the repository's required GDAL bindings and passed all checks."},
+    {"name": "standalone HTTP offline start and embedded Worker", "status": "passed"},
+    {"name": "file URL launch", "status": "not-run", "reason": "Chromium policy returned ERR_BLOCKED_BY_ADMINISTRATOR"},
+    {"name": "physical Android touch, sustained FPS and thermal test", "status": "not-run", "reason": "No physical Android device in this environment"}
+  ],
+  "mobilityEvidence": {
+    "forwardToReverseKmh": [40, 60],
+    "firstReverseCommandTickStillForward": true,
+    "zeroAndSettleBeforeNegativeVelocity": true,
+    "reverseToForward": true,
+    "cancelledInterlockClearsPendingDirection": true,
+    "zeroTo20Mph": {"seconds": 7.2, "speedMps": 8.94045296363942},
+    "roadCapKmh": 67.592448,
+    "reverseCapKmh": 40.2336,
+    "massAndPowerCausality": true,
+    "fixedTickBatchDeterminism": true
+  },
+  "performance": {
+    "mobility100TickMedianMs": 0.01682690700000012,
+    "mobility100TickP95Ms": 0.01792347399999926,
+    "targetMedianMs": 1,
+    "actualMap100": {
+      "baselineMedianMs": 0.6570024600000011,
+      "baselineP95Ms": 1.203788850000001,
+      "wip13MedianMs": 0.584709340000004,
+      "wip13P95Ms": 1.3060702300000002
+    },
+    "chromium100Frame": {
+      "baselineMedianMs": 20.600000023841858,
+      "baselineP95Ms": 29.400000005960464,
+      "wip13MedianMs": 20.5,
+      "wip13P95Ms": 29.599999994039536
+    },
+    "files": [
+      "tests/releases/WIP13-mobility-benchmark.json",
+      "tests/releases/WIP13-mobility-browser-benchmark.json"
+    ]
+  },
+  "artifacts": {
+    "html": {
+      "path": "Tactical_v0.4_WIP13.html",
+      "bytes": 8428158,
+      "sha256": "1c712c27e4ae294fcb7e84e8cb272fc83895f563da9c3d7ecdfc2be4de54c244",
+      "matchesDist": true
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP13.zip",
+      "bytes": 1660506,
+      "sha256": "66072bdd75560e940d1919b288484e1c3d730d9144a2fc04653d9718316a75b6",
+      "crc32": "3de2dbe3",
+      "entries": ["Tactical_v0.4_WIP13.html"],
+      "extractMatchesDist": true,
+      "repeatPackagingMatches": true
+    }
+  }
+}
