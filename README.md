@@ -1,15 +1,15 @@
-# TACTICAL v0.4 WIP11B — 영구 잔해·기본 자동교전
+# TACTICAL v0.4 WIP11C — 경계·교전 UI와 공개 체력 정보
 
-WIP11A의 M1A2 (1998)·M829A2 피해 상태를 유지하면서 잔해 재발견과 팀별 영구 표시를 고쳤고, 양측 차량에 기본 자동교전을 연결했다. 차량은 자체 관측·식별·인계/확보·조준·발사선 재검사를 거쳐 자동 단발을 반복한다. 플레이어 지정은 현재 임무보다 우선하며 자동 모드를 유지한다. 현재 포수 표적의 관측 또는 발사선을 잃으면 전차장이 처음 발견한 순서의 유효 후보로 전환한다.
+WIP11B의 영구 잔해·자동교전을 유지하면서 관측 명령 UI와 경계/교전 상태를 정리했다. 포수의 지정 경계는 교전 임무와 별도 상태로 보존되며, 실제 접촉을 탐지·식별·확보·조준·자동 사격한 뒤 경계 지점으로 복귀한다. 식별한 적의 이름·차종·HP는 관측 시점의 팀 공개 사본으로만 표시하고, 관측을 잃은 동안의 피해·위치·상태는 기억 표시에 반영하지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11B.zip). 압축을 풀면 `Tactical_v0.4_WIP11B.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP11B.html](Tactical_v0.4_WIP11B.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [잔해·자동교전 구현](docs/WRECK_AND_AUTO_ENGAGEMENT_WIP11B.md) · [피해 상태](docs/COMBAT_STATE_WIP11A.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11B.md) · [체크섬](SHA256SUMS_WIP11B.txt).
-- 최신 main `2f1786c`를 기존 PR #9 브랜치 `feat/wip11a-combat-state`에 정상 병합해 이어서 작업했다. 이전 실행 파일·ZIP·검증 자료를 보존한다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11C.zip). 압축을 풀면 `Tactical_v0.4_WIP11C.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP11C.html](Tactical_v0.4_WIP11C.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP11C UI·경계 구현](docs/UI_AND_GUARD_WIP11C.md) · [잔해·자동교전](docs/WRECK_AND_AUTO_ENGAGEMENT_WIP11B.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11C.md) · [체크섬](SHA256SUMS_WIP11C.txt).
+- 최신 main `902a999`를 기존 PR #9 브랜치 `feat/wip11a-combat-state`에 정상 병합해 이어서 작업했다. 이전 실행 파일·ZIP·검증 자료를 보존한다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11B.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11B.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11C.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11C.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -17,9 +17,9 @@ WIP11A의 M1A2 (1998)·M829A2 피해 상태를 유지하면서 잔해 재발견�
 - 시야 버튼 홀드 또는 V 키 홀드: 선택 전차의 가시·차폐 영역을 표시한다.
 - 드래그: 지도 이동. 핀치·휠: 확대/축소. 우측 맞춤 버튼: 전체 4km 지도 보기.
 - 관측 표적 탭: 미식별 실루엣은 일반 정보만, 식별한 현재 접촉은 차종·부위 관측 비율을 표시한다. 흐린 잔상은 마지막 관측 위치다.
-- 전차장/포수 선택 → 지점 경계(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 자동 경계 버튼으로 해당 명령 해제. Esc는 새 입력만 취소한다.
+- 하단 **경계** 버튼 → 전차장/포수 선택 → 방향 지정(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 기본 유지 시간은 해제까지이며 추가 옵션에서 5/10/30초를 고를 수 있다. 자동 경계 복귀로 해당 장비의 지점 명령만 해제한다. Esc·팝업 닫기·선택 변경은 완료하지 않은 입력만 취소한다.
 - 표적 패널의 포수 직접 지정과 인계 취소를 사용할 수 있다. 지정한 표적은 현재 임무보다 우선하며 `auto`에서는 별도 G 입력 없이 확보·조준 후 사격한다. 지정 전달과 포수 확보는 별도 상태다.
-- 실행 시 양측 차량은 **자동 사격**이다. 자체 확보·조준·발사선 조건이 맞으면 버튼 입력 없이 단발을 반복한다. 선택 차량의 `자동 사격` 버튼으로 `자동 사격 보류`를 전환할 수 있다. 보류는 관측·인계·조준을 유지하며 **발사 버튼 또는 G**의 수동 단발을 허용한다.
+- 실행 시 양측 차량은 **자동 사격**이다. 자체 확보·조준·발사선 조건이 맞으면 버튼 입력 없이 단발을 반복한다. 우측 교전 영역의 `자동` 버튼으로 `보류`를 전환할 수 있다. 보류는 관측·인계·조준을 유지하며 **발사 버튼 또는 G**의 수동 단발을 허용한다.
 - 확인된 잔해는 전투 종료까지 팀별로 계속 표시되고 통행을 막지만, 지도·명단·직접 API에서 선택하거나 표적으로 지정할 수 없다. 미관측 격파는 나중에 실제 관측·식별하기 전까지 공개되지 않는다.
 - Space: 일시정지. R: 후진 모드. X: 정지. F: 전체화면. Home: 전체 지도.
 - 전체화면 요청이 거절되거나 지원되지 않으면 지도 집중 모드로 전환한다.
@@ -87,7 +87,7 @@ WIP11A의 M1A2 (1998)·M829A2 피해 상태를 유지하면서 잔해 재발견�
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP11B.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP11C.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
@@ -122,12 +122,12 @@ WIP11A의 M1A2 (1998)·M829A2 피해 상태를 유지하면서 잔해 재발견�
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP11B
+python3 scripts/package_release.py WIP11C
 node --check src/combat-state.js
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs tests/combat-state.test.cjs tests/combat-core.test.cjs tests/combat-build.test.cjs tests/wip11b-wreck-auto.test.cjs
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs tests/combat-state.test.cjs tests/combat-core.test.cjs tests/combat-build.test.cjs tests/wip11b-wreck-auto.test.cjs tests/wip11c-ui-guard.test.cjs
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
@@ -177,7 +177,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 실제 지도와 기동·관측·수동/자동 단발 사격·기본 HP 전투를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2 한 종류와 1,450 HP를 사용한다. 비관통 피해는 0, 추가 탄속 피해 배율은 1이며 표 밖 관통값은 끝값으로 고정한다. 기본 자동교전은 기존 접촉과 헌터킬러 후보를 이용하는 1차 게임 로직이다. 정교한 위협 점수·3단계 ROE·전체 OODA, 적 자율 이동, 탄종 선택, 모듈/승무원 피해·화재·유폭·수리·상세 장전·보병은 후속이다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP11A 피해는 그 내부 명중/구역 결과를 받아 별도로 적용하므로 표시 좌표가 판정을 바꾸지 않는다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP11B 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP11A 피해는 그 내부 명중/구역 결과를 받아 별도로 적용하므로 표시 좌표가 판정을 바꾸지 않는다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP11C 릴리스 문서에 있다.
 
 ## 출처
 

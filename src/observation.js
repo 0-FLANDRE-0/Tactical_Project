@@ -23,9 +23,9 @@ const TacticalObservation=(()=>{
   function guard(u,ch,point,duration=0,time=0){
     if(!['commander','gunner'].includes(ch)||!point||![point.x,point.y,duration,time].every(Number.isFinite)||duration<0)return false;
     Object.assign(init(u)[ch],{mode:'guard',point:{x:point.x,y:point.y},interest:{x:point.x,y:point.y},interestUntil:Number.MAX_VALUE,expiresAt:duration?time+duration:null,focus:null});
-    if(ch==='gunner')cancel(u,time,'guard');return true;
+    return true;
   }
-  function resume(u,ch,time=0){if(!['commander','gunner'].includes(ch))return false;Object.assign(init(u)[ch],{mode:'auto',point:null,interestUntil:time+8,expiresAt:null,focus:null});if(ch==='gunner')cancel(u,time);return true;}
+  function resume(u,ch,time=0){if(!['commander','gunner'].includes(ch))return false;Object.assign(init(u)[ch],{mode:'auto',point:null,interestUntil:time+8,expiresAt:null,focus:null});return true;}
   function create({profileOf,exposure,seed=7,onEvent=null}){
     let tick=0,time=0,teams=new Map();
     const stats={queries:0,candidates:0,samples:0,rayQueries:0,rayCacheHits:0},geometryCaches=new WeakMap();
@@ -51,11 +51,10 @@ const TacticalObservation=(()=>{
       if(shared){
         // Team knowledge is transferred, not own detection/evidence/current LOS.
         local.shared={pose:copyPose(c.pose),observedAt:c.lastSeen,receivedAt:time};
-        if(c.identified){local.identified=true;local.enemyConfirmed=c.enemyConfirmed;local.known={...c.known};local.knowledgeAt=c.knowledgeAt;local.knowledgeSource='team';}
+        if(c.identified){local.identified=true;local.enemyConfirmed=c.enemyConfirmed;local.known={...c.known,...(c.known?.combat?{combat:{...c.known.combat}}:{})};local.knowledgeAt=c.knowledgeAt;local.knowledgeSource='team';}
         emit(u,'team-designation-received',local,{source:'manual'});
       }
       if(source==='manual'){
-        Object.assign(s.gunner,{mode:'auto',point:null,expiresAt:null,focus:null});
         s.tracking={status:'cancelled',reason:'player-change',endedAt:time};
       }
       s.designation={status:'designated',target:id,key:local.key,source,pose:copyPose(c.pose),observedAt:c.lastSeen,startedAt:time,expiresAt:time+t.designationSeconds,reason:'slewing'};
@@ -87,8 +86,8 @@ const TacticalObservation=(()=>{
         const o=s[ch],eq=sensors[ch];
         if(o.mode==='guard'&&o.expiresAt!==null&&now>=o.expiresAt)Object.assign(o,{mode:'auto',point:null,interestUntil:now+8,expiresAt:null,focus:null});
         if(!eq.enabled||(ch==='commander'&&!eq.independent))continue;
-        let point=o.mode==='guard'?o.point:null;
-        const d=mission(s);if(!point&&ch==='gunner'&&d)point=d.pose;
+        const d=mission(s);
+        let point=ch==='gunner'&&d?d.pose:o.mode==='guard'?o.point:null;
         if(!point)point=focus(u,ch,now);
         o.scanPhase??=hash(u.id+':'+ch,seed)*TAU;
         const scan=eq.scan,aim=point?Math.atan2(point.y-u.y,point.x-u.x):u.heading+scan.amplitude*Math.sin(now*TAU/scan.period+o.scanPhase);
@@ -144,7 +143,9 @@ const TacticalObservation=(()=>{
         if(c.detected){
           c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,barrelTip:tp.model.barrelTip,turretOrigin:tp.model.turretOrigin,turretPivot:[...tp.model.turretPivot],turretRingDiameter:tp.model.turretRingDiameter,muzzleLocal:[...tp.model.muzzleLocal]}};
           const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};c.gunnerExposure=result.gunner?{hull:result.gunner.hull,turret:result.gunner.turret,samples:result.gunner.samples,presented:{...tp.fireControl.presented}}:{hull:0,turret:0,samples:[]};
-          if(c.identified&&identify>0){c.known={name:target.name,type:tp.name};c.knowledgeAt=now;}
+          if(c.identified&&identify>0){
+            c.known={name:target.name,type:tp.name,...(target.combat?{combat:{hp:target.combat.hp,maxHp:target.combat.maxHp,status:target.combat.status}}:{})};c.knowledgeAt=now;
+          }
           if(c.detected&&result.commander?.quality>0)c.commanderDiscoveredAt??=now;
           if(c.identified&&result.commander?.quality>0)c.commanderIdentifiedAt??=now;
           // A destroyed world object remains an ordinary observation candidate.
@@ -210,7 +211,7 @@ const TacticalObservation=(()=>{
         }
         if(pendingOrderChanged)s.pending.sort((a,b)=>a.discoveredAt-b.discoveredAt||(a.key<b.key?-1:a.key>b.key?1:0));
       }
-      if(d||s.gunner.mode==='guard'||!sensors.gunner.enabled||now<s.autoAssignAfter)return;
+      if(d||!sensors.gunner.enabled||now<s.autoAssignAfter)return;
       if(sensors.hunterKiller&&sensors.commander.enabled){
         const next=s.pending.find(v=>now-v.observedAt<=t.designationStale&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
         if(next){designate(u,next.target,'commander');return;}
@@ -225,7 +226,7 @@ const TacticalObservation=(()=>{
     }
     function retarget(u,target,reason,now){
       const s=init(u),d=mission(s),t=profileOf(u).sensors.tuning;
-      if(!d||d.target!==target||d.status!=='acquired'||s.gunner.mode==='guard')return false;
+      if(!d||d.target!==target||d.status!=='acquired')return false;
       const next=s.pending.find(v=>v.target!==target&&now-v.observedAt<=t.designationStale&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
       if(!next)return false;
       finish(u,d,'lost',reason,now);
@@ -237,10 +238,10 @@ const TacticalObservation=(()=>{
     function buildTeam(units){
       const merged=new Map();for(const u of units){const map=merged.get(u.team)||new Map();merged.set(u.team,map);
         for(const[id,c]of Object.entries(init(u).contacts)){
-          if(!c.detected||!c.pose)continue;const old=map.get(id);if(!old){map.set(id,{...c,pose:copyPose(c.pose)});continue;}
-          const knowledge=old.identified&&old.known?{identified:true,enemyConfirmed:old.enemyConfirmed,known:old.known,knowledgeAt:old.knowledgeAt}:{},current=old.current||c.current;
+          if(!c.detected||!c.pose)continue;const old=map.get(id);if(!old){map.set(id,{...c,pose:copyPose(c.pose),known:c.known?{...c.known,...(c.known.combat?{combat:{...c.known.combat}}:{})}:null});continue;}
+          const knowledge=old.identified&&old.known?{identified:true,enemyConfirmed:old.enemyConfirmed,known:{...old.known,...(old.known.combat?{combat:{...old.known.combat}}:{})},knowledgeAt:old.knowledgeAt}:{},current=old.current||c.current;
           if(c.lastSeen>old.lastSeen)Object.assign(old,{...c,pose:copyPose(c.pose)});
-          if(c.identified&&c.known)Object.assign(old,{identified:true,enemyConfirmed:c.enemyConfirmed,known:{...c.known},knowledgeAt:c.knowledgeAt});else Object.assign(old,knowledge);old.current=current;
+          if(c.identified&&c.known)Object.assign(old,{identified:true,enemyConfirmed:c.enemyConfirmed,known:{...c.known,...(c.known.combat?{combat:{...c.known.combat}}:{})},knowledgeAt:c.knowledgeAt});else Object.assign(old,knowledge);old.current=current;
         }
       }teams=merged;
     }
@@ -257,7 +258,7 @@ const TacticalObservation=(()=>{
     }
     function contacts(team){return[...(teams.get(team)?.values()||[])].map(c=>{
       const v={key:c.key,...copyPose(c.pose),team:team==='blue'?'red':'blue',identified:c.identified,current:c.current,memory:!c.current,observedAt:c.lastSeen,age:Math.max(0,time-c.lastSeen),label:c.identified&&c.known?c.known.name:'미식별 표적'};
-      if(c.identified&&c.known){v.name=c.known.name;v.type=c.known.type;if(c.current)v.exposure={...c.exposure};}return v;
+      if(c.identified&&c.known){v.name=c.known.name;v.type=c.known.type;if(c.known.combat)v.combat={...c.known.combat};if(c.current)v.exposure={...c.exposure};}return v;
     });}
     function direct(u,key){const match=[...(teams.get(u.team)?.entries()||[])].find(([,c])=>c.key===key);return!!match&&designate(u,match[0],'manual',match[1]);}
     function ownStatus(u,key=null){

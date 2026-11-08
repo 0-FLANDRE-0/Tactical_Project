@@ -3,10 +3,10 @@ const {fixture,core,original}=require('./helpers/observation-core-fixture.cjs');
 const near=(a,b,tol=1e-8)=>assert(Math.abs(a-b)<tol,`${a} != ${b}`);
 const evidence=[];
 test('R14 moving target crosses actual gunner FOV boundaries without stale observation',()=>{
- const f=fixture('flat',{target:{x:1200,y:600}});f.u.profileOverride=structuredClone(f.C.PROFILE);f.u.profileOverride.sensors.commander.enabled=false;f.C.guard(f.s,f.u,'gunner',{x:2000,y:1000});const seen=[];
+ const f=fixture('flat',{target:{x:1200,y:600}});f.u.profileOverride=structuredClone(f.C.PROFILE);f.u.profileOverride.sensors.commander.enabled=false;f.u.observation.autoAssignAfter=999;f.C.guard(f.s,f.u,'gunner',{x:2000,y:1000});const seen=[];
  f.step(800,(now,u,t)=>{const a=(-25+50*(now/40))*Math.PI/180;t.x=u.x+700*Math.cos(a);t.y=u.y+700*Math.sin(a);});
  // Repeat with trajectory samples to inspect actual channel decisions.
- const g=fixture('flat',{target:{x:1200,y:600}});g.u.profileOverride=structuredClone(g.C.PROFILE);g.u.profileOverride.sensors.commander.enabled=false;g.C.guard(g.s,g.u,'gunner',{x:2000,y:1000});
+ const g=fixture('flat',{target:{x:1200,y:600}});g.u.profileOverride=structuredClone(g.C.PROFILE);g.u.profileOverride.sensors.commander.enabled=false;g.u.observation.autoAssignAfter=999;g.C.guard(g.s,g.u,'gunner',{x:2000,y:1000});
  for(let i=0;i<800;i++){g.step(1,(now,u,t)=>{const a=(-25+50*(now/40))*Math.PI/180;t.x=u.x+700*Math.cos(a);t.y=u.y+700*Math.sin(a);});if(i%20===0)seen.push({time:g.s.time,angle:Math.atan2(g.t.y-g.u.y,g.t.x-g.u.x)*180/Math.PI,current:g.local()?.sources.gunner.current??false});}
  assert(seen.some(v=>Math.abs(v.angle)<10&&v.current));assert(seen.filter(v=>v.angle>17).every(v=>!v.current));assert(g.contact().memory);assert.deepEqual(f.u.observation,g.u.observation);evidence.push({id:'R14',fixture:'flat',trajectory:'radius 700m, bearing -25 to +25 deg over 40s; fixed gunner guard east',seen});
 });

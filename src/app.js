@@ -1,6 +1,6 @@
 (() => {
   const C=TacticalCore,$=id=>document.getElementById(id),canvas=$('map'),ctx=canvas.getContext('2d'),wrap=$('mapWrap');
-  let sim=C.createScenario(),selected='A11',targetId=null,paused=false,timeScale=1,reverseMode=false,showContours=true,sightHeld=false,sightPointer=null,sightKey=false,last=performance.now(),accumulator=0,uiTime=0,toastUntil=0,visibilityDirty=true,visLast=-1,visOrigin=null,frameCount=0;
+  let sim=C.createScenario(),selected='A11',targetId=null,paused=false,timeScale=1,reverseMode=false,showContours=true,sightHeld=false,sightPointer=null,sightKey=false,last=performance.now(),accumulator=0,uiTime=0,toastUntil=0,visibilityDirty=true,visLast=-1,visOrigin=null,frameCount=0,guardPopupOpen=false,portraitBlocked=false,portraitPausedBefore=false;
   const camera={
     x:C.WORLD.w/2,y:C.WORLD.h/2,zoom:.5,w:1,h:1,dpr:1
   }
@@ -9,7 +9,7 @@
   const alive=u=>u&&u.combat?.status!=='destroyed';
   const selectedUnit=()=>sim.units.find(u=>u.id===selected&&u.team==='blue'&&alive(u));
   const ui=TacticalUICache,updateRoster=ui.createListUpdater(v=>v.state+' · '+Math.round(v.speed*3.6)+' km/h','.unit-sub');
-  const lookView=()=>{const u=selectedUnit();return u?C.observationView(sim,u,$('lookChannel').value||'commander'):{mode:'idle',turret:0,gaze:0,direction:null,remaining:null,point:null};};
+  const lookView=channel=>{const u=selectedUnit();return u?C.observationView(sim,u,channel||$('lookChannel').value||'commander'):{mode:'idle',turret:0,gaze:0,direction:null,remaining:null,point:null};};
   let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA);
   let visibility=null,visibilityPath=null;
@@ -76,18 +76,31 @@
     $('lookDirection').setAttribute('aria-pressed',lookPicking);
     wrap.classList.toggle('look-picking',lookPicking);
   }
+  function setGuardPopup(value){
+    guardPopupOpen=!!value&&!portraitBlocked&&!!selectedUnit();
+    $('guardPopup').classList.toggle('open',guardPopupOpen);
+    $('guardPopup').setAttribute('aria-hidden',String(!guardPopupOpen));
+    $('guardMenu').setAttribute('aria-expanded',String(guardPopupOpen));
+    $('guardMenu').classList.toggle('active',guardPopupOpen);
+  }
   function toggleLookPicking(){
-    if(!selectedUnit())return;
+    if(portraitBlocked||!selectedUnit())return;
     setLookPicking(!lookPicking);
+    if(lookPicking)setGuardPopup(false);
     toast(lookPicking?'지도에서 경계할 지점을 탭해줘 · Esc 취소':'지점 경계 입력 취소');
   }
+  $('guardMenu').onclick=()=>{setLookPicking(false);setGuardPopup(!guardPopupOpen);};
+  $('guardClose').onclick=()=>{setLookPicking(false);setGuardPopup(false);};
+  for(const type of ['pointerdown','click'])$('guardPopup').addEventListener(type,e=>e.stopPropagation());
+  $('guardPopup').addEventListener('keydown',e=>{if(e.code==='Escape'){e.preventDefault();e.stopPropagation();setLookPicking(false);setGuardPopup(false);}},true);
   $('lookDirection').onclick=toggleLookPicking;
-  $('lookResume').onclick=()=>{const u=selectedUnit();setLookPicking(false);if(u)C.resumeObservation(sim,u,$('lookChannel').value||'commander');updateUI();};
+  $('lookResume').onclick=()=>{const u=selectedUnit();setLookPicking(false);setGuardPopup(false);if(u)C.resumeObservation(sim,u,$('lookChannel').value||'commander');updateUI();};
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{const u=selectedUnit();if(u&&targetId&&C.designate(sim,u,targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
   const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
   function fireSelected(){
+    if(portraitBlocked)return;
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
     const u=selectedUnit();if(!u){toast('선택 가능한 차량이 없음');return;}
     if(!targetId){toast('관측 중인 표적을 먼저 탭해줘');return;}
@@ -97,8 +110,10 @@
   $('cancelDesignation').onclick=()=>{const u=selectedUnit();if(u)C.cancelDesignation(sim,u);updateUI();};
   $('fireMode').onclick=()=>{const u=selectedUnit();if(!u)return;const next=C.fireStatus(sim,u).mode==='auto'?'hold':'auto';C.fireMode(sim,u,next);toast(next==='auto'?'자동 사격 허용':'자동 사격 보류 · 수동 단발 가능');updateUI();};
   function select(id){
+    if(portraitBlocked)return false;
     const candidate=sim.units.find(u=>u.id===id&&u.team==='blue'&&alive(u));if(!candidate)return false;
     setLookPicking(false);
+    setGuardPopup(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     selected=id;
     targetId=null;
@@ -162,6 +177,7 @@
   }
   );
   function tap(sx,sy){
+    if(portraitBlocked)return;
     const p=toWorld(sx,sy);
     if(lookPicking){
       const u=selectedUnit();if(!u){setLookPicking(false);return;}const dx=p.x-u.x,dy=p.y-u.y;
@@ -201,6 +217,7 @@
     }
   }
   canvas.addEventListener('pointerdown',e=>{
+    if(portraitBlocked)return;
     if(e.button!==0&&e.pointerType==='mouse')return;
     e.preventDefault();
     canvas.setPointerCapture(e.pointerId);
@@ -277,12 +294,14 @@
   canvas.addEventListener('contextmenu',e=>e.preventDefault());
   $('move').onclick=()=>{
     setLookPicking(false);
+    setGuardPopup(false);
     setReverse(false);
     toast('이동할 지면을 탭해줘')
   }
   ;
   $('reverse').onclick=()=>{
     setLookPicking(false);
+    setGuardPopup(false);
     setReverse(!reverseMode);
     toast(reverseMode?'후진할 지면을 탭해줘':'전진 이동 모드')
   }
@@ -310,6 +329,25 @@
     $('pause').classList.toggle('active',v);
     accumulator=0
   }
+  const orientationMedia=window.matchMedia?window.matchMedia('(orientation: portrait)'):null;
+  const isPortrait=()=>orientationMedia?orientationMedia.matches:Number.isFinite(window.innerWidth)&&Number.isFinite(window.innerHeight)&&window.innerHeight>window.innerWidth;
+  function syncOrientation(){
+    const next=isPortrait();
+    if(next===portraitBlocked)return;
+    if(next){
+      portraitPausedBefore=paused;portraitBlocked=true;
+      releaseSight();setLookPicking(false);setGuardPopup(false);pointers.clear();gesture=null;clickStart=null;dragged=false;accumulator=0;
+      setPaused(true);
+    }else{
+      portraitBlocked=false;
+      setPaused(portraitPausedBefore);
+    }
+    $('orientationBlock').setAttribute('aria-hidden',String(!portraitBlocked));
+    document.body?.classList.toggle('portrait-blocked',portraitBlocked);
+    last=performance.now();
+  }
+  if(orientationMedia?.addEventListener)orientationMedia.addEventListener('change',()=>{syncOrientation();setTimeout(()=>resize(),0);});
+  else if(orientationMedia?.addListener)orientationMedia.addListener(()=>{syncOrientation();setTimeout(()=>resize(),0);});
   $('pause').onclick=()=>setPaused(!paused);
   $('speed').onclick=()=>{
     timeScale=timeScale===1?2:1;
@@ -350,6 +388,7 @@
   );
   $('reset').onclick=()=>{
     setLookPicking(false);
+    setGuardPopup(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     sim=C.createScenario();
     selected='A11';
@@ -367,8 +406,9 @@
   }
   ;
   window.addEventListener('keydown',e=>{
+    if(portraitBlocked){e.preventDefault();return;}
+    if(e.code==='Escape'){if(lookPicking)setLookPicking(false);else setGuardPopup(false);return;}
     if(['INPUT','SELECT','TEXTAREA'].includes(e.target?.tagName)||e.target?.isContentEditable)return;
-    if(e.code==='Escape'){setLookPicking(false);return;}
     if(e.code==='KeyL'&&!e.repeat){e.preventDefault();toggleLookPicking();return;}
     if(e.target instanceof HTMLButtonElement&&['Space','Enter'].includes(e.code))return;
     if(e.code==='KeyV'){
@@ -390,6 +430,7 @@
   }
   );
   window.addEventListener('keyup',e=>{
+    if(portraitBlocked)return;
     if(e.code==='KeyV'){
       sightKey=false;
       setSight(sightPointer!==null)
@@ -399,6 +440,7 @@
   window.addEventListener('blur',()=>{
     releaseSight();
     setLookPicking(false);
+    setGuardPopup(false);
     pointers.clear();
     clickStart=null;
     gesture=null;
@@ -409,6 +451,7 @@
   document.addEventListener('visibilitychange',()=>{
     releaseSight();
     setLookPicking(false);
+    setGuardPopup(false);
     pointers.clear();
     clickStart=null;
     gesture=null;
@@ -416,7 +459,7 @@
     last=performance.now()
   }
   );
-  window.addEventListener('resize',()=>resize());
+  window.addEventListener('resize',()=>{syncOrientation();resize();});
   new ResizeObserver(()=>resize()).observe(wrap);
   function updateVisibility(now){
     const u=selectedUnit();
@@ -468,27 +511,26 @@
     updateRoster($('roster').children,friendlies,selected);ui.setText($('rosterCount'),String(living.length).padStart(2,'0'));
     for(const row of $('roster').children){const unit=friendlies.find(v=>v.id===row.dataset.id),gone=!alive(unit);row.hidden=gone;row.disabled=gone;}
     if(!u){
-      for(const id of ['move','reverse','stop','sight','fire','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode'])$(id).disabled=true;
+      for(const id of ['move','reverse','stop','sight','fire','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode'])$(id).disabled=true;
       ui.setText($('unitName'),'선택 가능한 차량 없음');ui.setText($('unitType'),'아군 차량 전멸');ui.setText($('velocity'),'0');ui.setText($('motionState'),'격파');
       ui.setText($('combatSummary'),'생존 아군 없음');ui.setText($('fireState'),'자동 사격 중지');ui.setText($('flightState'),'');ui.setText($('lookStatus'),'관측 불가');ui.setText($('designationStatus'),'없음');
-      ui.setText($('equipmentStatus'),'');ui.setText($('elevation'),'—');ui.setText($('slope'),'—');ui.setText($('heading'),'—');ui.setText($('surface'),'—');ui.setHTML($('routeInfo'),'<strong>아군 전멸</strong> · 지도 이동·확대·초기화는 계속 사용할 수 있음');
+      ui.setText($('elevation'),'—');ui.setText($('slope'),'—');ui.setText($('heading'),'—');ui.setText($('surface'),'—');ui.setHTML($('routeInfo'),'<strong>아군 전멸</strong> · 지도 이동·확대·초기화는 계속 사용할 수 있음');
       $('targetPanel').classList.toggle('visible',false);return;
     }
     const combat=C.combatView(u),destroyed=combat?.status==='destroyed';
     const firing=C.fireStatus(sim,u,targetId),fireText=firing.status==='ready'?'조준 완료':firing.status==='aiming'?'조준 '+Math.round(firing.aimProgress*100)+'%':fireReasons[firing.reason]||'표적 미확보';
     ui.setText($('fireState'),(firing.mode==='auto'?'자동':'보류')+' · '+fireText+' · 시험탄 '+firing.ammo);
-    ui.setText($('fireMode'),firing.mode==='auto'?'자동 사격':'자동 사격 보류');$('fireMode').setAttribute('aria-pressed',String(firing.mode==='auto'));$('fireMode').classList.toggle('active',firing.mode==='auto');
+    ui.setText($('fireMode'),firing.mode==='auto'?'자동':'보류');$('fireMode').setAttribute('aria-pressed',String(firing.mode==='auto'));$('fireMode').classList.toggle('active',firing.mode==='auto');
     const activeFlight=firing.inFlight[0];ui.setText($('flightState'),activeFlight?'비행 중'+(firing.inFlight.length>1?' '+firing.inFlight.length+'발':'')+' · 착탄까지 '+activeFlight.remaining.toFixed(1)+'초':firing.lastShot?.result==='unobserved'?'최근 단발: 결과 미확인':'');
     $('fire').disabled=paused||destroyed||!targetId||!firing.canFire;
     $('fire').setAttribute('aria-disabled',String($('fire').disabled));
-    const look=lookView(),bearing=look.direction===null?null:((Math.round(look.direction*180/Math.PI)+90)%360+360)%360;
-    ui.setText($('lookStatus'),look.mode==='fixed'?bearing+'° · '+(look.remaining===null?'해제까지':Math.ceil(look.remaining)+'초'):'자동 경계');
+    const guardLabel=channel=>{const view=lookView(channel),bearing=view.direction===null?null:((Math.round(view.direction*180/Math.PI)+90)%360+360)%360;return view.mode==='fixed'?bearing+'° '+(view.remaining===null?'· 해제까지':'· '+Math.ceil(view.remaining)+'초'):'자동';};
     ui.setText($('unitName'),u.name);updateVehicleSpecs(u);
     ui.setText($('velocity'),Math.round(u.speed*3.6));
     ui.setText($('motionState'),u.state);
     ui.setText($('combatSummary'),combat?combat.ammoId+' · HP '+Math.round(combat.hp).toLocaleString()+' / '+Math.round(combat.maxHp).toLocaleString()+' · '+(destroyed?'격파':'생존'):'피해 모델 비활성');
     $('combatSummary').classList.toggle('destroyed',destroyed);
-    for(const id of ['move','reverse','stop','sight','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode'])$(id).disabled=destroyed;
+    for(const id of ['move','reverse','stop','sight','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode'])$(id).disabled=destroyed;
     ui.setText($('elevation'),C.heightAt(u.x,u.y).toFixed(1)+' m');
     ui.setText($('slope'),(Math.atan(C.slopeAt(u.x,u.y))*180/Math.PI).toFixed(1)+'°');
     ui.setText($('heading'),((Math.round(u.heading*180/Math.PI)+90)%360+360)%360+'°');
@@ -501,9 +543,8 @@
     ui.setText($('clock'),'T+ '+String(Math.floor(sim.time/60)).padStart(2,'0')+':'+String(Math.floor(sim.time%60)).padStart(2,'0'));
     ui.setText($('simState'),paused?'일시정지':'기동·관측·사격 시험');
     const own=C.ownObservation(sim,u),d=own,status={idle:'없음',designated:'지정 전달',waiting:'확보 대기',acquiring:'포수 확인 중',acquired:'포수 확보',expired:'지정 만료',cancelled:'지정 취소',lost:'표적 유지 해제'};
-    ui.setText($('designationStatus'),(d.source==='gunner'?'포수 자체 · ':d.source==='commander'?'전차장 인계 · ':d.source==='manual'?'직접 지정 · ':'')+(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':'')+(own.pending?' · 후보 '+own.pending:''));
-    const sensors=C.profileOf(u).sensors;
-    ui.setText($('equipmentStatus'),'전차장 '+(!sensors.commander.enabled?'없음':sensors.commander.independent?'독립':'포탑 연동')+' · 헌터킬러 '+(sensors.hunterKiller?'지원':'없음'));
+    ui.setText($('lookStatus'),'전차장 '+guardLabel('commander')+' · 포수 '+guardLabel('gunner')+' · 후보 '+own.pending);
+    ui.setText($('designationStatus'),(d.source==='gunner'?'포수 자체 · ':d.source==='commander'?'전차장 인계 · ':d.source==='manual'?'직접 지정 · ':'')+(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':''));
     let target=C.contacts(sim).find(v=>v.key===targetId);if(target?.wreck){targetId=null;target=null;}
     $('targetPanel').classList.toggle('visible',!!target);
     if(target){
@@ -511,7 +552,8 @@
       ui.setText($('targetTitle'),target.label);
       const ownTarget=C.ownObservation(sim,u,target.key),channelNames={ambient:'주변',commander:'전차장',gunner:'포수'};
       ui.setText($('targetOwnStatus'),'팀 '+(target.current?'관측':'기억')+' · 선택 차량 '+(ownTarget.current?ownTarget.channels.map(ch=>channelNames[ch]).join('/'):'자체 관측 없음')+' · '+(ownTarget.acquired?'포수 확보':'포수 미확보'));
-      ui.setText($('targetDetails'),target.wreck?'관측된 격파 잔해 · '+target.type:target.memory?'마지막 관측 '+target.age.toFixed(1)+'초 전 · '+(target.identified?target.type:'미식별 표적'):target.identified?target.type:'미식별 표적 · 상세정보 없음');
+      const publicHp=target.identified&&target.combat?' · '+(target.memory?'마지막 확인 ':'')+'HP '+Math.round(target.combat.hp).toLocaleString()+' / '+Math.round(target.combat.maxHp).toLocaleString():'';
+      ui.setText($('targetDetails'),target.wreck?'관측된 격파 잔해 · '+target.type:target.memory?'마지막 관측 '+target.age.toFixed(1)+'초 전 · '+(target.identified?target.type+publicHp:'미식별 표적'):target.identified?target.type+publicHp:'미식별 표적 · 상세정보 없음');
       const fc=C.fireStatus(sim,u,target.key);
       const probabilities=fc.zoneProbabilities;
       const b=fc.breakdown,rects=b?.rects||[],w=rects.length?Math.max(...rects.map(r=>r.x2))-Math.min(...rects.map(r=>r.x1)):0,h=rects.length?Math.max(...rects.map(r=>r.z2))-Math.min(...rects.map(r=>r.z1)):0;
@@ -571,8 +613,15 @@
       ctx.beginPath();ctx.moveTo(ring+24,0);ctx.lineTo(ring+16,-4);ctx.lineTo(ring+16,4);ctx.closePath();ctx.fill();ctx.restore();
     }
     if(z<1){ctx.fillStyle=unknown?'#050505':enemy?'#eab17c':'#a5e1c5';ctx.strokeStyle='#253c30';ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fill();ctx.stroke();}
-    ctx.font='600 10px ui-monospace,monospace';ctx.textAlign='center';const text=enemy?u.label+(u.memory?' · 기억':''):u.name+(destroyed?' · 격파':''),tw=ctx.measureText(text).width,labelY=ring+7;
-    ctx.fillStyle='#12271fe8';ctx.fillRect(-tw/2-5,labelY,tw+10,17);ctx.fillStyle=enemy?'#f0bd86':'#e3edcc';ctx.fillText(text,0,labelY+12);ctx.restore();
+    ctx.font='600 10px ui-monospace,monospace';ctx.textAlign='center';
+    const text=enemy?(u.identified?u.label+' · '+u.type+(u.memory?' · 기억':''):'미식별 표적'):u.name+(destroyed?' · 격파':''),tw=ctx.measureText(text).width,labelY=-ring-43;
+    ctx.fillStyle='#12271fe8';ctx.fillRect(-tw/2-5,labelY,tw+10,16);ctx.fillStyle=enemy?'#f0bd86':'#e3edcc';ctx.fillText(text,0,labelY+11);
+    const health=!destroyed&&(!enemy||u.identified)?u.combat:null;
+    if(health&&Number.isFinite(health.hp)&&Number.isFinite(health.maxHp)&&health.maxHp>0){
+      const bw=Math.max(44,Math.min(84,tw+10)),ratio=C.clamp(health.hp/health.maxHp,0,1),barY=labelY+18;
+      ctx.fillStyle='#0b1512df';ctx.fillRect(-bw/2-1,barY-1,bw+2,6);ctx.fillStyle=ratio>.55?'#8fc879':ratio>.25?'#d6b96c':'#d77862';ctx.fillRect(-bw/2,barY,bw*ratio,4);ctx.strokeStyle='#b8c5ad88';ctx.lineWidth=1;ctx.strokeRect(-bw/2-.5,barY-.5,bw+1,5);
+    }
+    ctx.restore();
   }
   function drawShots(){
     const events=C.fireEvents(sim,'blue',sim.time-7),done=new Set(events.filter(e=>e.type==='impact').map(e=>e.id)),fired=new Map(events.filter(e=>e.type==='fired').map(e=>[e.id,e]));
@@ -738,6 +787,7 @@
   }
   $('loading').remove();
   resize(true);
+  syncOrientation();
   updateUI();
   requestAnimationFrame(loop);
   function snapshotUnit(u){
@@ -749,17 +799,17 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP11B',core:C,snapshot:()=>JSON.parse(JSON.stringify({
-      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue')
+    version:'0.4-WIP11C',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue')
     }
-    )),command:(x,y,reverse=false)=>{
+    )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
       setReverse(reverse);
       const u=selectedUnit();if(!u)return{ok:false,reason:'no-selection'};return C.issueMove(u,{
         x,y
       }
       ,reverse,sim.units)
     }
-    ,select,fire:()=>{if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen
+    ,select,fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen
   }
   ;
 }

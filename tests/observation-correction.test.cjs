@@ -37,8 +37,8 @@ test('R07 acquired gunner keeps target while second identified commander contact
  f.step(15);assert.equal(f.runtime.ownStatus(f.u).targetKey,held);assert(f.u.observation.pending.some(v=>v.target==='SECOND'));assert.equal(f.u.observation.designation.status,'idle');
  const pending=f.u.observation.pending.find(v=>v.target==='SECOND'),pose={...pending.pose};f.p.sensors.commander.enabled=false;second.x+=100;second.y+=200;f.step(2);assert.deepEqual(f.u.observation.pending.find(v=>v.target==='SECOND').pose,pose);f.step(30);assert(!f.u.observation.pending.some(v=>v.target==='SECOND'));
 });
-test('R08 explicit guard priority survives gunner acquisition and new contacts',()=>{
- const f=fixture({bearing:1.5});f.guard();f.step(10);assert.equal(f.u.observation.commander.mode,'guard');f.guard('gunner',{x:500,y:400});const point={...f.u.observation.gunner.point};f.step(8);assert.deepEqual(f.u.observation.gunner.point,point);assert.equal(f.u.observation.gunner.mode,'guard');assert(!f.runtime.ownStatus(f.u).acquired);
+test('R08 gunner mission temporarily outranks and preserves explicit guard',()=>{
+ const f=fixture({bearing:1.5});f.guard();f.step(10);assert.equal(f.u.observation.commander.mode,'guard');f.guard('gunner',{x:500,y:400});const point={...f.u.observation.gunner.point};f.step(8);assert.deepEqual(f.u.observation.gunner.point,point);assert.equal(f.u.observation.gunner.mode,'guard');assert(f.runtime.ownStatus(f.u).acquired);assert(Math.abs(angle(f.u.turret,Math.atan2(point.y-f.u.y,point.x-f.u.x)))>.2);
 });
 test('R09 ambient detection and unfinished identity decay use separate 8-second half-lives',()=>{
  const f=fixture({distance:150});f.p.sensors.gunner.enabled=false;f.p.sensors.hunterKiller=false;f.guard();f.step(1.2);const c=f.u.observation.contacts['SECRET-ID'],initial=c.identityEvidence,detect=c.evidence;assert(!c.identified&&initial>0);f.p.sensors.commander.enabled=false;f.step(8);near(c.identityEvidence/initial,.5,1e-9);assert(c.evidence>detect);assert(!c.identified);f.block(true);const d=c.evidence;f.step(8);near(c.evidence/d,.5,1e-9);

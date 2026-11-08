@@ -1,11 +1,14 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path'),crypto=require('crypto');
 const {core}=require('./helpers/observation-core-fixture.cjs'),{fixture}=require('./helpers/observation-fixture.cjs');
 test('nine-sample metadata preserves order/endpoints and does not change cache keys',()=>{const C=core(),u=C.makeTank('A','A',500,1000,0,'blue',undefined,'hold'),t=C.makeTank('T','T',1500,1300,.3,'red',undefined,'hold'),cache={time:0,maxAge:.5,samples:[]},a=C.exposure(u,t,2.65,cache);assert.equal(a.samples.length,9);for(const[i,s]of a.samples.entries()){assert.equal(s.col,i<6?Math.floor(i/2):i-6);assert.equal(s.row,i<6?i%2:0);assert.equal(s.z,i<6?C.PROFILE.exposure.hullHeights[i%2]:2.2);assert.equal(s.along,i<6?C.PROFILE.exposure.hullAlong[Math.floor(i/2)]:C.PROFILE.exposure.turretAlong[i-6]);}cache.time=.1;const b=C.exposure(u,t,2.65,cache);assert.equal(b.rayCacheHits,9);assert.equal(b.rayQueries,0);assert.deepEqual(a.samples,b.samples);t.turret+=.5;cache.time=.2;const c=C.exposure(u,t,2.65,cache);assert.equal(c.rayQueries,2);assert.equal(c.rayCacheHits,7);});
-test('additive metadata leaves WIP08A observation decisions/events/timing/state exactly unchanged',()=>{
+test('additive metadata leaves frozen WIP08A sensing, evidence and public contacts unchanged',()=>{
  const source=fs.readFileSync(path.join(__dirname,'fixtures/observation-WIP08A.js'),'utf8');assert.equal(crypto.createHash('sha256').update(source).digest('hex'),'5790c3db92e62a6b9bd75e3c960156509dab5228f454c519a311c6b412b49cb9');const old=new Function('module',source+'\nreturn module.exports;')({exports:{}}),a=fixture({seed:81}),b=fixture({seed:81,observation:old});
  function normalize(x,key=''){if(Array.isArray(x))return x.map(v=>normalize(v));if(x&&typeof x==='object'){if(key==='gunnerExposure')return{hull:x.hull,turret:x.turret};return Object.fromEntries(Object.entries(x).filter(([k])=>!['candidateRevision','commanderDiscoveredAt','commanderIdentifiedAt','discoveredAt','identifiedAt'].includes(k)&&!(key==='model'&&['turretLength','turretWidth'].includes(k))).map(([k,v])=>[k,normalize(v,k)]));}return x;}
- for(const f of[a,b]){f.guard();f.guard('gunner');}
+ // WIP11C deliberately changed gunner-guard mission precedence. This frozen
+ // WIP08A oracle remains byte-identical and still isolates the additive sample
+ // metadata path under the unchanged commander observation route.
+ for(const f of[a,b])f.guard();
  for(let phase=0;phase<6;phase++){for(const f of[a,b]){if(phase===1)f.parts(false,true);if(phase===2)f.block(true);if(phase===3){f.t.x+=50;f.t.heading+=.3;f.t.turret+=.7;}if(phase===4)f.block(false);if(phase===5)f.forest(.6);f.step(4);}
-  const snapshot=f=>normalize(JSON.parse(JSON.stringify({s:f.s,contacts:f.contacts(),events:f.events,stats:f.runtime.stats,own:f.runtime.ownStatus(f.u),calls:f.calls()})));assert.deepEqual(snapshot(a),snapshot(b),'phase '+phase);
+  const snapshot=f=>normalize(JSON.parse(JSON.stringify({time:f.s.time,units:f.s.units.map(u=>({id:u.id,x:u.x,y:u.y,heading:u.heading,turret:u.turret,commander:u.commander,contacts:u.observation.contacts,lastQuery:u.observation.lastQuery})),contacts:f.contacts(),events:f.events.filter(e=>['detected','identified','channel-seen','channel-lost'].includes(e.type)),stats:f.runtime.stats,calls:f.calls()})));assert.deepEqual(snapshot(a),snapshot(b),'phase '+phase);
  }
 });

@@ -1,0 +1,99 @@
+{
+  "version": "0.4-WIP11C",
+  "date": "2026-11-08",
+  "baseMain": "902a99986081f4e8d88839e004cd2aa89eaadff2",
+  "branch": "feat/wip11a-combat-state",
+  "pullRequest": 9,
+  "environment": {
+    "node": "v24.22.1",
+    "python": "3.12.14",
+    "sourcePython": "3.13.5",
+    "gdal": "3.10.3",
+    "platform": "linux x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "browser": "Chromium 156.0.8078.79",
+    "browserURL": "local HTTP, exact standalone dist/index.html",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR"
+  },
+  "automated": {
+    "nodeRulesAndCore": {"passed": 203, "failed": 0, "priorWIP11B": 197, "newWIP11C": 6},
+    "input": {"passed": 41, "failed": 0, "priorWIP11B": 37, "newWIP11C": 4},
+    "map": {"passed": 16, "failed": 0},
+    "visibility": {"passed": 12, "failed": 0},
+    "vehicleAndWorker": {"passed": 9, "failed": 0},
+    "nodeTotal": {"passed": 281, "failed": 0, "priorWIP11B": 271, "newWIP11C": 10},
+    "browser": {
+      "passed": 25,
+      "failed": 0,
+      "actualEmbeddedWorker": true,
+      "desktop1440x900": true,
+      "landscape844x390": true,
+      "portrait390x844": true,
+      "portraitInputBlocked": true,
+      "pauseStateRestored": true,
+      "duplicateDomIds": 0
+    },
+    "javascriptSyntax": {"passed": 61, "failed": 0},
+    "pythonSyntax": {"passed": 13, "failed": 0},
+    "sourceDataQuality": {"passed": 7, "failed": 0, "runner": "/usr/bin/python3", "results": "tests/source-results.json"}
+  },
+  "requirements": {
+    "C01": "PASS — commander guard and gunner guard independently detect, identify, acquire, pass the aim gate and auto-fire through the actual core without contact/readiness injection",
+    "C02": "PASS — an engagement mission temporarily overrides gunner direction and loss returns to the preserved world guard point",
+    "C03": "PASS — manual priority, cancellation, expiry and release preserve or expire only the base guard state required by each command",
+    "C04": "PASS — hold preserves guard sensing, acquisition and aim while suppressing automatic fire",
+    "C05": "PASS — unknown contacts expose no HP; identified memory freezes public HP and reobservation refreshes it",
+    "U01": "PASS — the always-visible map panel is removed; the dock guard button opens a bounded popover above the dock",
+    "U02": "PASS — close, Escape, channel/selection changes cancel only incomplete input and do not delete active guard orders",
+    "U03": "PASS — the right panel reports both guards, candidate count, mission, ammo/flights, auto/hold, cancel and manual G fire with unique IDs",
+    "U04": "PASS — portrait entry blocks commands, clears transient pointers/sight/picking, pauses and restores the exact pre-entry pause state",
+    "U05": "PASS — friendly actual HP and identified public enemy HP render in fixed-pixel labels; silhouettes and wrecks have no HP bar",
+    "G01": "PASS — gunner guard may produce actual own acquisition or commander handoff and returns after loss/death without oscillating against the base point",
+    "G02": "PASS — player designation, first-discovery candidate order, handoff, exact-once flights and auto/hold paths retain WIP11B behavior",
+    "P01": "PASS — public contacts deep-copy observed combat data and never read or follow hidden enemy HP in renderer/panel code",
+    "I01": "PASS — frozen WIP08A/WIP09/WIP10 reference files are unchanged; the oracle comparison remains checksum-pinned to sensing behavior",
+    "I02": "PASS — full prior Node, input, map, visibility, vehicle/Worker, source-data and actual Chromium regressions pass",
+    "I03": "PASS — source exports, dist, standalone HTML and deterministic one-entry ZIP agree on WIP11C"
+  },
+  "benchmarks": {
+    "observation": "tests/releases/WIP11C-benchmark.json",
+    "observationFixture": "100 timed fixed 0.05s steps after 20 warmup; both teams sense; CPU step time, not FPS",
+    "observationCases": {
+      "stationary50": {"medianStepMs": 2.7888490000000274, "p95StepMs": 5.275801999999999},
+      "stationary100": {"medianStepMs": 7.36224100000004, "p95StepMs": 15.284168000000136},
+      "moving50": {"medianStepMs": 4.181159999999636, "p95StepMs": 5.680933999999979},
+      "moving100": {"medianStepMs": 17.470075999999608, "p95StepMs": 21.73570400000017}
+    },
+    "auto": "tests/releases/WIP11C-auto-benchmark.json",
+    "autoCases": {
+      "50": {"medianStepMs": 2.3191799999999603, "p95StepMs": 5.5509479999999485, "shots": 125, "resolvedImpacts": 125, "destroyed": 17, "retargetEvents": 43},
+      "100": {"medianStepMs": 7.858008000000154, "p95StepMs": 14.339431000000332, "shots": 316, "resolvedImpacts": 311, "inFlight": 5, "destroyed": 41, "retargetEvents": 120}
+    },
+    "combat": "tests/releases/WIP11C-combat-benchmark.json",
+    "combatFixture": "10000 resolved impacts plus duplicate replay",
+    "combatMedianMs": 19.921335,
+    "combatP95Ms": 27.931373000000008,
+    "duplicateHpStable": true,
+    "boundedCombatRecords": 200
+  },
+  "package": {
+    "htmlBytes": 8349153,
+    "htmlSHA256": "cb1b9e2ef62d63be8850f12c03634d8abd0125c8a1d0e0c4825600b83a152114",
+    "zipBytes": 1631948,
+    "zipSHA256": "0380719d16672a2e3b41af0d39543f71f1f1d6607e44a736a1acbd5b650a9e98",
+    "zipCRC32": "033c1301",
+    "zipEntries": ["Tactical_v0.4_WIP11C.html"],
+    "extractedMatchesDist": true,
+    "repeatPackageByteIdentical": true
+  },
+  "notRun": [
+    "Android or iOS physical-device multitouch, orientation-lock, thermal and sustained frame-rate testing"
+  ],
+  "limits": [
+    "Browser mobile checks are Chromium viewports, not physical devices",
+    "CPU timings are fixed-step fixture measurements and are not whole-game FPS",
+    "file:// was blocked by environment policy; the exact standalone HTML was tested through local HTTP",
+    "WIP10 unobserved-miss dust disclosure remains a separate undecided policy",
+    "New 60–90 degree penetration, ricochet and HEAT fuze rules remain future work; WIP11A basic M829A2 incidence/table interpolation/penetration/HP stays active"
+  ]
+}
