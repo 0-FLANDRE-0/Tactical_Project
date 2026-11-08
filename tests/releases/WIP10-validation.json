@@ -1,0 +1,142 @@
+{
+  "version": "0.4-WIP10",
+  "date": "2026-11-07",
+  "timezone": "Asia/Seoul",
+  "scope": "observed-velocity lead, velocity-derived flight, impact-time probability, post-result hit point and terrain/building miss impact",
+  "fullInstructionConformance": true,
+  "excludedByInstruction": [
+    "penetration, armour, damage and destruction",
+    "ricochet, fuzes, ERA, detailed sub-parts and ammunition variants",
+    "forest projectile collision, automatic fire and second-shot correction"
+  ],
+  "source": {
+    "instructionBytes": 18523,
+    "instructionSHA256": "4e469d696daed538f2a4587461b42162d5f90574511c19a206b7cc3a0d6be857",
+    "referenceBytes": 4770,
+    "referenceSHA256": "142e5001ee9bd4042a88e6011a1342a2b96cc94eb093f9b0faec069c6aaf6dc6",
+    "referenceRepositoryCopy": "tests/fixtures/wip10_hit_reference.py",
+    "referenceExecuted": true,
+    "referenceRepublished": true,
+    "generatedRows": 46
+  },
+  "baseline": "04d6d2e85bd4e599332f03f0614989dbbc79990b",
+  "continuationStart": "41f080efd11675f24d23fc0b3547b9f4364e4380",
+  "mainAtFinalFetch": "e2f44d92d06d35782dfa0f5ce81f6c3eb3a77bf6",
+  "mainMergeCommit": "2f12a560d56ffd8bc6025e6a50af6719596a4554",
+  "branch": "feat/wip10-flight-impact",
+  "initialWorktree": "clean; no applicable AGENTS.md",
+  "node": "v24.22.1",
+  "checks": [
+    {
+      "command": "node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs",
+      "passed": 164,
+      "failed": 0,
+      "kind": "rules, actual core, synthetic terrain, frozen LOS, WIP09 regression and WIP10 reference"
+    },
+    {
+      "command": "node tests/input.test.cjs",
+      "passed": 35,
+      "failed": 0,
+      "kind": "fake DOM and input"
+    },
+    {
+      "command": "node tests/map.test.cjs",
+      "passed": 16,
+      "failed": 0,
+      "kind": "actual map and mobility"
+    },
+    {
+      "command": "node tests/visibility.test.cjs",
+      "passed": 12,
+      "failed": 0,
+      "kind": "visibility geometry, mask and map"
+    },
+    {
+      "command": "node tests/vehicle.test.cjs",
+      "passed": 9,
+      "failed": 0,
+      "kind": "profiles, mobility, actual Node Worker and stale responses"
+    }
+  ],
+  "nodePassed": 236,
+  "nodeFailed": 0,
+  "wip10SpecificTests": 24,
+  "referenceComparison": {
+    "previewRows": 24,
+    "impactRows": 6,
+    "zoneRows": 11,
+    "dropRows": 5,
+    "impactPointSeeds": 1000,
+    "passed": true
+  },
+  "browser": {
+    "report": "tests/releases/WIP10-browser.json",
+    "browser": "156.0.8078.79",
+    "transport": "local HTTP serving standalone dist/index.html",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+    "passed": 16,
+    "failed": 0
+  },
+  "syntax": {
+    "jsCjs": 49,
+    "python": 11,
+    "failed": 0
+  },
+  "package": {
+    "html": "Tactical_v0.4_WIP10.html",
+    "htmlBytes": 8314287,
+    "htmlSHA256": "017583cd603d8b97de400bf8947d24ae1c73532d06bc830885b453a7a2b518e1",
+    "zip": "Tactical_v0.4_WIP10.zip",
+    "zipBytes": 1622838,
+    "zipSHA256": "95a8efdb7116029c198b83abbeec01653496dc7b1bea1f229f2efa72c653c0ba",
+    "extractedMatchesDist": true,
+    "repeatBuildByteIdentical": true,
+    "zipCRCChecked": true
+  },
+  "performance": {
+    "comparison": "tests/releases/WIP10-comparison.json",
+    "benchmark": "tests/releases/WIP10-benchmark.json",
+    "fullStateOutputsEqual": 24,
+    "cases": [
+      {
+        "mode": "stationary",
+        "count": 50,
+        "baselineMedianMs": 3.502546,
+        "optimizedMedianMs": 2.539422,
+        "optimizedP95Ms": 5.363825,
+        "reductionPercent": 27.4978
+      },
+      {
+        "mode": "stationary",
+        "count": 100,
+        "baselineMedianMs": 17.868205,
+        "optimizedMedianMs": 7.331424,
+        "optimizedP95Ms": 15.460372,
+        "reductionPercent": 58.9694
+      },
+      {
+        "mode": "moving",
+        "count": 50,
+        "baselineMedianMs": 9.252663,
+        "optimizedMedianMs": 3.716068,
+        "optimizedP95Ms": 5.783588,
+        "reductionPercent": 59.8379
+      },
+      {
+        "mode": "moving",
+        "count": 100,
+        "baselineMedianMs": 66.735713,
+        "optimizedMedianMs": 16.449114,
+        "optimizedP95Ms": 19.188849,
+        "reductionPercent": 75.3519
+      }
+    ],
+    "kind": "CPU fixed-step; observation fixture has no fire commands, so this is not FPS or projectile-impact performance"
+  },
+  "notRun": [
+    "file:// launch: blocked by Chromium environment policy; local HTTP browser run passed",
+    "actual Android multitouch, memory, thermal and sustained FPS",
+    "whole-game FPS and concurrent-fire performance",
+    "original DEM/GDAL source-quality rerun"
+  ]
+}

@@ -51,4 +51,4 @@ test('forest/scrub prefix and canopy boundaries preserve exact optical accumulat
  for(const eye of [1.4,14.99999999,15,15.00000001,30])for(const height of [.8,2.2,15,30])for(const fast of [false,true])for(const [x0,x1]of [[0,31.9],[0,64],[0,160],[160,0],[32,128],[128,32],[32,32]])equal(A,B,{x:x0,y:1000},{x:x1,y:1000},height,fast,eye);
  assert(equal(A,B,{x:0,y:1000},{x:64,y:1000},1.5).forestDepth>0);report.cases.push('scrub + forest prefix, 15m canopy boundary, both directions');
 });
-test.after(()=>fs.writeFileSync(path.resolve(__dirname,'releases/WIP09-los-equivalence.json'),JSON.stringify(report,null,2)+'\n'));
+test.after(()=>fs.writeFileSync(path.resolve(__dirname,'releases/WIP10-los-equivalence.json'),JSON.stringify(report,null,2)+'\n'));

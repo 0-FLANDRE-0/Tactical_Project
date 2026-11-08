@@ -19,7 +19,7 @@ function core(kind='flat'){
 }
 function fixture(kind='flat',{target={x:1500,y:1300},observer={x:500,y:1000},seed=17}={}){
  const C=core(kind),u=C.makeTank('A','OBSERVER',observer.x,observer.y,0),t=C.makeTank('T','MOVING TARGET',target.x,target.y,Math.PI,'red');
- const s={time:0,seed,units:[u,t],recordObservationEvents:true};C.guard(s,u,'commander',target);C.guard(s,u,'gunner',target);
+ const s={time:0,seed,units:[u,t],recordObservationEvents:true,recordFireEvents:true};C.guard(s,u,'commander',target);C.guard(s,u,'gunner',target);
  const step=(n=1,move=null)=>{for(let i=0;i<n;i++){if(move)move(s.time+.05,u,t);C.step(s,.05);}};
  return{C,s,u,t,step,contact:()=>C.contacts(s)[0],local:()=>u.observation.contacts.T,events:()=>s.observationEvents||[]};
 }

@@ -455,6 +455,7 @@
     const u=selectedUnit();
     const firing=C.fireStatus(sim,u,targetId),fireText=firing.status==='ready'?'조준 완료':firing.status==='aiming'?'조준 '+Math.round(firing.aimProgress*100)+'%':fireReasons[firing.reason]||'표적 미확보';
     ui.setText($('fireState'),fireText+' · 시험탄 '+firing.ammo);
+    const activeFlight=firing.inFlight[0];ui.setText($('flightState'),activeFlight?'비행 중'+(firing.inFlight.length>1?' '+firing.inFlight.length+'발':'')+' · 착탄까지 '+activeFlight.remaining.toFixed(1)+'초':firing.lastShot?.result==='unobserved'?'최근 단발: 결과 미확인':'');
     $('fire').disabled=paused||!targetId||!firing.canFire;
     $('fire').setAttribute('aria-disabled',String($('fire').disabled));
     const look=lookView(),bearing=look.direction===null?null:((Math.round(look.direction*180/Math.PI)+90)%360+360)%360;
@@ -487,11 +488,10 @@
       ui.setText($('targetDetails'),target.memory?'마지막 관측 '+target.age.toFixed(1)+'초 전 · '+(target.identified?target.type:'미식별 표적'):target.identified?target.type:'미식별 표적 · 상세정보 없음');
       const fc=C.fireStatus(sim,u,target.key);
       const probabilities=fc.zoneProbabilities;
-      ui.setText($('fireDetails'),(!target.identified||!target.current||fc.hitChance===null)?'발사: '+(fireReasons[fc.reason]||'현재 포수 표적 아님'):'예상 명중 '+Math.round(fc.hitChance*100)+'% · 명중 시 부위: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '));
       const b=fc.breakdown,rects=b?.rects||[],w=rects.length?Math.max(...rects.map(r=>r.x2))-Math.min(...rects.map(r=>r.x1)):0,h=rects.length?Math.max(...rects.map(r=>r.z2))-Math.min(...rects.map(r=>r.z1)):0;
-      ui.setText($('hitSummary'),target.identified&&target.current&&b?'예상 명중률 '+Math.round(fc.hitChance*100)+'% · 오차 '+Math.max(b.sigma.x,b.sigma.z).toFixed(2)+'밀 · 보이는 표적 '+w.toFixed(1)+'×'+h.toFixed(1)+'m · 차체/포탑 '+Math.round(b.pHull*100)+'/'+Math.round(b.pTurret*100)+'%':'');
-      const lastShot=target.identified&&fc.lastShot?.targetKey===target.key?fc.lastShot:null;
-      ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.hit?'명중 · '+zoneNames[lastShot.zone]:'빗나감')+' · 피해 판정 없음':'');
+      ui.setText($('fireDetails'),target.identified&&target.current&&b?'예상 명중 '+Math.round(fc.hitChance*100)+'% (발사 시) · 오차 '+Math.max(b.sigma.x,b.sigma.z).toFixed(2)+'밀 · 표적 '+w.toFixed(1)+'×'+h.toFixed(1)+'m · 명중 시: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '):'');
+      const lastShot=target.identified&&target.current&&fc.lastShot?.targetKey===target.key?fc.lastShot:null,impactKind={ground:'지면',building:'건물','out-of-map':'지도 밖','max-distance':'최대 거리'},missText=lastShot?.impact?(lastShot.impact.beyond>=0?'표적 너머 ':'표적 앞 ')+Math.round(Math.abs(lastShot.impact.beyond))+'m '+(impactKind[lastShot.impact.kind]||lastShot.impact.kind):'탄착점 없음';
+      ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.result==='unobserved'?'결과 미확인':lastShot.result==='hit'?'명중 · '+zoneNames[lastShot.zone]+(lastShot.side?'('+({right:'우',left:'좌'})[lastShot.side]+')':''):'빗나감 · '+missText)+' · 피해 판정 없음':'');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
       for(const part of ['hull','turret']){
         const value=target.identified&&target.current?Math.round((target.exposure?.[part]||0)*100)+'%':'—';
@@ -546,15 +546,20 @@
     ctx.fillStyle='#12271fe8';ctx.fillRect(-tw/2-5,labelY,tw+10,17);ctx.fillStyle=enemy?'#f0bd86':'#e3edcc';ctx.fillText(text,0,labelY+12);ctx.restore();
   }
   function drawShots(){
-    for(const shot of C.fireEvents(sim,'blue',sim.time-1.2)){
-      const age=sim.time-shot.time;if(age<0||age>1.2)continue;
-      const a=toScreen(shot.origin.x,shot.origin.y),b=toScreen(shot.targetPose.x,shot.targetPose.y);
-      ctx.save();ctx.globalAlpha=Math.max(0,1-age/1.2);ctx.strokeStyle=shot.hit?'#ffe5a0':'#dfaa88';ctx.lineWidth=2;ctx.setLineDash(shot.hit?[]:[4,5]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
-      // Cosmetic projectile follows fixed event endpoints. Its display duration
-      // never participates in hit/region resolution or consumes simulation RNG.
-      const phase=Math.min(1,age/.35),px=a.x+(b.x-a.x)*phase,py=a.y+(b.y-a.y)*phase;
-      if(phase<1){ctx.setLineDash([]);ctx.strokeStyle='#fff6d0';ctx.lineWidth=3;const length=Math.hypot(b.x-a.x,b.y-a.y)||1;ctx.beginPath();ctx.moveTo(px-(b.x-a.x)/length*6*phase,py-(b.y-a.y)/length*6*phase);ctx.lineTo(px,py);ctx.stroke();}
-      ctx.fillStyle='#fff1bd';ctx.beginPath();ctx.arc(a.x,a.y,Math.max(2,7*(1-age/1.2)),0,Math.PI*2);ctx.fill();ctx.font='600 11px system-ui';ctx.fillText(shot.hit?'명중 · '+zoneNames[shot.zone]:'빗나감',b.x,b.y-20);ctx.restore();
+    const events=C.fireEvents(sim,'blue',sim.time-7),done=new Set(events.filter(e=>e.type==='impact').map(e=>e.id)),fired=new Map(events.filter(e=>e.type==='fired').map(e=>[e.id,e]));
+    for(const shot of events){
+      const age=sim.time-shot.time;if(age<0)continue;
+      if(shot.type==='fired'&&!done.has(shot.id)){
+        const a=toScreen(shot.origin.x,shot.origin.y),shooter=sim.units.find(u=>u.id===shot.shooterId),fire=shooter?C.profileOf(shooter).fireControl:null,distance=fire?shot.tof*fire.muzzleVelocity*fire.velocityRetention:0,phase=C.clamp(age/shot.tof,0,1),worldX=shot.origin.x+Math.cos(shot.muzzleHeading)*distance*phase,worldY=shot.origin.y+Math.sin(shot.muzzleHeading)*distance*phase,{x,y}=toScreen(worldX,worldY);
+        ctx.save();ctx.strokeStyle='#ffe3a0';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(x,y);ctx.stroke();
+        if(age<.18){ctx.fillStyle='#fff2bb';ctx.beginPath();ctx.arc(a.x,a.y,Math.max(2,7*(1-age/.18)),0,Math.PI*2);ctx.fill();}
+        ctx.fillStyle='#fff7db';ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fill();ctx.restore();
+      }else if(shot.type==='impact'&&shot.impact&&age<=2){
+        const start=fired.get(shot.id),a=toScreen(shot.impact.x,shot.impact.y),fade=1-age/2,hit=shot.impact.kind==='hit';
+        ctx.save();ctx.globalAlpha=fade;if(start){const origin=toScreen(start.origin.x,start.origin.y);ctx.strokeStyle=hit?'#ffe8a9':'#d5b282';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(origin.x,origin.y);ctx.lineTo(a.x,a.y);ctx.stroke();}
+        ctx.fillStyle=hit?'#fff0ba':'#c3ab80';ctx.beginPath();ctx.arc(a.x,a.y,(hit?7:10)*(1+age*.5),0,Math.PI*2);ctx.fill();
+        if(shot.result!=='unobserved'){ctx.fillStyle='#ffdda0';ctx.font='600 11px system-ui';ctx.fillText(shot.result==='hit'?'명중 · '+zoneNames[shot.zone]:'빗나감',a.x,a.y-18);}ctx.restore();
+      }
     }
   }
   function drawRoute(u){
@@ -715,7 +720,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP09',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP10',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView(),firing:C.fireStatus(sim,selectedUnit(),targetId),shots:C.fireEvents(sim,'blue')
     }
     )),command:(x,y,reverse=false)=>{
