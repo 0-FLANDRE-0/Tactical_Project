@@ -67,7 +67,7 @@
       "crc32": "7c1bec01",
       "unzipTest": "passed",
       "verifiedRawDownload": "https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip",
-      "rawDownloadSha256Matches": null
+      "rawDownloadSha256Matches": true
     },
     "effectAtlas": {
       "path": "assets/effects/wip12-effects-atlas.png",
@@ -160,7 +160,7 @@
     ]
   },
   "delayedFrameCorrectionBasisHead": "10ac4fa51e4b1e4944f6e07426ea82e91e770915",
-  "delayedFrameCorrectionCommit": null,
+  "delayedFrameCorrectionCommit": "c96dda857daa611eb70fc8b67a5f034ced08c26c",
   "delayedFrameCorrection": {
     "seed": 70,
     "fromSimTime": 15.45,
