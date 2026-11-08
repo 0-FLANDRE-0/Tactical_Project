@@ -6,13 +6,16 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP12 사격 이펙트·미관측 사격 표시·입사각/도탄 확장 | [완료 안내](TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) | 구현·검증 완료 · 검토 PR 준비 |
+| WIP13 경량 구동·자동변속·제동·조향 | [작업 지시서](TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md) | 사용자 확정 · 지시서 등록 · 구현 대기 |
+| WIP12 사격 이펙트·미관측 사격 표시·입사각/도탄 확장 | [완료 안내](TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) | 최종 수정·재검증 완료 · main 통합 6e5a510 |
 | WIP11E 9표본 LOS 중복 조회 최적화 | [완료 안내](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | 재검증 통과 · PR #10 main 통합 |
 | WIP11D 지형 판독성 개선·WIP11C 공개 체력 병합 검증 | [완료 지시서](../../archive/instructions/TACTICAL_WIP11D_TERRAIN_READABILITY.md) | 구현·재검증 완료 · main 통합 |
 
 WIP11E는 main `a01ae8b`에서 만든 새 브랜치에서 구현하고 재검증 후 통합했다. 같은 수평 경로를 쓰는 차체의 두 높이 표본만 묶어 정적 조회를 공유하며 9표본·2m 격자·차폐 결과와 기존 캐시 계약을 유지한다. [구현 문서](../LOS_OPTIMIZATION_WIP11E.md), [작성자 검증](../../tests/releases/WIP11E-validation.json), [병합 검토](../reviews/WIP11E_MERGE_REVIEW_2026-11-08.md)를 참고한다. 완료한 작업을 다시 구현하지 않는다.
 
-WIP12는 최신 main `687c624`에서 새 브랜치로 구현했다. [구현 문서](../COMBAT_EFFECTS_AND_RICOCHET_WIP12.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP12.md), [검증 JSON](../../tests/releases/WIP12-validation.json)을 참고한다. 후속 작업은 별도 지시서가 확정되기 전까지 이 목차에서 임의로 정하지 않는다.
+WIP12는 main `687c624`에서 새 브랜치로 구현하고, 최종 `0314f7c`를 재검증한 뒤 `6e5a510`으로 main에 통합했다. [구현 문서](../COMBAT_EFFECTS_AND_RICOCHET_WIP12.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP12.md), [검증 JSON](../../tests/releases/WIP12-validation.json)을 참고한다.
+
+다음 작업은 사용자 확정 WIP13이다. 기존 0.05초 고정 틱에 맞춘 경량 구동 모델로 전후진 즉시 반전을 고치고 자동변속·제동·조향을 연결한다. Tank_Project는 개발 참고 자료이며 적 이동 AI는 후속 작업이다. 구현 AI는 [WIP13 지시서](TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md)부터 읽는다.
 
 ## 관리 방법
 
