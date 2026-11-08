@@ -6,7 +6,8 @@ WIP11D는 기존 WIP11C 전투·관측 상태를 유지하면서 2D 지형 판�
 
 - 브랜치: `feat/wip11a-combat-state`
 - 구현 기준: `a037774a8348378563d1d3ddb7822a20eab19890`
-- 기준 main: `902a99986081f4e8d88839e004cd2aa89eaadff2`
+- 작업 시작 main: `902a99986081f4e8d88839e004cd2aa89eaadff2`
+- 최종 동기화 main: `8ca288fc4db80e2d90144220d8fa232d2f16fec5` (설계 아카이브 3개 파일, 정상 merge)
 - 지시서 브랜치: `origin/docs/wip11d-task-instructions`, 문서 커밋 `28b1bdce4e7a06b40e31e3c17a9c090b93839557`
 - 기존 PR: #9
 

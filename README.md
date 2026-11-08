@@ -5,7 +5,7 @@ WIP11C의 관측·경계·자동교전과 공개 체력 규칙을 유지하면�
 - 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11D.zip). 압축을 풀면 `Tactical_v0.4_WIP11D.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP11D.html](Tactical_v0.4_WIP11D.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP11D 지형 판독성](docs/TERRAIN_READABILITY_WIP11D.md) · [WIP11C UI·경계](docs/UI_AND_GUARD_WIP11C.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11D.md) · [체크섬](SHA256SUMS_WIP11D.txt).
-- 기존 PR #9 브랜치 `feat/wip11a-combat-state`의 WIP11C 수정 포함 head `a037774`에서 이어서 작업했다. 공개 HP 최신 관측 병합은 중복 수정하지 않고 C05/C06으로 재검증했다. WIP11D 전체 Node 287/287, 지형 분석 7/7, 원본 자료 7/7, 실제 Chromium 27/27을 통과했다.
+- 기존 PR #9 브랜치 `feat/wip11a-combat-state`의 WIP11C 수정 포함 head `a037774`에서 이어서 작업하고 최신 main `8ca288f`의 설계 아카이브를 정상 병합했다. 공개 HP 최신 관측 병합은 중복 수정하지 않고 C05/C06으로 재검증했다. WIP11D 전체 Node 287/287, 지형 분석 7/7, 원본 자료 7/7, 실제 Chromium 27/27을 통과했다.
 
 ## 실행과 조작
 

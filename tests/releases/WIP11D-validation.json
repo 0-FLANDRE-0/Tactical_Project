@@ -1,7 +1,8 @@
 {
   "version": "0.4-WIP11D",
   "date": "2026-11-08",
-  "baseMain": "902a99986081f4e8d88839e004cd2aa89eaadff2",
+  "startingMain": "902a99986081f4e8d88839e004cd2aa89eaadff2",
+  "baseMain": "8ca288fc4db80e2d90144220d8fa232d2f16fec5",
   "implementationBase": "a037774a8348378563d1d3ddb7822a20eab19890",
   "taskDocumentCommit": "28b1bdce4e7a06b40e31e3c17a9c090b93839557",
   "branch": "feat/wip11a-combat-state",
