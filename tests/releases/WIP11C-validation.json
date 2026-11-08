@@ -16,12 +16,12 @@
     "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR"
   },
   "automated": {
-    "nodeRulesAndCore": {"passed": 203, "failed": 0, "priorWIP11B": 197, "newWIP11C": 6},
+    "nodeRulesAndCore": {"passed": 204, "failed": 0, "priorWIP11B": 197, "newWIP11C": 7},
     "input": {"passed": 41, "failed": 0, "priorWIP11B": 37, "newWIP11C": 4},
     "map": {"passed": 16, "failed": 0},
     "visibility": {"passed": 12, "failed": 0},
     "vehicleAndWorker": {"passed": 9, "failed": 0},
-    "nodeTotal": {"passed": 281, "failed": 0, "priorWIP11B": 271, "newWIP11C": 10},
+    "nodeTotal": {"passed": 282, "failed": 0, "priorWIP11B": 271, "newWIP11C": 11},
     "browser": {
       "passed": 25,
       "failed": 0,
@@ -43,6 +43,7 @@
     "C03": "PASS — manual priority, cancellation, expiry and release preserve or expire only the base guard state required by each command",
     "C04": "PASS — hold preserves guard sensing, acquisition and aim while suppressing automatic fire",
     "C05": "PASS — unknown contacts expose no HP; identified memory freezes public HP and reobservation refreshes it",
+    "C06": "PASS — team knowledge retains freshest identified HP across observer order, newer ambient poses, memory and returned-copy mutation",
     "U01": "PASS — the always-visible map panel is removed; the dock guard button opens a bounded popover above the dock",
     "U02": "PASS — close, Escape, channel/selection changes cancel only incomplete input and do not delete active guard orders",
     "U03": "PASS — the right panel reports both guards, candidate count, mission, ammo/flights, auto/hold, cancel and manual G fire with unique IDs",
@@ -77,14 +78,34 @@
     "boundedCombatRecords": 200
   },
   "package": {
-    "htmlBytes": 8349153,
-    "htmlSHA256": "cb1b9e2ef62d63be8850f12c03634d8abd0125c8a1d0e0c4825600b83a152114",
-    "zipBytes": 1631948,
-    "zipSHA256": "0380719d16672a2e3b41af0d39543f71f1f1d6607e44a736a1acbd5b650a9e98",
-    "zipCRC32": "033c1301",
+    "htmlBytes": 8349365,
+    "htmlSHA256": "7eddd9011d058f451fcac2374be89eaf131095df239414038082eaa4d54c5ebf",
+    "zipBytes": 1632112,
+    "zipSHA256": "d34e04dc21cbf96a5a0d1fa4886c837d85a6cf0259d2690646ef4dc4e4bb09f7",
+    "zipCRC32": "136e1dc1",
     "zipEntries": ["Tactical_v0.4_WIP11C.html"],
     "extractedMatchesDist": true,
     "repeatPackageByteIdentical": true
+  },
+  "mergeReview": {
+    "date": "2026-11-08",
+    "reviewedHead": "f285e4da0ba01016dd0fc96a2d4b3e035a86810e",
+    "fix": "Merge identified team knowledge by knowledgeAt separately from pose lastSeen; stale observer HP cannot overwrite a fresher optical sample.",
+    "rerun": {
+      "nodeRulesAndCore": 204,
+      "input": 41,
+      "map": 16,
+      "visibility": 12,
+      "vehicleAndWorker": 9,
+      "nodeTotal": 282,
+      "failed": 0,
+      "packageRepeatByteIdentical": true
+    },
+    "browser": {
+      "rerun": false,
+      "reason": "Chromium launch failed: socket() failed: Operation not permitted"
+    },
+    "historicalEvidence": "automated.browser, sourceDataQuality, syntax counts, environment and benchmarks describe the author run at reviewedHead; they were not rerun on the final package in this review."
   },
   "notRun": [
     "Android or iOS physical-device multitouch, orientation-lock, thermal and sustained frame-rate testing"

@@ -12,7 +12,9 @@ WIP11C는 최신 main `902a99986081f4e8d88839e004cd2aa89eaadff2`를 기존 PR #9
 
 ## 검증
 
-최종 결과는 **Node 281/281, 실제 Chromium 25/25, 원자료/GDAL 7/7, JavaScript/CJS 구문 61/61, Python 구문 13/13, 실패 0**이다. 규칙/코어 203, 입력 41, 지도 16, 시야 12, 차량/Worker 9다. 기계 판독 결과는 [WIP11C-validation.json](tests/releases/WIP11C-validation.json), 브라우저 기록은 [WIP11C-browser.json](tests/releases/WIP11C-browser.json)에 있다.
+병합 검토에서 팀 공개 정보 병합 오류를 수정한 뒤 **Node 282/282, 실패 0**을 재확인했다. 규칙/코어 204, 입력 41, 지도 16, 시야 12, 차량/Worker 9다. 두 아군 중 오래된 기억을 가진 아군이 뒤에 나열되거나 주변 채널로 자세만 새로 관측했을 때 최신 공개 HP를 덮어쓰던 오류를 고쳤다. 추가 C06 검사는 두 유닛 순서, 주변 채널 관측, 관측 상실 후 HP 고정, 공개 사본 분리를 확인한다. 단일 HTML과 ZIP을 재생성하고 아래 체크섬과 반복 패키징 일치를 확인했다.
+
+수정 전 구현 커밋 `f285e4da0ba01016dd0fc96a2d4b3e035a86810e`의 작성자 기록은 **Node 281/281, 실제 Chromium 25/25, 원자료/GDAL 7/7, JavaScript/CJS 구문 61/61, Python 구문 13/13**이다. 이번 병합 검토 환경에서는 Chromium이 `socket() failed: Operation not permitted`로 실행되지 않아 브라우저 검사를 재실행하지 못했다. 아래 브라우저·성능 항목은 수정 전 작성자 증거이며 최종 패키지에서 재측정한 결과로 간주하지 않는다. 기계 판독 결과는 [WIP11C-validation.json](tests/releases/WIP11C-validation.json), 기존 브라우저 기록은 [WIP11C-browser.json](tests/releases/WIP11C-browser.json)에 있다.
 
 WIP11C 전용 코어 검사는 준비된 접촉이나 `ready` 상태를 삽입하지 않고 실제 9개 관측 표본과 0.05초 고정 스텝을 사용했다. 전차장 경계와 포수 경계가 각각 탐지→식별→확보→조준 게이트→자동 발사까지 진행했으며, 표적 상실 뒤 경계 복귀, 직접 지정 우선, 취소, 임무 중 경계 만료/해제, 보류, 공개 HP 고정·재관측을 통과했다. 기존 최초 발견 순 후보, A→B 인계, 비행탄 정확히 1회 처리와 자동/수동 경로도 재통과했다. WIP08A 동결 관측 파일과 WIP09/WIP10 기준 파일은 수정하지 않았다.
 
@@ -38,14 +40,14 @@ CPU는 AMD EPYC 9V74, Node v24.22.1 환경이다. 아래는 고정 스텝 CPU �
 
 ## 실행 파일
 
-[GitHub 실행 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11C.zip)을 내려받아 압축을 풀면 외부 의존성 없는 HTML 한 파일이 나온다.
+[GitHub 실행 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11C.zip)을 내려받아 압축을 풀면 외부 의존성 없는 HTML 한 파일이 나온다.
 
 | 파일 | 바이트 | SHA-256 |
 |---|---:|---|
-| `Tactical_v0.4_WIP11C.html` = `dist/index.html` | 8,349,153 | `cb1b9e2ef62d63be8850f12c03634d8abd0125c8a1d0e0c4825600b83a152114` |
-| `Tactical_v0.4_WIP11C.zip` | 1,631,948 | `0380719d16672a2e3b41af0d39543f71f1f1d6607e44a736a1acbd5b650a9e98` |
+| `Tactical_v0.4_WIP11C.html` = `dist/index.html` | 8,349,365 | `7eddd9011d058f451fcac2374be89eaf131095df239414038082eaa4d54c5ebf` |
+| `Tactical_v0.4_WIP11C.zip` | 1,632,112 | `d34e04dc21cbf96a5a0d1fa4886c837d85a6cf0259d2690646ef4dc4e4bb09f7` |
 
-ZIP에는 `Tactical_v0.4_WIP11C.html` 한 파일만 있으며 CRC-32는 `033c1301`이다. 해제한 HTML과 `dist/index.html`이 일치하고, 같은 입력으로 두 번 패키징한 ZIP도 바이트 단위로 일치했다. [체크섬](SHA256SUMS_WIP11C.txt).
+ZIP에는 `Tactical_v0.4_WIP11C.html` 한 파일만 있으며 CRC-32는 `136e1dc1`이다. 해제한 HTML과 `dist/index.html`이 일치하고, 같은 입력으로 두 번 패키징한 ZIP도 바이트 단위로 일치했다. [체크섬](SHA256SUMS_WIP11C.txt).
 
 ## 남은 범위
 

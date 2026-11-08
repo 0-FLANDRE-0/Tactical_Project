@@ -2,14 +2,14 @@
 
 WIP11B의 영구 잔해·자동교전을 유지하면서 관측 명령 UI와 경계/교전 상태를 정리했다. 포수의 지정 경계는 교전 임무와 별도 상태로 보존되며, 실제 접촉을 탐지·식별·확보·조준·자동 사격한 뒤 경계 지점으로 복귀한다. 식별한 적의 이름·차종·HP는 관측 시점의 팀 공개 사본으로만 표시하고, 관측을 잃은 동안의 피해·위치·상태는 기억 표시에 반영하지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11C.zip). 압축을 풀면 `Tactical_v0.4_WIP11C.html` 한 파일이 나온다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11C.zip). 압축을 풀면 `Tactical_v0.4_WIP11C.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP11C.html](Tactical_v0.4_WIP11C.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP11C UI·경계 구현](docs/UI_AND_GUARD_WIP11C.md) · [잔해·자동교전](docs/WRECK_AND_AUTO_ENGAGEMENT_WIP11B.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11C.md) · [체크섬](SHA256SUMS_WIP11C.txt).
-- 최신 main `902a999`를 기존 PR #9 브랜치 `feat/wip11a-combat-state`에 정상 병합해 이어서 작업했다. 이전 실행 파일·ZIP·검증 자료를 보존한다.
+- 최신 main `902a999`를 기존 PR #9 브랜치 `feat/wip11a-combat-state`에 정상 병합해 이어서 작업했다. 이전 실행 파일·ZIP·검증 자료를 보존한다. 병합 검토에서 팀 공개 HP의 최신 관측값 병합을 보정하고 Node 282/282와 단일 HTML/ZIP 일치를 재확인했다. 브라우저 25/25는 보정 전 작성자 기록이며 이번 환경에서는 재실행하지 못했다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11C.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11C.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11C.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11C.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.

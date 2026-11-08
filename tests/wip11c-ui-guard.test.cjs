@@ -43,3 +43,26 @@ test('C05 unknown contacts hide HP; identified memory freezes HP and reobservati
   assert(C.guard(s,u,'commander',{x:0,y:1000}));t.x=900;until(step,()=>C.contacts(s)[0]?.memory);t.combat.hp-=321;for(let i=0;i<20;i++)step();contact=C.contacts(s)[0];assert.equal(contact.combat.hp,frozen);assert(!JSON.stringify(contact).includes(String(t.combat.hp)));
   assert(C.guard(s,u,'commander',{x:t.x,y:t.y}));until(step,()=>C.contacts(s)[0]?.current&&C.contacts(s)[0]?.combat.hp===t.combat.hp);contact=C.contacts(s)[0];assert.equal(contact.combat.hp,t.combat.hp);contact.combat.hp=-1;assert.equal(C.contacts(s)[0].combat.hp,t.combat.hp);
 });
+
+test('C06 team knowledge keeps the freshest identified HP across observer order and newer ambient poses',()=>{
+  const C=core('flat'),fresh=C.makeTank('FRESH','FRESH',500,1000,0,'blue',undefined,'hold'),stale=C.makeTank('STALE','STALE',500,1020,0,'blue',undefined,'hold'),target=C.makeTank('T','TARGET',1000,1000,Math.PI,'red',undefined,'hold');
+  const s={time:0,seed:17,units:[fresh,stale,target]},step=()=>C.step(s,.05);
+  for(const observer of[fresh,stale])assert(C.guard(s,observer,'commander',target));
+  until(step,()=>[fresh,stale].every(u=>u.observation.contacts.T?.known?.combat));
+  const oldHp=target.combat.hp;stale.x=3500;stale.y=3500;for(let i=0;i<10;i++)step();
+  target.combat.hp=1000;for(let i=0;i<10;i++)step();
+  assert.equal(fresh.observation.contacts.T.known.combat.hp,1000);assert.equal(stale.observation.contacts.T.known.combat.hp,oldHp);
+  assert.equal(C.contacts(s)[0].combat.hp,1000);
+  // A current ambient-only pose still cannot replace newer optical HP knowledge.
+  stale.profileOverride=structuredClone(C.PROFILE);stale.profileOverride.sensors.commander.enabled=false;stale.profileOverride.sensors.gunner.enabled=false;
+  stale.x=900;stale.y=1000;
+  for(const observers of[[fresh,stale],[stale,fresh]]){
+    s.units=[...observers,target];for(let i=0;i<10;i++)step();
+    assert(stale.observation.contacts.T.current);assert.equal(stale.observation.contacts.T.known.combat.hp,oldHp);
+    assert.equal(C.contacts(s)[0].combat.hp,1000);
+  }
+  // Team memory must also preserve the freshest last-confirmed value.
+  fresh.x=3500;fresh.y=3200;stale.x=3500;stale.y=3500;for(let i=0;i<10;i++)step();target.combat.hp=700;
+  for(let i=0;i<10;i++)step();const memory=C.contacts(s)[0];assert(memory.memory);assert.equal(memory.combat.hp,1000);
+  memory.combat.hp=-1;assert.equal(C.contacts(s)[0].combat.hp,1000);
+});

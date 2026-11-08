@@ -1311,9 +1311,14 @@ const TacticalObservation=(()=>{
       const merged=new Map();for(const u of units){const map=merged.get(u.team)||new Map();merged.set(u.team,map);
         for(const[id,c]of Object.entries(init(u).contacts)){
           if(!c.detected||!c.pose)continue;const old=map.get(id);if(!old){map.set(id,{...c,pose:copyPose(c.pose),known:c.known?{...c.known,...(c.known.combat?{combat:{...c.known.combat}}:{})}:null});continue;}
-          const knowledge=old.identified&&old.known?{identified:true,enemyConfirmed:old.enemyConfirmed,known:{...old.known,...(old.known.combat?{combat:{...old.known.combat}}:{})},knowledgeAt:old.knowledgeAt}:{},current=old.current||c.current;
+          // Observation pose and identification knowledge have separate clocks.
+          // A later-listed observer's memory must not replace newer public HP,
+          // even if that observer refreshed its pose using ambient sight only.
+          const current=old.current||c.current;
+          const source=c.identified&&c.known&&(!old.identified||!old.known||c.knowledgeAt>old.knowledgeAt)?c:old;
+          const knowledge=source.identified&&source.known?{identified:true,enemyConfirmed:source.enemyConfirmed,known:{...source.known,...(source.known.combat?{combat:{...source.known.combat}}:{})},knowledgeAt:source.knowledgeAt}:null;
           if(c.lastSeen>old.lastSeen)Object.assign(old,{...c,pose:copyPose(c.pose)});
-          if(c.identified&&c.known)Object.assign(old,{identified:true,enemyConfirmed:c.enemyConfirmed,known:{...c.known,...(c.known.combat?{combat:{...c.known.combat}}:{})},knowledgeAt:c.knowledgeAt});else Object.assign(old,knowledge);old.current=current;
+          if(knowledge)Object.assign(old,knowledge);old.current=current;
         }
       }teams=merged;
     }
