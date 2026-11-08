@@ -7,7 +7,7 @@ test('V05 real core applies no launch damage and exactly one impact-time damage'
 });
 
 test('V08 an unobserved resolved hit still damages internally without public armour or HP leakage',()=>{
- const f=ready(3),key=f.contact().key;f.t.combat.hp=1;const r=fireAndLand(f,{hide:true});assert.equal(r.internal.result,'hit');assert.equal(r.after,0);assert.equal(f.t.combat.status,'destroyed');assert.equal(r.impact.result,'unobserved');assert.equal(r.impact.zone,null);assert.equal(r.impact.combat,null);assert(!f.C.contacts(f.s).some(c=>c.wreck));assert.equal(f.C.designate(f.s,f.u,key),false);const publicText=JSON.stringify(f.C.fireEvents(f.s));assert(!publicText.includes('hpAfter'));assert(!publicText.includes('targetId'));
+ const f=ready(3),key=f.contact().key;f.t.combat.hp=1;const r=fireAndLand(f,{hide:true});assert.equal(r.internal.result,'hit');assert.equal(r.after,0);assert.equal(f.t.combat.status,'destroyed');assert.equal(r.impact.result,'unobserved');assert.equal(r.impact.zone,null);assert.equal(r.impact.combat,null);assert(!f.C.contacts(f.s).some(c=>c.wreck));assert.equal(f.C.designate(f.s,f.u,key),true);const publicText=JSON.stringify(f.C.fireEvents(f.s));assert(!publicText.includes('hpAfter'));assert(!publicText.includes('targetId'));
 });
 
 test('V09/V14 cumulative damage destroys once, rejects actions and leaves a blocking observed wreck',()=>{

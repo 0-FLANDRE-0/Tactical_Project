@@ -1,0 +1,66 @@
+{
+  "version": "0.4-WIP11B",
+  "date": "2026-11-08",
+  "node": "v24.22.1",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "seed": 911,
+  "fixture": "50/100 stationary M1A2_1998 in a legalNear 10-column grid, alternating teams/headings, every unit explicitly auto; 20 warmup + 600 timed fixed 0.05s steps",
+  "notes": "Includes observation, handoff/acquisition, aim, automatic request, flight/impact, damage, destruction and retarget state. Excludes rendering, pathfinding and whole-game FPS.",
+  "cases": [
+    {
+      "count": 50,
+      "blue": 25,
+      "red": 25,
+      "warmupSteps": 20,
+      "steps": 600,
+      "simulatedSeconds": 30,
+      "medianStepMs": 2.3116180000001805,
+      "p95StepMs": 5.382654000000002,
+      "maxStepMs": 10.034628999999995,
+      "autoShots": 125,
+      "resolvedImpacts": 125,
+      "inFlight": 0,
+      "destroyed": 17,
+      "alive": 33,
+      "confirmedWrecksBlue": 8,
+      "confirmedWrecksRed": 9,
+      "retargetEvents": 13,
+      "multiImpactFixedSteps": 33,
+      "boundedLogs": {
+        "observation": 912,
+        "combatRecords": 125,
+        "blueFireEvents": 101,
+        "redFireEvents": 99
+      }
+    },
+    {
+      "count": 100,
+      "blue": 50,
+      "red": 50,
+      "warmupSteps": 20,
+      "steps": 600,
+      "simulatedSeconds": 30,
+      "medianStepMs": 8.00792999999976,
+      "p95StepMs": 14.192699000000175,
+      "maxStepMs": 20.32713799999965,
+      "autoShots": 314,
+      "resolvedImpacts": 309,
+      "inFlight": 5,
+      "destroyed": 39,
+      "alive": 61,
+      "confirmedWrecksBlue": 15,
+      "confirmedWrecksRed": 24,
+      "retargetEvents": 56,
+      "multiImpactFixedSteps": 50,
+      "boundedLogs": {
+        "observation": 3942,
+        "combatRecords": 200,
+        "blueFireEvents": 94,
+        "redFireEvents": 106
+      }
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "version": "0.4-WIP11B",
+  "date": "2026-11-08",
+  "baseMain": "2f1786c5d844fa2dd9086c1a69a1d6e52d18c05d",
+  "branch": "feat/wip11a-combat-state",
+  "pullRequest": 9,
+  "environment": {
+    "node": "v24.22.1",
+    "python": "3.12.14",
+    "platform": "linux x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "browser": "Chromium 156.0.8078.79",
+    "browserURL": "local HTTP, exact standalone dist/index.html",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR"
+  },
+  "automated": {
+    "nodeRulesAndCore": {
+      "passed": 192,
+      "failed": 0,
+      "priorBaseline": 177,
+      "newWIP11B": 15
+    },
+    "input": {
+      "passed": 37,
+      "failed": 0,
+      "priorBaseline": 35,
+      "newWIP11B": 2
+    },
+    "map": {
+      "passed": 16,
+      "failed": 0
+    },
+    "visibility": {
+      "passed": 12,
+      "failed": 0
+    },
+    "vehicleAndWorker": {
+      "passed": 9,
+      "failed": 0
+    },
+    "nodeTotal": {
+      "passed": 266,
+      "failed": 0,
+      "priorWIP11ABaseline": 249,
+      "newWIP11B": 17
+    },
+    "browser": {
+      "passed": 22,
+      "failed": 0,
+      "actualEmbeddedWorker": true,
+      "defaultAuto": true,
+      "wreckRediscovery": true,
+      "multiTargetHandoff": true,
+      "desktop": true,
+      "viewport844x390": true,
+      "viewport390x844": true
+    },
+    "javascriptSyntax": {
+      "passed": 56,
+      "failed": 0
+    },
+    "pythonSyntax": {
+      "passed": 13,
+      "failed": 0
+    }
+  },
+  "requirements": {
+    "W01": "PASS — observed wreck remains permanently visible beyond ordinary contact memory and is not designatable",
+    "W02": "PASS — unobserved destruction publishes no new wreck or combat result",
+    "W03": "PASS — a destroyed object can be detected and identified after prior memory has expired",
+    "W04": "PASS — confirmed team wreck snapshot stays frozen and unique across observers and reads",
+    "W05": "PASS — identical alive/hidden-destroyed public memory accepts designation identically",
+    "W06": "PASS — friendly/enemy wreck actions and selection are rejected while dynamic occupancy remains",
+    "W07": "PASS — selected destruction falls back to a living friendly; final loss supports safe no-selection UI and shortcuts",
+    "W08": "PASS — a replacement scenario inherits no wreck, mode, request, HP, flight or public state",
+    "E01": "PASS — playable units explicitly start auto, makeTank remains hold, modes are per-unit and profile data stays immutable",
+    "E02": "PASS — both teams automatically sense, identify, acquire, aim, fire, impact and damage without input",
+    "E03": "PASS — team-only, unidentified, unacquired, lost, blocked, empty-ammo and destroyed states do not authorize auto fire",
+    "E04": "PASS — auto uses the same final own-sight and weapon-line recheck as manual fire",
+    "E05": "PASS — hold blocks auto shots while retaining observation, handoff, aim and gated manual one-shot",
+    "E06": "PASS — hold clears only an unexecuted auto request and preserves launched flights",
+    "E07": "PASS — manual/auto overlap fires and consumes ammo once; each impact damages once",
+    "E08": "PASS — a confirmed destroyed target is cleared and the existing path acquires and auto-engages another target",
+    "E09": "PASS — hidden destruction, HP, target ID and live coordinates do not leak through public status, logs or snapshot",
+    "E10": "PASS — enemy auto fire requires its own actual observation and uses separate team-public events",
+    "E11": "PASS — equal seed, commands and fixed steps reproduce across batching and repeated UI reads",
+    "E12": "PASS — equal-time flights resolve deterministically and launched rounds survive cancellation/destruction",
+    "E13": "PASS — gunner loss beyond existing grace hands A to commander-observed B, then reacquires and fires",
+    "E14": "PASS — real low weapon-line obstruction switches optically visible A to valid commander B in auto and hold",
+    "E15": "PASS — absent, shared-only, unidentified, stale or confirmed-wreck candidates cannot bypass handoff gates",
+    "E16": "PASS — interval/aim/slew are not false switch reasons and A reappearance does not oscillate from valid B",
+    "E17": "PASS — A-to-B clears unexecuted A preparation, preserves launched flights and advances B through one aim path",
+    "I01": "PASS — frozen WIP09/WIP10 Python and manual-fire fixtures plus the full prior regression remain unchanged",
+    "I02": "PASS — actual embedded Worker, stale-response protection, failure fallback and page script order pass",
+    "I03": "PASS — source exports, active profile/ammunition, dist, standalone HTML and one-entry ZIP agree on WIP11B"
+  },
+  "benchmarks": {
+    "observation": "tests/releases/WIP11B-benchmark.json",
+    "observationFixture": "100 timed fixed 0.05s steps after 20 warmup, both teams sense",
+    "observationCases": {
+      "stationary50": {
+        "medianStepMs": 2.9979639999999677,
+        "p95StepMs": 5.815415999999971
+      },
+      "stationary100": {
+        "medianStepMs": 8.340452000000141,
+        "p95StepMs": 16.092715
+      },
+      "moving50": {
+        "medianStepMs": 4.63752199999999,
+        "p95StepMs": 6.37286099999983
+      },
+      "moving100": {
+        "medianStepMs": 17.658588999999665,
+        "p95StepMs": 22.358734999999797
+      }
+    },
+    "combat": "tests/releases/WIP11B-combat-benchmark.json",
+    "combatFixture": "10000 resolved impacts plus duplicate replay",
+    "combatMedianMs": 19.12833799999993,
+    "combatP95Ms": 29.726977999999974,
+    "duplicateHpStable": true,
+    "boundedCombatRecords": 200,
+    "auto": "tests/releases/WIP11B-auto-benchmark.json",
+    "autoFixture": "50/100 stationary units, all explicitly auto, 600 timed fixed 0.05s steps after 20 warmup",
+    "autoCases": {
+      "50": {
+        "medianStepMs": 2.3116180000001805,
+        "p95StepMs": 5.382654000000002,
+        "shots": 125,
+        "resolvedImpacts": 125,
+        "inFlight": 0,
+        "destroyed": 17,
+        "retargetEvents": 13
+      },
+      "100": {
+        "medianStepMs": 8.00792999999976,
+        "p95StepMs": 14.192699000000175,
+        "shots": 314,
+        "resolvedImpacts": 309,
+        "inFlight": 5,
+        "destroyed": 39,
+        "retargetEvents": 56
+      }
+    }
+  },
+  "package": {
+    "htmlBytes": 8339591,
+    "htmlSHA256": "4069a9e6e5cdc01b9e9d7f030233d3201f84d36db1c8284c662fa6525b34aeb5",
+    "zipBytes": 1629733,
+    "zipSHA256": "7921646d14438cb5477afb5749b5ebfd90c2ac7bd0fae521f0898aecbe00a986",
+    "zipCRC32": "311795d1",
+    "zipEntries": [
+      "Tactical_v0.4_WIP11B.html"
+    ],
+    "extractedMatchesDist": true,
+    "repeatPackageByteIdentical": true
+  },
+  "notRun": [
+    "Android or iOS physical-device multitouch, thermal and sustained frame-rate testing"
+  ],
+  "limits": [
+    "Browser mobile checks are Chromium viewports, not physical devices",
+    "CPU timings are fixed-step synthetic measurements and are not whole-game FPS",
+    "file:// was blocked by environment policy; the exact standalone HTML was tested through local HTTP",
+    "WIP10 unobserved-miss dust disclosure remains a separate undecided policy"
+  ]
+}

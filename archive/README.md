@@ -6,13 +6,13 @@
 
 | 데이터 범위 | 최신 정리 문서 | 내용 |
 |---|---|---|
-| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | WIP 진행 현황(WIP10 검토 통과), 다음 작업 순서, 결정 대기 항목, 정보 공개 방향, 아카이브 정리 목록. **새 수치 확정 없음** (최종 갱신 2026-11-08) |
+| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | WIP 진행 현황(WIP11B 구현·검증), 다음 작업 순서, 결정 대기 항목, 정보 공개 방향, 아카이브 정리 목록. **새 수치 확정 없음** (최종 갱신 2026-11-08) |
 | **보병 설계 논의 백업** | [infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md](infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md) | 병사별 누적 부상·개별 파편 피격, AI/플레이어 역할, 보병 대전차탄 후보값, 재보급·프리셋 변경. **방향·예시·제안·미정 구분 / 코드 미구현** |
-| **작업 지시서 백업** | [instructions/](instructions/) | WIP09·WIP10 지시서와 기준표 Python 스크립트 원본 |
+| **작업 지시서 백업** | [instructions/](instructions/) | WIP09·WIP10 지시서·기준표와 WIP11A·WIP11B 지시서 사본 목차 |
 | **M1 계열 상면도 뷰어** | [art/M1_Abrams_TopView.html](art/M1_Abrams_TopView.html) | M1A2/M1A1/M1A1 HA 단독 뷰어·삽입용 HTML, 원본 JS, 포탑 링 실측 확인 이미지 |
 | **전차 방호력·차량 HP (본편 32종 + 확장 2종)** | [tanks/README.md](tanks/README.md) | 7구역 KE(CE), ERA/BDD/D-Tech, **§9 차량 최대 HP 34종**, 계열·연식별 구분. **HP 확정 데이터 / 피해량·모듈 HP 미정** |
 | **관통·피해·모듈 HP 설계** | [combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md](combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) | M829A1 기준 피해 380 및 게임 피해 곡선. **M829A2는 A1형 배율 공유·100% 기준 405, WIP11 단일 시험탄**. M830은 시험 후보, 탄속·모듈 피해 미정 |
-| **잔해 유지·식별·선택 규칙** | [combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md](combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md) | **잔해 영구 유지·선택 불가.** 미관측 격파도 이후 한 번 식별하면 계속 표시. 미확인 격파의 명령 반응 노출 방지. **방향 확정 / 코드 수정 예정** |
+| **잔해 유지·식별·선택 규칙** | [combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md](combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md) | **잔해 영구 유지·선택 불가.** 미관측 격파도 이후 한 번 식별하면 계속 표시. 미확인 격파의 명령 반응 노출 방지. **WIP11B PR #9 적용·검증 / main 병합 전** |
 | **전투 판정 2단계 설계 메모 (미구현)** | [combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md](combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md) | 발사·착탄 상태 평가, 최종 명중 추첨 1회 권장, 360° 구역 확률, 선택 면의 LOS/관통 판정 구상. **세부 공식·수치 미확정** |
 | **장갑 세부 구획 검토 메모 (미확정)** | [tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md](tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md) | 7구역 내부 상/하부·포방패·좌우 뺨·측면 전후·지붕 분할 후보, LOS·이동 상태·사통/관측 확률 아이디어. **현재 미확정·미구현** |
 | **탄약 및 적재 프리셋** | [ammo/README.md](ammo/README.md) | 탄종별 게임 관통력, 전차별 기본탄, **32종×3=96개** 적재 프리셋, 구획·장전·보급 설계 |

@@ -233,7 +233,11 @@ const TacticalCore = (() => {
       ['A11','ALPHA 11',550,2750,-.45,'blue'],['A12','ALPHA 12',780,3060,-.45,'blue'],
       ['T01','관측 표적 01',1150,2330,2.4,'red'],['T02','관측 표적 02',1800,1650,2.5,'red'],['T03','관측 표적 03',3020,2060,2.8,'red']
     ]) {const p=legalNear(x,y,units);units.push(makeTank(id,name,p.x,p.y,h,team));}
-    return {time:0,seed,units};
+    const scenario={time:0,seed,units};
+    // The playable test scenario explicitly opts both teams into automatic
+    // single-shot engagement. makeTank() remains hold for legacy/manual fixtures.
+    for(const u of units)fireFor(scenario).setMode(u,'auto');
+    return scenario;
   }
   function issueMove(u,goal,reverse,units) {
     if(u?.combat?.status==='destroyed')return{ok:false,reason:'격파 차량은 이동할 수 없음',points:[]};
@@ -283,7 +287,16 @@ const TacticalCore = (() => {
     if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
     return observationRuntimes.get(s);
   }
-  function step(s,dt){s.time+=dt;for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}const alive=s.units.filter(u=>u.combat?.status!=='destroyed');observationFor(s).advance(alive,dt,s.time);fireFor(s).step(s.units,dt,s.time);}
+  function step(s,dt){
+    s.time+=dt;
+    for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}
+    const alive=s.units.filter(u=>u.combat?.status!=='destroyed');
+    // Only living vehicles observe and act; every vehicle remains a sensing
+    // candidate so an unseen destruction can later be discovered as a wreck.
+    observationFor(s).advance(alive,dt,s.time,s.units);
+    confirmObservedWrecks(s,alive);
+    fireFor(s).step(s.units,dt,s.time);
+  }
   const wreckRuntimes=new WeakMap();
   function wreckMap(s,team){if(!wreckRuntimes.has(s))wreckRuntimes.set(s,new Map());const all=wreckRuntimes.get(s);if(!all.has(team))all.set(team,new Map());return all.get(team);}
   function contacts(s,team='blue'){
@@ -292,11 +305,29 @@ const TacticalCore = (() => {
     for(const [key,w]of wrecks)if(!seen.has(key))result.push(JSON.parse(JSON.stringify(w)));
     return result;
   }
+  function wreckSnapshot(target,c,now){
+    const p=profileOf(target),pose=c.pose;
+    return{key:c.key,x:pose.x,y:pose.y,heading:pose.heading,turret:pose.turret,commander:pose.commander??pose.turret,
+      model:{...pose.model,turretPivot:pose.model?.turretPivot?.slice(),muzzleLocal:pose.model?.muzzleLocal?.slice()},team:target.team,
+      identified:true,current:false,memory:false,wreck:true,destroyed:true,observedAt:now,age:0,label:'격파 잔해',name:c.known?.name??target.name,type:c.known?.type??p.name};
+  }
+  function confirmWreck(s,team,target,c){
+    const map=wreckMap(s,team);if(map.has(c.key)||!c.pose)return map.get(c.key)||null;
+    const copy=wreckSnapshot(target,c,s.time);map.set(c.key,copy);return copy;
+  }
+  function confirmObservedWrecks(s,observers){
+    const byId=new Map(s.units.map(u=>[u.id,u]));
+    for(const observer of observers)for(const[id,c]of Object.entries(observer.observation?.contacts||{})){
+      if(!c.wreckConfirmed)continue;const target=byId.get(id);
+      if(target?.combat?.status==='destroyed')confirmWreck(s,observer.team,target,c);
+    }
+  }
   const aliveCommand=u=>u&&u.combat?.status!=='destroyed';
-  function deadContact(s,key){for(const observer of s.units)for(const[id,c]of Object.entries(observer.observation?.contacts||{}))if(c.key===key)return s.units.find(u=>u.id===id)?.combat?.status==='destroyed';return false;}
   const guard=(s,u,ch,point,duration=0)=>aliveCommand(u)&&!!profileOf(u).sensors[ch]?.enabled&&(ch!=='commander'||profileOf(u).sensors.commander.independent)&&TacticalObservation.guard(u,ch,point,duration,s.time);
   const resumeObservation=(s,u,ch)=>aliveCommand(u)&&TacticalObservation.resume(u,ch,s.time);
-  const designate=(s,u,key)=>aliveCommand(u)&&!wreckMap(s,u.team).has(key)&&!deadContact(s,key)&&observationFor(s).direct(u,key);
+  // Command acceptance depends only on the team's public contact. A hidden
+  // destruction must not be disclosed by a different success/failure result.
+  const designate=(s,u,key)=>aliveCommand(u)&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);
   const cancelDesignation=(s,u)=>{if(!aliveCommand(u))return false;TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);return true;};
   const observationView=(s,u,ch='commander')=>TacticalObservation.view(u,ch,s.time);
   const ownObservation=(s,u,key=null)=>observationFor(s).ownStatus(u,key);
@@ -309,7 +340,11 @@ const TacticalCore = (() => {
     }}));
     return combatRuntimes.get(s);
   }
-  const combatView=u=>u?.combat?{maxHp:u.combat.maxHp,hp:u.combat.hp,status:u.combat.status,ammoId:u.combat.ammoId,destroyedAt:u.combat.destroyedAt,lastDamage:u.combat.lastDamage?JSON.parse(JSON.stringify(u.combat.lastDamage)):null}:null;
+  const combatView=u=>{
+    if(!u?.combat)return null;let lastDamage=null;
+    if(u.combat.lastDamage){const{id,targetId,...safe}=u.combat.lastDamage;lastDamage=JSON.parse(JSON.stringify(safe));}
+    return{maxHp:u.combat.maxHp,hp:u.combat.hp,status:u.combat.status,ammoId:u.combat.ammoId,destroyedAt:u.combat.destroyedAt,lastDamage};
+  };
   const combatEvents=s=>s.recordFireEvents?combatFor(s).records():[];
   const combatStats=s=>combatFor(s).stats();
   const fireRuntimes=new WeakMap();
@@ -333,8 +368,12 @@ const TacticalCore = (() => {
         }
         return TacticalCombatState.publicRecord(record);
       },
+      onFireBlocked:(u,target,reason,now)=>observationFor(s).retarget(u,target,reason,now),
       freshSight:(u,id)=>{
-      const target=s.units.find(v=>v.id===id);if(!target||target.combat?.status==='destroyed')return{visible:false,reason:'target-unavailable'};
+      const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'fresh-sight-failed'};
+      // A private destruction may physically stop a shot, but its public reason
+      // stays indistinguishable from an ordinary loss of the firing solution.
+      if(target.combat?.status==='destroyed')return{visible:false,reason:'fresh-sight-failed'};
       const p=profileOf(u),sensor=p.sensors.gunner,optical=exposure(u,target,sensor.eyeHeight),muzzle={...TacticalVehicleGeometry.muzzleWorld(u,p.model),profileId:u.profileId,profileOverride:u.profileOverride};
       // Keep the game firing height relative to the hull's ground, even when
       // the barrel tip lies over different terrain. Optics stay on the vehicle.
@@ -353,11 +392,9 @@ const TacticalCore = (() => {
     return fireRuntimes.get(s);
   }
   const fireStatus=(s,u,key=null)=>fireFor(s).view(u,key);
+  const fireMode=(s,u,mode)=>aliveCommand(u)&&fireFor(s).setMode(u,mode);
   const requestFire=(s,u,key)=>{
     if(!aliveCommand(u))return{ok:false,reason:'destroyed'};
-    const mission=[u.observation?.designation,u.observation?.tracking].find(d=>['designated','waiting','acquiring','acquired'].includes(d?.status));
-    const target=mission?s.units.find(v=>v.id===mission.target):null;
-    if(target?.combat?.status==='destroyed')return{ok:false,reason:'target-unavailable'};
     return fireFor(s).request(u,key,s.time);
   };
   const fireEvents=(s,team='blue',since=-Infinity)=>fireFor(s).events(team,since);
@@ -457,6 +494,6 @@ const TacticalCore = (() => {
     for(const [col,along] of e.turretAlong.entries())sample(along,e.turretHeight,target.turret??target.heading,'turret',col,0);
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,requestFire,fireEvents,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

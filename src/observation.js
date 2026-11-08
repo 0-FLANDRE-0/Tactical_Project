@@ -144,6 +144,12 @@ const TacticalObservation=(()=>{
           c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,barrelTip:tp.model.barrelTip,turretOrigin:tp.model.turretOrigin,turretPivot:[...tp.model.turretPivot],turretRingDiameter:tp.model.turretRingDiameter,muzzleLocal:[...tp.model.muzzleLocal]}};
           const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};c.gunnerExposure=result.gunner?{hull:result.gunner.hull,turret:result.gunner.turret,samples:result.gunner.samples,presented:{...tp.fireControl.presented}}:{hull:0,turret:0,samples:[]};
           if(c.identified&&identify>0){c.known={name:target.name,type:tp.name};c.knowledgeAt=now;}
+          // A destroyed world object remains an ordinary observation candidate.
+          // Its private state becomes team knowledge only after this observer has
+          // both re-detected it and obtained an identifying optical sample.
+          if(target.combat?.status==='destroyed'&&c.detected&&c.identified&&identify>0){
+            c.wreckConfirmed=true;c.wreckConfirmedAt??=now;
+          }
         }
       }
       for(const[id,c]of Object.entries(s.contacts)){
@@ -174,7 +180,8 @@ const TacticalObservation=(()=>{
       if(d){
         const c=s.contacts[d.target],previous=d.status;
         if(c?.current&&c.pose){d.pose=copyPose(c.pose);d.observedAt=c.lastSeen;}
-        if(d.status==='acquired'&&now-(c?.gunnerLastSeen??-Infinity)>t.lossGrace){finish(u,d,'lost','own-observation-lost',now);d=null;}
+        if(c?.wreckConfirmed){finish(u,d,'destroyed','confirmed-wreck',now);d=null;}
+        else if(d.status==='acquired'&&now-(c?.gunnerLastSeen??-Infinity)>t.lossGrace){finish(u,d,'lost','own-observation-lost',now);d=null;}
         else if(d.status!=='acquired'&&(now>=d.expiresAt||now-d.observedAt>t.designationStale)){finish(u,d,'expired',now>=d.expiresAt?'timeout':'stale',now);d=null;}
         else if(c?.sources.gunner.current&&c.gunnerSince!==null&&now-c.gunnerSince>=t.acquireSeconds){
           d.status='acquired';d.reason='gunner';d.acquiredAt??=now;d.expiresAt=null;releaseCommander(s,d.target);s.commander.cooldowns[d.target]=now+t.revisitSeconds;
@@ -185,9 +192,9 @@ const TacticalObservation=(()=>{
         }
       }
       // Refresh pending candidates only from this commander's actual samples.
-      s.pending=s.pending.filter(v=>now-v.observedAt<=t.memorySeconds&&v.target!==d?.target);
+      s.pending=s.pending.filter(v=>now-v.observedAt<=t.memorySeconds&&v.target!==d?.target&&!s.contacts[v.target]?.wreckConfirmed);
       if(sensors.hunterKiller&&sensors.commander.enabled){
-        for(const[id,c]of Object.entries(s.contacts))if(c.current&&c.identified&&c.enemyConfirmed&&c.sources.commander.current&&id!==d?.target){
+        for(const[id,c]of Object.entries(s.contacts))if(c.current&&c.identified&&c.enemyConfirmed&&!c.wreckConfirmed&&c.sources.commander.current&&id!==d?.target){
           const entry={target:id,key:c.key,pose:copyPose(c.pose),observedAt:c.lastSeen},index=s.pending.findIndex(v=>v.target===id);
           if(index>=0)s.pending[index]=entry;
           else if((s.commander.cooldowns[id]??0)<=now){
@@ -199,14 +206,25 @@ const TacticalObservation=(()=>{
       if(d||s.gunner.mode==='guard'||!sensors.gunner.enabled||now<s.autoAssignAfter)return;
       // Own gunner identification/recognition is a separate route, not a fake
       // commander handoff, and works without commander equipment or HK.
-      const own=Object.entries(s.contacts).find(([id,c])=>c.current&&c.identified&&c.enemyConfirmed&&c.sources.gunner.current&&(s.gunner.cooldowns[id]??0)<=now);
+      const own=Object.entries(s.contacts).find(([id,c])=>c.current&&c.identified&&c.enemyConfirmed&&!c.wreckConfirmed&&c.sources.gunner.current&&(s.gunner.cooldowns[id]??0)<=now);
       if(own){
         const[id,c]=own;s.tracking={status:'acquiring',target:id,key:c.key,source:'gunner',pose:copyPose(c.pose),observedAt:c.lastSeen,startedAt:now,expiresAt:now+t.designationSeconds,reason:'own-confirmation'};
         releaseCommander(s,id);s.commander.cooldowns[id]=now+t.revisitSeconds;s.pending=s.pending.filter(v=>v.target!==id);emit(u,'gunner-own-target',c,{channel:'gunner',source:'gunner'});return;
       }
       if(!sensors.hunterKiller||!sensors.commander.enabled)return;
-      const next=s.pending.find(v=>now-v.observedAt<=t.designationStale&&(s.gunner.cooldowns[v.target]??0)<=now);
+      const next=s.pending.find(v=>now-v.observedAt<=t.designationStale&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
       if(next)designate(u,next.target,'commander');
+    }
+    function retarget(u,target,reason,now){
+      const s=init(u),d=mission(s),t=profileOf(u).sensors.tuning;
+      if(!d||d.target!==target||d.status!=='acquired'||s.gunner.mode==='guard')return false;
+      const next=s.pending.find(v=>v.target!==target&&now-v.observedAt<=t.designationStale&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
+      if(!next)return false;
+      finish(u,d,'lost',reason,now);
+      if(!designate(u,next.target,'commander'))return false;
+      s.designation.reason=reason;s.designation.previousKey=d.key;
+      emit(u,'target-switched',s.contacts[next.target],{source:'commander',reason,previousKey:d.key});
+      return true;
     }
     function buildTeam(units){
       const merged=new Map();for(const u of units){const map=merged.get(u.team)||new Map();merged.set(u.team,map);
@@ -218,9 +236,9 @@ const TacticalObservation=(()=>{
         }
       }teams=merged;
     }
-    function advance(units,dt,now){
+    function advance(units,dt,now,candidates=units){
       time=now;tick++;for(const u of units)control(u,dt,now);
-      const buckets=new Map(),size=500;for(const u of units){const k=Math.floor(u.x/size)+','+Math.floor(u.y/size);if(!buckets.has(k))buckets.set(k,[]);buckets.get(k).push(u);}
+      const buckets=new Map(),size=500;for(const u of candidates){const k=Math.floor(u.x/size)+','+Math.floor(u.y/size);if(!buckets.has(k))buckets.set(k,[]);buckets.get(k).push(u);}
       for(const[index,u]of units.entries()){
         const s=init(u),p=profileOf(u).sensors,period=p.tuning.queryPeriod,stride=Math.max(1,Math.round(period/dt));if(tick%stride!==index%stride)continue;
         const radius=Math.max(...channels.map(ch=>p[ch].enabled?p[ch].range:0))+10,candidates=[];
@@ -240,7 +258,7 @@ const TacticalObservation=(()=>{
         gunnerCurrent:entry?.sources.gunner.current??false,acquired:!!(d?.status==='acquired'&&(!key||d.key===key)),
         targetKey:d?.key??null,status:d?.status??last.status,source:d?.source??last.source??null,reason:d?.reason??last.reason??null,pending:s.pending.length};
     }
-    return{advance,contacts,direct,ownStatus,stats};
+    return{advance,contacts,direct,ownStatus,retarget,stats};
   }
   function view(u,ch='commander',time=0){const o=init(u)[ch];return{mode:o.mode==='guard'?'fixed':'idle',turret:u.turret,gaze:u.commander,direction:o.mode==='guard'?Math.atan2(o.point.y-u.y,o.point.x-u.x):null,remaining:o.expiresAt===null?null:Math.max(0,o.expiresAt-time),point:o.point?{...o.point}:null};}
   return Object.freeze({create,init,guard,resume,cancel,view,hash});

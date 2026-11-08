@@ -1,5 +1,5 @@
 {
-  "version": "0.4-WIP10",
+  "version": "0.4-WIP11B",
   "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
   "passed": 16,
   "failed": 0,
@@ -37,7 +37,7 @@
     {
       "name": "actual building interior blocks navigation and rejects a destination",
       "status": "PASS",
-      "ms": 0
+      "ms": 1
     },
     {
       "name": "pond surface rejects vehicle passage",
@@ -47,22 +47,22 @@
     {
       "name": "four real-map routes arrive with zero collisions",
       "status": "PASS",
-      "ms": 2614
+      "ms": 3396
     },
     {
       "name": "reverse retains hull facing on a rearward route",
       "status": "PASS",
-      "ms": 32
+      "ms": 46
     },
     {
       "name": "stop cancels path and brakes",
       "status": "PASS",
-      "ms": 49
+      "ms": 71
     },
     {
       "name": "fixed physics results match between render batches",
       "status": "PASS",
-      "ms": 456
+      "ms": 672
     },
     {
       "name": "observation range is enforced",
