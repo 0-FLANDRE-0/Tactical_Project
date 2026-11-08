@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP11E</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP12</title>
 <style>
 :root{
   color-scheme:dark;
@@ -914,7 +914,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP11E</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP12</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -960,7 +960,7 @@ footer{
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
 <div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
 <div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · AUTO FIRE · TERRAIN / WIP11E</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · AUTO FIRE · EFFECTS / WIP12</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -1359,8 +1359,8 @@ if(typeof module!=='undefined')module.exports=TacticalObservation;
 </script>
 <script id="combat-state">
 'use strict';
-/* WIP11A abstract game damage. This module consumes the already-resolved hit
- * and zone; it never rolls hit, zone, penetration, damage or destruction. */
+/* WIP12 abstract game damage. This module consumes already-resolved hit, zone
+ * and ricochet rolls; it never draws effects or owns a frame-time RNG. */
 const TacticalCombatState=(()=>{
   const ZONES=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -1370,7 +1370,8 @@ const TacticalCombatState=(()=>{
   const AMMUNITION=deepFreeze({
     M829A2:{
       id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
-      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],outsidePolicy:'clamp'},
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'}
     }
   });
@@ -1401,8 +1402,17 @@ const TacticalCombatState=(()=>{
   }
   function penetrationAt(ammo,rangeM,angleDeg){
     finitePositive(rangeM,'사거리');if(!Number.isFinite(angleDeg)||angleDeg<0)throw Error('입사각 값 오류');
-    const t=ammo.penetration,r=interval(t.rangesM,rangeM),a=interval(t.anglesDeg,angleDeg),row=i=>t.values[i][a.lo]+(t.values[i][a.hi]-t.values[i][a.lo])*a.t;
-    return{value:row(r.lo)+(row(r.hi)-row(r.lo))*r.t,rangeClamped:r.clamped,angleClamped:a.clamped,rangeUsed:clamp(rangeM,t.rangesM[0],t.rangesM.at(-1)),angleUsed:clamp(angleDeg,t.anglesDeg[0],t.anglesDeg.at(-1))};
+    const t=ammo.penetration,r=interval(t.rangesM,rangeM),last=t.anglesDeg.at(-1),limit=t.parallelLimitDeg??last,used=clamp(angleDeg,t.anglesDeg[0],limit);
+    let lo,hi,ratio;
+    if(used>last){lo=hi=t.anglesDeg.length-1;ratio=0;}
+    else{const a=interval(t.anglesDeg,used);lo=a.lo;hi=a.hi;ratio=a.t;}
+    const row=i=>{const base=t.values[i][lo]+(t.values[i][hi]-t.values[i][lo])*ratio;return used>last?base*(limit-used)/(limit-last):base;};
+    return{value:row(r.lo)+(row(r.hi)-row(r.lo))*r.t,rangeClamped:r.clamped,angleClamped:angleDeg>limit,rangeUsed:clamp(rangeM,t.rangesM[0],t.rangesM.at(-1)),angleUsed:used};
+  }
+  function ricochetChance(ammo,angleDeg){
+    if(!Number.isFinite(angleDeg)||angleDeg<0)throw Error('도탄 입사각 값 오류');
+    const rule=ammo.ricochet;if(!rule)return 0;const a=interval(rule.anglesDeg,angleDeg);
+    return rule.chances[a.lo]+(rule.chances[a.hi]-rule.chances[a.lo])*a.t;
   }
   function multiplierAt(ammo,residualRatio){
     if(!Number.isFinite(residualRatio)||residualRatio<0)throw Error('잔여 관통비 값 오류');
@@ -1424,15 +1434,17 @@ const TacticalCombatState=(()=>{
     const incoming=Math.atan2(origin.y-pose.y,origin.x-pose.x);
     return Math.abs(diff(incoming,faceHeading(pose,zone,side)))*180/Math.PI;
   }
-  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId}){
+  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId,ricochetRoll}){
     if(typeof hit!=='boolean')throw Error('명중 결과 누락');
-    if(!hit)return Object.freeze({hit:false,penetrated:false,damage:0,reason:'miss'});
+    if(!hit)return Object.freeze({hit:false,ricochet:false,penetrated:false,damage:0,reason:'miss'});
     validateProfile(profile);
     if(!ZONES.includes(zone))throw Error('지원하지 않는 피격 구역: '+zone);
-    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone].ke;
-    const penetrated=pen.value>=protection,residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0,damage=penetrated?ammo.baseDamage*multiplier:0;
+    if(!Number.isFinite(ricochetRoll)||ricochetRoll<0||ricochetRoll>=1)throw Error('도탄 난수 값 오류');
+    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone].ke;
+    if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
+    const penetrated=pen.value>0&&pen.value>=protection,residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0,damage=penetrated?ammo.baseDamage*multiplier:0;
     if(!Number.isFinite(damage)||damage<0)throw Error('피해 계산 오류');
-    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,penetration:pen.value,protection,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
+    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
   }
   function create({profileOf,onDestroyed=null,recordLimit=200,idLimit=4096}={}){
     if(typeof profileOf!=='function')throw Error('profileOf 필요');
@@ -1457,15 +1469,15 @@ const TacticalCombatState=(()=>{
       mark(id);
       const hpBefore=state.hp,damage=Math.min(hpBefore,result.damage),hpAfter=clamp(hpBefore-damage,0,state.maxHp),destroyed=hpAfter<=0&&state.status!=='destroyed';
       state.hp=hpAfter;
-      const record={applied:true,id,time:now,targetId:target.id,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,protection:result.protection??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,damage,hpBefore,hpAfter,maxHp:state.maxHp,destroyed};
+      const record={applied:true,id,time:now,targetId:target.id,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,ricochet:!!result.ricochet,ricochetChance:result.ricochetChance??0,ricochetRoll:result.ricochetRoll??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,protection:result.protection??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,damage,hpBefore,hpAfter,maxHp:state.maxHp,destroyed};
       state.lastDamage={...record};
       if(destroyed){state.status='destroyed';state.destroyedAt=now;destroyedCount++;onDestroyed?.(target,record);}
       return remember(record);
     }
     return Object.freeze({apply,records:()=>clone(records),stats:()=>({applied:appliedCount,records:records.length,destroyed:destroyedCount,sequenceShooters:sequences.size,recentIds:recent.size})});
   }
-  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
-  return Object.freeze({create,initUnit,validateProfile,evaluate,penetrationAt,multiplierAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES});
+  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
+  return Object.freeze({create,initUnit,validateProfile,evaluate,penetrationAt,ricochetChance,multiplierAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;
 
@@ -1480,6 +1492,7 @@ const TacticalFireControl=(()=>{
   const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
   const GRAVITY=9.81,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   function random(text,seed){let n=(2166136261^seed^0x51f15e)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
+  const visualSeed=(shot,phase,seed)=>Math.floor(random(shot.id+':visual:'+phase,seed^0x6d2b79f5)*4294967296)>>>0;
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   function init(u,p,mode='auto'){
@@ -1555,6 +1568,18 @@ const TacticalFireControl=(()=>{
     const incoming=Math.atan2(observer.y-pose.y,observer.x-pose.x),s=Math.sin(diff(incoming,zone.startsWith('hull')?pose.heading:pose.turret));
     return s>1e-12?'right':s< -1e-12?'left':null;
   }
+  function faceHeading(pose,zone,side){
+    const heading=zone?.startsWith('turret')?pose.turret:pose.heading;
+    if(zone?.endsWith('Front'))return heading;
+    if(zone?.endsWith('Rear'))return heading+Math.PI;
+    if(zone?.endsWith('Side'))return heading+(side==='right'?Math.PI/2:-Math.PI/2);
+    return null;
+  }
+  function reflectedHeading(beta,pose,zone,side){
+    const normal=faceHeading(pose,zone,side);if(normal===null)return beta+Math.PI;
+    const dx=Math.cos(beta),dy=Math.sin(beta),nx=Math.cos(normal),ny=Math.sin(normal),dot=dx*nx+dy*ny;
+    return Math.atan2(dy-2*dot*ny,dx-2*dot*nx);
+  }
   function impactEvaluation(shot,sight){
     const pose=sight?.gone?{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}:sight?.pose||{...shot.pose,x:shot.predicted.x,y:shot.predicted.y};
     const rects=sight?.gone?[]:presentedRects(shot.origin,pose,sight||shot.fireExposure,shot.fireControl);
@@ -1598,9 +1623,11 @@ const TacticalFireControl=(()=>{
     return marchImpact(shot,pose,point,environment);
   }
   function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,onImpactResolved=null,onFireBlocked=null,seed=7,debug=false,onDecisionRoll=null}){
-    const events=[],flights=[],records=[];let currentTime=0;
+    const events=[],effects=[],flights=[],records=[];let currentTime=0,effectNumber=0;
     const clone=v=>JSON.parse(JSON.stringify(v));
     const emit=e=>{events.push(e);if(events.length>200)events.shift();};
+    const emitEffect=e=>{const effect=Object.freeze({id:'fx-'+(++effectNumber),...e});effects.push(effect);if(effects.length>256)effects.shift();return effect;};
+    const pruneEffects=now=>{for(let i=effects.length-1;i>=0;i--)if(effects[i].expiresAt<now)effects.splice(i,1);};
     function resetAim(s){s.aimElapsed=0;s.aimProgress=0;s.layTime=0;}
     function resetMotion(s){s.previousSample=null;s.targetMotion=0;s.targetVelocity={x:0,y:0};}
     function clearPreview(s){s.hitChance=null;s.zoneProbabilities=null;s.breakdown=null;}
@@ -1610,11 +1637,13 @@ const TacticalFireControl=(()=>{
       flights.sort((a,b)=>a.impactAt-b.impactAt||(a.id<b.id?-1:a.id>b.id?1:0));
       while(flights.length&&flights[0].impactAt<=now+1e-9){
         const shot=flights.shift(),sight=impactSight?impactSight(shot):{...clone(shot.fireExposure),pose:{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}},evaluation=impactEvaluation(shot,sight);
-        const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
+        const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),ricochetRoll=result.hit?roll(shot,'ricochet'):null,point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
         const observation=isObserved(shot.team,shot.targetKey),observed=!sight?.gone&&!!observation;
         // Damage consumes the private resolved result exactly here, before any
         // public redaction. It must not infer a hit from the display point.
-        const combat=onImpactResolved?.({id:shot.id,time:now,team:shot.team,shooterId:shot.shooterId,targetId:shot.targetId,targetKey:shot.targetKey,ammoId:shot.ammoId,hit:result.hit,zone:result.zone,side,origin:clone(shot.origin),pose:clone(evaluation.pose),rangeM:Math.hypot(evaluation.pose.x-shot.origin.x,evaluation.pose.y-shot.origin.y),impact:clone(impact),observed,observation:observation?clone(observation):null})??null;
+        const combat=onImpactResolved?.({id:shot.id,time:now,team:shot.team,shooterId:shot.shooterId,targetId:shot.targetId,targetKey:shot.targetKey,ammoId:shot.ammoId,hit:result.hit,zone:result.zone,side,ricochetRoll,origin:clone(shot.origin),pose:clone(evaluation.pose),rangeM:Math.hypot(evaluation.pose.x-shot.origin.x,evaluation.pose.y-shot.origin.y),impact:clone(impact),observed,observation:observation?clone(observation):null})??null;
+        const effectClass=result.hit?(combat?.ricochet?'ricochet':combat?.penetrated?'penetration':'non-penetration'):'miss-'+impact.kind;
+        emitEffect({kind:'impact',time:now,expiresAt:now+3.2,position:{x:impact.x,y:impact.y,z:impact.z},effectClass,flightEffectId:shot.flightEffectId,outgoingHeading:combat?.ricochet?reflectedHeading(shot.beta,evaluation.pose,result.zone,side):null,visualSeed:visualSeed(shot,'impact',seed)});
         const publicImpact=observed?clone(impact):result.hit?null:{...clone(impact),beyond:null};
         const publicResult={type:'impact',id:shot.id,time:now,impactAt:shot.impactAt,team:shot.team,shooterId:shot.shooterId,targetKey:shot.targetKey,
           result:observed?(result.hit?'hit':'miss'):'unobserved',zone:observed?result.zone:null,side:observed?side:null,
@@ -1642,6 +1671,7 @@ const TacticalFireControl=(()=>{
     }
     function step(units,dt,now){
       currentTime=now;
+      pruneEffects(now);
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
         if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
@@ -1705,6 +1735,8 @@ const TacticalFireControl=(()=>{
           origin,fireEye:sight.fireEye,profileAtFire:clone(p),fireControl:clone(f),pose:clone(pose),fireExposure:clone(sight),
           beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1};
         flights.push(shot);
+        const flightEffect=emitEffect({kind:'fire',time:now,expiresAt:impactAt+.35,origin:{x:origin.x,y:origin.y},heading:beta,distanceM:chance.breakdown.range,duration:tof,visualSeed:visualSeed(shot,'fire',seed)});
+        shot.flightEffectId=flightEffect.id;
         emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:request.source,origin:{...origin},muzzleHeading:beta,
           tof,impactAt,hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1});
         s.shotCount=number;s.ammo--;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
@@ -1732,9 +1764,10 @@ const TacticalFireControl=(()=>{
     }
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
-    return{step,request,setMode,view,cancel,events:publicEvents,debugRecords:()=>debug?clone(records):[]};
+    const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
+    return{step,request,setMode,view,cancel,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;
 
@@ -2140,6 +2173,8 @@ const TacticalCore = (() => {
     return fireFor(s).request(u,key,s.time);
   };
   const fireEvents=(s,team='blue',since=-Infinity)=>fireFor(s).events(team,since);
+  const effectEvents=(s,since=-Infinity)=>fireFor(s).effects(since);
+  const effectEventStats=s=>fireFor(s).effectStats();
   const fireDebugRecords=s=>s.recordFireEvents?fireFor(s).debugRecords():[];
   const roofGrid=new Float32Array(TH.columns*TH.rows);
   for(const b of buildings) for(let y=Math.max(0,Math.floor(b.minY/4));y<=Math.min(999,Math.floor(b.maxY/4));y++) for(let x=Math.max(0,Math.floor(b.minX/4));x<=Math.min(999,Math.floor(b.maxX/4));x++) {
@@ -2308,7 +2343,7 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -3049,6 +3084,87 @@ const TacticalLookAnimation=(()=>{
 if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
 
 </script>
+<script id="effect-atlas">const TACTICAL_EFFECT_ATLAS='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABACAYAAAD1Xam+AAAqWElEQVR42u2dB3hV15XvddUlhBBV9N57L6FjqkAXIdFMB3XpFumq944Qorhh416Dy8SOHcdxsAFjYjvuTjyxscn4ZRIn4/eSvMzkzYypuuf91tYWuWAQRcXy+OzvWx+Hc/be9yL0/621djteXmYxi1nMYhazmMUsZjGLWcxiFrOYxSxmMYtZzGIWs5jFLGYxi1nMYhazmMUsZjGLWczSUIzjy/2xEPMnYZZLfi8OWYPMn8L3BwKdzJ+CWS4DgPk78T2DQPerPfu6apTX19VjvL7eNc7r65rxlq9rJmjjWu7JM+qY5X8UAHq3+GecsgaaP+m2A4C+l4h+5+h6sddOtpzeO8379P4ZPqdvm+lz+vZZvqdvn62Na7knz6gjdVUb2n7fy/5KZ4NZLjN1/zsCgSEtDIAwU3ltCwKDlTffPclyet90bwTuc/rOuX6nDyzwP33PooDTB5cEnrl3aeCZ+5bVG9dyTz2TOlJX2tBW+pC+dL8B3yPRi8i9MR/MV5uftoa/++g6lrYMAwAw9ibbtbsO8fcwFdeGinht47XlI5Xw75jjqwQtgr8/IujMg9Z2Zx6OCjnzSHT7M4/GhJ55dLU2ruWePJM61FVAkLbSB325jy7r8F2LCNKc8Z5m0XbxXiPC99FC98cCsSAsGGunLVjfC9R1/HSbNgkChDztJtp0uw7xLzIV15bETx5/es9U8fi+7iMRk5WXfzCy3ZlHVrU/89iaDmd+uL7j2UMbO599anOXs09v6Xr26a3dzj9/a191Lfd4JnVUXWkjbSU6AATuw8t6SN/yGd8BwYvQvbX5aPPV1vD3hucKCh4e308LW0TeHuuAdcQ6YZ21ddL3Oug6wbqNX0NE0AYhMO8G6w+4hvgnmIprS+InZ1deX8L3g4sD3K8un+1+dcWiM0+sCzv75KbOZ5/Z2u3sj2J7nH0uvtfZHyf2Pvt8ch+s7/mfbR6rruWePJM6Upc20lYiA/fh5WPchyMGqb4lLeCz2qDwLR6CF6H7YwFYIBZ0mQXqZ1LHNy8rybeyKNW/tszRIPxQLfCuWDjWA+uF9dbWS98L13U66jbSNkCnB20qGkDQy26w/uhGxD/DVFybEv8EixrAu2u+n8rpH1oZcubxtWHuI9aVZ5/ZHq6EjdjPvmgfcO6ltEHnfuYacu7ljKHnfp457MKRHXPUtdzjmdRRdaUNbesOR82UvlSf9C2fIZ8ln9mGxN8gfH8t7mCsHdYeC8U6YGHaOuh78qxdZnpCu4LspJDygtTQmlJ7hz3ljs5a1CLwPlh/bBA2GBuibbC+11/X6eEBghAdDbQpCCDomOZIGRB/BLbAVF1b8vwi/gMLED95voTuEuoT3p99Nr6n+0j05nM/dQ5SIn8lZ+S5I3ljzh0tHHfuWNH4c68VT7jwWsJKdS335JnUkbq0OftCSt+6V2KWSF8qNZC++Qz5rHoINB4JyOKkVvD6Inw/LfwG0YvQO2FdsG5Y+GUm97q40hI652QkdinMSe5aVpDafWexrefuMntvINB/X4US+FBsJDYaG4uN0zZW3xup6wzUIOiuU4T2nhBoonADmxECm66z3oJGABBtqq4t5fwS9ivPL+KPRvwbOimvT0h/7kXHAPexNYnnXs0dde4YAj9eOun8iYpp59+omnH+zeqZ2Ky6X6RsVddyj2dSR9WVNoCg7sjaGJUe0Kf0rT5DICCRgKQDVxkTkEVJLbUy0UP8vjqUD9bC76hFLyLvifXG+mL9sP7a5LpvujO+T6YroU9uVlLfotzk/gBgUFWRbciuEvtwUoFRe8sdY/dVOscj4EnYVGw6NkPbdH1vkgbCSB0Z9NPRQHNDYOgN1T9lbX+VfuKvUDfsCvUir9LvBlN1bUX8O0fXD/iRl6uwX3l+xP9P27tLTq9C/cPZI8Szu49vzFYCf6tmzvm398w//+6+heffu23x+fdvX1r3liNNXcs9eSZ1pO7rZZPrXtsUp/qQ1EDGCei7HgISCZAOyJiADAx6zA7IOoTGFiM1Y8jv6+H1w7Twu2vRi8gHYkOwYdhwbIQ2uR6G9x+WlZE4nPx/JAAYU5afMq6yKHVidYltMlHAVKKAGXsrHDOJBOYg4LnYAuwWbQv0vVkaBgKCMdgwnRY0QCBEjwl4NzUVQJT9seE3AIGeV+jDof48MMLLuHuMxbhnrLdxcsUgdc09XWfdVfp7olVSlddu5Xdoo5fx+hYv48R2L+ONWC/jzQQv460kL+OXqV7G2w4v4500L+PdDC/jvWwv44NcL+PDAi/jo2Iv41elXsavK7yMj6u8jH/e5WX8ptbL+HSvl3HyNi/jszu9jM8P8O846GX89n4v418e9DK+eMTL+F+PeRn/+kMv4/dPWYw/PGMxvnzWYvzxeYvxp59YjH97yWJ89XOL8X9esRh/Pmox/nLcYvz1hMX4v29ajL/90mL8+7sW4z8+sBj/7yOL8Z8fW4z/+sRi/PdJi/H1KYtx+guLceZ3FuPsHyzG+T9ajAtfWYy6P3sb7r96N/2HdHx5wNe7J1rUAp6DiwNUfi5hv3j+evEPVqE8If75X1ROc5/YUnb+3b23IPhlFz48EHnhV/dEXfj1vTEXPr53tfud9BJ1Lfd4JnWkbt2J2CxpK32ovuhTQUBFAqQDfKZ8tnwH+S58pxGy/qCVBvsaxB+ivb6E9L208AdrkY/CxmLjsQnYRG0T8P4TMtITJmZnJE7Oz06aCgBmAICZlYWpc0gD5tWU2hcQBSwEAosBwFLEuwxbjq3QJtdyfxE2H5uJTdGpwTAdCXTXYwLBenagWcZMEOi465nWQ7BDsUkX/37XcC/j4Hhv2uYZD8/yNx6dF2g8Nj/I+OcV09W13Htgmi/P46TuZX1ltNpYxc0BwAIALADAAgAsAMACACwAwAIALADAAgAsAMACACwAwBsAeAMAbwDgDQC8AYA3APAGAN4AwBsA+AAAHwDgAwB8AIAPAPABAD4AwBcA+AIAXwDgCwB8AYAvAPADAH4AwA8A+AEAPwDgDwD8AYA/APAHAE1Pi2VhjvuVZWF1Ly/rdeaBFcEySKdyfgn7xfPXi3+i8uRv184XT2+cWHdEBH/hNw/eeuHThzdfOPnotgufPbbd/X7WfnUt9+SZ1PnogNV9Yv2PVFv6kL40BAapdEDGBGRgkM92H4n4gXEsYkLDYqEWBsCVxB+uvf5A7e1Ha9FPxqZhM7CZnpaeFj+T8H92TmbiXAAwHwAsLM1PWVJRmLoMACwnDbASBawEAKuIAmKAQAwCXu1h8vdVWKQGwS06GpiiIwFJB/rQrivtZWAxaHep3ScpJdZLrJlAMBdbch0gmKc8/YMz/JTgD1mrjaetHY1/iu5sPLu6q/HrlavUtdw7tKy9cSjSperSRrcvaNXBymsDwAIALADAAgAsAMByGQC8AYA3APAGAN4AgCjnNh8A4AMAfACADwDwAQC+AMAXAPgCAF8A4AcA/ACAHwDwBwD+AMAfAAQAgAAAEAAAAgFAIAAIBABBACAIAAQBgGAAEAwAggFAOwDQDgCEAIAQABACANoDgPYAIBQAhDYdALLC7445vjJH7351xRI1zfdsfE/J+VXILp5fiZ+Q/oM7Ii78+mC0iNv9dvJjF049EV/32ydT6r542l73xTNO94e5D6lr7skzgYH77ZS7pY20VX3UQ2CC6pvPkM+Sz3QfWbHcfWT5fPku8p1awfv76Jy/nYf4+2CDdHg/Vgt/OjYLm4stwBZ62CLC/0UAYAkAWAYAVgCAlQBgFQBYXVVkW1tdYl9PFLCBKGDj3nLHpr0Vzs37Kp2b9v/DNmLrNQxWYhEaApIyTEb0o2vLHUMQfR/66kq/ocW5KUHpaQm+AMBbm6U5YICgaxt9/nmk1XhkToAStwj9+Q09jCejDho/ixtgvJwwyPg4JkVdv7itr/HkyipVR+pKm3snegOAijYCAAsAsFwGAG8A4A0AvAGANwDwAQA+AMAHAPgCAF8A4AsA/ACAHwDwAwD+AMAfAAQAgAAAEAAAAgFAIAAIAgBBACAYALQDAO0AQAgACAEA7QFAewAQCgA6AIAOACAMAHQEAB0BQCcA0BkAdAYAXQBAVwDQFQB0AwDhAKA7AOgBAJq2clLl/jLwd2CBv1qo88S6sLrD0XPqXl2zXI3ek/NL6K68txI/4f0nD2268PkTce53U5+t+92PXHW//3Fu3R+eL6z78oVi968KnlXXco9n7vfSDkld1Ya29RCgL0kHZKaAz3Afjd7hPrJyvVonwHdQKwZlQLCFVgp65P1+esAvTIf9vbX4R2qvP1V7+Xla7EuxCGwFFilG+B/pSk+wZrkSV+VmJsYUZCetBQDrAcBGhLoZAGyrLrFtBwCxu8sccXjveAQdj7DjELjYDmw7tkWDYA0WxfMIYLEQ4c9G+FMQ/hj6GlpekNq3KDclPDszMcwJuBB9AOaP+TYXCIDAVizxG/dFwBLef2KNNT5ZmWn8dEd/43DKMIT+hXE8e6Lxeu4U4zfrK9T10fSx3P+VqvPj9eHGZ9b7jM+t+6WPK3xeLyy0FQFguQwA3gDAWwPABwD4AABfAOALAHwBgB8A8AMA/gAgAAAEAIBAABAIAIIAQDAACAYA7QBACAAIAQDtAUAoAOgAAMIAQBgA6AgAOgGAzgCgCwDoCgC6AYBwANAdAPQAAD0BQC8A0BsA9AEAfQFAPwDQHwAMBACDAMBgADAEAAwFAMObBgCZ9pN1+rK895FV7ZX3fy6+l0zb1R3buNF9fGuSGsgj7FeeX4QsXh9vLyJ3f5D+at2fXtpZ99XLu+u++vle98dFr6hrufflT0rdH7hekLoqGlAQIBKgL+nTfXxDgfu1dWlqilDWCchiIb6DWjbMd2qpBUIe032BerS/i875B2rPP16H+7OxW7TwRfRRWAy2GlsjRvi/lvx/PQDYkJuZtAkAbAUAOwBAHGJNQLRJ1cW2lF2l9lTSABuCtiFsGwJPJQpIRuxJWIKGwTaJDADEOkARDTBW0G4RacScyiLbtLKC1HGIf1heVlL/TFdiD4cjvjNiD8VCsCANgwYQNEc04MRy1LWE/eLFn1rRQXn9T1btVCI/kT/NeKt8nvFO9WLjvZplyuRa7skzqSORwWcrf6jaSh8N6cAh61RsRCtHABYPAHgDAG8NAB8A4AMAfAGAHwDwAwD+AMAfAAQAgEAAEAQAggBAMABoBwBCAEB7ABAKADoAgDAA0BEAdAIAnQFAFwDQFQB0AwDdAUAPANATAPQCAH0AQF8A0A8ADAAAAwHAYAAwBAAMAwDDAcBIADAKAIwBAOMAwHgAMBEATAYAUwDANADQtEVUalefjPzL2v7H1nRQq/aeT+6rvP8xvD/het0b8bnut5KrVE6PN9fiz6/7008r3R9mvOn+85G73H85dp/7r689oEyuuaeA8GHGEVVXICCRgPTx0QGr8frql1UqcKw+ClCLhfhstWxY9g7wneS7taD39/cI/bvrAb9hOuyfqsW/UHv8lVr067AN2CZssxgA2AIAtmVlJO4AAPGkAIkAIBkA2ACAHeE6EXDarhK7C0/uIg1wIW4XIk8HAk5Eb8dSBAT8PYH724HEFureSpuYqmJbJJHEktL81HmE/TPys5Mn4P1HEP4PsNvjeyH0bpiAIMwDBH7NBQEt1BKsRoXy4s1F0McyxhufrntICf6j22OMj+/ZaPzmvq3K5FruybM3S2YbJ6NfUm2krfQhYwL0+S2kABYPAHhrAPgAAB8A4AsA/ACAHwDwBwABACAQAAQBgGAA0A4AhACA9gAgFAB0AABhAKATAOgMALoAgG4AIBwAdAcAPQFALwDQBwD0AwD9AcBAADAYAAwBAMMAwAgAMAoAjAEA4wDABAAwCQBMAQDTAMAMADATAMwGAHMBwAIAsBAALAYAywDAcgBgvXnxV43yUlt6VfhvbadG/mXprqzwk0E6meev9/7L3L9M3ud+x35f3b88ZVPhPeKv+9+H9yux/+31x93//sbT7v9481llci33eCZ1VF1pQ1v3LxMPud+Ku1/NDtC3WifAZ6kVg3y2mhHgu6g0QLYSN/N5Ah65v6f3761H+0frnH+m9vwR2uuv0cLfgm3HYrE4MQCQAAASAUAyKUAqALADgLSSvBQXAMioLEzNBADZiDmHNCAHAOQAgGyEnoXgMxB+mkCAa4kMUnieSL04Qv5tRA+SRqwFJisR/7KC7OT5QOYHeP9JMiths8cNTk6N7YfQBQThGgQdsGCdFvg0SyRQP9p/B/aQCunFq4uw39+zQon9s0eSjN8+6TK+eCZXmVzLPXkmdaSutJG2RBTGocg46bOVAWDxAIC3BoAPAPAFAL4AwA8A+AOAAAAQCACCAEAwAGgHANoDgFAA0AEAdAQAnQBAFwDQFQCEA4AeAKAnAOgNAPoCgP4AYCAAGAwAhgKA4QBgJAAYDQDGAYAJAGASAJgKAKYDgB8AgNkAYB4AWAAAFgGApQAgAgBEAoAoABADANYCgFsBwCYAsBUA7AAA8U0a/Ver/u5ZFCA799TGHgn/ZeT/SN4Ytcjn7T3z1VSfeG7CeEL6Z9wfZv3M/auc1+vFf+KQ++9vveD+z3cOu//r3WPK5FruyTOBgEQC7zuPud+zvahSAelLpghlQFAWC8mKQZkRkDRANhDxXdRWYlkd2MyzAR4j/w25f7j2/sN16D9d5/xLtecX8W/EtmnRJ2LJWIoYALABADsAcAKAdACQAQAyAUA2IXsuAs7Di+dXl9gKEHYBaUA+AMhD7LmIPouQ38WfaQAhDfE7qGND/MmIP562kkpsRvzrCnKSV+VmJUXwObe40hNmkf9PttnixgKAYYh8ECYg6Il11dFAOw2Bq0YCxilr8HWJSE3n4bkl9H8q6lnj6ZjDyruLwD9/3G787rki448v7Tb+7fAdyuRa7skzqSN1JR14Onqf6kP6os/rXH8g0499sM7X+32vAQBvDQAfAOALAPwAgD8ACAAAgQAgCAAEA4AQANAeAHQAAGEAoBMA6AwAugKAcADQAwD0AgB9AEA/ADAAAAwGAEMBwHAAMAoAjAEA4wHAJAAwBQBMBwAzAcAcADAfACwEAEsAQAQAiAQAUQBgNQBYBwA2AoAtAGAHAIgHAMkAwA4A0gBAJgDIBQCFAKC0aSv/5OAOlf9Ht1c7+GTqT9bxH60P/2VBj5rT//ThzWq0X3n/l3aqsF+8vAgd0Rtff/COcfqjj5RxrUCgIEAdSQdkTEDayuyATBHSp1osJGmADAbymWpKkO8g30WNA/Ddmnu34GXhfye9wm+gnuefrEf7F+qcf7X2/CL+eC18G+bAnGIAIB0AuLJciZk5mYnZACCnMCc5tzgvJb8sP6UAERci5sLqYlsR+XwRAChE6AUKAhUSCTgz+TODsF9ShHTE76S+g3YphP2J9BOL+LeQ96/PzkiMznAlLif8X0j+PzvVFjc1OSV2PAIfhQkIBmC9dVoQpiMBv2tAAC9m7YeNxCZjc7GLG33UIh+Z05dpPRnZF08u+b2E+OLlRegi+r/84nHjb28/p0yu5Z48kzpSV9pIW+lD+pI+D4y4/LusxSKxW2SDEDa+BSIAAYAPAPAFAH4AwB8ABACAQAAQDADaAYD2ACAUAIQBgE4AoAsA6AYAugOAngCgDwDoBwAGAIDBAGAYABgBAEYDgHEAYCIAmAIApgOAmQBgDgBYAAAWAYBlAGAFAIgCAKsBwDoAsBEAbAUAsQAgEQDYAEAaAMgEALkAoAgAlAGAnQCgFgDcBgDuAgD3AoCHmjoAqKb/ZA+/2sYrC39U/l80Xi3pfe+2xWrk/+Sj29T0nozwf/XybuX9JdTH2yvxn/n1SePcx79XJtcCAYkEpI6KAl7erdrSh1onIDMCsmKQz1B7B+rHAfrId1DnCci2YVkU1IwDgR75f8Bl4f8QnftP01N9S3Xov06H/XFa/HYsDcvAMsUAQBYAyAYAOQAgD6EWFOUkFxIBFJcVpJQg5FJSgFIigNKaEnsJHr4IABReBEC5M5PrDMCQQZqQQV0XbdLL8lMdiN8GTJLoMzYnM2kLof96V1pCNN5/OeH/wpTUuDkAYDrinoSNxYZjAzUEuup0IEgPDN7QzxHxxWBbsGTjs8gc46S12vg06h41wi+DfOLZJdQXby+C//uHrxr//cl7yuRa7skzqSN1pY20lSnCk9aDxmfW3fRdJIuC1Gecsm5rhRTA+zIA+AOAAAAQCACCAUAIAGgPADoAgI4AoDMA6AYAugOAngCgDwDoDwAGAoAhAGA4ABgFAMYBgIkAYAoAmAEAZgGAeQBgIQBYCgBWAIAoALAaAKwHAJsAwHYAEA8AUgCAAwBkAIBcAFAEAMoBQDUA2AMA7gAA9wCABwHAYwDgKQDwHAB4EQAcBgCvNQEAEyxyhJda+vvo6lC1+EcGAH+eOUzN/b9ZPUuN/stins8e264G/758oViF9DLYJ/m+eH/x+iL885/8XZlcc09FAVKHutJGtZXBQPqSPtVsAJ+h1gTwmWogUBYFyaEisjSY79acuwQvy/9D9dRfXz34N14v8lmgc/8Y7f2367DfpsUvws/GcsQAQC4heV6WKyEfABQVZCeVFOWmlJbkp5SXF6ZWVBbZKhB1JeIuR/zlCL0Eb19ICpC3BwAg/szdZY4Mnon4MysLbRmkDi4Ako74HUQUqYg/idA/FtAIjNbj/aPx/ssBwCKEPRebiU3BxmkIDNDpQGc9MBhws4OCavRfFvzIIh8ZyDu5+mkV0stgn+T74unF64vwz//rV8rkWu7JM6kjdaWNTBOejHpS9SV96tmAVhgDsHgAwAcA+AIAPwAQAAACAUAwAAgBAKEAIAwAdAIAXQFAOADoCQD6AID+AGAQABgKAEYAgNEAYDwAmAwApgGAmQBgLgC4BQAsBQArAMAqALAGAGwAAFsBQBwASAYADgCQAQByAUAxAKgAADUAYD8AOAAA7gcAjwKAJwHAswDgpwDgFQDwOgB4GwB8BAA+BQBfAIA/NhsA5DAP2c8vW3plV59s7JG1/bK8V1b4ySIfmeeXqb6bAYD7o5wX3B9kPu5+L/0u99uOqro3U7PrTiQm1B2PXVt3ZMviCz/fMPXCT9cOO/9cVHgLAyBIb+P1zP8n6ME/z/B/kx7wS9Zhf4YWfy6WJ5aOIcwCwvNiPHUpoi0vzkuuxPvvxJPvJP/fifffSfi/E/FXIP4yRF+I+GUcIBvxZ9bUh/4uQv+M8oLUTOAh4wiu/OzkdPJ+B32nZrgSEgn9dzgd8Zvt9rj1ACCa/H8Fol6MzcdmaQiM1elAPz0wGHazUcAVASAibgoApA8TAG0FAN+7FKBhADDIYwCwv577n+gBgEg9+LdZh/8pOufP1J5fxJ8vRgRQSPhfjPcvw1tXINyq0ryUarz/Lrz/Lrx6DQLfhfira8vsVYi/DOEXk/vncZ2lQn8AQL10gOEqzU9xFeemuMj7XQDFhfidhP52Qn/5Dgl4/x02W9wmvP9awv9ViFogsERDYKZOB0bpgcFeHlGAGhC8YQHJxh5Z/CMr+iR8/9G6XU1KAZ6Odqi+pE/6buVZADMF+D4PAjY3AET8eP+irIyEUsRaUZCTVFWSl1xNCL+7sjB1N6Ku3VVq27271F6D+Hch+Cry/vJ9FY6ifRXOHBX+lztcpAdpRApO2jkI/dOIItLzspPSCf3TgUsaKQbRR0Iq4k8i94/D+2/F+29E0GuS/gGBxTodmKZTAYkC+uoBwdAbTQOMQ9YOWD85ANQ4FLmAP9cbT61yNssg4CFrjPHDyB/w56CWfs+AOQjYzNOAaunvlz8pVSH9DUwDqja0/TanAZszBUD8BUr8roSS3HrvX1mcm7wTD76rojCltqo4dQ+hfy3evxbx70bsuxB/JeIv21/pLNhX6czZp0b/7U4iADvhfyppg40Iwkbo78jNTHLK1CKf4ST0tzud8al2e3wy4o/H++8AAJsR860aAlHYMmyBjgImYiOw/lh3jzTgptYFXDINKEt/ZUrvZqYBpe0NTgO2EADMacAbXQikBgJlY8+7qc+633e87P4g7fiNLARyv+98yf2u/Rn32ykP6wHAVl8I1FyDgOT9OXjl/ExXQhEhunj/8sKcpMoSCf0LUmqqilJrEf8exL+HEL+WfH834t+1r9JRifhLbqty5t1W6cwiDUirLXfYiQBSSBeSgEcS3j+Z/lIk7yf0t2nx2/D+qXj/5BQAgPh3IOQtmEQB67BoHQXIoOBsbLJOA2RGoAfWUU8J+t4UAGQhkOTsErrLYp6Tq56/qYVAn0YdNE5ad6m+zIVA3/5CoOtdCiz7+dWW3l8mPHT5UmAVCTSyFFivArxkKbD7zfj96jyBVl4K3FzTgHrqLw+RFuZmJZUS+pfh/SvK8lOqCf136dC/FvHvwfPXIv6a/ZWOnfurnOWIv+j2nWnZ/JkODGw8TwYU8UAjVvYP0FccoX8c4k8EMknyuYg/2Y748f6JeP94RCwA2Io1RAExWKROA+bowcDRehxAZgM6eQDgxgcCZe+/LN/9zHqncXLlIxeXAouwr2cpsNT1XAr8uTXbOPXNzUbmUuBWXgp8rc1AcoyXnOQjB4AYJ9YcvvJmINdhz81A9eaxGeg92ytX2gzkfn3Nk+7jm+3qqLBW3AzU1IVAeH87wiQ3T8jOyUzMJ/QvJmwvK8lPqSgvTKki9N+F96+pIezHu4vnr8HzVyP+yturnCWIP++Onc4MzA4EknkeR93tVcW2rfSxJT8neQtg2QpgtuP9Y52O+DjEH69DfygQG4uIt7cmAPS6gOOXbAYSQT8dc/91bQZ6Muq5+lWE/9gMRH+bsKhvYTuwuRnoWtuB1UlAL6SoKMD92q0ZV9sOrNb2v5/23CXbgT/KeeGS7cDvpDzf2HbguqPrNstnqZOBWmE7cFOXAuP9kxGnTM1lEKrLqr+CkrzkEvL3ssqi1MqdJbYqPHo1uX014q7eV+/5K2/f6SxF9IV3Vqdl37UrzcGfSdyL5fmW3WWOjUQN6wHAeoCyjtz/VsS/gdB/s90RvxXxb0P82xD/NgS8TYu/VVIARJrScILPxe3AImTZ69+wHVhE3rAdWKxhO7A8a9gOfMj6sGp72XZgeRlISx4Lbm4Hvh4IeBwIos7tP2Jd6T4StcF9NCausQNB6scE7I9dciDIB5mPex4IIpt/VN1GDgSpezXa6n5l5QL3Kyumqum/FjwQpKmbgVx4ZXL/ZLy/LNLJxPvnEroXVhSmluDFy3aV2GSxT6WM+Kucv8pRgdDLEH8Ros9F/OkHdqUlYzvurHZuJgqQrb8xACAaAKwCKlGZ6YmrEH80of9amy1uPXn/Bj3qv0l7/c1a/C02CIgo12Pbv3FfIHAoMh5BZ148EORz65cXDwR5MuqJiweCfGb9ycUDQQ5Z75IdhY183lhsYCsBwDwQ5BuzAToKcB9Zfsv1HAlWPyaQeOc3jgR7L/2uy48Ec7+x/aBa9Xc9R4K9GjFCef8WOhKsqduBCf83Z7kSY3OzEpPJ1x14/4zygpRcvH8BoX9xjVrpZy/dK6P9VY5Swv7iO6qdBVr8rgM1aal316TH3l2TtonrNbdXO1dSdwVtIwDJUgCwlAhjKeKPQPyRiH8V4l+thb5Oi/5Wfd3s04CIcAm2spHpwTWXHgmGuD+zPnLxSLBD1gMXjwT7xLpV1fE8EuyQtfQanz+glQBgHgl26Q9q+Uj30YhJAGDmtQ4FVYd5vBFb5H4jrvobh4K+7ai60qGgxusxL13PoaDuV5f1N45FhBvHl4e2VFjYlANBEOdawv9NCHUH3l9G7u14/wy15bfUlldbZi9A0IV4/wK8ewGePw/xZynPL+LfnR5/cHf6poO16TH37E5fwbOl+yqdCwHAAvqal5uVNDc9PWGu3Ra3QJb6Iv5lOr+P0qF+jLZofa/ZFgIhvinYnGusD1h6cWBQZgc+t955yaGgh6w7LzkU9PPIZZ6HgjYcMNJaxTwU9Hp+SPL23xs4FlwNDL6+Lf2Kx4K/mZp9pWPB5fQfteDnBo4Fb6m3BzfhSLBlACASAKwm/N9YnJu8ndw/Ee+fioDTZFXfnnJ7FuKXUf5sQv8sBJ6B+J14/JR7RPy16ZvvrXWtuW+Pa8W9temLgMJc6s7cVWqfDgCmkVpMkc9NTY2boZf3ztfefZkWe6S2Ffpek5cCI/pB2DUHXBDvrCu03X3JseBySrDnseBXyO/lOHEsoQ0D4H/+seD6RRvd5dz9S1YGXuPFIOrlHsc2bL/qi0FOJCZc7cUg7mOr7eoQ0Jt4MUgLjgXc0KGgAGARIl1RkJ0UXZyXvJ7wf2tVcWoc3j+J0N+G93cQ+qch/jTE70T8NkSehPhjlfj3uNbcv9cV+cBe10JsFvemkSJMJHUYDwDG5mQmjXY448ck14fxU7RXn6vz+0Va8Iv19YKmbAZCnJ2udN7/VcR/tZd7lF8u7ivUGXWF/rZ4meXbKY29YedarwZTr/c6sm7N1V4NJht7Gns1mPtI1NabfTVYC84IXPex4ABgFgBYQP6/tCQvZaWc2EP4v7Gm1L4N7x+H90/Aoych6iTEn4j44xH/doS+SYvf+sA+1+IH92XMxqYSCYyn3ijgMYxoYkh2ZuJguyN+iBbyWB3ST9Min62n+ebo65n62Q1vB0aUQdf9+3LI2v0q4s+/Qt24K9Trc7XxBFON3w4A/BtfG3Dll4PKPH3dK6sWNfZyUNnV19jLQd1HrGvaystBb+bFIK70hIkAYBoAmFOSn7Kwoig1gvA/ivB/Ld7/Vrz/Zrz/1jt3pW1F/Fvvrs/3b0X8q7X4lzy4P2PuQ/szpmPj+ftIADF4f6WjPzDpCwD62O1xfbUXH6bz+XF6ZH+y9vRT9PVE/eymDwS5DvGHNDJmkHGF+huuUC+0kf4LTUW2wXL568HVC0MI1+sOW2c09npw2dLb2OvB5ex/6Uu9BagNvB78Rl8N5kqLH56dkTgGAEwiZJ9B/j93V4ltER48Au9vvW2ncxXefzVeffXdNemrZbAP8a+8b69rufb88xD+DGwSNgobDBj60KZHVbEtHLh0TbXFddMhfD89mDdMT+uN0gt8RuvrEfrZTR0J1mRHcsqaegVBR90EZGaZimuLEJAxARkYlFeGyRTh0eW3qMVCErrLkl1JDWQDkewilK3EhPayn19dyz3Z2COhvtSVNtJWXj5yNGKecTRiuhrwa6Wc/wYigUZfDprujO+b5UoYmJ+dNFxy9qqi1Ek1pbYZeyocc/D+C+7Y6VyE+JfcXZO2DPEvRfxLEPgixL8Azz9be34R/xhsKNYXCwcWneR14kQA7ZNTVejeWQ/i9dLTef11eD9I20B9r29LHwp6FfHHXkXMi28y0phkKq4tQmDnaC95V5/7SES4LNBRq/Rk2bDsHZANRA9HhaiBPNnDL4eKyGEeci335JnUkbX9srxX2kofeH3jteXjW+rFH02EwDVfD56RntA9LzupNwAYUFWcOqymzD4G7z+B0H8Kof8MxD+TsH424p+N+Gch/h8g/mkIfbKE/drzi/j7YT2wTlg7oofArIzEAJ23h2hP3lmH9N31qr6e2nroey1+LPhVALCpOb057UaZamvb4wahasWgpAWyd0DCdxG0bNsVIMgqQhkvEJPVfCJ4eSZ1pK60kXCfPmSRj7z8sy3+Oz1SAh+9WChQRwQNMAhNT4vvQKjeuSQvOXxnsa0X4X9/vP/gO6vThpP3j0b84xD/+Af2YvsyJiDucdhYLfzhEvZrzy/i74y1xwIwH4cj3lsP2nmCIFQLvKNe199JX4e15ItBrgGA1VcR8sSb7vOQdSDW01Rb2xN/wCURATm72kUoW4llsFAOFZE04fbZ2riWe/JMtvRSV7W5zOO39Nt/myEaaACBr4ZBgAZCEFFAcFFucggA6Li3wtGF0L874u99b216P/L9gYh/MPn+UO3pxYZgg7TX7yVhv/b8Iv5AzBez6Bd+WrSIfXUo3wCD4MssqCVeDXYd4o9sRMRNWptO+46m4r4r6UHVKLWMWPJ4JfCaCdq4lnvy7Br7+T3XIbRREHjCoAEICgq5WUl+hP8BhP7BeP329+5J70i430WLu6cWem9tvfS9cO31wyTs155fid/zsy8DgbfO530vM5/mfjnodQJgUSMCbvL/J30Emer6/kQX3b8r39UDCA1QsIhwJXTH/LEgLATrgHXUQve0jvpZiK7rr9s2OgvS8BpwDyhYPO+1+v/ZKevsRsTbxfytNsuNAKDTd/3fgIDFvLUn99chfbD28J4WrJ/567rS5rv1/3XKOvUa3jvY/K02y41CIORai5O+QyBoiAh8tflpa/i7j67z3fy/OmUda/7GmsUs1wZBAww8zeu7KnwtfnmF2FDzf9gsZvk+RmqnrOHmT8EsZvn+AqCD+VMwi1m+n+IPNH8KZjGLWcxiFrOYxSxmMYtZzGIWs5jFLG2j/H8YZuGw3/Y/VQAAAABJRU5ErkJggg==';</script>
+<script id="effects">
+'use strict';
+/* WIP12 display-only effects. Frozen public events are converted to particles
+ * with a visual-only seed. No result, damage, collision or unit lookup occurs. */
+const TacticalEffects=(()=>{
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  function rng(seed){let n=seed>>>0;return()=>{n+=0x6d2b79f5;let t=n;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+  function create({source=typeof TACTICAL_EFFECT_ATLAS!=='undefined'?TACTICAL_EFFECT_ATLAS:'',particleLimit=384,seenLimit=1024}={}){
+    if(!Number.isInteger(particleLimit)||particleLimit<32)throw Error('effect particle limit');
+    const image=typeof Image!=='undefined'?new Image():null,particles=[],seen=new Set(),seenQueue=[],flightLinks=new Map(),flightLinkQueue=[];let ready=false,error=false,maxParticles=0,dropped=0,droppedCore=0,droppedAux=0,particleNumber=0,linkedFlights=0,unlinkedImpacts=0,lastFlightErrorM=null;
+    if(image){image.onload=()=>{ready=image.naturalWidth===256&&image.naturalHeight===64;error=!ready;};image.onerror=()=>{error=true;};image.src=source;}
+    const cell={muzzle:0,smoke:1,spark:2,tracer:3};
+    function dropAt(index,core=false){particles.splice(index,1);dropped++;if(core)droppedCore++;else droppedAux++;}
+    function push(p){
+      if(particles.length>=particleLimit){
+        if(p.aux){dropped++;droppedAux++;return false;}
+        const auxiliary=particles.findIndex(v=>v.aux);
+        if(auxiliary>=0)dropAt(auxiliary);else dropAt(0,true);
+      }
+      const particle={...p,visualIndex:particleNumber++};particles.push(particle);maxParticles=Math.max(maxParticles,particles.length);return particle;
+    }
+    function remember(id){seen.add(id);seenQueue.push(id);if(seenQueue.length>seenLimit)seen.delete(seenQueue.shift());}
+    function rememberFlight(id,flight){flightLinks.set(id,flight);flightLinkQueue.push(id);while(flightLinkQueue.length>seenLimit)flightLinks.delete(flightLinkQueue.shift());}
+    function pruneFlightLinks(now){for(const [id,flight] of flightLinks)if(flight.expiresAt<now)flightLinks.delete(id);}
+    function ingest(event){
+      if(!event||seen.has(event.id))return;remember(event.id);const random=rng(event.visualSeed),jitter=()=>random()*2-1;
+      if(event.kind==='fire'){
+        push({kind:'muzzle',x:event.origin.x,y:event.origin.y,start:event.time,duration:.16,size:25,angle:event.heading,aux:false,eventId:event.id});
+        const travelDuration=Math.max(.05,event.duration),flight={kind:'tracer',x:event.origin.x,y:event.origin.y,start:event.time,duration:travelDuration+.12,travelDuration,size:28,angle:event.heading,distance:event.distanceM,aux:false,eventId:event.id,flight:true,expiresAt:event.expiresAt};
+        rememberFlight(event.id,flight);push(flight);
+        for(let i=0;i<3;i++)push({kind:'smoke',x:event.origin.x+jitter()*1.5,y:event.origin.y+jitter()*1.5,start:event.time+.03*i,duration:.65+random()*.3,size:15+random()*12,angle:random()*Math.PI*2,driftX:jitter()*3,driftY:jitter()*3,aux:true});
+      }else if(event.kind==='impact'){
+        let flight=particles.find(p=>p.kind==='tracer'&&p.flight&&p.eventId===event.flightEffectId);
+        if(!flight&&flightLinks.has(event.flightEffectId))flight=push(flightLinks.get(event.flightEffectId));
+        if(flight){
+          flight.endX=event.position.x;flight.endY=event.position.y;flight.travelDuration=Math.max(.05,event.time-flight.start);flight.duration=flight.travelDuration+.12;flight.resolved=true;
+          lastFlightErrorM=Math.hypot(flight.endX-event.position.x,flight.endY-event.position.y);linkedFlights++;flightLinks.delete(event.flightEffectId);
+        }else if(event.flightEffectId)unlinkedImpacts++;
+        const ricochet=event.effectClass==='ricochet',penetration=event.effectClass==='penetration';
+        push({kind:'spark',x:event.position.x,y:event.position.y,start:event.time,duration:ricochet?.34:.26,size:ricochet?29:penetration?25:22,angle:random()*Math.PI*2,aux:false});
+        if(ricochet)push({kind:'tracer',x:event.position.x,y:event.position.y,start:event.time,duration:.34,size:23,angle:event.outgoingHeading,distance:85+random()*45,aux:false,ricochet:true});
+        const count=ricochet?5:penetration?3:7;
+        for(let i=0;i<count;i++)push({kind:i%2?'spark':'smoke',x:event.position.x+jitter()*2,y:event.position.y+jitter()*2,start:event.time+random()*.08,duration:.45+random()*.75,size:10+random()*18,angle:random()*Math.PI*2,driftX:jitter()*7,driftY:jitter()*7,aux:true});
+      }
+    }
+    function sync(events,now=null){
+      const time=Number.isFinite(now)?now:events.reduce((latest,event)=>Math.max(latest,Number(event?.time)||0),0);
+      for(const event of events)ingest(event);advance(time);pruneFlightLinks(time);
+    }
+    function advance(now){for(let i=particles.length-1;i>=0;i--)if(now-particles[i].start>particles[i].duration)particles.splice(i,1);}
+    function sprite(ctx,p,x,y,size,alpha,angle=0){
+      ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y);ctx.rotate(angle);
+      if(ready)ctx.drawImage(image,cell[p.kind]*64,0,64,64,-size/2,-size/2,size,size);
+      else{ctx.fillStyle=p.kind==='smoke'?'#938a76':p.kind==='tracer'?'#fff0a4':'#ffd36b';ctx.beginPath();ctx.arc(0,0,Math.max(1,size/5),0,Math.PI*2);ctx.fill();}
+      ctx.restore();
+    }
+    function draw(ctx,now,toScreen,zoom,{reducedMotion=false,quality=1}={}){
+      advance(now);
+      const q=clamp(quality,.25,1),scale=clamp(Math.sqrt(Math.max(.08,zoom)),.65,1.6);
+      for(const p of particles){
+        if(reducedMotion&&p.aux)continue;if(p.aux&&q<1&&(p.visualIndex%4)/4>=q)continue;
+        const age=now-p.start;if(age<0||age>p.duration)continue;const t=age/p.duration,travelDuration=p.travelDuration||p.duration,travel=clamp(age/travelDuration,0,1),alpha=p.kind==='tracer'?(p.flight?(age<=travelDuration?Math.sin(Math.PI*.5*travel):Math.max(0,1-(age-travelDuration)/Math.max(1e-9,p.duration-travelDuration))):Math.sin(Math.PI*clamp(t,0,1))):Math.max(0,1-t);
+        if(p.kind==='tracer'){
+          const vx=Number.isFinite(p.endX)?p.endX-p.x:Math.cos(p.angle)*p.distance,vy=Number.isFinite(p.endY)?p.endY-p.y:Math.sin(p.angle)*p.distance,total=Math.hypot(vx,vy),ux=total?vx/total:Math.cos(p.angle),uy=total?vy/total:Math.sin(p.angle),distance=total*travel,head={x:p.x+ux*distance,y:p.y+uy*distance},tailDistance=Math.max(0,distance-clamp(18/Math.max(.01,zoom),8,90)),tail={x:p.x+ux*tailDistance,y:p.y+uy*tailDistance},a=toScreen(tail.x,tail.y),b=toScreen(head.x,head.y);
+          ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=p.ricochet?'#ffca73':'#fff1b0';ctx.lineWidth=clamp(2.4*scale,1.2,4);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.restore();
+          sprite(ctx,p,b.x,b.y,clamp(p.size*scale,12,42),alpha,p.angle);
+        }else{
+          const w={x:p.x+(p.driftX||0)*age,y:p.y+(p.driftY||0)*age},s=toScreen(w.x,w.y),growth=p.kind==='smoke'?1+t*.8:1+t*.25;
+          sprite(ctx,p,s.x,s.y,clamp(p.size*scale*growth,8,54),alpha,p.angle);
+        }
+      }
+    }
+    function reset(){particles.length=0;seen.clear();seenQueue.length=0;flightLinks.clear();flightLinkQueue.length=0;maxParticles=0;dropped=0;droppedCore=0;droppedAux=0;particleNumber=0;linkedFlights=0;unlinkedImpacts=0;lastFlightErrorM=null;}
+    return Object.freeze({sync,advance,draw,reset,stats:()=>({ready,error,particles:particles.length,coreParticles:particles.filter(p=>!p.aux).length,auxParticles:particles.filter(p=>p.aux).length,byKind:particles.reduce((counts,p)=>(counts[p.kind]=(counts[p.kind]||0)+1,counts),{}),particleLimit,seen:seen.size,seenLimit,pendingFlightLinks:flightLinks.size,maxParticles,dropped,droppedCore,droppedAux,linkedFlights,unlinkedImpacts,lastFlightErrorM})});
+  }
+  return Object.freeze({create});
+})();
+if(typeof module!=='undefined')module.exports=TacticalEffects;
+
+</script>
 <script id="app-code">
 (() => {
   const C=TacticalCore,$=id=>document.getElementById(id),canvas=$('map'),ctx=canvas.getContext('2d'),wrap=$('mapWrap');
@@ -3064,6 +3180,8 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   const lookView=channel=>{const u=selectedUnit();return u?C.observationView(sim,u,channel||$('lookChannel').value||'commander'):{mode:'idle',turret:0,gaze:0,direction:null,remaining:null,point:null};};
   let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA,TERRAIN_DATA);
+  const effectRenderer=TacticalEffects.create(),reducedMotionMedia=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
+  let effectsEnabled=true,effectQuality=1,reducedMotionOverride=null;
   let visibility=null,visibilityPath=null;
   const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
@@ -3452,6 +3570,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     setGuardPopup(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     sim=C.createScenario();
+    effectRenderer.reset();
     selected='A11';
     targetId=null;
     trails.length=0;
@@ -3620,7 +3739,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
       const b=fc.breakdown,rects=b?.rects||[],w=rects.length?Math.max(...rects.map(r=>r.x2))-Math.min(...rects.map(r=>r.x1)):0,h=rects.length?Math.max(...rects.map(r=>r.z2))-Math.min(...rects.map(r=>r.z1)):0;
       ui.setText($('fireDetails'),target.identified&&target.current&&b?'예상 명중 '+Math.round(fc.hitChance*100)+'% (발사 시) · 오차 '+Math.max(b.sigma.x,b.sigma.z).toFixed(2)+'밀 · 표적 '+w.toFixed(1)+'×'+h.toFixed(1)+'m · 명중 시: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '):'');
       const lastShot=target.identified&&target.current&&fc.lastShot?.targetKey===target.key?fc.lastShot:null,impactKind={ground:'지면',building:'건물','out-of-map':'지도 밖','max-distance':'최대 거리'},missText=lastShot?.impact?(lastShot.impact.beyond>=0?'표적 너머 ':'표적 앞 ')+Math.round(Math.abs(lastShot.impact.beyond))+'m '+(impactKind[lastShot.impact.kind]||lastShot.impact.kind):'탄착점 없음';
-      const hitDamage=lastShot?.combat,lastDamage=hitDamage?(hitDamage.penetrated?'관통 · 피해 '+Math.round(hitDamage.damage)+(hitDamage.destroyed?' · 격파':' · HP '+Math.round(hitDamage.hpAfter)):'비관통 · 피해 0'):'';
+      const hitDamage=lastShot?.combat,lastDamage=hitDamage?(hitDamage.ricochet?'도탄 · 피해 0':hitDamage.penetrated?'관통 · 피해 '+Math.round(hitDamage.damage)+(hitDamage.destroyed?' · 격파':' · HP '+Math.round(hitDamage.hpAfter)):'비관통 · 피해 0'):'';
       ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.result==='unobserved'?'결과 미확인':lastShot.result==='hit'?'명중 · '+zoneNames[lastShot.zone]+(lastShot.side?'('+({right:'우',left:'좌'})[lastShot.side]+')':'')+(lastDamage?' · '+lastDamage:''):'빗나감 · '+missText):'');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
       for(const part of ['hull','turret']){
@@ -3685,21 +3804,8 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
     ctx.restore();
   }
   function drawShots(){
-    const events=C.fireEvents(sim,'blue',sim.time-7),done=new Set(events.filter(e=>e.type==='impact').map(e=>e.id)),fired=new Map(events.filter(e=>e.type==='fired').map(e=>[e.id,e]));
-    for(const shot of events){
-      const age=sim.time-shot.time;if(age<0)continue;
-      if(shot.type==='fired'&&!done.has(shot.id)){
-        const a=toScreen(shot.origin.x,shot.origin.y),shooter=sim.units.find(u=>u.id===shot.shooterId),fire=shooter?C.profileOf(shooter).fireControl:null,distance=fire?shot.tof*fire.muzzleVelocity*fire.velocityRetention:0,phase=C.clamp(age/shot.tof,0,1),worldX=shot.origin.x+Math.cos(shot.muzzleHeading)*distance*phase,worldY=shot.origin.y+Math.sin(shot.muzzleHeading)*distance*phase,{x,y}=toScreen(worldX,worldY);
-        ctx.save();ctx.strokeStyle='#ffe3a0';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(x,y);ctx.stroke();
-        if(age<.18){ctx.fillStyle='#fff2bb';ctx.beginPath();ctx.arc(a.x,a.y,Math.max(2,7*(1-age/.18)),0,Math.PI*2);ctx.fill();}
-        ctx.fillStyle='#fff7db';ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fill();ctx.restore();
-      }else if(shot.type==='impact'&&shot.impact&&age<=2){
-        const start=fired.get(shot.id),a=toScreen(shot.impact.x,shot.impact.y),fade=1-age/2,hit=shot.impact.kind==='hit';
-        ctx.save();ctx.globalAlpha=fade;if(start){const origin=toScreen(start.origin.x,start.origin.y);ctx.strokeStyle=hit?'#ffe8a9':'#d5b282';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(origin.x,origin.y);ctx.lineTo(a.x,a.y);ctx.stroke();}
-        ctx.fillStyle=hit?'#fff0ba':'#c3ab80';ctx.beginPath();ctx.arc(a.x,a.y,(hit?7:10)*(1+age*.5),0,Math.PI*2);ctx.fill();
-        if(shot.result!=='unobserved'){ctx.fillStyle='#ffdda0';ctx.font='600 11px system-ui';ctx.fillText(shot.result==='hit'?'명중 · '+zoneNames[shot.zone]:'빗나감',a.x,a.y-18);}ctx.restore();
-      }
-    }
+    effectRenderer.sync(C.effectEvents(sim,sim.time-4),sim.time);
+    if(effectsEnabled)effectRenderer.draw(ctx,sim.time,toScreen,camera.zoom,{quality:effectQuality,reducedMotion:reducedMotionOverride??!!reducedMotionMedia?.matches});else effectRenderer.advance(sim.time);
   }
   function drawRoute(u){
     if(!u.path.length)return;
@@ -3860,8 +3966,8 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP11E',core:C,snapshot:()=>JSON.parse(JSON.stringify({
-      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue')
+    version:'0.4-WIP12',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
       setReverse(reverse);
@@ -3870,7 +3976,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
       }
       ,reverse,sim.units)
     }
-    ,select,fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen,rendererStats:()=>terrainRenderer.stats(),mapView:(x,y,zoom)=>{if([x,y,zoom].every(Number.isFinite)){camera.x=x;camera.y=y;camera.zoom=C.clamp(zoom,.1,32);clampCamera();}return{...camera};}
+    ,select,fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen,rendererStats:()=>terrainRenderer.stats(),effectRendererStats:()=>effectRenderer.stats(),effectOptions:(enabled=effectsEnabled,quality=effectQuality,reduced=reducedMotionOverride)=>{effectsEnabled=!!enabled;effectQuality=C.clamp(Number(quality)||1,.25,1);reducedMotionOverride=reduced===null?null:!!reduced;return{enabled:effectsEnabled,quality:effectQuality,reduced:reducedMotionOverride};},mapView:(x,y,zoom)=>{if([x,y,zoom].every(Number.isFinite)){camera.x=x;camera.y=y;camera.zoom=C.clamp(zoom,.1,32);clampCamera();}return{...camera};}
   }
   ;
 }

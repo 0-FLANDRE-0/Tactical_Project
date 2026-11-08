@@ -1,0 +1,171 @@
+{
+  "version": "0.4-WIP12",
+  "browser": "156.0.8078.79",
+  "standalone": "dist/index.html over ephemeral local HTTP",
+  "viewportEvidence": [
+    "1440x900 DPR1",
+    "844x390 DPR2"
+  ],
+  "frameStepSeconds": 0.05,
+  "continuousFrames": [
+    "WIP12-effects-frame-00.png",
+    "WIP12-effects-frame-01.png",
+    "WIP12-effects-frame-02.png",
+    "WIP12-effects-frame-03.png",
+    "WIP12-effects-frame-04.png",
+    "WIP12-effects-frame-05.png",
+    "WIP12-effects-frame-06.png",
+    "WIP12-effects-frame-07.png",
+    "WIP12-effects-frame-08.png",
+    "WIP12-effects-frame-09.png",
+    "WIP12-effects-frame-10.png",
+    "WIP12-effects-frame-11.png",
+    "WIP12-effects-frame-12.png",
+    "WIP12-effects-frame-13.png",
+    "WIP12-effects-frame-14.png"
+  ],
+  "seed70ContinuousFrames": [
+    "WIP12-effects-seed70-frame-00.png",
+    "WIP12-effects-seed70-frame-01.png",
+    "WIP12-effects-seed70-frame-02.png",
+    "WIP12-effects-seed70-frame-03.png",
+    "WIP12-effects-seed70-frame-04.png",
+    "WIP12-effects-seed70-frame-05.png",
+    "WIP12-effects-seed70-frame-06.png",
+    "WIP12-effects-seed70-frame-07.png",
+    "WIP12-effects-seed70-frame-08.png",
+    "WIP12-effects-seed70-frame-09.png",
+    "WIP12-effects-seed70-frame-10.png",
+    "WIP12-effects-seed70-frame-11.png",
+    "WIP12-effects-seed70-frame-12.png",
+    "WIP12-effects-seed70-frame-13.png",
+    "WIP12-effects-seed70-frame-14.png"
+  ],
+  "seed70DelayedFrame": {
+    "fromSimTime": 15.450000000000085,
+    "toSimTime": 15.650000000000087,
+    "timeScale": 2,
+    "displayFrameSeconds": 0.1,
+    "evidence": [
+      "WIP12-effects-seed70-delay-before.png",
+      "WIP12-effects-seed70-delay-after.png"
+    ],
+    "result": {
+      "time": 15.650000000000087,
+      "timeScale": 2,
+      "linked": true,
+      "renderer": {
+        "ready": true,
+        "error": false,
+        "particles": 12,
+        "coreParticles": 2,
+        "auxParticles": 10,
+        "byKind": {
+          "tracer": 1,
+          "smoke": 7,
+          "spark": 4
+        },
+        "particleLimit": 384,
+        "seen": 2,
+        "seenLimit": 1024,
+        "pendingFlightLinks": 0,
+        "maxParticles": 12,
+        "dropped": 0,
+        "droppedCore": 0,
+        "droppedAux": 0,
+        "linkedFlights": 1,
+        "unlinkedImpacts": 0,
+        "lastFlightErrorM": 0
+      },
+      "canvasTracerEnd": {
+        "x": 908.7700370850725,
+        "y": 185.99157238272892
+      },
+      "impactScreen": {
+        "x": 908.7700370850725,
+        "y": 185.99157238272892
+      },
+      "canvasEndpointErrorPx": 0
+    }
+  },
+  "actualCore": {
+    "seed": 25,
+    "selectedFace": "hullFront",
+    "incidenceDeg": 80.00794201547919,
+    "ricochetChance": 0.5039710077395938,
+    "ricochetRoll": 0.4249394212383777,
+    "damage": 0,
+    "hpAfter": 1450
+  },
+  "hiddenEnemy": {
+    "teamContacts": 0,
+    "publicUnitIds": [
+      "A11"
+    ],
+    "detailedBlueEvents": 0,
+    "hitAndRicochetEffectsVisible": true,
+    "miss": {
+      "effectClass": "miss-ground",
+      "result": "miss",
+      "impactKind": "ground",
+      "contacts": 0,
+      "detailedBlueEvents": 0,
+      "linked": true,
+      "provisionalEndpointErrorM": 107.98212577574515,
+      "renderer": {
+        "ready": true,
+        "error": false,
+        "particles": 9,
+        "coreParticles": 1,
+        "auxParticles": 8,
+        "byKind": {
+          "smoke": 5,
+          "spark": 4
+        },
+        "particleLimit": 384,
+        "seen": 2,
+        "seenLimit": 1024,
+        "pendingFlightLinks": 0,
+        "maxParticles": 12,
+        "dropped": 0,
+        "droppedCore": 0,
+        "droppedAux": 0,
+        "linkedFlights": 1,
+        "unlinkedImpacts": 0,
+        "lastFlightErrorM": 0
+      }
+    }
+  },
+  "texture": {
+    "ready": true,
+    "error": false,
+    "particles": 10,
+    "coreParticles": 2,
+    "auxParticles": 8,
+    "byKind": {
+      "smoke": 6,
+      "spark": 3,
+      "tracer": 1
+    },
+    "particleLimit": 384,
+    "seen": 2,
+    "seenLimit": 1024,
+    "pendingFlightLinks": 0,
+    "maxParticles": 11,
+    "dropped": 0,
+    "droppedCore": 0,
+    "droppedAux": 0,
+    "linkedFlights": 1,
+    "unlinkedImpacts": 0,
+    "lastFlightErrorM": 0
+  },
+  "networkRequests": [
+    "/",
+    "/favicon.ico",
+    "/?seed=70"
+  ],
+  "errors": [],
+  "passed": 18,
+  "failed": 0,
+  "notes": "Actual Chromium and exact built standalone HTML. Deterministic RAF advances the real app/core/canvas. Seed 70 verifies both consecutive 0.05-second frames and the delayed 15.45 -> 15.65 simulation-time frame at 2x; the latter records the real CanvasRenderingContext2D tracer line endpoint and compares it with the impact screen coordinate. Headless viewports are not physical Android thermal/performance validation."
+}

@@ -1,0 +1,189 @@
+{
+  "release": "Tactical v0.4 WIP12",
+  "branch": "feat/wip12-effects-ricochet",
+  "baselineCommit": "687c624d8185a4fbd6463171030116138469f69e",
+  "validatedAt": "2026-11-09",
+  "implementationCommit": "ca32a56e1a7120a58c797b40d6100c819658be35",
+  "status": "passed",
+  "summary": {
+    "nodeTestRunner": {
+      "passed": 232,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "scriptChecks": {
+      "input": "42/42",
+      "map": "16/16",
+      "visibility": "12/12",
+      "vehicle": "9/9",
+      "terrainReadability": "7/7",
+      "sourceQuality": "7/7",
+      "javascriptSyntax": "75/75",
+      "pythonSyntax": "18/18"
+    },
+    "browser": {
+      "general": {
+        "passed": 27,
+        "failed": 0
+      },
+      "wip12Effects": {
+        "passed": 18,
+        "failed": 0
+      },
+      "chromium": "156.0.8078.79",
+      "fakeDomAndRealBrowserReportedSeparately": true
+    }
+  },
+  "commands": [
+    "node --test tests/*.test.cjs",
+    "node tests/input.test.cjs",
+    "node tests/map.test.cjs",
+    "node tests/visibility.test.cjs",
+    "node tests/vehicle.test.cjs",
+    "python3 tests/terrain_readability_test.py",
+    "/usr/bin/python3 tests/source_quality.py",
+    "node tests/browser.test.cjs",
+    "node --test tests/wip12-effects-browser.test.cjs",
+    "node scripts/benchmark_observation.cjs",
+    "node scripts/benchmark_auto_engagement.cjs",
+    "node scripts/benchmark_combat.cjs",
+    "node scripts/benchmark_effects_browser.cjs",
+    "python3 build.py",
+    "python3 scripts/package_release.py WIP12"
+  ],
+  "artifacts": {
+    "standaloneHtml": {
+      "path": "Tactical_v0.4_WIP12.html",
+      "bytes": 8415484,
+      "sha256": "3055d04b5465012db0631920a9234e80f05118ee7b30106b6f7b525f5d0691c2",
+      "matchesDistIndex": true
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP12.zip",
+      "bytes": 1656467,
+      "sha256": "d41b3ba3639f1c52d069bb7a0905444eb280bc40bc292d21ca29c10abc0b364b",
+      "entry": "Tactical_v0.4_WIP12.html",
+      "crc32": "7c1bec01",
+      "unzipTest": "passed",
+      "verifiedRawDownload": "https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip",
+      "rawDownloadSha256Matches": true
+    },
+    "effectAtlas": {
+      "path": "assets/effects/wip12-effects-atlas.png",
+      "bytes": 10897,
+      "sha256": "f70eb173ed14eb6d8ebc7927f408987a588777cd62216891ffac0ece2bf39340",
+      "dimensions": "256x64 RGBA"
+    },
+    "reproduciblePackaging": true
+  },
+  "benchmarks": {
+    "observationMoving100": {
+      "medianMs": 15.847253,
+      "p95Ms": 22.393716,
+      "finalStateSha256MatchesOtherObservationFixtures": true
+    },
+    "automaticEngagement100": {
+      "medianMs": 7.511779,
+      "p95Ms": 13.710676,
+      "shots": 321,
+      "impacts": 315
+    },
+    "combat10000Impacts": {
+      "medianMs": 24.536,
+      "p95Ms": 29.096
+    },
+    "browserEffects50Units": {
+      "effectsDisabledMedianMs": 3.6,
+      "effectsDisabledP95Ms": 7.5,
+      "effectsEnabledMedianMs": 3.8,
+      "effectsEnabledP95Ms": 7.4,
+      "sameFinalGameState": true,
+      "maxLiveParticles": 152,
+      "particleLimit": 384,
+      "effectQueueLimit": 256
+    }
+  },
+  "coverage": [
+    "M829A2 penetration interpolation from 60 to 90 degrees and defensive clamping",
+    "strict seeded ricochet probability and no damage after ricochet",
+    "current hull and turret pose armor-zone resolution",
+    "duplicate shot id exact-once handling without reroll",
+    "full detection-to-flight-to-impact simulation path",
+    "minimal hidden-enemy fire and impact effects without private target data",
+    "renderer read/frame-count independence from combat RNG",
+    "atlas fallback, bounded particles, pause, reset, quality and reduced-motion behavior",
+    "desktop and mobile viewport browser rendering",
+    "resolved impact retargets the linked tracer endpoint without rerolling combat",
+    "384-particle admission protects 80 muzzle and tracer pairs by dropping auxiliary particles first",
+    "expired tracer reconnects on the exact seed-70 15.45-to-15.65 delayed 2x browser frame with a zero-pixel canvas endpoint error"
+  ],
+  "notExecuted": [
+    "physical mobile-device hardware testing",
+    "file:// launch was blocked by the managed browser policy; the exact standalone HTML was tested over a local HTTP server"
+  ],
+  "notes": [
+    "The WIP11E observation fixture state hashes remain exact.",
+    "The moving-100 observation P95 is a single-run measurement and is not claimed as an improvement.",
+    "No release was published and main was not merged."
+  ],
+  "reviewCorrectionBasisHead": "f55d824597b72be208a94b560291f9f42006e1c3",
+  "reviewCorrectionCommit": "43e3cf9520cada44f7f400aee8c48e215ab45f62",
+  "reviewCorrections": {
+    "tracerImpactLink": {
+      "seed": 70,
+      "provisionalEndpointErrorM": 107.98212577574515,
+      "linkedEndpointErrorM": 0,
+      "linkedFlights": 1,
+      "unlinkedImpacts": 0,
+      "frameStepSeconds": 0.05,
+      "continuousFrames": 15,
+      "evidence": "tests/releases/WIP12-effects-seed70-frame-00.png through 14.png"
+    },
+    "particlePriority": {
+      "particleLimit": 384,
+      "shots": 80,
+      "batches": 2,
+      "batchStepSeconds": 0.05,
+      "inspectedAtSeconds": 0.1,
+      "muzzleParticles": 80,
+      "tracerParticles": 80,
+      "coreParticles": 160,
+      "auxParticles": 224,
+      "droppedCore": 0,
+      "droppedAux": 16
+    },
+    "preservedContracts": [
+      "decision timing and hit/zone/ricochet RNG order",
+      "hidden enemy effect visibility without unit/HP disclosure",
+      "zero follow-on damage after ricochet"
+    ]
+  },
+  "delayedFrameCorrectionBasisHead": "10ac4fa51e4b1e4944f6e07426ea82e91e770915",
+  "delayedFrameCorrectionCommit": "c96dda857daa611eb70fc8b67a5f034ced08c26c",
+  "delayedFrameCorrection": {
+    "seed": 70,
+    "fromSimTime": 15.45,
+    "toSimTime": 15.65,
+    "timeScale": 2,
+    "displayFrameSeconds": 0.1,
+    "linkedFlights": 1,
+    "unlinkedImpacts": 0,
+    "pendingFlightLinksAfterImpact": 0,
+    "worldEndpointErrorM": 0,
+    "canvasEndpointErrorPx": 0,
+    "canvasTracerEnd": {
+      "x": 908.7700370850725,
+      "y": 185.99157238272892
+    },
+    "impactScreen": {
+      "x": 908.7700370850725,
+      "y": 185.99157238272892
+    },
+    "evidence": [
+      "tests/releases/WIP12-effects-seed70-delay-before.png",
+      "tests/releases/WIP12-effects-seed70-delay-after.png"
+    ],
+    "implementation": "pending flight-link metadata is bounded separately from particle lifetime; impact ingestion precedes current-time expiry"
+  }
+}

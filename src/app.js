@@ -12,6 +12,8 @@
   const lookView=channel=>{const u=selectedUnit();return u?C.observationView(sim,u,channel||$('lookChannel').value||'commander'):{mode:'idle',turret:0,gaze:0,direction:null,remaining:null,point:null};};
   let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA,TERRAIN_DATA);
+  const effectRenderer=TacticalEffects.create(),reducedMotionMedia=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
+  let effectsEnabled=true,effectQuality=1,reducedMotionOverride=null;
   let visibility=null,visibilityPath=null;
   const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
@@ -400,6 +402,7 @@
     setGuardPopup(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     sim=C.createScenario();
+    effectRenderer.reset();
     selected='A11';
     targetId=null;
     trails.length=0;
@@ -568,7 +571,7 @@
       const b=fc.breakdown,rects=b?.rects||[],w=rects.length?Math.max(...rects.map(r=>r.x2))-Math.min(...rects.map(r=>r.x1)):0,h=rects.length?Math.max(...rects.map(r=>r.z2))-Math.min(...rects.map(r=>r.z1)):0;
       ui.setText($('fireDetails'),target.identified&&target.current&&b?'예상 명중 '+Math.round(fc.hitChance*100)+'% (발사 시) · 오차 '+Math.max(b.sigma.x,b.sigma.z).toFixed(2)+'밀 · 표적 '+w.toFixed(1)+'×'+h.toFixed(1)+'m · 명중 시: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '):'');
       const lastShot=target.identified&&target.current&&fc.lastShot?.targetKey===target.key?fc.lastShot:null,impactKind={ground:'지면',building:'건물','out-of-map':'지도 밖','max-distance':'최대 거리'},missText=lastShot?.impact?(lastShot.impact.beyond>=0?'표적 너머 ':'표적 앞 ')+Math.round(Math.abs(lastShot.impact.beyond))+'m '+(impactKind[lastShot.impact.kind]||lastShot.impact.kind):'탄착점 없음';
-      const hitDamage=lastShot?.combat,lastDamage=hitDamage?(hitDamage.penetrated?'관통 · 피해 '+Math.round(hitDamage.damage)+(hitDamage.destroyed?' · 격파':' · HP '+Math.round(hitDamage.hpAfter)):'비관통 · 피해 0'):'';
+      const hitDamage=lastShot?.combat,lastDamage=hitDamage?(hitDamage.ricochet?'도탄 · 피해 0':hitDamage.penetrated?'관통 · 피해 '+Math.round(hitDamage.damage)+(hitDamage.destroyed?' · 격파':' · HP '+Math.round(hitDamage.hpAfter)):'비관통 · 피해 0'):'';
       ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.result==='unobserved'?'결과 미확인':lastShot.result==='hit'?'명중 · '+zoneNames[lastShot.zone]+(lastShot.side?'('+({right:'우',left:'좌'})[lastShot.side]+')':'')+(lastDamage?' · '+lastDamage:''):'빗나감 · '+missText):'');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
       for(const part of ['hull','turret']){
@@ -633,21 +636,8 @@
     ctx.restore();
   }
   function drawShots(){
-    const events=C.fireEvents(sim,'blue',sim.time-7),done=new Set(events.filter(e=>e.type==='impact').map(e=>e.id)),fired=new Map(events.filter(e=>e.type==='fired').map(e=>[e.id,e]));
-    for(const shot of events){
-      const age=sim.time-shot.time;if(age<0)continue;
-      if(shot.type==='fired'&&!done.has(shot.id)){
-        const a=toScreen(shot.origin.x,shot.origin.y),shooter=sim.units.find(u=>u.id===shot.shooterId),fire=shooter?C.profileOf(shooter).fireControl:null,distance=fire?shot.tof*fire.muzzleVelocity*fire.velocityRetention:0,phase=C.clamp(age/shot.tof,0,1),worldX=shot.origin.x+Math.cos(shot.muzzleHeading)*distance*phase,worldY=shot.origin.y+Math.sin(shot.muzzleHeading)*distance*phase,{x,y}=toScreen(worldX,worldY);
-        ctx.save();ctx.strokeStyle='#ffe3a0';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(x,y);ctx.stroke();
-        if(age<.18){ctx.fillStyle='#fff2bb';ctx.beginPath();ctx.arc(a.x,a.y,Math.max(2,7*(1-age/.18)),0,Math.PI*2);ctx.fill();}
-        ctx.fillStyle='#fff7db';ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fill();ctx.restore();
-      }else if(shot.type==='impact'&&shot.impact&&age<=2){
-        const start=fired.get(shot.id),a=toScreen(shot.impact.x,shot.impact.y),fade=1-age/2,hit=shot.impact.kind==='hit';
-        ctx.save();ctx.globalAlpha=fade;if(start){const origin=toScreen(start.origin.x,start.origin.y);ctx.strokeStyle=hit?'#ffe8a9':'#d5b282';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(origin.x,origin.y);ctx.lineTo(a.x,a.y);ctx.stroke();}
-        ctx.fillStyle=hit?'#fff0ba':'#c3ab80';ctx.beginPath();ctx.arc(a.x,a.y,(hit?7:10)*(1+age*.5),0,Math.PI*2);ctx.fill();
-        if(shot.result!=='unobserved'){ctx.fillStyle='#ffdda0';ctx.font='600 11px system-ui';ctx.fillText(shot.result==='hit'?'명중 · '+zoneNames[shot.zone]:'빗나감',a.x,a.y-18);}ctx.restore();
-      }
-    }
+    effectRenderer.sync(C.effectEvents(sim,sim.time-4),sim.time);
+    if(effectsEnabled)effectRenderer.draw(ctx,sim.time,toScreen,camera.zoom,{quality:effectQuality,reducedMotion:reducedMotionOverride??!!reducedMotionMedia?.matches});else effectRenderer.advance(sim.time);
   }
   function drawRoute(u){
     if(!u.path.length)return;
@@ -808,8 +798,8 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP11E',core:C,snapshot:()=>JSON.parse(JSON.stringify({
-      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue')
+    version:'0.4-WIP12',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
       setReverse(reverse);
@@ -818,7 +808,7 @@
       }
       ,reverse,sim.units)
     }
-    ,select,fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen,rendererStats:()=>terrainRenderer.stats(),mapView:(x,y,zoom)=>{if([x,y,zoom].every(Number.isFinite)){camera.x=x;camera.y=y;camera.zoom=C.clamp(zoom,.1,32);clampCamera();}return{...camera};}
+    ,select,fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen,rendererStats:()=>terrainRenderer.stats(),effectRendererStats:()=>effectRenderer.stats(),effectOptions:(enabled=effectsEnabled,quality=effectQuality,reduced=reducedMotionOverride)=>{effectsEnabled=!!enabled;effectQuality=C.clamp(Number(quality)||1,.25,1);reducedMotionOverride=reduced===null?null:!!reduced;return{enabled:effectsEnabled,quality:effectQuality,reduced:reducedMotionOverride};},mapView:(x,y,zoom)=>{if([x,y,zoom].every(Number.isFinite)){camera.x=x;camera.y=y;camera.zoom=C.clamp(zoom,.1,32);clampCamera();}return{...camera};}
   }
   ;
 }

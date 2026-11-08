@@ -1,6 +1,6 @@
 'use strict';
-/* WIP11A abstract game damage. This module consumes the already-resolved hit
- * and zone; it never rolls hit, zone, penetration, damage or destruction. */
+/* WIP12 abstract game damage. This module consumes already-resolved hit, zone
+ * and ricochet rolls; it never draws effects or owns a frame-time RNG. */
 const TacticalCombatState=(()=>{
   const ZONES=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -10,7 +10,8 @@ const TacticalCombatState=(()=>{
   const AMMUNITION=deepFreeze({
     M829A2:{
       id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
-      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],outsidePolicy:'clamp'},
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'}
     }
   });
@@ -41,8 +42,17 @@ const TacticalCombatState=(()=>{
   }
   function penetrationAt(ammo,rangeM,angleDeg){
     finitePositive(rangeM,'사거리');if(!Number.isFinite(angleDeg)||angleDeg<0)throw Error('입사각 값 오류');
-    const t=ammo.penetration,r=interval(t.rangesM,rangeM),a=interval(t.anglesDeg,angleDeg),row=i=>t.values[i][a.lo]+(t.values[i][a.hi]-t.values[i][a.lo])*a.t;
-    return{value:row(r.lo)+(row(r.hi)-row(r.lo))*r.t,rangeClamped:r.clamped,angleClamped:a.clamped,rangeUsed:clamp(rangeM,t.rangesM[0],t.rangesM.at(-1)),angleUsed:clamp(angleDeg,t.anglesDeg[0],t.anglesDeg.at(-1))};
+    const t=ammo.penetration,r=interval(t.rangesM,rangeM),last=t.anglesDeg.at(-1),limit=t.parallelLimitDeg??last,used=clamp(angleDeg,t.anglesDeg[0],limit);
+    let lo,hi,ratio;
+    if(used>last){lo=hi=t.anglesDeg.length-1;ratio=0;}
+    else{const a=interval(t.anglesDeg,used);lo=a.lo;hi=a.hi;ratio=a.t;}
+    const row=i=>{const base=t.values[i][lo]+(t.values[i][hi]-t.values[i][lo])*ratio;return used>last?base*(limit-used)/(limit-last):base;};
+    return{value:row(r.lo)+(row(r.hi)-row(r.lo))*r.t,rangeClamped:r.clamped,angleClamped:angleDeg>limit,rangeUsed:clamp(rangeM,t.rangesM[0],t.rangesM.at(-1)),angleUsed:used};
+  }
+  function ricochetChance(ammo,angleDeg){
+    if(!Number.isFinite(angleDeg)||angleDeg<0)throw Error('도탄 입사각 값 오류');
+    const rule=ammo.ricochet;if(!rule)return 0;const a=interval(rule.anglesDeg,angleDeg);
+    return rule.chances[a.lo]+(rule.chances[a.hi]-rule.chances[a.lo])*a.t;
   }
   function multiplierAt(ammo,residualRatio){
     if(!Number.isFinite(residualRatio)||residualRatio<0)throw Error('잔여 관통비 값 오류');
@@ -64,15 +74,17 @@ const TacticalCombatState=(()=>{
     const incoming=Math.atan2(origin.y-pose.y,origin.x-pose.x);
     return Math.abs(diff(incoming,faceHeading(pose,zone,side)))*180/Math.PI;
   }
-  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId}){
+  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId,ricochetRoll}){
     if(typeof hit!=='boolean')throw Error('명중 결과 누락');
-    if(!hit)return Object.freeze({hit:false,penetrated:false,damage:0,reason:'miss'});
+    if(!hit)return Object.freeze({hit:false,ricochet:false,penetrated:false,damage:0,reason:'miss'});
     validateProfile(profile);
     if(!ZONES.includes(zone))throw Error('지원하지 않는 피격 구역: '+zone);
-    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone].ke;
-    const penetrated=pen.value>=protection,residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0,damage=penetrated?ammo.baseDamage*multiplier:0;
+    if(!Number.isFinite(ricochetRoll)||ricochetRoll<0||ricochetRoll>=1)throw Error('도탄 난수 값 오류');
+    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone].ke;
+    if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
+    const penetrated=pen.value>0&&pen.value>=protection,residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0,damage=penetrated?ammo.baseDamage*multiplier:0;
     if(!Number.isFinite(damage)||damage<0)throw Error('피해 계산 오류');
-    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,penetration:pen.value,protection,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
+    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
   }
   function create({profileOf,onDestroyed=null,recordLimit=200,idLimit=4096}={}){
     if(typeof profileOf!=='function')throw Error('profileOf 필요');
@@ -97,14 +109,14 @@ const TacticalCombatState=(()=>{
       mark(id);
       const hpBefore=state.hp,damage=Math.min(hpBefore,result.damage),hpAfter=clamp(hpBefore-damage,0,state.maxHp),destroyed=hpAfter<=0&&state.status!=='destroyed';
       state.hp=hpAfter;
-      const record={applied:true,id,time:now,targetId:target.id,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,protection:result.protection??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,damage,hpBefore,hpAfter,maxHp:state.maxHp,destroyed};
+      const record={applied:true,id,time:now,targetId:target.id,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,ricochet:!!result.ricochet,ricochetChance:result.ricochetChance??0,ricochetRoll:result.ricochetRoll??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,protection:result.protection??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,damage,hpBefore,hpAfter,maxHp:state.maxHp,destroyed};
       state.lastDamage={...record};
       if(destroyed){state.status='destroyed';state.destroyedAt=now;destroyedCount++;onDestroyed?.(target,record);}
       return remember(record);
     }
     return Object.freeze({apply,records:()=>clone(records),stats:()=>({applied:appliedCount,records:records.length,destroyed:destroyedCount,sequenceShooters:sequences.size,recentIds:recent.size})});
   }
-  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
-  return Object.freeze({create,initUnit,validateProfile,evaluate,penetrationAt,multiplierAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES});
+  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
+  return Object.freeze({create,initUnit,validateProfile,evaluate,penetrationAt,ricochetChance,multiplierAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;

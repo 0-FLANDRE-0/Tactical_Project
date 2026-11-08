@@ -398,6 +398,8 @@ const TacticalCore = (() => {
     return fireFor(s).request(u,key,s.time);
   };
   const fireEvents=(s,team='blue',since=-Infinity)=>fireFor(s).events(team,since);
+  const effectEvents=(s,since=-Infinity)=>fireFor(s).effects(since);
+  const effectEventStats=s=>fireFor(s).effectStats();
   const fireDebugRecords=s=>s.recordFireEvents?fireFor(s).debugRecords():[];
   const roofGrid=new Float32Array(TH.columns*TH.rows);
   for(const b of buildings) for(let y=Math.max(0,Math.floor(b.minY/4));y<=Math.min(999,Math.floor(b.maxY/4));y++) for(let x=Math.max(0,Math.floor(b.minX/4));x<=Math.min(999,Math.floor(b.maxX/4));x++) {
@@ -566,6 +568,6 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

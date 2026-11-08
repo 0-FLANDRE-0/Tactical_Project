@@ -7,6 +7,7 @@ const TacticalFireControl=(()=>{
   const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
   const GRAVITY=9.81,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   function random(text,seed){let n=(2166136261^seed^0x51f15e)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
+  const visualSeed=(shot,phase,seed)=>Math.floor(random(shot.id+':visual:'+phase,seed^0x6d2b79f5)*4294967296)>>>0;
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   function init(u,p,mode='auto'){
@@ -82,6 +83,18 @@ const TacticalFireControl=(()=>{
     const incoming=Math.atan2(observer.y-pose.y,observer.x-pose.x),s=Math.sin(diff(incoming,zone.startsWith('hull')?pose.heading:pose.turret));
     return s>1e-12?'right':s< -1e-12?'left':null;
   }
+  function faceHeading(pose,zone,side){
+    const heading=zone?.startsWith('turret')?pose.turret:pose.heading;
+    if(zone?.endsWith('Front'))return heading;
+    if(zone?.endsWith('Rear'))return heading+Math.PI;
+    if(zone?.endsWith('Side'))return heading+(side==='right'?Math.PI/2:-Math.PI/2);
+    return null;
+  }
+  function reflectedHeading(beta,pose,zone,side){
+    const normal=faceHeading(pose,zone,side);if(normal===null)return beta+Math.PI;
+    const dx=Math.cos(beta),dy=Math.sin(beta),nx=Math.cos(normal),ny=Math.sin(normal),dot=dx*nx+dy*ny;
+    return Math.atan2(dy-2*dot*ny,dx-2*dot*nx);
+  }
   function impactEvaluation(shot,sight){
     const pose=sight?.gone?{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}:sight?.pose||{...shot.pose,x:shot.predicted.x,y:shot.predicted.y};
     const rects=sight?.gone?[]:presentedRects(shot.origin,pose,sight||shot.fireExposure,shot.fireControl);
@@ -125,9 +138,11 @@ const TacticalFireControl=(()=>{
     return marchImpact(shot,pose,point,environment);
   }
   function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,onImpactResolved=null,onFireBlocked=null,seed=7,debug=false,onDecisionRoll=null}){
-    const events=[],flights=[],records=[];let currentTime=0;
+    const events=[],effects=[],flights=[],records=[];let currentTime=0,effectNumber=0;
     const clone=v=>JSON.parse(JSON.stringify(v));
     const emit=e=>{events.push(e);if(events.length>200)events.shift();};
+    const emitEffect=e=>{const effect=Object.freeze({id:'fx-'+(++effectNumber),...e});effects.push(effect);if(effects.length>256)effects.shift();return effect;};
+    const pruneEffects=now=>{for(let i=effects.length-1;i>=0;i--)if(effects[i].expiresAt<now)effects.splice(i,1);};
     function resetAim(s){s.aimElapsed=0;s.aimProgress=0;s.layTime=0;}
     function resetMotion(s){s.previousSample=null;s.targetMotion=0;s.targetVelocity={x:0,y:0};}
     function clearPreview(s){s.hitChance=null;s.zoneProbabilities=null;s.breakdown=null;}
@@ -137,11 +152,13 @@ const TacticalFireControl=(()=>{
       flights.sort((a,b)=>a.impactAt-b.impactAt||(a.id<b.id?-1:a.id>b.id?1:0));
       while(flights.length&&flights[0].impactAt<=now+1e-9){
         const shot=flights.shift(),sight=impactSight?impactSight(shot):{...clone(shot.fireExposure),pose:{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}},evaluation=impactEvaluation(shot,sight);
-        const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
+        const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),ricochetRoll=result.hit?roll(shot,'ricochet'):null,point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
         const observation=isObserved(shot.team,shot.targetKey),observed=!sight?.gone&&!!observation;
         // Damage consumes the private resolved result exactly here, before any
         // public redaction. It must not infer a hit from the display point.
-        const combat=onImpactResolved?.({id:shot.id,time:now,team:shot.team,shooterId:shot.shooterId,targetId:shot.targetId,targetKey:shot.targetKey,ammoId:shot.ammoId,hit:result.hit,zone:result.zone,side,origin:clone(shot.origin),pose:clone(evaluation.pose),rangeM:Math.hypot(evaluation.pose.x-shot.origin.x,evaluation.pose.y-shot.origin.y),impact:clone(impact),observed,observation:observation?clone(observation):null})??null;
+        const combat=onImpactResolved?.({id:shot.id,time:now,team:shot.team,shooterId:shot.shooterId,targetId:shot.targetId,targetKey:shot.targetKey,ammoId:shot.ammoId,hit:result.hit,zone:result.zone,side,ricochetRoll,origin:clone(shot.origin),pose:clone(evaluation.pose),rangeM:Math.hypot(evaluation.pose.x-shot.origin.x,evaluation.pose.y-shot.origin.y),impact:clone(impact),observed,observation:observation?clone(observation):null})??null;
+        const effectClass=result.hit?(combat?.ricochet?'ricochet':combat?.penetrated?'penetration':'non-penetration'):'miss-'+impact.kind;
+        emitEffect({kind:'impact',time:now,expiresAt:now+3.2,position:{x:impact.x,y:impact.y,z:impact.z},effectClass,flightEffectId:shot.flightEffectId,outgoingHeading:combat?.ricochet?reflectedHeading(shot.beta,evaluation.pose,result.zone,side):null,visualSeed:visualSeed(shot,'impact',seed)});
         const publicImpact=observed?clone(impact):result.hit?null:{...clone(impact),beyond:null};
         const publicResult={type:'impact',id:shot.id,time:now,impactAt:shot.impactAt,team:shot.team,shooterId:shot.shooterId,targetKey:shot.targetKey,
           result:observed?(result.hit?'hit':'miss'):'unobserved',zone:observed?result.zone:null,side:observed?side:null,
@@ -169,6 +186,7 @@ const TacticalFireControl=(()=>{
     }
     function step(units,dt,now){
       currentTime=now;
+      pruneEffects(now);
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
         if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
@@ -232,6 +250,8 @@ const TacticalFireControl=(()=>{
           origin,fireEye:sight.fireEye,profileAtFire:clone(p),fireControl:clone(f),pose:clone(pose),fireExposure:clone(sight),
           beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1};
         flights.push(shot);
+        const flightEffect=emitEffect({kind:'fire',time:now,expiresAt:impactAt+.35,origin:{x:origin.x,y:origin.y},heading:beta,distanceM:chance.breakdown.range,duration:tof,visualSeed:visualSeed(shot,'fire',seed)});
+        shot.flightEffectId=flightEffect.id;
         emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:request.source,origin:{...origin},muzzleHeading:beta,
           tof,impactAt,hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1});
         s.shotCount=number;s.ammo--;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
@@ -259,8 +279,9 @@ const TacticalFireControl=(()=>{
     }
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
-    return{step,request,setMode,view,cancel,events:publicEvents,debugRecords:()=>debug?clone(records):[]};
+    const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
+    return{step,request,setMode,view,cancel,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;

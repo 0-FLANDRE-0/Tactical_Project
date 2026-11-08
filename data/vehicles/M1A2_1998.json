@@ -221,8 +221,8 @@
       }
     }
   },
-  "baseline": "Active symmetric WIP11A game fixture: M1A2 (1998) / M829A2",
-  "reviewed": "2026-11-08",
+  "baseline": "Active symmetric WIP12 game fixture: M1A2 (1998) / M829A2",
+  "reviewed": "2026-11-09",
   "sources": [
     {
       "id": "USER_WIP09",
@@ -287,6 +287,12 @@
       "title": "TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md and current archive game tables",
       "path": "../../docs/TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md",
       "scope": "User-confirmed abstract HP, armour and M829A2 game data; not independently verified real equipment performance"
+    },
+    {
+      "id": "TACTICAL_WIP12_EFFECTS_AND_RICOCHET",
+      "title": "TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md",
+      "path": "../../archive/instructions/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md",
+      "scope": "User-confirmed high-angle game penetration continuation, M829A2 ricochet anchors and display/public-effect rules; not real equipment performance"
     }
   ],
   "fieldEvidence": {
@@ -424,12 +430,22 @@
       "source": "USER_WIP11A",
       "value": "M829A2",
       "note": "Single symmetric trial ammunition"
+    },
+    "weapons.mainGun.ricochet": {
+      "status": "user game data",
+      "source": "TACTICAL_WIP12_EFFECTS_AND_RICOCHET",
+      "note": "M829A2 game chance: 78° 0%, 80° 50%, 81° 100%; roll<chance. Independent of hit and hit-zone rolls."
+    },
+    "weapons.mainGun.highAnglePenetration": {
+      "status": "game rule",
+      "source": "TACTICAL_WIP12_EFFECTS_AND_RICOCHET",
+      "note": "Existing 60° value interpolates linearly to zero at 90°. Values beyond 90° clamp only for defensive input handling."
     }
   },
   "limits": [
     "Mass and engine rating are profile metadata, not a full powertrain simulation",
     "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
     "No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities",
-    "WIP11A penetration and damage are abstract game tables; no ricochet, module, crew, fire or ammunition-rack model"
+    "WIP12 penetration, damage and ricochet are abstract game tables; ricochet continuation is display-only and has no further collision or damage; no module, crew, fire or ammunition-rack model"
   ]
 }
