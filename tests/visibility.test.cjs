@@ -55,4 +55,4 @@ test('contours are bound to the gameplay heightmap and stay on their elevation',
  for(const f of data.lines){assert.equal(f.level%10,0);for(let i=0;i<f.points.length;i+=11){const [x,y]=f.points[i];maxError=Math.max(maxError,Math.abs(C.heightAt(x,y)-f.level));samples++;}}
  assert(samples>2000);assert(maxError<.65);measurements.push({contourSamples:samples,maxElevationError:maxError});
 });
-const report={version:'0.4-WIP11D',passed,failed:0,measurements};fs.writeFileSync(path.join(__dirname,'visibility-results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+const report={version:'0.4-WIP11E',passed,failed:0,measurements};fs.writeFileSync(path.join(__dirname,'visibility-results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));

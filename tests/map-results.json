@@ -1,5 +1,5 @@
 {
-  "version": "0.4-WIP11D",
+  "version": "0.4-WIP11E",
   "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
   "passed": 16,
   "failed": 0,
@@ -12,7 +12,7 @@
     {
       "name": "measured 2m cell-centre samples decode without missing heights",
       "status": "PASS",
-      "ms": 2
+      "ms": 3
     },
     {
       "name": "height interpolation is continuous at grid boundaries",
@@ -27,7 +27,7 @@
     {
       "name": "selected building footprints retain real OSM identities",
       "status": "PASS",
-      "ms": 38
+      "ms": 15
     },
     {
       "name": "all initial vehicles have clear footprints",
@@ -47,22 +47,22 @@
     {
       "name": "four real-map routes arrive with zero collisions",
       "status": "PASS",
-      "ms": 8611
+      "ms": 3231
     },
     {
       "name": "reverse retains hull facing on a rearward route",
       "status": "PASS",
-      "ms": 56
+      "ms": 42
     },
     {
       "name": "stop cancels path and brakes",
       "status": "PASS",
-      "ms": 76
+      "ms": 78
     },
     {
       "name": "fixed physics results match between render batches",
       "status": "PASS",
-      "ms": 651
+      "ms": 627
     },
     {
       "name": "observation range is enforced",

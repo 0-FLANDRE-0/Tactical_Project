@@ -412,6 +412,17 @@ const TacticalCore = (() => {
     for(const b of candidates)if(b.roof>ray&&x>=b.minX&&x<=b.maxX&&y>=b.minY&&y<=b.maxY&&insideBuilding(x,y,b))return true;
     return false;
   }
+  function sightRoofBlockedPair(x,y,ray0,ray1){
+    const candidates=buildingBuckets.get(Math.floor(y/64)*bucketCols+Math.floor(x/64));
+    if(!candidates)return 0;
+    let blocked=0;
+    for(const b of candidates){
+      if((blocked&1||b.roof<=ray0)&&(blocked&2||b.roof<=ray1))continue;
+      if(x<b.minX||x>b.maxX||y<b.minY||y>b.maxY||!insideBuilding(x,y,b))continue;
+      if(b.roof>ray0)blocked|=1;if(b.roof>ray1)blocked|=2;if(blocked===3)break;
+    }
+    return blocked;
+  }
   // Conservative static summaries, never a replacement heightfield. Include
   // every interpolation vertex touching a 32m tile (one-node halo), all roofs
   // whose bounding boxes intersect it, and every forest/scrub surface cell.
@@ -436,6 +447,11 @@ const TacticalCore = (() => {
   for(const b of buildings){
     const x0=clamp(Math.floor(b.minX/sightTile),0,sightCols-1),x1=clamp(Math.floor(b.maxX/sightTile),0,sightCols-1),y0=clamp(Math.floor(b.minY/sightTile),0,sightRows-1),y1=clamp(Math.floor(b.maxY/sightTile),0,sightRows-1);
     for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const key=y*sightCols+x;sightRoofMax[key]=Math.max(sightRoofMax[key],b.roof);}
+  }
+  const sharedLosStats={groups:0,rays:0,heightSamples:0,heightReadsAvoided:0,buildingSamples:0,forestSamples:0};let trackSharedLos=false;
+  function losDiagnostics(enable=null){
+    if(enable!==null){if(enable)for(const key of Object.keys(sharedLosStats))sharedLosStats[key]=0;trackSharedLos=!!enable;}
+    return{enabled:trackSharedLos,...sharedLosStats};
   }
   const losAccelerationInfo=()=>({tileMetres:sightTile,tiles:sightCols*sightRows,summaryBytes:sightGroundMax.byteLength+sightRoofMax.byteLength+sightForest.byteLength});
   function lineOfSight(observer,target,targetHeight=1.5,fast=false,eyeHeight=null) {
@@ -476,24 +492,80 @@ const TacticalCore = (() => {
     }
     return {visible:true,reason:'clear',forestDepth:optical};
   }
+  // Two hull samples at the same x/y use the exact same 2 m horizontal
+  // lattice. Share only static lookups; ray height, tile skips, forest depth,
+  // blocking reason and early termination remain independent.
+  function pairedLineOfSight(observer,target,height0,height1,eyeHeight){
+    if(!Number.isFinite(observer.x+observer.y+target.x+target.y+height0+height1+eyeHeight)||observer.x<0||observer.x>WORLD.w||observer.y<0||observer.y>WORLD.h||target.x<0||target.x>WORLD.w||target.y<0||target.y>WORLD.h){
+      return[lineOfSight(observer,target,height0,false,eyeHeight),lineOfSight(observer,target,height1,false,eyeHeight)];
+    }
+    const d=Math.hypot(target.x-observer.x,target.y-observer.y),sensor=profileOf(observer).sensors;
+    if(d>sensor.observationLimit)return[{visible:false,reason:'range',forestDepth:0},{visible:false,reason:'range',forestDepth:0}];
+    const observerGround=heightAt(observer.x,observer.y),targetGround=heightAt(target.x,target.y),start=observerGround+eyeHeight,end0=targetGround+height0,end1=targetGround+height1,n=Math.max(2,Math.ceil(d/2));
+    const dx=target.x-observer.x,dy=target.y-observer.y;let optical0=0,optical1=0,next0=1,next1=1,result0=null,result1=null;
+    if(trackSharedLos){sharedLosStats.groups++;sharedLosStats.rays+=2;sharedLosStats.heightReadsAvoided+=2;}
+    while(!result0||!result1){
+      const i=Math.min(result0?Infinity:next0,result1?Infinity:next1);if(i>=n)break;
+      const t=i/n,x=mix(observer.x,target.x,t),y=mix(observer.y,target.y,t),bx=Math.min(sightCols-1,Math.floor(x/sightTile)),by=Math.min(sightRows-1,Math.floor(y/sightTile));
+      const exitX=dx>0?((bx+1)*sightTile-observer.x)/dx:dx<0?(bx*sightTile-observer.x)/dx:Infinity;
+      const exitY=dy>0?((by+1)*sightTile-observer.y)/dy:dy<0?(by*sightTile-observer.y)/dy:Infinity;
+      let limit=Math.min(n,Math.max(i+1,Math.ceil(Math.min(exitX,exitY,1)*n)));
+      let last=(limit-1)/n,lastX=mix(observer.x,target.x,last),lastY=mix(observer.y,target.y,last);
+      while(limit>i+1&&(Math.min(sightCols-1,Math.floor(lastX/sightTile))!==bx||Math.min(sightRows-1,Math.floor(lastY/sightTile))!==by)){
+        limit--;last=(limit-1)/n;lastX=mix(observer.x,target.x,last);lastY=mix(observer.y,target.y,last);
+      }
+      const key=by*sightCols+bx,groundMax=sightGroundMax[key],roofMax=sightRoofMax[key],forest=sightForest[key],epsilon=1e-7;let fine0=false,fine1=false;
+      if(!result0&&next0===i){const minRay=Math.min(mix(start,end0,t),mix(start,end0,last));if(minRay+.06>=groundMax+epsilon&&minRay>=roofMax+epsilon&&(!forest||minRay>=groundMax+15+epsilon))next0=limit;else fine0=true;}
+      if(!result1&&next1===i){const minRay=Math.min(mix(start,end1,t),mix(start,end1,last));if(minRay+.06>=groundMax+epsilon&&minRay>=roofMax+epsilon&&(!forest||minRay>=groundMax+15+epsilon))next1=limit;else fine1=true;}
+      if(!fine0&&!fine1)continue;
+      for(let index=i;index<limit&&(fine0||fine1);index++){
+        let active0=fine0&&!result0&&next0===index,active1=fine1&&!result1&&next1===index;if(!active0&&!active1)continue;
+        const ratio=index/n,sx=mix(observer.x,target.x,ratio),sy=mix(observer.y,target.y,ratio),ground=heightAt(sx,sy),ray0=mix(start,end0,ratio),ray1=mix(start,end1,ratio);
+        if(trackSharedLos){sharedLosStats.heightSamples++;if(active0&&active1)sharedLosStats.heightReadsAvoided++;}
+        if(active0&&ground>ray0+.06){result0={visible:false,reason:'terrain',forestDepth:optical0};active0=fine0=false;}
+        if(active1&&ground>ray1+.06){result1={visible:false,reason:'terrain',forestDepth:optical1};active1=fine1=false;}
+        if(active0&&active1){const blocked=sightRoofBlockedPair(sx,sy,ray0,ray1);if(trackSharedLos)sharedLosStats.buildingSamples++;if(blocked&1){result0={visible:false,reason:'building',forestDepth:optical0};active0=fine0=false;}if(blocked&2){result1={visible:false,reason:'building',forestDepth:optical1};active1=fine1=false;}}
+        else if(active0&&sightRoofBlocked(sx,sy,ray0)){result0={visible:false,reason:'building',forestDepth:optical0};active0=fine0=false;}
+        else if(active1&&sightRoofBlocked(sx,sy,ray1)){result1={visible:false,reason:'building',forestDepth:optical1};active1=fine1=false;}
+        const forest0=active0&&ray0<ground+15,forest1=active1&&ray1<ground+15;
+        if(forest0||forest1){const density=forestAt(sx,sy),increment=density*d/n/85;if(trackSharedLos)sharedLosStats.forestSamples++;if(forest0){optical0+=increment;if(optical0>1){result0={visible:false,reason:'forest',forestDepth:optical0};active0=fine0=false;}}if(forest1){optical1+=increment;if(optical1>1){result1={visible:false,reason:'forest',forestDepth:optical1};active1=fine1=false;}}}
+        if(active0)next0=index+1;if(active1)next1=index+1;
+      }
+    }
+    if(!result0)result0={visible:true,reason:'clear',forestDepth:optical0};if(!result1)result1={visible:true,reason:'clear',forestDepth:optical1};return[result0,result1];
+  }
   function exposure(observer,target,eyeHeight=null,cache=null) {
     let hull=0,turret=0,depth=0,rayQueries=0,rayCacheHits=0;const eye=eyeHeight??profileOf(observer).sensors.eyeHeight,e=profileOf(target).exposure,samples=[];
-    function sample(along,z,angle,part,col,row){
-      const x=target.x+Math.cos(angle)*along,y=target.y+Math.sin(angle)*along;
-      const previous=cache?.samples[samples.length];
+    function previousLos(index,x,y,z){
+      const previous=cache?.samples[index];
       // Reuse only exactly unchanged endpoints/eye/sample height on the frozen
       // map, and for at most 0.5 simulated seconds. Turning hull/turret or moving
       // either unit invalidates affected samples immediately.
-      let los;
-      if(previous&&previous.x===x&&previous.y===y&&previous.z===z&&previous.ox===observer.x&&previous.oy===observer.y&&previous.eye===eye&&cache.time-previous.at<=cache.maxAge){los=previous.los;rayCacheHits++;}
-      else{los=lineOfSight(observer,{x,y},z,false,eye);rayQueries++;if(cache)cache.samples[samples.length]={x,y,z,ox:observer.x,oy:observer.y,eye,at:cache.time,los};}
+      if(previous&&previous.x===x&&previous.y===y&&previous.z===z&&previous.ox===observer.x&&previous.oy===observer.y&&previous.eye===eye&&cache.time-previous.at<=cache.maxAge){rayCacheHits++;return previous.los;}
+      return null;
+    }
+    function store(index,x,y,z,los){if(cache)cache.samples[index]={x,y,z,ox:observer.x,oy:observer.y,eye,at:cache.time,los};}
+    function append(x,y,along,z,part,col,row,los){
       samples.push({x,y,part,along,z,col,row,visible:los.visible,forestDepth:los.forestDepth});
       if(los.visible){if(part==='hull')hull++;else turret++;depth+=los.forestDepth;}
     }
-    for(const [col,along] of e.hullAlong.entries())for(const [row,z] of e.hullHeights.entries())sample(along,z,target.heading,'hull',col,row);
-    for(const [col,along] of e.turretAlong.entries())sample(along,e.turretHeight,target.turret??target.heading,'turret',col,0);
+    const hullCos=Math.cos(target.heading),hullSin=Math.sin(target.heading);
+    for(const [col,along] of e.hullAlong.entries()){
+      const x=target.x+hullCos*along,y=target.y+hullSin*along,index=samples.length,z0=e.hullHeights[0],z1=e.hullHeights[1];let los0=previousLos(index,x,y,z0),los1=previousLos(index+1,x,y,z1);
+      if(!los0&&!los1){[los0,los1]=pairedLineOfSight(observer,{x,y},z0,z1,eye);rayQueries+=2;store(index,x,y,z0,los0);store(index+1,x,y,z1,los1);}
+      else{
+        if(!los0){los0=lineOfSight(observer,{x,y},z0,false,eye);rayQueries++;store(index,x,y,z0,los0);}
+        if(!los1){los1=lineOfSight(observer,{x,y},z1,false,eye);rayQueries++;store(index+1,x,y,z1,los1);}
+      }
+      append(x,y,along,z0,'hull',col,0,los0);append(x,y,along,z1,'hull',col,1,los1);
+    }
+    const turretAngle=target.turret??target.heading,turretCos=Math.cos(turretAngle),turretSin=Math.sin(turretAngle);
+    for(const [col,along] of e.turretAlong.entries()){
+      const x=target.x+turretCos*along,y=target.y+turretSin*along,index=samples.length,z=e.turretHeight;let los=previousLos(index,x,y,z);
+      if(!los){los=lineOfSight(observer,{x,y},z,false,eye);rayQueries++;store(index,x,y,z,los);}append(x,y,along,z,'turret',col,0,los);
+    }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

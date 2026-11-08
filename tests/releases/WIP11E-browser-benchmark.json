@@ -1,0 +1,291 @@
+{
+  "version": "0.4-WIP11E",
+  "date": "2026-11-08",
+  "browser": "156.0.8078.79",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "baselineCommit": "a668f9b21340db09fe2459190bb34337ef7d2690",
+  "trials": 3,
+  "seed": 407,
+  "stepSeconds": 0.05,
+  "warmupSteps": 20,
+  "measuredSteps": 100,
+  "notes": "Actual headless Chromium using the exact WIP11D and WIP11E standalone HTML over local HTTP. Independent simulation scenarios run while the app scenario is paused. CPU fixed-step time, not render FPS or a physical-device result.",
+  "cases": [
+    {
+      "name": "stationary-small",
+      "count": 10,
+      "moving": false,
+      "steps": 100,
+      "baseline": {
+        "medianStepMs": 0.30000001192092896,
+        "p95StepMs": 1.5,
+        "maxStepMs": 12.800000011920929
+      },
+      "optimized": {
+        "medianStepMs": 0.30000001192092896,
+        "p95StepMs": 1.199999988079071,
+        "maxStepMs": 10.400000005960464
+      },
+      "reductionPercent": 0,
+      "p95ReductionPercent": 20.0000007947286,
+      "finalStateSHA256": "250e6efdee11db9764164f6d672e39589603ba4a37c704293d4b9476d7bf17ae",
+      "finalStatesEqual": true
+    },
+    {
+      "name": "moving-50",
+      "count": 50,
+      "moving": true,
+      "steps": 100,
+      "baseline": {
+        "medianStepMs": 4.5,
+        "p95StepMs": 7.200000017881393,
+        "maxStepMs": 8.200000017881393
+      },
+      "optimized": {
+        "medianStepMs": 4,
+        "p95StepMs": 7.300000011920929,
+        "maxStepMs": 15.699999988079071
+      },
+      "reductionPercent": 11.111111111111116,
+      "p95ReductionPercent": -1.3888888026553081,
+      "finalStateSHA256": "5a9517928b5b5ef725dff7612ddfe5347bb36d9836a7f63ce93dadf5cfcfe260",
+      "finalStatesEqual": true
+    },
+    {
+      "name": "moving-100",
+      "count": 100,
+      "moving": true,
+      "steps": 100,
+      "baseline": {
+        "medianStepMs": 17,
+        "p95StepMs": 23.19999998807907,
+        "maxStepMs": 30.299999982118607
+      },
+      "optimized": {
+        "medianStepMs": 14.5,
+        "p95StepMs": 19.69999998807907,
+        "maxStepMs": 26.400000005960464
+      },
+      "reductionPercent": 14.70588235294118,
+      "p95ReductionPercent": 15.086206904303513,
+      "finalStateSHA256": "ded7c3f6ea88516b2426e07f1486723ee9b10711efa4e71eed6f70d96b16a06c",
+      "finalStatesEqual": true
+    }
+  ],
+  "runs": {
+    "baseline": [
+      [
+        {
+          "name": "stationary-small",
+          "count": 10,
+          "moving": false,
+          "steps": 100,
+          "medianStepMs": 0.30000001192092896,
+          "p95StepMs": 1.699999988079071,
+          "maxStepMs": 12.800000011920929,
+          "heapBefore": 69663233,
+          "heapAfter": 67066021
+        },
+        {
+          "name": "moving-50",
+          "count": 50,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 4.5999999940395355,
+          "p95StepMs": 7.300000011920929,
+          "maxStepMs": 8.200000017881393,
+          "heapBefore": 76108209,
+          "heapAfter": 83672121
+        },
+        {
+          "name": "moving-100",
+          "count": 100,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 17.099999994039536,
+          "p95StepMs": 25.30000001192093,
+          "maxStepMs": 30.299999982118607,
+          "heapBefore": 84646945,
+          "heapAfter": 59632225
+        }
+      ],
+      [
+        {
+          "name": "stationary-small",
+          "count": 10,
+          "moving": false,
+          "steps": 100,
+          "medianStepMs": 0.29999998211860657,
+          "p95StepMs": 1.2000000178813934,
+          "maxStepMs": 5.100000023841858,
+          "heapBefore": 69837133,
+          "heapAfter": 67806273
+        },
+        {
+          "name": "moving-50",
+          "count": 50,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 4.5,
+          "p95StepMs": 7.200000017881393,
+          "maxStepMs": 8,
+          "heapBefore": 73221221,
+          "heapAfter": 80711681
+        },
+        {
+          "name": "moving-100",
+          "count": 100,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 15.400000005960464,
+          "p95StepMs": 22.299999982118607,
+          "maxStepMs": 27.5,
+          "heapBefore": 82583973,
+          "heapAfter": 56303145
+        }
+      ],
+      [
+        {
+          "name": "stationary-small",
+          "count": 10,
+          "moving": false,
+          "steps": 100,
+          "medianStepMs": 0.3999999761581421,
+          "p95StepMs": 1.5,
+          "maxStepMs": 3.699999988079071,
+          "heapBefore": 69517085,
+          "heapAfter": 66695361
+        },
+        {
+          "name": "moving-50",
+          "count": 50,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 4,
+          "p95StepMs": 5.699999988079071,
+          "maxStepMs": 7.5999999940395355,
+          "heapBefore": 73511665,
+          "heapAfter": 81899437
+        },
+        {
+          "name": "moving-100",
+          "count": 100,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 17,
+          "p95StepMs": 23.19999998807907,
+          "maxStepMs": 26.299999982118607,
+          "heapBefore": 56730957,
+          "heapAfter": 67818193
+        }
+      ]
+    ],
+    "optimized": [
+      [
+        {
+          "name": "stationary-small",
+          "count": 10,
+          "moving": false,
+          "steps": 100,
+          "medianStepMs": 0.30000001192092896,
+          "p95StepMs": 1,
+          "maxStepMs": 4.600000023841858,
+          "heapBefore": 74525144,
+          "heapAfter": 73167928
+        },
+        {
+          "name": "moving-50",
+          "count": 50,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 4.200000017881393,
+          "p95StepMs": 7.300000011920929,
+          "maxStepMs": 8.800000011920929,
+          "heapBefore": 48326377,
+          "heapAfter": 60571533
+        },
+        {
+          "name": "moving-100",
+          "count": 100,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 15.699999988079071,
+          "p95StepMs": 19.69999998807907,
+          "maxStepMs": 26.400000005960464,
+          "heapBefore": 71259809,
+          "heapAfter": 63909337
+        }
+      ],
+      [
+        {
+          "name": "stationary-small",
+          "count": 10,
+          "moving": false,
+          "steps": 100,
+          "medianStepMs": 0.29999998211860657,
+          "p95StepMs": 1.199999988079071,
+          "maxStepMs": 3.199999988079071,
+          "heapBefore": 72380912,
+          "heapAfter": 73161660
+        },
+        {
+          "name": "moving-50",
+          "count": 50,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 3.9000000059604645,
+          "p95StepMs": 6.699999988079071,
+          "maxStepMs": 7.600000023841858,
+          "heapBefore": 49943941,
+          "heapAfter": 62132297
+        },
+        {
+          "name": "moving-100",
+          "count": 100,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 14.5,
+          "p95StepMs": 18.299999982118607,
+          "maxStepMs": 20.899999976158142,
+          "heapBefore": 74979917,
+          "heapAfter": 71610101
+        }
+      ],
+      [
+        {
+          "name": "stationary-small",
+          "count": 10,
+          "moving": false,
+          "steps": 100,
+          "medianStepMs": 0.30000001192092896,
+          "p95StepMs": 1.600000023841858,
+          "maxStepMs": 10.400000005960464,
+          "heapBefore": 66521888,
+          "heapAfter": 69190108
+        },
+        {
+          "name": "moving-50",
+          "count": 50,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 4,
+          "p95StepMs": 8.100000023841858,
+          "maxStepMs": 15.699999988079071,
+          "heapBefore": 77384404,
+          "heapAfter": 60044281
+        },
+        {
+          "name": "moving-100",
+          "count": 100,
+          "moving": true,
+          "steps": 100,
+          "medianStepMs": 14.300000011920929,
+          "p95StepMs": 20.5,
+          "maxStepMs": 25.900000005960464,
+          "heapBefore": 69605865,
+          "heapAfter": 90581057
+        }
+      ]
+    ]
+  }
+}
