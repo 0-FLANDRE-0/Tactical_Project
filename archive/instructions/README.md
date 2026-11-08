@@ -10,7 +10,7 @@
 | WIP11B 잔해·기본 자동교전 | [TACTICAL_WIP11B_WRECK_AND_AUTO_ENGAGEMENT_INSTRUCTIONS.md](../../docs/TACTICAL_WIP11B_WRECK_AND_AUTO_ENGAGEMENT_INSTRUCTIONS.md) | — | #9 | 검토 통과 · main 병합 |
 | WIP11C UI·경계 임무 | [TACTICAL_WIP11C_UI_AND_GUARD_INSTRUCTIONS.md](../../docs/TACTICAL_WIP11C_UI_AND_GUARD_INSTRUCTIONS.md) | — | #9 | 검토 통과 · main 병합 |
 | WIP11D 지형 판독성 | [TACTICAL_WIP11D_TERRAIN_READABILITY.md](TACTICAL_WIP11D_TERRAIN_READABILITY.md) | — | #9 | 검토 통과 · main 병합 |
-| WIP11E 9표본 LOS 중복 조회 최적화 | [TACTICAL_WIP11E_LOS_OPTIMIZATION.md](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | — | 새 PR | 구현·검증 완료 · 검토 대기 |
+| WIP11E 9표본 LOS 중복 조회 최적화 | [TACTICAL_WIP11E_LOS_OPTIMIZATION.md](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | — | #10 | 구현·검증 완료 · 검토 대기 |
 
 - 스크립트는 표준 라이브러리만 사용한다. `python3 wip10_hit_reference.py`로 기준값 표를 출력한다.
 - WIP10 사본의 SHA-256은 지시서 `4e469d69…`, 스크립트 `142e5001…`로 PR #6 검증 기록(`tests/releases/WIP10-validation.json`)과 같다.

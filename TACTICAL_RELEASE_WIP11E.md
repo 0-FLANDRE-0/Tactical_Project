@@ -5,6 +5,7 @@ WIP11E는 WIP11D의 지도·관측·전투 결과를 유지하면서 9표본 노
 ## 작업 기준
 
 - 브랜치: `feat/wip11e-los-optimization`
+- 검토 PR: [#10](https://github.com/0-FLANDRE-0/Tactical_Project/pull/10)
 - 시작 main과 지시서 commit: `a01ae8bd8965f5b035acdcfa40087cf6fe8c3c7d`
 - 게임 코드 기준: `a668f9b21340db09fe2459190bb34337ef7d2690`
 - WIP11D 코어 SHA-256: `8ee5cc9f4374db0afcffaf9ae49df9e6c818a089fd72a7f1319f29c994788ee8`

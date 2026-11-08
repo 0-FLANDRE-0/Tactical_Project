@@ -6,4 +6,4 @@
 - 릴리스와 검증: [TACTICAL_RELEASE_WIP11E.md](../../TACTICAL_RELEASE_WIP11E.md)
 - 기계 판독 검증 기록: [WIP11E-validation.json](../../tests/releases/WIP11E-validation.json)
 
-WIP11E는 `feat/wip11e-los-optimization` 브랜치에서 완료했으며 main 병합은 검토 후 별도 진행한다.
+WIP11E는 `feat/wip11e-los-optimization` 브랜치와 [PR #10](https://github.com/0-FLANDRE-0/Tactical_Project/pull/10)에서 완료했으며 main 병합은 검토 후 별도 진행한다.

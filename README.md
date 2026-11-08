@@ -5,6 +5,7 @@ WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지�
 - 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11e-los-optimization/Tactical_v0.4_WIP11E.zip). 압축을 풀면 `Tactical_v0.4_WIP11E.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP11E.html](Tactical_v0.4_WIP11E.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP11E LOS 구현·성능](docs/LOS_OPTIMIZATION_WIP11E.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11E.md) · [체크섬](SHA256SUMS_WIP11E.txt) · [작업 목차](docs/tasks/README.md).
+- 검토용 [PR #10](https://github.com/0-FLANDRE-0/Tactical_Project/pull/10). main 병합과 공개 배포는 하지 않았다.
 - 최신 main `a01ae8b`에서 새 브랜치로 작업했다. WIP11D 고정 코어와 실제 지도 LOS 12,000건·노출 2,000건을 정확히 대조했고 전체 Node 219/219, 지형·원본 14/14, 실제 Chromium 27/27을 통과했다. 이동 100대의 5회 Node 비교는 중앙값 16.26%, P95 13.27%, 실제 Chromium 비교는 중앙값 14.71% 개선됐다.
 
 ## 실행과 조작
