@@ -1,0 +1,2146 @@
+{
+  "version": "0.4-WIP11E",
+  "date": "2026-11-08",
+  "reviewedHead": "e9a21ab731e6146422e1646a1eb8272b34820861",
+  "mainBase": "a01ae8bd8965f5b035acdcfa40087cf6fe8c3c7d",
+  "decision": "approve merge; exact equivalence preserved and moving-100 target met",
+  "tests": {
+    "nodeRunner": {
+      "passed": 219,
+      "failed": 0,
+      "includesStandaloneBrowserHarness": true
+    },
+    "browserFunctional": {
+      "passed": 27,
+      "failed": 0,
+      "pageErrors": 0
+    },
+    "terrainDerivation": {
+      "passed": 7,
+      "failed": 0
+    },
+    "sourceQuality": {
+      "passed": 7,
+      "failed": 0
+    },
+    "additionalPairedBoundaryComparisons": {
+      "pairedRequests": 16230,
+      "independentRays": 32460,
+      "exact": true
+    },
+    "additionalAutoStateComparisons": {
+      "comparedSteps": 600,
+      "exact": true,
+      "cases": [
+        {
+          "units": 10,
+          "steps": 300,
+          "simulatedSeconds": 15.000000000000078,
+          "publicFiringEvents": 8
+        },
+        {
+          "units": 50,
+          "steps": 300,
+          "simulatedSeconds": 15.000000000000078,
+          "publicFiringEvents": 54
+        }
+      ]
+    }
+  },
+  "package": {
+    "htmlSHA256": "61a4b23a4e5d7bcc7619494aa09e2ba3c64a2a0f47b2afdf4242cfc48d72d096",
+    "zipSHA256": "66c730fc37bbf5e5a959712b3dd360a557dfdd8cef685726195e83c643c8adc2",
+    "singleEntryCrcAndExtractedHtmlVerified": true,
+    "repackagedTwiceByteIdentical": true
+  },
+  "nodeComparison": {
+    "version": "0.4-WIP11E",
+    "date": "2026-11-08",
+    "baselineCommit": "a668f9b21340db09fe2459190bb34337ef7d2690",
+    "baselineSourceSHA256": "8ee5cc9f4374db0afcffaf9ae49df9e6c818a089fd72a7f1319f29c994788ee8",
+    "optimizedSourceSHA256": "5fab4fbc559f698387319665606517861501c07beb70337c1aac9690d674cb64",
+    "node": "v24.22.1",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "platform": "linux",
+    "arch": "x64",
+    "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+    "seed": 407,
+    "stepSeconds": 0.05,
+    "queryHz": 10,
+    "warmupSteps": 20,
+    "measuredSteps": 100,
+    "trials": 5,
+    "fixture": "unchanged observation-benchmark-fixture.cjs; stationary/moving 50/100 units; sequential fresh processes with alternating order; both cores receive the same parsed map and dependencies",
+    "notes": "Median and p95 summaries are medians of per-process statistics; maximum is the largest observed step. State JSON and existing counters compare byte-for-byte. Diagnostics run after the timed fixture and are excluded from timings. Heap values follow forced GC but remain process-level observations, not allocation counts or device guarantees.",
+    "cases": [
+      {
+        "mode": "stationary",
+        "count": 50,
+        "baseline": {
+          "medianStepMs": 3.1363320000000385,
+          "p95StepMs": 6.57839899999999,
+          "maxStepMs": 52.42425000000003
+        },
+        "optimized": {
+          "medianStepMs": 2.898975000000007,
+          "p95StepMs": 6.664404000000047,
+          "maxStepMs": 19.547807999999975
+        },
+        "reductionPercent": 7.567980685719123,
+        "p95ReductionPercent": -1.3073849731531473,
+        "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda",
+        "finalStatesEqual": true,
+        "candidatePairs": 14212,
+        "exactRayQueries": 37448,
+        "unchangedRayCacheHits": 90460
+      },
+      {
+        "mode": "stationary",
+        "count": 100,
+        "baseline": {
+          "medianStepMs": 8.763572000000067,
+          "p95StepMs": 19.058146999999963,
+          "maxStepMs": 58.25296400000002
+        },
+        "optimized": {
+          "medianStepMs": 8.839224000000058,
+          "p95StepMs": 16.86461700000018,
+          "maxStepMs": 51.5249060000001
+        },
+        "reductionPercent": -0.863255302746313,
+        "p95ReductionPercent": 11.509670903471292,
+        "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97",
+        "finalStatesEqual": true,
+        "candidatePairs": 48682,
+        "exactRayQueries": 119941,
+        "unchangedRayCacheHits": 318197
+      },
+      {
+        "mode": "moving",
+        "count": 50,
+        "baseline": {
+          "medianStepMs": 5.1132440000001225,
+          "p95StepMs": 6.84245299999975,
+          "maxStepMs": 12.115628000000015
+        },
+        "optimized": {
+          "medianStepMs": 4.118609000000106,
+          "p95StepMs": 6.063662999999906,
+          "maxStepMs": 37.60489800000005
+        },
+        "reductionPercent": 19.45213254051621,
+        "p95ReductionPercent": 11.381736929722031,
+        "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d",
+        "finalStatesEqual": true,
+        "candidatePairs": 14081,
+        "exactRayQueries": 126729,
+        "unchangedRayCacheHits": 0
+      },
+      {
+        "mode": "moving",
+        "count": 100,
+        "baseline": {
+          "medianStepMs": 19.229949000000033,
+          "p95StepMs": 25.15602399999989,
+          "maxStepMs": 55.84849299999996
+        },
+        "optimized": {
+          "medianStepMs": 16.797951999999896,
+          "p95StepMs": 22.19596300000012,
+          "maxStepMs": 62.33223300000009
+        },
+        "reductionPercent": 12.646923816595324,
+        "p95ReductionPercent": 11.766807823047799,
+        "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7",
+        "finalStatesEqual": true,
+        "candidatePairs": 48737,
+        "exactRayQueries": 438633,
+        "unchangedRayCacheHits": 0
+      }
+    ],
+    "runs": {
+      "baseline": [
+        {
+          "variant": "baseline",
+          "initMs": 220.21749099999997,
+          "heapBefore": 29413608,
+          "heapAfterInit": 29949888,
+          "heapAfterRun": 21259704,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": null,
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.441583000000037,
+              "p95StepMs": 8.885612000000037,
+              "maxStepMs": 19.953825999999935,
+              "medianTeamReadMs": 0.03616500000009637,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 8.763572000000067,
+              "p95StepMs": 28.552273000000014,
+              "maxStepMs": 42.22298899999987,
+              "medianTeamReadMs": 0.04296500000009473,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 5.451523000000179,
+              "p95StepMs": 7.719648000000234,
+              "maxStepMs": 10.837658999999803,
+              "medianTeamReadMs": 0.026699999999891588,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 20.98940500000026,
+              "p95StepMs": 32.01968300000044,
+              "maxStepMs": 42.61472700000013,
+              "medianTeamReadMs": 0.04542799999944691,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        },
+        {
+          "variant": "baseline",
+          "initMs": 92.093139,
+          "heapBefore": 29413608,
+          "heapAfterInit": 29950504,
+          "heapAfterRun": 21266576,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": null,
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.067079999999919,
+              "p95StepMs": 6.028201000000024,
+              "maxStepMs": 11.159889000000021,
+              "medianTeamReadMs": 0.021152000000029147,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 8.701097000000004,
+              "p95StepMs": 19.058146999999963,
+              "maxStepMs": 34.694369999999935,
+              "medianTeamReadMs": 0.04289500000004409,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 4.797334999999748,
+              "p95StepMs": 6.016884000000118,
+              "maxStepMs": 6.32271800000035,
+              "medianTeamReadMs": 0.0221030000002429,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 20.01420300000018,
+              "p95StepMs": 25.15602399999989,
+              "maxStepMs": 55.84849299999996,
+              "medianTeamReadMs": 0.044756999999663094,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        },
+        {
+          "variant": "baseline",
+          "initMs": 98.836037,
+          "heapBefore": 29413608,
+          "heapAfterInit": 29950440,
+          "heapAfterRun": 21274760,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": null,
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.1363320000000385,
+              "p95StepMs": 6.949853000000019,
+              "maxStepMs": 31.75563299999999,
+              "medianTeamReadMs": 0.019068000000061147,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 8.661221999999952,
+              "p95StepMs": 25.089733999999908,
+              "maxStepMs": 58.25296400000002,
+              "medianTeamReadMs": 0.037264999999933934,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 4.625711000000138,
+              "p95StepMs": 6.860869999999977,
+              "maxStepMs": 12.115628000000015,
+              "medianTeamReadMs": 0.019479000000046653,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 18.998700999999983,
+              "p95StepMs": 25.131366000000526,
+              "maxStepMs": 35.818295000000035,
+              "medianTeamReadMs": 0.042053000000123575,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        },
+        {
+          "variant": "baseline",
+          "initMs": 103.89816900000001,
+          "heapBefore": 29413680,
+          "heapAfterInit": 30023096,
+          "heapAfterRun": 21284656,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": null,
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.302267000000029,
+              "p95StepMs": 6.57839899999999,
+              "maxStepMs": 12.032691999999997,
+              "medianTeamReadMs": 0.02213500000004842,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 9.04340900000011,
+              "p95StepMs": 18.742318999999952,
+              "maxStepMs": 36.9092549999998,
+              "medianTeamReadMs": 0.038457000000107655,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 5.1132440000001225,
+              "p95StepMs": 6.84245299999975,
+              "maxStepMs": 7.385717000000113,
+              "medianTeamReadMs": 0.018378000000211614,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 18.93408099999988,
+              "p95StepMs": 23.07014100000015,
+              "maxStepMs": 25.443812999999864,
+              "medianTeamReadMs": 0.03959899999972549,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        },
+        {
+          "variant": "baseline",
+          "initMs": 87.933362,
+          "heapBefore": 29413680,
+          "heapAfterInit": 29950432,
+          "heapAfterRun": 21272424,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": null,
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.0245239999999853,
+              "p95StepMs": 6.1100999999999885,
+              "maxStepMs": 52.42425000000003,
+              "medianTeamReadMs": 0.021542000000067674,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 8.941017999999985,
+              "p95StepMs": 17.72796799999992,
+              "maxStepMs": 31.207730999999967,
+              "medianTeamReadMs": 0.03781600000002072,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 5.122161999999662,
+              "p95StepMs": 6.236139999999978,
+              "maxStepMs": 6.715387000000192,
+              "medianTeamReadMs": 0.01981999999998152,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 19.229949000000033,
+              "p95StepMs": 26.47847399999955,
+              "maxStepMs": 27.58167599999979,
+              "medianTeamReadMs": 0.04066100000000006,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        }
+      ],
+      "optimized": [
+        {
+          "variant": "optimized",
+          "initMs": 94.84904199999998,
+          "heapBefore": 29413616,
+          "heapAfterInit": 29965560,
+          "heapAfterRun": 21419344,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": {
+            "enabled": false,
+            "groups": 285807,
+            "rays": 571614,
+            "heightSamples": 13737643,
+            "heightReadsAvoided": 12455579,
+            "buildingSamples": 11750108,
+            "forestSamples": 12972279
+          },
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.0528380000000084,
+              "p95StepMs": 6.874181000000021,
+              "maxStepMs": 11.661616999999978,
+              "medianTeamReadMs": 0.019198999999957778,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 8.843352000000095,
+              "p95StepMs": 16.86461700000018,
+              "maxStepMs": 33.76017900000011,
+              "medianTeamReadMs": 0.037415999999893756,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 4.419855999999982,
+              "p95StepMs": 5.63877599999978,
+              "maxStepMs": 6.295611999999892,
+              "medianTeamReadMs": 0.0183670000001257,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 15.91382399999975,
+              "p95StepMs": 21.6396450000002,
+              "maxStepMs": 22.414324000000306,
+              "medianTeamReadMs": 0.04537900000013906,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        },
+        {
+          "variant": "optimized",
+          "initMs": 97.993816,
+          "heapBefore": 29413688,
+          "heapAfterInit": 29964912,
+          "heapAfterRun": 21410360,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": {
+            "enabled": false,
+            "groups": 285807,
+            "rays": 571614,
+            "heightSamples": 13737643,
+            "heightReadsAvoided": 12455579,
+            "buildingSamples": 11750108,
+            "forestSamples": 12972279
+          },
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.2548420000000533,
+              "p95StepMs": 6.215620000000001,
+              "maxStepMs": 11.634807000000023,
+              "medianTeamReadMs": 0.01971000000003187,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 7.936900000000151,
+              "p95StepMs": 24.221673999999894,
+              "maxStepMs": 39.049126000000115,
+              "medianTeamReadMs": 0.0372859999999946,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.9800430000000233,
+              "p95StepMs": 6.063662999999906,
+              "maxStepMs": 8.705353999999716,
+              "medianTeamReadMs": 0.01981999999998152,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 16.797951999999896,
+              "p95StepMs": 22.19596300000012,
+              "maxStepMs": 24.608218000000306,
+              "medianTeamReadMs": 0.03971000000001368,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        },
+        {
+          "variant": "optimized",
+          "initMs": 94.01603899999999,
+          "heapBefore": 29413616,
+          "heapAfterInit": 29964840,
+          "heapAfterRun": 21405416,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": {
+            "enabled": false,
+            "groups": 285807,
+            "rays": 571614,
+            "heightSamples": 13737643,
+            "heightReadsAvoided": 12455579,
+            "buildingSamples": 11750108,
+            "forestSamples": 12972279
+          },
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 2.8249150000000327,
+              "p95StepMs": 6.664404000000047,
+              "maxStepMs": 19.547807999999975,
+              "medianTeamReadMs": 0.021243000000026768,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 8.839224000000058,
+              "p95StepMs": 16.152021999999988,
+              "maxStepMs": 51.5249060000001,
+              "medianTeamReadMs": 0.04422599999998056,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 3.876144000000295,
+              "p95StepMs": 5.202262999999903,
+              "maxStepMs": 7.028941000000032,
+              "medianTeamReadMs": 0.02217300000029354,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 18.205075000000306,
+              "p95StepMs": 24.94648099999995,
+              "maxStepMs": 62.33223300000009,
+              "medianTeamReadMs": 0.04789100000016333,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        },
+        {
+          "variant": "optimized",
+          "initMs": 101.16063900000002,
+          "heapBefore": 29413616,
+          "heapAfterInit": 29965560,
+          "heapAfterRun": 21397312,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": {
+            "enabled": false,
+            "groups": 285807,
+            "rays": 571614,
+            "heightSamples": 13737643,
+            "heightReadsAvoided": 12455579,
+            "buildingSamples": 11750108,
+            "forestSamples": 12972279
+          },
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 2.898975000000007,
+              "p95StepMs": 5.389898999999957,
+              "maxStepMs": 10.848507999999981,
+              "medianTeamReadMs": 0.021312000000079934,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 8.161845999999969,
+              "p95StepMs": 19.070832999999993,
+              "maxStepMs": 50.993539000000055,
+              "medianTeamReadMs": 0.037366000000019994,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 4.404313999999886,
+              "p95StepMs": 7.357970999999907,
+              "maxStepMs": 10.536217000000306,
+              "medianTeamReadMs": 0.01963900000009744,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 16.390250999999807,
+              "p95StepMs": 20.289410000000316,
+              "maxStepMs": 23.812106000000313,
+              "medianTeamReadMs": 0.039619000000129745,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        },
+        {
+          "variant": "optimized",
+          "initMs": 90.256357,
+          "heapBefore": 29413616,
+          "heapAfterInit": 29964440,
+          "heapAfterRun": 21402360,
+          "summary": {
+            "tileMetres": 32,
+            "tiles": 15625,
+            "summaryBytes": 265625
+          },
+          "diagnostics": {
+            "enabled": false,
+            "groups": 285807,
+            "rays": 571614,
+            "heightSamples": 13737643,
+            "heightReadsAvoided": 12455579,
+            "buildingSamples": 11750108,
+            "forestSamples": 12972279
+          },
+          "cases": [
+            {
+              "mode": "stationary",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 2.891008999999997,
+              "p95StepMs": 6.834585000000004,
+              "maxStepMs": 13.970952000000011,
+              "medianTeamReadMs": 0.019047999999997955,
+              "queries": 2500,
+              "candidatePairs": 14212,
+              "geometryRequests": 14212,
+              "exactRayQueries": 37448,
+              "unchangedRayCacheHits": 90460,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "6c6d58daa85545845a685df3572f462c65113d6916bf3a8bcb8414eceb98bcda"
+            },
+            {
+              "mode": "stationary",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 8.850658000000067,
+              "p95StepMs": 15.070357999999942,
+              "maxStepMs": 20.866201000000046,
+              "medianTeamReadMs": 0.037015000000110376,
+              "queries": 5000,
+              "candidatePairs": 48682,
+              "geometryRequests": 48682,
+              "exactRayQueries": 119941,
+              "unchangedRayCacheHits": 318197,
+              "movedEndpoints": 0,
+              "blockedEndpointUpdates": 0,
+              "finalStateSHA256": "48ce1ac17658c25f6cde2108105e8b9e98e5b76e3897a6c8e55d26a29ff16e97"
+            },
+            {
+              "mode": "moving",
+              "count": 50,
+              "blue": 25,
+              "red": 25,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 4.118609000000106,
+              "p95StepMs": 6.613800000000083,
+              "maxStepMs": 37.60489800000005,
+              "medianTeamReadMs": 0.019509000000198284,
+              "queries": 2500,
+              "candidatePairs": 14081,
+              "geometryRequests": 14081,
+              "exactRayQueries": 126729,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 4902,
+              "blockedEndpointUpdates": 98,
+              "finalStateSHA256": "4dfe72826a683c1f7b6d6601d58006358bdca9a64752f831fbe1bbff013e934d"
+            },
+            {
+              "mode": "moving",
+              "count": 100,
+              "blue": 50,
+              "red": 50,
+              "steps": 100,
+              "simulatedSeconds": 5,
+              "medianStepMs": 17.296645999999782,
+              "p95StepMs": 22.538179000000127,
+              "maxStepMs": 54.74916799999983,
+              "medianTeamReadMs": 0.03950799999984156,
+              "queries": 5000,
+              "candidatePairs": 48737,
+              "geometryRequests": 48737,
+              "exactRayQueries": 438633,
+              "unchangedRayCacheHits": 0,
+              "movedEndpoints": 9854,
+              "blockedEndpointUpdates": 146,
+              "finalStateSHA256": "d39cf8f23dfa80241c726984e5e168070e93251640585bbdda1c26a1503a37f7"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "browserComparison": {
+    "version": "0.4-WIP11E",
+    "date": "2026-11-08",
+    "browser": "156.0.8078.79",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "baselineCommit": "a668f9b21340db09fe2459190bb34337ef7d2690",
+    "trials": 3,
+    "seed": 407,
+    "stepSeconds": 0.05,
+    "warmupSteps": 20,
+    "measuredSteps": 100,
+    "notes": "Actual headless Chromium using the exact WIP11D and WIP11E standalone HTML over local HTTP. Independent simulation scenarios run while the app scenario is paused. CPU fixed-step time, not render FPS or a physical-device result.",
+    "cases": [
+      {
+        "name": "stationary-small",
+        "count": 10,
+        "moving": false,
+        "steps": 100,
+        "baseline": {
+          "medianStepMs": 0.40000000037252903,
+          "p95StepMs": 1.5,
+          "maxStepMs": 5.599999999627471
+        },
+        "optimized": {
+          "medianStepMs": 0.40000000037252903,
+          "p95StepMs": 1.5,
+          "maxStepMs": 4.400000000372529
+        },
+        "reductionPercent": 0,
+        "p95ReductionPercent": 0,
+        "finalStateSHA256": "250e6efdee11db9764164f6d672e39589603ba4a37c704293d4b9476d7bf17ae",
+        "finalStatesEqual": true
+      },
+      {
+        "name": "moving-50",
+        "count": 50,
+        "moving": true,
+        "steps": 100,
+        "baseline": {
+          "medianStepMs": 5.099999999627471,
+          "p95StepMs": 8.399999998509884,
+          "maxStepMs": 15.900000000372529
+        },
+        "optimized": {
+          "medianStepMs": 4.900000000372529,
+          "p95StepMs": 7.800000000745058,
+          "maxStepMs": 14.400000000372529
+        },
+        "reductionPercent": 3.9215686131284455,
+        "p95ReductionPercent": 7.1428571175150335,
+        "finalStateSHA256": "5a9517928b5b5ef725dff7612ddfe5347bb36d9836a7f63ce93dadf5cfcfe260",
+        "finalStatesEqual": true
+      },
+      {
+        "name": "moving-100",
+        "count": 100,
+        "moving": true,
+        "steps": 100,
+        "baseline": {
+          "medianStepMs": 19,
+          "p95StepMs": 28.90000000037253,
+          "maxStepMs": 40.899999998509884
+        },
+        "optimized": {
+          "medianStepMs": 18.200000001117587,
+          "p95StepMs": 25.09999999962747,
+          "maxStepMs": 41.5
+        },
+        "reductionPercent": 4.210526309907436,
+        "p95ReductionPercent": 13.148788929744203,
+        "finalStateSHA256": "ded7c3f6ea88516b2426e07f1486723ee9b10711efa4e71eed6f70d96b16a06c",
+        "finalStatesEqual": true
+      }
+    ],
+    "runs": {
+      "baseline": [
+        [
+          {
+            "name": "stationary-small",
+            "count": 10,
+            "moving": false,
+            "steps": 100,
+            "medianStepMs": 0.30000000074505806,
+            "p95StepMs": 1.199999999254942,
+            "maxStepMs": 5.599999999627471,
+            "heapBefore": 69865969,
+            "heapAfter": 67113493
+          },
+          {
+            "name": "moving-50",
+            "count": 50,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 5.099999999627471,
+            "p95StepMs": 10.800000000745058,
+            "maxStepMs": 15.799999998882413,
+            "heapBefore": 76637589,
+            "heapAfter": 55640265
+          },
+          {
+            "name": "moving-100",
+            "count": 100,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 19,
+            "p95StepMs": 26,
+            "maxStepMs": 38.80000000074506,
+            "heapBefore": 72339293,
+            "heapAfter": 98372333
+          }
+        ],
+        [
+          {
+            "name": "stationary-small",
+            "count": 10,
+            "moving": false,
+            "steps": 100,
+            "medianStepMs": 0.40000000037252903,
+            "p95StepMs": 1.599999999627471,
+            "maxStepMs": 3.400000000372529,
+            "heapBefore": 66621117,
+            "heapAfter": 69931021
+          },
+          {
+            "name": "moving-50",
+            "count": 50,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 4.800000000745058,
+            "p95StepMs": 7.700000001117587,
+            "maxStepMs": 15.900000000372529,
+            "heapBefore": 68902421,
+            "heapAfter": 84514581
+          },
+          {
+            "name": "moving-100",
+            "count": 100,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 18.699999999254942,
+            "p95StepMs": 30.199999999254942,
+            "maxStepMs": 40.899999998509884,
+            "heapBefore": 83947933,
+            "heapAfter": 85841325
+          }
+        ],
+        [
+          {
+            "name": "stationary-small",
+            "count": 10,
+            "moving": false,
+            "steps": 100,
+            "medianStepMs": 0.5,
+            "p95StepMs": 1.5,
+            "maxStepMs": 3,
+            "heapBefore": 67584697,
+            "heapAfter": 69395549
+          },
+          {
+            "name": "moving-50",
+            "count": 50,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 5.399999998509884,
+            "p95StepMs": 8.399999998509884,
+            "maxStepMs": 9.800000000745058,
+            "heapBefore": 76535553,
+            "heapAfter": 83891245
+          },
+          {
+            "name": "moving-100",
+            "count": 100,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 20.300000000745058,
+            "p95StepMs": 28.90000000037253,
+            "maxStepMs": 31.90000000037253,
+            "heapBefore": 84758249,
+            "heapAfter": 82322617
+          }
+        ]
+      ],
+      "optimized": [
+        [
+          {
+            "name": "stationary-small",
+            "count": 10,
+            "moving": false,
+            "steps": 100,
+            "medianStepMs": 0.40000000037252903,
+            "p95StepMs": 1.599999999627471,
+            "maxStepMs": 3.400000000372529,
+            "heapBefore": 69960324,
+            "heapAfter": 68799340
+          },
+          {
+            "name": "moving-50",
+            "count": 50,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 4.900000000372529,
+            "p95StepMs": 7.800000000745058,
+            "maxStepMs": 9,
+            "heapBefore": 74882620,
+            "heapAfter": 72272128
+          },
+          {
+            "name": "moving-100",
+            "count": 100,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 16.299999998882413,
+            "p95StepMs": 21.09999999962747,
+            "maxStepMs": 25.300000000745058,
+            "heapBefore": 61161305,
+            "heapAfter": 90152281
+          }
+        ],
+        [
+          {
+            "name": "stationary-small",
+            "count": 10,
+            "moving": false,
+            "steps": 100,
+            "medianStepMs": 0.40000000037252903,
+            "p95StepMs": 1.400000000372529,
+            "maxStepMs": 2.400000000372529,
+            "heapBefore": 72726180,
+            "heapAfter": 74182972
+          },
+          {
+            "name": "moving-50",
+            "count": 50,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 4.700000001117587,
+            "p95StepMs": 9,
+            "maxStepMs": 14,
+            "heapBefore": 53022273,
+            "heapAfter": 64822629
+          },
+          {
+            "name": "moving-100",
+            "count": 100,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 22.799999998882413,
+            "p95StepMs": 30.800000000745058,
+            "maxStepMs": 41.5,
+            "heapBefore": 74409333,
+            "heapAfter": 67282713
+          }
+        ],
+        [
+          {
+            "name": "stationary-small",
+            "count": 10,
+            "moving": false,
+            "steps": 100,
+            "medianStepMs": 0.3999999985098839,
+            "p95StepMs": 1.5,
+            "maxStepMs": 4.400000000372529,
+            "heapBefore": 69450024,
+            "heapAfter": 68210784
+          },
+          {
+            "name": "moving-50",
+            "count": 50,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 5.200000001117587,
+            "p95StepMs": 7.5,
+            "maxStepMs": 14.400000000372529,
+            "heapBefore": 71805644,
+            "heapAfter": 62266141
+          },
+          {
+            "name": "moving-100",
+            "count": 100,
+            "moving": true,
+            "steps": 100,
+            "medianStepMs": 18.200000001117587,
+            "p95StepMs": 25.09999999962747,
+            "maxStepMs": 27.299999998882413,
+            "heapBefore": 56379037,
+            "heapAfter": 77570085
+          }
+        ]
+      ]
+    }
+  },
+  "sceneComparison": {
+    "version": "0.4-WIP11E",
+    "date": "2026-11-08",
+    "node": "v24.22.1",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "trials": 5,
+    "notes": "Supplementary fixed placements; 500 warmup exposures, then seven rounds of 2,000 uncached nine-ray exposures per fresh process. Baseline/current process order alternates. CPU time, not simulation step or FPS.",
+    "cases": [
+      {
+        "name": "real-west-slope",
+        "exposuresPerRound": 2000,
+        "roundsPerProcess": 7,
+        "baseline": {
+          "medianMs": 50.53402200000005,
+          "p95Ms": 57.08218999999997,
+          "maxMs": 65.68201099999999
+        },
+        "optimized": {
+          "medianMs": 43.547357000000034,
+          "p95Ms": 47.53981900000008,
+          "maxMs": 67.03177900000003
+        },
+        "reductionPercent": 13.825665805900055,
+        "resultsEqual": true
+      },
+      {
+        "name": "real-town",
+        "exposuresPerRound": 2000,
+        "roundsPerProcess": 7,
+        "baseline": {
+          "medianMs": 63.064173999999866,
+          "p95Ms": 70.51531399999999,
+          "maxMs": 124.48301900000001
+        },
+        "optimized": {
+          "medianMs": 52.433508000000074,
+          "p95Ms": 61.056374000000005,
+          "maxMs": 88.80640700000004
+        },
+        "reductionPercent": 16.85690198685519,
+        "resultsEqual": true
+      },
+      {
+        "name": "synthetic-forest",
+        "exposuresPerRound": 2000,
+        "roundsPerProcess": 7,
+        "baseline": {
+          "medianMs": 35.01011399999993,
+          "p95Ms": 39.46252799999979,
+          "maxMs": 79.66591500000004
+        },
+        "optimized": {
+          "medianMs": 29.301426999999876,
+          "p95Ms": 32.04238099999998,
+          "maxMs": 46.08889999999997
+        },
+        "reductionPercent": 16.30582236893049,
+        "resultsEqual": true
+      },
+      {
+        "name": "synthetic-ridge-tangent",
+        "exposuresPerRound": 2000,
+        "roundsPerProcess": 7,
+        "baseline": {
+          "medianMs": 14.627222000000074,
+          "p95Ms": 18.49592400000006,
+          "maxMs": 21.826639000000114
+        },
+        "optimized": {
+          "medianMs": 11.75202199999967,
+          "p95Ms": 15.230557999999974,
+          "maxMs": 19.861024000000043
+        },
+        "reductionPercent": 19.656500735412298,
+        "resultsEqual": true
+      },
+      {
+        "name": "synthetic-early-building",
+        "exposuresPerRound": 2000,
+        "roundsPerProcess": 7,
+        "baseline": {
+          "medianMs": 24.094579000000067,
+          "p95Ms": 27.81544900000017,
+          "maxMs": 39.054615999999896
+        },
+        "optimized": {
+          "medianMs": 17.491670000000113,
+          "p95Ms": 22.222966999999926,
+          "maxMs": 25.275975000000017
+        },
+        "reductionPercent": 27.404126878498005,
+        "resultsEqual": true
+      }
+    ],
+    "runs": {
+      "baseline": [
+        {
+          "variant": "baseline",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 50.53402200000005,
+              "p95Ms": 52.126601999999934,
+              "minMs": 47.64235600000006,
+              "maxMs": 52.126601999999934
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 62.283013999999866,
+              "p95Ms": 67.65023899999983,
+              "minMs": 58.853170999999975,
+              "maxMs": 67.65023899999983
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 35.67031399999996,
+              "p95Ms": 39.46252799999979,
+              "minMs": 33.234923999999864,
+              "maxMs": 39.46252799999979
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 14.519118000000162,
+              "p95Ms": 18.305509000000256,
+              "minMs": 14.081658999999945,
+              "maxMs": 18.305509000000256
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 25.77024100000017,
+              "p95Ms": 39.054615999999896,
+              "minMs": 23.02703700000029,
+              "maxMs": 39.054615999999896
+            }
+          ]
+        },
+        {
+          "variant": "baseline",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 53.001972999999964,
+              "p95Ms": 57.08218999999997,
+              "minMs": 50.73318900000004,
+              "maxMs": 57.08218999999997
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 66.58328499999993,
+              "p95Ms": 124.48301900000001,
+              "minMs": 64.17126999999982,
+              "maxMs": 124.48301900000001
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 34.55841099999998,
+              "p95Ms": 38.73140699999999,
+              "minMs": 33.48670199999992,
+              "maxMs": 38.73140699999999
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 15.107015000000047,
+              "p95Ms": 20.18139700000006,
+              "minMs": 14.822233000000097,
+              "maxMs": 20.18139700000006
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 24.094579000000067,
+              "p95Ms": 25.47351299999991,
+              "minMs": 22.820200000000114,
+              "maxMs": 25.47351299999991
+            }
+          ]
+        },
+        {
+          "variant": "baseline",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 46.573672999999985,
+              "p95Ms": 51.24881399999998,
+              "minMs": 45.44960600000002,
+              "maxMs": 51.24881399999998
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 62.44850699999995,
+              "p95Ms": 124.18815900000004,
+              "minMs": 60.750348999999915,
+              "maxMs": 124.18815900000004
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 33.852301000000125,
+              "p95Ms": 35.158987000000025,
+              "minMs": 33.18644899999981,
+              "maxMs": 35.158987000000025
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 14.551504000000023,
+              "p95Ms": 15.266357999999855,
+              "minMs": 14.343764000000192,
+              "maxMs": 15.266357999999855
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 22.781009999999924,
+              "p95Ms": 27.81544900000017,
+              "minMs": 22.260446,
+              "maxMs": 27.81544900000017
+            }
+          ]
+        },
+        {
+          "variant": "baseline",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 46.45595500000002,
+              "p95Ms": 65.68201099999999,
+              "minMs": 45.02790700000003,
+              "maxMs": 65.68201099999999
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 63.064173999999866,
+              "p95Ms": 69.08174799999995,
+              "minMs": 60.48106400000006,
+              "maxMs": 69.08174799999995
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 36.61184500000013,
+              "p95Ms": 79.66591500000004,
+              "minMs": 33.637664000000086,
+              "maxMs": 79.66591500000004
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 14.627222000000074,
+              "p95Ms": 21.826639000000114,
+              "minMs": 14.293969000000061,
+              "maxMs": 21.826639000000114
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 24.547153999999864,
+              "p95Ms": 25.095731999999998,
+              "minMs": 23.124722999999904,
+              "maxMs": 25.095731999999998
+            }
+          ]
+        },
+        {
+          "variant": "baseline",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 54.845545999999956,
+              "p95Ms": 63.14506499999993,
+              "minMs": 46.46065199999998,
+              "maxMs": 63.14506499999993
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 64.55265099999997,
+              "p95Ms": 70.51531399999999,
+              "minMs": 62.81257100000005,
+              "maxMs": 70.51531399999999
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 35.01011399999993,
+              "p95Ms": 45.293869000000086,
+              "minMs": 34.32175200000006,
+              "maxMs": 45.293869000000086
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 14.763320000000022,
+              "p95Ms": 18.49592400000006,
+              "minMs": 14.273693000000094,
+              "maxMs": 18.49592400000006
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 23.853401999999733,
+              "p95Ms": 31.738203999999996,
+              "minMs": 22.694680999999946,
+              "maxMs": 31.738203999999996
+            }
+          ]
+        }
+      ],
+      "optimized": [
+        {
+          "variant": "optimized",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 43.547357000000034,
+              "p95Ms": 47.53981900000008,
+              "minMs": 42.83669099999997,
+              "maxMs": 47.53981900000008
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 53.49028099999987,
+              "p95Ms": 88.80640700000004,
+              "minMs": 51.995260000000144,
+              "maxMs": 88.80640700000004
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 28.03506799999991,
+              "p95Ms": 28.475462000000107,
+              "minMs": 26.262423000000126,
+              "maxMs": 28.475462000000107
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 11.75202199999967,
+              "p95Ms": 18.964019000000008,
+              "minMs": 10.75025400000004,
+              "maxMs": 18.964019000000008
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 13.716041000000132,
+              "p95Ms": 20.745605999999952,
+              "minMs": 13.262547000000268,
+              "maxMs": 20.745605999999952
+            }
+          ]
+        },
+        {
+          "variant": "optimized",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 46.38440200000002,
+              "p95Ms": 62.99736800000005,
+              "minMs": 42.339563,
+              "maxMs": 62.99736800000005
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 52.433508000000074,
+              "p95Ms": 61.056374000000005,
+              "minMs": 49.71673299999998,
+              "maxMs": 61.056374000000005
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 29.301426999999876,
+              "p95Ms": 32.04238099999998,
+              "minMs": 27.32679999999982,
+              "maxMs": 32.04238099999998
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 11.913641000000098,
+              "p95Ms": 15.230557999999974,
+              "minMs": 11.243217000000186,
+              "maxMs": 15.230557999999974
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 17.854397999999946,
+              "p95Ms": 23.00502299999971,
+              "minMs": 17.075632999999925,
+              "maxMs": 23.00502299999971
+            }
+          ]
+        },
+        {
+          "variant": "optimized",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 40.91660300000001,
+              "p95Ms": 46.971901,
+              "minMs": 39.93104400000004,
+              "maxMs": 46.971901
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 47.90338100000008,
+              "p95Ms": 53.81429600000001,
+              "minMs": 47.123355000000174,
+              "maxMs": 53.81429600000001
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 25.17525499999988,
+              "p95Ms": 27.266286000000036,
+              "minMs": 24.60286599999995,
+              "maxMs": 27.266286000000036
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 11.436869999999999,
+              "p95Ms": 19.861024000000043,
+              "minMs": 10.409638000000086,
+              "maxMs": 19.861024000000043
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 16.810310000000072,
+              "p95Ms": 21.317213000000038,
+              "minMs": 16.461483000000044,
+              "maxMs": 21.317213000000038
+            }
+          ]
+        },
+        {
+          "variant": "optimized",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 40.587941,
+              "p95Ms": 42.932748999999944,
+              "minMs": 39.95698599999997,
+              "maxMs": 42.932748999999944
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 47.93472699999995,
+              "p95Ms": 54.84880099999998,
+              "minMs": 47.5500770000001,
+              "maxMs": 54.84880099999998
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 30.33796200000006,
+              "p95Ms": 46.08889999999997,
+              "minMs": 26.085074000000077,
+              "maxMs": 46.08889999999997
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 11.44023500000003,
+              "p95Ms": 14.450330000000122,
+              "minMs": 11.006102000000055,
+              "maxMs": 14.450330000000122
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 17.491670000000113,
+              "p95Ms": 22.222966999999926,
+              "minMs": 16.595591000000013,
+              "maxMs": 22.222966999999926
+            }
+          ]
+        },
+        {
+          "variant": "optimized",
+          "cases": [
+            {
+              "name": "real-west-slope",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 43.702274999999986,
+              "p95Ms": 67.03177900000003,
+              "minMs": 40.884411,
+              "maxMs": 67.03177900000003
+            },
+            {
+              "name": "real-town",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 58.24529800000005,
+              "p95Ms": 63.80331799999999,
+              "minMs": 53.400251000000026,
+              "maxMs": 63.80331799999999
+            },
+            {
+              "name": "synthetic-forest",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 31.390135999999984,
+              "p95Ms": 38.79235299999982,
+              "minMs": 28.296812000000045,
+              "maxMs": 38.79235299999982
+            },
+            {
+              "name": "synthetic-ridge-tangent",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 11.828950999999961,
+              "p95Ms": 12.593135999999959,
+              "minMs": 11.358030999999983,
+              "maxMs": 12.593135999999959
+            },
+            {
+              "name": "synthetic-early-building",
+              "exposuresPerRound": 2000,
+              "rounds": 7,
+              "medianMs": 17.50459100000012,
+              "p95Ms": 25.275975000000017,
+              "minMs": 17.011608999999908,
+              "maxMs": 25.275975000000017
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "sceneRepeatProtocol": "Initial 3-process scene results showed two tail regressions; repeated with 5 alternating fresh processes. Only the reviewer parent trial count and report trials field were changed in memory; checked-in script and per-worker scene/warmup/round/workload settings were unchanged.",
+  "preliminaryThreeTrialSceneCases": [
+    {
+      "name": "real-west-slope",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 55.90321,
+        "p95Ms": 65.00803299999995,
+        "maxMs": 93.803584
+      },
+      "optimized": {
+        "medianMs": 51.44880999999998,
+        "p95Ms": 54.60776899999996,
+        "maxMs": 69.41001100000005
+      },
+      "reductionPercent": 7.968057648210225,
+      "resultsEqual": true
+    },
+    {
+      "name": "real-town",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 76.04162299999984,
+        "p95Ms": 86.18553800000007,
+        "maxMs": 87.39112499999965
+      },
+      "optimized": {
+        "medianMs": 57.59264600000006,
+        "p95Ms": 61.33476400000018,
+        "maxMs": 78.99633599999993
+      },
+      "reductionPercent": 24.26168231574939,
+      "resultsEqual": true
+    },
+    {
+      "name": "synthetic-forest",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 35.98335099999986,
+        "p95Ms": 43.137559999999894,
+        "maxMs": 68.57788500000015
+      },
+      "optimized": {
+        "medianMs": 31.331105000000207,
+        "p95Ms": 42.493071999999984,
+        "maxMs": 42.812787999999955
+      },
+      "reductionPercent": 12.92888480564155,
+      "resultsEqual": true
+    },
+    {
+      "name": "synthetic-ridge-tangent",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 15.548436999999922,
+        "p95Ms": 16.320813000000044,
+        "maxMs": 18.888479999999618
+      },
+      "optimized": {
+        "medianMs": 14.128314000000046,
+        "p95Ms": 19.696007999999892,
+        "maxMs": 23.195764999999938
+      },
+      "reductionPercent": 9.133541847324478,
+      "resultsEqual": true
+    },
+    {
+      "name": "synthetic-early-building",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 24.60580899999968,
+        "p95Ms": 27.388034999999945,
+        "maxMs": 34.01870700000018
+      },
+      "optimized": {
+        "medianMs": 22.18990400000007,
+        "p95Ms": 31.990330000000085,
+        "maxMs": 33.71870899999999
+      },
+      "reductionPercent": 9.818433525187665,
+      "resultsEqual": true
+    }
+  ],
+  "limits": [
+    "CPU measurements are not whole-game FPS or physical-device guarantees.",
+    "Author stationary-50 p95 regression of 12.95% was not reproduced at that magnitude; reviewer 5-trial p95 was 1.31% slower.",
+    "Reviewer stationary-100 median was 0.86% slower; its p95 improved.",
+    "Some individual maxima increased; aggregate p95 and median improvements are not worst-case latency guarantees.",
+    "file:// remained blocked by Chromium policy; the same standalone HTML was tested over local HTTP.",
+    "Physical Android/iOS sustained FPS, thermals and multitouch were not run."
+  ]
+}

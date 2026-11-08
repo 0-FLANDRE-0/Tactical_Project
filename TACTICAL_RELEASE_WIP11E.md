@@ -11,7 +11,7 @@ WIP11E는 WIP11D의 지도·관측·전투 결과를 유지하면서 9표본 노
 - WIP11D 코어 SHA-256: `8ee5cc9f4374db0afcffaf9ae49df9e6c818a089fd72a7f1319f29c994788ee8`
 - 현재 코어 SHA-256: `5fab4fbc559f698387319665606517861501c07beb70337c1aac9690d674cb64`
 
-[구현·성능 상세](docs/LOS_OPTIMIZATION_WIP11E.md) · [보존한 지시서](archive/instructions/TACTICAL_WIP11E_LOS_OPTIMIZATION.md)
+[구현·성능 상세](docs/LOS_OPTIMIZATION_WIP11E.md) · [보존한 지시서](archive/instructions/TACTICAL_WIP11E_LOS_OPTIMIZATION.md) · [독립 병합 검토](docs/reviews/WIP11E_MERGE_REVIEW_2026-11-08.md)
 
 ## 자동 검증
 

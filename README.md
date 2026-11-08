@@ -2,7 +2,8 @@
 
 WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지하면서 9표본 LOS 비용을 줄였다. 차체의 같은 x/y에서 높이만 다른 두 관측 광선이 지면·건물 후보와 내부 판정·숲 조회를 공유한다. 각 높이의 차폐 사유·광학 깊이·32m 건너뛰기·종료와 표본별 캐시는 독립적이며 2m 격자, 9표본 결과와 기존 관측 통계는 그대로다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11e-los-optimization/Tactical_v0.4_WIP11E.zip). 압축을 풀면 `Tactical_v0.4_WIP11E.html` 한 파일이 나온다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11E.zip). 압축을 풀면 `Tactical_v0.4_WIP11E.html` 한 파일이 나온다.
+- [WIP11E 병합 검토](docs/reviews/WIP11E_MERGE_REVIEW_2026-11-08.md): 판정 동등성과 Node·Chromium 성능을 독립 재측정한 뒤 main에 통합했다.
 - 현재 실행 파일: [Tactical_v0.4_WIP11E.html](Tactical_v0.4_WIP11E.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP11E LOS 구현·성능](docs/LOS_OPTIMIZATION_WIP11E.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11E.md) · [체크섬](SHA256SUMS_WIP11E.txt) · [작업 목차](docs/tasks/README.md).
 - 검토용 [PR #10](https://github.com/0-FLANDRE-0/Tactical_Project/pull/10). main 병합과 공개 배포는 하지 않았다.
@@ -10,7 +11,7 @@ WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지�
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11e-los-optimization/Tactical_v0.4_WIP11E.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11E.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11E.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11E.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
