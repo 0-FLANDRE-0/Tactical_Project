@@ -6,13 +6,13 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP11D 지형 판독성 개선·WIP11C 공개 체력 병합 검증 | [TACTICAL_WIP11D_TERRAIN_READABILITY.md](TACTICAL_WIP11D_TERRAIN_READABILITY.md) | 지시서 작성 완료 · 구현은 별도 작업에서 진행 |
+| WIP11D 지형 판독성 개선·WIP11C 공개 체력 병합 검증 | [완료 지시서](../../archive/instructions/TACTICAL_WIP11D_TERRAIN_READABILITY.md) | 구현·재검증 완료 · main 통합 |
 
-WIP11D는 잠정 버전이다. 작업 시작 시 실제 기준 브랜치와 기존 진행 PR을 확인한다. WIP11C 공개 체력 병합 수정은 이미 반영된 경우 보존·재검증하고 중복 적용하지 않는다.
+현재 대기 중인 새 지시서는 없다. WIP11D는 [구현 문서](../TERRAIN_READABILITY_WIP11D.md)와 [병합 검토](../reviews/WIP11D_MERGE_REVIEW_2026-11-08.md)를 확인한다. 완료한 지시서를 다시 구현하지 않는다.
 
 ## 작업 AI에게 전달할 문구
 
-> `docs/tasks/TACTICAL_WIP11D_TERRAIN_READABILITY.md`를 읽고 작업해줘. 시작 전에 실제 코드와 브랜치 상태를 확인하고, 이미 반영된 수정은 중복 적용하지 마. 지시서의 범위와 완료 기준에 따라 구현하고 실제 검증 결과를 보고해줘.
+> `docs/tasks/README.md`에서 예정·진행 중인 작업을 확인하고 해당 지시서를 읽어줘. 완료 작업은 다시 실행하지 말고, 새 작업은 실제 코드와 브랜치 상태부터 확인해줘.
 
 ## 관리 방법
 

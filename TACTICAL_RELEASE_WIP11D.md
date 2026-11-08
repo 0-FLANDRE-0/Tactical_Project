@@ -59,7 +59,7 @@ Chromium 156.0.8078.79에서 소스 빌드 단일 HTML을 로컬 HTTP로 실행�
 
 ## 실행 파일
 
-[GitHub 실행 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11D.zip)을 내려받아 압축을 풀면 외부 의존성 없는 HTML 한 파일이 나온다.
+[GitHub 실행 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11D.zip)을 내려받아 압축을 풀면 외부 의존성 없는 HTML 한 파일이 나온다.
 
 | 파일 | 바이트 | SHA-256 |
 |---|---:|---|

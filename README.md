@@ -2,14 +2,15 @@
 
 WIP11C의 관측·경계·자동교전과 공개 체력 규칙을 유지하면서 고저·사면·능선·골짜기를 읽기 쉽게 만들었다. 고정 고도 팔레트, 부드러운 다방향 음영, 개선된 10/50m 등고선과 숫자를 기본 지도에 적용했다. `지형` 모드는 숲·농경지 장식을 낮추고 2m 게임 높이장에서 미리 추출한 능선 실선과 골짜기 파선을 표시한다. 이 파생선은 표시 전용이며 이동·LOS·관측·전투 판정에 사용하지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11D.zip). 압축을 풀면 `Tactical_v0.4_WIP11D.html` 한 파일이 나온다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11D.zip). 압축을 풀면 `Tactical_v0.4_WIP11D.html` 한 파일이 나온다.
+- main 통합 후의 [병합 검토 기록](docs/reviews/WIP11D_MERGE_REVIEW_2026-11-08.md)과 [작업 목차](docs/tasks/README.md).
 - 현재 실행 파일: [Tactical_v0.4_WIP11D.html](Tactical_v0.4_WIP11D.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP11D 지형 판독성](docs/TERRAIN_READABILITY_WIP11D.md) · [WIP11C UI·경계](docs/UI_AND_GUARD_WIP11C.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11D.md) · [체크섬](SHA256SUMS_WIP11D.txt).
 - 기존 PR #9 브랜치 `feat/wip11a-combat-state`의 WIP11C 수정 포함 head `a037774`에서 이어서 작업하고 최신 main `8ca288f`의 설계 아카이브를 정상 병합했다. 공개 HP 최신 관측 병합은 중복 수정하지 않고 C05/C06으로 재검증했다. WIP11D 전체 Node 287/287, 지형 분석 7/7, 원본 자료 7/7, 실제 Chromium 27/27을 통과했다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11D.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11D.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11D.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11D.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
