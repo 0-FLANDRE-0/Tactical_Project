@@ -67,7 +67,7 @@
       "crc32": "60b7e835",
       "unzipTest": "passed",
       "verifiedRawDownload": "https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip",
-      "rawDownloadSha256Matches": null
+      "rawDownloadSha256Matches": true
     },
     "effectAtlas": {
       "path": "assets/effects/wip12-effects-atlas.png",
@@ -127,7 +127,7 @@
     "No release was published and main was not merged."
   ],
   "reviewCorrectionBasisHead": "f55d824597b72be208a94b560291f9f42006e1c3",
-  "reviewCorrectionCommit": null,
+  "reviewCorrectionCommit": "43e3cf9520cada44f7f400aee8c48e215ab45f62",
   "reviewCorrections": {
     "tracerImpactLink": {
       "seed": 70,
