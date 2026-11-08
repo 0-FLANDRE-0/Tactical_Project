@@ -18,6 +18,7 @@
 | **장갑 세부 구획 검토 메모 (미확정)** | [tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md](tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md) | 7구역 내부 상/하부·포방패·좌우 뺨·측면 전후·지붕 분할 후보, LOS·이동 상태·사통/관측 확률 아이디어. **현재 미확정·미구현** |
 | **탄약 및 적재 프리셋** | [ammo/README.md](ammo/README.md) | 탄종별 게임 관통력, 전차별 기본탄, **32종×3=96개** 적재 프리셋, 구획·장전·보급 설계 |
 | **0~10m KE 3각도·5mm 기준표 (29종)** | [ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md](ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md) | 29종 0°/30°/60°의 5mm 근거리 게임값. 3BM32 505/425/275 버프, 3BM42 450/380/250 너프. 나머지 2km 값 유지 |
+| **대형 단일 전장·포병 실체·최적화·보병 분대 AI** | [performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md](performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md) | **전역지도는 임시 보관**, 4×4 유지·8×8/9×12 확장 후보, 포병 실제 유닛, 경로탐색·LOS 현행/제안 구분, **분대 공통 관측·판단 / 병사별 피격·부상**. 성능 검증·코드 구현 전 |
 | **폐기된 통합 문서 안내** | [TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md](TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md) | 구형 통합 데이터는 최신 기준에서 제외. 과거 내용은 Git 파일 이력에서 확인 |
 
 ## 데이터 유지 원칙
