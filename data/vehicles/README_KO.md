@@ -51,3 +51,9 @@ WIP07A의 자동 수색 중심은 전방 기준 전차장 ±45°/20초·포수 �
 제공 HTML의 M1A2 벡터를 사용한다. 원본은 `references/M1_Abrams_TopView.html`, 체크섬/수입 범위는 `references/top_view_import.json`에 보관했다. 다른 형식의 프로파일이나 Lab UI는 활성화하지 않는다. 제공 파일의 실측 주장을 별도로 인증하지 않았으며 도안용 근사값으로 기록한다.
 
 `model.turretOrigin=0.15`는 벡터 배치 원점, `turretPivot=[0.66,0]`은 차체에 고정된 링 축, `muzzleLocal=[5.717,0]`은 벡터 포구 끝이다. 모호한 `turretCenter`를 대체했다. `src/vehicle-geometry.js`의 변환을 그리기/발사에서 공유한다. 포구 발사선은 기존 게임 높이 2.2m를 차체 지면 기준으로 유지한다. 본격 탄도나 포신 충돌 모델은 추가하지 않았다. [현재 도안·발사 연결](../../docs/M1A2_ART_MUZZLE_WIP08A.md)을 참조한다.
+
+## WIP09 게임 명중 모델
+
+WIP08 선형 정확도·이동 곱셈·고정 `zoneWeights`를 제거하고 게임 오차 예산과 제시 직사각형을 사용한다. 준비 게이트 1.2초 이후에도 `layTime`이 계속 누적된다. 표적 이동은 현재 자기 포수 관측에서 벡터로 추정하며 숨겨진 실제 속도를 읽지 않는다. 모든 수치는 실차 성능이 아닌 게임 튜닝이다.
+
+`fireControl`의 추가 필드·범위 검증·35개 Python 기준표와 JS 비교는 [현재 상태 문서](../../docs/FIRE_CONTROL_WIP09.md)에 있다. 높이 띠는 표적 프로파일에서, 오차는 사수 프로파일에서 읽어 섞지 않는다. 레지스트리는 폐기된 정확도 필드가 남은 프로파일을 거부한다. `node scripts/export_vehicle_profile.cjs`로 현재 JSON을 내보낸다. 현재 활성 차종은 M1A2 하나이며 장갑/관통/탄약 아카이브를 자동 적용하지 않는다.

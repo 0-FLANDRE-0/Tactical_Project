@@ -61,6 +61,6 @@ async function asyncTests(){
  const actual=new Client(C,require('../src/visibility.js'),()=>['battlefield-data','vehicle-profiles','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(get).join('\n'),nodePlatform);
  try{const result=await actual.request({x:550,y:2750,profileId:'M1A2'});assert.equal(result.range,4000);assert(result.loops.length>10);assert.deepEqual(result.origin,{x:550,y:2750});assert(actual.worker,'Real worker must execute without fallback');passed++;console.log('PASS shipped worker bundle loads M1A2 and computes 4km visibility offline');}
  finally{actual.worker?.terminate();actual.releaseURL();}
- const report={version:'0.4-WIP08A',passed,failed:0,evidence};fs.writeFileSync(path.join(__dirname,'vehicle-results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+ const report={version:'0.4-WIP09',passed,failed:0,evidence};fs.writeFileSync(path.join(__dirname,'vehicle-results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
 }
 asyncTests().catch(error=>{console.error(error);process.exitCode=1;});

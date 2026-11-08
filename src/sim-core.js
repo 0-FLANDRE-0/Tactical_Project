@@ -299,13 +299,14 @@ const TacticalCore = (() => {
       const fireEye=heightAt(u.x,u.y)+p.fireControl.fireHeight-heightAt(muzzle.x,muzzle.y);
       const muzzleRoof=buildingAt(muzzle.x,muzzle.y)?.roof??-Infinity;
       const weapon=fireEye>0&&heightAt(u.x,u.y)+p.fireControl.fireHeight>=muzzleRoof?exposure(muzzle,target,fireEye):null;
-      let hull=0,turret=0,gunnerVisible=false;
+      let hull=0,turret=0,gunnerVisible=false;const samples=optical.samples.map(v=>({...v,visible:false}));
       for(let i=0;i<optical.samples.length;i++){
         const v=optical.samples[i],d=Math.hypot(v.x-u.x,v.y-u.y),angle=Math.abs(angleDiff(Math.atan2(v.y-u.y,v.x-u.x),u.turret));
         if(!v.visible||d>sensor.range||angle>sensor.fov/2)continue;gunnerVisible=true;
-        if(weapon?.samples[i].visible){if(v.part==='hull')hull++;else turret++;}
+        if(weapon?.samples[i].visible){samples[i].visible=true;if(v.part==='hull')hull++;else turret++;}
       }
-      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret}};
+      const tp=profileOf(target);
+      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,presented:{...tp.fireControl.presented},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
     }}));
     return fireRuntimes.get(s);
   }
@@ -391,7 +392,7 @@ const TacticalCore = (() => {
   }
   function exposure(observer,target,eyeHeight=null,cache=null) {
     let hull=0,turret=0,depth=0,rayQueries=0,rayCacheHits=0;const eye=eyeHeight??profileOf(observer).sensors.eyeHeight,e=profileOf(target).exposure,samples=[];
-    function sample(along,z,angle,part){
+    function sample(along,z,angle,part,col,row){
       const x=target.x+Math.cos(angle)*along,y=target.y+Math.sin(angle)*along;
       const previous=cache?.samples[samples.length];
       // Reuse only exactly unchanged endpoints/eye/sample height on the frozen
@@ -400,11 +401,11 @@ const TacticalCore = (() => {
       let los;
       if(previous&&previous.x===x&&previous.y===y&&previous.z===z&&previous.ox===observer.x&&previous.oy===observer.y&&previous.eye===eye&&cache.time-previous.at<=cache.maxAge){los=previous.los;rayCacheHits++;}
       else{los=lineOfSight(observer,{x,y},z,false,eye);rayQueries++;if(cache)cache.samples[samples.length]={x,y,z,ox:observer.x,oy:observer.y,eye,at:cache.time,los};}
-      samples.push({x,y,part,visible:los.visible,forestDepth:los.forestDepth});
+      samples.push({x,y,part,along,z,col,row,visible:los.visible,forestDepth:los.forestDepth});
       if(los.visible){if(part==='hull')hull++;else turret++;depth+=los.forestDepth;}
     }
-    for(const along of e.hullAlong)for(const z of e.hullHeights)sample(along,z,target.heading,'hull');
-    for(const along of e.turretAlong)sample(along,e.turretHeight,target.turret??target.heading,'turret');
+    for(const [col,along] of e.hullAlong.entries())for(const [row,z] of e.hullHeights.entries())sample(along,z,target.heading,'hull',col,row);
+    for(const [col,along] of e.turretAlong.entries())sample(along,e.turretHeight,target.turret??target.heading,'turret',col,0);
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
   return {registry,fireStatus,requestFire,fireEvents,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};

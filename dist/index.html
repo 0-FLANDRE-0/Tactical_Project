@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP08A</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP09</title>
 <style>
 :root{
   color-scheme:dark;
@@ -875,14 +875,14 @@ footer{
 
 /* WIP08 manual firing controls */
 .command:disabled{opacity:.4;cursor:default}.command.fire:not(:disabled){color:#ffdfa0;border-color:#bd9b5d}
-.look-title{flex-wrap:wrap;gap:6px}#fireState{color:#f2d496}#fireDetails,#shotDetails{font-size:10px;line-height:1.6;color:#d9ceaa}
+.look-title{flex-wrap:wrap;gap:6px}#fireState{color:#f2d496}#fireDetails,#shotDetails,#hitSummary{font-size:10px;line-height:1.6;color:#d9ceaa}
 @media(max-width:600px){.dock{gap:2px;padding:4px}.command{min-width:42px;padding:7px 5px;font-size:9px}}
 
 </style>
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP08A</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP09</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -917,9 +917,9 @@ footer{
 <div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">차체 방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
 <details class="vehicle-specs"><summary id="profileTitle">M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>게임식 단발 발사·명중/부위 추첨 지원.<br>탄도·관통·피해·상세 장전은 후속 구현.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
-<div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
+<div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="hitSummary"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
 <div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>표적 탭 → 포수 직접 지정 → 조준 완료 후 발사/G.<br>실루엣은 미식별 · 흐린 잔상은 마지막 관측 기억.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · FIRE / WIP08A</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · FIRE / WIP09</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -953,8 +953,10 @@ const VEHICLE_PROFILES=(()=>{
     // Fictional game tuning, not measured real fire-control/ballistic data.
     fireControl:{enabled:true,aimSeconds:1.2,alignmentTolerance:1.5*Math.PI/180,
       maxRange:2000,fireHeight:2.2,shotIntervalSeconds:1,testRounds:42,
-      accuracyNear:.88,accuracyFar:.55,selfMotionPenalty:.35,targetMotionPenalty:.25,
-      motionReference:20,zoneWeights:{hull:.65,turret:.35}},
+      dispersionMrad:.25,layStartMrad:1.5,layMinMrad:.10,layTauSeconds:.6,
+      rangeErrorM:5,muzzleVelocity:1650,velocityRetention:.94,leadResidual:.10,
+      maneuverAccel:1,maneuverReferenceSpeed:5,stabMradPerMps:.03,
+      presented:{hullBottom:inch(19),hullTop:1.65,turretTop:inch(93.5)}},
     exposure:{hullAlong:[-2.8,0,2.8],hullHeights:[.80,1.40],turretAlong:[-1,0,1],turretHeight:2.20},
     navigation:{clearanceMargin:.25,contract:'nav16-M1A2-r4.62-long0.60-side0.40-v2'}
   };
@@ -972,9 +974,11 @@ const VEHICLE_PROFILES=(()=>{
       for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
       if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
       const f=p.fireControl;
-      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','motionReference'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
-      for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty'])if(!Number.isFinite(f[field])||f[field]<0||f[field]>1)throw Error('확률 프로파일 값 오류: '+id+'.'+field);
-      if(!Number.isInteger(f.testRounds)||f.zoneWeights.hull<0||f.zoneWeights.turret<0||!Number.isFinite(f.zoneWeights.hull+f.zoneWeights.turret)||f.zoneWeights.hull+f.zoneWeights.turret<=0)throw Error('시험탄/구역 가중치 오류: '+id);
+      for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
+      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention','maneuverAccel','maneuverReferenceSpeed'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
+      for(const field of ['leadResidual','stabMradPerMps'])if(!Number.isFinite(f[field])||f[field]<0)throw Error('사격 오차 값 오류: '+id+'.'+field);
+      const band=f.presented;
+      if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
       profiles[id]=freeze(p);
     }
     const ids=Object.freeze(Object.keys(profiles));
@@ -1139,8 +1143,9 @@ const TacticalObservation=(()=>{
             const ex=exposure(u,target,h,cache);geometry.set(h,ex);stats.samples++;stats.rayQueries+=ex.rayQueries??9;stats.rayCacheHits+=ex.rayCacheHits??0;
           }
           const ex=geometry.get(h),samples=ex.samples||[{x:target.x,y:target.y,visible:ex.visible,forestDepth:ex.forestDepth||0,part:'hull'}];let q=0,hull=0,turret=0;
-          for(const v of samples)if(v.visible){const value=quality(u,ch,v);q+=value;if(value>0){if(v.part==='turret')turret++;else hull++;}}
-          result[ch]={quality:q/samples.length,hull:hull/6,turret:turret/3};
+          const channelSamples=ch==='gunner'?[]:null;
+          for(const v of samples){const value=v.visible?quality(u,ch,v):0;q+=value;if(value>0){if(v.part==='turret')turret++;else hull++;}if(channelSamples)channelSamples.push({...v,visible:value>0});}
+          result[ch]={quality:q/samples.length,hull:hull/6,turret:turret/3,...(channelSamples?{samples:channelSamples}:{})};
         }
         const detect=Math.max(0,...Object.values(result).map(v=>v.quality)),identify=Math.max(result.commander?.quality||0,result.gunner?.quality||0);if(detect<=0)continue;
         const c=record(u,target.id);observed.set(target.id,{result,detect,identify});
@@ -1155,8 +1160,8 @@ const TacticalObservation=(()=>{
           c.identified=true;c.enemyConfirmed=true;c.identifiedBy=by;c.identifiedAt=now;c.knowledgeSource=by;emit(u,'identified',c,{channel:by,enemyConfirmed:true,current:true});
         }
         if(c.detected){
-          c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,barrelTip:tp.model.barrelTip,turretOrigin:tp.model.turretOrigin,turretPivot:[...tp.model.turretPivot],turretRingDiameter:tp.model.turretRingDiameter,muzzleLocal:[...tp.model.muzzleLocal]}};
-          const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};c.gunnerExposure=result.gunner?{hull:result.gunner.hull,turret:result.gunner.turret}:{hull:0,turret:0};
+          c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,barrelTip:tp.model.barrelTip,turretOrigin:tp.model.turretOrigin,turretPivot:[...tp.model.turretPivot],turretRingDiameter:tp.model.turretRingDiameter,muzzleLocal:[...tp.model.muzzleLocal]}};
+          const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};c.gunnerExposure=result.gunner?{hull:result.gunner.hull,turret:result.gunner.turret,samples:result.gunner.samples,presented:{...tp.fireControl.presented}}:{hull:0,turret:0,samples:[]};
           if(c.identified&&identify>0){c.known={name:target.name,type:tp.name};c.knowledgeAt=now;}
         }
       }
@@ -1274,27 +1279,68 @@ const TacticalFireControl=(()=>{
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   function init(u,p){
-    return u.fireControl??={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,ammo:p.fireControl.testRounds,
-      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0};
+    return u.fireControl??={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
+      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null};
   }
-  function distribution(observer,pose,exposure,f){
-    const result=Object.fromEntries(zones.map(z=>[z,0])),hull=clamp(exposure.hull,0,1)*f.zoneWeights.hull,turret=clamp(exposure.turret,0,1)*f.zoneWeights.turret,total=hull+turret;
+  // Fictional RTS error budget. These coefficients are game tuning, not
+  // measured weapon/FCS performance; this module never computes a firing
+  // solution, trajectory or impact coordinates.
+  function normalCdf(x){
+    if(x===0)return .5;
+    const v=Math.abs(x)/Math.SQRT2,t=1/(1+.3275911*v);
+    const erf=1-(((((1.061405429*t-1.453152027)*t+1.421413741)*t-.284496736)*t+.254829592)*t)*Math.exp(-v*v);
+    return clamp(.5*(1+(x<0?-erf:erf)),0,1);
+  }
+  function errorBudget(observer,pose,f,targetVelocity={x:0,y:0},layTime=0){
+    const dx=pose.x-observer.x,dy=pose.y-observer.y,range=Math.hypot(dx,dy),safeRange=Math.max(1e-9,range),beta=Math.atan2(dy,dx);
+    const vx=targetVelocity.x||0,vy=targetVelocity.y||0,speed=Math.hypot(vx,vy),cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=range/(f.muzzleVelocity*f.velocityRetention);
+    const disp=f.dispersionMrad,lay=f.layMinMrad+(f.layStartMrad-f.layMinMrad)*Math.exp(-Math.max(0,layTime)/f.layTauSeconds);
+    const rng=1000*9.81*f.rangeErrorM/(2*f.muzzleVelocity**2),lead=1000*f.leadResidual*cross*tof/safeRange;
+    const man=1000*.5*f.maneuverAccel*tof**2/safeRange*Math.min(1,speed/f.maneuverReferenceSpeed),own=f.stabMradPerMps*Math.abs(observer.speed||0);
+    return{range,tof,sigma:{disp,lay,rng,lead,man,own,x:Math.hypot(disp,lay,lead,man,own),z:Math.hypot(disp,lay,rng,own)}};
+  }
+  function presentedRects(observer,pose,exposure,f){
+    const m=pose.model,band=exposure.presented||f.presented,samples=exposure.samples||[],rects=[];
+    if(!m)return rects;
+    const beta=Math.atan2(pose.y-observer.y,pose.x-observer.x),h=pose.heading-beta,t=pose.turret-beta;
+    const hull=samples.filter(v=>v.part==='hull'),visibleHull=hull.filter(v=>v.visible),visibleTurret=samples.filter(v=>v.part==='turret'&&v.visible);
+    function rect(part,c,width,z1,z2){if(width>0&&z2>z1)rects.push({part,x1:c-width/2,x2:c+width/2,z1,z2});}
+    if(visibleHull.length){
+      const cols=new Map(visibleHull.map(v=>[v.col,v.along])),rows=[...new Set(visibleHull.map(v=>v.row))],levels=[...new Map(hull.map(v=>[v.row,v.z]))].sort((a,b)=>a[0]-b[0]);
+      const bands=new Map(levels.map(([row,z],i)=>[row,[i?(levels[i-1][1]+z)/2:band.hullBottom,i+1<levels.length?(z+levels[i+1][1])/2:band.hullTop]]));
+      const c=[...cols.values()].reduce((sum,along)=>sum+along*Math.sin(h),0)/cols.size,width=(m.hullLength*Math.abs(Math.sin(h))+m.width*Math.abs(Math.cos(h)))*cols.size/3;
+      rect('hull',c,width,Math.min(...rows.map(r=>bands.get(r)[0])),Math.max(...rows.map(r=>bands.get(r)[1])));
+    }
+    if(visibleTurret.length){
+      const [px,py]=m.turretPivot,offset=px*Math.sin(h)+py*Math.cos(h),c=offset+visibleTurret.reduce((sum,v)=>sum+v.along*Math.sin(t),0)/visibleTurret.length;
+      const width=(m.turretLength*Math.abs(Math.sin(t))+m.turretWidth*Math.abs(Math.cos(t)))*visibleTurret.length/3;
+      rect('turret',c,width,band.hullTop,band.turretTop);
+    }
+    return rects;
+  }
+  function rectProbability(rect,aim,sx,sz){
+    const x=Math.max(1e-9,sx),z=Math.max(1e-9,sz);
+    return clamp((normalCdf((rect.x2-aim.x)/x)-normalCdf((rect.x1-aim.x)/x))*(normalCdf((rect.z2-aim.z)/z)-normalCdf((rect.z1-aim.z)/z)),0,1);
+  }
+  function distribution(observer,pose,{pHull=0,pTurret=0}){
+    const result=Object.fromEntries(zones.map(z=>[z,0])),total=pHull+pTurret;
     if(!(total>0))return result;
     const incoming=Math.atan2(observer.y-pose.y,observer.x-pose.x);
     function group(prefix,heading,amount){
       const a=diff(incoming,heading),front=Math.max(0,Math.cos(a)),side=Math.abs(Math.sin(a)),rear=Math.max(0,-Math.cos(a)),sum=front+side+rear;
       result[prefix+'Front']=amount/total*front/sum;result[prefix+'Side']=amount/total*side/sum;result[prefix+'Rear']=amount/total*rear/sum;
     }
-    group('hull',pose.heading,hull);group('turret',pose.turret,turret);
-    // Upper is reserved: there is no elevation/top-attack model in this stage.
+    group('hull',pose.heading,pHull);group('turret',pose.turret,pTurret);
     return result;
   }
-  function estimate(observer,pose,exposure,f,targetMotion=0){
-    const distance=Math.hypot(pose.x-observer.x,pose.y-observer.y),weight=f.zoneWeights.hull+f.zoneWeights.turret;
-    const visible=(clamp(exposure.hull,0,1)*f.zoneWeights.hull+clamp(exposure.turret,0,1)*f.zoneWeights.turret)/weight;
-    const accuracy=f.accuracyNear+(f.accuracyFar-f.accuracyNear)*clamp(distance/f.maxRange,0,1);
-    const own=1-f.selfMotionPenalty*clamp(Math.abs(observer.speed||0)/f.motionReference,0,1),moving=1-f.targetMotionPenalty*clamp(targetMotion/f.motionReference,0,1);
-    return{hitChance:distance<=f.maxRange?clamp(accuracy*own*moving*visible,0,1):0,zoneProbabilities:distribution(observer,pose,exposure,f)};
+  function estimate(observer,pose,exposure,f,targetVelocity={x:0,y:0},layTime=0){
+    const budget=errorBudget(observer,pose,f,targetVelocity,layTime),rects=presentedRects(observer,pose,exposure,f);
+    const area=r=>(r.x2-r.x1)*(r.z2-r.z1),total=rects.reduce((sum,r)=>sum+area(r),0);
+    const aim=total?{x:rects.reduce((sum,r)=>sum+(r.x1+r.x2)/2*area(r),0)/total,z:rects.reduce((sum,r)=>sum+(r.z1+r.z2)/2*area(r),0)/total}:{x:0,z:0};
+    let pHull=0,pTurret=0;
+    if(budget.range<=f.maxRange)for(const r of rects){const p=rectProbability(r,aim,budget.sigma.x/1000*budget.range,budget.sigma.z/1000*budget.range);if(r.part==='hull')pHull=p;else pTurret=p;}
+    const hitChance=clamp(pHull+pTurret,0,1),breakdown={...budget,rects,aim,pHull,pTurret};
+    return{hitChance,zoneProbabilities:distribution(observer,pose,breakdown),breakdown};
   }
   function resolve(hitChance,probabilities,hitRoll,zoneRoll){
     if(!(hitRoll<hitChance))return{hit:false,zone:null};
@@ -1303,6 +1349,10 @@ const TacticalFireControl=(()=>{
   }
   function create({profileOf,freshSight,seed=7}){
     const events=[];
+    function resetAim(s){s.aimElapsed=0;s.aimProgress=0;s.layTime=0;s.previousSample=null;s.targetMotion=0;s.targetVelocity={x:0,y:0};}
+    function clearPreview(s){s.hitChance=null;s.zoneProbabilities=null;s.breakdown=null;}
+    function preview(s,value){s.hitChance=value.hitChance;s.zoneProbabilities=value.zoneProbabilities;s.breakdown=value.breakdown;}
+
     function inspect(u,now){
       const p=profileOf(u),f=p.fireControl,s=init(u,p),d=mission(u),c=d?u.observation.contacts[d.target]:null;
       if(!f.enabled||!p.weapons.mainGun.enabled||!p.sensors.gunner.enabled)return{reason:'disabled'};
@@ -1321,17 +1371,19 @@ const TacticalFireControl=(()=>{
     function step(units,dt,now){
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
-        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.aimElapsed=0;s.aimProgress=0;s.previousSample=null;s.targetMotion=0;}
+        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;resetAim(s);}
         if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
           const previous=s.previousSample;
-          if(previous&&c.sources.gunner.lastSeen>previous.time)s.targetMotion=Math.hypot(c.pose.x-previous.x,c.pose.y-previous.y)/(c.sources.gunner.lastSeen-previous.time);
+          const elapsed=previous?c.sources.gunner.lastSeen-previous.time:0;
+          s.targetVelocity=elapsed>0&&elapsed<=p.sensors.tuning.queryPeriod*5+1e-9?{x:(c.pose.x-previous.x)/elapsed,y:(c.pose.y-previous.y)/elapsed}:{x:0,y:0};
+          s.targetMotion=Math.hypot(s.targetVelocity.x,s.targetVelocity.y);
           s.previousSample={x:c.pose.x,y:c.pose.y,time:c.sources.gunner.lastSeen};
         }
-        if(check.reason){s.status=check.reason==='interval'?'interval':check.reason==='aligning'?'aligning':'blocked';if(check.reason==='no-target')s.status='no-target';s.reason=check.reason;s.aimElapsed=0;s.aimProgress=0;s.hitChance=null;s.zoneProbabilities=null;}
+        if(check.reason){s.status=check.reason==='interval'?'interval':check.reason==='aligning'?'aligning':'blocked';if(check.reason==='no-target')s.status='no-target';s.reason=check.reason;resetAim(s);clearPreview(s);}
         else{
-          s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
+          s.layTime+=dt;s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
           s.status=s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=null;
-          const ex=c.gunnerExposure||{hull:0,turret:0},preview=estimate(u,c.pose,ex,f,s.targetMotion);s.hitChance=preview.hitChance;s.zoneProbabilities=preview.zoneProbabilities;
+          const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,f,s.targetVelocity,s.layTime));
         }
         if(!s.pending)continue;
         const request=s.pending;s.pending=null;
@@ -1339,34 +1391,36 @@ const TacticalFireControl=(()=>{
         // A fire command must recheck its own current range/FOV/terrain samples;
         // an old 10Hz contact or team knowledge cannot authorize a shot.
         const sight=freshSight(u,d.target);
-        if(!sight?.visible){s.status='blocked';s.reason=sight?.reason||'fresh-sight-failed';s.aimElapsed=0;s.aimProgress=0;s.lastRejection=s.reason;s.hitChance=null;s.zoneProbabilities=null;continue;}
+        if(!sight?.visible){s.status='blocked';s.reason=sight?.reason||'fresh-sight-failed';resetAim(s);s.lastRejection=s.reason;clearPreview(s);continue;}
         const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
-        if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';s.aimElapsed=0;s.aimProgress=0;s.hitChance=null;s.zoneProbabilities=null;continue;}
-        const chance=estimate(u,pose,sight,f,s.targetMotion),number=s.shotCount+1;
+        if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
+        const chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime),number=s.shotCount+1;
+        if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
         const result=resolve(chance.hitChance,chance.zoneProbabilities,random(u.id+':'+number+':hit',seed),random(u.id+':'+number+':zone',seed));
         const shot={id:u.id+'-shot-'+number,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:d.source,
           origin:G.muzzleWorld(u,p.model),muzzleHeading:u.turret,
           targetPose:{x:pose.x,y:pose.y,heading:pose.heading,turret:pose.turret},...chance,...result,ammoRemaining:s.ammo-1};
-        events.push(shot);if(events.length>200)events.shift();s.shotCount=number;s.ammo--;s.lastShot=shot;s.nextShotAt=now+f.shotIntervalSeconds;s.aimElapsed=0;s.aimProgress=0;s.status='interval';s.reason='interval';
+        events.push(shot);if(events.length>200)events.shift();s.shotCount=number;s.ammo--;s.lastShot=shot;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
       }
     }
     function request(u,key,now){
       const s=init(u,profileOf(u)),check=inspect(u,now);
       if(s.pending)return{ok:false,reason:'pending'};
+      if(s.hitChance===0)return{ok:false,reason:'no-presented-target'};
       if(check.reason||s.status!=='ready'||key!==s.targetKey)return{ok:false,reason:check.reason||'not-ready'};
       s.pending={key};return{ok:true};
     }
     function view(u,key=null){
       const s=init(u,profileOf(u)),same=!key||key===s.targetKey;
-      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,ammo:s.ammo,pending:!!s.pending,
-        canFire:same&&s.status==='ready'&&!s.pending,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
-        shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
+      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,pending:!!s.pending,
+        canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
+        breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
-    function cancel(u){const s=init(u,profileOf(u));s.pending=null;s.aimElapsed=0;s.aimProgress=0;s.status='blocked';s.reason='cancelled';s.hitChance=null;s.zoneProbabilities=null;}
+    function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     return{step,request,view,cancel,events:publicEvents};
   }
-  return Object.freeze({create,init,estimate,distribution,resolve,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,resolve,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;
 
@@ -1673,13 +1727,14 @@ const TacticalCore = (() => {
       const fireEye=heightAt(u.x,u.y)+p.fireControl.fireHeight-heightAt(muzzle.x,muzzle.y);
       const muzzleRoof=buildingAt(muzzle.x,muzzle.y)?.roof??-Infinity;
       const weapon=fireEye>0&&heightAt(u.x,u.y)+p.fireControl.fireHeight>=muzzleRoof?exposure(muzzle,target,fireEye):null;
-      let hull=0,turret=0,gunnerVisible=false;
+      let hull=0,turret=0,gunnerVisible=false;const samples=optical.samples.map(v=>({...v,visible:false}));
       for(let i=0;i<optical.samples.length;i++){
         const v=optical.samples[i],d=Math.hypot(v.x-u.x,v.y-u.y),angle=Math.abs(angleDiff(Math.atan2(v.y-u.y,v.x-u.x),u.turret));
         if(!v.visible||d>sensor.range||angle>sensor.fov/2)continue;gunnerVisible=true;
-        if(weapon?.samples[i].visible){if(v.part==='hull')hull++;else turret++;}
+        if(weapon?.samples[i].visible){samples[i].visible=true;if(v.part==='hull')hull++;else turret++;}
       }
-      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret}};
+      const tp=profileOf(target);
+      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,presented:{...tp.fireControl.presented},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
     }}));
     return fireRuntimes.get(s);
   }
@@ -1765,7 +1820,7 @@ const TacticalCore = (() => {
   }
   function exposure(observer,target,eyeHeight=null,cache=null) {
     let hull=0,turret=0,depth=0,rayQueries=0,rayCacheHits=0;const eye=eyeHeight??profileOf(observer).sensors.eyeHeight,e=profileOf(target).exposure,samples=[];
-    function sample(along,z,angle,part){
+    function sample(along,z,angle,part,col,row){
       const x=target.x+Math.cos(angle)*along,y=target.y+Math.sin(angle)*along;
       const previous=cache?.samples[samples.length];
       // Reuse only exactly unchanged endpoints/eye/sample height on the frozen
@@ -1774,11 +1829,11 @@ const TacticalCore = (() => {
       let los;
       if(previous&&previous.x===x&&previous.y===y&&previous.z===z&&previous.ox===observer.x&&previous.oy===observer.y&&previous.eye===eye&&cache.time-previous.at<=cache.maxAge){los=previous.los;rayCacheHits++;}
       else{los=lineOfSight(observer,{x,y},z,false,eye);rayQueries++;if(cache)cache.samples[samples.length]={x,y,z,ox:observer.x,oy:observer.y,eye,at:cache.time,los};}
-      samples.push({x,y,part,visible:los.visible,forestDepth:los.forestDepth});
+      samples.push({x,y,part,along,z,col,row,visible:los.visible,forestDepth:los.forestDepth});
       if(los.visible){if(part==='hull')hull++;else turret++;depth+=los.forestDepth;}
     }
-    for(const along of e.hullAlong)for(const z of e.hullHeights)sample(along,z,target.heading,'hull');
-    for(const along of e.turretAlong)sample(along,e.turretHeight,target.turret??target.heading,'turret');
+    for(const [col,along] of e.hullAlong.entries())for(const [row,z] of e.hullHeights.entries())sample(along,z,target.heading,'hull',col,row);
+    for(const [col,along] of e.turretAlong.entries())sample(along,e.turretHeight,target.turret??target.heading,'turret',col,0);
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
   return {registry,fireStatus,requestFire,fireEvents,losAccelerationInfo,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
@@ -2538,7 +2593,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{if(targetId&&C.designate(sim,selectedUnit(),targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
-  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
   function fireSelected(){
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
     if(!targetId){toast('관측 중인 표적을 먼저 탭해줘');return;}
@@ -2942,6 +2997,8 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
       const fc=C.fireStatus(sim,u,target.key);
       const probabilities=fc.zoneProbabilities;
       ui.setText($('fireDetails'),(!target.identified||!target.current||fc.hitChance===null)?'발사: '+(fireReasons[fc.reason]||'현재 포수 표적 아님'):'예상 명중 '+Math.round(fc.hitChance*100)+'% · 명중 시 부위: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '));
+      const b=fc.breakdown,rects=b?.rects||[],w=rects.length?Math.max(...rects.map(r=>r.x2))-Math.min(...rects.map(r=>r.x1)):0,h=rects.length?Math.max(...rects.map(r=>r.z2))-Math.min(...rects.map(r=>r.z1)):0;
+      ui.setText($('hitSummary'),target.identified&&target.current&&b?'예상 명중률 '+Math.round(fc.hitChance*100)+'% · 오차 '+Math.max(b.sigma.x,b.sigma.z).toFixed(2)+'밀 · 보이는 표적 '+w.toFixed(1)+'×'+h.toFixed(1)+'m · 차체/포탑 '+Math.round(b.pHull*100)+'/'+Math.round(b.pTurret*100)+'%':'');
       const lastShot=target.identified&&fc.lastShot?.targetKey===target.key?fc.lastShot:null;
       ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.hit?'명중 · '+zoneNames[lastShot.zone]:'빗나감')+' · 피해 판정 없음':'');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
@@ -3167,7 +3224,7 @@ if(typeof module!=='undefined')module.exports=TacticalLookAnimation;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP08A',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP09',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,look:lookView(),firing:C.fireStatus(sim,selectedUnit(),targetId),shots:C.fireEvents(sim,'blue')
     }
     )),command:(x,y,reverse=false)=>{
