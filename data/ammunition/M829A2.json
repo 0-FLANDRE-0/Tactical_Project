@@ -27,7 +27,21 @@
           365
         ]
       ],
+      "parallelLimitDeg": 90,
       "outsidePolicy": "clamp"
+    },
+    "ricochet": {
+      "anglesDeg": [
+        78,
+        80,
+        81
+      ],
+      "chances": [
+        0,
+        0.5,
+        1
+      ],
+      "comparison": "roll<chance"
     },
     "damageMultiplier": {
       "points": [
@@ -59,11 +73,13 @@
       "outsidePolicy": "clamp"
     }
   },
-  "status": "active WIP11A game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP11A instructions",
+  "status": "active WIP12 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP11A instructions plus TACTICAL_WIP12_EFFECTS_AND_RICOCHET",
   "limits": [
-    "Table interpolation with endpoint clamp",
-    "Non-penetration damage 0",
+    "Range endpoints clamp; 60–90° penetration interpolates to zero",
+    "Ricochet uses an independent deterministic roll at 78/80/81° anchors",
+    "Non-penetration and ricochet damage 0",
+    "Ricochet continuation is visual only",
     "No additional velocity damage multiplier"
   ]
 }

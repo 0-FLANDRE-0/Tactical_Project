@@ -1,0 +1,72 @@
+{
+  "version": "0.4-WIP12",
+  "date": "2026-11-09",
+  "node": "v24.22.1",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "seed": 911,
+  "fixture": "50/100 stationary M1A2_1998 in a legalNear 10-column grid, alternating teams/headings, every unit explicitly auto; 20 warmup + 600 timed fixed 0.05s steps",
+  "notes": "Includes observation, handoff/acquisition, aim, automatic request, flight/impact, damage, destruction and retarget state. Excludes rendering, pathfinding and whole-game FPS.",
+  "cases": [
+    {
+      "count": 50,
+      "blue": 25,
+      "red": 25,
+      "warmupSteps": 20,
+      "steps": 600,
+      "simulatedSeconds": 30,
+      "medianStepMs": 2.313833000000159,
+      "p95StepMs": 5.416696000000002,
+      "maxStepMs": 20.502992000000006,
+      "autoShots": 126,
+      "resolvedImpacts": 126,
+      "inFlight": 0,
+      "destroyed": 17,
+      "alive": 33,
+      "confirmedWrecksBlue": 8,
+      "confirmedWrecksRed": 9,
+      "retargetEvents": 43,
+      "multiImpactFixedSteps": 33,
+      "ricochets": 1,
+      "boundedLogs": {
+        "observation": 912,
+        "combatRecords": 126,
+        "blueFireEvents": 102,
+        "redFireEvents": 98,
+        "effectEvents": 4,
+        "effectEventLimit": 256
+      }
+    },
+    {
+      "count": 100,
+      "blue": 50,
+      "red": 50,
+      "warmupSteps": 20,
+      "steps": 600,
+      "simulatedSeconds": 30,
+      "medianStepMs": 7.511779000000388,
+      "p95StepMs": 13.710676000000149,
+      "maxStepMs": 18.289788000000044,
+      "autoShots": 321,
+      "resolvedImpacts": 315,
+      "inFlight": 6,
+      "destroyed": 39,
+      "alive": 61,
+      "confirmedWrecksBlue": 16,
+      "confirmedWrecksRed": 23,
+      "retargetEvents": 121,
+      "multiImpactFixedSteps": 36,
+      "ricochets": 2,
+      "boundedLogs": {
+        "observation": 4000,
+        "combatRecords": 200,
+        "blueFireEvents": 88,
+        "redFireEvents": 112,
+        "effectEvents": 24,
+        "effectEventLimit": 256
+      }
+    }
+  ]
+}

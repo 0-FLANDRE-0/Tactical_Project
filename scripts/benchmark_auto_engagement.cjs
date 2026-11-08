@@ -17,9 +17,9 @@ function run(count){
   return{count,blue:count/2,red:count/2,warmupSteps,steps,simulatedSeconds:steps*.05,medianStepMs:median(times),p95StepMs:sorted[Math.min(steps-1,Math.floor(steps*.95))],maxStepMs:Math.max(...times),
     autoShots:shots,resolvedImpacts:stats.applied,inFlight:units.reduce((n,u)=>n+C.fireStatus(s,u).inFlight.length,0),destroyed:stats.destroyed,alive:units.filter(u=>u.combat.status==='alive').length,confirmedWrecksBlue:C.contacts(s,'blue').filter(c=>c.wreck).length,confirmedWrecksRed:C.contacts(s,'red').filter(c=>c.wreck).length,
     retargetEvents:(s.observationEvents||[]).filter(e=>e.type==='target-switched'||e.type==='designated').length,multiImpactFixedSteps:[...byTime.values()].filter(v=>v>1).length,
-    boundedLogs:{observation:(s.observationEvents||[]).length,combatRecords:records.length,blueFireEvents:C.fireEvents(s,'blue').length,redFireEvents:C.fireEvents(s,'red').length}};
+    ricochets:records.filter(r=>r.ricochet).length,boundedLogs:{observation:(s.observationEvents||[]).length,combatRecords:records.length,blueFireEvents:C.fireEvents(s,'blue').length,redFireEvents:C.fireEvents(s,'red').length,effectEvents:C.effectEvents(s).length,effectEventLimit:C.effectEventStats(s).limit}};
 }
-const result={version:'0.4-WIP11E',date:'2026-11-08',node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model,mapHash:C.MAP.meta.mapHash,seed:911,
+const result={version:'0.4-WIP12',date:'2026-11-09',node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model,mapHash:C.MAP.meta.mapHash,seed:911,
   fixture:'50/100 stationary M1A2_1998 in a legalNear 10-column grid, alternating teams/headings, every unit explicitly auto; 20 warmup + 600 timed fixed 0.05s steps',
   notes:'Includes observation, handoff/acquisition, aim, automatic request, flight/impact, damage, destruction and retarget state. Excludes rendering, pathfinding and whole-game FPS.',cases:[run(50),run(100)]};
-fs.writeFileSync('tests/releases/WIP11E-auto-benchmark.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));
+fs.writeFileSync('tests/releases/WIP12-auto-benchmark.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));

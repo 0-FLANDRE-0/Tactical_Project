@@ -1,17 +1,16 @@
-# TACTICAL v0.4 WIP11E — LOS 공통 경로 최적화
+# TACTICAL v0.4 WIP12 — 사격 이펙트와 도탄
 
-WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지하면서 9표본 LOS 비용을 줄였다. 차체의 같은 x/y에서 높이만 다른 두 관측 광선이 지면·건물 후보와 내부 판정·숲 조회를 공유한다. 각 높이의 차폐 사유·광학 깊이·32m 건너뛰기·종료와 표본별 캐시는 독립적이며 2m 격자, 9표본 결과와 기존 관측 통계는 그대로다.
+WIP12는 기존 명중·피격 구역·피해 판정 뒤에 M829A2 게임 도탄 판정을 연결하고, 그 확정 결과를 자체 제작한 투명 텍스처와 파티클로 표시한다. 미관측 적의 포구 섬광·예광·탄착·도탄도 보이지만, 표시 사건에는 내부 차량 ID·차종·HP·피해·방호 수치가 들어가지 않는다. 도탄 뒤 탄광은 짧은 시각 표현으로 끝나며 새 충돌이나 피해를 만들지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11E.zip). 압축을 풀면 `Tactical_v0.4_WIP11E.html` 한 파일이 나온다.
-- [WIP11E 병합 검토](docs/reviews/WIP11E_MERGE_REVIEW_2026-11-08.md): 판정 동등성과 Node·Chromium 성능을 독립 재측정한 뒤 main에 통합했다.
-- 현재 실행 파일: [Tactical_v0.4_WIP11E.html](Tactical_v0.4_WIP11E.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP11E LOS 구현·성능](docs/LOS_OPTIMIZATION_WIP11E.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11E.md) · [체크섬](SHA256SUMS_WIP11E.txt) · [작업 목차](docs/tasks/README.md).
-- 검토용 [PR #10](https://github.com/0-FLANDRE-0/Tactical_Project/pull/10). main 병합과 공개 배포는 하지 않았다.
-- 최신 main `a01ae8b`에서 새 브랜치로 작업했다. WIP11D 고정 코어와 실제 지도 LOS 12,000건·노출 2,000건을 정확히 대조했고 전체 Node 219/219, 지형·원본 14/14, 실제 Chromium 27/27을 통과했다. 이동 100대의 5회 Node 비교는 중앙값 16.26%, P95 13.27%, 실제 Chromium 비교는 중앙값 14.71% 개선됐다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat%2Fwip12-effects-ricochet/Tactical_v0.4_WIP12.zip). 압축을 풀면 `Tactical_v0.4_WIP12.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP12.html](Tactical_v0.4_WIP12.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP12 구현·공개 규칙](docs/COMBAT_EFFECTS_AND_RICOCHET_WIP12.md) · [릴리스·검증](TACTICAL_RELEASE_WIP12.md) · [체크섬](SHA256SUMS_WIP12.txt) · [작업 목차](docs/tasks/README.md).
+- 최신 main `687c624`에서 `feat/wip12-effects-ricochet` 브랜치를 만들었다. main에는 병합하거나 릴리스로 배포하지 않았다.
+- 실제 코어 seed 25의 탐지→확보→발사→비행→80.01° 도탄, 숨은 적 사격의 실제 Chromium 연속 15프레임, 50대 양 팀 효과 스트레스와 기존 관측·LOS 회귀를 검사했다. 수치는 게임 밸런스 데이터이며 실장비 성능 추정이 아니다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11E.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11E.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat%2Fwip12-effects-ricochet/Tactical_v0.4_WIP12.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP12.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -23,6 +22,7 @@ WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지�
 - 하단 **경계** 버튼 → 전차장/포수 선택 → 방향 지정(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 기본 유지 시간은 해제까지이며 추가 옵션에서 5/10/30초를 고를 수 있다. 자동 경계 복귀로 해당 장비의 지점 명령만 해제한다. Esc·팝업 닫기·선택 변경은 완료하지 않은 입력만 취소한다.
 - 표적 패널의 포수 직접 지정과 인계 취소를 사용할 수 있다. 지정한 표적은 현재 임무보다 우선하며 `auto`에서는 별도 G 입력 없이 확보·조준 후 사격한다. 지정 전달과 포수 확보는 별도 상태다.
 - 실행 시 양측 차량은 **자동 사격**이다. 자체 확보·조준·발사선 조건이 맞으면 버튼 입력 없이 단발을 반복한다. 우측 교전 영역의 `자동` 버튼으로 `보류`를 전환할 수 있다. 보류는 관측·인계·조준을 유지하며 **발사 버튼 또는 G**의 수동 단발을 허용한다.
+- 황백색 포구 섬광·짧은 예광·회갈색 탄착 먼지·충돌 불꽃을 표시한다. 미관측 적의 사격도 효과 위치와 방향은 보이지만 적 차량 정보나 현재 위치 추적을 새로 공개하지 않는다. 도탄 탄광은 표시 전용이다.
 - 확인된 잔해는 전투 종료까지 팀별로 계속 표시되고 통행을 막지만, 지도·명단·직접 API에서 선택하거나 표적으로 지정할 수 없다. 미관측 격파는 나중에 실제 관측·식별하기 전까지 공개되지 않는다.
 - Space: 일시정지. R: 후진 모드. X: 정지. F: 전체화면. Home: 전체 지도.
 - 전체화면 요청이 거절되거나 지원되지 않으면 지도 집중 모드로 전환한다.
@@ -90,7 +90,7 @@ WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지�
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP11E.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP12.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `tests/fixtures/sim-core-WIP11D.js`, `tests/helpers/los-wip11d-reference.cjs` | 빌드에 포함되지 않는 해시 고정 WIP11D 비교 코어와 로더 |
 | `tests/los-shared-path.test.cjs` | 같은 경로의 다중 높이·캐시·합성 차폐 정확성 대조 |
 | `scripts/benchmark_los_shared_compare.cjs`, `benchmark_los_scenes.cjs`, `benchmark_los_browser.cjs` | 분리 프로세스 기본/고정 장면/실제 Chromium LOS 성능 비교 |
@@ -98,8 +98,9 @@ WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지�
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
 | `src/vehicle-geometry.js` | 차체 고정 링·포탑 로컬 점·실제 포구의 공통 2D 변환 |
-| `src/fire-control.js` | 자체 확보·조준·예측 발사·착탄 시점 확률·지형/건물 탄착·팀별 공개 이벤트 |
-| `src/combat-state.js` | M829A2 게임 표·관통/피해 순수 계산·착탄 ID별 HP/격파 상태 전이 |
+| `src/fire-control.js` | 자체 확보·조준·예측 발사·착탄 시점 확률·지형/건물 탄착·팀별 상세 이벤트와 전역 최소 효과 사건 |
+| `src/combat-state.js` | M829A2 게임 표·60–90° 관통 보간·도탄/관통/피해·착탄 ID별 HP/격파 상태 전이 |
+| `src/effects.js`, `assets/effects/` | 표시 전용 파티클 렌더러와 자체 제작 투명 RGBA atlas·제작 기록 |
 | `src/m1a2-art.js` | 독립 차체·포탑 벡터 도안과 SVG 내보내기 |
 | `src/visibility-client.js` | 내장 시야 Worker와 오류 시 동일 계산 대체 실행 |
 | `data/vehicles/`, `data/ammunition/` | 적용 차량·탄약 게임 데이터, 필드별 근거·외형 SVG·참고 자료 |
@@ -130,10 +131,11 @@ WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지�
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP11E
+python3 scripts/package_release.py WIP12
 node --check src/combat-state.js
 node --check src/sim-core.js
 node --check src/app.js
+node --check src/effects.js
 node --check src/look-animation.js
 node --test --test-concurrency=2 tests/*.test.cjs
 python3 -m unittest tests/terrain_readability_test.py
@@ -143,9 +145,11 @@ node tests/visibility.test.cjs
 node tests/vehicle.test.cjs
 # Playwright 개발 의존성과 시스템 Chromium이 있는 환경:
 node tests/browser.test.cjs
+node tests/wip12-effects-browser.test.cjs
 node scripts/benchmark_observation.cjs
 node scripts/benchmark_combat.cjs
 node scripts/benchmark_auto_engagement.cjs
+node scripts/benchmark_effects_browser.cjs
 node scripts/benchmark_terrain_render.cjs
 node scripts/benchmark_los_compare.cjs
 WIP11E_TRIALS=5 node scripts/benchmark_los_shared_compare.cjs
@@ -190,9 +194,9 @@ node tests/vehicle.test.cjs
 
 ## 현재 범위
 
-이번 버전은 실제 지도와 기동·관측·수동/자동 단발 사격·기본 HP 전투를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2 한 종류와 1,450 HP를 사용한다. 비관통 피해는 0, 추가 탄속 피해 배율은 1이며 표 밖 관통값은 끝값으로 고정한다. 기본 자동교전은 기존 접촉과 헌터킬러 후보를 이용하는 1차 게임 로직이다. 정교한 위협 점수·3단계 ROE·전체 OODA, 적 자율 이동, 탄종 선택, 모듈/승무원 피해·화재·유폭·수리·상세 장전·보병은 후속이다.
+이번 버전은 실제 지도와 기동·관측·수동/자동 단발 사격·기본 HP 전투·표시 효과를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2 한 종류와 1,450 HP를 사용한다. 기존 0/30/60° 게임 관통 표는 유지하며 60° 값에서 면에 평행한 90°의 0까지 선형 보간한다. 도탄 확률은 78° 0%, 80° 50%, 81° 100%이며 `roll < chance` 규칙을 쓴다. 비관통과 도탄 피해는 0이다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP11A 피해는 그 내부 명중/구역 결과를 받아 별도로 적용하므로 표시 좌표가 판정을 바꾸지 않는다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP11E 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP12 효과는 내부 결과가 확정된 뒤 생성되며 입자 충돌이나 화면 표시가 판정을 바꾸지 않는다. 도탄 후 추가 충돌·피해, 새 탄종, 상부 피격, 모듈/승무원 피해·화재·유폭·수리·상세 장전·보병은 후속 범위다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP12 릴리스 문서에 있다.
 
 ## 출처
 

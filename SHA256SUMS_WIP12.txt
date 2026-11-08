@@ -1,0 +1,3 @@
+451db113e1decc0ebed1d3789eace8968b435c72ed31dc915c398c9bb2641c15  Tactical_v0.4_WIP12.html
+451db113e1decc0ebed1d3789eace8968b435c72ed31dc915c398c9bb2641c15  dist/index.html
+a9d1b856f21d7a22df434f58053e7633a3a3fa6c910efa3fb82c1e54981716f8  Tactical_v0.4_WIP12.zip

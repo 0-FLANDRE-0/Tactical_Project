@@ -1,0 +1,70 @@
+{
+  "version": "0.4-WIP12",
+  "browser": "156.0.8078.79",
+  "standalone": "dist/index.html over ephemeral local HTTP",
+  "viewportEvidence": [
+    "1440x900 DPR1",
+    "844x390 DPR2"
+  ],
+  "frameStepSeconds": 0.05,
+  "continuousFrames": [
+    "WIP12-effects-frame-00.png",
+    "WIP12-effects-frame-01.png",
+    "WIP12-effects-frame-02.png",
+    "WIP12-effects-frame-03.png",
+    "WIP12-effects-frame-04.png",
+    "WIP12-effects-frame-05.png",
+    "WIP12-effects-frame-06.png",
+    "WIP12-effects-frame-07.png",
+    "WIP12-effects-frame-08.png",
+    "WIP12-effects-frame-09.png",
+    "WIP12-effects-frame-10.png",
+    "WIP12-effects-frame-11.png",
+    "WIP12-effects-frame-12.png",
+    "WIP12-effects-frame-13.png",
+    "WIP12-effects-frame-14.png"
+  ],
+  "actualCore": {
+    "seed": 25,
+    "selectedFace": "hullFront",
+    "incidenceDeg": 80.00794201547919,
+    "ricochetChance": 0.5039710077395938,
+    "ricochetRoll": 0.4249394212383777,
+    "damage": 0,
+    "hpAfter": 1450
+  },
+  "hiddenEnemy": {
+    "teamContacts": 0,
+    "publicUnitIds": [
+      "A11"
+    ],
+    "detailedBlueEvents": 0,
+    "hitAndRicochetEffectsVisible": true,
+    "miss": {
+      "effectClass": "miss-ground",
+      "result": "miss",
+      "impactKind": "ground",
+      "contacts": 0,
+      "detailedBlueEvents": 0
+    }
+  },
+  "texture": {
+    "ready": true,
+    "error": false,
+    "particles": 10,
+    "particleLimit": 384,
+    "seen": 2,
+    "seenLimit": 1024,
+    "maxParticles": 11,
+    "dropped": 0
+  },
+  "networkRequests": [
+    "/",
+    "/favicon.ico",
+    "/?seed=70"
+  ],
+  "errors": [],
+  "passed": 14,
+  "failed": 0,
+  "notes": "Actual Chromium and exact built standalone HTML. Deterministic RAF advances the real app/core/canvas. PNG sequence contains consecutive 0.05 simulation-second frames; it is not an art-only preview. Headless viewports are not physical Android thermal/performance validation."
+}
