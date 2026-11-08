@@ -3,7 +3,7 @@
   "branch": "feat/wip12-effects-ricochet",
   "baselineCommit": "687c624d8185a4fbd6463171030116138469f69e",
   "validatedAt": "2026-11-09",
-  "implementationCommit": null,
+  "implementationCommit": "ca32a56e1a7120a58c797b40d6100c819658be35",
   "status": "passed",
   "summary": {
     "nodeTestRunner": {
@@ -65,7 +65,9 @@
       "sha256": "a9d1b856f21d7a22df434f58053e7633a3a3fa6c910efa3fb82c1e54981716f8",
       "entry": "Tactical_v0.4_WIP12.html",
       "crc32": "540949b5",
-      "unzipTest": "passed"
+      "unzipTest": "passed",
+      "verifiedRawDownload": "https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip",
+      "rawDownloadSha256Matches": true
     },
     "effectAtlas": {
       "path": "assets/effects/wip12-effects-atlas.png",

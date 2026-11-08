@@ -2,7 +2,7 @@
 
 WIP12는 기존 명중·피격 구역·피해 판정 뒤에 M829A2 게임 도탄 판정을 연결하고, 그 확정 결과를 자체 제작한 투명 텍스처와 파티클로 표시한다. 미관측 적의 포구 섬광·예광·탄착·도탄도 보이지만, 표시 사건에는 내부 차량 ID·차종·HP·피해·방호 수치가 들어가지 않는다. 도탄 뒤 탄광은 짧은 시각 표현으로 끝나며 새 충돌이나 피해를 만들지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat%2Fwip12-effects-ricochet/Tactical_v0.4_WIP12.zip). 압축을 풀면 `Tactical_v0.4_WIP12.html` 한 파일이 나온다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip). 압축을 풀면 `Tactical_v0.4_WIP12.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP12.html](Tactical_v0.4_WIP12.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP12 구현·공개 규칙](docs/COMBAT_EFFECTS_AND_RICOCHET_WIP12.md) · [릴리스·검증](TACTICAL_RELEASE_WIP12.md) · [체크섬](SHA256SUMS_WIP12.txt) · [작업 목차](docs/tasks/README.md).
 - 최신 main `687c624`에서 `feat/wip12-effects-ricochet` 브랜치를 만들었다. main에는 병합하거나 릴리스로 배포하지 않았다.
@@ -10,7 +10,7 @@ WIP12는 기존 명중·피격 구역·피해 판정 뒤에 M829A2 게임 도탄
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat%2Fwip12-effects-ricochet/Tactical_v0.4_WIP12.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP12.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP12.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
