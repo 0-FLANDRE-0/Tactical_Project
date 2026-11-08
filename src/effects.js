@@ -6,7 +6,7 @@ const TacticalEffects=(()=>{
   function rng(seed){let n=seed>>>0;return()=>{n+=0x6d2b79f5;let t=n;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
   function create({source=typeof TACTICAL_EFFECT_ATLAS!=='undefined'?TACTICAL_EFFECT_ATLAS:'',particleLimit=384,seenLimit=1024}={}){
     if(!Number.isInteger(particleLimit)||particleLimit<32)throw Error('effect particle limit');
-    const image=typeof Image!=='undefined'?new Image():null,particles=[],seen=new Set(),seenQueue=[];let ready=false,error=false,maxParticles=0,dropped=0,droppedCore=0,droppedAux=0,particleNumber=0,linkedFlights=0,unlinkedImpacts=0,lastFlightErrorM=null;
+    const image=typeof Image!=='undefined'?new Image():null,particles=[],seen=new Set(),seenQueue=[],flightLinks=new Map(),flightLinkQueue=[];let ready=false,error=false,maxParticles=0,dropped=0,droppedCore=0,droppedAux=0,particleNumber=0,linkedFlights=0,unlinkedImpacts=0,lastFlightErrorM=null;
     if(image){image.onload=()=>{ready=image.naturalWidth===256&&image.naturalHeight===64;error=!ready;};image.onerror=()=>{error=true;};image.src=source;}
     const cell={muzzle:0,smoke:1,spark:2,tracer:3};
     function dropAt(index,core=false){particles.splice(index,1);dropped++;if(core)droppedCore++;else droppedAux++;}
@@ -16,21 +16,24 @@ const TacticalEffects=(()=>{
         const auxiliary=particles.findIndex(v=>v.aux);
         if(auxiliary>=0)dropAt(auxiliary);else dropAt(0,true);
       }
-      particles.push({...p,visualIndex:particleNumber++});maxParticles=Math.max(maxParticles,particles.length);return true;
+      const particle={...p,visualIndex:particleNumber++};particles.push(particle);maxParticles=Math.max(maxParticles,particles.length);return particle;
     }
     function remember(id){seen.add(id);seenQueue.push(id);if(seenQueue.length>seenLimit)seen.delete(seenQueue.shift());}
+    function rememberFlight(id,flight){flightLinks.set(id,flight);flightLinkQueue.push(id);while(flightLinkQueue.length>seenLimit)flightLinks.delete(flightLinkQueue.shift());}
+    function pruneFlightLinks(now){for(const [id,flight] of flightLinks)if(flight.expiresAt<now)flightLinks.delete(id);}
     function ingest(event){
       if(!event||seen.has(event.id))return;remember(event.id);const random=rng(event.visualSeed),jitter=()=>random()*2-1;
       if(event.kind==='fire'){
         push({kind:'muzzle',x:event.origin.x,y:event.origin.y,start:event.time,duration:.16,size:25,angle:event.heading,aux:false,eventId:event.id});
-        const travelDuration=Math.max(.05,event.duration);
-        push({kind:'tracer',x:event.origin.x,y:event.origin.y,start:event.time,duration:travelDuration+.12,travelDuration,size:28,angle:event.heading,distance:event.distanceM,aux:false,eventId:event.id,flight:true});
+        const travelDuration=Math.max(.05,event.duration),flight={kind:'tracer',x:event.origin.x,y:event.origin.y,start:event.time,duration:travelDuration+.12,travelDuration,size:28,angle:event.heading,distance:event.distanceM,aux:false,eventId:event.id,flight:true,expiresAt:event.expiresAt};
+        rememberFlight(event.id,flight);push(flight);
         for(let i=0;i<3;i++)push({kind:'smoke',x:event.origin.x+jitter()*1.5,y:event.origin.y+jitter()*1.5,start:event.time+.03*i,duration:.65+random()*.3,size:15+random()*12,angle:random()*Math.PI*2,driftX:jitter()*3,driftY:jitter()*3,aux:true});
       }else if(event.kind==='impact'){
-        const flight=particles.find(p=>p.kind==='tracer'&&p.flight&&p.eventId===event.flightEffectId);
+        let flight=particles.find(p=>p.kind==='tracer'&&p.flight&&p.eventId===event.flightEffectId);
+        if(!flight&&flightLinks.has(event.flightEffectId))flight=push(flightLinks.get(event.flightEffectId));
         if(flight){
           flight.endX=event.position.x;flight.endY=event.position.y;flight.travelDuration=Math.max(.05,event.time-flight.start);flight.duration=flight.travelDuration+.12;flight.resolved=true;
-          lastFlightErrorM=Math.hypot(flight.endX-event.position.x,flight.endY-event.position.y);linkedFlights++;
+          lastFlightErrorM=Math.hypot(flight.endX-event.position.x,flight.endY-event.position.y);linkedFlights++;flightLinks.delete(event.flightEffectId);
         }else if(event.flightEffectId)unlinkedImpacts++;
         const ricochet=event.effectClass==='ricochet',penetration=event.effectClass==='penetration';
         push({kind:'spark',x:event.position.x,y:event.position.y,start:event.time,duration:ricochet?.34:.26,size:ricochet?29:penetration?25:22,angle:random()*Math.PI*2,aux:false});
@@ -41,7 +44,7 @@ const TacticalEffects=(()=>{
     }
     function sync(events,now=null){
       const time=Number.isFinite(now)?now:events.reduce((latest,event)=>Math.max(latest,Number(event?.time)||0),0);
-      advance(time);for(const event of events)ingest(event);
+      for(const event of events)ingest(event);advance(time);pruneFlightLinks(time);
     }
     function advance(now){for(let i=particles.length-1;i>=0;i--)if(now-particles[i].start>particles[i].duration)particles.splice(i,1);}
     function sprite(ctx,p,x,y,size,alpha,angle=0){
@@ -66,8 +69,8 @@ const TacticalEffects=(()=>{
         }
       }
     }
-    function reset(){particles.length=0;seen.clear();seenQueue.length=0;maxParticles=0;dropped=0;droppedCore=0;droppedAux=0;particleNumber=0;linkedFlights=0;unlinkedImpacts=0;lastFlightErrorM=null;}
-    return Object.freeze({sync,advance,draw,reset,stats:()=>({ready,error,particles:particles.length,coreParticles:particles.filter(p=>!p.aux).length,auxParticles:particles.filter(p=>p.aux).length,byKind:particles.reduce((counts,p)=>(counts[p.kind]=(counts[p.kind]||0)+1,counts),{}),particleLimit,seen:seen.size,seenLimit,maxParticles,dropped,droppedCore,droppedAux,linkedFlights,unlinkedImpacts,lastFlightErrorM})});
+    function reset(){particles.length=0;seen.clear();seenQueue.length=0;flightLinks.clear();flightLinkQueue.length=0;maxParticles=0;dropped=0;droppedCore=0;droppedAux=0;particleNumber=0;linkedFlights=0;unlinkedImpacts=0;lastFlightErrorM=null;}
+    return Object.freeze({sync,advance,draw,reset,stats:()=>({ready,error,particles:particles.length,coreParticles:particles.filter(p=>!p.aux).length,auxParticles:particles.filter(p=>p.aux).length,byKind:particles.reduce((counts,p)=>(counts[p.kind]=(counts[p.kind]||0)+1,counts),{}),particleLimit,seen:seen.size,seenLimit,pendingFlightLinks:flightLinks.size,maxParticles,dropped,droppedCore,droppedAux,linkedFlights,unlinkedImpacts,lastFlightErrorM})});
   }
   return Object.freeze({create});
 })();

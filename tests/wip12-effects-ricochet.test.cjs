@@ -88,3 +88,13 @@ test('W12-11 default 384 budget keeps all 80 muzzle flashes and tracers across t
     assert.equal(stats.particles,384);assert.equal(stats.coreParticles,160);assert.equal(stats.byKind.muzzle,80);assert.equal(stats.byKind.tracer,80);assert.equal(stats.droppedCore,0);assert.equal(stats.droppedAux,16);assert.equal(stats.auxParticles,224);
   }finally{global.Image=Original;}
 });
+
+test('W12-12 delayed 2x frame reconnects an expired seed-70-style tracer before the terminal canvas draw',()=>{
+  const Original=global.Image;global.Image=class{set src(value){this.value=value;this.naturalWidth=256;this.naturalHeight=64;this.onload?.();}};
+  try{
+    const Effects=require('../src/effects.js'),renderer=Effects.create({source:'data:image/png;base64,test'}),fire={id:'fx-1',kind:'fire',time:15,expiresAt:15.85,origin:{x:0,y:0},heading:0,distanceM:1000,duration:.5,visualSeed:70},impact={id:'fx-2',kind:'impact',time:15.55,expiresAt:18.75,position:{x:980,y:108,z:0},effectClass:'miss-ground',flightEffectId:'fx-1',outgoingHeading:null,visualSeed:71};
+    renderer.sync([fire],15.45);renderer.advance(15.65);assert.equal(renderer.stats().byKind.tracer,undefined);assert.equal(renderer.stats().pendingFlightLinks,1);
+    renderer.sync([fire,impact],15.65);const lines=[],ctx={save(){},restore(){},translate(){},rotate(){},drawImage(){},beginPath(){},arc(){},fill(){},moveTo(x,y){this.from={x,y};},lineTo(x,y){lines.push({from:this.from,to:{x,y}});},stroke(){},set globalAlpha(v){},set fillStyle(v){},set strokeStyle(v){},set lineWidth(v){}};renderer.draw(ctx,15.65,(x,y)=>({x,y}),1);
+    const stats=renderer.stats();assert.equal(lines.length,1);near(lines[0].to.x,impact.position.x);near(lines[0].to.y,impact.position.y);assert.equal(stats.linkedFlights,1);assert.equal(stats.unlinkedImpacts,0);assert.equal(stats.pendingFlightLinks,0);assert.equal(stats.lastFlightErrorM,0);
+  }finally{global.Image=Original;}
+});

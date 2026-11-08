@@ -41,6 +41,53 @@
     "WIP12-effects-seed70-frame-13.png",
     "WIP12-effects-seed70-frame-14.png"
   ],
+  "seed70DelayedFrame": {
+    "fromSimTime": 15.450000000000085,
+    "toSimTime": 15.650000000000087,
+    "timeScale": 2,
+    "displayFrameSeconds": 0.1,
+    "evidence": [
+      "WIP12-effects-seed70-delay-before.png",
+      "WIP12-effects-seed70-delay-after.png"
+    ],
+    "result": {
+      "time": 15.650000000000087,
+      "timeScale": 2,
+      "linked": true,
+      "renderer": {
+        "ready": true,
+        "error": false,
+        "particles": 12,
+        "coreParticles": 2,
+        "auxParticles": 10,
+        "byKind": {
+          "tracer": 1,
+          "smoke": 7,
+          "spark": 4
+        },
+        "particleLimit": 384,
+        "seen": 2,
+        "seenLimit": 1024,
+        "pendingFlightLinks": 0,
+        "maxParticles": 12,
+        "dropped": 0,
+        "droppedCore": 0,
+        "droppedAux": 0,
+        "linkedFlights": 1,
+        "unlinkedImpacts": 0,
+        "lastFlightErrorM": 0
+      },
+      "canvasTracerEnd": {
+        "x": 908.7700370850725,
+        "y": 185.99157238272892
+      },
+      "impactScreen": {
+        "x": 908.7700370850725,
+        "y": 185.99157238272892
+      },
+      "canvasEndpointErrorPx": 0
+    }
+  },
   "actualCore": {
     "seed": 25,
     "selectedFace": "hullFront",
@@ -78,6 +125,7 @@
         "particleLimit": 384,
         "seen": 2,
         "seenLimit": 1024,
+        "pendingFlightLinks": 0,
         "maxParticles": 12,
         "dropped": 0,
         "droppedCore": 0,
@@ -102,6 +150,7 @@
     "particleLimit": 384,
     "seen": 2,
     "seenLimit": 1024,
+    "pendingFlightLinks": 0,
     "maxParticles": 11,
     "dropped": 0,
     "droppedCore": 0,
@@ -116,7 +165,7 @@
     "/?seed=70"
   ],
   "errors": [],
-  "passed": 16,
+  "passed": 18,
   "failed": 0,
-  "notes": "Actual Chromium and exact built standalone HTML. Deterministic RAF advances the real app/core/canvas. Both PNG sequences contain consecutive 0.05 simulation-second frames; seed 70 verifies that the resolved impact replaces the provisional endpoint before the terminal tracer frame. Headless viewports are not physical Android thermal/performance validation."
+  "notes": "Actual Chromium and exact built standalone HTML. Deterministic RAF advances the real app/core/canvas. Seed 70 verifies both consecutive 0.05-second frames and the delayed 15.45 -> 15.65 simulation-time frame at 2x; the latter records the real CanvasRenderingContext2D tracer line endpoint and compares it with the impact screen coordinate. Headless viewports are not physical Android thermal/performance validation."
 }

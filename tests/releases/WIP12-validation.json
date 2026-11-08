@@ -7,7 +7,7 @@
   "status": "passed",
   "summary": {
     "nodeTestRunner": {
-      "passed": 231,
+      "passed": 232,
       "failed": 0,
       "skipped": 0,
       "cancelled": 0
@@ -28,7 +28,7 @@
         "failed": 0
       },
       "wip12Effects": {
-        "passed": 16,
+        "passed": 18,
         "failed": 0
       },
       "chromium": "156.0.8078.79",
@@ -55,19 +55,19 @@
   "artifacts": {
     "standaloneHtml": {
       "path": "Tactical_v0.4_WIP12.html",
-      "bytes": 8414793,
-      "sha256": "544d31bfe13b16c5268fb2892714d5e532760badad2e4691f80ac7eae65ef65a",
+      "bytes": 8415484,
+      "sha256": "3055d04b5465012db0631920a9234e80f05118ee7b30106b6f7b525f5d0691c2",
       "matchesDistIndex": true
     },
     "zip": {
       "path": "Tactical_v0.4_WIP12.zip",
-      "bytes": 1656298,
-      "sha256": "b667d07dfe8a4eb0bfbbc8c1fb1fa4f75ad4fe57a44ca8ec4ecc2b7c4204a6c1",
+      "bytes": 1656467,
+      "sha256": "d41b3ba3639f1c52d069bb7a0905444eb280bc40bc292d21ca29c10abc0b364b",
       "entry": "Tactical_v0.4_WIP12.html",
-      "crc32": "60b7e835",
+      "crc32": "7c1bec01",
       "unzipTest": "passed",
       "verifiedRawDownload": "https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip",
-      "rawDownloadSha256Matches": true
+      "rawDownloadSha256Matches": null
     },
     "effectAtlas": {
       "path": "assets/effects/wip12-effects-atlas.png",
@@ -94,12 +94,12 @@
       "p95Ms": 29.096
     },
     "browserEffects50Units": {
-      "effectsDisabledMedianMs": 3.5,
-      "effectsDisabledP95Ms": 6.6,
-      "effectsEnabledMedianMs": 3.5,
-      "effectsEnabledP95Ms": 6.7,
+      "effectsDisabledMedianMs": 3.6,
+      "effectsDisabledP95Ms": 7.5,
+      "effectsEnabledMedianMs": 3.8,
+      "effectsEnabledP95Ms": 7.4,
       "sameFinalGameState": true,
-      "maxLiveParticles": 143,
+      "maxLiveParticles": 152,
       "particleLimit": 384,
       "effectQueueLimit": 256
     }
@@ -115,7 +115,8 @@
     "atlas fallback, bounded particles, pause, reset, quality and reduced-motion behavior",
     "desktop and mobile viewport browser rendering",
     "resolved impact retargets the linked tracer endpoint without rerolling combat",
-    "384-particle admission protects 80 muzzle and tracer pairs by dropping auxiliary particles first"
+    "384-particle admission protects 80 muzzle and tracer pairs by dropping auxiliary particles first",
+    "expired tracer reconnects on the exact seed-70 15.45-to-15.65 delayed 2x browser frame with a zero-pixel canvas endpoint error"
   ],
   "notExecuted": [
     "physical mobile-device hardware testing",
@@ -157,5 +158,32 @@
       "hidden enemy effect visibility without unit/HP disclosure",
       "zero follow-on damage after ricochet"
     ]
+  },
+  "delayedFrameCorrectionBasisHead": "10ac4fa51e4b1e4944f6e07426ea82e91e770915",
+  "delayedFrameCorrectionCommit": null,
+  "delayedFrameCorrection": {
+    "seed": 70,
+    "fromSimTime": 15.45,
+    "toSimTime": 15.65,
+    "timeScale": 2,
+    "displayFrameSeconds": 0.1,
+    "linkedFlights": 1,
+    "unlinkedImpacts": 0,
+    "pendingFlightLinksAfterImpact": 0,
+    "worldEndpointErrorM": 0,
+    "canvasEndpointErrorPx": 0,
+    "canvasTracerEnd": {
+      "x": 908.7700370850725,
+      "y": 185.99157238272892
+    },
+    "impactScreen": {
+      "x": 908.7700370850725,
+      "y": 185.99157238272892
+    },
+    "evidence": [
+      "tests/releases/WIP12-effects-seed70-delay-before.png",
+      "tests/releases/WIP12-effects-seed70-delay-after.png"
+    ],
+    "implementation": "pending flight-link metadata is bounded separately from particle lifetime; impact ingestion precedes current-time expiry"
   }
 }

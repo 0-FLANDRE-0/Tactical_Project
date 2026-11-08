@@ -17,16 +17,16 @@
   "simulatedSecondsPerTrial": 30,
   "fixture": "50 stationary M1A2_1998 in the existing legalNear grid, alternating teams/headings, both teams auto-fire; exact standalone HTML and actual app canvas",
   "effectsDisabled": {
-    "medianFrameCpuMs": 3.5,
-    "p95FrameCpuMs": 6.600000023841858,
-    "maxFrameCpuMs": 43.20000001788139,
+    "medianFrameCpuMs": 3.5999999940395355,
+    "p95FrameCpuMs": 7.5,
+    "maxFrameCpuMs": 38.20000001788139,
     "simTime": 32.00000000000032,
     "shots": 127,
     "resolved": 126,
     "destroyed": 17,
     "maxParticles": 140,
     "maxEffectQueue": 66,
-    "maxObservedJsHeapBytes": 92544163,
+    "maxObservedJsHeapBytes": 90543298,
     "finalRenderer": {
       "ready": true,
       "error": false,
@@ -40,7 +40,8 @@
       "particleLimit": 384,
       "seen": 253,
       "seenLimit": 1024,
-      "maxParticles": 143,
+      "pendingFlightLinks": 1,
+      "maxParticles": 152,
       "dropped": 0,
       "droppedCore": 0,
       "droppedAux": 0,
@@ -54,42 +55,42 @@
     },
     "trialSummaries": [
       {
+        "medianFrameCpuMs": 3.600000023841858,
+        "p95FrameCpuMs": 7.4000000059604645,
+        "maxFrameCpuMs": 38.20000001788139,
+        "maxParticles": 140,
+        "maxEffectQueue": 66,
+        "maxObservedJsHeapBytes": 90221086
+      },
+      {
         "medianFrameCpuMs": 3.5999999940395355,
-        "p95FrameCpuMs": 7.0999999940395355,
-        "maxFrameCpuMs": 25.700000017881393,
+        "p95FrameCpuMs": 7.800000011920929,
+        "maxFrameCpuMs": 18.5,
         "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 91814043
+        "maxObservedJsHeapBytes": 90543298
       },
       {
-        "medianFrameCpuMs": 3.5,
-        "p95FrameCpuMs": 6.199999988079071,
-        "maxFrameCpuMs": 43.20000001788139,
+        "medianFrameCpuMs": 3.5999999940395355,
+        "p95FrameCpuMs": 7.4000000059604645,
+        "maxFrameCpuMs": 21.099999994039536,
         "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 92544163
-      },
-      {
-        "medianFrameCpuMs": 3.4000000059604645,
-        "p95FrameCpuMs": 6.800000011920929,
-        "maxFrameCpuMs": 17.80000001192093,
-        "maxParticles": 140,
-        "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 89937239
+        "maxObservedJsHeapBytes": 83706702
       }
     ]
   },
   "effectsEnabled": {
-    "medianFrameCpuMs": 3.5,
-    "p95FrameCpuMs": 6.699999988079071,
-    "maxFrameCpuMs": 19.099999994039536,
+    "medianFrameCpuMs": 3.800000011920929,
+    "p95FrameCpuMs": 7.4000000059604645,
+    "maxFrameCpuMs": 43.900000005960464,
     "simTime": 32.00000000000032,
     "shots": 127,
     "resolved": 126,
     "destroyed": 17,
     "maxParticles": 140,
     "maxEffectQueue": 66,
-    "maxObservedJsHeapBytes": 92100218,
+    "maxObservedJsHeapBytes": 91630673,
     "finalRenderer": {
       "ready": true,
       "error": false,
@@ -103,7 +104,8 @@
       "particleLimit": 384,
       "seen": 253,
       "seenLimit": 1024,
-      "maxParticles": 143,
+      "pendingFlightLinks": 1,
+      "maxParticles": 152,
       "dropped": 0,
       "droppedCore": 0,
       "droppedAux": 0,
@@ -117,33 +119,33 @@
     },
     "trialSummaries": [
       {
-        "medianFrameCpuMs": 3.5,
-        "p95FrameCpuMs": 6.5,
-        "maxFrameCpuMs": 19.099999994039536,
+        "medianFrameCpuMs": 3.7999999821186066,
+        "p95FrameCpuMs": 6.9000000059604645,
+        "maxFrameCpuMs": 19.30000001192093,
         "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 91107342
+        "maxObservedJsHeapBytes": 91630673
       },
       {
-        "medianFrameCpuMs": 3.399999976158142,
-        "p95FrameCpuMs": 7.199999988079071,
-        "maxFrameCpuMs": 18.80000001192093,
+        "medianFrameCpuMs": 3.800000011920929,
+        "p95FrameCpuMs": 7.799999982118607,
+        "maxFrameCpuMs": 20.700000017881393,
         "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 87206586
+        "maxObservedJsHeapBytes": 86189905
       },
       {
-        "medianFrameCpuMs": 3.5999999940395355,
-        "p95FrameCpuMs": 6.300000011920929,
-        "maxFrameCpuMs": 18.200000017881393,
+        "medianFrameCpuMs": 3.800000011920929,
+        "p95FrameCpuMs": 7.5999999940395355,
+        "maxFrameCpuMs": 43.900000005960464,
         "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 92100218
+        "maxObservedJsHeapBytes": 86984081
       }
     ]
   },
-  "medianDisplayDeltaMs": 0,
-  "p95DisplayDeltaMs": 0.09999996423721313,
+  "medianDisplayDeltaMs": 0.20000001788139343,
+  "p95DisplayDeltaMs": -0.09999999403953552,
   "finalGameStateSHA256": "9f8be5a9f6cf3b9a269640d4a6f0a4d4fbf3daecdae2b5991df50d5b78fe0269",
   "gameStateEqual": true,
   "notes": "Three trials alternate mode order. Manual deterministic RAF drives one fixed simulation step and one real canvas draw per measured frame. Disabled mode still ingests and expires bounded public effects so toggling cannot replay old events; the delta isolates drawing more closely than the full event path. CPU/frame timings and JS heap are headless Chromium observations, not mobile FPS, memory retention proof or thermal validation."
