@@ -2,14 +2,14 @@
 
 WIP11A의 M1A2 (1998)·M829A2 피해 상태를 유지하면서 잔해 재발견과 팀별 영구 표시를 고쳤고, 양측 차량에 기본 자동교전을 연결했다. 차량은 자체 관측·식별·인계/확보·조준·발사선 재검사를 거쳐 자동 단발을 반복한다. 플레이어 지정은 현재 임무보다 우선하며 자동 모드를 유지한다. 현재 포수 표적의 관측 또는 발사선을 잃으면 전차장이 처음 발견한 순서의 유효 후보로 전환한다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip11a-combat-state/Tactical_v0.4_WIP11B.zip). 압축을 풀면 `Tactical_v0.4_WIP11B.html` 한 파일이 나온다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11B.zip). 압축을 풀면 `Tactical_v0.4_WIP11B.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP11B.html](Tactical_v0.4_WIP11B.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [잔해·자동교전 구현](docs/WRECK_AND_AUTO_ENGAGEMENT_WIP11B.md) · [피해 상태](docs/COMBAT_STATE_WIP11A.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11B.md) · [체크섬](SHA256SUMS_WIP11B.txt).
 - 최신 main `2f1786c`를 기존 PR #9 브랜치 `feat/wip11a-combat-state`에 정상 병합해 이어서 작업했다. 이전 실행 파일·ZIP·검증 자료를 보존한다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://github.com/0-FLANDRE-0/Tactical_Project/raw/refs/heads/feat/wip11a-combat-state/Tactical_v0.4_WIP11B.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11B.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11B.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11B.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면을 권장한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
