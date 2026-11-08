@@ -7,7 +7,7 @@
   "status": "passed",
   "summary": {
     "nodeTestRunner": {
-      "passed": 229,
+      "passed": 231,
       "failed": 0,
       "skipped": 0,
       "cancelled": 0
@@ -19,8 +19,8 @@
       "vehicle": "9/9",
       "terrainReadability": "7/7",
       "sourceQuality": "7/7",
-      "javascriptSyntax": "71/71",
-      "pythonSyntax": "15/15"
+      "javascriptSyntax": "75/75",
+      "pythonSyntax": "18/18"
     },
     "browser": {
       "general": {
@@ -28,7 +28,7 @@
         "failed": 0
       },
       "wip12Effects": {
-        "passed": 14,
+        "passed": 16,
         "failed": 0
       },
       "chromium": "156.0.8078.79",
@@ -50,24 +50,24 @@
     "node scripts/benchmark_combat.cjs",
     "node scripts/benchmark_effects_browser.cjs",
     "python3 build.py",
-    "python3 scripts/package_release.py"
+    "python3 scripts/package_release.py WIP12"
   ],
   "artifacts": {
     "standaloneHtml": {
       "path": "Tactical_v0.4_WIP12.html",
-      "bytes": 8412809,
-      "sha256": "451db113e1decc0ebed1d3789eace8968b435c72ed31dc915c398c9bb2641c15",
+      "bytes": 8414793,
+      "sha256": "544d31bfe13b16c5268fb2892714d5e532760badad2e4691f80ac7eae65ef65a",
       "matchesDistIndex": true
     },
     "zip": {
       "path": "Tactical_v0.4_WIP12.zip",
-      "bytes": 1655703,
-      "sha256": "a9d1b856f21d7a22df434f58053e7633a3a3fa6c910efa3fb82c1e54981716f8",
+      "bytes": 1656298,
+      "sha256": "b667d07dfe8a4eb0bfbbc8c1fb1fa4f75ad4fe57a44ca8ec4ecc2b7c4204a6c1",
       "entry": "Tactical_v0.4_WIP12.html",
-      "crc32": "540949b5",
+      "crc32": "60b7e835",
       "unzipTest": "passed",
       "verifiedRawDownload": "https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip",
-      "rawDownloadSha256Matches": true
+      "rawDownloadSha256Matches": null
     },
     "effectAtlas": {
       "path": "assets/effects/wip12-effects-atlas.png",
@@ -94,12 +94,12 @@
       "p95Ms": 29.096
     },
     "browserEffects50Units": {
-      "effectsDisabledMedianMs": 3.8,
-      "effectsDisabledP95Ms": 7.2,
-      "effectsEnabledMedianMs": 3.8,
-      "effectsEnabledP95Ms": 7.2,
+      "effectsDisabledMedianMs": 3.5,
+      "effectsDisabledP95Ms": 6.6,
+      "effectsEnabledMedianMs": 3.5,
+      "effectsEnabledP95Ms": 6.7,
       "sameFinalGameState": true,
-      "maxLiveParticles": 133,
+      "maxLiveParticles": 143,
       "particleLimit": 384,
       "effectQueueLimit": 256
     }
@@ -113,7 +113,9 @@
     "minimal hidden-enemy fire and impact effects without private target data",
     "renderer read/frame-count independence from combat RNG",
     "atlas fallback, bounded particles, pause, reset, quality and reduced-motion behavior",
-    "desktop and mobile viewport browser rendering"
+    "desktop and mobile viewport browser rendering",
+    "resolved impact retargets the linked tracer endpoint without rerolling combat",
+    "384-particle admission protects 80 muzzle and tracer pairs by dropping auxiliary particles first"
   ],
   "notExecuted": [
     "physical mobile-device hardware testing",
@@ -123,5 +125,37 @@
     "The WIP11E observation fixture state hashes remain exact.",
     "The moving-100 observation P95 is a single-run measurement and is not claimed as an improvement.",
     "No release was published and main was not merged."
-  ]
+  ],
+  "reviewCorrectionBasisHead": "f55d824597b72be208a94b560291f9f42006e1c3",
+  "reviewCorrectionCommit": null,
+  "reviewCorrections": {
+    "tracerImpactLink": {
+      "seed": 70,
+      "provisionalEndpointErrorM": 107.98212577574515,
+      "linkedEndpointErrorM": 0,
+      "linkedFlights": 1,
+      "unlinkedImpacts": 0,
+      "frameStepSeconds": 0.05,
+      "continuousFrames": 15,
+      "evidence": "tests/releases/WIP12-effects-seed70-frame-00.png through 14.png"
+    },
+    "particlePriority": {
+      "particleLimit": 384,
+      "shots": 80,
+      "batches": 2,
+      "batchStepSeconds": 0.05,
+      "inspectedAtSeconds": 0.1,
+      "muzzleParticles": 80,
+      "tracerParticles": 80,
+      "coreParticles": 160,
+      "auxParticles": 224,
+      "droppedCore": 0,
+      "droppedAux": 16
+    },
+    "preservedContracts": [
+      "decision timing and hit/zone/ricochet RNG order",
+      "hidden enemy effect visibility without unit/HP disclosure",
+      "zero follow-on damage after ricochet"
+    ]
+  }
 }

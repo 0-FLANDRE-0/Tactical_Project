@@ -1,12 +1,12 @@
 # TACTICAL v0.4 WIP12 — 사격 이펙트와 도탄
 
-WIP12는 기존 명중·피격 구역·피해 판정 뒤에 M829A2 게임 도탄 판정을 연결하고, 그 확정 결과를 자체 제작한 투명 텍스처와 파티클로 표시한다. 미관측 적의 포구 섬광·예광·탄착·도탄도 보이지만, 표시 사건에는 내부 차량 ID·차종·HP·피해·방호 수치가 들어가지 않는다. 도탄 뒤 탄광은 짧은 시각 표현으로 끝나며 새 충돌이나 피해를 만들지 않는다.
+WIP12는 기존 명중·피격 구역·피해 판정 뒤에 M829A2 게임 도탄 판정을 연결하고, 그 확정 결과를 자체 제작한 투명 텍스처와 파티클로 표시한다. 미관측 적의 포구 섬광·예광·탄착·도탄도 보이지만, 표시 사건에는 내부 차량 ID·차종·HP·피해·방호 수치가 들어가지 않는다. 도탄 뒤 탄광은 짧은 시각 표현으로 끝나며 새 충돌이나 피해를 만들지 않는다. 검토 수정으로 같은 사격의 예광 종점을 확정 탄착 좌표에 연결하고, 입자 상한에서는 연기·먼지를 먼저 줄여 핵심 포구·예광·충돌 표시를 보존한다.
 
 - 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip12-effects-ricochet/Tactical_v0.4_WIP12.zip). 압축을 풀면 `Tactical_v0.4_WIP12.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP12.html](Tactical_v0.4_WIP12.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP12 구현·공개 규칙](docs/COMBAT_EFFECTS_AND_RICOCHET_WIP12.md) · [릴리스·검증](TACTICAL_RELEASE_WIP12.md) · [체크섬](SHA256SUMS_WIP12.txt) · [작업 목차](docs/tasks/README.md).
 - 최신 main `687c624`에서 `feat/wip12-effects-ricochet` 브랜치를 만들었다. main에는 병합하거나 릴리스로 배포하지 않았다.
-- 실제 코어 seed 25의 탐지→확보→발사→비행→80.01° 도탄, 숨은 적 사격의 실제 Chromium 연속 15프레임, 50대 양 팀 효과 스트레스와 기존 관측·LOS 회귀를 검사했다. 수치는 게임 밸런스 데이터이며 실장비 성능 추정이 아니다.
+- 실제 코어 seed 25의 탐지→확보→발사→비행→80.01° 도탄, 숨은 적 사격 seed 25/70의 실제 Chromium 연속 프레임, 80발 입자 예산, 50대 양 팀 효과 스트레스와 기존 관측·LOS 회귀를 검사했다. 수치는 게임 밸런스 데이터이며 실장비 성능 추정이 아니다.
 
 ## 실행과 조작
 

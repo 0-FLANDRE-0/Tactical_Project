@@ -636,7 +636,7 @@
     ctx.restore();
   }
   function drawShots(){
-    effectRenderer.sync(C.effectEvents(sim,sim.time-4));
+    effectRenderer.sync(C.effectEvents(sim,sim.time-4),sim.time);
     if(effectsEnabled)effectRenderer.draw(ctx,sim.time,toScreen,camera.zoom,{quality:effectQuality,reducedMotion:reducedMotionOverride??!!reducedMotionMedia?.matches});else effectRenderer.advance(sim.time);
   }
   function drawRoute(u){

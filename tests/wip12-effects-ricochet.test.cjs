@@ -68,3 +68,23 @@ test('W12-08 renderer decodes the owned atlas, bounds particles and clears on re
 test('W12-09 ricochet reflection changes only the display direction',()=>{
   const pose={heading:rad(80),turret:0},out=Fire.reflectedHeading(0,pose,'hullFront',null);near(Math.atan2(Math.sin(out-rad(-20)),Math.cos(out-rad(-20))),0);
 });
+
+test('W12-10 resolved impact retargets its linked display tracer to the exact impact position',()=>{
+  const Original=global.Image;global.Image=class{set src(value){this.value=value;this.naturalWidth=256;this.naturalHeight=64;this.onload?.();}};
+  try{
+    const Effects=require('../src/effects.js'),renderer=Effects.create({source:'data:image/png;base64,test'}),fire={id:'fx-1',kind:'fire',time:0,expiresAt:1.35,origin:{x:0,y:0},heading:0,distanceM:1000,duration:1,visualSeed:1},impact={id:'fx-2',kind:'impact',time:1,expiresAt:4.2,position:{x:980,y:108,z:0},effectClass:'miss-ground',flightEffectId:'fx-1',outgoingHeading:null,visualSeed:2};
+    renderer.sync([fire],0);renderer.sync([fire,impact],1);
+    const lines=[],ctx={save(){},restore(){},translate(){},rotate(){},drawImage(){},beginPath(){},arc(){},fill(){},moveTo(x,y){this.from={x,y};},lineTo(x,y){lines.push({from:this.from,to:{x,y}});},stroke(){},set globalAlpha(v){},set fillStyle(v){},set strokeStyle(v){},set lineWidth(v){}};
+    renderer.draw(ctx,1,(x,y)=>({x,y}),1);const stats=renderer.stats();assert.equal(lines.length,1);near(lines[0].to.x,impact.position.x);near(lines[0].to.y,impact.position.y);assert.equal(stats.linkedFlights,1);assert.equal(stats.unlinkedImpacts,0);assert.equal(stats.lastFlightErrorM,0);
+  }finally{global.Image=Original;}
+});
+
+test('W12-11 default 384 budget keeps all 80 muzzle flashes and tracers across two 0.05 second frames',()=>{
+  const Original=global.Image;global.Image=class{set src(value){this.value=value;this.naturalWidth=256;this.naturalHeight=64;this.onload?.();}};
+  try{
+    const Effects=require('../src/effects.js'),renderer=Effects.create({source:'data:image/png;base64,test'}),events=[];
+    for(let i=0;i<80;i++)events.push({id:'fx-'+i,kind:'fire',time:i<40?0:.05,expiresAt:1.5,origin:{x:i,y:0},heading:0,distanceM:1000,duration:1,visualSeed:i});
+    renderer.sync(events.slice(0,40),.05);renderer.sync(events,.1);renderer.advance(.1);const stats=renderer.stats();
+    assert.equal(stats.particles,384);assert.equal(stats.coreParticles,160);assert.equal(stats.byKind.muzzle,80);assert.equal(stats.byKind.tracer,80);assert.equal(stats.droppedCore,0);assert.equal(stats.droppedAux,16);assert.equal(stats.auxParticles,224);
+  }finally{global.Image=Original;}
+});

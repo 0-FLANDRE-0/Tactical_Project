@@ -17,25 +17,36 @@
   "simulatedSecondsPerTrial": 30,
   "fixture": "50 stationary M1A2_1998 in the existing legalNear grid, alternating teams/headings, both teams auto-fire; exact standalone HTML and actual app canvas",
   "effectsDisabled": {
-    "medianFrameCpuMs": 3.7999999821186066,
-    "p95FrameCpuMs": 7.199999988079071,
-    "maxFrameCpuMs": 53.10000002384186,
+    "medianFrameCpuMs": 3.5,
+    "p95FrameCpuMs": 6.600000023841858,
+    "maxFrameCpuMs": 43.20000001788139,
     "simTime": 32.00000000000032,
     "shots": 127,
     "resolved": 126,
     "destroyed": 17,
-    "maxParticles": 133,
+    "maxParticles": 140,
     "maxEffectQueue": 66,
-    "maxObservedJsHeapBytes": 92407775,
+    "maxObservedJsHeapBytes": 92544163,
     "finalRenderer": {
       "ready": true,
       "error": false,
       "particles": 6,
+      "coreParticles": 1,
+      "auxParticles": 5,
+      "byKind": {
+        "smoke": 5,
+        "tracer": 1
+      },
       "particleLimit": 384,
       "seen": 253,
       "seenLimit": 1024,
-      "maxParticles": 148,
-      "dropped": 0
+      "maxParticles": 143,
+      "dropped": 0,
+      "droppedCore": 0,
+      "droppedAux": 0,
+      "linkedFlights": 126,
+      "unlinkedImpacts": 0,
+      "lastFlightErrorM": 0
     },
     "finalEffectQueue": {
       "queued": 5,
@@ -43,51 +54,62 @@
     },
     "trialSummaries": [
       {
-        "medianFrameCpuMs": 3.899999976158142,
-        "p95FrameCpuMs": 7.5,
-        "maxFrameCpuMs": 53.10000002384186,
-        "maxParticles": 133,
-        "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 92407775
-      },
-      {
         "medianFrameCpuMs": 3.5999999940395355,
         "p95FrameCpuMs": 7.0999999940395355,
-        "maxFrameCpuMs": 20.5,
-        "maxParticles": 133,
+        "maxFrameCpuMs": 25.700000017881393,
+        "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 86484371
+        "maxObservedJsHeapBytes": 91814043
       },
       {
-        "medianFrameCpuMs": 3.7999999821186066,
-        "p95FrameCpuMs": 7.0999999940395355,
-        "maxFrameCpuMs": 19.19999998807907,
-        "maxParticles": 133,
+        "medianFrameCpuMs": 3.5,
+        "p95FrameCpuMs": 6.199999988079071,
+        "maxFrameCpuMs": 43.20000001788139,
+        "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 88515899
+        "maxObservedJsHeapBytes": 92544163
+      },
+      {
+        "medianFrameCpuMs": 3.4000000059604645,
+        "p95FrameCpuMs": 6.800000011920929,
+        "maxFrameCpuMs": 17.80000001192093,
+        "maxParticles": 140,
+        "maxEffectQueue": 66,
+        "maxObservedJsHeapBytes": 89937239
       }
     ]
   },
   "effectsEnabled": {
-    "medianFrameCpuMs": 3.7999999821186066,
-    "p95FrameCpuMs": 7.199999988079071,
-    "maxFrameCpuMs": 25,
+    "medianFrameCpuMs": 3.5,
+    "p95FrameCpuMs": 6.699999988079071,
+    "maxFrameCpuMs": 19.099999994039536,
     "simTime": 32.00000000000032,
     "shots": 127,
     "resolved": 126,
     "destroyed": 17,
-    "maxParticles": 133,
+    "maxParticles": 140,
     "maxEffectQueue": 66,
-    "maxObservedJsHeapBytes": 91883010,
+    "maxObservedJsHeapBytes": 92100218,
     "finalRenderer": {
       "ready": true,
       "error": false,
       "particles": 6,
+      "coreParticles": 1,
+      "auxParticles": 5,
+      "byKind": {
+        "smoke": 5,
+        "tracer": 1
+      },
       "particleLimit": 384,
       "seen": 253,
       "seenLimit": 1024,
-      "maxParticles": 148,
-      "dropped": 0
+      "maxParticles": 143,
+      "dropped": 0,
+      "droppedCore": 0,
+      "droppedAux": 0,
+      "linkedFlights": 126,
+      "unlinkedImpacts": 0,
+      "lastFlightErrorM": 0
     },
     "finalEffectQueue": {
       "queued": 5,
@@ -95,33 +117,33 @@
     },
     "trialSummaries": [
       {
-        "medianFrameCpuMs": 3.600000023841858,
-        "p95FrameCpuMs": 6.600000023841858,
-        "maxFrameCpuMs": 25,
-        "maxParticles": 133,
+        "medianFrameCpuMs": 3.5,
+        "p95FrameCpuMs": 6.5,
+        "maxFrameCpuMs": 19.099999994039536,
+        "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 90040618
+        "maxObservedJsHeapBytes": 91107342
       },
       {
-        "medianFrameCpuMs": 3.800000011920929,
-        "p95FrameCpuMs": 7.800000011920929,
-        "maxFrameCpuMs": 21.799999982118607,
-        "maxParticles": 133,
-        "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 91883010
-      },
-      {
-        "medianFrameCpuMs": 3.9000000059604645,
+        "medianFrameCpuMs": 3.399999976158142,
         "p95FrameCpuMs": 7.199999988079071,
-        "maxFrameCpuMs": 24,
-        "maxParticles": 133,
+        "maxFrameCpuMs": 18.80000001192093,
+        "maxParticles": 140,
         "maxEffectQueue": 66,
-        "maxObservedJsHeapBytes": 91717129
+        "maxObservedJsHeapBytes": 87206586
+      },
+      {
+        "medianFrameCpuMs": 3.5999999940395355,
+        "p95FrameCpuMs": 6.300000011920929,
+        "maxFrameCpuMs": 18.200000017881393,
+        "maxParticles": 140,
+        "maxEffectQueue": 66,
+        "maxObservedJsHeapBytes": 92100218
       }
     ]
   },
   "medianDisplayDeltaMs": 0,
-  "p95DisplayDeltaMs": 0,
+  "p95DisplayDeltaMs": 0.09999996423721313,
   "finalGameStateSHA256": "9f8be5a9f6cf3b9a269640d4a6f0a4d4fbf3daecdae2b5991df50d5b78fe0269",
   "gameStateEqual": true,
   "notes": "Three trials alternate mode order. Manual deterministic RAF drives one fixed simulation step and one real canvas draw per measured frame. Disabled mode still ingests and expires bounded public effects so toggling cannot replay old events; the delta isolates drawing more closely than the full event path. CPU/frame timings and JS heap are headless Chromium observations, not mobile FPS, memory retention proof or thermal validation."

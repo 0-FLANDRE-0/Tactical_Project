@@ -24,6 +24,23 @@
     "WIP12-effects-frame-13.png",
     "WIP12-effects-frame-14.png"
   ],
+  "seed70ContinuousFrames": [
+    "WIP12-effects-seed70-frame-00.png",
+    "WIP12-effects-seed70-frame-01.png",
+    "WIP12-effects-seed70-frame-02.png",
+    "WIP12-effects-seed70-frame-03.png",
+    "WIP12-effects-seed70-frame-04.png",
+    "WIP12-effects-seed70-frame-05.png",
+    "WIP12-effects-seed70-frame-06.png",
+    "WIP12-effects-seed70-frame-07.png",
+    "WIP12-effects-seed70-frame-08.png",
+    "WIP12-effects-seed70-frame-09.png",
+    "WIP12-effects-seed70-frame-10.png",
+    "WIP12-effects-seed70-frame-11.png",
+    "WIP12-effects-seed70-frame-12.png",
+    "WIP12-effects-seed70-frame-13.png",
+    "WIP12-effects-seed70-frame-14.png"
+  ],
   "actualCore": {
     "seed": 25,
     "selectedFace": "hullFront",
@@ -45,18 +62,53 @@
       "result": "miss",
       "impactKind": "ground",
       "contacts": 0,
-      "detailedBlueEvents": 0
+      "detailedBlueEvents": 0,
+      "linked": true,
+      "provisionalEndpointErrorM": 107.98212577574515,
+      "renderer": {
+        "ready": true,
+        "error": false,
+        "particles": 9,
+        "coreParticles": 1,
+        "auxParticles": 8,
+        "byKind": {
+          "smoke": 5,
+          "spark": 4
+        },
+        "particleLimit": 384,
+        "seen": 2,
+        "seenLimit": 1024,
+        "maxParticles": 12,
+        "dropped": 0,
+        "droppedCore": 0,
+        "droppedAux": 0,
+        "linkedFlights": 1,
+        "unlinkedImpacts": 0,
+        "lastFlightErrorM": 0
+      }
     }
   },
   "texture": {
     "ready": true,
     "error": false,
     "particles": 10,
+    "coreParticles": 2,
+    "auxParticles": 8,
+    "byKind": {
+      "smoke": 6,
+      "spark": 3,
+      "tracer": 1
+    },
     "particleLimit": 384,
     "seen": 2,
     "seenLimit": 1024,
     "maxParticles": 11,
-    "dropped": 0
+    "dropped": 0,
+    "droppedCore": 0,
+    "droppedAux": 0,
+    "linkedFlights": 1,
+    "unlinkedImpacts": 0,
+    "lastFlightErrorM": 0
   },
   "networkRequests": [
     "/",
@@ -64,7 +116,7 @@
     "/?seed=70"
   ],
   "errors": [],
-  "passed": 14,
+  "passed": 16,
   "failed": 0,
-  "notes": "Actual Chromium and exact built standalone HTML. Deterministic RAF advances the real app/core/canvas. PNG sequence contains consecutive 0.05 simulation-second frames; it is not an art-only preview. Headless viewports are not physical Android thermal/performance validation."
+  "notes": "Actual Chromium and exact built standalone HTML. Deterministic RAF advances the real app/core/canvas. Both PNG sequences contain consecutive 0.05 simulation-second frames; seed 70 verifies that the resolved impact replaces the provisional endpoint before the terminal tracer frame. Headless viewports are not physical Android thermal/performance validation."
 }
