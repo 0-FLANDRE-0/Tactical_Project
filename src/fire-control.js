@@ -9,10 +9,10 @@ const TacticalFireControl=(()=>{
   function random(text,seed){let n=(2166136261^seed^0x51f15e)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
-  function init(u,p,mode='hold'){
+  function init(u,p,mode='auto'){
     if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
-      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null};
-    u.fireControl.fireMode??=mode;u.fireControl.lineProbeTarget??=null;u.fireControl.lineProbePose??=null;return u.fireControl;
+      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0};
+    u.fireControl.fireMode??=mode;u.fireControl.lineProbeTarget??=null;u.fireControl.lineProbePose??=null;u.fireControl.lineProbeBlocked??=false;u.fireControl.lineProbeCandidateRevision??=null;u.fireControl.lineProbeQueries??=0;return u.fireControl;
   }
   // Fictional RTS error budget. Target manoeuvre is represented only by the
   // difference between predicted and actual pose at impact, never twice here.
@@ -171,7 +171,7 @@ const TacticalFireControl=(()=>{
       currentTime=now;
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
-        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
+        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
         if(s.previousSample&&now-s.previousSample.time>p.sensors.tuning.queryPeriod*5+1e-9)resetMotion(s);
         if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
           const previous=s.previousSample;
@@ -186,17 +186,28 @@ const TacticalFireControl=(()=>{
           s.status=s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=null;
           const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,f,s.targetVelocity,s.layTime));
         }
-        // Actual scenarios opt into auto explicitly. It creates the same queued
-        // request consumed below, after aim is complete, and never overwrites a
-        // manual request that already exists for this step.
-        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto')s.pending={key:s.targetKey,source:'auto'};
-        // Hold still participates in hunter-killer switching. Probe at ready
-        // and again only when the observer or observed target pose changes.
+        // Normal units default to auto. Both modes retain a blocked weapon-line
+        // result until the geometry changes; a new commander candidate can use
+        // that result for retargeting without running the same LOS again.
         const linePose=c?.pose?[u.x,u.y,u.heading,u.turret,c.pose.x,c.pose.y,c.pose.heading,c.pose.turret]:null;
         const changedLine=!linePose||!s.lineProbePose||linePose.some((v,i)=>v!==s.lineProbePose[i]);
-        if(s.status==='ready'&&!s.pending&&s.fireMode==='hold'&&(s.lineProbeTarget!==s.targetKey||changedLine)){
-          s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;const probe=freshSight(u,d.target);
-          if(!probe?.visible&&probe?.reason==='fire-line-blocked'&&onFireBlocked?.(u,d.target,'fire-line-blocked',now)){
+        const candidateRevision=u.observation?.candidateRevision??0,candidatesChanged=s.lineProbeCandidateRevision!==candidateRevision;
+        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto'&&s.lineProbeBlocked&&s.lineProbeTarget===s.targetKey&&!changedLine){
+          s.lineProbeCandidateRevision=candidateRevision;
+          if(candidatesChanged&&onFireBlocked?.(u,d.target,'fire-line-blocked',now)){
+            s.status='blocked';s.reason='retargeted';resetAim(s);clearPreview(s);continue;
+          }
+          s.status='blocked';s.reason='fire-line-blocked';clearPreview(s);continue;
+        }
+        // Auto creates the same queued request consumed below and never
+        // overwrites a manual request already present for this step.
+        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto')s.pending={key:s.targetKey,source:'auto'};
+        // Hold still probes the real line and participates in hunter-killer
+        // switching, while never creating an automatic firing request.
+        if(s.status==='ready'&&!s.pending&&s.fireMode==='hold'&&(s.lineProbeTarget!==s.targetKey||changedLine||candidatesChanged)){
+          if(s.lineProbeTarget!==s.targetKey||changedLine){s.lineProbeQueries++;const probe=freshSight(u,d.target);s.lineProbeBlocked=!probe?.visible&&probe?.reason==='fire-line-blocked';}
+          s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeCandidateRevision=candidateRevision;
+          if(s.lineProbeBlocked&&onFireBlocked?.(u,d.target,'fire-line-blocked',now)){
             s.status='blocked';s.reason='retargeted';resetAim(s);clearPreview(s);continue;
           }
         }
@@ -205,11 +216,13 @@ const TacticalFireControl=(()=>{
         if(s.status!=='ready'||request.key!==s.targetKey){s.lastRejection=check.reason||'target-changed';continue;}
         // A fire command must recheck its own current range/FOV/terrain samples;
         // an old 10Hz contact or team knowledge cannot authorize a shot.
-        const sight=freshSight(u,d.target);
+        s.lineProbeQueries++;const sight=freshSight(u,d.target);
         if(!sight?.visible){
           const blocked=sight?.reason||'fresh-sight-failed',switched=blocked==='fire-line-blocked'&&onFireBlocked?.(u,d.target,blocked,now);
+          if(blocked==='fire-line-blocked'){s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=true;s.lineProbeCandidateRevision=candidateRevision;}
           s.status='blocked';s.reason=switched?'retargeted':blocked;resetAim(s);s.lastRejection=s.reason;clearPreview(s);continue;
         }
+        s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=candidateRevision;
         const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
         if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
         const chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime),number=s.shotCount+1;

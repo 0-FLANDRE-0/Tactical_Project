@@ -295,7 +295,9 @@
           "turret": 0.2914567944778671,
           "commander": 0.2914567944778671,
           "heading": 0,
-          "channel": "commander"
+          "channel": "commander",
+          "discoveredAt": 1.0000000000000002,
+          "identifiedAt": 3.1999999999999966
         },
         {
           "time": 7.99999999999998,
@@ -531,12 +533,14 @@
           "turret": 0.054959371920586336,
           "commander": 0.2914567944778671,
           "heading": 0,
-          "channel": "commander"
+          "channel": "commander",
+          "discoveredAt": 1.0000000000000002,
+          "identifiedAt": 3.1999999999999966
         },
         {
           "time": 29.000000000000277,
           "observer": "A",
-          "type": "gunner-own-target",
+          "type": "designated",
           "key": "접촉-162ecet",
           "detectedBy": "commander",
           "identifiedBy": "commander",
@@ -544,8 +548,8 @@
           "turret": 0.054959371920586336,
           "commander": 0.2914567944778671,
           "heading": 0,
-          "channel": "gunner",
-          "source": "gunner"
+          "source": "commander",
+          "status": "designated"
         },
         {
           "time": 29.050000000000278,
@@ -572,7 +576,9 @@
           "turret": 2.2339668566986637,
           "commander": 2.2206547832200507,
           "heading": 2.4000000000000066,
-          "channel": "commander"
+          "channel": "commander",
+          "discoveredAt": 29.050000000000278,
+          "identifiedAt": 29.050000000000278
         },
         {
           "time": 29.050000000000278,
@@ -612,7 +618,7 @@
           "turret": -0.2139371199909994,
           "commander": 0.2914567944778671,
           "heading": 0,
-          "source": "gunner",
+          "source": "commander",
           "status": "acquired"
         },
         {
@@ -783,7 +789,9 @@
           "turret": 0,
           "commander": 0,
           "heading": 0,
-          "channel": "commander"
+          "channel": "commander",
+          "discoveredAt": 0.9000000000000002,
+          "identifiedAt": 2.8999999999999977
         },
         {
           "time": 3.149999999999997,
@@ -810,12 +818,14 @@
           "turret": 3.141592653589793,
           "commander": 3.141592653589793,
           "heading": 3.141592653589793,
-          "channel": "commander"
+          "channel": "commander",
+          "discoveredAt": 1.3500000000000005,
+          "identifiedAt": 3.149999999999997
         },
         {
           "time": 3.149999999999997,
           "observer": "T",
-          "type": "gunner-own-target",
+          "type": "designated",
           "key": "접촉-xmfyvu",
           "detectedBy": "commander",
           "identifiedBy": "gunner",
@@ -823,8 +833,8 @@
           "turret": 3.141592653589793,
           "commander": 3.141592653589793,
           "heading": 3.141592653589793,
-          "channel": "gunner",
-          "source": "gunner"
+          "source": "commander",
+          "status": "designated"
         },
         {
           "time": 3.1999999999999966,
@@ -837,7 +847,7 @@
           "turret": 3.141592653589793,
           "commander": 3.1285026841998356,
           "heading": 3.141592653589793,
-          "source": "gunner",
+          "source": "commander",
           "status": "acquired"
         },
         {
@@ -907,7 +917,7 @@
           "turret": 3.141592653589793,
           "commander": 2.883300290134783,
           "heading": 3.141592653589793,
-          "source": "gunner",
+          "source": "commander",
           "status": "lost",
           "reason": "own-observation-lost"
         }
@@ -1053,7 +1063,9 @@
           "turret": 0,
           "commander": 0,
           "heading": 0,
-          "channel": "commander"
+          "channel": "commander",
+          "discoveredAt": 0.9000000000000002,
+          "identifiedAt": 2.8999999999999977
         },
         {
           "time": 3.149999999999997,
@@ -1080,12 +1092,14 @@
           "turret": 3.141592653589793,
           "commander": 3.141592653589793,
           "heading": 3.141592653589793,
-          "channel": "commander"
+          "channel": "commander",
+          "discoveredAt": 1.3500000000000005,
+          "identifiedAt": 3.149999999999997
         },
         {
           "time": 3.149999999999997,
           "observer": "T",
-          "type": "gunner-own-target",
+          "type": "designated",
           "key": "접촉-xmfyvu",
           "detectedBy": "commander",
           "identifiedBy": "gunner",
@@ -1093,8 +1107,8 @@
           "turret": 3.141592653589793,
           "commander": 3.141592653589793,
           "heading": 3.141592653589793,
-          "channel": "gunner",
-          "source": "gunner"
+          "source": "commander",
+          "status": "designated"
         },
         {
           "time": 3.1999999999999966,
@@ -1107,7 +1121,7 @@
           "turret": 3.141592653589793,
           "commander": 3.1285026841998356,
           "heading": 3.141592653589793,
-          "source": "gunner",
+          "source": "commander",
           "status": "acquired"
         },
         {
@@ -1177,7 +1191,7 @@
           "turret": 3.141592653589793,
           "commander": 3.8217668311384774,
           "heading": 3.141592653589793,
-          "source": "gunner",
+          "source": "commander",
           "status": "lost",
           "reason": "own-observation-lost"
         }

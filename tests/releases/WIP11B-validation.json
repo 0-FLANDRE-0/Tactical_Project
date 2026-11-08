@@ -11,20 +11,22 @@
     "cpu": "AMD EPYC 9V74 80-Core Processor",
     "browser": "Chromium 156.0.8078.79",
     "browserURL": "local HTTP, exact standalone dist/index.html",
-    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR"
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+    "sourcePython": "3.13.5",
+    "gdal": "3.10.3"
   },
   "automated": {
     "nodeRulesAndCore": {
-      "passed": 192,
+      "passed": 197,
       "failed": 0,
-      "priorBaseline": 177,
-      "newWIP11B": 15
+      "priorWIP11B": 192,
+      "newPolicyCorrection": 5
     },
     "input": {
       "passed": 37,
       "failed": 0,
-      "priorBaseline": 35,
-      "newWIP11B": 2
+      "priorWIP11B": 37,
+      "newPolicyCorrection": 0
     },
     "map": {
       "passed": 16,
@@ -39,16 +41,19 @@
       "failed": 0
     },
     "nodeTotal": {
-      "passed": 266,
+      "passed": 271,
       "failed": 0,
+      "priorWIP11B": 266,
+      "newPolicyCorrection": 5,
       "priorWIP11ABaseline": 249,
-      "newWIP11B": 17
+      "totalWIP11B": 22
     },
     "browser": {
-      "passed": 22,
+      "passed": 23,
       "failed": 0,
       "actualEmbeddedWorker": true,
       "defaultAuto": true,
+      "playerPriorityDesignation": true,
       "wreckRediscovery": true,
       "multiTargetHandoff": true,
       "desktop": true,
@@ -62,6 +67,12 @@
     "pythonSyntax": {
       "passed": 13,
       "failed": 0
+    },
+    "sourceDataQuality": {
+      "passed": 7,
+      "failed": 0,
+      "runner": "/usr/bin/python3",
+      "results": "tests/source-results.json"
     }
   },
   "requirements": {
@@ -73,7 +84,7 @@
     "W06": "PASS — friendly/enemy wreck actions and selection are rejected while dynamic occupancy remains",
     "W07": "PASS — selected destruction falls back to a living friendly; final loss supports safe no-selection UI and shortcuts",
     "W08": "PASS — a replacement scenario inherits no wreck, mode, request, HP, flight or public state",
-    "E01": "PASS — playable units explicitly start auto, makeTank remains hold, modes are per-unit and profile data stays immutable",
+    "E01": "PASS — normal creation and scenarios default auto, modes are per-unit and profile data stays immutable",
     "E02": "PASS — both teams automatically sense, identify, acquire, aim, fire, impact and damage without input",
     "E03": "PASS — team-only, unidentified, unacquired, lost, blocked, empty-ammo and destroyed states do not authorize auto fire",
     "E04": "PASS — auto uses the same final own-sight and weapon-line recheck as manual fire",
@@ -90,6 +101,12 @@
     "E15": "PASS — absent, shared-only, unidentified, stale or confirmed-wreck candidates cannot bypass handoff gates",
     "E16": "PASS — interval/aim/slew are not false switch reasons and A reappearance does not oscillate from valid B",
     "E17": "PASS — A-to-B clears unexecuted A preparation, preserves launched flights and advances B through one aim path",
+    "E18": "PASS — normal makeTank/fire initialization/replacement scenarios default auto while manual fixtures explicitly request hold",
+    "E19": "PASS — player designation replaces A with D, preserves auto and fires D after its normal acquisition/aim gates without G",
+    "E20": "PASS — commander candidates hand off by first discovery time despite reversed unit arrays and public keys",
+    "E21": "PASS — discovery and identification times stay separate; unidentified contacts do not block and later identification preserves discovery order",
+    "E22": "PASS — reobservation preserves first discovery without duplicates; stale/wreck candidates advance to the next valid contact",
+    "E23": "PASS — a candidate arriving after cached A obstruction retargets in auto and hold without another weapon-line LOS; hold does not fire",
     "I01": "PASS — frozen WIP09/WIP10 Python and manual-fire fixtures plus the full prior regression remain unchanged",
     "I02": "PASS — actual embedded Worker, stale-response protection, failure fallback and page script order pass",
     "I03": "PASS — source exports, active profile/ammunition, dist, standalone HTML and one-entry ZIP agree on WIP11B"
@@ -99,57 +116,57 @@
     "observationFixture": "100 timed fixed 0.05s steps after 20 warmup, both teams sense",
     "observationCases": {
       "stationary50": {
-        "medianStepMs": 2.9979639999999677,
-        "p95StepMs": 5.815415999999971
+        "medianStepMs": 2.8821699999999737,
+        "p95StepMs": 5.124815000000012
       },
       "stationary100": {
-        "medianStepMs": 8.340452000000141,
-        "p95StepMs": 16.092715
+        "medianStepMs": 8.51342899999986,
+        "p95StepMs": 15.904453999999987
       },
       "moving50": {
-        "medianStepMs": 4.63752199999999,
-        "p95StepMs": 6.37286099999983
+        "medianStepMs": 4.4189000000001215,
+        "p95StepMs": 5.595845999999938
       },
       "moving100": {
-        "medianStepMs": 17.658588999999665,
-        "p95StepMs": 22.358734999999797
+        "medianStepMs": 17.70859700000028,
+        "p95StepMs": 23.12632399999984
       }
     },
     "combat": "tests/releases/WIP11B-combat-benchmark.json",
     "combatFixture": "10000 resolved impacts plus duplicate replay",
-    "combatMedianMs": 19.12833799999993,
-    "combatP95Ms": 29.726977999999974,
+    "combatMedianMs": 19.20016899999999,
+    "combatP95Ms": 26.915442999999982,
     "duplicateHpStable": true,
     "boundedCombatRecords": 200,
     "auto": "tests/releases/WIP11B-auto-benchmark.json",
     "autoFixture": "50/100 stationary units, all explicitly auto, 600 timed fixed 0.05s steps after 20 warmup",
     "autoCases": {
       "50": {
-        "medianStepMs": 2.3116180000001805,
-        "p95StepMs": 5.382654000000002,
+        "medianStepMs": 2.2553539999998975,
+        "p95StepMs": 5.1662469999999985,
         "shots": 125,
         "resolvedImpacts": 125,
         "inFlight": 0,
         "destroyed": 17,
-        "retargetEvents": 13
+        "retargetEvents": 43
       },
       "100": {
-        "medianStepMs": 8.00792999999976,
-        "p95StepMs": 14.192699000000175,
-        "shots": 314,
-        "resolvedImpacts": 309,
+        "medianStepMs": 8.037951000000248,
+        "p95StepMs": 15.065257000000202,
+        "shots": 316,
+        "resolvedImpacts": 311,
         "inFlight": 5,
-        "destroyed": 39,
-        "retargetEvents": 56
+        "destroyed": 41,
+        "retargetEvents": 120
       }
     }
   },
   "package": {
-    "htmlBytes": 8339591,
-    "htmlSHA256": "4069a9e6e5cdc01b9e9d7f030233d3201f84d36db1c8284c662fa6525b34aeb5",
-    "zipBytes": 1629733,
-    "zipSHA256": "7921646d14438cb5477afb5749b5ebfd90c2ac7bd0fae521f0898aecbe00a986",
-    "zipCRC32": "311795d1",
+    "htmlBytes": 8341994,
+    "htmlSHA256": "22144264d35aba75ebc32ad73c860fd8417a679444899376d2c9510f28696fd9",
+    "zipBytes": 1630294,
+    "zipSHA256": "833bb5376da6761fb0391fe8035aae234f5ec67e1adcee50faac1ab047cf5747",
+    "zipCRC32": "a1081707",
     "zipEntries": [
       "Tactical_v0.4_WIP11B.html"
     ],

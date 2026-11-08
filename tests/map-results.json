@@ -12,7 +12,7 @@
     {
       "name": "measured 2m cell-centre samples decode without missing heights",
       "status": "PASS",
-      "ms": 2
+      "ms": 4
     },
     {
       "name": "height interpolation is continuous at grid boundaries",
@@ -27,7 +27,7 @@
     {
       "name": "selected building footprints retain real OSM identities",
       "status": "PASS",
-      "ms": 13
+      "ms": 14
     },
     {
       "name": "all initial vehicles have clear footprints",
@@ -37,7 +37,7 @@
     {
       "name": "actual building interior blocks navigation and rejects a destination",
       "status": "PASS",
-      "ms": 1
+      "ms": 0
     },
     {
       "name": "pond surface rejects vehicle passage",
@@ -47,22 +47,22 @@
     {
       "name": "four real-map routes arrive with zero collisions",
       "status": "PASS",
-      "ms": 3396
+      "ms": 3541
     },
     {
       "name": "reverse retains hull facing on a rearward route",
       "status": "PASS",
-      "ms": 46
+      "ms": 47
     },
     {
       "name": "stop cancels path and brakes",
       "status": "PASS",
-      "ms": 71
+      "ms": 72
     },
     {
       "name": "fixed physics results match between render batches",
       "status": "PASS",
-      "ms": 672
+      "ms": 699
     },
     {
       "name": "observation range is enforced",

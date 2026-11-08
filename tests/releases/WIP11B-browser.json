@@ -23,6 +23,7 @@
     "actual browser command cancellation and automatic return respect separate guard orders",
     "reset clears firing events, aim progress and test-round state",
     "actual browser multi-target loss hands gunner A to commander-observed B without oscillation",
+    "player designation replaces A in auto and fires D without a separate fire command",
     "embedded M1A2 Canvas pixels match supplied HTML with fresh Path2D caches at four independent poses",
     "no application page errors"
   ],
@@ -80,9 +81,9 @@
       ]
     }
   },
-  "passed": 22,
+  "passed": 23,
   "failed": 0,
   "errors": [],
-  "scope": "WIP11B active profile, observation, manual/automatic fire and flight, abstract penetration damage, permanent wreck discovery, selection fallback and hunter-killer retarget UI",
-  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact is injected only for UI privacy checks. Default auto fire, multi-target handoff, team sharing, flight damage, destruction and wreck selection use the actual core and map. Supplied HTML M1A2 Canvas pixels are compared exactly at four poses. file:// is reported separately; mobile checks are Chromium viewports, not Android hardware."
+  "scope": "WIP11B active profile, observation, manual/automatic fire and flight, abstract penetration damage, permanent wreck discovery, selection fallback, player-priority designation and hunter-killer retarget UI",
+  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact is injected only for UI privacy checks. Default auto fire, player-priority designation without a separate fire command, multi-target handoff, team sharing, flight damage, destruction and wreck selection use the actual core and map. Supplied HTML M1A2 Canvas pixels are compared exactly at four poses. file:// is reported separately; mobile checks are Chromium viewports, not Android hardware."
 }

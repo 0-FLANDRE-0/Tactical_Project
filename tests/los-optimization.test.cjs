@@ -17,7 +17,7 @@ test('12000 real-map LOS results exactly match baseline, including reason/optica
 });
 test('1000 real-map nine-point exposure records exactly match at independent hull/turret angles',()=>{
  for(let i=0;i<1000;i++){
-  const o=C.makeTank('A','A',C.hash(i,711)*4000,C.hash(i,712)*4000,i),t=C.makeTank('T','T',C.hash(i,713)*4000,C.hash(i,714)*4000,i*.27,'red');t.turret=i*.39;
+  const o=C.makeTank('A','A',C.hash(i,711)*4000,C.hash(i,712)*4000,i,'blue',undefined,'hold'),t=C.makeTank('T','T',C.hash(i,713)*4000,C.hash(i,714)*4000,i*.27,'red',undefined,'hold');t.turret=i*.39;
   const ex=C.exposure(o,t,[2.65,1.4,10][i%3]);assert.deepEqual({...ex,samples:ex.samples.map(({along,z,col,row,...v})=>v)},B.exposure(o,t,[2.65,1.4,10][i%3]),'prior exposure fields '+i);report.exposures++;
  }
  report.cases.push('1000 exposure records (9000 rays), independent poses');

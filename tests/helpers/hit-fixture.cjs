@@ -12,7 +12,7 @@ function fixture(seed=7){
  const runtime=F.create({seed,profileOf:()=>profile,debug:true,onDecisionRoll:kind=>rolls.push(kind),isObserved:()=>observed,
   impactEnvironment:{heightAt:()=>0,buildingAt:()=>null,world:{w:5000,h:5000}},
   impactSight:()=>{const e=structuredClone(c.gunnerExposure);if(cover)for(const sample of e.samples)sample.visible=false;return{...e,visible:!cover&&!gone,gone,presented:structuredClone(profile.fireControl.presented),pose:structuredClone(c.pose)};},
-  freshSight:()=>{calls++;return{...(fresh||c.gunnerExposure),visible:!blocked,fireEye:2.2,presented:structuredClone(profile.fireControl.presented),reason:'fire-line-blocked',pose:structuredClone(c.pose)};}});F.init(u,profile);
+  freshSight:()=>{calls++;return{...(fresh||c.gunnerExposure),visible:!blocked,fireEye:2.2,presented:structuredClone(profile.fireControl.presented),reason:'fire-line-blocked',pose:structuredClone(c.pose)};}});F.init(u,profile,'hold');
  const tickAt=(now,observe=true)=>{time=now;if(observe&&c.sources.gunner.current)c.sources.gunner.lastSeen=time;runtime.step([u],.05,time);};
  const step=(seconds=.05,move=null)=>{for(let i=0;i<Math.round(seconds/.05);i++){move?.(c,u,time+.05);tickAt(time+.05);}};
  const land=()=>{let count=0;while(runtime.view(u).inFlight.length&&count++<110)step();};

@@ -26,13 +26,13 @@ flatMap.features={roads:[],forests:[],fields:[],water:[],waterways:[],trees:[],l
 const holder={exports:{}},profiles=require('../src/vehicle-profiles.js');
 const flat=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',fs.readFileSync(path.join(__dirname,'../src/sim-core.js'),'utf8')+'\nreturn module.exports;')(flatMap,profiles,require('../src/observation.js'),require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),holder);
 test('actual integrator reaches 20 mph in 7.2 seconds on level road',()=>{
- const u=flat.makeTank('TEST','TEST',500,1000,0),s={time:0,units:[u]};assert(flat.issueMove(u,{x:3500,y:1000},false,s.units).ok);
+ const u=flat.makeTank('TEST','TEST',500,1000,0,'blue',undefined,'hold'),s={time:0,units:[u]};assert(flat.issueMove(u,{x:3500,y:1000},false,s.units).ok);
  for(let i=0;i<144;i++)flat.step(s,.05);close(u.speed,20*.44704,.02);
  evidence.push({test:'0-20mph',seconds:s.time,speedMps:u.speed});
  for(let i=0;i<2000;i++)flat.step(s,.05);close(u.speed,42*.44704,.001);assert(u.path.length);evidence.push({test:'road cap',speedKmh:u.speed*3.6});
 });
 test('actual integrator reaches reverse cap without turning hull around',()=>{
- const u=flat.makeTank('TEST','TEST',3500,1000,0),s={time:0,units:[u]};assert(flat.issueMove(u,{x:500,y:1000},true,s.units).ok);
+ const u=flat.makeTank('TEST','TEST',3500,1000,0,'blue',undefined,'hold'),s={time:0,units:[u]};assert(flat.issueMove(u,{x:500,y:1000},true,s.units).ok);
  for(let i=0;i<1400;i++)flat.step(s,.05);close(u.speed,25*.44704,.001);close(u.heading,0,.001);assert(u.x<3500);evidence.push({test:'reverse cap',speedKmh:u.speed*3.6});
 });
 test('CITV eye height drives LOS while weapon reference is not a visibility cut-off',()=>{

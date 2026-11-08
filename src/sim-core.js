@@ -215,10 +215,10 @@ const TacticalCore = (() => {
     }
     return {ok:true,points:points.slice(1),visits,cost:dist[g]};
   }
-  function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID) {
+  function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID,fireMode='auto') {
     registry.get(profileId);
     const u={id,name,profileId,x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
-    const p=profileOf(u);TacticalObservation.init(u);TacticalFireControl.init(u,p);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
+    const p=profileOf(u);TacticalObservation.init(u);TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
   }
   function legalNear(x,y,units=[]) {
     for(let r=0;r<150;r+=8) for(let a=0;a<Math.PI*2;a+=Math.PI/8) {
@@ -234,8 +234,8 @@ const TacticalCore = (() => {
       ['T01','관측 표적 01',1150,2330,2.4,'red'],['T02','관측 표적 02',1800,1650,2.5,'red'],['T03','관측 표적 03',3020,2060,2.8,'red']
     ]) {const p=legalNear(x,y,units);units.push(makeTank(id,name,p.x,p.y,h,team));}
     const scenario={time:0,seed,units};
-    // The playable test scenario explicitly opts both teams into automatic
-    // single-shot engagement. makeTank() remains hold for legacy/manual fixtures.
+    // Playable scenarios state the normal automatic policy explicitly too;
+    // manual compatibility fixtures opt into hold when constructing a unit.
     for(const u of units)fireFor(scenario).setMode(u,'auto');
     return scenario;
   }
