@@ -1,0 +1,3671 @@
+{
+  "version": "0.4-WIP11E",
+  "date": "2026-11-08",
+  "node": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "trials": 3,
+  "notes": "Supplementary fixed placements; 500 warmup exposures, then seven rounds of 2,000 uncached nine-ray exposures per fresh process. Baseline/current process order alternates. CPU time, not simulation step or FPS.",
+  "cases": [
+    {
+      "name": "real-west-slope",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 45.275847999999996,
+        "p95Ms": 47.32954499999994,
+        "maxMs": 50.06269600000002
+      },
+      "optimized": {
+        "medianMs": 40.744235,
+        "p95Ms": 42.35829699999999,
+        "maxMs": 47.17209600000001
+      },
+      "reductionPercent": 10.008897017235308,
+      "resultsEqual": true
+    },
+    {
+      "name": "real-town",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 60.80048999999997,
+        "p95Ms": 65.04968600000007,
+        "maxMs": 66.82667200000003
+      },
+      "optimized": {
+        "medianMs": 48.134704000000056,
+        "p95Ms": 50.89904899999999,
+        "maxMs": 53.819949999999835
+      },
+      "reductionPercent": 20.831716981228144,
+      "resultsEqual": true
+    },
+    {
+      "name": "synthetic-forest",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 33.280430000000024,
+        "p95Ms": 35.02294599999982,
+        "maxMs": 35.31069000000002
+      },
+      "optimized": {
+        "medianMs": 25.413774999999987,
+        "p95Ms": 28.543812000000116,
+        "maxMs": 28.669261000000006
+      },
+      "reductionPercent": 23.63748004457884,
+      "resultsEqual": true
+    },
+    {
+      "name": "synthetic-ridge-tangent",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 14.825145999999904,
+        "p95Ms": 15.982402999999977,
+        "maxMs": 19.53167899999994
+      },
+      "optimized": {
+        "medianMs": 10.818366000000196,
+        "p95Ms": 12.35931299999993,
+        "maxMs": 13.511924000000135
+      },
+      "reductionPercent": 27.026917643844683,
+      "resultsEqual": true
+    },
+    {
+      "name": "synthetic-early-building",
+      "exposuresPerRound": 2000,
+      "roundsPerProcess": 7,
+      "baseline": {
+        "medianMs": 23.709092000000055,
+        "p95Ms": 24.945578999999952,
+        "maxMs": 32.646733999999924
+      },
+      "optimized": {
+        "medianMs": 16.45647999999983,
+        "p95Ms": 21.496039999999994,
+        "maxMs": 23.03604099999984
+      },
+      "reductionPercent": 30.59000319371239,
+      "resultsEqual": true
+    }
+  ],
+  "runs": {
+    "baseline": [
+      {
+        "variant": "baseline",
+        "cases": [
+          {
+            "name": "real-west-slope",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 45.833415,
+            "p95Ms": 47.32954499999994,
+            "minMs": 45.431264,
+            "maxMs": 47.32954499999994,
+            "sample": {
+              "hull": 0.5,
+              "turret": 1,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150.7373937155412,
+                  "y": 2329.324536819449,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1149.2626062844588,
+                  "y": 2330.675463180551,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "real-town",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 61.79861200000005,
+            "p95Ms": 66.82667200000003,
+            "minMs": 60.43021699999997,
+            "maxMs": 66.82667200000003,
+            "sample": {
+              "hull": 0.3333333333333333,
+              "turret": 0,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300.737393715541,
+                  "y": 1800.675463180551,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3299.262606284459,
+                  "y": 1799.324536819449,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-forest",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 33.280430000000024,
+            "p95Ms": 34.00834800000007,
+            "minMs": 32.84257000000002,
+            "maxMs": 34.00834800000007,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154561465304677
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154541176470586
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-ridge-tangent",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 16.34320600000001,
+            "p95Ms": 19.53167899999994,
+            "minMs": 15.461525999999822,
+            "maxMs": 19.53167899999994,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-early-building",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 24.888935000000174,
+            "p95Ms": 32.646733999999924,
+            "minMs": 23.381659000000127,
+            "maxMs": 32.646733999999924,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          }
+        ]
+      },
+      {
+        "variant": "baseline",
+        "cases": [
+          {
+            "name": "real-west-slope",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 44.65948700000001,
+            "p95Ms": 50.06269600000002,
+            "minMs": 44.306303999999955,
+            "maxMs": 50.06269600000002,
+            "sample": {
+              "hull": 0.5,
+              "turret": 1,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150.7373937155412,
+                  "y": 2329.324536819449,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1149.2626062844588,
+                  "y": 2330.675463180551,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "real-town",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 60.092310999999995,
+            "p95Ms": 61.11183099999994,
+            "minMs": 59.0223860000001,
+            "maxMs": 61.11183099999994,
+            "sample": {
+              "hull": 0.3333333333333333,
+              "turret": 0,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300.737393715541,
+                  "y": 1800.675463180551,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3299.262606284459,
+                  "y": 1799.324536819449,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-forest",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 33.621849999999995,
+            "p95Ms": 35.31069000000002,
+            "minMs": 32.87991000000011,
+            "maxMs": 35.31069000000002,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154561465304677
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154541176470586
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-ridge-tangent",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 14.361216000000013,
+            "p95Ms": 15.60886000000005,
+            "minMs": 13.938568000000032,
+            "maxMs": 15.60886000000005,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-early-building",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 21.97597400000018,
+            "p95Ms": 23.50883900000008,
+            "minMs": 21.806799000000183,
+            "maxMs": 23.50883900000008,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          }
+        ]
+      },
+      {
+        "variant": "baseline",
+        "cases": [
+          {
+            "name": "real-west-slope",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 45.275847999999996,
+            "p95Ms": 47.01909899999998,
+            "minMs": 44.08927600000004,
+            "maxMs": 47.01909899999998,
+            "sample": {
+              "hull": 0.5,
+              "turret": 1,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150.7373937155412,
+                  "y": 2329.324536819449,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1149.2626062844588,
+                  "y": 2330.675463180551,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "real-town",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 60.80048999999997,
+            "p95Ms": 65.04968600000007,
+            "minMs": 60.36612500000001,
+            "maxMs": 65.04968600000007,
+            "sample": {
+              "hull": 0.3333333333333333,
+              "turret": 0,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300.737393715541,
+                  "y": 1800.675463180551,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3299.262606284459,
+                  "y": 1799.324536819449,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-forest",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 33.22732399999995,
+            "p95Ms": 35.02294599999982,
+            "minMs": 32.37720000000013,
+            "maxMs": 35.02294599999982,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154561465304677
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154541176470586
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-ridge-tangent",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 14.825145999999904,
+            "p95Ms": 15.982402999999977,
+            "minMs": 14.40994999999998,
+            "maxMs": 15.982402999999977,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-early-building",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 23.709092000000055,
+            "p95Ms": 24.945578999999952,
+            "minMs": 22.385193000000072,
+            "maxMs": 24.945578999999952,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "variant": "optimized",
+        "cases": [
+          {
+            "name": "real-west-slope",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 45.13960999999995,
+            "p95Ms": 47.17209600000001,
+            "minMs": 43.06241399999999,
+            "maxMs": 47.17209600000001,
+            "sample": {
+              "hull": 0.5,
+              "turret": 1,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150.7373937155412,
+                  "y": 2329.324536819449,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1149.2626062844588,
+                  "y": 2330.675463180551,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "real-town",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 51.6594970000001,
+            "p95Ms": 53.819949999999835,
+            "minMs": 49.691205999999966,
+            "maxMs": 53.819949999999835,
+            "sample": {
+              "hull": 0.3333333333333333,
+              "turret": 0,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300.737393715541,
+                  "y": 1800.675463180551,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3299.262606284459,
+                  "y": 1799.324536819449,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-forest",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 27.031868999999915,
+            "p95Ms": 28.543812000000116,
+            "minMs": 25.69638299999997,
+            "maxMs": 28.543812000000116,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154561465304677
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154541176470586
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-ridge-tangent",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 11.7691319999999,
+            "p95Ms": 12.35931299999993,
+            "minMs": 11.158179000000018,
+            "maxMs": 12.35931299999993,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-early-building",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 17.3438000000001,
+            "p95Ms": 21.460966999999982,
+            "minMs": 16.78402499999993,
+            "maxMs": 21.460966999999982,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          }
+        ]
+      },
+      {
+        "variant": "optimized",
+        "cases": [
+          {
+            "name": "real-west-slope",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 40.744235,
+            "p95Ms": 42.02003100000002,
+            "minMs": 39.891897000000085,
+            "maxMs": 42.02003100000002,
+            "sample": {
+              "hull": 0.5,
+              "turret": 1,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150.7373937155412,
+                  "y": 2329.324536819449,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1149.2626062844588,
+                  "y": 2330.675463180551,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "real-town",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 48.134704000000056,
+            "p95Ms": 50.89904899999999,
+            "minMs": 47.123096999999916,
+            "maxMs": 50.89904899999999,
+            "sample": {
+              "hull": 0.3333333333333333,
+              "turret": 0,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300.737393715541,
+                  "y": 1800.675463180551,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3299.262606284459,
+                  "y": 1799.324536819449,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-forest",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 25.413774999999987,
+            "p95Ms": 26.66334299999994,
+            "minMs": 25.077517999999827,
+            "maxMs": 26.66334299999994,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154561465304677
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154541176470586
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-ridge-tangent",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 10.818366000000196,
+            "p95Ms": 13.511924000000135,
+            "minMs": 10.411732000000029,
+            "maxMs": 13.511924000000135,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-early-building",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 16.45647999999983,
+            "p95Ms": 21.496039999999994,
+            "minMs": 16.20320700000002,
+            "maxMs": 21.496039999999994,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          }
+        ]
+      },
+      {
+        "variant": "optimized",
+        "cases": [
+          {
+            "name": "real-west-slope",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 40.70962300000002,
+            "p95Ms": 42.35829699999999,
+            "minMs": 40.21871300000004,
+            "maxMs": 42.35829699999999,
+            "sample": {
+              "hull": 0.5,
+              "turret": 1,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1152.0647024035154,
+                  "y": 2328.108703094457,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1147.9352975964846,
+                  "y": 2331.891296905543,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150.7373937155412,
+                  "y": 2329.324536819449,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1150,
+                  "y": 2330,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1149.2626062844588,
+                  "y": 2330.675463180551,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "real-town",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 47.850671000000034,
+            "p95Ms": 50.032374000000004,
+            "minMs": 47.03275700000006,
+            "maxMs": 50.032374000000004,
+            "sample": {
+              "hull": 0.3333333333333333,
+              "turret": 0,
+              "visible": true,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3302.399288509433,
+                  "y": 1798.5565961589,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3297.600711490567,
+                  "y": 1801.4434038411,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": true,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300.737393715541,
+                  "y": 1800.675463180551,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3300,
+                  "y": 1800,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 3299.262606284459,
+                  "y": 1799.324536819449,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-forest",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 25.359123999999838,
+            "p95Ms": 28.669261000000006,
+            "minMs": 24.916457000000037,
+            "maxMs": 28.669261000000006,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0152556831497548
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 1.0156557821525412
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154561465304677
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.016470588235293
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 1.0154541176470586
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-ridge-tangent",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 10.500598000000082,
+            "p95Ms": 10.950076000000081,
+            "minMs": 10.295299000000114,
+            "maxMs": 10.950076000000081,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          },
+          {
+            "name": "synthetic-early-building",
+            "exposuresPerRound": 2000,
+            "rounds": 7,
+            "medianMs": 16.261966999999913,
+            "p95Ms": 23.03604099999984,
+            "minMs": 16.10960699999987,
+            "maxMs": 23.03604099999984,
+            "sample": {
+              "hull": 0,
+              "turret": 0,
+              "visible": false,
+              "forestDepth": 0,
+              "samples": [
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 0.8,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1502.8,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": -2.8,
+                  "z": 1.4,
+                  "col": 0,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 0.8,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 0,
+                  "z": 1.4,
+                  "col": 1,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 0.8,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1497.2,
+                  "y": 1000,
+                  "part": "hull",
+                  "along": 2.8,
+                  "z": 1.4,
+                  "col": 2,
+                  "row": 1,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1501,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": -1,
+                  "z": 2.2,
+                  "col": 0,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1500,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 0,
+                  "z": 2.2,
+                  "col": 1,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                },
+                {
+                  "x": 1499,
+                  "y": 1000,
+                  "part": "turret",
+                  "along": 1,
+                  "z": 2.2,
+                  "col": 2,
+                  "row": 0,
+                  "visible": false,
+                  "forestDepth": 0
+                }
+              ],
+              "rayQueries": 9,
+              "rayCacheHits": 0
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

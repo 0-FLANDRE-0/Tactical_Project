@@ -1,0 +1,133 @@
+{
+  "version": "0.4-WIP11E",
+  "date": "2026-11-08",
+  "startingMain": "a01ae8bd8965f5b035acdcfa40087cf6fe8c3c7d",
+  "comparisonBase": "a668f9b21340db09fe2459190bb34337ef7d2690",
+  "branch": "feat/wip11e-los-optimization",
+  "pullRequest": 10,
+  "sourceHashes": {
+    "frozenWIP11DCore": "8ee5cc9f4374db0afcffaf9ae49df9e6c818a089fd72a7f1319f29c994788ee8",
+    "optimizedCore": "5fab4fbc559f698387319665606517861501c07beb70337c1aac9690d674cb64",
+    "archivedTask": "b55aa5e9296599cea1226642be64cc31780e6b0606c113c5cb0243cbf66bb161"
+  },
+  "environment": {
+    "node": "v24.22.1",
+    "python": "3.12.14",
+    "sourcePython": "3.13.5",
+    "platform": "linux x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "browser": "Chromium 156.0.8078.79",
+    "browserURL": "local HTTP, exact standalone dist/index.html",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR"
+  },
+  "automated": {
+    "publicHpNarrowC05C06": {"passed": 2, "failed": 0},
+    "nodeRunner": {"passed": 219, "failed": 0},
+    "embeddedHarnessCounts": {
+      "note": "These checks ran inside the Node invocation and are not added again to nodeRunner.",
+      "input": {"passed": 42, "failed": 0},
+      "map": {"passed": 16, "failed": 0},
+      "visibility": {"passed": 12, "failed": 0},
+      "vehicleAndWorker": {"passed": 9, "failed": 0}
+    },
+    "wip11dSharedPathEquivalence": {"passed": 6, "failed": 0},
+    "wip07aLosOracle": {"passed": 7, "failed": 0},
+    "terrainDerivation": {"passed": 7, "failed": 0},
+    "sourceDataQuality": {"passed": 7, "failed": 0, "runner": "/usr/bin/python3"},
+    "javascriptSyntax": {"passed": 64, "failed": 0},
+    "pythonSyntax": {"passed": 13, "failed": 0},
+    "browser": {
+      "passed": 27,
+      "failed": 0,
+      "actualEmbeddedWorker": true,
+      "desktop1440x900Dpr1": true,
+      "landscape844x390Dpr1And2": true,
+      "portrait390x844": true,
+      "fourTerrainContourCombinations": true,
+      "duplicateDomIds": 0,
+      "pageErrors": 0
+    }
+  },
+  "equivalence": {
+    "wip11dPublicLos": 12000,
+    "wip11dExposures": 2000,
+    "wip11dExposureLogicalRays": 18000,
+    "existingWip07aPublicLos": 12000,
+    "existingWip07aExposures": 1000,
+    "exactFields": [
+      "visible",
+      "reason",
+      "forestDepth",
+      "all nine sample positions and metadata",
+      "hull and turret aggregates",
+      "logical ray and cache counters",
+      "fixture state JSON and state SHA-256"
+    ],
+    "cacheCases": ["cold", "full hit", "partial hit", "expiry boundary", "movement", "hull rotation", "turret rotation", "eye-height change"],
+    "syntheticCases": ["flat", "ridge tangent", "building", "one-height roof", "low wall", "forest"]
+  },
+  "nodeComparison": {
+    "fixture": "seed 407; unchanged observation-benchmark-fixture.cjs; 0.05s step; 20 warmup and 100 measured steps; separate fresh processes in alternating order; five trials each",
+    "allFinalStatesEqual": true,
+    "cases": [
+      {"mode": "stationary", "count": 50, "baselineMedianMs": 2.819164999999998, "optimizedMedianMs": 2.6620790000000056, "medianReductionPercent": 5.5720754194945155, "baselineP95Ms": 5.1217699999999695, "optimizedP95Ms": 5.785081000000048, "p95ReductionPercent": -12.950815831247443},
+      {"mode": "stationary", "count": 100, "baselineMedianMs": 8.218946000000187, "optimizedMedianMs": 7.542384000000084, "medianReductionPercent": 8.231736770141673, "baselineP95Ms": 16.39121, "optimizedP95Ms": 13.067082000000028, "p95ReductionPercent": 20.279942725399614},
+      {"mode": "moving", "count": 50, "baselineMedianMs": 4.429896999999983, "optimizedMedianMs": 3.7545269999998254, "medianReductionPercent": 15.245726932255078, "baselineP95Ms": 5.98111700000004, "optimizedP95Ms": 5.308651999999938, "p95ReductionPercent": 11.24313401660756},
+      {"mode": "moving", "count": 100, "baselineMedianMs": 18.463038000000324, "optimizedMedianMs": 15.46056899999985, "medianReductionPercent": 16.262052864758335, "baselineP95Ms": 22.63684899999953, "optimizedP95Ms": 19.633453000000372, "p95ReductionPercent": 13.26772997425224}
+    ],
+    "diagnosticUntimedRun": {"sharedGroups": 285807, "logicalRays": 571614, "fineHeightSamples": 13737643, "heightReadsAvoided": 12455579, "buildingSamples": 11750108, "forestSamples": 12972279},
+    "medianProcessObservations": {
+      "baselineInitMs": 92.65609300000001,
+      "optimizedInitMs": 88.63950500000001,
+      "baselineHeapAfterInitBytes": 29950504,
+      "optimizedHeapAfterInitBytes": 29965536,
+      "baselineHeapAfterRunBytes": 21271392,
+      "optimizedHeapAfterRunBytes": 21401336
+    }
+  },
+  "supplementarySceneMedianReductionPercent": {
+    "realWestSlope": 10.008897017235308,
+    "realTown": 20.831716981228144,
+    "syntheticForest": 23.63748004457884,
+    "syntheticRidgeTangent": 27.026917643844683,
+    "syntheticEarlyBuilding": 30.59000319371239
+  },
+  "browserComparison": {
+    "trials": 3,
+    "allFinalStatesEqual": true,
+    "stationary10MedianReductionPercent": 0,
+    "moving50MedianReductionPercent": 11.111111111111116,
+    "moving50P95ReductionPercent": -1.3888888026553081,
+    "moving100MedianReductionPercent": 14.70588235294118,
+    "moving100P95ReductionPercent": 15.086206904303513
+  },
+  "evidence": {
+    "browserFunctional": "tests/releases/WIP11E-browser.json",
+    "nodeComparison": "tests/releases/WIP11E-los-comparison.json",
+    "sceneComparison": "tests/releases/WIP11E-los-scenes.json",
+    "browserComparison": "tests/releases/WIP11E-browser-benchmark.json",
+    "observationBenchmark": "tests/releases/WIP11E-benchmark.json",
+    "autoBenchmark": "tests/releases/WIP11E-auto-benchmark.json",
+    "combatBenchmark": "tests/releases/WIP11E-combat-benchmark.json"
+  },
+  "package": {
+    "htmlBytes": 8390190,
+    "htmlSHA256": "61a4b23a4e5d7bcc7619494aa09e2ba3c64a2a0f47b2afdf4242cfc48d72d096",
+    "zipBytes": 1641403,
+    "zipSHA256": "66c730fc37bbf5e5a959712b3dd360a557dfdd8cef685726195e83c643c8adc2",
+    "zipCRC32": "1661851c",
+    "zipEntries": ["Tactical_v0.4_WIP11E.html"],
+    "extractedMatchesDist": true,
+    "repeatPackageByteIdentical": true
+  },
+  "notRun": [
+    "file:// execution because Chromium policy returned ERR_BLOCKED_BY_ADMINISTRATOR",
+    "Android or iOS physical-device multitouch, orientation-lock, thermal and sustained frame-rate testing"
+  ],
+  "limits": [
+    "Stationary 50-unit Node p95 median was 12.95% slower despite a 5.57% median improvement; three of five run p95 values were slower, two faster, and the maximum improved.",
+    "Browser mobile checks are Chromium viewports, not physical devices.",
+    "CPU timings are fixture measurements and are not whole-game FPS.",
+    "No hierarchical summaries, approximate caches, observation-rate changes, Worker migration, GPU or WASM work was added."
+  ]
+}

@@ -1,16 +1,16 @@
-# TACTICAL v0.4 WIP11D — 지형 판독성
+# TACTICAL v0.4 WIP11E — LOS 공통 경로 최적화
 
-WIP11C의 관측·경계·자동교전과 공개 체력 규칙을 유지하면서 고저·사면·능선·골짜기를 읽기 쉽게 만들었다. 고정 고도 팔레트, 부드러운 다방향 음영, 개선된 10/50m 등고선과 숫자를 기본 지도에 적용했다. `지형` 모드는 숲·농경지 장식을 낮추고 2m 게임 높이장에서 미리 추출한 능선 실선과 골짜기 파선을 표시한다. 이 파생선은 표시 전용이며 이동·LOS·관측·전투 판정에 사용하지 않는다.
+WIP11D의 지도·관측·경계·자동교전·공개 체력 규칙을 유지하면서 9표본 LOS 비용을 줄였다. 차체의 같은 x/y에서 높이만 다른 두 관측 광선이 지면·건물 후보와 내부 판정·숲 조회를 공유한다. 각 높이의 차폐 사유·광학 깊이·32m 건너뛰기·종료와 표본별 캐시는 독립적이며 2m 격자, 9표본 결과와 기존 관측 통계는 그대로다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11D.zip). 압축을 풀면 `Tactical_v0.4_WIP11D.html` 한 파일이 나온다.
-- main 통합 후의 [병합 검토 기록](docs/reviews/WIP11D_MERGE_REVIEW_2026-11-08.md)과 [작업 목차](docs/tasks/README.md).
-- 현재 실행 파일: [Tactical_v0.4_WIP11D.html](Tactical_v0.4_WIP11D.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP11D 지형 판독성](docs/TERRAIN_READABILITY_WIP11D.md) · [WIP11C UI·경계](docs/UI_AND_GUARD_WIP11C.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11D.md) · [체크섬](SHA256SUMS_WIP11D.txt).
-- 기존 PR #9 브랜치 `feat/wip11a-combat-state`의 WIP11C 수정 포함 head `a037774`에서 이어서 작업하고 최신 main `8ca288f`의 설계 아카이브를 정상 병합했다. 공개 HP 최신 관측 병합은 중복 수정하지 않고 C05/C06으로 재검증했다. WIP11D 전체 Node 287/287, 지형 분석 7/7, 원본 자료 7/7, 실제 Chromium 27/27을 통과했다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11e-los-optimization/Tactical_v0.4_WIP11E.zip). 압축을 풀면 `Tactical_v0.4_WIP11E.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP11E.html](Tactical_v0.4_WIP11E.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP11E LOS 구현·성능](docs/LOS_OPTIMIZATION_WIP11E.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11E.md) · [체크섬](SHA256SUMS_WIP11E.txt) · [작업 목차](docs/tasks/README.md).
+- 검토용 [PR #10](https://github.com/0-FLANDRE-0/Tactical_Project/pull/10). main 병합과 공개 배포는 하지 않았다.
+- 최신 main `a01ae8b`에서 새 브랜치로 작업했다. WIP11D 고정 코어와 실제 지도 LOS 12,000건·노출 2,000건을 정확히 대조했고 전체 Node 219/219, 지형·원본 14/14, 실제 Chromium 27/27을 통과했다. 이동 100대의 5회 Node 비교는 중앙값 16.26%, P95 13.27%, 실제 Chromium 비교는 중앙값 14.71% 개선됐다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11D.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11D.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11e-los-optimization/Tactical_v0.4_WIP11E.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11E.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -89,7 +89,10 @@ WIP11C의 관측·경계·자동교전과 공개 체력 규칙을 유지하면�
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP11D.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP11E.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `tests/fixtures/sim-core-WIP11D.js`, `tests/helpers/los-wip11d-reference.cjs` | 빌드에 포함되지 않는 해시 고정 WIP11D 비교 코어와 로더 |
+| `tests/los-shared-path.test.cjs` | 같은 경로의 다중 높이·캐시·합성 차폐 정확성 대조 |
+| `scripts/benchmark_los_shared_compare.cjs`, `benchmark_los_scenes.cjs`, `benchmark_los_browser.cjs` | 분리 프로세스 기본/고정 장면/실제 Chromium LOS 성능 비교 |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
@@ -126,12 +129,12 @@ WIP11C의 관측·경계·자동교전과 공개 체력 규칙을 유지하면�
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP11D
+python3 scripts/package_release.py WIP11E
 node --check src/combat-state.js
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs tests/combat-state.test.cjs tests/combat-core.test.cjs tests/combat-build.test.cjs tests/wip11b-wreck-auto.test.cjs tests/wip11c-ui-guard.test.cjs tests/terrain-renderer.test.cjs
+node --test --test-concurrency=2 tests/*.test.cjs
 python3 -m unittest tests/terrain_readability_test.py
 node tests/map.test.cjs
 node tests/input.test.cjs
@@ -144,6 +147,9 @@ node scripts/benchmark_combat.cjs
 node scripts/benchmark_auto_engagement.cjs
 node scripts/benchmark_terrain_render.cjs
 node scripts/benchmark_los_compare.cjs
+WIP11E_TRIALS=5 node scripts/benchmark_los_shared_compare.cjs
+node scripts/benchmark_los_scenes.cjs
+node scripts/benchmark_los_browser.cjs
 ```
 
 능선·골짜기 파생 데이터를 재생성할 때는 `/usr/bin/python3 scripts/build_terrain_readability.py`를 실행한다. NumPy 2.2.4와 SciPy 1.15.3이 필요하며, 결과 확인은 `--check`와 `python3 scripts/validate_terrain_readability.py`로 수행한다. 원본 지도·등고선·길찾기 데이터는 재생성하거나 수정하지 않는다.
@@ -185,7 +191,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 실제 지도와 기동·관측·수동/자동 단발 사격·기본 HP 전투를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2 한 종류와 1,450 HP를 사용한다. 비관통 피해는 0, 추가 탄속 피해 배율은 1이며 표 밖 관통값은 끝값으로 고정한다. 기본 자동교전은 기존 접촉과 헌터킬러 후보를 이용하는 1차 게임 로직이다. 정교한 위협 점수·3단계 ROE·전체 OODA, 적 자율 이동, 탄종 선택, 모듈/승무원 피해·화재·유폭·수리·상세 장전·보병은 후속이다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP11A 피해는 그 내부 명중/구역 결과를 받아 별도로 적용하므로 표시 좌표가 판정을 바꾸지 않는다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP11D 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP11A 피해는 그 내부 명중/구역 결과를 받아 별도로 적용하므로 표시 좌표가 판정을 바꾸지 않는다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP11E 릴리스 문서에 있다.
 
 ## 출처
 

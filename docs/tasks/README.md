@@ -6,14 +6,14 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP11E 9표본 LOS 중복 조회 최적화 | [작업 지시서](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | 사용자 선택 · 지시서 작성 완료 · 구현 대기 |
+| WIP11E 9표본 LOS 중복 조회 최적화 | [완료 안내](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | 구현·검증 완료 · PR #10 검토 대기 |
 | WIP11D 지형 판독성 개선·WIP11C 공개 체력 병합 검증 | [완료 지시서](../../archive/instructions/TACTICAL_WIP11D_TERRAIN_READABILITY.md) | 구현·재검증 완료 · main 통합 |
 
-다음 작업은 WIP11E다. 현재 main을 기준으로 새 작업 브랜치에서 진행하며, 완료한 PR #9의 옛 브랜치를 재사용하지 않는다. WIP11D는 [구현 문서](../TERRAIN_READABILITY_WIP11D.md)와 [병합 검토](../reviews/WIP11D_MERGE_REVIEW_2026-11-08.md)를 참고하고 다시 구현하지 않는다.
+WIP11E는 최신 main `a01ae8b`에서 만든 새 브랜치에서 구현했다. 같은 수평 경로를 쓰는 차체의 두 높이 표본만 묶어 정적 조회를 공유하며 9표본·2m 격자·차폐 결과와 기존 캐시 계약을 유지한다. [구현 문서](../LOS_OPTIMIZATION_WIP11E.md)와 [검증 기록](../../tests/releases/WIP11E-validation.json)을 참고한다.
 
-## 작업 AI에게 전달할 문구
+## 다음 작업
 
-> 최신 main의 `docs/tasks/TACTICAL_WIP11E_LOS_OPTIMIZATION.md`를 읽고 새 작업 브랜치에서 진행해줘. 기존 9표본·관측 주기·판정 결과를 유지하고, 독립 기준 대조와 반복 성능 측정으로 실제 개선을 확인해줘. 완료한 WIP11D는 다시 구현하지 마.
+WIP11E 이후 작업은 아직 이 폴더에 지시서로 확정하지 않았다. 입사각·도탄 설계와 다른 장기 제안은 아카이브의 참고 자료이며 별도 요청 없이 구현 범위로 간주하지 않는다.
 
 ## 관리 방법
 
