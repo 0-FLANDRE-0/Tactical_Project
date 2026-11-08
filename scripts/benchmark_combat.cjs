@@ -15,8 +15,8 @@ function run(){
  return{ms,hp,stats};
 }
 for(let i=0;i<3;i++)run();for(let i=0;i<rounds;i++){final=run();times.push(final.ms);}times.sort((a,b)=>a-b);
-const result={version:'0.4-WIP11C',date:'2026-11-08',node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model,
+const result={version:'0.4-WIP11D',date:'2026-11-08',node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model,
  fixture:'10,000 independent M1A2_1998 targets; 80% hit inputs alternating hullFront/turretFront at 1000m; one deterministic pass plus duplicate replay',impactCount,rounds,warmupRounds:3,
  medianMs:times[Math.floor(times.length/2)],p95Ms:times[Math.ceil(times.length*.95)-1],minMs:times[0],maxMs:times.at(-1),boundedRecords:final.stats.records,duplicateHpStable:true,
  notes:'CPU time for resolved game damage/state application only. Excludes observation, hit/zone resolution, flight, rendering, pathfinding and whole-game FPS.'};
-fs.writeFileSync('tests/releases/WIP11C-combat-benchmark.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));
+fs.writeFileSync('tests/releases/WIP11D-combat-benchmark.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));

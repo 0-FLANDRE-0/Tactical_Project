@@ -1,6 +1,6 @@
 (() => {
   const C=TacticalCore,$=id=>document.getElementById(id),canvas=$('map'),ctx=canvas.getContext('2d'),wrap=$('mapWrap');
-  let sim=C.createScenario(),selected='A11',targetId=null,paused=false,timeScale=1,reverseMode=false,showContours=true,sightHeld=false,sightPointer=null,sightKey=false,last=performance.now(),accumulator=0,uiTime=0,toastUntil=0,visibilityDirty=true,visLast=-1,visOrigin=null,frameCount=0,guardPopupOpen=false,portraitBlocked=false,portraitPausedBefore=false;
+  let sim=C.createScenario(),selected='A11',targetId=null,paused=false,timeScale=1,reverseMode=false,showContours=true,terrainMode=false,sightHeld=false,sightPointer=null,sightKey=false,last=performance.now(),accumulator=0,uiTime=0,toastUntil=0,visibilityDirty=true,visLast=-1,visOrigin=null,frameCount=0,guardPopupOpen=false,portraitBlocked=false,portraitPausedBefore=false;
   const camera={
     x:C.WORLD.w/2,y:C.WORLD.h/2,zoom:.5,w:1,h:1,dpr:1
   }
@@ -11,7 +11,7 @@
   const ui=TacticalUICache,updateRoster=ui.createListUpdater(v=>v.state+' · '+Math.round(v.speed*3.6)+' km/h','.unit-sub');
   const lookView=channel=>{const u=selectedUnit();return u?C.observationView(sim,u,channel||$('lookChannel').value||'commander'):{mode:'idle',turret:0,gaze:0,direction:null,remaining:null,point:null};};
   let lookPicking=false;
-  const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA);
+  const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA,TERRAIN_DATA);
   let visibility=null,visibilityPath=null;
   const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
@@ -315,10 +315,19 @@
   $('zoomIn').onclick=()=>zoomAt(1.35);
   $('zoomOut').onclick=()=>zoomAt(1/1.35);
   $('fit').onclick=()=>fitCamera();
+  $('terrainMode').onclick=()=>{
+    terrainMode=!terrainMode;
+    $('terrainMode').classList.toggle('active',terrainMode);
+    $('terrainMode').setAttribute('aria-pressed',String(terrainMode));
+    $('terrainLegend').hidden=!terrainMode;
+    wrap.classList.toggle('terrain-emphasis',terrainMode);
+    toast(terrainMode?'지형 강조 · 능선과 골짜기 표시':'일반 지도');
+  };
   $('contours').onclick=()=>{
     showContours=!showContours;
     $('contours').classList.toggle('active',showContours);
-    $('contours').setAttribute('aria-pressed',showContours)
+    $('contours').setAttribute('aria-pressed',showContours);
+    $('contourLegend').hidden=!showContours
   }
   ;
   function setPaused(v){
@@ -694,7 +703,7 @@
     ctx.fillStyle='#899275';
     ctx.fillRect(0,0,camera.w,camera.h);
     const p=toScreen(0,0),ww=C.WORLD.w*camera.zoom,hh=C.WORLD.h*camera.zoom;
-    terrainRenderer.draw(ctx,camera,showContours);
+    terrainRenderer.draw(ctx,camera,{showContours,terrainMode,sightHeld});
     ctx.save();
     ctx.beginPath();
     ctx.rect(p.x,p.y,ww,hh);
@@ -799,8 +808,8 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP11C',core:C,snapshot:()=>JSON.parse(JSON.stringify({
-      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue')
+    version:'0.4-WIP11D',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue')
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
       setReverse(reverse);
@@ -809,7 +818,7 @@
       }
       ,reverse,sim.units)
     }
-    ,select,fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen
+    ,select,fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen,rendererStats:()=>terrainRenderer.stats(),mapView:(x,y,zoom)=>{if([x,y,zoom].every(Number.isFinite)){camera.x=x;camera.y=y;camera.zoom=C.clamp(zoom,.1,32);clampCamera();}return{...camera};}
   }
   ;
 }

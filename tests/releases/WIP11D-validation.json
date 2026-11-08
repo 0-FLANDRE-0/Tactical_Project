@@ -1,0 +1,110 @@
+{
+  "version": "0.4-WIP11D",
+  "date": "2026-11-08",
+  "baseMain": "902a99986081f4e8d88839e004cd2aa89eaadff2",
+  "implementationBase": "a037774a8348378563d1d3ddb7822a20eab19890",
+  "taskDocumentCommit": "28b1bdce4e7a06b40e31e3c17a9c090b93839557",
+  "branch": "feat/wip11a-combat-state",
+  "pullRequest": 9,
+  "environment": {
+    "node": "v24.22.1",
+    "python": "3.12.14",
+    "sourcePython": "3.13.5",
+    "numpy": "2.2.4",
+    "scipy": "1.15.3",
+    "pillow": "11.1.0",
+    "gdal": "3.10.3",
+    "platform": "linux x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "browser": "Chromium 156.0.8078.79",
+    "browserURL": "local HTTP, exact standalone dist/index.html",
+    "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR"
+  },
+  "automated": {
+    "publicHpNarrowC05C06": {"passed": 2, "failed": 0},
+    "nodeRulesAndCore": {"passed": 208, "failed": 0, "priorWIP11C": 204, "newWIP11D": 4},
+    "input": {"passed": 42, "failed": 0, "priorWIP11C": 41, "newWIP11D": 1},
+    "map": {"passed": 16, "failed": 0},
+    "visibility": {"passed": 12, "failed": 0},
+    "vehicleAndWorker": {"passed": 9, "failed": 0},
+    "nodeTotal": {"passed": 287, "failed": 0, "priorWIP11C": 282, "newWIP11D": 5},
+    "terrainDerivation": {"passed": 7, "failed": 0},
+    "sourceDataQuality": {"passed": 7, "failed": 0, "runner": "/usr/bin/python3"},
+    "javascriptSyntax": {"passed": 61, "failed": 0},
+    "pythonSyntax": {"passed": 17, "failed": 0},
+    "browser": {
+      "passed": 27,
+      "failed": 0,
+      "actualEmbeddedWorker": true,
+      "desktop1440x900Dpr1": true,
+      "landscape844x390Dpr1And2": true,
+      "portrait390x844": true,
+      "fourTerrainContourCombinations": true,
+      "staticCache120Frames": true,
+      "duplicateDomIds": 0,
+      "pageErrors": 0
+    }
+  },
+  "publicHealthMerge": {
+    "status": "existing WIP11C fix preserved and reverified; not duplicated in WIP11D",
+    "sourceCommit": "a037774a8348378563d1d3ddb7822a20eab19890",
+    "rule": "pose lastSeen and identified knowledgeAt are merged independently",
+    "coverage": ["observer array order", "newer ambient pose with stale HP", "lost observation freezes public HP", "reobservation refresh", "unknown contact privacy", "detached returned copies"]
+  },
+  "terrainData": {
+    "sourceMapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+    "algorithm": "inverted-d8-cross-relief",
+    "algorithmVersion": "1.0.0",
+    "analysisSpacingMetres": 20,
+    "smoothingSigmaMetres": 40,
+    "ridgeLines": 47,
+    "valleyLines": 59,
+    "totalLengthMetres": 45589.4,
+    "realMapZones": 4,
+    "crossProfiles": {"matchedKind": 8, "total": 8},
+    "originalHashes": {
+      "data/rasdorf_4km.json": "034b6749eccfe23ead935dd6d2db62fa0064e2eeb539a22b479638a9de0a87ce",
+      "data/contours.json": "f69eac65070d30938b37762b7cd1f513b2d0c82f896fc2900cd5740b522696da",
+      "data/map_manifest.json": "614cbc31d6e75654aad6194c7b376d5757db36386b2d8d8b0f4d9ad66abfee6a",
+      "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7"
+    }
+  },
+  "evidence": {
+    "browser": "tests/releases/WIP11D-browser.json",
+    "terrainAnalysis": "tests/releases/WIP11D-terrain-analysis.json",
+    "terrainComparison": "tests/releases/WIP11D-terrain-comparison.json",
+    "terrainContactSheet": "tests/releases/WIP11D-terrain-comparison.png",
+    "terrainGrayscale": "tests/releases/WIP11D-terrain-grayscale.png",
+    "terrainBenchmark": "tests/releases/WIP11D-terrain-benchmark.json",
+    "observationBenchmark": "tests/releases/WIP11D-benchmark.json",
+    "autoBenchmark": "tests/releases/WIP11D-auto-benchmark.json",
+    "combatBenchmark": "tests/releases/WIP11D-combat-benchmark.json"
+  },
+  "terrainBenchmark": {
+    "fixture": "actual headless Chromium, 1440x900 DPR1, identical 36-camera pan/zoom sequence; CPU map-cache rebuild time, not FPS",
+    "beforeWIP11C": {"medianMs": 6.25, "p95Ms": 9.3, "maxMs": 23.7, "static120UnexpectedRebuilds": 0},
+    "wip11dNormal": {"medianMs": 9.85, "p95Ms": 14.5, "maxMs": 19.4, "static120UnexpectedRebuilds": 0},
+    "wip11dTerrain": {"medianMs": 9.95, "p95Ms": 12.5, "maxMs": 18.6, "static120UnexpectedRebuilds": 0}
+  },
+  "package": {
+    "htmlBytes": 8383527,
+    "htmlSHA256": "5e9d931fcd94f0112fb81618c94fec7f589d7c29b0d74d179b50e8ff96129be8",
+    "zipBytes": 1639941,
+    "zipSHA256": "b1ccd725c71cbe4fa462ec04da2b3ff77c941fc6e6a5d383feebc64c388bd7fd",
+    "zipCRC32": "cacf2575",
+    "zipEntries": ["Tactical_v0.4_WIP11D.html"],
+    "extractedMatchesDist": true,
+    "repeatPackageByteIdentical": true
+  },
+  "notRun": [
+    "file:// execution because Chromium policy returned ERR_BLOCKED_BY_ADMINISTRATOR",
+    "Android or iOS physical-device multitouch, orientation-lock, thermal and sustained frame-rate testing"
+  ],
+  "limits": [
+    "20 m analysis and 40 m Gaussian smoothing intentionally omit narrow micro-relief",
+    "D8 and inverted-D8 centre lines may omit broad flat divides and closed depressions",
+    "Interpretation vectors are display-only and never feed movement, LOS, collision, observation or combat",
+    "Browser mobile checks are Chromium viewports, not physical devices",
+    "CPU timings are fixture measurements and are not whole-game FPS"
+  ]
+}

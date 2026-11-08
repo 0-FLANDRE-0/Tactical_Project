@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP11C</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP11D</title>
 <style>
 {{STYLES}}
 </style>
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP11C</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP11D</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
 <div id="loading" class="loading">전장 불러오는 중…</div>
 <div class="map-heading"><div class="eyebrow">RASDORF / HESSEN, GERMANY</div><h1>라스도르프 서부</h1><div class="small">실제 지형 · 농경지 · 마을 · 숲</div></div>
 
-<div class="map-tools"><div class="north">N</div><button id="zoomIn" aria-label="지도 확대"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button><button id="zoomOut" aria-label="지도 축소"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/></svg></button></div>
+<div class="map-tools"><div class="north">N</div><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button><button id="zoomOut" aria-label="지도 축소"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/></svg></button></div>
 <div class="visibility-key"><b>선택 전차의 관측 범위</b><div class="keys"><span><i class="dot" style="background:#8bedd0"></i> 보이는 곳</span><span><i class="dot" style="background:#d89579"></i> 가려진 곳</span></div><div class="note" id="sightNote">지형 가능 영역 · 실제 탐지와 다름<br>주변 200m · 전차장 2500m · 포수 2000m</div></div>
 <section class="guard-popup" id="guardPopup" aria-label="경계 명령" aria-hidden="true">
 <div class="guard-popup-title"><strong>경계 명령</strong><button id="guardClose" aria-label="경계 메뉴 닫기">×</button></div>
@@ -27,7 +27,8 @@
 <details class="guard-options"><summary>추가 옵션</summary><label>유지 시간 <select id="lookDuration" aria-label="지점 경계 유지 시간"><option value="0" selected>해제까지</option><option value="5">5초</option><option value="10">10초</option><option value="30">30초</option></select></label></details>
 </section>
 <div class="pause-tag">일시정지</div>
-<div class="map-legend"><span class="legend-item"><i class="dot" style="background:#247e99"></i>아군</span><span class="legend-item"><i class="dot" style="background:#b9683d"></i>관측 표적</span><span class="legend-item"><i class="dot" style="background:#3b6242"></i>숲</span><span class="legend-item">등고선 10m</span></div>
+<div class="terrain-legend" id="terrainLegend" hidden><span class="height-key"><i></i>낮음 → 높음</span><span><i class="ridge-key"></i>능선</span><span><i class="valley-key"></i>골짜기</span><small>골짜기 ≠ 물길</small></div>
+<div class="map-legend"><span class="legend-item"><i class="dot" style="background:#247e99"></i>아군</span><span class="legend-item"><i class="dot" style="background:#b9683d"></i>관측 표적</span><span class="legend-item"><i class="dot" style="background:#3b6242"></i>숲</span><span class="legend-item" id="contourLegend">등고선 10m · 주요 50m</span></div>
 <div class="scale"><div class="scale-line" id="scaleLine"></div><span id="scaleText">200m</span></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="dock" aria-label="전차 명령">
@@ -56,7 +57,7 @@
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
 <div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
 <div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · AUTO FIRE · WRECK / WIP11C</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">MOBILITY · OBSERVATION · AUTO FIRE · TERRAIN / WIP11D</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -84,6 +85,9 @@
 </script>
 <script id="contour-data">
 {{CONTOUR_DATA}}
+</script>
+<script id="terrain-data">
+{{TERRAIN_DATA}}
 </script>
 <script id="map-renderer">
 {{MAP_RENDERER}}

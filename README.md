@@ -1,20 +1,21 @@
-# TACTICAL v0.4 WIP11C — 경계·교전 UI와 공개 체력 정보
+# TACTICAL v0.4 WIP11D — 지형 판독성
 
-WIP11B의 영구 잔해·자동교전을 유지하면서 관측 명령 UI와 경계/교전 상태를 정리했다. 포수의 지정 경계는 교전 임무와 별도 상태로 보존되며, 실제 접촉을 탐지·식별·확보·조준·자동 사격한 뒤 경계 지점으로 복귀한다. 식별한 적의 이름·차종·HP는 관측 시점의 팀 공개 사본으로만 표시하고, 관측을 잃은 동안의 피해·위치·상태는 기억 표시에 반영하지 않는다.
+WIP11C의 관측·경계·자동교전과 공개 체력 규칙을 유지하면서 고저·사면·능선·골짜기를 읽기 쉽게 만들었다. 고정 고도 팔레트, 부드러운 다방향 음영, 개선된 10/50m 등고선과 숫자를 기본 지도에 적용했다. `지형` 모드는 숲·농경지 장식을 낮추고 2m 게임 높이장에서 미리 추출한 능선 실선과 골짜기 파선을 표시한다. 이 파생선은 표시 전용이며 이동·LOS·관측·전투 판정에 사용하지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11C.zip). 압축을 풀면 `Tactical_v0.4_WIP11C.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP11C.html](Tactical_v0.4_WIP11C.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP11C UI·경계 구현](docs/UI_AND_GUARD_WIP11C.md) · [잔해·자동교전](docs/WRECK_AND_AUTO_ENGAGEMENT_WIP11B.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11C.md) · [체크섬](SHA256SUMS_WIP11C.txt).
-- 최신 main `902a999`를 기존 PR #9 브랜치 `feat/wip11a-combat-state`에 정상 병합해 이어서 작업했다. 이전 실행 파일·ZIP·검증 자료를 보존한다. 병합 검토에서 팀 공개 HP의 최신 관측값 병합을 보정하고 Node 282/282와 단일 HTML/ZIP 일치를 재확인했다. 브라우저 25/25는 보정 전 작성자 기록이며 이번 환경에서는 재실행하지 못했다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11D.zip). 압축을 풀면 `Tactical_v0.4_WIP11D.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP11D.html](Tactical_v0.4_WIP11D.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP11D 지형 판독성](docs/TERRAIN_READABILITY_WIP11D.md) · [WIP11C UI·경계](docs/UI_AND_GUARD_WIP11C.md) · [릴리스·검증](TACTICAL_RELEASE_WIP11D.md) · [체크섬](SHA256SUMS_WIP11D.txt).
+- 기존 PR #9 브랜치 `feat/wip11a-combat-state`의 WIP11C 수정 포함 head `a037774`에서 이어서 작업했다. 공개 HP 최신 관측 병합은 중복 수정하지 않고 C05/C06으로 재검증했다. WIP11D 전체 Node 287/287, 지형 분석 7/7, 원본 자료 7/7, 실제 Chromium 27/27을 통과했다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/main/Tactical_v0.4_WIP11C.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11C.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/feat/wip11a-combat-state/Tactical_v0.4_WIP11D.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP11D.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
 - 정지: 경로 취소 후 감속한다.
 - 시야 버튼 홀드 또는 V 키 홀드: 선택 전차의 가시·차폐 영역을 표시한다.
+- 지도 하단 `지형`: 일반 지도와 지형 강조를 전환한다. 강조 모드의 황갈색 실선은 능선, 청회색 파선은 골짜기이며 골짜기가 항상 물길이라는 뜻은 아니다. `등고선`은 별도 버튼으로 독립 전환한다.
 - 드래그: 지도 이동. 핀치·휠: 확대/축소. 우측 맞춤 버튼: 전체 4km 지도 보기.
 - 관측 표적 탭: 미식별 실루엣은 일반 정보만, 식별한 현재 접촉은 차종·부위 관측 비율을 표시한다. 흐린 잔상은 마지막 관측 위치다.
 - 하단 **경계** 버튼 → 전차장/포수 선택 → 방향 지정(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 기본 유지 시간은 해제까지이며 추가 옵션에서 5/10/30초를 고를 수 있다. 자동 경계 복귀로 해당 장비의 지점 명령만 해제한다. Esc·팝업 닫기·선택 변경은 완료하지 않은 입력만 취소한다.
@@ -87,7 +88,7 @@ WIP11B의 영구 잔해·자동교전을 유지하면서 관측 명령 UI와 경
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP11C.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP11D.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
@@ -98,7 +99,9 @@ WIP11B의 영구 잔해·자동교전을 유지하면서 관측 명령 UI와 경
 | `src/visibility-client.js` | 내장 시야 Worker와 오류 시 동일 계산 대체 실행 |
 | `data/vehicles/`, `data/ammunition/` | 적용 차량·탄약 게임 데이터, 필드별 근거·외형 SVG·참고 자료 |
 | `scripts/export_vehicle_profile.cjs`, `scripts/build_vehicle_review.py` | 제원·도안 내보내기와 동일 축척 비교 화면 제작 |
-| `src/map-renderer.js` | 화면 해상도에 맞춘 벡터 지형 렌더러·표시 캐시 |
+| `src/map-renderer.js` | 고정 고도 팔레트·다방향 음영·등고선·능선/골짜기 벡터 렌더러와 표시 캐시 |
+| `data/terrain-readability.json`, `src/terrain-data.js` | 지도 해시에 묶인 표시 전용 능선·골짜기 파생 데이터와 HTML 내장본 |
+| `scripts/build_terrain_readability.py` | 2m 게임 높이장에서 20m 분석 축척의 능선·골짜기 벡터 재생성 |
 | `src/visibility.js` | 지형·건물·수관에 대한 방사형 가시선 계산과 벡터 경계 연결 |
 | `data/contours.json`, `src/contour-data.js` | 게임 높이장에서 생성한 동일 벡터 등고선 |
 | `src/battlefield-data.js` | HTML에 삽입하는 고정 전장 데이터 |
@@ -122,12 +125,13 @@ WIP11B의 영구 잔해·자동교전을 유지하면서 관측 명령 UI와 경
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP11C
+python3 scripts/package_release.py WIP11D
 node --check src/combat-state.js
 node --check src/sim-core.js
 node --check src/app.js
 node --check src/look-animation.js
-node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs tests/combat-state.test.cjs tests/combat-core.test.cjs tests/combat-build.test.cjs tests/wip11b-wreck-auto.test.cjs tests/wip11c-ui-guard.test.cjs
+node --test tests/ui-cache.test.cjs tests/look-animation.test.cjs tests/observation.test.cjs tests/observation-core.test.cjs tests/observation-correction.test.cjs tests/observation-moving.test.cjs tests/los-optimization.test.cjs tests/profile-registry.test.cjs tests/fire-control.test.cjs tests/fire-core.test.cjs tests/art-muzzle.test.cjs tests/hit-model.test.cjs tests/observation-metadata.test.cjs tests/game-flight.test.cjs tests/wip10-reference.test.cjs tests/combat-state.test.cjs tests/combat-core.test.cjs tests/combat-build.test.cjs tests/wip11b-wreck-auto.test.cjs tests/wip11c-ui-guard.test.cjs tests/terrain-renderer.test.cjs
+python3 -m unittest tests/terrain_readability_test.py
 node tests/map.test.cjs
 node tests/input.test.cjs
 node tests/visibility.test.cjs
@@ -137,8 +141,11 @@ node tests/browser.test.cjs
 node scripts/benchmark_observation.cjs
 node scripts/benchmark_combat.cjs
 node scripts/benchmark_auto_engagement.cjs
+node scripts/benchmark_terrain_render.cjs
 node scripts/benchmark_los_compare.cjs
 ```
+
+능선·골짜기 파생 데이터를 재생성할 때는 `/usr/bin/python3 scripts/build_terrain_readability.py`를 실행한다. NumPy 2.2.4와 SciPy 1.15.3이 필요하며, 결과 확인은 `--check`와 `python3 scripts/validate_terrain_readability.py`로 수행한다. 원본 지도·등고선·길찾기 데이터는 재생성하거나 수정하지 않는다.
 
 전장 데이터를 다시 만들 때는 원본을 보존한 상태에서 다음 순서로 실행한다. GDAL·NumPy·Pillow가 필요하다. 이 환경에서는 `/usr/bin/python3`에 설치되어 있다.
 
@@ -177,7 +184,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 실제 지도와 기동·관측·수동/자동 단발 사격·기본 HP 전투를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2 한 종류와 1,450 HP를 사용한다. 비관통 피해는 0, 추가 탄속 피해 배율은 1이며 표 밖 관통값은 끝값으로 고정한다. 기본 자동교전은 기존 접촉과 헌터킬러 후보를 이용하는 1차 게임 로직이다. 정교한 위협 점수·3단계 ROE·전체 OODA, 적 자율 이동, 탄종 선택, 모듈/승무원 피해·화재·유폭·수리·상세 장전·보병은 후속이다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP11A 피해는 그 내부 명중/구역 결과를 받아 별도로 적용하므로 표시 좌표가 판정을 바꾸지 않는다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP11C 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP10의 선행 조준·ToF·착탄 시점 확률·표시용 탄착점은 그대로 유지한다. WIP11A 피해는 그 내부 명중/구역 결과를 받아 별도로 적용하므로 표시 좌표가 판정을 바꾸지 않는다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 자세한 검사 결과와 미실행 항목은 WIP11D 릴리스 문서에 있다.
 
 ## 출처
 

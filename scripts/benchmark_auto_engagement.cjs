@@ -19,7 +19,7 @@ function run(count){
     retargetEvents:(s.observationEvents||[]).filter(e=>e.type==='target-switched'||e.type==='designated').length,multiImpactFixedSteps:[...byTime.values()].filter(v=>v>1).length,
     boundedLogs:{observation:(s.observationEvents||[]).length,combatRecords:records.length,blueFireEvents:C.fireEvents(s,'blue').length,redFireEvents:C.fireEvents(s,'red').length}};
 }
-const result={version:'0.4-WIP11C',date:'2026-11-08',node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model,mapHash:C.MAP.meta.mapHash,seed:911,
+const result={version:'0.4-WIP11D',date:'2026-11-08',node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model,mapHash:C.MAP.meta.mapHash,seed:911,
   fixture:'50/100 stationary M1A2_1998 in a legalNear 10-column grid, alternating teams/headings, every unit explicitly auto; 20 warmup + 600 timed fixed 0.05s steps',
   notes:'Includes observation, handoff/acquisition, aim, automatic request, flight/impact, damage, destruction and retarget state. Excludes rendering, pathfinding and whole-game FPS.',cases:[run(50),run(100)]};
-fs.writeFileSync('tests/releases/WIP11C-auto-benchmark.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));
+fs.writeFileSync('tests/releases/WIP11D-auto-benchmark.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));
