@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP14</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP15</title>
 <style>
 :root{
   color-scheme:dark;
@@ -914,7 +914,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP14</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP15</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -952,15 +952,16 @@ footer{
 <div class="engagement-line"><b>경계</b><output id="lookStatus">자동 경계</output></div>
 <div class="engagement-line"><b>교전</b><output id="designationStatus">없음</output></div>
 <div class="engagement-line"><b>사격</b><output id="fireState">표적 미확보</output></div>
+<output class="flight-state" id="readinessState">장전탄 1 · 저장 41</output>
 <output class="flight-state" id="flightState"></output>
 <div class="engagement-actions"><button id="fireMode" aria-pressed="true">자동</button><button id="cancelDesignation">교전 취소</button><button id="fire" disabled aria-label="선택 표적 단발 발사" title="조준 완료 후 선택 표적에 단발 발사 · G">단발 · G</button></div>
 </section>
 <div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">차체 방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
-<details class="vehicle-specs"><summary id="profileTitle">M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>게임식 예측 발사·비행·탄착·피해 지원.<br>HP와 격파만 적용 · 모듈 피해와 상세 장전은 후속.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
+<details class="vehicle-specs"><summary id="profileTitle">M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>게임식 예측 발사·비행·탄착·피해 지원.<br>단일 시험탄 장전과 일시 대응 상태 적용 · 영구 모듈 피해는 후속.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
 <div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
-<div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · AUTO FIRE · EFFECTS · ENEMY AI / WIP14</div>
+<div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·장전·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · RELOAD · REACTIONS · ENEMY AI / WIP15</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -1006,11 +1007,20 @@ const VEHICLE_PROFILES=(()=>{
     weapons:{mainGun:{name:'M256',calibreMm:120,ammunitionCapacity:42,referenceEngagementRange:3000,enabled:true},coax:{name:'M240',calibreMm:7.62},commander:{name:'M2',calibreMm:12.7}},
     // Fictional game tuning, not measured real fire-control/ballistic data.
     fireControl:{enabled:true,aimSeconds:1.2,alignmentTolerance:1.5*Math.PI/180,
-      maxRange:2000,fireHeight:2.2,shotIntervalSeconds:1,testRounds:42,
+      maxRange:2000,fireHeight:2.2,testRounds:42,
       dispersionMrad:.25,layStartMrad:1.5,layMinMrad:.10,layTauSeconds:.6,
       rangeErrorM:5,muzzleVelocity:1650,velocityRetention:.94,leadResidual:.10,
       stabMradPerMps:.03,impact:{rejectionAttempts:64,marchStepM:2,maxBeyondM:3000},
       movement:{fireOnMove:true,stationarySpeedMps:.10,stationaryHoldSeconds:.35},
+      // WIP15 game trial values. They model an abstract loader and temporary
+      // crew/equipment response; they are not measured vehicle specifications.
+      readiness:{reloadSeconds:5.98,reloadMaxSeconds:14,
+        fatigue:{maxSeconds:5,startsAtShot:4,perShotSeconds:.35,recoveryPerSecond:.25,burstResetSeconds:6},
+        shock:{maxSeconds:5,recoveryPerSecond:.25,normalSeconds:.25,nearSeconds:1,penetrationSeconds:2.5},
+        nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]},
+        temporaryFault:{baseChance:.02,damageScaleChance:.18,damageReference:405,durationSeconds:[3,8],
+          observationAimRateMultiplier:.70,observationSigmaMultiplier:1.25,
+          kinds:{fireControl:.50,commander:.25,gunner:.25}}},
       presented:{hullBottom:inch(19),hullTop:1.65,turretTop:inch(93.5)}},
     exposure:{hullAlong:[-2.8,0,2.8],hullHeights:[.80,1.40],turretAlong:[-1,0,1],turretHeight:2.20},
     navigation:{clearanceMargin:.25,contract:'nav16-M1A2-r4.62-long0.60-side0.40-v2'}
@@ -1046,9 +1056,16 @@ const VEHICLE_PROFILES=(()=>{
       if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
       const f=p.fireControl;
       for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights','maneuverAccel','maneuverReferenceSpeed','flightSeconds','effectSeconds'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
-      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
+      if(Object.hasOwn(f,'shotIntervalSeconds'))throw Error('폐기된 사격 필드: '+id+'.shotIntervalSeconds');
+      for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
       for(const field of ['leadResidual','stabMradPerMps'])if(!Number.isFinite(f[field])||f[field]<0)throw Error('사격 오차 값 오류: '+id+'.'+field);
       if(!f.movement||typeof f.movement.fireOnMove!=='boolean'||!Number.isFinite(f.movement.stationarySpeedMps)||f.movement.stationarySpeedMps<0||!Number.isFinite(f.movement.stationaryHoldSeconds)||f.movement.stationaryHoldSeconds<0)throw Error('이동 사격 프로파일 값 오류: '+id+'.movement');
+      const ready=f.readiness,fatigue=ready?.fatigue,shock=ready?.shock,near=ready?.nearNonPenetration,fault=ready?.temporaryFault;
+      if(!ready||!fatigue||!shock||!near||!fault)throw Error('장전/피격 반응 프로파일 누락: '+id);
+      if(![ready.reloadSeconds,ready.reloadMaxSeconds,fatigue.maxSeconds,fatigue.perShotSeconds,fatigue.recoveryPerSecond,fatigue.burstResetSeconds,shock.maxSeconds,shock.recoveryPerSecond,shock.normalSeconds,shock.nearSeconds,shock.penetrationSeconds,near.maxDeficit,near.chance,fault.baseChance,fault.damageScaleChance,fault.damageReference,fault.observationAimRateMultiplier,fault.observationSigmaMultiplier].every(Number.isFinite)||ready.reloadSeconds<=0||ready.reloadMaxSeconds<ready.reloadSeconds||ready.reloadMaxSeconds>14||fatigue.maxSeconds<0||shock.maxSeconds<0||!Number.isInteger(fatigue.startsAtShot)||fatigue.startsAtShot<1||fatigue.perShotSeconds<0||fatigue.recoveryPerSecond<0||fatigue.burstResetSeconds<=0||shock.recoveryPerSecond<0||shock.normalSeconds<0||shock.nearSeconds<shock.normalSeconds||shock.penetrationSeconds<shock.nearSeconds||near.maxDeficit<=0||near.chance<0||near.chance>1||fault.baseChance<0||fault.damageScaleChance<0||fault.baseChance+fault.damageScaleChance>1||fault.damageReference<=0||fault.observationAimRateMultiplier<=0||fault.observationAimRateMultiplier>1||fault.observationSigmaMultiplier<1)throw Error('장전/피격 반응 프로파일 값 오류: '+id);
+      if(!Array.isArray(near.damagePoints)||near.damagePoints.length<2||near.damagePoints[0][0]!==0||near.damagePoints.at(-1)[0]!==near.maxDeficit||near.damagePoints.some((v,i)=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[1]<0||(i&&v[0]<=near.damagePoints[i-1][0])))throw Error('근접 비관통 피해 표 오류: '+id);
+      const faultKindNames=['fireControl','commander','gunner'];
+      if(!Array.isArray(fault.durationSeconds)||fault.durationSeconds.length!==2||!fault.durationSeconds.every(Number.isFinite)||fault.durationSeconds[0]<3||fault.durationSeconds[1]>8||fault.durationSeconds[1]<fault.durationSeconds[0]||!fault.kinds||Object.keys(fault.kinds).length!==faultKindNames.length||!faultKindNames.every(k=>Object.hasOwn(fault.kinds,k))||Math.abs(Object.values(fault.kinds).reduce((a,b)=>a+b,0)-1)>1e-9||Object.values(fault.kinds).some(v=>!Number.isFinite(v)||v<0))throw Error('일시 이상 프로파일 값 오류: '+id);
       if(!f.impact||!Number.isInteger(f.impact.rejectionAttempts)||!['rejectionAttempts','marchStepM','maxBeyondM'].every(field=>Number.isFinite(f.impact[field])&&f.impact[field]>0))throw Error('탄착 프로파일 값 오류: '+id+'.impact');
       const band=f.presented;
       if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
@@ -1349,7 +1366,13 @@ const TacticalObservation=(()=>{
     return true;
   }
   function resume(u,ch,time=0){if(!['commander','gunner'].includes(ch))return false;Object.assign(init(u)[ch],{mode:'auto',point:null,interestUntil:time+8,expiresAt:null,focus:null});return true;}
-  function create({profileOf,exposure,seed=7,onEvent=null}){
+  function interrupt(u,ch,time=0){
+    if(!['commander','gunner'].includes(ch))return false;const s=init(u);
+    for(const c of Object.values(s.contacts)){const source=c.sources?.[ch];if(source)source.current=false;c.channels=c.channels.filter(v=>v!==ch);c.current=!!(c.detected&&channels.some(v=>c.sources?.[v]?.current));if(ch==='gunner')c.gunnerSince=null;}
+    const d=mission(s);if(ch==='gunner'&&d?.status==='acquired'){d.status='acquiring';d.reason='gunner-fault';d.expiresAt=Number.MAX_VALUE;}
+    s[ch].focus=null;s[ch].interruptedAt=time;return true;
+  }
+  function create({profileOf,exposure,seed=7,onEvent=null,channelOperational=()=>true}){
     let tick=0,time=0,teams=new Map();
     const stats={queries:0,candidates:0,samples:0,rayQueries:0,rayCacheHits:0},geometryCaches=new WeakMap();
     function emit(u,type,c=null,extra={}){
@@ -1434,7 +1457,7 @@ const TacticalObservation=(()=>{
         if(target.team===u.team||target===u)continue;
         const tp=profileOf(target),pad=Math.hypot(tp.model.hullLength/2,tp.model.width/2),distance=Math.hypot(target.x-u.x,target.y-u.y);
         const eligible=channels.filter(ch=>{
-          const e=p.sensors[ch];if(!e.enabled||distance>e.range+pad)return false;if(ch==='ambient'||distance<=pad)return true;
+          const e=p.sensors[ch];if(!e.enabled||distance>e.range+pad)return false;if(ch!=='ambient'&&!channelOperational(u,ch,now))return false;if(ch==='ambient'||distance<=pad)return true;
           return Math.abs(diff(Math.atan2(target.y-u.y,target.x-u.x),ch==='gunner'?u.turret:u.commander))<=e.fov/2+Math.asin(Math.min(1,pad/distance));
         });if(!eligible.length)continue;stats.candidates++;
         const geometry=new Map(),result={};
@@ -1598,7 +1621,7 @@ const TacticalObservation=(()=>{
     return{advance,contacts,direct,ownStatus,retarget,stats};
   }
   function view(u,ch='commander',time=0){const o=init(u)[ch];return{mode:o.mode==='guard'?'fixed':'idle',turret:u.turret,gaze:u.commander,direction:o.mode==='guard'?Math.atan2(o.point.y-u.y,o.point.x-u.x):null,remaining:o.expiresAt===null?null:Math.max(0,o.expiresAt-time),point:o.point?{...o.point}:null};}
-  return Object.freeze({create,init,guard,resume,cancel,view,hash});
+  return Object.freeze({create,init,guard,resume,cancel,interrupt,view,hash});
 })();
 if(typeof module!=='undefined')module.exports=TacticalObservation;
 
@@ -1667,6 +1690,12 @@ const TacticalCombatState=(()=>{
     for(let i=1;i<points.length;i++)if(residualRatio<=points[i][0]){const[a,x]=points[i-1],[b,y]=points[i];return x+(y-x)*(residualRatio-a)/(b-a);}
     return points.at(-1)[1];
   }
+  function nearDamageAt(profile,deficit){
+    const rule=profile.fireControl.readiness.nearNonPenetration,points=rule.damagePoints;
+    if(!(deficit>0&&deficit<rule.maxDeficit))return 0;
+    for(let i=1;i<points.length;i++)if(deficit<=points[i][0]){const[a,x]=points[i-1],[b,y]=points[i];return x+(y-x)*(deficit-a)/(b-a);}
+    return 0;
+  }
   function faceHeading(pose,zone,side){
     const heading=zone.startsWith('turret')?pose.turret:pose.heading;
     if(zone.endsWith('Front'))return heading;
@@ -1680,17 +1709,20 @@ const TacticalCombatState=(()=>{
     const incoming=Math.atan2(origin.y-pose.y,origin.x-pose.x);
     return Math.abs(diff(incoming,faceHeading(pose,zone,side)))*180/Math.PI;
   }
-  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId,ricochetRoll}){
+  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId,ricochetRoll,nearDamageRoll}){
     if(typeof hit!=='boolean')throw Error('명중 결과 누락');
     if(!hit)return Object.freeze({hit:false,ricochet:false,penetrated:false,damage:0,reason:'miss'});
     validateProfile(profile);
     if(!ZONES.includes(zone))throw Error('지원하지 않는 피격 구역: '+zone);
     if(!Number.isFinite(ricochetRoll)||ricochetRoll<0||ricochetRoll>=1)throw Error('도탄 난수 값 오류');
     const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone].ke;
-    if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
-    const penetrated=pen.value>0&&pen.value>=protection,residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0,damage=penetrated?ammo.baseDamage*multiplier:0;
+    if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,protectionDeficit:Math.max(0,protection-pen.value),nearNonPenetration:false,nearDamageChance:0,nearDamageRoll:null,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
+    const penetrated=pen.value>0&&pen.value>=protection,protectionDeficit=Math.max(0,protection-pen.value),nearRule=profile.fireControl.readiness.nearNonPenetration,nearNonPenetration=!penetrated&&pen.value>0&&protectionDeficit>0&&protectionDeficit<nearRule.maxDeficit;
+    if(nearNonPenetration&&(!Number.isFinite(nearDamageRoll)||nearDamageRoll<0||nearDamageRoll>=1))throw Error('근접 비관통 난수 값 오류');
+    const residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0;
+    const damage=penetrated?ammo.baseDamage*multiplier:nearNonPenetration&&nearDamageRoll<nearRule.chance?nearDamageAt(profile,protectionDeficit):0;
     if(!Number.isFinite(damage)||damage<0)throw Error('피해 계산 오류');
-    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
+    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,protectionDeficit,nearNonPenetration,nearDamageChance:nearNonPenetration?nearRule.chance:0,nearDamageRoll:nearNonPenetration?nearDamageRoll:null,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
   }
   function create({profileOf,onDestroyed=null,recordLimit=200,idLimit=4096}={}){
     if(typeof profileOf!=='function')throw Error('profileOf 필요');
@@ -1713,17 +1745,17 @@ const TacticalCombatState=(()=>{
       if(state.status==='destroyed'){mark(id);return remember({applied:false,reason:'target-destroyed',id,time:now,targetId:target.id,hpBefore:state.hp,hpAfter:state.hp,damage:0,destroyed:false});}
       const result=evaluate({...event,profile,ammoId:event.ammoId||profile.weapons.mainGun.ammunitionId});
       mark(id);
-      const hpBefore=state.hp,damage=Math.min(hpBefore,result.damage),hpAfter=clamp(hpBefore-damage,0,state.maxHp),destroyed=hpAfter<=0&&state.status!=='destroyed';
+      const hpBefore=state.hp,computedDamage=result.damage,damage=Math.min(hpBefore,computedDamage),hpAfter=clamp(hpBefore-damage,0,state.maxHp),destroyed=hpAfter<=0&&state.status!=='destroyed';
       state.hp=hpAfter;
-      const record={applied:true,id,time:now,targetId:target.id,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,ricochet:!!result.ricochet,ricochetChance:result.ricochetChance??0,ricochetRoll:result.ricochetRoll??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,protection:result.protection??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,damage,hpBefore,hpAfter,maxHp:state.maxHp,destroyed};
+      const record={applied:true,id,time:now,targetId:target.id,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,ricochet:!!result.ricochet,ricochetChance:result.ricochetChance??0,ricochetRoll:result.ricochetRoll??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,protection:result.protection??null,protectionDeficit:result.protectionDeficit??null,nearNonPenetration:!!result.nearNonPenetration,nearDamageChance:result.nearDamageChance??0,nearDamageRoll:result.nearDamageRoll??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,computedDamage,damage,hpBefore,hpAfter,maxHp:state.maxHp,destroyed};
       state.lastDamage={...record};
       if(destroyed){state.status='destroyed';state.destroyedAt=now;destroyedCount++;onDestroyed?.(target,record);}
       return remember(record);
     }
     return Object.freeze({apply,records:()=>clone(records),stats:()=>({applied:appliedCount,records:records.length,destroyed:destroyedCount,sequenceShooters:sequences.size,recentIds:recent.size})});
   }
-  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
-  return Object.freeze({create,initUnit,validateProfile,evaluate,penetrationAt,ricochetChance,multiplierAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES});
+  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,protectionDeficit:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
+  return Object.freeze({create,initUnit,validateProfile,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;
 
@@ -1736,6 +1768,7 @@ if(typeof module!=='undefined')module.exports=TacticalCombatState;
 const TacticalFireControl=(()=>{
   const G=typeof TacticalVehicleGeometry!=='undefined'?TacticalVehicleGeometry:require('./vehicle-geometry.js');
   const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
+  const turretZones=new Set(['turretFront','turretSide','turretRear']),faultKinds=['fireControl','commander','gunner'];
   const GRAVITY=9.81,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   function random(text,seed){let n=(2166136261^seed^0x51f15e)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
   const visualSeed=(shot,phase,seed)=>Math.floor(random(shot.id+':visual:'+phase,seed^0x6d2b79f5)*4294967296)>>>0;
@@ -1743,8 +1776,30 @@ const TacticalFireControl=(()=>{
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   function init(u,p,mode='auto'){
     if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
-      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null};
-    u.fireControl.fireMode??=mode;u.fireControl.lineProbeTarget??=null;u.fireControl.lineProbePose??=null;u.fireControl.lineProbeBlocked??=false;u.fireControl.lineProbeCandidateRevision??=null;u.fireControl.lineProbeQueries??=0;u.fireControl.stationaryElapsed??=0;u.fireControl.autoSuppressed??=false;u.fireControl.lastRejection??=null;return u.fireControl;
+      shotCount:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null,
+      loaded:true,reloadProgress:1,reloadStartedAt:null,reloadCompletedAt:0,readyIdleSeconds:0,burstShots:0,fatigueSeconds:0,shockSeconds:0,faultUntil:{fireControl:0,commander:0,gunner:0},lastReaction:null};
+    const s=u.fireControl;s.fireMode??=mode;s.lineProbeTarget??=null;s.lineProbePose??=null;s.lineProbeBlocked??=false;s.lineProbeCandidateRevision??=null;s.lineProbeQueries??=0;s.stationaryElapsed??=0;s.autoSuppressed??=false;s.lastRejection??=null;
+    s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;return s;
+  }
+  const readiness=p=>p.fireControl.readiness;
+  function reloadSeconds(p,s){const r=readiness(p);return clamp(r.reloadSeconds+s.fatigueSeconds+s.shockSeconds,r.reloadSeconds,r.reloadMaxSeconds);}
+  function faultActive(s,kind,now){return Number.isFinite(s?.faultUntil?.[kind])&&s.faultUntil[kind]>now+1e-9;}
+  function observationPenalty(p,s,now){
+    const f=readiness(p).temporaryFault,active=faultActive(s,'commander',now)||faultActive(s,'gunner',now);
+    return{active,aimRateMultiplier:active?f.observationAimRateMultiplier:1,errorSigmaMultiplier:active?f.observationSigmaMultiplier:1};
+  }
+  function faultChance(p,damage){const f=readiness(p).temporaryFault;return clamp(f.baseChance+f.damageScaleChance*clamp((Number(damage)||0)/f.damageReference,0,1),f.baseChance,f.baseChance+f.damageScaleChance);}
+  function faultDuration(p,roll){const [lo,hi]=readiness(p).temporaryFault.durationSeconds;return lo+(hi-lo)*clamp(roll,0,1);}
+  function faultKind(p,roll){let cumulative=0;for(const kind of faultKinds){cumulative+=readiness(p).temporaryFault.kinds[kind];if(roll<cumulative)return kind;}return faultKinds.at(-1);}
+  function advanceReadiness(u,p,s,dt,now){
+    const r=readiness(p);s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
+    if(!s.loaded&&s.ammo>0){s.readyIdleSeconds=0;s.reloadStartedAt??=now-dt;s.reloadProgress=clamp(s.reloadProgress+dt/reloadSeconds(p,s),0,1);if(s.reloadProgress>=1-1e-12){s.loaded=true;s.reloadProgress=1;s.reloadCompletedAt=now;s.reloadStartedAt=null;}}
+    else if(s.loaded){s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}
+    else{s.reloadProgress=0;s.reloadStartedAt=null;s.readyIdleSeconds=0;}
+  }
+  function consumeLoaded(p,s,now){
+    if(!s.loaded||s.ammo<=0)return false;const r=readiness(p);s.loaded=false;s.reloadProgress=0;s.reloadStartedAt=s.ammo>1?now:null;s.reloadCompletedAt=null;s.readyIdleSeconds=0;s.burstShots++;
+    if(s.burstShots>=r.fatigue.startsAtShot)s.fatigueSeconds=Math.min(r.fatigue.maxSeconds,s.fatigueSeconds+r.fatigue.perShotSeconds);return true;
   }
   function motionReady(u,p,s=init(u,p)){const m=p.fireControl.movement;return m.fireOnMove||Math.abs(u.drive?.velocity??u.speed??0)<=m.stationarySpeedMps+1e-9&&s.stationaryElapsed+1e-9>=m.stationaryHoldSeconds;}
   // Fictional RTS error budget. Target manoeuvre is represented only by the
@@ -1755,12 +1810,13 @@ const TacticalFireControl=(()=>{
     const erf=1-(((((1.061405429*t-1.453152027)*t+1.421413741)*t-.284496736)*t+.254829592)*t)*Math.exp(-v*v);
     return clamp(.5*(1+(x<0?-erf:erf)),0,1);
   }
-  function errorBudget(observer,pose,f,targetVelocity={x:0,y:0},layTime=0){
+  function errorBudget(observer,pose,f,targetVelocity={x:0,y:0},layTime=0,errorSigmaMultiplier=1){
     const dx=pose.x-observer.x,dy=pose.y-observer.y,range=Math.hypot(dx,dy),safeRange=Math.max(1e-9,range),beta=Math.atan2(dy,dx);
     const vx=targetVelocity.x||0,vy=targetVelocity.y||0,cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=range/(f.muzzleVelocity*f.velocityRetention);
     const disp=f.dispersionMrad,lay=f.layMinMrad+(f.layStartMrad-f.layMinMrad)*Math.exp(-Math.max(0,layTime)/f.layTauSeconds);
     const rng=1000*GRAVITY*f.rangeErrorM/(2*f.muzzleVelocity**2),lead=1000*f.leadResidual*cross*tof/safeRange,own=f.stabMradPerMps*Math.abs(observer.speed||0);
-    return{range,tof,sigma:{disp,lay,rng,lead,own,x:Math.hypot(disp,lay,lead,own),z:Math.hypot(disp,lay,rng,own)}};
+    const multiplier=Number.isFinite(errorSigmaMultiplier)&&errorSigmaMultiplier>0?errorSigmaMultiplier:1;
+    return{range,tof,sigma:{disp,lay,rng,lead,own,multiplier,x:Math.hypot(disp,lay,lead,own)*multiplier,z:Math.hypot(disp,lay,rng,own)*multiplier}};
   }
   function presentedRects(observer,pose,exposure,f){
     const m=pose.model,band=exposure.presented||f.presented,samples=exposure.samples||[],rects=[];
@@ -1796,8 +1852,8 @@ const TacticalFireControl=(()=>{
     group('hull',pose.heading,pHull);group('turret',pose.turret,pTurret);
     return result;
   }
-  function estimate(observer,pose,exposure,f,targetVelocity={x:0,y:0},layTime=0){
-    const budget=errorBudget(observer,pose,f,targetVelocity,layTime),rects=presentedRects(observer,pose,exposure,f);
+  function estimate(observer,pose,exposure,f,targetVelocity={x:0,y:0},layTime=0,errorSigmaMultiplier=1){
+    const budget=errorBudget(observer,pose,f,targetVelocity,layTime,errorSigmaMultiplier),rects=presentedRects(observer,pose,exposure,f);
     const area=r=>(r.x2-r.x1)*(r.z2-r.z1),total=rects.reduce((sum,r)=>sum+area(r),0);
     const aim=total?{x:rects.reduce((sum,r)=>sum+(r.x1+r.x2)/2*area(r),0)/total,z:rects.reduce((sum,r)=>sum+(r.z1+r.z2)/2*area(r),0)/total}:{x:0,z:0};
     let pHull=0,pTurret=0;
@@ -1869,7 +1925,7 @@ const TacticalFireControl=(()=>{
     if(result.hit)return{kind:'hit',x:pose.x+point.x*px,y:pose.y+point.x*py,z:(environment?.heightAt?.(pose.x,pose.y)||0)+point.z,beyond:0};
     return marchImpact(shot,pose,point,environment);
   }
-  function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,onImpactResolved=null,onFireBlocked=null,seed=7,debug=false,onDecisionRoll=null}){
+  function create({profileOf,freshSight,impactSight=null,impactEnvironment=null,isObserved=()=>true,onImpactResolved=null,onTemporaryFault=null,onFireBlocked=null,seed=7,debug=false,onDecisionRoll=null}){
     const events=[],effects=[],flights=[],records=[];let currentTime=0,effectNumber=0;
     const clone=v=>JSON.parse(JSON.stringify(v));
     const emit=e=>{events.push(e);if(events.length>200)events.shift();};
@@ -1880,15 +1936,26 @@ const TacticalFireControl=(()=>{
     function clearPreview(s){s.hitChance=null;s.zoneProbabilities=null;s.breakdown=null;}
     function preview(s,value){s.hitChance=value.hitChance;s.zoneProbabilities=value.zoneProbabilities;s.breakdown=value.breakdown;}
     function roll(shot,kind){onDecisionRoll?.(kind,shot.id);return random(shot.shooterId+':'+shot.number+':'+kind,seed);}
+    const reactionRoll=(shot,kind)=>random(shot.shooterId+':'+shot.number+':reaction:'+kind,seed^0x243f6a88);
+    function react(target,record,now,forced=null){
+      if(!target||!record?.applied||!record.hit)return null;const p=profileOf(target),s=init(target,p),r=readiness(p),classification=record.penetrated?'penetration':record.nearNonPenetration?'near':'normal';
+      s.shockSeconds=Math.min(r.shock.maxSeconds,s.shockSeconds+r.shock[classification+'Seconds']);
+      let fault=null;
+      if(!record.destroyed&&target.combat?.status!=='destroyed'&&turretZones.has(record.zone)){
+        const chance=faultChance(p,record.computedDamage),occurrence=forced?.occurrence??random(record.id+':reaction:fault',seed^0x7f4a7c15);
+        if(occurrence<chance){const kindRoll=forced?.kind??random(record.id+':reaction:kind',seed^0x94d049bb),durationRoll=forced?.duration??random(record.id+':reaction:duration',seed^0x369dea0f),kind=faultKind(p,kindRoll),duration=faultDuration(p,durationRoll),until=Math.max(s.faultUntil[kind],now+duration);s.faultUntil[kind]=until;fault={kind,duration,until,chance,occurrence};onTemporaryFault?.(target,kind,now,until);}
+      }
+      s.lastReaction={time:now,classification,shockSeconds:s.shockSeconds,fault:fault?{...fault}:null};return{...s.lastReaction,fault:fault?{...fault}:null};
+    }
     function finishDue(units,now){
       flights.sort((a,b)=>a.impactAt-b.impactAt||(a.id<b.id?-1:a.id>b.id?1:0));
       while(flights.length&&flights[0].impactAt<=now+1e-9){
         const shot=flights.shift(),sight=impactSight?impactSight(shot):{...clone(shot.fireExposure),pose:{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}},evaluation=impactEvaluation(shot,sight);
-        const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),ricochetRoll=result.hit?roll(shot,'ricochet'):null,point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
+        const result=resolve(evaluation.finalHitChance,evaluation.probabilities,roll(shot,'hit'),roll(shot,'zone')),side=sideFor(shot.origin,evaluation.pose,result.zone),ricochetRoll=result.hit?roll(shot,'ricochet'):null,nearDamageRoll=result.hit?reactionRoll(shot,'near-damage'):null,point=sampleImpactPlane(shot,evaluation,result,seed),impact=impactLocation(shot,evaluation,result,point,impactEnvironment);
         const observation=isObserved(shot.team,shot.targetKey),observed=!sight?.gone&&!!observation;
         // Damage consumes the private resolved result exactly here, before any
         // public redaction. It must not infer a hit from the display point.
-        const combat=onImpactResolved?.({id:shot.id,time:now,team:shot.team,shooterId:shot.shooterId,targetId:shot.targetId,targetKey:shot.targetKey,ammoId:shot.ammoId,hit:result.hit,zone:result.zone,side,ricochetRoll,origin:clone(shot.origin),pose:clone(evaluation.pose),rangeM:Math.hypot(evaluation.pose.x-shot.origin.x,evaluation.pose.y-shot.origin.y),impact:clone(impact),observed,observation:observation?clone(observation):null})??null;
+        const combat=onImpactResolved?.({id:shot.id,time:now,team:shot.team,shooterId:shot.shooterId,targetId:shot.targetId,targetKey:shot.targetKey,ammoId:shot.ammoId,hit:result.hit,zone:result.zone,side,ricochetRoll,nearDamageRoll,origin:clone(shot.origin),pose:clone(evaluation.pose),rangeM:Math.hypot(evaluation.pose.x-shot.origin.x,evaluation.pose.y-shot.origin.y),impact:clone(impact),observed,observation:observation?clone(observation):null})??null;
         const effectClass=result.hit?(combat?.ricochet?'ricochet':combat?.penetrated?'penetration':'non-penetration'):'miss-'+impact.kind;
         emitEffect({kind:'impact',time:now,expiresAt:now+3.2,position:{x:impact.x,y:impact.y,z:impact.z},effectClass,flightEffectId:shot.flightEffectId,outgoingHeading:combat?.ricochet?reflectedHeading(shot.beta,evaluation.pose,result.zone,side):null,visualSeed:visualSeed(shot,'impact',seed)});
         const publicImpact=observed?clone(impact):result.hit?null:{...clone(impact),beyond:null};
@@ -1897,7 +1964,7 @@ const TacticalFireControl=(()=>{
           finalHitChance:observed?evaluation.finalHitChance:null,hitChanceAtFire:shot.hitChanceAtFire,bias:observed?clone(evaluation.bias):null,
           impact:publicImpact,ammoRemaining:shot.ammoRemaining,combat:observed&&combat?clone(combat):null};
         emit(publicResult);shot.shooter.fireControl.lastShot=clone(publicResult);
-        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),combat:combat?clone(combat):null,reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
+        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,hitChanceAtFire:shot.hitChanceAtFire,aimPenaltyAtFire:clone(shot.aimPenaltyAtFire),sigmaAtFire:clone(shot.sigma),bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),combat:combat?clone(combat):null,reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
       }
     }
     function inspect(u,now){
@@ -1912,15 +1979,20 @@ const TacticalFireControl=(()=>{
       if(distance>f.maxRange||distance>p.sensors.gunner.range)return{reason:'range',d,c};
       const error=Math.abs(diff(Math.atan2(c.pose.y-u.y,c.pose.x-u.x),u.turret));
       if(error>f.alignmentTolerance)return{reason:'aligning',d,c};
+      if(faultActive(s,'fireControl',now))return{reason:'fcs-fault',d,c};
       if(s.ammo<=0)return{reason:'out-of-ammo',d,c};
-      if(now<s.nextShotAt)return{reason:'interval',d,c};
+      if(!s.loaded)return{reason:'reloading',d,c};
       return{reason:null,d,c};
     }
     function step(units,dt,now){
       currentTime=now;
       pruneEffects(now);
+      // Resolve arrivals before readiness/observation consumers attempt a new
+      // shot at this timestamp. Core also calls resolveImpacts before sensing;
+      // this second idempotent call keeps the standalone runtime contract.
+      finishDue(units,now);
       for(const u of units){
-        const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
+        const p=profileOf(u),f=p.fireControl,s=init(u,p);advanceReadiness(u,p,s,dt,now);const check=inspect(u,now),{d,c}=check;
         if(Math.abs(u.drive?.velocity??u.speed??0)<=f.movement.stationarySpeedMps+1e-9)s.stationaryElapsed+=dt;else s.stationaryElapsed=0;
         if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
         if(s.previousSample&&now-s.previousSample.time>p.sensors.tuning.queryPeriod*5+1e-9)resetMotion(s);
@@ -1931,12 +2003,14 @@ const TacticalFireControl=(()=>{
           s.targetMotion=Math.hypot(s.targetVelocity.x,s.targetVelocity.y);
           s.previousSample={x:c.pose.x,y:c.pose.y,time:c.sources.gunner.lastSeen};
         }
-        if(check.reason){s.status=check.reason==='interval'?'interval':check.reason==='aligning'?'aligning':'blocked';if(check.reason==='no-target')s.status='no-target';s.reason=check.reason;resetAim(s);clearPreview(s);}
-        else{
-          s.layTime+=dt;s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
-          s.status=s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=null;
-          const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,f,s.targetVelocity,s.layTime));
+        const aimPenalty=observationPenalty(p,s,now);
+        if(!check.reason||check.reason==='reloading'){
+          s.layTime+=dt*aimPenalty.aimRateMultiplier;s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt*aimPenalty.aimRateMultiplier);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
+          s.status=check.reason==='reloading'?'reloading':s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=check.reason;
+          const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,f,s.targetVelocity,s.layTime,aimPenalty.errorSigmaMultiplier));
         }
+        else if(check.reason==='fcs-fault'){s.status='blocked';s.reason=check.reason;clearPreview(s);}
+        else{s.status=check.reason==='aligning'?'aligning':'blocked';if(check.reason==='no-target')s.status='no-target';s.reason=check.reason;resetAim(s);clearPreview(s);}
         // Normal units default to auto. Both modes retain a blocked weapon-line
         // result until the geometry changes; a new commander candidate can use
         // that result for retargeting without running the same LOS again.
@@ -1981,20 +2055,23 @@ const TacticalFireControl=(()=>{
         s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=candidateRevision;
         const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
         if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
-        const chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime),number=s.shotCount+1;
+        const firePenalty=observationPenalty(p,s,now),chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime,firePenalty.errorSigmaMultiplier),number=s.shotCount+1;
         if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
+        // The last mutable readiness check must succeed before creating a
+        // flight, effect or public event. Rejected fire never spends a round
+        // and cannot leave a display-only shot behind.
+        if(!consumeLoaded(p,s,now)){s.lastRejection='reloading';continue;}
         const origin=G.muzzleWorld(u,p.model),tof=chance.breakdown.tof,predicted={x:pose.x+s.targetVelocity.x*tof,y:pose.y+s.targetVelocity.y*tof},beta=Math.atan2(predicted.y-origin.y,predicted.x-origin.x),id=u.id+'-shot-'+number,impactAt=now+tof;
         const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,ammoId:p.weapons.mainGun.ammunitionId??null,shooter:u,
           origin,fireEye:sight.fireEye,profileAtFire:clone(p),fireControl:clone(f),pose:clone(pose),fireExposure:clone(sight),
-          beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1};
+          beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),aimPenaltyAtFire:clone(firePenalty),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1};
         flights.push(shot);
         const flightEffect=emitEffect({kind:'fire',time:now,expiresAt:impactAt+.35,origin:{x:origin.x,y:origin.y},heading:beta,distanceM:chance.breakdown.range,duration:tof,visualSeed:visualSeed(shot,'fire',seed)});
         shot.flightEffectId=flightEffect.id;
         emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:request.source,origin:{...origin},muzzleHeading:beta,
           tof,impactAt,hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1});
-        s.shotCount=number;s.ammo--;s.nextShotAt=now+f.shotIntervalSeconds;resetAim(s);clearPreview(s);s.status='interval';s.reason='interval';
+        s.shotCount=number;s.ammo--;resetAim(s);clearPreview(s);s.status=s.ammo>0?'reloading':'blocked';s.reason=s.ammo>0?'reloading':'out-of-ammo';
       }
-      finishDue(units,now);
     }
     function request(u,key,now){
       const p=profileOf(u),s=init(u,p),check=inspect(u,now);
@@ -2012,17 +2089,21 @@ const TacticalFireControl=(()=>{
     }
     function view(u,key=null){
       const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
+      const aimPenalty=observationPenalty(p,s,currentTime);
       return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
         canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
+        loading:{loaded:s.loaded,progress:s.reloadProgress,estimatedSeconds:s.loaded?0:s.ammo>0?(1-s.reloadProgress)*reloadSeconds(p,s):null,currentWorkSeconds:reloadSeconds(p,s),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots,fatigueSeconds:s.fatigueSeconds,shockSeconds:s.shockSeconds},
+        aimPenalty,
+        faults:Object.fromEntries(faultKinds.map(kind=>[kind,{active:faultActive(s,kind,currentTime),remaining:Math.max(0,s.faultUntil[kind]-currentTime)}])),
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
     function suppressAuto(u,value){const s=init(u,profileOf(u));s.autoSuppressed=!!value;if(value&&s.pending?.source==='auto')s.pending=null;return s.autoSuppressed;}
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
-    return{step,request,setMode,view,cancel,suppressAuto,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
+    return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,setMode,view,cancel,suppressAuto,react,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,motionReady,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;
 
@@ -2354,6 +2435,9 @@ const TacticalCore = (() => {
   function step(s,dt){
     s.time+=dt;
     for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}
+    // Flight arrivals and their temporary reactions precede sensing, AI and
+    // any new fire attempt at the same fixed-step timestamp.
+    fireFor(s).resolveImpacts(s.units,s.time);
     const alive=s.units.filter(u=>u.combat?.status!=='destroyed');
     // Only living vehicles observe and act; every vehicle remains a sensing
     // candidate so an unseen destruction can later be discovered as a wreck.
@@ -2424,6 +2508,7 @@ const TacticalCore = (() => {
       onImpactResolved:event=>{
         const target=s.units.find(v=>v.id===event.targetId),p=target?profileOf(target):null;
         const record=p?.combat?combatFor(s).apply(event,target,s.time):{applied:false,reason:target?'unsupported-profile':'target-unavailable',damage:0,destroyed:false};
+        if(target&&record.applied)fireFor(s).react(target,record,s.time);
         if(record.destroyed&&event.observed&&event.observation){
           const c=event.observation,w={key:c.key,x:event.pose.x,y:event.pose.y,heading:event.pose.heading,turret:event.pose.turret,commander:event.pose.commander??event.pose.turret,model:{...c.model,turretPivot:c.model?.turretPivot?.slice(),muzzleLocal:c.model?.muzzleLocal?.slice()},team:target.team,identified:true,current:false,memory:false,wreck:true,destroyed:true,observedAt:s.time,age:0,label:'격파 잔해',name:c.name??target.name,type:c.type??p.name};
           wreckMap(s,event.team).set(c.key,w);
@@ -3559,7 +3644,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{const u=selectedUnit();if(u&&targetId&&C.designate(sim,u,targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
-  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실','must-stop':'정차·안정화 대기','movement-policy':'교전 정차 대기'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',reloading:'장전 중','fcs-fault':'사통 대응 중','gunner-fault':'포수 관측 대응 중','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실','must-stop':'정차·안정화 대기','movement-policy':'교전 정차 대기'};
   function fireSelected(){
     if(portraitBlocked)return;
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
@@ -3984,13 +4069,17 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     if(!u){
       for(const id of ['move','reverse','stop','sight','fire','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode'])$(id).disabled=true;
       ui.setText($('unitName'),'선택 가능한 차량 없음');ui.setText($('unitType'),'아군 차량 전멸');ui.setText($('velocity'),'0');ui.setText($('motionState'),'격파');
-      ui.setText($('combatSummary'),'생존 아군 없음');ui.setText($('fireState'),'자동 사격 중지');ui.setText($('flightState'),'');ui.setText($('lookStatus'),'관측 불가');ui.setText($('designationStatus'),'없음');
+      ui.setText($('combatSummary'),'생존 아군 없음');ui.setText($('fireState'),'자동 사격 중지');ui.setText($('readinessState'),'');ui.setText($('flightState'),'');ui.setText($('lookStatus'),'관측 불가');ui.setText($('designationStatus'),'없음');
       ui.setText($('elevation'),'—');ui.setText($('slope'),'—');ui.setText($('heading'),'—');ui.setText($('surface'),'—');ui.setHTML($('routeInfo'),'<strong>아군 전멸</strong> · 지도 이동·확대·초기화는 계속 사용할 수 있음');
       $('targetPanel').classList.toggle('visible',false);return;
     }
     const combat=C.combatView(u),destroyed=combat?.status==='destroyed';
     const firing=C.fireStatus(sim,u,targetId),fireText=firing.status==='ready'?'조준 완료':firing.status==='aiming'?'조준 '+Math.round(firing.aimProgress*100)+'%':fireReasons[firing.reason]||'표적 미확보';
     ui.setText($('fireState'),(firing.mode==='auto'?'자동':'보류')+' · '+fireText+' · 시험탄 '+firing.ammo);
+    const load=firing.loading,fcsFault=firing.faults.fireControl,observationFaults=[firing.faults.commander,firing.faults.gunner].filter(v=>v.active),observationRemaining=observationFaults.length?Math.max(...observationFaults.map(v=>v.remaining)):0;
+    const faultText=[fcsFault.active?'사통 이상 '+fcsFault.remaining.toFixed(1)+'초':'',observationFaults.length?'관측장비 불안정 · 조준 저하 '+observationRemaining.toFixed(1)+'초':''].filter(Boolean).join(' / ');
+    const loadText=load.loaded?'장전탄 '+load.chamber+' · 저장 '+load.stored:load.estimatedSeconds===null?'장전할 탄 없음':'장전 '+Math.round(load.progress*100)+'% · 예상 '+load.estimatedSeconds.toFixed(1)+'초';
+    ui.setText($('readinessState'),loadText+(load.fatigueSeconds>.005?' · 피로 +'+load.fatigueSeconds.toFixed(2)+'초':'')+(load.shockSeconds>.005?' · 동요 +'+load.shockSeconds.toFixed(2)+'초':'')+(faultText?' · 대응 '+faultText:''));
     ui.setText($('fireMode'),firing.mode==='auto'?'자동':'보류');$('fireMode').setAttribute('aria-pressed',String(firing.mode==='auto'));$('fireMode').classList.toggle('active',firing.mode==='auto');
     const activeFlight=firing.inFlight[0];ui.setText($('flightState'),activeFlight?'비행 중'+(firing.inFlight.length>1?' '+firing.inFlight.length+'발':'')+' · 착탄까지 '+activeFlight.remaining.toFixed(1)+'초':firing.lastShot?.result==='unobserved'?'최근 단발: 결과 미확인':'');
     $('fire').disabled=paused||destroyed||!targetId||!firing.canFire;
@@ -4031,7 +4120,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
       const b=fc.breakdown,rects=b?.rects||[],w=rects.length?Math.max(...rects.map(r=>r.x2))-Math.min(...rects.map(r=>r.x1)):0,h=rects.length?Math.max(...rects.map(r=>r.z2))-Math.min(...rects.map(r=>r.z1)):0;
       ui.setText($('fireDetails'),target.identified&&target.current&&b?'예상 명중 '+Math.round(fc.hitChance*100)+'% (발사 시) · 오차 '+Math.max(b.sigma.x,b.sigma.z).toFixed(2)+'밀 · 표적 '+w.toFixed(1)+'×'+h.toFixed(1)+'m · 명중 시: '+Object.entries(probabilities).filter(([,v])=>v>.001).map(([z,v])=>zoneNames[z]+' '+Math.round(v*100)+'%').join(' / '):'');
       const lastShot=target.identified&&target.current&&fc.lastShot?.targetKey===target.key?fc.lastShot:null,impactKind={ground:'지면',building:'건물','out-of-map':'지도 밖','max-distance':'최대 거리'},missText=lastShot?.impact?(lastShot.impact.beyond>=0?'표적 너머 ':'표적 앞 ')+Math.round(Math.abs(lastShot.impact.beyond))+'m '+(impactKind[lastShot.impact.kind]||lastShot.impact.kind):'탄착점 없음';
-      const hitDamage=lastShot?.combat,lastDamage=hitDamage?(hitDamage.ricochet?'도탄 · 피해 0':hitDamage.penetrated?'관통 · 피해 '+Math.round(hitDamage.damage)+(hitDamage.destroyed?' · 격파':' · HP '+Math.round(hitDamage.hpAfter)):'비관통 · 피해 0'):'';
+      const hitDamage=lastShot?.combat,lastDamage=hitDamage?(hitDamage.ricochet?'도탄 · 피해 0':hitDamage.penetrated?'관통 · 피해 '+Math.round(hitDamage.damage)+(hitDamage.destroyed?' · 격파':' · HP '+Math.round(hitDamage.hpAfter)):hitDamage.damage>0?'근접 비관통 · 피해 '+Math.round(hitDamage.damage)+(hitDamage.destroyed?' · 격파':' · HP '+Math.round(hitDamage.hpAfter)):'비관통 · 피해 0'):'';
       ui.setText($('shotDetails'),lastShot?'최근 단발: '+(lastShot.result==='unobserved'?'결과 미확인':lastShot.result==='hit'?'명중 · '+zoneNames[lastShot.zone]+(lastShot.side?'('+({right:'우',left:'좌'})[lastShot.side]+')':'')+(lastDamage?' · '+lastDamage:''):'빗나감 · '+missText):'');
       $('targetExposure').style.display=target.identified&&target.current?'':'none';
       for(const part of ['hull','turret']){
@@ -4044,7 +4133,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     const vehicle=C.profileOf(u),model=vehicle.model,motion=vehicle.mobility,s=vehicle.sensors,degrees=r=>Math.round(r*180/Math.PI);
     ui.setText($('unitType'),vehicle.name+' · '+vehicle.weapons.mainGun.calibreMm+'mm '+vehicle.weapons.mainGun.name);
     ui.setText($('profileTitle'),vehicle.id+' 제원 · 적용값');
-    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['자동변속',motion.powertrain.forwardRatios.length+'단 전진 · '+motion.powertrain.reverseRatios.length+'단 후진'],['방향 전환',motion.powertrain.directionSettleSeconds.toFixed(2)+' 초 정차 확인'],['기동간 사격',vehicle.fireControl.movement.fireOnMove?'가능 · 이동 오차 적용':'불가 · '+vehicle.fireControl.movement.stationaryHoldSeconds.toFixed(2)+'초 정차'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
+    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['자동변속',motion.powertrain.forwardRatios.length+'단 전진 · '+motion.powertrain.reverseRatios.length+'단 후진'],['방향 전환',motion.powertrain.directionSettleSeconds.toFixed(2)+' 초 정차 확인'],['기동간 사격',vehicle.fireControl.movement.fireOnMove?'가능 · 이동 오차 적용':'불가 · '+vehicle.fireControl.movement.stationaryHoldSeconds.toFixed(2)+'초 정차'],['기본 장전',vehicle.fireControl.readiness.reloadSeconds.toFixed(2)+'초 · 작업 상한 '+vehicle.fireControl.readiness.reloadMaxSeconds+'초'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
   }
   for(const u of sim.units.filter(u=>u.team==='blue')){
     const b=document.createElement('button');
@@ -4258,7 +4347,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP14',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP15',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

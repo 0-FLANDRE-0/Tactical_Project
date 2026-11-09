@@ -1,0 +1,138 @@
+{
+  "version": "0.4-WIP15",
+  "baselineMain": "c83024a0a91450b08317083d889466ba7de1de8c",
+  "branch": "feat/wip15-reload-reactions",
+  "date": "2026-11-09",
+  "checks": [
+    {
+      "name": "JavaScript syntax checks for src, scripts and tests",
+      "status": "passed"
+    },
+    {
+      "name": "complete Node test runner including browser scripts",
+      "status": "passed",
+      "passed": 278,
+      "failed": 0
+    },
+    {
+      "name": "non-browser Node test runner",
+      "status": "passed",
+      "passed": 275,
+      "failed": 0
+    },
+    {
+      "name": "terrain readability Python unittest",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "name": "source quality with system Python GDAL/OGR",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0,
+      "note": "default Python lacked osgeo; /usr/bin/python3 used installed system binding"
+    },
+    {
+      "name": "standalone real-map checks",
+      "status": "passed",
+      "passed": 16,
+      "failed": 0
+    },
+    {
+      "name": "standalone fake-DOM input checks",
+      "status": "passed",
+      "passed": 42,
+      "failed": 0,
+      "kind": "fake DOM, not a browser"
+    },
+    {
+      "name": "standalone visibility checks",
+      "status": "passed",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "standalone vehicle/Worker checks",
+      "status": "passed",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "name": "actual Chromium full application regression",
+      "status": "passed",
+      "passed": 31,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP15-full-browser.json"
+    },
+    {
+      "name": "actual Chromium WIP15 reload/reaction scenarios",
+      "status": "passed",
+      "passed": 4,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP15-browser.json",
+      "note": "Seeds 26/79/560: FCS blocking plus observation-preserving aim/accuracy penalties and automatic fire during commander/gunner faults"
+    },
+    {
+      "name": "actual Chromium WIP12 effects regression",
+      "status": "passed",
+      "passed": 18,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP12-effects-browser.json"
+    },
+    {
+      "name": "physical mobile device long-run/thermal check",
+      "status": "not-run",
+      "reason": "no physical mobile device attached; Chromium mobile viewports passed"
+    }
+  ],
+  "performance": {
+    "readiness100": {
+      "baselineMedianPerTickMs": 0.0054705049999999745,
+      "currentMedianPerTickMs": 0.01997895,
+      "absoluteDeltaMs": 0.014508445000000024
+    },
+    "map": {
+      "baselineMedianMs": 0.2829870000000483,
+      "currentMedianMs": 0.34508099999993647,
+      "baselineP95Ms": 0.6390139999999747,
+      "currentP95Ms": 0.7680690000000823
+    },
+    "evidence": [
+      "tests/releases/WIP15-readiness-benchmark.json",
+      "tests/releases/WIP15-map-benchmark.json",
+      "tests/releases/WIP15-performance-comparison.json"
+    ]
+  },
+  "artifacts": {
+    "html": {
+      "path": "Tactical_v0.4_WIP15.html",
+      "bytes": 8455158,
+      "sha256": "b7fb2d511315676859b69ee6cd6eac4051c0614b485a478c875c6fb9339e4f58",
+      "matchesDist": true
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP15.zip",
+      "bytes": 1668507,
+      "sha256": "773176585504959007b1d0ad85e3c71c5db98de8ce47904098d9e80909c9fe30",
+      "entry": "Tactical_v0.4_WIP15.html",
+      "entryBytes": 8455158,
+      "crc32": "49b02b6b",
+      "repeatPackageByteIdentical": true
+    }
+  },
+  "notImplemented": [
+    "permanent module damage or repairs",
+    "crew injury or replacement loading",
+    "autoloader vehicle behavior",
+    "ammunition rack transfer, resupply or selection",
+    "additional impact-velocity damage factor",
+    "new vehicle or ammunition profiles"
+  ],
+  "revisionMain": "eb485b7c9022b43d6edfe1ee5029ac7289e00d0b",
+  "draftHead": "296053940094cb07b02a337faadb6b053617c769",
+  "revision": "Commander/gunner faults preserve normal observation and target commands while applying one 0.70 aim-rate and 1.25 effective-sigma penalty; fire-control faults still pause aim and new fire."
+}

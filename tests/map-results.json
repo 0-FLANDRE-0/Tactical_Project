@@ -1,5 +1,5 @@
 {
-  "version": "0.4-WIP14",
+  "version": "0.4-WIP15",
   "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
   "passed": 16,
   "failed": 0,
@@ -27,12 +27,12 @@
     {
       "name": "selected building footprints retain real OSM identities",
       "status": "PASS",
-      "ms": 14
+      "ms": 20
     },
     {
       "name": "all initial vehicles have clear footprints",
       "status": "PASS",
-      "ms": 2
+      "ms": 3
     },
     {
       "name": "actual building interior blocks navigation and rejects a destination",
@@ -47,22 +47,22 @@
     {
       "name": "four real-map routes arrive with zero collisions",
       "status": "PASS",
-      "ms": 3729
+      "ms": 4675
     },
     {
       "name": "reverse retains hull facing on a rearward route",
       "status": "PASS",
-      "ms": 55
+      "ms": 68
     },
     {
       "name": "stop cancels path and brakes",
       "status": "PASS",
-      "ms": 95
+      "ms": 104
     },
     {
       "name": "fixed physics results match between render batches",
       "status": "PASS",
-      "ms": 665
+      "ms": 698
     },
     {
       "name": "observation range is enforced",

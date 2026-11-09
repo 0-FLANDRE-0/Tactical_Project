@@ -1,0 +1,415 @@
+{
+  "version": "0.4-WIP15",
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/{burst,fault}",
+  "checks": [
+    "both teams auto-reload and continue firing with conserved ammunition and friendly reload UI",
+    "seed 26 actual fireControl fault applies its revised behavior and recovers",
+    "seed 79 actual gunner fault applies its revised behavior and recovers",
+    "seed 560 actual commander fault applies its revised behavior and recovers"
+  ],
+  "passed": 4,
+  "failed": 0,
+  "evidence": {
+    "browser": "156.0.8078.79",
+    "standalone": "dist/index.html",
+    "forcedOutcomeControls": false,
+    "burst": {
+      "time": 32.50000000000029,
+      "a": {
+        "shots": 4,
+        "ammo": 38,
+        "burst": 4,
+        "fatigue": 0.35,
+        "times": [
+          4.799999999999991,
+          12.950000000000049,
+          22.350000000000183,
+          32.50000000000029
+        ]
+      },
+      "t": {
+        "shots": 5,
+        "ammo": 37,
+        "burst": 5,
+        "fatigue": 0.7,
+        "times": [
+          3.049999999999997,
+          9.049999999999994,
+          15.050000000000079,
+          21.050000000000164,
+          28.650000000000272
+        ]
+      },
+      "loadingText": "장전 0% · 예상 8.2초 · 동요 +2.17초"
+    },
+    "fireControl": {
+      "seed": 26,
+      "active": {
+        "time": 5.699999999999988,
+        "fault": {
+          "kind": "fireControl",
+          "duration": 3.880996339255944,
+          "until": 9.530996339255932,
+          "chance": 0.02,
+          "occurrence": 0.006487841485068202
+        },
+        "ammo": 42,
+        "shotCount": 0,
+        "aimProgress": 1,
+        "hitChance": null,
+        "aimPenalty": {
+          "active": false,
+          "aimRateMultiplier": 1,
+          "errorSigmaMultiplier": 1
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-1jlxbmz",
+          "status": "acquired",
+          "source": "commander",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "duringShot": null,
+      "recovered": {
+        "time": 9.600000000000001,
+        "active": false,
+        "shots": 1,
+        "lastFired": {
+          "type": "fired",
+          "id": "T-shot-1",
+          "time": 9.55,
+          "team": "blue",
+          "shooterId": "T",
+          "targetKey": "접촉-1jlxbmz",
+          "source": "auto",
+          "origin": {
+            "x": 1145.2475795376001,
+            "y": 2333.4318241262636
+          },
+          "muzzleHeading": 2.530985232763681,
+          "tof": 0.46377490941237476,
+          "impactAt": 10.013774909412376,
+          "hitChanceAtFire": 0.9999975475149512,
+          "ammoRemaining": 41
+        },
+        "aim": 0.04166666666666667,
+        "penalty": {
+          "active": false,
+          "aimRateMultiplier": 1,
+          "errorSigmaMultiplier": 1
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-1jlxbmz",
+          "status": "acquired",
+          "source": "commander",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "ui": "장전탄 1 · 저장 41 · 동요 +0.20초 · 대응 사통 이상 3.7초"
+    },
+    "gunner": {
+      "seed": 79,
+      "active": {
+        "time": 6.099999999999986,
+        "fault": {
+          "kind": "gunner",
+          "duration": 7.2266381124500185,
+          "until": 13.276638112450005,
+          "chance": 0.02,
+          "occurrence": 0.013062258251011372
+        },
+        "ammo": 42,
+        "shotCount": 0,
+        "aimProgress": 1,
+        "hitChance": 0.9998387992171055,
+        "aimPenalty": {
+          "active": true,
+          "aimRateMultiplier": 0.7,
+          "errorSigmaMultiplier": 1.25
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-1nxahy",
+          "status": "acquired",
+          "source": "commander",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "duringShot": {
+        "time": 6.299999999999986,
+        "active": true,
+        "shots": 1,
+        "lastFired": {
+          "type": "fired",
+          "id": "T-shot-1",
+          "time": 6.249999999999986,
+          "team": "blue",
+          "shooterId": "T",
+          "targetKey": "접촉-1nxahy",
+          "source": "auto",
+          "origin": {
+            "x": 1145.2475795376001,
+            "y": 2333.4318241262636
+          },
+          "muzzleHeading": 2.530985232763681,
+          "tof": 0.46377490941237476,
+          "impactAt": 6.71377490941236,
+          "hitChanceAtFire": 0.9998434687872663,
+          "ammoRemaining": 41
+        },
+        "aim": 0.029166666666666664,
+        "penalty": {
+          "active": true,
+          "aimRateMultiplier": 0.7,
+          "errorSigmaMultiplier": 1.25
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-1nxahy",
+          "status": "acquired",
+          "source": "commander",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "recovered": {
+        "time": 13.300000000000054,
+        "active": false,
+        "shots": 2,
+        "lastFired": {
+          "type": "fired",
+          "id": "T-shot-2",
+          "time": 12.250000000000039,
+          "team": "blue",
+          "shooterId": "T",
+          "targetKey": "접촉-1nxahy",
+          "source": "auto",
+          "origin": {
+            "x": 1145.2475795376001,
+            "y": 2333.4318241262636
+          },
+          "muzzleHeading": 2.530985232763681,
+          "tof": 0.46377490941237476,
+          "impactAt": 12.713774909412415,
+          "hitChanceAtFire": 0.9998617380257488,
+          "ammoRemaining": 40
+        },
+        "aim": 0.625,
+        "penalty": {
+          "active": false,
+          "aimRateMultiplier": 1,
+          "errorSigmaMultiplier": 1
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-1nxahy",
+          "status": "acquired",
+          "source": "commander",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "ui": "장전탄 1 · 저장 41 · 동요 +0.20초 · 대응 관측장비 불안정 · 조준 저하 7.1초"
+    },
+    "commander": {
+      "seed": 560,
+      "active": {
+        "time": 5.299999999999989,
+        "fault": {
+          "kind": "commander",
+          "duration": 4.361340560251847,
+          "until": 9.611340560251836,
+          "chance": 0.02,
+          "occurrence": 0.006849116878584027
+        },
+        "ammo": 42,
+        "shotCount": 0,
+        "aimProgress": 1,
+        "hitChance": 0.9995573284992681,
+        "aimPenalty": {
+          "active": true,
+          "aimRateMultiplier": 0.7,
+          "errorSigmaMultiplier": 1.25
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-1lioetq",
+          "status": "acquired",
+          "source": "commander",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "duringShot": {
+        "time": 5.4999999999999885,
+        "active": true,
+        "shots": 1,
+        "lastFired": {
+          "type": "fired",
+          "id": "T-shot-1",
+          "time": 5.449999999999989,
+          "team": "blue",
+          "shooterId": "T",
+          "targetKey": "접촉-1lioetq",
+          "source": "auto",
+          "origin": {
+            "x": 1145.2475795376001,
+            "y": 2333.4318241262636
+          },
+          "muzzleHeading": 2.530985232763681,
+          "tof": 0.46377490941237476,
+          "impactAt": 5.913774909412363,
+          "hitChanceAtFire": 0.9996363209318804,
+          "ammoRemaining": 41
+        },
+        "aim": 0.029166666666666664,
+        "penalty": {
+          "active": true,
+          "aimRateMultiplier": 0.7,
+          "errorSigmaMultiplier": 1.25
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-1lioetq",
+          "status": "acquired",
+          "source": "commander",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "recovered": {
+        "time": 9.700000000000003,
+        "active": false,
+        "shots": 1,
+        "lastFired": {
+          "type": "fired",
+          "id": "T-shot-1",
+          "time": 5.449999999999989,
+          "team": "blue",
+          "shooterId": "T",
+          "targetKey": "접촉-1lioetq",
+          "source": "auto",
+          "origin": {
+            "x": 1145.2475795376001,
+            "y": 2333.4318241262636
+          },
+          "muzzleHeading": 2.530985232763681,
+          "tof": 0.46377490941237476,
+          "impactAt": 5.913774909412363,
+          "hitChanceAtFire": 0.9996363209318804,
+          "ammoRemaining": 41
+        },
+        "aim": 1,
+        "penalty": {
+          "active": false,
+          "aimRateMultiplier": 1,
+          "errorSigmaMultiplier": 1
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-1lioetq",
+          "status": "acquired",
+          "source": "commander",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "ui": "장전탄 1 · 저장 41 · 동요 +0.20초 · 대응 관측장비 불안정 · 조준 저하 4.2초"
+    }
+  },
+  "scope": "Actual standalone app, automatic reload/continuous fire for both teams, friendly readiness UI, deterministic unforced FCS blocking, and gunner/commander observation faults that preserve sight and fire with aim/accuracy penalties."
+}

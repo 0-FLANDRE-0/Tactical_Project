@@ -1,0 +1,464 @@
+{
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+  "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+  "checks": [
+    "single HTML starts offline with active M1A2 (1998), M829A2, HP and auto mode",
+    "terrain data, four display combinations, reset persistence and static cache are independent of core state",
+    "vehicle auto/hold modes remain independent across selection",
+    "default scenario fires automatically without button input",
+    "actual app keeps one enemy moving through auto fire and halts then resumes another patrol",
+    "completed mission stays completed after engagement loss and reassignment refreshes fire suppression",
+    "reacquisition preserves the first paused mission status and resumes once after the second loss",
+    "actual browser commands keep hull bearing and lateral line through both direction interlocks",
+    "guard world point input, actual turret pose and pause",
+    "guard popover closes without map click-through and keeps an active order",
+    "terrain hold runs real embedded Worker and composes sectors",
+    "silhouette reuses artwork but contains only black opaque pixels",
+    "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+    "identified and remembered contacts update panel permissions then expire selection",
+    "mobile viewport 844×390 has no horizontal overflow and orientation rules hold",
+    "mobile viewport 390×844 has no horizontal overflow and orientation rules hold",
+    "844×390 DPR2 keeps terrain tools, legend and native canvas inside the map",
+    "portrait pause restores the exact pre-entry running or paused state",
+    "reduced-motion and normal views keep same actual observation state",
+    "actual core team contact stays distinct from selected vehicle observation and direct acquisition",
+    "actual acquired target aims, fires once and respects reload and paused keyboard input",
+    "unobserved result is hidden while its game flight still resolves",
+    "unobserved destruction is rediscovered as one permanent non-selectable wreck",
+    "observed lethal impact creates one wreck and disables destroyed vehicle commands",
+    "selected and final friendly destruction produce safe selection fallback and no-selection UI",
+    "actual browser command cancellation and automatic return respect separate guard orders",
+    "reset clears firing events, aim progress and test-round state",
+    "actual browser multi-target loss hands gunner A to commander-observed B without oscillation",
+    "player designation replaces A in auto and fires D without a separate fire command",
+    "embedded M1A2 Canvas pixels match supplied HTML with fresh Path2D caches at four independent poses",
+    "no application page errors"
+  ],
+  "geometryEvidence": {
+    "enemyAI": {
+      "movingShot": {
+        "a": {
+          "x": 1150.0201322229216,
+          "y": 2330.0133301935875,
+          "velocity": 0.24150000000000005
+        },
+        "b": {
+          "x": 1800,
+          "y": 1650,
+          "velocity": 0,
+          "shots": 0
+        },
+        "behavior": "mission",
+        "counters": {
+          "decisions": 5,
+          "pathRequests": 1,
+          "pathFailures": 0,
+          "stops": 0,
+          "resumes": 0,
+          "waypoints": 0,
+          "duplicateCommandsAvoided": 4
+        },
+        "shot": {
+          "id": "T01-shot-1",
+          "time": 3.2999999999999963
+        }
+      },
+      "halt": {
+        "a": {
+          "x": 1419.3113252663268,
+          "y": 2190.3608909830928,
+          "velocity": 0
+        },
+        "b": {
+          "x": 1949.6628684294117,
+          "y": 1522.4894801409582,
+          "velocity": 6.187138392024034,
+          "shots": 0
+        },
+        "behavior": "braking",
+        "counters": {
+          "decisions": 52,
+          "pathRequests": 2,
+          "pathFailures": 0,
+          "stops": 1,
+          "resumes": 0,
+          "waypoints": 1,
+          "duplicateCommandsAvoided": 49
+        },
+        "shot": {
+          "id": "T01-shot-2",
+          "time": 10.350000000000012
+        }
+      },
+      "engaged": {
+        "velocity": 0,
+        "shots": 1
+      },
+      "resume": {
+        "distance": 1.0183250000003112,
+        "index": 1,
+        "stops": 1,
+        "resumes": 1
+      },
+      "start": {
+        "T01": {
+          "x": 1150,
+          "y": 2330
+        },
+        "T02": {
+          "x": 1800,
+          "y": 1650
+        },
+        "T03": {
+          "x": 3012.6089637399095,
+          "y": 2056.9385325410794
+        }
+      }
+    },
+    "aiCompletionReassignment": {
+      "completed": {
+        "enabled": true,
+        "mission": {
+          "id": "completed-edge",
+          "revision": 1,
+          "type": "move",
+          "waypoints": [
+            {
+              "x": 1150,
+              "y": 2330,
+              "reverse": false
+            }
+          ],
+          "index": 1,
+          "loop": false,
+          "status": "completed"
+        },
+        "policy": "halt",
+        "stopPreference": "maintain",
+        "behavior": "completed",
+        "nextThinkAt": 9.15,
+        "retryAt": 0,
+        "lastContactKey": null,
+        "lostAt": null,
+        "haltElapsed": 8.399999999999984,
+        "autoSuppressed": false,
+        "resumeStatus": null,
+        "counters": {
+          "decisions": 12,
+          "pathRequests": 0,
+          "pathFailures": 0,
+          "stops": 1,
+          "resumes": 0,
+          "waypoints": 1,
+          "duplicateCommandsAvoided": 0
+        }
+      },
+      "reassigned": {
+        "halt": {
+          "suppressed": true,
+          "mode": "hold"
+        },
+        "maintain": {
+          "suppressed": false,
+          "mode": "hold"
+        },
+        "haltAgain": {
+          "suppressed": true,
+          "mode": "hold"
+        },
+        "auto": {
+          "suppressed": false,
+          "mode": "hold",
+          "state": {
+            "enabled": true,
+            "mission": {
+              "id": "T01-mission",
+              "revision": 5,
+              "type": "move",
+              "waypoints": [
+                {
+                  "x": 1200,
+                  "y": 2330,
+                  "reverse": false
+                }
+              ],
+              "index": 0,
+              "loop": false,
+              "status": "active"
+            },
+            "policy": "auto",
+            "stopPreference": "maintain",
+            "behavior": "mission",
+            "nextThinkAt": 8.649999999999986,
+            "retryAt": 8.499999999999986,
+            "lastContactKey": null,
+            "lostAt": null,
+            "haltElapsed": 0,
+            "autoSuppressed": false,
+            "resumeStatus": null,
+            "counters": {
+              "decisions": 0,
+              "pathRequests": 0,
+              "pathFailures": 0,
+              "stops": 0,
+              "resumes": 0,
+              "waypoints": 0,
+              "duplicateCommandsAvoided": 0
+            }
+          }
+        }
+      }
+    },
+    "aiReacquireResume": {
+      "first": {
+        "enabled": true,
+        "mission": {
+          "id": "recontact-patrol",
+          "revision": 1,
+          "type": "patrol",
+          "waypoints": [
+            {
+              "x": 1420,
+              "y": 2190,
+              "reverse": false
+            },
+            {
+              "x": 1040,
+              "y": 2460,
+              "reverse": false
+            }
+          ],
+          "index": 0,
+          "loop": true,
+          "status": "paused"
+        },
+        "policy": "halt",
+        "stopPreference": "maintain",
+        "behavior": "engaging",
+        "nextThinkAt": 2.4,
+        "retryAt": 0.15000000000000002,
+        "lastContactKey": "접촉-1urjt5z",
+        "lostAt": null,
+        "haltElapsed": 1.7000000000000008,
+        "autoSuppressed": false,
+        "resumeStatus": "active",
+        "counters": {
+          "decisions": 3,
+          "pathRequests": 1,
+          "pathFailures": 0,
+          "stops": 1,
+          "resumes": 0,
+          "waypoints": 0,
+          "duplicateCommandsAvoided": 1
+        }
+      },
+      "waiting": {
+        "enabled": true,
+        "mission": {
+          "id": "recontact-patrol",
+          "revision": 1,
+          "type": "patrol",
+          "waypoints": [
+            {
+              "x": 1420,
+              "y": 2190,
+              "reverse": false
+            },
+            {
+              "x": 1040,
+              "y": 2460,
+              "reverse": false
+            }
+          ],
+          "index": 0,
+          "loop": true,
+          "status": "paused"
+        },
+        "policy": "halt",
+        "stopPreference": "maintain",
+        "behavior": "observe",
+        "nextThinkAt": 3.15,
+        "retryAt": 0.15000000000000002,
+        "lastContactKey": "접촉-1urjt5z",
+        "lostAt": 2.3999999999999995,
+        "haltElapsed": 2.3999999999999995,
+        "autoSuppressed": true,
+        "resumeStatus": "active",
+        "counters": {
+          "decisions": 4,
+          "pathRequests": 1,
+          "pathFailures": 0,
+          "stops": 1,
+          "resumes": 0,
+          "waypoints": 0,
+          "duplicateCommandsAvoided": 1
+        }
+      },
+      "recontact": {
+        "enabled": true,
+        "mission": {
+          "id": "recontact-patrol",
+          "revision": 1,
+          "type": "patrol",
+          "waypoints": [
+            {
+              "x": 1420,
+              "y": 2190,
+              "reverse": false
+            },
+            {
+              "x": 1040,
+              "y": 2460,
+              "reverse": false
+            }
+          ],
+          "index": 0,
+          "loop": true,
+          "status": "paused"
+        },
+        "policy": "halt",
+        "stopPreference": "maintain",
+        "behavior": "engaging",
+        "nextThinkAt": 3.9,
+        "retryAt": 0.15000000000000002,
+        "lastContactKey": "접촉-1urjt5z",
+        "lostAt": null,
+        "haltElapsed": 3.1999999999999966,
+        "autoSuppressed": false,
+        "resumeStatus": "active",
+        "counters": {
+          "decisions": 5,
+          "pathRequests": 1,
+          "pathFailures": 0,
+          "stops": 2,
+          "resumes": 0,
+          "waypoints": 0,
+          "duplicateCommandsAvoided": 1
+        }
+      },
+      "resumed": {
+        "state": {
+          "enabled": true,
+          "mission": {
+            "id": "recontact-patrol",
+            "revision": 1,
+            "type": "patrol",
+            "waypoints": [
+              {
+                "x": 1420,
+                "y": 2190,
+                "reverse": false
+              },
+              {
+                "x": 1040,
+                "y": 2460,
+                "reverse": false
+              }
+            ],
+            "index": 0,
+            "loop": true,
+            "status": "active"
+          },
+          "policy": "halt",
+          "stopPreference": "maintain",
+          "behavior": "mission",
+          "nextThinkAt": 9.15,
+          "retryAt": 8.399999999999984,
+          "lastContactKey": null,
+          "lostAt": null,
+          "haltElapsed": 8.399999999999984,
+          "autoSuppressed": false,
+          "resumeStatus": null,
+          "counters": {
+            "decisions": 12,
+            "pathRequests": 2,
+            "pathFailures": 0,
+            "stops": 2,
+            "resumes": 1,
+            "waypoints": 0,
+            "duplicateCommandsAvoided": 1
+          }
+        },
+        "path": 1,
+        "goal": {
+          "x": 1420,
+          "y": 2190,
+          "reverse": false
+        },
+        "x": 1150,
+        "y": 2330
+      }
+    },
+    "directionInterlock": {
+      "forwardToReverse": {
+        "startKmh": 26.639507327797048,
+        "maxHeadingRadians": 4.440892098500626e-15,
+        "maxLateralMeters": 9.268141809570807e-13
+      },
+      "reverseToForward": {
+        "startKmh": 11.30219999999999,
+        "maxHeadingRadians": 1.1102230246251565e-15,
+        "maxLateralMeters": 6.175060462965121e-13
+      }
+    },
+    "muzzle": {
+      "geometryError": 3.5760872045925e-8,
+      "effectError": 0,
+      "textureReady": true,
+      "particles": 5
+    },
+    "art": {
+      "freshPathCaches": true,
+      "poses": 4,
+      "channelDifferences": 0,
+      "details": [
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 0,
+            "commander": 1
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 1.5707963267948966,
+            "commander": -1
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 3.141592653589793,
+            "commander": 0.2
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0.6,
+            "turret": -1,
+            "commander": 2
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        }
+      ]
+    }
+  },
+  "passed": 31,
+  "failed": 0,
+  "errors": [],
+  "scope": "WIP15 full application regression: reload/reactions plus WIP14 enemy AI and fire-movement, WIP13 direction-interlock steering, shared-path LOS, terrain modes, public HP, combat UI, flight, wrecks and handoff",
+  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas and both forward/reverse commands through complete braking, settle and range connection. One controlled contact is injected only for UI privacy and panel checks. Core guard acquisition and frozen public HP are also exercised without injected contacts in Node. file:// is reported separately; mobile checks are Chromium viewports, not physical Android hardware."
+}

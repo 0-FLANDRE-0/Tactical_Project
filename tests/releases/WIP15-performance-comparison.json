@@ -1,0 +1,246 @@
+{
+  "version": "0.4-WIP15",
+  "date": "2026-11-09",
+  "baseline": {
+    "ref": "c83024a0a91450b08317083d889466ba7de1de8c",
+    "label": "latest main before implementation"
+  },
+  "environment": {
+    "node": "v24.22.1",
+    "cpu": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "readiness": {
+    "scope": "Fire-control/readiness state only; no LOS, observation, pathfinding, mobility, effects or render.",
+    "fixture": "50/100 independent fire-control states; one third begin reloading when the profile supports readiness; 1s warmup + 10s/200 fixed ticks; 40 rounds",
+    "baseline": [
+      {
+        "vehicles": 50,
+        "simulationSeconds": 10,
+        "ticks": 200,
+        "rounds": 40,
+        "medianMs": 0.621777999999992,
+        "p95Ms": 2.0636639999999957,
+        "perTickMedianMs": 0.0031088899999999597,
+        "perTickP95Ms": 0.010318319999999978
+      },
+      {
+        "vehicles": 100,
+        "simulationSeconds": 10,
+        "ticks": 200,
+        "rounds": 40,
+        "medianMs": 1.0941009999999949,
+        "p95Ms": 1.297598999999991,
+        "perTickMedianMs": 0.0054705049999999745,
+        "perTickP95Ms": 0.006487994999999956
+      }
+    ],
+    "current": [
+      {
+        "vehicles": 50,
+        "simulationSeconds": 10,
+        "ticks": 200,
+        "rounds": 40,
+        "medianMs": 2.1981979999999908,
+        "p95Ms": 8.396507,
+        "perTickMedianMs": 0.010990989999999954,
+        "perTickP95Ms": 0.041982535
+      },
+      {
+        "vehicles": 100,
+        "simulationSeconds": 10,
+        "ticks": 200,
+        "rounds": 40,
+        "medianMs": 3.9957899999999995,
+        "p95Ms": 5.868827999999951,
+        "perTickMedianMs": 0.01997895,
+        "perTickP95Ms": 0.029344139999999755
+      }
+    ],
+    "deltas": [
+      {
+        "vehicles": 50,
+        "medianPerTickMs": 0.007882099999999994,
+        "p95PerTickMs": 0.03166421500000002,
+        "medianPercent": 253.53421960893107,
+        "p95Percent": 306.8737449507293
+      },
+      {
+        "vehicles": 100,
+        "medianPerTickMs": 0.014508445000000024,
+        "p95PerTickMs": 0.0228561449999998,
+        "medianPercent": 265.2121696260234,
+        "p95Percent": 352.28364078578903
+      }
+    ]
+  },
+  "map": {
+    "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+    "scope": "Total fixed tick including movement, observation/LOS, AI, fire, readiness, flight and impacts; excludes rendering.",
+    "fixture": "default five-vehicle playable scenario, same placements/missions and seeds 7/17/27, 2s warmup + 20s measurement",
+    "baseline": {
+      "medianOfTickMediansMs": 0.2829870000000483,
+      "medianOfTickP95Ms": 0.6390139999999747
+    },
+    "current": {
+      "medianOfTickMediansMs": 0.34508099999993647,
+      "medianOfTickP95Ms": 0.7680690000000823
+    },
+    "deltas": {
+      "medianPercent": 21.94235070864654,
+      "p95Percent": 20.195958148039427
+    },
+    "baselineTrials": [
+      {
+        "seed": 7,
+        "vehicles": 5,
+        "enemyVehicles": 3,
+        "simulationSeconds": 20,
+        "warmupSeconds": 2,
+        "medianTickMs": 0.30576200000001563,
+        "p95TickMs": 0.9442349999999919,
+        "maxTickMs": 2.75798199999997,
+        "aiDecisions": 90,
+        "pathRequests": 3,
+        "pathFailures": 0,
+        "visitedCells": 827,
+        "movingEnemies": 3,
+        "enemyDistanceM": 527.3381539302248,
+        "shots": 13,
+        "observation": {
+          "queries": 1005,
+          "candidates": 1281,
+          "samples": 1281,
+          "rayQueries": 10749,
+          "rayCacheHits": 780
+        }
+      },
+      {
+        "seed": 17,
+        "vehicles": 5,
+        "enemyVehicles": 3,
+        "simulationSeconds": 20,
+        "warmupSeconds": 2,
+        "medianTickMs": 0.2355049999999892,
+        "p95TickMs": 0.5035300000000689,
+        "maxTickMs": 1.103525999999988,
+        "aiDecisions": 88,
+        "pathRequests": 3,
+        "pathFailures": 0,
+        "visitedCells": 827,
+        "movingEnemies": 2,
+        "enemyDistanceM": 365.5427356700271,
+        "shots": 18,
+        "observation": {
+          "queries": 970,
+          "candidates": 1653,
+          "samples": 1653,
+          "rayQueries": 9872,
+          "rayCacheHits": 5005
+        }
+      },
+      {
+        "seed": 27,
+        "vehicles": 5,
+        "enemyVehicles": 3,
+        "simulationSeconds": 20,
+        "warmupSeconds": 2,
+        "medianTickMs": 0.2829870000000483,
+        "p95TickMs": 0.6390139999999747,
+        "maxTickMs": 1.7922239999999192,
+        "aiDecisions": 90,
+        "pathRequests": 3,
+        "pathFailures": 0,
+        "visitedCells": 827,
+        "movingEnemies": 3,
+        "enemyDistanceM": 524.6095928221137,
+        "shots": 22,
+        "observation": {
+          "queries": 1097,
+          "candidates": 1764,
+          "samples": 1764,
+          "rayQueries": 14849,
+          "rayCacheHits": 1027
+        }
+      }
+    ],
+    "currentTrials": [
+      {
+        "seed": 7,
+        "vehicles": 5,
+        "enemyVehicles": 3,
+        "simulationSeconds": 20,
+        "warmupSeconds": 2,
+        "medianTickMs": 0.46251799999998866,
+        "p95TickMs": 1.4520219999999995,
+        "maxTickMs": 3.133489999999995,
+        "aiDecisions": 90,
+        "pathRequests": 3,
+        "pathFailures": 0,
+        "visitedCells": 827,
+        "movingEnemies": 3,
+        "enemyDistanceM": 527.3381539302248,
+        "shots": 5,
+        "observation": {
+          "queries": 1100,
+          "candidates": 1605,
+          "samples": 1605,
+          "rayQueries": 13665,
+          "rayCacheHits": 780
+        }
+      },
+      {
+        "seed": 17,
+        "vehicles": 5,
+        "enemyVehicles": 3,
+        "simulationSeconds": 20,
+        "warmupSeconds": 2,
+        "medianTickMs": 0.34508099999993647,
+        "p95TickMs": 0.7680690000000823,
+        "maxTickMs": 1.2989999999999782,
+        "aiDecisions": 90,
+        "pathRequests": 3,
+        "pathFailures": 0,
+        "visitedCells": 827,
+        "movingEnemies": 2,
+        "enemyDistanceM": 382.16159680861784,
+        "shots": 10,
+        "observation": {
+          "queries": 1100,
+          "candidates": 2109,
+          "samples": 2109,
+          "rayQueries": 12892,
+          "rayCacheHits": 6089
+        }
+      },
+      {
+        "seed": 27,
+        "vehicles": 5,
+        "enemyVehicles": 3,
+        "simulationSeconds": 20,
+        "warmupSeconds": 2,
+        "medianTickMs": 0.306803000000059,
+        "p95TickMs": 0.6728360000000748,
+        "maxTickMs": 1.4078950000000532,
+        "aiDecisions": 90,
+        "pathRequests": 3,
+        "pathFailures": 0,
+        "visitedCells": 827,
+        "movingEnemies": 3,
+        "enemyDistanceM": 527.3381539302248,
+        "shots": 8,
+        "observation": {
+          "queries": 1100,
+          "candidates": 1766,
+          "samples": 1766,
+          "rayQueries": 14903,
+          "rayCacheHits": 991
+        }
+      }
+    ],
+    "notes": [
+      "The gameplay change intentionally lowers firing frequency and therefore changes destruction, surviving observers and LOS sample counts; whole-map deltas are not an isolated readiness attribution.",
+      "Path requests and failures stayed equal for all three seeds; no renderer work is included.",
+      "The revised observation-fault path keeps normal LOS sampling and adds only constant-time aim/error multiplier checks; this rerun replaces the draft WIP15 current measurements."
+    ]
+  }
+}
