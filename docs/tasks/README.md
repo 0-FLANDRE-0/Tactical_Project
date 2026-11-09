@@ -6,7 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP15 가변 장전·피격 동요·장비 일시 이상 | [작업 지시서](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) | 지시서 등록 · 구현·검증 대기 |
+| WIP15 가변 장전·피격 동요·장비 일시 이상 | [기본 지시서](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) · [관측 이상 수정](TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md) | 초안 2960539 검토 · 관측 유지/조준 저하로 수정·재검증 대기 |
 | WIP14 적 경로 이동·기본 AI·사격 시 이동 정책 | [완료 안내](TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md) | 임무 수명·재관측 보완 및 재검증 완료 · main 통합 |
 | WIP13 경량 구동·자동변속·제동·조향 | [완료 안내](TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md) | 방향 전환 조향 수정·재검증 완료 · main 통합 |
 | WIP12 사격 이펙트·미관측 사격 표시·입사각/도탄 확장 | [완료 안내](TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) | 최종 수정·재검증 완료 · main 통합 6e5a510 |
