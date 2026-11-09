@@ -7,8 +7,8 @@
     "WIP13 enemies were stationary, so no invalid before/after attribution is made."
   ],
   "summary": {
-    "medianOfTickMediansMs": 0.26812500000005457,
-    "medianOfTickP95Ms": 0.7910339999999678
+    "medianOfTickMediansMs": 0.3118500000000495,
+    "medianOfTickP95Ms": 0.7636019999999917
   },
   "trials": [
     {
@@ -17,9 +17,9 @@
       "enemyVehicles": 3,
       "simulationSeconds": 20,
       "warmupSeconds": 2,
-      "medianTickMs": 0.34971799999999575,
-      "p95TickMs": 0.9459979999999746,
-      "maxTickMs": 2.7779730000000313,
+      "medianTickMs": 0.3818160000000148,
+      "p95TickMs": 1.1410319999999956,
+      "maxTickMs": 2.82483400000001,
       "aiDecisions": 90,
       "pathRequests": 3,
       "pathFailures": 0,
@@ -41,9 +41,9 @@
       "enemyVehicles": 3,
       "simulationSeconds": 20,
       "warmupSeconds": 2,
-      "medianTickMs": 0.23763899999994464,
-      "p95TickMs": 0.5746879999999237,
-      "maxTickMs": 1.157556999999997,
+      "medianTickMs": 0.2583190000000286,
+      "p95TickMs": 0.6040309999999636,
+      "maxTickMs": 2.2322789999999486,
       "aiDecisions": 88,
       "pathRequests": 3,
       "pathFailures": 0,
@@ -65,9 +65,9 @@
       "enemyVehicles": 3,
       "simulationSeconds": 20,
       "warmupSeconds": 2,
-      "medianTickMs": 0.26812500000005457,
-      "p95TickMs": 0.7910339999999678,
-      "maxTickMs": 4.674975999999901,
+      "medianTickMs": 0.3118500000000495,
+      "p95TickMs": 0.7636019999999917,
+      "maxTickMs": 7.460972000000083,
       "aiDecisions": 90,
       "pathRequests": 3,
       "pathFailures": 0,

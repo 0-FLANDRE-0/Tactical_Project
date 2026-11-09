@@ -1230,6 +1230,10 @@ const TacticalAI=(()=>{
     }
     const validWaypoint=s=>Number.isInteger(s.mission.index)&&s.mission.index>=0&&s.mission.index<s.mission.waypoints.length;
     function suspendMission(s){
+      if(s.mission.status==='paused'){
+        if(['active','blocked'].includes(s.resumeStatus)&&validWaypoint(s))return true;
+        s.resumeStatus=null;return false;
+      }
       if(!['active','blocked'].includes(s.mission.status)||!validWaypoint(s)){s.resumeStatus=null;return false;}
       s.resumeStatus=s.mission.status;s.mission.status='paused';return true;
     }

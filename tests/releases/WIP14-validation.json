@@ -11,7 +11,7 @@
     {
       "name": "non-browser Node test runner",
       "status": "passed",
-      "passed": 259,
+      "passed": 261,
       "failed": 0
     },
     {
@@ -48,7 +48,7 @@
     {
       "name": "actual Chromium application checks",
       "status": "passed",
-      "passed": 30,
+      "passed": 31,
       "failed": 0,
       "browser": "156.0.8078.79",
       "evidence": "tests/releases/WIP14-browser.json"
@@ -69,13 +69,13 @@
   ],
   "aiPerformance": {
     "pure100": {
-      "medianMs": 0.017726,
-      "p95Ms": 0.037957,
+      "medianMs": 0.017697,
+      "p95Ms": 0.037967,
       "scope": "AI decision only; excludes pathfinding, LOS, physics and render"
     },
     "map": {
-      "medianOfTickMediansMs": 0.268125,
-      "medianOfTickP95Ms": 0.791034,
+      "medianOfTickMediansMs": 0.31185,
+      "medianOfTickP95Ms": 0.763602,
       "scope": "default real-map five-vehicle scenario; includes movement, observation/LOS, AI, fire and flight"
     },
     "evidence": [
@@ -86,17 +86,17 @@
   "artifacts": {
     "html": {
       "path": "Tactical_v0.4_WIP14.html",
-      "bytes": 8441710,
-      "sha256": "42054edcd9c1c56acbad30d70d6f23054512834bd43cfb86b880ea02bda0cf6c",
+      "bytes": 8441887,
+      "sha256": "e986b50723177ce7263e8fba73220977a80c9476f4d660b0bdb76ad4ff6ba933",
       "matches": "dist/index.html"
     },
     "zip": {
       "path": "Tactical_v0.4_WIP14.zip",
-      "bytes": 1664384,
-      "sha256": "42a47e15d7a1cdc730e3ea4b4bd5a748f17610665c48be7b6ff1567643cc965c",
+      "bytes": 1664403,
+      "sha256": "c4ab065f52d11764273414478a0c0bc403c08ee915345cd5b9ab2624c91be957",
       "entry": "Tactical_v0.4_WIP14.html",
-      "entryBytes": 8441710,
-      "entryCrc32": "ecb308dd",
+      "entryBytes": 8441887,
+      "entryCrc32": "66379008",
       "testzip": "passed",
       "reproducible": "two consecutive packages byte-identical"
     }
