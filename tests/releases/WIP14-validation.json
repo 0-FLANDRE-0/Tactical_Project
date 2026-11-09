@@ -4,24 +4,101 @@
   "branch": "feat/wip14-enemy-ai-fire-movement",
   "date": "2026-11-09",
   "checks": [
-    {"name":"JavaScript syntax checks for src, scripts and tests","status":"passed"},
-    {"name":"non-browser Node test runner","status":"passed","passed":255,"failed":0},
-    {"name":"terrain readability Python unittest","status":"passed","passed":7,"failed":0},
-    {"name":"standalone real-map checks","status":"passed","passed":16,"failed":0},
-    {"name":"standalone fake-DOM input checks","status":"passed","passed":42,"failed":0,"kind":"fake DOM, not a browser"},
-    {"name":"standalone visibility checks","status":"passed","passed":12,"failed":0},
-    {"name":"standalone vehicle/Worker checks","status":"passed","passed":9,"failed":0},
-    {"name":"actual Chromium application checks","status":"passed","passed":29,"failed":0,"browser":"156.0.8078.79","evidence":"tests/releases/WIP14-browser.json"},
-    {"name":"actual Chromium WIP12 effects regression","status":"passed","passed":18,"failed":0,"browser":"156.0.8078.79","evidence":"tests/releases/WIP12-effects-browser.json"},
-    {"name":"physical mobile device long-run/thermal check","status":"not-run","reason":"no physical mobile device attached; Chromium mobile viewports passed"}
+    {
+      "name": "JavaScript syntax checks for src, scripts and tests",
+      "status": "passed"
+    },
+    {
+      "name": "non-browser Node test runner",
+      "status": "passed",
+      "passed": 259,
+      "failed": 0
+    },
+    {
+      "name": "terrain readability Python unittest",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "name": "standalone real-map checks",
+      "status": "passed",
+      "passed": 16,
+      "failed": 0
+    },
+    {
+      "name": "standalone fake-DOM input checks",
+      "status": "passed",
+      "passed": 42,
+      "failed": 0,
+      "kind": "fake DOM, not a browser"
+    },
+    {
+      "name": "standalone visibility checks",
+      "status": "passed",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "standalone vehicle/Worker checks",
+      "status": "passed",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "name": "actual Chromium application checks",
+      "status": "passed",
+      "passed": 30,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP14-browser.json"
+    },
+    {
+      "name": "actual Chromium WIP12 effects regression",
+      "status": "passed",
+      "passed": 18,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP12-effects-browser.json"
+    },
+    {
+      "name": "physical mobile device long-run/thermal check",
+      "status": "not-run",
+      "reason": "no physical mobile device attached; Chromium mobile viewports passed"
+    }
   ],
   "aiPerformance": {
-    "pure100":{"medianMs":0.017647,"p95Ms":0.038668,"scope":"AI decision only; excludes pathfinding, LOS, physics and render"},
-    "map":{"medianOfTickMediansMs":0.279682,"medianOfTickP95Ms":0.826097,"scope":"default real-map five-vehicle scenario; includes movement, observation/LOS, AI, fire and flight"},
-    "evidence":["tests/releases/WIP14-ai-benchmark.json","tests/releases/WIP14-ai-map-benchmark.json"]
+    "pure100": {
+      "medianMs": 0.017726,
+      "p95Ms": 0.037957,
+      "scope": "AI decision only; excludes pathfinding, LOS, physics and render"
+    },
+    "map": {
+      "medianOfTickMediansMs": 0.268125,
+      "medianOfTickP95Ms": 0.791034,
+      "scope": "default real-map five-vehicle scenario; includes movement, observation/LOS, AI, fire and flight"
+    },
+    "evidence": [
+      "tests/releases/WIP14-ai-benchmark.json",
+      "tests/releases/WIP14-ai-map-benchmark.json"
+    ]
   },
   "artifacts": {
-    "html":{"path":"Tactical_v0.4_WIP14.html","bytes":8440551,"sha256":"3621662758d45ce5a64d32e1a8601ef298934870c3fe8a70299fb027a69fc460","matches":"dist/index.html"},
-    "zip":{"path":"Tactical_v0.4_WIP14.zip","bytes":1664135,"sha256":"c116ceeaf1b64a3d375c79ac9aba7173d845a9a7d11abab22492c96cef6633f2","entry":"Tactical_v0.4_WIP14.html","entryBytes":8440551,"entryCrc32":"5b70cde6","testzip":"passed","reproducible":"two consecutive packages byte-identical"}
+    "html": {
+      "path": "Tactical_v0.4_WIP14.html",
+      "bytes": 8441710,
+      "sha256": "42054edcd9c1c56acbad30d70d6f23054512834bd43cfb86b880ea02bda0cf6c",
+      "matches": "dist/index.html"
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP14.zip",
+      "bytes": 1664384,
+      "sha256": "42a47e15d7a1cdc730e3ea4b4bd5a748f17610665c48be7b6ff1567643cc965c",
+      "entry": "Tactical_v0.4_WIP14.html",
+      "entryBytes": 8441710,
+      "entryCrc32": "ecb308dd",
+      "testzip": "passed",
+      "reproducible": "two consecutive packages byte-identical"
+    }
   }
 }
