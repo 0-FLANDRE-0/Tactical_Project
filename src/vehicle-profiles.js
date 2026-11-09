@@ -38,6 +38,7 @@ const VEHICLE_PROFILES=(()=>{
       dispersionMrad:.25,layStartMrad:1.5,layMinMrad:.10,layTauSeconds:.6,
       rangeErrorM:5,muzzleVelocity:1650,velocityRetention:.94,leadResidual:.10,
       stabMradPerMps:.03,impact:{rejectionAttempts:64,marchStepM:2,maxBeyondM:3000},
+      movement:{fireOnMove:true,stationarySpeedMps:.10,stationaryHoldSeconds:.35},
       presented:{hullBottom:inch(19),hullTop:1.65,turretTop:inch(93.5)}},
     exposure:{hullAlong:[-2.8,0,2.8],hullHeights:[.80,1.40],turretAlong:[-1,0,1],turretHeight:2.20},
     navigation:{clearanceMargin:.25,contract:'nav16-M1A2-r4.62-long0.60-side0.40-v2'}
@@ -75,6 +76,7 @@ const VEHICLE_PROFILES=(()=>{
       for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights','maneuverAccel','maneuverReferenceSpeed','flightSeconds','effectSeconds'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
       for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
       for(const field of ['leadResidual','stabMradPerMps'])if(!Number.isFinite(f[field])||f[field]<0)throw Error('사격 오차 값 오류: '+id+'.'+field);
+      if(!f.movement||typeof f.movement.fireOnMove!=='boolean'||!Number.isFinite(f.movement.stationarySpeedMps)||f.movement.stationarySpeedMps<0||!Number.isFinite(f.movement.stationaryHoldSeconds)||f.movement.stationaryHoldSeconds<0)throw Error('이동 사격 프로파일 값 오류: '+id+'.movement');
       if(!f.impact||!Number.isInteger(f.impact.rejectionAttempts)||!['rejectionAttempts','marchStepM','maxBeyondM'].every(field=>Number.isFinite(f.impact[field])&&f.impact[field]>0))throw Error('탄착 프로파일 값 오류: '+id+'.impact');
       const band=f.presented;
       if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);

@@ -2,7 +2,7 @@
 
 > 2026-11-09 (KST). 사용자 확정: 움직이는 적과 기본 AI를 구현한다. **이동 임무와 교전 중 이동 정책을 분리하고, 차량 성능에 따라 기동간 사격과 정차 사격을 지원할 기반을 만든다.**
 > 현재 M1A2 시험 구성과 기존 자동교전·WIP13 경량 구동을 재사용한다. 무거운 판단·물리 계산을 추가하지 않는다.
-> 이 파일은 작업 지시서다. **WIP14 구현·검증은 아직 완료되지 않았다.**
+> 이 파일은 완료된 작업 지시서의 작업 브랜치 사본이다. 원문은 `archive/instructions/TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md`, 구현 상태는 `docs/ENEMY_AI_FIRE_MOVEMENT_WIP14.md`와 `TACTICAL_RELEASE_WIP14.md`에 기록한다.
 
 ## 1. 작업 기준과 완료 범위
 

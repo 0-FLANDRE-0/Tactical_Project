@@ -207,6 +207,11 @@
         "marchStepM": 2,
         "maxBeyondM": 3000
       },
+      "movement": {
+        "fireOnMove": true,
+        "stationarySpeedMps": 0.1,
+        "stationaryHoldSeconds": 0.35
+      },
       "presented": {
         "hullBottom": 0.4826,
         "hullTop": 1.65,
@@ -250,6 +255,12 @@
       "title": "TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md and wip10_hit_reference.py",
       "path": "../../docs/WIP10_SOURCE_SCOPE.json",
       "scope": "Fictional game prediction, two-stage probability, post-result impact display and reference tables; not real weapon performance"
+    },
+    {
+      "id": "TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT",
+      "title": "TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md",
+      "path": "../../archive/instructions/TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md",
+      "scope": "User-confirmed enemy mission behavior and common movement-fire game policy; not real doctrine or certified vehicle performance"
     },
     {
       "id": "USER_TOP_VIEW",
@@ -414,6 +425,11 @@
       ],
       "note": "WIP10 retains the fictional RTS dispersion/lay/range/lead/stabilization budget, removes the duplicate statistical manoeuvre term, predicts from observed velocity, and delays the single roll by range divided by the fictional average velocity. Values are not measured M1A2 fire-control or ammunition data. See docs/FIRE_CONTROL_WIP10.md."
     },
+    "fireControl.movement": {
+      "status": "fictional game policy",
+      "source": "TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT",
+      "note": "M1A2 trial profile permits fire on the move. A 0.10m/s actual-speed threshold and 0.35s fixed-tick hold define the common stationary gate for profiles that disable fire on the move; these are game defaults, not measured certification values."
+    },
     "fireControl.impact": {
       "status": "fictional display tuning",
       "source": "USER_WIP10",
@@ -437,6 +453,7 @@
   },
   "limits": [
     "The WIP13 drivetrain is a deterministic lightweight game approximation, not a full engine, converter, hydraulic, track-contact or suspension simulation",
+    "WIP14 enemy missions and movement-fire policy are deterministic game behavior, not a claim about real doctrine or fire-control certification",
     "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
     "No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities"
   ]

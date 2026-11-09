@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "activeProfileId": "M1A2_1998",
   "ids": [
     "M1A2",
@@ -11,5 +11,5 @@
   "ammunitionIds": [
     "M829A2"
   ],
-  "note": "M1A2 is the shared public mobility baseline; M1A2_1998 is the active WIP13 mobility and symmetric combat profile."
+  "note": "M1A2 is the shared public mobility baseline; M1A2_1998 is the active WIP14 enemy-AI, movement-fire and symmetric combat profile."
 }

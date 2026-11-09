@@ -1,0 +1,188 @@
+{
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/ (standalone dist/index.html)",
+  "fileURL": "ERR_BLOCKED_BY_ADMINISTRATOR",
+  "checks": [
+    "single HTML starts offline with active M1A2 (1998), M829A2, HP and auto mode",
+    "terrain data, four display combinations, reset persistence and static cache are independent of core state",
+    "vehicle auto/hold modes remain independent across selection",
+    "default scenario fires automatically without button input",
+    "actual app keeps one enemy moving through auto fire and halts then resumes another patrol",
+    "actual browser commands keep hull bearing and lateral line through both direction interlocks",
+    "guard world point input, actual turret pose and pause",
+    "guard popover closes without map click-through and keeps an active order",
+    "terrain hold runs real embedded Worker and composes sectors",
+    "silhouette reuses artwork but contains only black opaque pixels",
+    "unidentified marker, click and panel hide ID/type/exposure; render never calls LOS",
+    "identified and remembered contacts update panel permissions then expire selection",
+    "mobile viewport 844×390 has no horizontal overflow and orientation rules hold",
+    "mobile viewport 390×844 has no horizontal overflow and orientation rules hold",
+    "844×390 DPR2 keeps terrain tools, legend and native canvas inside the map",
+    "portrait pause restores the exact pre-entry running or paused state",
+    "reduced-motion and normal views keep same actual observation state",
+    "actual core team contact stays distinct from selected vehicle observation and direct acquisition",
+    "actual acquired target aims, fires once and respects interval and paused keyboard input",
+    "unobserved result is hidden while its game flight still resolves",
+    "unobserved destruction is rediscovered as one permanent non-selectable wreck",
+    "observed lethal impact creates one wreck and disables destroyed vehicle commands",
+    "selected and final friendly destruction produce safe selection fallback and no-selection UI",
+    "actual browser command cancellation and automatic return respect separate guard orders",
+    "reset clears firing events, aim progress and test-round state",
+    "actual browser multi-target loss hands gunner A to commander-observed B without oscillation",
+    "player designation replaces A in auto and fires D without a separate fire command",
+    "embedded M1A2 Canvas pixels match supplied HTML with fresh Path2D caches at four independent poses",
+    "no application page errors"
+  ],
+  "geometryEvidence": {
+    "enemyAI": {
+      "movingShot": {
+        "a": {
+          "x": 1150.0201322229216,
+          "y": 2330.0133301935875,
+          "velocity": 0.24150000000000005
+        },
+        "b": {
+          "x": 1800,
+          "y": 1650,
+          "velocity": 0,
+          "shots": 0
+        },
+        "behavior": "mission",
+        "counters": {
+          "decisions": 5,
+          "pathRequests": 1,
+          "pathFailures": 0,
+          "stops": 0,
+          "resumes": 0,
+          "waypoints": 0,
+          "duplicateCommandsAvoided": 4
+        },
+        "shot": {
+          "id": "T01-shot-1",
+          "time": 3.2999999999999963
+        }
+      },
+      "halt": {
+        "a": {
+          "x": 1419.3113252663268,
+          "y": 2190.3608909830928,
+          "velocity": 0
+        },
+        "b": {
+          "x": 1941.8662138614,
+          "y": 1530.4973645006899,
+          "velocity": 8.012662419535497,
+          "shots": 0
+        },
+        "behavior": "braking",
+        "counters": {
+          "decisions": 54,
+          "pathRequests": 2,
+          "pathFailures": 0,
+          "stops": 1,
+          "resumes": 0,
+          "waypoints": 1,
+          "duplicateCommandsAvoided": 51
+        },
+        "shot": {
+          "id": "T01-shot-5",
+          "time": 12.000000000000036
+        }
+      },
+      "engaged": {
+        "velocity": 0,
+        "shots": 1
+      },
+      "resume": {
+        "distance": 1.0183250000003112,
+        "index": 1,
+        "stops": 1,
+        "resumes": 1
+      },
+      "start": {
+        "T01": {
+          "x": 1150,
+          "y": 2330
+        },
+        "T02": {
+          "x": 1800,
+          "y": 1650
+        },
+        "T03": {
+          "x": 3012.6089637399095,
+          "y": 2056.9385325410794
+        }
+      }
+    },
+    "directionInterlock": {
+      "forwardToReverse": {
+        "startKmh": 26.639507327797048,
+        "maxHeadingRadians": 4.440892098500626e-15,
+        "maxLateralMeters": 9.268141809570807e-13
+      },
+      "reverseToForward": {
+        "startKmh": 11.30219999999999,
+        "maxHeadingRadians": 1.1102230246251565e-15,
+        "maxLateralMeters": 6.175060462965121e-13
+      }
+    },
+    "muzzle": {
+      "geometryError": 3.5760872045925e-8,
+      "effectError": 0,
+      "textureReady": true,
+      "particles": 5
+    },
+    "art": {
+      "freshPathCaches": true,
+      "poses": 4,
+      "channelDifferences": 0,
+      "details": [
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 0,
+            "commander": 1
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 1.5707963267948966,
+            "commander": -1
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0,
+            "turret": 3.141592653589793,
+            "commander": 0.2
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        },
+        {
+          "pose": {
+            "heading": 0.6,
+            "turret": -1,
+            "commander": 2
+          },
+          "count": 0,
+          "max": 0,
+          "first": []
+        }
+      ]
+    }
+  },
+  "passed": 29,
+  "failed": 0,
+  "errors": [],
+  "scope": "WIP14 enemy AI, fire-movement policy, WIP13 direction-interlock steering, shared-path LOS, WIP11D terrain modes, WIP11C public HP regression, landscape gate, combat UI, flight, wrecks and handoff",
+  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas and both forward/reverse commands through complete braking, settle and range connection. One controlled contact is injected only for UI privacy and panel checks. Core guard acquisition and frozen public HP are also exercised without injected contacts in Node. file:// is reported separately; mobile checks are Chromium viewports, not physical Android hardware."
+}

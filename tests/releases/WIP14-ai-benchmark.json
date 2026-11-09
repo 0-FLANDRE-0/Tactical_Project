@@ -1,0 +1,33 @@
+{
+  "version": "0.4-WIP14",
+  "runtime": "v24.22.1",
+  "clock": "performance.now",
+  "fixedInput": true,
+  "target": "100 vehicles median <= 1ms",
+  "results": [
+    {
+      "vehicles": 50,
+      "repetitions": 1000,
+      "medianMs": 0.009764000000004103,
+      "p95Ms": 0.014722000000002566,
+      "maxMs": 0.28745399999999677,
+      "decisions": 55000,
+      "pathfindingIncluded": false,
+      "losIncluded": false,
+      "physicsIncluded": false,
+      "renderIncluded": false
+    },
+    {
+      "vehicles": 100,
+      "repetitions": 1000,
+      "medianMs": 0.017647000000003743,
+      "p95Ms": 0.03866800000000126,
+      "maxMs": 0.25492500000000007,
+      "decisions": 110000,
+      "pathfindingIncluded": false,
+      "losIncluded": false,
+      "physicsIncluded": false,
+      "renderIncluded": false
+    }
+  ]
+}

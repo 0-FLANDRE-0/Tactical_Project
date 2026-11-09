@@ -227,24 +227,30 @@ const TacticalCore = (() => {
     }
     throw Error('배치 가능한 위치가 없음');
   }
-  function createScenario(seed=7) {
+  function createScenario(seed=7,options={}) {
     const units=[];
     for(const [id,name,x,y,h,team] of [
       ['A11','ALPHA 11',550,2750,-.45,'blue'],['A12','ALPHA 12',780,3060,-.45,'blue'],
       ['T01','관측 표적 01',1150,2330,2.4,'red'],['T02','관측 표적 02',1800,1650,2.5,'red'],['T03','관측 표적 03',3020,2060,2.8,'red']
     ]) {const p=legalNear(x,y,units);units.push(makeTank(id,name,p.x,p.y,h,team));}
-    const scenario={time:0,seed,units};
+    const scenario={time:0,seed,units,recordAIEvents:!!options.recordAIEvents};
     // Playable scenarios state the normal automatic policy explicitly too;
     // manual compatibility fixtures opt into hold when constructing a unit.
     for(const u of units)fireFor(scenario).setMode(u,'auto');
+    const byId=id=>units.find(u=>u.id===id),missionPoint=(x,y)=>legalNear(x,y,units);
+    assignMission(scenario,byId('T01'),{id:'T01-patrol',type:'patrol',policy:'maintain',loop:true,waypoints:[missionPoint(1420,2190),missionPoint(1040,2460)]});
+    assignMission(scenario,byId('T02'),{id:'T02-stop-engage',type:'patrol',policy:'halt',loop:true,waypoints:[missionPoint(1960,1510),missionPoint(1660,1820)]});
+    assignMission(scenario,byId('T03'),{id:'T03-reposition',type:'move',policy:'auto',stopPreference:'maintain',waypoints:[missionPoint(2780,2200)]});
     return scenario;
   }
-  function issueMove(u,goal,reverse,units) {
+  function applyMove(u,goal,reverse,units) {
     if(u?.combat?.status==='destroyed')return{ok:false,reason:'격파 차량은 이동할 수 없음',points:[]};
     const r=planPath(u,goal,units,u);if(!r.ok)return r;
     u.path=r.points;u.goal={...goal};u.reverse=reverse;u.drive.requestedDirection=reverse?-1:1;return r;
   }
-  function stop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.reverse=false;u.drive.requestedDirection=0;u.drive.pendingDirection=0;u.state=u.speed>.15?'감속':'대기';return true;}
+  function applyStop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.reverse=false;u.drive.requestedDirection=0;u.drive.pendingDirection=0;u.state=u.speed>.15?'감속':'대기';return true;}
+  function issueMove(u,goal,reverse,units){TacticalAI.override(u,'manual-move');return applyMove(u,goal,reverse,units);}
+  function stop(u){TacticalAI.override(u,'manual-stop');return applyStop(u);}
   function routeDistance(u){let d=0,p=u;for(const q of u.path){d+=Math.hypot(q.x-p.x,q.y-p.y);p=q;}return d;}
   function mobilityLimit(type,along,side,reverse=false,p=PROFILE){
     const m=p.mobility,base=type==='road'||type==='bridge'?m.roadSpeed:Math.min(m.crossCountrySpeed,m.surfaceSpeed[type]??Infinity);
@@ -269,8 +275,7 @@ const TacticalCore = (() => {
   }
   function stepTank(u,dt,units) {
     const drive=ensureDrive(u);
-    if(u.combat?.status==='destroyed'){TacticalMobility.reset(drive);u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
-    if(u.team!=='blue')return;
+    if(u.combat?.status==='destroyed'){TacticalAI.destroy(u);TacticalMobility.reset(drive);u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
     const pVehicle=profileOf(u),motion=pVehicle.mobility;
     u.replanTimer=Math.max(0,u.replanTimer-dt);
     while(u.path.length>1&&Math.hypot(u.path[0].x-u.x,u.path[0].y-u.y)<4)u.path.shift();
@@ -308,6 +313,14 @@ const TacticalCore = (() => {
     if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
     return observationRuntimes.get(s);
   }
+  const aiRuntimes=new WeakMap();
+  function aiFor(s){
+    if(!aiRuntimes.has(s))aiRuntimes.set(s,TacticalAI.create({profileOf,move:applyMove,stop:applyStop,suppressAuto:(u,value)=>fireFor(s).suppressAuto(u,value),
+      onEvent:s.recordAIEvents?event=>{s.aiEvents??=[];s.aiEvents.push(event);if(s.aiEvents.length>2000)s.aiEvents.shift();}:null}));
+    return aiRuntimes.get(s);
+  }
+  const assignMission=(s,u,spec)=>aliveCommand(u)?aiFor(s).assign(u,spec,s.time):null;
+  const cancelMission=(s,u,halt=true)=>{const changed=TacticalAI.override(u,'mission-cancelled');if(changed&&halt)applyStop(u);return changed;};
   function step(s,dt){
     s.time+=dt;
     for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}
@@ -316,6 +329,7 @@ const TacticalCore = (() => {
     // candidate so an unseen destruction can later be discovered as a wreck.
     observationFor(s).advance(alive,dt,s.time,s.units);
     confirmObservedWrecks(s,alive);
+    aiFor(s).advance(alive,dt,s.time);
     fireFor(s).step(s.units,dt,s.time);
   }
   const wreckRuntimes=new WeakMap();
@@ -357,6 +371,7 @@ const TacticalCore = (() => {
   function combatFor(s){
     if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,onDestroyed:(target)=>{
       target.speed=0;if(target.drive)TacticalMobility.reset(target.drive);target.path=[];target.goal=null;target.reverse=false;target.state='격파';
+      TacticalAI.destroy(target);
       TacticalObservation.cancel(target,s.time,'destroyed');fireFor(s).cancel(target);
     }}));
     return combatRuntimes.get(s);
@@ -589,6 +604,6 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

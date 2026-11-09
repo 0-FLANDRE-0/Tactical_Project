@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP13</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP14</title>
 <style>
 :root{
   color-scheme:dark;
@@ -914,7 +914,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP13</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP14</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -960,7 +960,7 @@ footer{
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
 <div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
 <div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · AUTO FIRE · EFFECTS / WIP13</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · AUTO FIRE · EFFECTS · ENEMY AI / WIP14</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -1010,6 +1010,7 @@ const VEHICLE_PROFILES=(()=>{
       dispersionMrad:.25,layStartMrad:1.5,layMinMrad:.10,layTauSeconds:.6,
       rangeErrorM:5,muzzleVelocity:1650,velocityRetention:.94,leadResidual:.10,
       stabMradPerMps:.03,impact:{rejectionAttempts:64,marchStepM:2,maxBeyondM:3000},
+      movement:{fireOnMove:true,stationarySpeedMps:.10,stationaryHoldSeconds:.35},
       presented:{hullBottom:inch(19),hullTop:1.65,turretTop:inch(93.5)}},
     exposure:{hullAlong:[-2.8,0,2.8],hullHeights:[.80,1.40],turretAlong:[-1,0,1],turretHeight:2.20},
     navigation:{clearanceMargin:.25,contract:'nav16-M1A2-r4.62-long0.60-side0.40-v2'}
@@ -1047,6 +1048,7 @@ const VEHICLE_PROFILES=(()=>{
       for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights','maneuverAccel','maneuverReferenceSpeed','flightSeconds','effectSeconds'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
       for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','shotIntervalSeconds','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
       for(const field of ['leadResidual','stabMradPerMps'])if(!Number.isFinite(f[field])||f[field]<0)throw Error('사격 오차 값 오류: '+id+'.'+field);
+      if(!f.movement||typeof f.movement.fireOnMove!=='boolean'||!Number.isFinite(f.movement.stationarySpeedMps)||f.movement.stationarySpeedMps<0||!Number.isFinite(f.movement.stationaryHoldSeconds)||f.movement.stationaryHoldSeconds<0)throw Error('이동 사격 프로파일 값 오류: '+id+'.movement');
       if(!f.impact||!Number.isInteger(f.impact.rejectionAttempts)||!['rejectionAttempts','marchStepM','maxBeyondM'].every(field=>Number.isFinite(f.impact[field])&&f.impact[field]>0))throw Error('탄착 프로파일 값 오류: '+id+'.impact');
       const band=f.presented;
       if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
@@ -1173,6 +1175,104 @@ const TacticalMobility=(()=>{
   return{create,reset,step,turnRate,directionLabel,gearLabel,selectGearForSpeed};
 })();
 if(typeof module!=='undefined')module.exports=TacticalMobility;
+
+</script>
+<script id="tactical-ai">
+'use strict';
+/* Lightweight mission and engagement-movement policy. It reads only a unit's
+ * own observation records and drivetrain state. Terrain paths remain owned by
+ * sim-core and firing remains owned by fire-control. */
+const TacticalAI=(()=>{
+  const STATE=Symbol('tactical-ai-state');
+  const POLICIES=Object.freeze(['maintain','halt','auto']);
+  const DEFAULTS=Object.freeze({decisionPeriod:.75,lossGrace:1.5,observationHold:2.5,pathRetry:2,pathBudget:2,maxWaypoints:8});
+  const clone=v=>JSON.parse(JSON.stringify(v));
+  function phase(id,period){let h=2166136261;for(const c of String(id))h=Math.imul(h^c.charCodeAt(0),16777619);const slots=Math.max(1,Math.round(period/.05));return((h>>>0)%slots)*period/slots;}
+  function state(u){return u?.[STATE]||null;}
+  function validate(spec){
+    if(!spec||!['move','patrol'].includes(spec.type))throw Error('AI 임무 종류 오류');
+    if(!POLICIES.includes(spec.policy))throw Error('AI 교전 이동 정책 오류');
+    if(spec.stopPreference!==undefined&&!['maintain','halt'].includes(spec.stopPreference))throw Error('AI 자동 정책 선호 오류');
+    if(!Array.isArray(spec.waypoints)||!spec.waypoints.length||spec.waypoints.length>DEFAULTS.maxWaypoints)throw Error('AI 경유점 개수 오류');
+    if(spec.type==='move'&&spec.waypoints.length!==1)throw Error('지점 이동 임무는 경유점 하나가 필요함');
+    if(!spec.waypoints.every(p=>Number.isFinite(p?.x)&&Number.isFinite(p?.y)&&(!Object.hasOwn(p,'reverse')||typeof p.reverse==='boolean')))throw Error('AI 경유점 값 오류');
+    if(spec.type==='move'&&spec.loop)throw Error('지점 이동 임무는 반복할 수 없음');
+  }
+  function assign(u,spec,now=0){
+    validate(spec);const previous=state(u),revision=(previous?.mission.revision||0)+1;
+    const value={enabled:true,mission:{id:String(spec.id||u.id+'-mission'),revision,type:spec.type,waypoints:spec.waypoints.map(p=>({x:p.x,y:p.y,reverse:!!p.reverse})),index:0,loop:spec.type==='patrol'&&spec.loop!==false,status:'active'},
+      policy:spec.policy,stopPreference:spec.stopPreference||'maintain',behavior:'mission',nextThinkAt:now+phase(u.id,DEFAULTS.decisionPeriod),retryAt:now,lastContactKey:null,lostAt:null,haltElapsed:0,autoSuppressed:false,
+      counters:{decisions:0,pathRequests:0,pathFailures:0,stops:0,resumes:0,waypoints:0,duplicateCommandsAvoided:0}};
+    Object.defineProperty(u,STATE,{value,writable:true,configurable:true,enumerable:false});return inspect(u);
+  }
+  function setSuppressed(u,s,value,callback){if(s.autoSuppressed===value)return;s.autoSuppressed=value;callback(u,value);}
+  function override(u,reason='manual-command'){
+    const s=state(u);if(!s)return false;s.enabled=false;s.mission.status='cancelled';s.behavior=reason;s.lastContactKey=null;s.lostAt=null;s.autoSuppressed=false;
+    if(u.fireControl)u.fireControl.autoSuppressed=false;return true;
+  }
+  function destroy(u){const s=state(u);if(!s)return false;s.enabled=false;s.mission.status='destroyed';s.behavior='destroyed';s.lastContactKey=null;s.lostAt=null;s.autoSuppressed=false;if(u.fireControl)u.fireControl.autoSuppressed=false;return true;}
+  function ownContact(u){
+    let best=null;for(const c of Object.values(u.observation?.contacts||{}))if(c.current&&c.identified&&c.enemyConfirmed&&!c.wreckConfirmed){if(!best||c.lastSeen>best.lastSeen||c.lastSeen===best.lastSeen&&c.key<best.key)best=c;}return best;
+  }
+  function shouldHalt(s,p){return s.policy==='halt'||s.policy==='auto'&&(!p.fireControl.movement.fireOnMove||s.stopPreference==='halt');}
+  function inspect(u){const s=state(u);return s?clone(s):null;}
+  function aggregate(units){
+    const out={active:0,decisions:0,pathRequests:0,pathFailures:0,stops:0,resumes:0,waypoints:0,duplicateCommandsAvoided:0,behaviors:{}};
+    for(const u of units){const s=state(u);if(!s)continue;if(s.enabled)out.active++;for(const k of ['decisions','pathRequests','pathFailures','stops','resumes','waypoints','duplicateCommandsAvoided'])out[k]+=s.counters[k];out.behaviors[s.behavior]=(out.behaviors[s.behavior]||0)+1;}return out;
+  }
+  function create({profileOf,move,stop,suppressAuto,onEvent=null,settings={}}){
+    const config=Object.freeze({...DEFAULTS,...settings});
+    function emit(u,s,type,now,extra={}){onEvent?.({time:now,unit:u.id,mission:s.mission.id,revision:s.mission.revision,type,behavior:s.behavior,...extra});}
+    function progress(u,s,now){
+      s.counters.waypoints++;s.mission.index++;
+      if(s.mission.index>=s.mission.waypoints.length){if(s.mission.loop)s.mission.index=0;else{s.mission.status='completed';s.behavior='completed';emit(u,s,'mission-completed',now);return false;}}
+      emit(u,s,'waypoint-advanced',now,{index:s.mission.index});return true;
+    }
+    function requestRoute(u,s,now,units,budget){
+      if(!s.enabled||s.mission.status==='paused'||s.mission.status==='completed'||u.goal||u.path?.length){s.counters.duplicateCommandsAvoided++;return budget;}
+      const p=profileOf(u),point=s.mission.waypoints[s.mission.index];
+      if(Math.hypot(point.x-u.x,point.y-u.y)<=p.mobility.powertrain.arrivalRadius+1){if(!progress(u,s,now))return budget;}
+      if(now+1e-9<s.retryAt||budget<=0)return budget;
+      const goal=s.mission.waypoints[s.mission.index];s.counters.pathRequests++;const result=move(u,goal,goal.reverse,units);
+      if(result.ok){s.mission.status='active';s.retryAt=now;emit(u,s,'path-issued',now,{index:s.mission.index,visits:result.visits||0});return budget-1;}
+      s.counters.pathFailures++;s.mission.status='blocked';s.retryAt=now+config.pathRetry;emit(u,s,'path-failed',now,{index:s.mission.index,reason:result.reason});return budget-1;
+    }
+    function advance(units,dt,now){
+      let budget=config.pathBudget;
+      for(const u of units){
+        const s=state(u);if(!s?.enabled)continue;
+        if(u.combat?.status==='destroyed'){destroy(u);continue;}
+        const p=profileOf(u),movement=p.fireControl.movement,contact=ownContact(u),ammo=(u.fireControl?.ammo??0)>0,halt=shouldHalt(s,p);
+        if(Math.abs(u.drive?.velocity??u.speed??0)<=movement.stationarySpeedMps+1e-9)s.haltElapsed+=dt;else s.haltElapsed=0;
+        /* Suppress halt-policy auto fire immediately after a contact appears.
+         * Route and behavior changes stay on the distributed low-rate clock. */
+        if(halt&&ammo&&(contact||s.lastContactKey)&&s.behavior!=='engaging')setSuppressed(u,s,true,suppressAuto);
+        if(now+1e-9<s.nextThinkAt)continue;
+        do{s.nextThinkAt+=config.decisionPeriod;}while(s.nextThinkAt<=now+1e-9);
+        s.counters.decisions++;
+        if(contact&&ammo&&halt){
+          s.lastContactKey=contact.key;s.lostAt=null;
+          if(!['braking','engaging'].includes(s.behavior)){
+            s.behavior='braking';s.mission.status='paused';stop(u);s.counters.stops++;emit(u,s,'engagement-stop',now,{contactKey:contact.key});
+          }
+          if(s.haltElapsed+1e-9>=movement.stationaryHoldSeconds){s.behavior='engaging';setSuppressed(u,s,false,suppressAuto);}else setSuppressed(u,s,true,suppressAuto);
+        }else if(s.lastContactKey&&halt&&ammo){
+          if(s.lostAt===null){s.lostAt=now;s.behavior='observe';setSuppressed(u,s,true,suppressAuto);emit(u,s,'contact-lost',now,{contactKey:s.lastContactKey});}
+          if(now-s.lostAt+1e-9>=config.lossGrace+config.observationHold){s.lastContactKey=null;s.lostAt=null;s.behavior='resume';s.mission.status='active';setSuppressed(u,s,false,suppressAuto);s.counters.resumes++;emit(u,s,'mission-resume',now);}
+        }else{
+          if(s.mission.status==='paused'||s.behavior==='observe'||s.behavior==='braking'||s.behavior==='engaging'){s.mission.status='active';s.behavior='resume';s.counters.resumes++;emit(u,s,ammo?'mission-resume':'out-of-ammo-resume',now);}
+          s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);
+        }
+        if(s.behavior==='resume')s.behavior='mission';
+        if((s.behavior==='mission'||s.mission.status==='blocked')&&s.mission.status!=='completed')budget=requestRoute(u,s,now,units,budget);
+      }
+      return aggregate(units);
+    }
+    return Object.freeze({assign:(u,spec,now)=>assign(u,spec,now),advance,inspect,aggregate,config});
+  }
+  return Object.freeze({create,assign,override,destroy,inspect,aggregate,policies:POLICIES,defaults:DEFAULTS});
+})();
+if(typeof module!=='undefined')module.exports=TacticalAI;
 
 </script>
 <script id="vehicle-geometry">
@@ -1621,9 +1721,10 @@ const TacticalFireControl=(()=>{
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   function init(u,p,mode='auto'){
     if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
-      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0};
-    u.fireControl.fireMode??=mode;u.fireControl.lineProbeTarget??=null;u.fireControl.lineProbePose??=null;u.fireControl.lineProbeBlocked??=false;u.fireControl.lineProbeCandidateRevision??=null;u.fireControl.lineProbeQueries??=0;return u.fireControl;
+      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null};
+    u.fireControl.fireMode??=mode;u.fireControl.lineProbeTarget??=null;u.fireControl.lineProbePose??=null;u.fireControl.lineProbeBlocked??=false;u.fireControl.lineProbeCandidateRevision??=null;u.fireControl.lineProbeQueries??=0;u.fireControl.stationaryElapsed??=0;u.fireControl.autoSuppressed??=false;u.fireControl.lastRejection??=null;return u.fireControl;
   }
+  function motionReady(u,p,s=init(u,p)){const m=p.fireControl.movement;return m.fireOnMove||Math.abs(u.drive?.velocity??u.speed??0)<=m.stationarySpeedMps+1e-9&&s.stationaryElapsed+1e-9>=m.stationaryHoldSeconds;}
   // Fictional RTS error budget. Target manoeuvre is represented only by the
   // difference between predicted and actual pose at impact, never twice here.
   function normalCdf(x){
@@ -1798,6 +1899,7 @@ const TacticalFireControl=(()=>{
       pruneEffects(now);
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
+        if(Math.abs(u.drive?.velocity??u.speed??0)<=f.movement.stationarySpeedMps+1e-9)s.stationaryElapsed+=dt;else s.stationaryElapsed=0;
         if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
         if(s.previousSample&&now-s.previousSample.time>p.sensors.tuning.queryPeriod*5+1e-9)resetMotion(s);
         if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
@@ -1828,7 +1930,7 @@ const TacticalFireControl=(()=>{
         }
         // Auto creates the same queued request consumed below and never
         // overwrites a manual request already present for this step.
-        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto')s.pending={key:s.targetKey,source:'auto'};
+        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto'&&!s.autoSuppressed&&motionReady(u,p,s))s.pending={key:s.targetKey,source:'auto'};
         // Hold still probes the real line and participates in hunter-killer
         // switching, while never creating an automatic firing request.
         if(s.status==='ready'&&!s.pending&&s.fireMode==='hold'&&(s.lineProbeTarget!==s.targetKey||changedLine||candidatesChanged)){
@@ -1841,6 +1943,11 @@ const TacticalFireControl=(()=>{
         if(!s.pending)continue;
         const request=s.pending;s.pending=null;
         if(s.status!=='ready'||request.key!==s.targetKey){s.lastRejection=check.reason||'target-changed';continue;}
+        // Recheck actual signed drivetrain speed immediately before every
+        // manual/automatic shot. A queued request cannot spend ammunition or
+        // decision RNG after the vehicle starts moving again.
+        if(!motionReady(u,p,s)){s.lastRejection='must-stop';continue;}
+        if(request.source==='auto'&&s.autoSuppressed){s.lastRejection='movement-policy';continue;}
         // A fire command must recheck its own current range/FOV/terrain samples;
         // an old 10Hz contact or team knowledge cannot authorize a shot.
         s.lineProbeQueries++;const sight=freshSight(u,d.target);
@@ -1868,10 +1975,11 @@ const TacticalFireControl=(()=>{
       finishDue(units,now);
     }
     function request(u,key,now){
-      const s=init(u,profileOf(u)),check=inspect(u,now);
+      const p=profileOf(u),s=init(u,p),check=inspect(u,now);
       if(s.pending)return{ok:false,reason:'pending'};
       if(s.hitChance===0)return{ok:false,reason:'no-presented-target'};
       if(check.reason||s.status!=='ready'||key!==s.targetKey)return{ok:false,reason:check.reason||'not-ready'};
+      if(!motionReady(u,p,s))return{ok:false,reason:'must-stop'};
       s.pending={key,source:'manual'};return{ok:true};
     }
     function setMode(u,mode){
@@ -1881,17 +1989,18 @@ const TacticalFireControl=(()=>{
       return true;
     }
     function view(u,key=null){
-      const s=init(u,profileOf(u)),same=!key||key===s.targetKey;
-      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
-        canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
+      const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
+      return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
+        canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
+    function suppressAuto(u,value){const s=init(u,profileOf(u));s.autoSuppressed=!!value;if(value&&s.pending?.source==='auto')s.pending=null;return s.autoSuppressed;}
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
-    return{step,request,setMode,view,cancel,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
+    return{step,request,setMode,view,cancel,suppressAuto,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,motionReady,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;
 
@@ -2126,24 +2235,30 @@ const TacticalCore = (() => {
     }
     throw Error('배치 가능한 위치가 없음');
   }
-  function createScenario(seed=7) {
+  function createScenario(seed=7,options={}) {
     const units=[];
     for(const [id,name,x,y,h,team] of [
       ['A11','ALPHA 11',550,2750,-.45,'blue'],['A12','ALPHA 12',780,3060,-.45,'blue'],
       ['T01','관측 표적 01',1150,2330,2.4,'red'],['T02','관측 표적 02',1800,1650,2.5,'red'],['T03','관측 표적 03',3020,2060,2.8,'red']
     ]) {const p=legalNear(x,y,units);units.push(makeTank(id,name,p.x,p.y,h,team));}
-    const scenario={time:0,seed,units};
+    const scenario={time:0,seed,units,recordAIEvents:!!options.recordAIEvents};
     // Playable scenarios state the normal automatic policy explicitly too;
     // manual compatibility fixtures opt into hold when constructing a unit.
     for(const u of units)fireFor(scenario).setMode(u,'auto');
+    const byId=id=>units.find(u=>u.id===id),missionPoint=(x,y)=>legalNear(x,y,units);
+    assignMission(scenario,byId('T01'),{id:'T01-patrol',type:'patrol',policy:'maintain',loop:true,waypoints:[missionPoint(1420,2190),missionPoint(1040,2460)]});
+    assignMission(scenario,byId('T02'),{id:'T02-stop-engage',type:'patrol',policy:'halt',loop:true,waypoints:[missionPoint(1960,1510),missionPoint(1660,1820)]});
+    assignMission(scenario,byId('T03'),{id:'T03-reposition',type:'move',policy:'auto',stopPreference:'maintain',waypoints:[missionPoint(2780,2200)]});
     return scenario;
   }
-  function issueMove(u,goal,reverse,units) {
+  function applyMove(u,goal,reverse,units) {
     if(u?.combat?.status==='destroyed')return{ok:false,reason:'격파 차량은 이동할 수 없음',points:[]};
     const r=planPath(u,goal,units,u);if(!r.ok)return r;
     u.path=r.points;u.goal={...goal};u.reverse=reverse;u.drive.requestedDirection=reverse?-1:1;return r;
   }
-  function stop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.reverse=false;u.drive.requestedDirection=0;u.drive.pendingDirection=0;u.state=u.speed>.15?'감속':'대기';return true;}
+  function applyStop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.reverse=false;u.drive.requestedDirection=0;u.drive.pendingDirection=0;u.state=u.speed>.15?'감속':'대기';return true;}
+  function issueMove(u,goal,reverse,units){TacticalAI.override(u,'manual-move');return applyMove(u,goal,reverse,units);}
+  function stop(u){TacticalAI.override(u,'manual-stop');return applyStop(u);}
   function routeDistance(u){let d=0,p=u;for(const q of u.path){d+=Math.hypot(q.x-p.x,q.y-p.y);p=q;}return d;}
   function mobilityLimit(type,along,side,reverse=false,p=PROFILE){
     const m=p.mobility,base=type==='road'||type==='bridge'?m.roadSpeed:Math.min(m.crossCountrySpeed,m.surfaceSpeed[type]??Infinity);
@@ -2168,8 +2283,7 @@ const TacticalCore = (() => {
   }
   function stepTank(u,dt,units) {
     const drive=ensureDrive(u);
-    if(u.combat?.status==='destroyed'){TacticalMobility.reset(drive);u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
-    if(u.team!=='blue')return;
+    if(u.combat?.status==='destroyed'){TacticalAI.destroy(u);TacticalMobility.reset(drive);u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
     const pVehicle=profileOf(u),motion=pVehicle.mobility;
     u.replanTimer=Math.max(0,u.replanTimer-dt);
     while(u.path.length>1&&Math.hypot(u.path[0].x-u.x,u.path[0].y-u.y)<4)u.path.shift();
@@ -2207,6 +2321,14 @@ const TacticalCore = (() => {
     if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
     return observationRuntimes.get(s);
   }
+  const aiRuntimes=new WeakMap();
+  function aiFor(s){
+    if(!aiRuntimes.has(s))aiRuntimes.set(s,TacticalAI.create({profileOf,move:applyMove,stop:applyStop,suppressAuto:(u,value)=>fireFor(s).suppressAuto(u,value),
+      onEvent:s.recordAIEvents?event=>{s.aiEvents??=[];s.aiEvents.push(event);if(s.aiEvents.length>2000)s.aiEvents.shift();}:null}));
+    return aiRuntimes.get(s);
+  }
+  const assignMission=(s,u,spec)=>aliveCommand(u)?aiFor(s).assign(u,spec,s.time):null;
+  const cancelMission=(s,u,halt=true)=>{const changed=TacticalAI.override(u,'mission-cancelled');if(changed&&halt)applyStop(u);return changed;};
   function step(s,dt){
     s.time+=dt;
     for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}
@@ -2215,6 +2337,7 @@ const TacticalCore = (() => {
     // candidate so an unseen destruction can later be discovered as a wreck.
     observationFor(s).advance(alive,dt,s.time,s.units);
     confirmObservedWrecks(s,alive);
+    aiFor(s).advance(alive,dt,s.time);
     fireFor(s).step(s.units,dt,s.time);
   }
   const wreckRuntimes=new WeakMap();
@@ -2256,6 +2379,7 @@ const TacticalCore = (() => {
   function combatFor(s){
     if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,onDestroyed:(target)=>{
       target.speed=0;if(target.drive)TacticalMobility.reset(target.drive);target.path=[];target.goal=null;target.reverse=false;target.state='격파';
+      TacticalAI.destroy(target);
       TacticalObservation.cancel(target,s.time,'destroyed');fireFor(s).cancel(target);
     }}));
     return combatRuntimes.get(s);
@@ -2488,7 +2612,7 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -3328,7 +3452,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   const effectRenderer=TacticalEffects.create(),reducedMotionMedia=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
   let effectsEnabled=true,effectQuality=1,reducedMotionOverride=null;
   let visibility=null,visibilityPath=null;
-  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','mobility','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
+  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','mobility','tactical-ai','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
   let sightRevision=0;
   function fitCamera(){
@@ -3413,7 +3537,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{const u=selectedUnit();if(u&&targetId&&C.designate(sim,u,targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
-  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실','must-stop':'정차·안정화 대기','movement-policy':'교전 정차 대기'};
   function fireSelected(){
     if(portraitBlocked)return;
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
@@ -3898,7 +4022,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     const vehicle=C.profileOf(u),model=vehicle.model,motion=vehicle.mobility,s=vehicle.sensors,degrees=r=>Math.round(r*180/Math.PI);
     ui.setText($('unitType'),vehicle.name+' · '+vehicle.weapons.mainGun.calibreMm+'mm '+vehicle.weapons.mainGun.name);
     ui.setText($('profileTitle'),vehicle.id+' 제원 · 적용값');
-    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['자동변속',motion.powertrain.forwardRatios.length+'단 전진 · '+motion.powertrain.reverseRatios.length+'단 후진'],['방향 전환',motion.powertrain.directionSettleSeconds.toFixed(2)+' 초 정차 확인'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
+    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['자동변속',motion.powertrain.forwardRatios.length+'단 전진 · '+motion.powertrain.reverseRatios.length+'단 후진'],['방향 전환',motion.powertrain.directionSettleSeconds.toFixed(2)+' 초 정차 확인'],['기동간 사격',vehicle.fireControl.movement.fireOnMove?'가능 · 이동 오차 적용':'불가 · '+vehicle.fireControl.movement.stationaryHoldSeconds.toFixed(2)+'초 정차'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
   }
   for(const u of sim.units.filter(u=>u.team==='blue')){
     const b=document.createElement('button');
@@ -4112,7 +4236,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP13',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP14',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
