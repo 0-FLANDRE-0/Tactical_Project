@@ -5,19 +5,48 @@ const Core=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalMobility'
 const make=(x=500,heading=0)=>{const u=Core.makeTank('M','MOBILITY',x,1000,heading,'blue',undefined,'hold'),s={time:0,seed:91,units:[u]};return{u,s};};
 const tick=(s,n=1)=>{for(let i=0;i<n;i++)Core.step(s,.05);};
 function reach(u,s,kmh){for(let i=0;i<4000&&u.speed*3.6<kmh;i++)tick(s);assert(u.speed*3.6>=kmh,`did not reach ${kmh} km/h`);}
+const angleDelta=(a,b)=>Math.abs(Math.atan2(Math.sin(a-b),Math.cos(a-b)));
+function poseDeviation(before,trace){return{
+  maxHeading:Math.max(...trace.map(v=>angleDelta(v.heading,before.heading))),
+  maxLateral:Math.max(...trace.map(v=>Math.abs(-(v.x-before.x)*Math.sin(before.heading)+(v.y-before.y)*Math.cos(before.heading))))
+};}
+function assertStraightTransition(before,trace,label){const pose=poseDeviation(before,trace);assert(pose.maxHeading<1e-10,`${label} heading changed by ${pose.maxHeading}`);assert(pose.maxLateral<1e-8,`${label} drifted laterally by ${pose.maxLateral} m`);return pose;}
 function reverseTrace(startKmh){
   const{u,s}=make();assert(Core.issueMove(u,{x:3900,y:1000},false,s.units).ok);reach(u,s,startKmh);
-  const before={x:u.x,velocity:u.drive.velocity,speed:u.speed};assert(Core.issueMove(u,{x:100,y:1000},true,s.units).ok);
-  const trace=[];for(let i=0;i<400;i++){const x=u.x;tick(s);trace.push({t:(i+1)*.05,dx:u.x-x,v:u.drive.velocity,mode:u.drive.mode,gear:u.drive.gear});if(u.drive.velocity<-.05)break;}
+  const before={x:u.x,y:u.y,heading:u.heading,velocity:u.drive.velocity,speed:u.speed};assert(Core.issueMove(u,{x:100,y:1000},true,s.units).ok);
+  const trace=[];for(let i=0;i<400;i++){const x=u.x;tick(s);trace.push({t:(i+1)*.05,x:u.x,y:u.y,heading:u.heading,dx:u.x-x,v:u.drive.velocity,mode:u.drive.mode,gear:u.drive.gear});if(u.drive.velocity<-.05)break;}
   return{u,s,before,trace};
 }
 for(const kmh of [40,60])test(`forward ${kmh} km/h brakes through zero before reverse drive`,()=>{
   const{before,trace}=reverseTrace(kmh);assert(trace[0].dx>0,'first tick must continue forward');assert(trace[0].v>0&&trace[0].v<before.velocity);
   const negative=trace.findIndex(v=>v.v<0);assert(negative>0,'reverse never engaged');assert(trace.slice(0,negative).every(v=>v.v>=0),'velocity crossed without interlock');
-  assert(trace.slice(0,negative).some(v=>v.v===0&&v.mode==='direction-wait'),'no stopped settle interval');assert(trace[negative].dx<0);
+  assert(trace.slice(0,negative).some(v=>v.v===0&&v.mode==='direction-wait'),'no stopped settle interval');assert(trace[negative].dx<0);assertStraightTransition(before,trace,`${kmh} km/h forward-to-reverse`);
 });
-test('reverse-to-forward transition and a cancelled range change leave no stale request',()=>{
+function forwardTrace(startKmh){
+  const{u,s}=make(3500);assert(Core.issueMove(u,{x:100,y:1000},true,s.units).ok);reach(u,s,Math.min(startKmh,40));
+  // 60 km/h is an explicit overspeed initial condition: the production
+  // profile caps reverse at 40.2336 km/h, but the interlock must stay safe if
+  // an imported scenario or later profile enters faster than that cap.
+  u.drive.velocity=-startKmh/3.6;u.speed=Math.abs(u.drive.velocity);
+  const before={x:u.x,y:u.y,heading:u.heading,velocity:u.drive.velocity,speed:u.speed};assert(Core.issueMove(u,{x:3900,y:1000},false,s.units).ok);
+  const trace=[];for(let i=0;i<500;i++){const x=u.x;tick(s);trace.push({t:(i+1)*.05,x:u.x,y:u.y,heading:u.heading,dx:u.x-x,v:u.drive.velocity,mode:u.drive.mode,gear:u.drive.gear});if(u.drive.velocity>.05)break;}
+  return{u,s,before,trace};
+}
+for(const kmh of [40,60])test(`reverse ${kmh} km/h brakes through zero before forward drive`,()=>{
+  const{before,trace}=forwardTrace(kmh);assert(trace[0].dx<0,'first tick must continue backward');assert(trace[0].v<0&&trace[0].v>before.velocity);
+  const positive=trace.findIndex(v=>v.v>0);assert(positive>0,'forward drive never engaged');assert(trace.slice(0,positive).every(v=>v.v<=0),'velocity crossed without interlock');
+  assert(trace.slice(0,positive).some(v=>v.v===0&&v.mode==='direction-wait'),'no stopped settle interval');assert(trace[positive].dx>0);assertStraightTransition(before,trace,`${kmh} km/h reverse-to-forward`);
+});
+test('a new route starts steering only after its requested direction connects',()=>{
+  const{u,s}=make();assert(Core.issueMove(u,{x:3900,y:1000},false,s.units).ok);reach(u,s,40);const heading=u.heading;
+  assert(Core.issueMove(u,{x:100,y:1200},true,s.units).ok);const waiting=[];for(let i=0;i<300;i++){tick(s);waiting.push(u.heading);if(u.drive.selectedDirection===-1&&!u.drive.pendingDirection)break;}
+  assert(waiting.length>1&&waiting.every(v=>angleDelta(v,heading)<1e-10),'interlock steered toward the new route');assert.equal(u.drive.selectedDirection,-1);
+  for(let i=0;i<10;i++)tick(s);assert(angleDelta(u.heading,heading)>1e-4,'connected reverse range never started route steering');
+});
+test('a cancelled range change leaves no stale request',()=>{
   const{u,s}=make(3500);assert(Core.issueMove(u,{x:200,y:1000},true,s.units).ok);reach(u,s,30);assert(u.drive.velocity<0);
+  assert(Core.issueMove(u,{x:3900,y:1000},false,s.units).ok);tick(s,4);assert(u.drive.pendingDirection===1);assert(Core.issueMove(u,{x:100,y:1000},true,s.units).ok);tick(s);
+  assert.equal(u.drive.pendingDirection,0);assert.equal(u.drive.requestedDirection,-1);tick(s,80);assert(u.drive.velocity<0&&!u.drive.pendingDirection);
   assert(Core.issueMove(u,{x:3900,y:1000},false,s.units).ok);let sawZero=false;for(let i=0;i<300&&u.drive.velocity<=0;i++){tick(s);sawZero||=u.drive.velocity===0;}assert(sawZero&&u.drive.velocity>0);
   reach(u,s,10);assert(Core.issueMove(u,{x:100,y:1000},true,s.units).ok);tick(s,4);assert(u.drive.pendingDirection===-1);assert(Core.issueMove(u,{x:3900,y:1000},false,s.units).ok);tick(s);
   assert.equal(u.drive.pendingDirection,0);assert.equal(u.drive.requestedDirection,1);tick(s,80);assert(u.drive.velocity>0&&!u.drive.pendingDirection);

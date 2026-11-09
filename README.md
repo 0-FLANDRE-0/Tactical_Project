@@ -1,12 +1,12 @@
 # TACTICAL v0.4 WIP13 — 경량 구동·자동변속·제동·조향
 
-WIP13은 이동/후진 요청과 실제 종방향 운동을 분리해 주행 중 즉시 반전을 제거했다. 질량·엔진 출력, 4단 전진/2단 후진 자동변속, 방향 전환 interlock, 유한 제동·도착과 속도별 조향을 기존 0.05초 고정 틱에 연결한다. 기존 지도·경로·충돌, 관측·자동교전과 WIP12 사격 효과/도탄 판정은 유지한다.
+WIP13은 이동/후진 요청과 실제 종방향 운동을 분리해 주행 중 즉시 반전을 제거했다. 질량·엔진 출력, 4단 전진/2단 후진 자동변속, 방향 전환 interlock, 유한 제동·도착과 속도별 조향을 기존 0.05초 고정 틱에 연결한다. 방향 전환 제동·대기 중에는 새 경로 조향을 보류하고 새 구동 방향이 연결된 뒤 적용한다. 기존 지도·경로·충돌, 관측·자동교전과 WIP12 사격 효과/도탄 판정은 유지한다.
 
 - 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip13-lightweight-mobility/Tactical_v0.4_WIP13.zip). 압축을 풀면 `Tactical_v0.4_WIP13.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP13.html](Tactical_v0.4_WIP13.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP13 구현](docs/MOBILITY_WIP13.md) · [릴리스·검증](TACTICAL_RELEASE_WIP13.md) · [체크섬](SHA256SUMS_WIP13.txt) · [작업 목차](docs/tasks/README.md).
 - 기준 main `a789d538`에서 `feat/wip13-lightweight-mobility` 브랜치를 만들었다. main에는 병합하거나 공개 릴리스로 배포하지 않는다.
-- 평탄 실제 적분기의 40/60km/h 전후진 전환, 질량·출력 인과성, 자동변속/도착/조향, 실제 지도 100대와 Chromium 100대 렌더, 기존 전체 회귀를 검사했다. 수치는 경량 게임 모델이며 실장비 성능 인증값이 아니다.
+- 평탄 실제 적분기의 40/60km/h 전후진 전환에서 속도 부호·차체 방위·측방 이탈을 함께 검사했고 실제 Chromium 조작으로 양방향 전환을 재검증했다. 질량·출력 인과성, 자동변속/도착/조향, 실제 지도 100대와 Chromium 100대 렌더, 기존 전체 회귀도 검사했다. 수치는 경량 게임 모델이며 실장비 성능 인증값이 아니다.
 
 ## 실행과 조작
 

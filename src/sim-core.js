@@ -281,14 +281,21 @@ const TacticalCore = (() => {
     }
     if(u.path.length) {
       request=u.reverse?-1:1;
-      const p=u.path[0],d=Math.hypot(p.x-u.x,p.y-u.y),actualDirection=Math.abs(drive.velocity)>motion.powertrain.directionStopSpeed?Math.sign(drive.velocity):(drive.pendingDirection||drive.selectedDirection||request);
-      const aim=Math.atan2(p.y-u.y,p.x-u.x)+(actualDirection<0?Math.PI:0);err=angleDiff(aim,u.heading);
-      const turnLimit=TacticalMobility.turnRate(drive.velocity,pVehicle)*dt;
-      u.heading+=clamp(err,-turnLimit,turnLimit);
-      const type=surfaceAt(u.x,u.y),grade=gradeAt(u.x,u.y,u.heading),base=mobilityLimit(type,grade.along,grade.side,request<0,pVehicle),corner=Math.max(0,Math.cos(err));
-      desired=Math.min(base*corner*corner,Math.sqrt(Math.max(0,2*motion.brakeDeceleration*(routeDistance(u)-motion.powertrain.arrivalRadius))));
-      if(u.path.length>1&&d<24){const q=u.path[1],turn=Math.abs(angleDiff(Math.atan2(q.y-p.y,q.x-p.x),Math.atan2(p.y-u.y,p.x-u.x)));if(turn>.5)desired=Math.min(desired,2.5+Math.max(0,d-5)*.35);}
-      if(Math.abs(err)>1.15)desired=0;
+      const velocityDirection=Math.abs(drive.velocity)>motion.powertrain.directionStopSpeed?Math.sign(drive.velocity):0;
+      // A route direction only becomes steerable after the drivetrain has
+      // connected that direction. During direction-brake/direction-wait the
+      // old momentum keeps its heading while targetSpeed=0 performs braking.
+      const directionConnected=!drive.pendingDirection&&drive.selectedDirection===request&&(!velocityDirection||velocityDirection===request);
+      if(directionConnected) {
+        const p=u.path[0],d=Math.hypot(p.x-u.x,p.y-u.y);
+        const aim=Math.atan2(p.y-u.y,p.x-u.x)+(request<0?Math.PI:0);err=angleDiff(aim,u.heading);
+        const turnLimit=TacticalMobility.turnRate(drive.velocity,pVehicle)*dt;
+        u.heading+=clamp(err,-turnLimit,turnLimit);
+        const type=surfaceAt(u.x,u.y),grade=gradeAt(u.x,u.y,u.heading),base=mobilityLimit(type,grade.along,grade.side,request<0,pVehicle),corner=Math.max(0,Math.cos(err));
+        desired=Math.min(base*corner*corner,Math.sqrt(Math.max(0,2*motion.brakeDeceleration*(routeDistance(u)-motion.powertrain.arrivalRadius))));
+        if(u.path.length>1&&d<24){const q=u.path[1],turn=Math.abs(angleDiff(Math.atan2(q.y-p.y,q.x-p.x),Math.atan2(p.y-u.y,p.x-u.x)));if(turn>.5)desired=Math.min(desired,2.5+Math.max(0,d-5)*.35);}
+        if(Math.abs(err)>1.15)desired=0;
+      }
     }
     TacticalMobility.step(drive,{direction:request,targetSpeed:desired},pVehicle,dt);u.speed=Math.abs(drive.velocity);
     u.state=TacticalMobility.directionLabel(drive);if(u.path.length&&desired<.2&&u.speed<.3&&!drive.pendingDirection)u.state='선회';

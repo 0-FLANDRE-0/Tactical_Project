@@ -7,7 +7,7 @@
     "terrain data, four display combinations, reset persistence and static cache are independent of core state",
     "vehicle auto/hold modes remain independent across selection",
     "default scenario fires automatically without button input",
-    "actual browser command brakes before reverse, exposes range state and advances fixed ticks at 2x",
+    "actual browser commands keep hull bearing and lateral line through both direction interlocks",
     "guard world point input, actual turret pose and pause",
     "guard popover closes without map click-through and keeps an active order",
     "terrain hold runs real embedded Worker and composes sectors",
@@ -33,6 +33,18 @@
     "no application page errors"
   ],
   "geometryEvidence": {
+    "directionInterlock": {
+      "forwardToReverse": {
+        "startKmh": 26.639507327797048,
+        "maxHeadingRadians": 4.440892098500626e-15,
+        "maxLateralMeters": 9.268141809570807e-13
+      },
+      "reverseToForward": {
+        "startKmh": 11.30219999999999,
+        "maxHeadingRadians": 1.1102230246251565e-15,
+        "maxLateralMeters": 6.175060462965121e-13
+      }
+    },
     "muzzle": {
       "geometryError": 3.5760872045925e-8,
       "effectError": 0,
@@ -90,6 +102,6 @@
   "passed": 28,
   "failed": 0,
   "errors": [],
-  "scope": "WIP13 shared-path LOS, WIP11D terrain modes, WIP11C public HP regression, landscape gate, combat UI, flight, wrecks and handoff",
-  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas. One controlled contact is injected only for UI privacy and panel checks. Core guard acquisition and frozen public HP are also exercised without injected contacts in Node. file:// is reported separately; mobile checks are Chromium viewports, not physical Android hardware."
+  "scope": "WIP13 direction-interlock steering, shared-path LOS, WIP11D terrain modes, WIP11C public HP regression, landscape gate, combat UI, flight, wrecks and handoff",
+  "notes": "Actual headless Chromium. Deterministic RAF harness drives real DOM/canvas and both forward/reverse commands through complete braking, settle and range connection. One controlled contact is injected only for UI privacy and panel checks. Core guard acquisition and frozen public HP are also exercised without injected contacts in Node. file:// is reported separately; mobile checks are Chromium viewports, not physical Android hardware."
 }

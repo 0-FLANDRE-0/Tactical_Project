@@ -11,9 +11,9 @@
   },
   "checks": [
     {"name": "JavaScript syntax and Python build/package syntax", "status": "passed"},
-    {"name": "all non-browser Node test files", "status": "passed", "passed": 239, "failed": 0},
+    {"name": "complete Node test runner including browser entry files", "status": "passed", "passed": 244, "failed": 0},
     {"name": "legacy input assertions within input.test.cjs", "status": "passed", "passed": 42, "failed": 0},
-    {"name": "new WIP13 mobility tests", "status": "passed", "passed": 8, "failed": 0},
+    {"name": "new WIP13 mobility tests", "status": "passed", "passed": 11, "failed": 0},
     {"name": "actual Chromium application tests", "status": "passed", "passed": 28, "failed": 0, "evidence": "tests/releases/WIP13-browser.json"},
     {"name": "WIP12 actual Chromium effects/ricochet regression", "status": "passed", "passed": 18, "failed": 0, "note": "Prior WIP12 evidence files were restored after the rerun so historical artifacts remain unchanged."},
     {"name": "terrain readability Python unittest", "status": "passed", "passed": 7, "failed": 0},
@@ -24,9 +24,18 @@
   ],
   "mobilityEvidence": {
     "forwardToReverseKmh": [40, 60],
+    "reverseToForwardKmh": [40, 60],
+    "reverse60KmhFixture": "explicit overspeed initial condition above the production M1A2 40.2336 km/h reverse cap",
     "firstReverseCommandTickStillForward": true,
     "zeroAndSettleBeforeNegativeVelocity": true,
     "reverseToForward": true,
+    "headingDeltaLimitRadians": 1e-10,
+    "lateralDeviationLimitMeters": 1e-8,
+    "steeringStartsOnlyAfterRequestedDirectionConnects": true,
+    "actualChromium": {
+      "forwardToReverse": {"startKmh": 26.639507327797048, "maxHeadingRadians": 4.440892098500626e-15, "maxLateralMeters": 9.268141809570807e-13},
+      "reverseToForward": {"startKmh": 11.30219999999999, "maxHeadingRadians": 1.1102230246251565e-15, "maxLateralMeters": 6.175060462965121e-13}
+    },
     "cancelledInterlockClearsPendingDirection": true,
     "zeroTo20Mph": {"seconds": 7.2, "speedMps": 8.94045296363942},
     "roadCapKmh": 67.592448,
@@ -58,15 +67,15 @@
   "artifacts": {
     "html": {
       "path": "Tactical_v0.4_WIP13.html",
-      "bytes": 8428158,
-      "sha256": "1c712c27e4ae294fcb7e84e8cb272fc83895f563da9c3d7ecdfc2be4de54c244",
+      "bytes": 8428535,
+      "sha256": "374b3c31a6ec8ffe76ff627d2edb145289ff5605793c46ea0209eebf25ab2446",
       "matchesDist": true
     },
     "zip": {
       "path": "Tactical_v0.4_WIP13.zip",
-      "bytes": 1660506,
-      "sha256": "66072bdd75560e940d1919b288484e1c3d730d9144a2fc04653d9718316a75b6",
-      "crc32": "3de2dbe3",
+      "bytes": 1660652,
+      "sha256": "9444d451cd10c40b6414972fe155be745c1bb0412df16ce78a3cc1ce8367c5ea",
+      "crc32": "520ed804",
       "entries": ["Tactical_v0.4_WIP13.html"],
       "extractMatchesDist": true,
       "repeatPackagingMatches": true
