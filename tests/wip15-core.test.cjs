@@ -33,18 +33,20 @@ test('W15-C01 actual impact applies FCS fault before a queued same-tick shot and
   assert(!C.fireStatus(f.s,f.target).faults.fireControl.active);assert(C.fireStatus(f.s,f.target).aimProgress>=before.aim);
 });
 
-test('W15-C02 actual gunner fault clears current acquisition, keeps commander sensing and reacquires fresh after recovery',()=>{
-  const f=prepared(79);impactNext(f);let own=C.ownObservation(f.s,f.target,f.shooterContact.key),local=f.target.observation.contacts.A;
-  assert(C.fireStatus(f.s,f.target).faults.gunner.active);assert(!local.sources.gunner.current);assert(local.sources.commander.current);assert(!own.acquired);
-  const until=f.target.fireControl.faultUntil.gunner;while(f.s.time<until-.05)C.step(f.s,.05);assert(!f.target.observation.contacts.A.sources.gunner.current);
-  for(let i=0;i<80&&!C.ownObservation(f.s,f.target,f.shooterContact.key).acquired;i++)C.step(f.s,.05);
-  own=C.ownObservation(f.s,f.target,f.shooterContact.key);assert(own.gunnerCurrent);assert(own.acquired);
+test('W15-C02 actual gunner fault preserves gunner-only acquisition, fires a queued shot with penalty and adds no retry wait',()=>{
+  const f=prepared(79),away=Math.atan2(f.shooter.y-f.target.y,f.shooter.x-f.target.x)+Math.PI;
+  assert(C.guard(f.s,f.target,'commander',{x:f.target.x+1000*Math.cos(away),y:f.target.y+1000*Math.sin(away)}));
+  for(let i=0;i<100&&f.target.observation.contacts.A.sources.commander.current;i++)C.step(f.s,.05);
+  assert(!f.target.observation.contacts.A.sources.commander.current);assert(f.target.observation.contacts.A.sources.gunner.current);assert(C.ownObservation(f.s,f.target,f.shooterContact.key).acquired);
+  const before=impactNext(f),status=C.fireStatus(f.s,f.target,f.shooterContact.key),own=C.ownObservation(f.s,f.target,f.shooterContact.key),local=f.target.observation.contacts.A,blue=C.fireEvents(f.s,'blue').find(e=>e.type==='fired');
+  assert(status.faults.gunner.active);assert(local.sources.gunner.current);assert(!local.sources.commander.current);assert(own.acquired);assert.equal(own.status,'acquired');assert(status.aimPenalty.active);assert.equal(status.ammo,before.ammo-1);assert(blue);assert(blue.hitChanceAtFire>0);
+  const until=f.target.fireControl.faultUntil.gunner;while(f.s.time<=until+.05)C.step(f.s,.05);
+  const recovered=C.ownObservation(f.s,f.target,f.shooterContact.key);assert(recovered.gunnerCurrent);assert(recovered.acquired);assert.equal(recovered.status,'acquired');assert(!['expired','stale'].includes(recovered.status));assert(!C.fireStatus(f.s,f.target).aimPenalty.active);assert(!(f.target.observation.gunner.cooldowns.A>f.s.time));
 });
 
-test('W15-C03 actual commander fault interrupts only commander and resumes from new observation samples',()=>{
-  const f=prepared(560);impactNext(f);let local=f.target.observation.contacts.A;
-  assert(C.fireStatus(f.s,f.target).faults.commander.active);assert(!local.sources.commander.current);assert(local.sources.gunner.current);
-  const until=f.target.fireControl.faultUntil.commander;while(f.s.time<until-.05)C.step(f.s,.05);assert(!f.target.observation.contacts.A.sources.commander.current);
-  for(let i=0;i<20&&!f.target.observation.contacts.A.sources.commander.current;i++)C.step(f.s,.05);
-  local=f.target.observation.contacts.A;assert(local.sources.commander.current);assert(local.sources.gunner.current);
+test('W15-C03 actual commander fault keeps both optical channels, target command and aim penalty until timer recovery',()=>{
+  const f=prepared(560),before=impactNext(f),status=C.fireStatus(f.s,f.target,f.shooterContact.key),local=f.target.observation.contacts.A,own=C.ownObservation(f.s,f.target,f.shooterContact.key);
+  assert(status.faults.commander.active);assert(local.sources.commander.current);assert(local.sources.gunner.current);assert(own.acquired);assert(status.aimPenalty.active);assert.equal(status.ammo,before.ammo-1);
+  const until=f.target.fireControl.faultUntil.commander;while(f.s.time<=until+.05)C.step(f.s,.05);
+  assert(f.target.observation.contacts.A.sources.commander.current);assert(f.target.observation.contacts.A.sources.gunner.current);assert(C.ownObservation(f.s,f.target,f.shooterContact.key).acquired);assert(!C.fireStatus(f.s,f.target).aimPenalty.active);
 });

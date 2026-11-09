@@ -1,6 +1,6 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const F=require('../src/fire-control.js'),Combat=require('../src/combat-state.js'),Profiles=require('../src/vehicle-profiles.js');
-const {fixture}=require('./helpers/hit-fixture.cjs');
+const {fixture,exposure,pose}=require('./helpers/hit-fixture.cjs');
 const near=(a,b,e=1e-7)=>assert(Math.abs(a-b)<=e,`${a} != ${b}`);
 const conserve=view=>assert.equal(view.loading.chamber+view.loading.stored,view.ammo);
 function waitUntil(f,predicate,limit=400){for(let i=0;i<limit&&!predicate();i++)f.step();assert(predicate(),'condition timeout');}
@@ -47,6 +47,7 @@ test('W15-D02 near non-penetration can destroy once while duplicate impact chang
 
 test('W15-F01 temporary fault probability, kind and duration boundaries follow the profile',()=>{
  const p=Profiles.M1A2_1998;near(F.faultChance(p,0),.02);near(F.faultChance(p,202.5),.11);near(F.faultChance(p,405),.20);near(F.faultChance(p,999),.20);near(F.faultDuration(p,0),3);near(F.faultDuration(p,1),8);
+ near(p.fireControl.readiness.temporaryFault.observationAimRateMultiplier,.70);near(p.fireControl.readiness.temporaryFault.observationSigmaMultiplier,1.25);
  assert.equal(F.faultKind(p,0),'fireControl');assert.equal(F.faultKind(p,.499999),'fireControl');assert.equal(F.faultKind(p,.5),'commander');assert.equal(F.faultKind(p,.75),'gunner');
 });
 
@@ -60,11 +61,30 @@ test('W15-F02 only turret hits schedule one bounded fault and repeated kinds nev
  f.u.combat={status:'destroyed'};assert.equal(f.runtime.react(f.u,record('dead'),3,{occurrence:0,kind:1,duration:1}).fault,null);
 });
 
-test('W15-F03 FCS and gunner faults block queued fire without spending a round while reload keeps moving',()=>{
+test('W15-F03 FCS fault blocks queued fire without spending a round while observation faults preserve reload and aim',()=>{
  const f=fixture();f.step(1.2);const before=f.view();assert(f.fire().ok);
  f.runtime.react(f.u,{id:'fcs',applied:true,hit:true,zone:'turretFront',computedDamage:0,penetrated:false,nearNonPenetration:false,destroyed:false},f.time(),{occurrence:0,kind:0,duration:0});
+ f.u.fireControl.faultUntil.gunner=f.u.fireControl.faultUntil.fireControl;
  f.step();let v=f.view();assert.equal(v.ammo,before.ammo);assert.equal(v.shotCount,0);assert.equal(f.u.fireControl.lastRejection,'fcs-fault');
- f.u.fireControl.faultUntil.fireControl=0;f.step();assert(f.fire().ok);f.step();v=f.view();assert.equal(v.ammo,41);const progress=v.loading.progress;
+ f.u.fireControl.faultUntil.fireControl=0;f.u.fireControl.faultUntil.gunner=0;f.step();assert(f.fire().ok);f.step();v=f.view();assert.equal(v.ammo,41);const progress=v.loading.progress;
  f.runtime.react(f.u,{id:'gunner',applied:true,hit:true,zone:'turretFront',computedDamage:0,penetrated:false,nearNonPenetration:false,destroyed:false},f.time(),{occurrence:0,kind:.99,duration:0});
- f.step(1);v=f.view();assert.equal(v.reason,'gunner-fault');assert(v.loading.progress>progress);assert.equal(v.aimProgress,0);
+ f.step(1);v=f.view();assert.equal(v.reason,'reloading');assert(v.loading.progress>progress);assert(v.aimProgress>0);assert(v.aimPenalty.active);near(v.aimPenalty.aimRateMultiplier,.70);near(v.aimPenalty.errorSigmaMultiplier,1.25);
+});
+
+test('W15-F04 commander and gunner faults slow aim once, keep completed aim and restore normal multipliers',()=>{
+ const normal=fixture(),impaired=fixture();impaired.u.fireControl.faultUntil.gunner=10;
+ normal.step(1);impaired.step(1);near(impaired.u.fireControl.aimElapsed/normal.u.fireControl.aimElapsed,.70);near(impaired.u.fireControl.layTime/normal.u.fireControl.layTime,.70);
+ impaired.u.fireControl.faultUntil.commander=10;const before=impaired.u.fireControl.aimElapsed;impaired.step(.1);near(impaired.u.fireControl.aimElapsed-before,.07);
+ impaired.u.fireControl.faultUntil.commander=0;impaired.u.fireControl.faultUntil.gunner=0;const restored=impaired.u.fireControl.aimElapsed;impaired.step(.1);near(impaired.u.fireControl.aimElapsed-restored,.1);assert.deepEqual(impaired.view().aimPenalty,{active:false,aimRateMultiplier:1,errorSigmaMultiplier:1});
+ const complete=fixture();complete.step(1.2);near(complete.view().aimProgress,1);complete.u.fireControl.faultUntil.commander=10;complete.step(.05);near(complete.view().aimProgress,1);
+});
+
+test('W15-F05 observation error is applied at queued fire and remains frozen after recovery in flight',()=>{
+ const f=fixture();f.c.pose=pose(1900);f.step(1.2);assert(f.view().canFire);const beforeLay=f.u.fireControl.layTime;assert(f.fire().ok);
+ f.u.fireControl.faultUntil.gunner=f.time()+.1;f.step();const fired=f.runtime.events('blue').find(e=>e.type==='fired');assert(fired);
+ const lay=beforeLay+.05*.70,normal=F.estimate(f.u,f.c.pose,exposure(),f.profile.fireControl,{x:0,y:0},lay,1),impaired=F.estimate(f.u,f.c.pose,exposure(),f.profile.fireControl,{x:0,y:0},lay,1.25);
+ near(fired.hitChanceAtFire,impaired.hitChance);assert(fired.hitChanceAtFire<normal.hitChance);f.step(.1);assert(!f.view().aimPenalty.active);f.land();
+ const record=f.runtime.debugRecords()[0];assert(record.aimPenaltyAtFire.active);near(record.aimPenaltyAtFire.errorSigmaMultiplier,1.25);near(record.sigmaAtFire.multiplier,1.25);near(record.hitChanceAtFire,impaired.hitChance);
+ const sight={...exposure(),presented:f.profile.fireControl.presented,pose:f.c.pose},shot={origin:record.origin,beta:0,predicted:{x:1900,y:0},pose:f.c.pose,fireControl:f.profile.fireControl,fireExposure:sight,aim:impaired.breakdown.aim,sigma:record.sigmaAtFire};
+ near(record.finalHitChance,F.impactEvaluation(shot,sight).finalHitChance);const normalSigma={...record.sigmaAtFire,multiplier:1,x:record.sigmaAtFire.x/1.25,z:record.sigmaAtFire.z/1.25};assert(record.finalHitChance<F.impactEvaluation({...shot,sigma:normalSigma},sight).finalHitChance);
 });

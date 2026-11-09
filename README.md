@@ -1,12 +1,12 @@
 # TACTICAL v0.4 WIP15 — 가변 장전·피격 반응
 
-WIP15는 5.98초 실제 장전, 연속 사격 피로, 피격 동요, 근접 비관통 HP 피해와 포탑 피격의 사통·전차장·포수 일시 이상을 기존 관측·자동교전·전투 경로에 연결한다. 양 팀은 같은 프로파일·고정 틱·결정 난수 규칙을 사용한다.
+WIP15는 5.98초 실제 장전, 연속 사격 피로, 피격 동요, 근접 비관통 HP 피해와 포탑 피격의 사통·전차장·포수 일시 이상을 기존 관측·자동교전·전투 경로에 연결한다. 전차장·포수 이상 중에도 정상 관측과 표적 명령을 유지하며 조준 진행은 0.70배, 유효 오차는 1.25배가 된다. 양 팀은 같은 프로파일·고정 틱·결정 난수 규칙을 사용한다.
 
 - 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip15-reload-reactions/Tactical_v0.4_WIP15.zip). 압축을 풀면 `Tactical_v0.4_WIP15.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP15.html](Tactical_v0.4_WIP15.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP15 구현](docs/RELOAD_AND_TEMPORARY_REACTIONS_WIP15.md) · [릴리스·검증](TACTICAL_RELEASE_WIP15.md) · [체크섬](SHA256SUMS_WIP15.txt) · [작업 목차](docs/tasks/README.md).
 - 기준 main `c83024a`에서 `feat/wip15-reload-reactions` 브랜치를 만들었다. main 병합은 별도 검토에서 결정한다.
-- 실제 Chromium에서 양 팀 자동 장전·연속 사격, 아군 상태 표시, 사통·포수·전차장 일시 이상과 새 관측 기반 복구를 확인했다. 수치는 게임 튜닝값이며 실장비 성능이나 승무원·장비 신뢰도 측정값이 아니다.
+- 실제 Chromium에서 양 팀 자동 장전·연속 사격, 사통 차단, 포수·전차장 이상 중 관측·지정·자동사격 유지와 배율 복원을 확인했다. 수치는 게임 튜닝값이며 실장비 성능이나 승무원·장비 신뢰도 측정값이 아니다.
 
 ## 실행과 조작
 

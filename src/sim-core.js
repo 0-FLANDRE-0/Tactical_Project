@@ -310,7 +310,7 @@ const TacticalCore = (() => {
   }
   const observationRuntimes=new WeakMap();
   function observationFor(s){
-    if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,channelOperational:(u,ch,now)=>fireFor(s).channelOperational(u,ch,now),onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
+    if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
     return observationRuntimes.get(s);
   }
   const aiRuntimes=new WeakMap();
@@ -408,7 +408,6 @@ const TacticalCore = (() => {
         }
         return TacticalCombatState.publicRecord(record);
       },
-      onTemporaryFault:(target,kind,now)=>{if(kind==='commander'||kind==='gunner')TacticalObservation.interrupt(target,kind,now);},
       onFireBlocked:(u,target,reason,now)=>observationFor(s).retarget(u,target,reason,now),
       freshSight:(u,id)=>{
       const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'fresh-sight-failed'};

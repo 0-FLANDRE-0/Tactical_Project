@@ -11,13 +11,13 @@
     {
       "name": "complete Node test runner including browser scripts",
       "status": "passed",
-      "passed": 276,
+      "passed": 278,
       "failed": 0
     },
     {
       "name": "non-browser Node test runner",
       "status": "passed",
-      "passed": 273,
+      "passed": 275,
       "failed": 0
     },
     {
@@ -72,7 +72,8 @@
       "passed": 4,
       "failed": 0,
       "browser": "156.0.8078.79",
-      "evidence": "tests/releases/WIP15-browser.json"
+      "evidence": "tests/releases/WIP15-browser.json",
+      "note": "Seeds 26/79/560: FCS blocking plus observation-preserving aim/accuracy penalties and automatic fire during commander/gunner faults"
     },
     {
       "name": "actual Chromium WIP12 effects regression",
@@ -90,15 +91,15 @@
   ],
   "performance": {
     "readiness100": {
-      "baselineMedianPerTickMs": 0.005470505,
-      "currentMedianPerTickMs": 0.0142488,
-      "absoluteDeltaMs": 0.008778295
+      "baselineMedianPerTickMs": 0.0054705049999999745,
+      "currentMedianPerTickMs": 0.01997895,
+      "absoluteDeltaMs": 0.014508445000000024
     },
     "map": {
-      "baselineMedianMs": 0.282987,
-      "currentMedianMs": 0.318741,
-      "baselineP95Ms": 0.639014,
-      "currentP95Ms": 0.694698
+      "baselineMedianMs": 0.2829870000000483,
+      "currentMedianMs": 0.34508099999993647,
+      "baselineP95Ms": 0.6390139999999747,
+      "currentP95Ms": 0.7680690000000823
     },
     "evidence": [
       "tests/releases/WIP15-readiness-benchmark.json",
@@ -109,17 +110,17 @@
   "artifacts": {
     "html": {
       "path": "Tactical_v0.4_WIP15.html",
-      "bytes": 8454050,
-      "sha256": "88effa2145f34750c7cce761fe5f9fc6ef72a41c2a65034e537ad0ccf5a685ba",
+      "bytes": 8455158,
+      "sha256": "b7fb2d511315676859b69ee6cd6eac4051c0614b485a478c875c6fb9339e4f58",
       "matchesDist": true
     },
     "zip": {
       "path": "Tactical_v0.4_WIP15.zip",
-      "bytes": 1668278,
-      "sha256": "ecc7d8a2b7a7c83c2071cfc889ea3eb50ad6ea8d6731e006452057755bea6b86",
+      "bytes": 1668507,
+      "sha256": "773176585504959007b1d0ad85e3c71c5db98de8ce47904098d9e80909c9fe30",
       "entry": "Tactical_v0.4_WIP15.html",
-      "entryBytes": 8454050,
-      "crc32": "bbef589b",
+      "entryBytes": 8455158,
+      "crc32": "49b02b6b",
       "repeatPackageByteIdentical": true
     }
   },
@@ -130,5 +131,8 @@
     "ammunition rack transfer, resupply or selection",
     "additional impact-velocity damage factor",
     "new vehicle or ammunition profiles"
-  ]
+  ],
+  "revisionMain": "eb485b7c9022b43d6edfe1ee5029ac7289e00d0b",
+  "draftHead": "296053940094cb07b02a337faadb6b053617c769",
+  "revision": "Commander/gunner faults preserve normal observation and target commands while applying one 0.70 aim-rate and 1.25 effective-sigma penalty; fire-control faults still pause aim and new fire."
 }

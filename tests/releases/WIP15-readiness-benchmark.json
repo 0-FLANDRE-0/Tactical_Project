@@ -10,20 +10,20 @@
       "simulationSeconds": 10,
       "ticks": 200,
       "rounds": 40,
-      "medianMs": 1.485090999999997,
-      "p95Ms": 3.066787000000005,
-      "perTickMedianMs": 0.007425454999999985,
-      "perTickP95Ms": 0.015333935000000026
+      "medianMs": 2.1981979999999908,
+      "p95Ms": 8.396507,
+      "perTickMedianMs": 0.010990989999999954,
+      "perTickP95Ms": 0.041982535
     },
     {
       "vehicles": 100,
       "simulationSeconds": 10,
       "ticks": 200,
       "rounds": 40,
-      "medianMs": 2.8497600000000034,
-      "p95Ms": 3.9505809999999997,
-      "perTickMedianMs": 0.014248800000000016,
-      "perTickP95Ms": 0.019752904999999998
+      "medianMs": 3.9957899999999995,
+      "p95Ms": 5.868827999999951,
+      "perTickMedianMs": 0.01997895,
+      "perTickP95Ms": 0.029344139999999755
     }
   ]
 }

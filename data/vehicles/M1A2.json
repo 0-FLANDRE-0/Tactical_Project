@@ -258,6 +258,8 @@
             3,
             8
           ],
+          "observationAimRateMultiplier": 0.7,
+          "observationSigmaMultiplier": 1.25,
           "kinds": {
             "fireControl": 0.5,
             "commander": 0.25,
@@ -320,6 +322,12 @@
       "title": "TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md",
       "path": "../../archive/instructions/TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md",
       "scope": "User-confirmed fictional reload, fatigue, shock, near-nonpenetration and temporary fault game rules; not measured vehicle or crew performance"
+    },
+    {
+      "id": "TACTICAL_WIP15_OBSERVATION_FAULT_REVISION",
+      "title": "TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md",
+      "path": "../../archive/instructions/TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md",
+      "scope": "User-directed revision that preserves optical observation while applying fictional 0.70 aim-rate and 1.25 effective-error multipliers; not measured equipment performance"
     },
     {
       "id": "USER_TOP_VIEW",
@@ -491,8 +499,11 @@
     },
     "fireControl.readiness": {
       "status": "fictional game tuning",
-      "source": "TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS",
-      "note": "5.98s base reload, 14s work cap, shot-count fatigue, impact shock, near-nonpenetration damage and single temporary turret fault are deterministic simulation rules. They are not real loading, crew injury or component reliability measurements."
+      "sources": [
+        "TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS",
+        "TACTICAL_WIP15_OBSERVATION_FAULT_REVISION"
+      ],
+      "note": "5.98s base reload, 14s work cap, shot-count fatigue, impact shock, near-nonpenetration damage and single temporary turret fault are deterministic simulation rules. Commander/gunner faults keep normal optical rules and apply one 0.70 aim-rate plus 1.25 effective-error penalty while active; fire-control faults still pause aim and new fire. They are not real loading, crew injury or component reliability measurements."
     },
     "fireControl.impact": {
       "status": "fictional display tuning",
@@ -518,7 +529,7 @@
   "limits": [
     "The WIP13 drivetrain is a deterministic lightweight game approximation, not a full engine, converter, hydraulic, track-contact or suspension simulation",
     "WIP14 enemy missions and movement-fire policy are deterministic game behavior, not a claim about real doctrine or fire-control certification",
-    "WIP15 readiness and temporary reaction values are fictional game parameters, not real crew timing, injury, reliability or subsystem damage data",
+    "WIP15 readiness, 0.70/1.25 observation-fault penalties and temporary reaction values are fictional game parameters, not real crew timing, injury, reliability or subsystem damage data",
     "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
     "No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities"
   ]

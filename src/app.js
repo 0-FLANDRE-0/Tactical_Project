@@ -532,7 +532,8 @@
     const combat=C.combatView(u),destroyed=combat?.status==='destroyed';
     const firing=C.fireStatus(sim,u,targetId),fireText=firing.status==='ready'?'조준 완료':firing.status==='aiming'?'조준 '+Math.round(firing.aimProgress*100)+'%':fireReasons[firing.reason]||'표적 미확보';
     ui.setText($('fireState'),(firing.mode==='auto'?'자동':'보류')+' · '+fireText+' · 시험탄 '+firing.ammo);
-    const load=firing.loading,faultNames={fireControl:'사통',commander:'전차장 관측',gunner:'포수 관측'},faultText=Object.entries(firing.faults).filter(([,v])=>v.active).map(([k,v])=>faultNames[k]+' '+v.remaining.toFixed(1)+'초').join(' / ');
+    const load=firing.loading,fcsFault=firing.faults.fireControl,observationFaults=[firing.faults.commander,firing.faults.gunner].filter(v=>v.active),observationRemaining=observationFaults.length?Math.max(...observationFaults.map(v=>v.remaining)):0;
+    const faultText=[fcsFault.active?'사통 이상 '+fcsFault.remaining.toFixed(1)+'초':'',observationFaults.length?'관측장비 불안정 · 조준 저하 '+observationRemaining.toFixed(1)+'초':''].filter(Boolean).join(' / ');
     const loadText=load.loaded?'장전탄 '+load.chamber+' · 저장 '+load.stored:load.estimatedSeconds===null?'장전할 탄 없음':'장전 '+Math.round(load.progress*100)+'% · 예상 '+load.estimatedSeconds.toFixed(1)+'초';
     ui.setText($('readinessState'),loadText+(load.fatigueSeconds>.005?' · 피로 +'+load.fatigueSeconds.toFixed(2)+'초':'')+(load.shockSeconds>.005?' · 동요 +'+load.shockSeconds.toFixed(2)+'초':'')+(faultText?' · 대응 '+faultText:''));
     ui.setText($('fireMode'),firing.mode==='auto'?'자동':'보류');$('fireMode').setAttribute('aria-pressed',String(firing.mode==='auto'));$('fireMode').classList.toggle('active',firing.mode==='auto');

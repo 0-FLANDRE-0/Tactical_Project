@@ -40,36 +40,36 @@
         "simulationSeconds": 10,
         "ticks": 200,
         "rounds": 40,
-        "medianMs": 1.485090999999997,
-        "p95Ms": 3.066787000000005,
-        "perTickMedianMs": 0.007425454999999985,
-        "perTickP95Ms": 0.015333935000000026
+        "medianMs": 2.1981979999999908,
+        "p95Ms": 8.396507,
+        "perTickMedianMs": 0.010990989999999954,
+        "perTickP95Ms": 0.041982535
       },
       {
         "vehicles": 100,
         "simulationSeconds": 10,
         "ticks": 200,
         "rounds": 40,
-        "medianMs": 2.8497600000000034,
-        "p95Ms": 3.9505809999999997,
-        "perTickMedianMs": 0.014248800000000016,
-        "perTickP95Ms": 0.019752904999999998
+        "medianMs": 3.9957899999999995,
+        "p95Ms": 5.868827999999951,
+        "perTickMedianMs": 0.01997895,
+        "perTickP95Ms": 0.029344139999999755
       }
     ],
     "deltas": [
       {
         "vehicles": 50,
-        "medianPerTickMs": 0.004316565000000026,
-        "p95PerTickMs": 0.005015615000000048,
-        "medianPercent": 138.84585816803045,
-        "p95Percent": 48.6088336085725
+        "medianPerTickMs": 0.007882099999999994,
+        "p95PerTickMs": 0.03166421500000002,
+        "medianPercent": 253.53421960893107,
+        "p95Percent": 306.8737449507293
       },
       {
         "vehicles": 100,
-        "medianPerTickMs": 0.008778295000000042,
-        "p95PerTickMs": 0.013264910000000043,
-        "medianPercent": 160.4658984865215,
-        "p95Percent": 204.4531476981738
+        "medianPerTickMs": 0.014508445000000024,
+        "p95PerTickMs": 0.0228561449999998,
+        "medianPercent": 265.2121696260234,
+        "p95Percent": 352.28364078578903
       }
     ]
   },
@@ -82,12 +82,12 @@
       "medianOfTickP95Ms": 0.6390139999999747
     },
     "current": {
-      "medianOfTickMediansMs": 0.3187409999999318,
-      "medianOfTickP95Ms": 0.694697999999903
+      "medianOfTickMediansMs": 0.34508099999993647,
+      "medianOfTickP95Ms": 0.7680690000000823
     },
     "deltas": {
-      "medianPercent": 12.634502644954498,
-      "p95Percent": 8.714050083398886
+      "medianPercent": 21.94235070864654,
+      "p95Percent": 20.195958148039427
     },
     "baselineTrials": [
       {
@@ -170,9 +170,9 @@
         "enemyVehicles": 3,
         "simulationSeconds": 20,
         "warmupSeconds": 2,
-        "medianTickMs": 0.40201600000000326,
-        "p95TickMs": 1.1686729999999557,
-        "maxTickMs": 4.8262620000000425,
+        "medianTickMs": 0.46251799999998866,
+        "p95TickMs": 1.4520219999999995,
+        "maxTickMs": 3.133489999999995,
         "aiDecisions": 90,
         "pathRequests": 3,
         "pathFailures": 0,
@@ -194,9 +194,9 @@
         "enemyVehicles": 3,
         "simulationSeconds": 20,
         "warmupSeconds": 2,
-        "medianTickMs": 0.3187409999999318,
-        "p95TickMs": 0.694697999999903,
-        "maxTickMs": 1.5244699999999511,
+        "medianTickMs": 0.34508099999993647,
+        "p95TickMs": 0.7680690000000823,
+        "maxTickMs": 1.2989999999999782,
         "aiDecisions": 90,
         "pathRequests": 3,
         "pathFailures": 0,
@@ -218,9 +218,9 @@
         "enemyVehicles": 3,
         "simulationSeconds": 20,
         "warmupSeconds": 2,
-        "medianTickMs": 0.2576889999999139,
-        "p95TickMs": 0.5375410000000329,
-        "maxTickMs": 1.313951999999972,
+        "medianTickMs": 0.306803000000059,
+        "p95TickMs": 0.6728360000000748,
+        "maxTickMs": 1.4078950000000532,
         "aiDecisions": 90,
         "pathRequests": 3,
         "pathFailures": 0,
@@ -239,7 +239,8 @@
     ],
     "notes": [
       "The gameplay change intentionally lowers firing frequency and therefore changes destruction, surviving observers and LOS sample counts; whole-map deltas are not an isolated readiness attribution.",
-      "Path requests and failures stayed equal for all three seeds; no renderer work is included."
+      "Path requests and failures stayed equal for all three seeds; no renderer work is included.",
+      "The revised observation-fault path keeps normal LOS sampling and adds only constant-time aim/error multiplier checks; this rerun replaces the draft WIP15 current measurements."
     ]
   }
 }

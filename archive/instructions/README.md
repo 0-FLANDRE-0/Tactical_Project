@@ -4,7 +4,7 @@
 
 | 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-09) |
 |---|---|---|---|---|
-| WIP15 가변 장전·피격 동요·장비 일시 이상 | [TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) | — | PR 검토 대기 | 구현·검증 완료 · main 미병합 |
+| WIP15 가변 장전·피격 동요·장비 일시 이상 | [기본 지시서](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) · [관측 이상 수정](TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md) | — | PR #14 | 수정 구현·재검증 완료 · main 미병합 |
 | WIP09 명중 확률 | [TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md](TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md) | [wip09_hit_reference.py](wip09_hit_reference.py) | #5 | 검토 통과 · main 병합 |
 | WIP10 발사·비행·착탄 | [TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md](TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md) | [wip10_hit_reference.py](wip10_hit_reference.py) | #6 | 검토 통과 · main 병합 |
 | WIP11A 피해·격파 | [TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md](../../docs/TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md) | — | #9 | 검토 통과 · main 병합 |
