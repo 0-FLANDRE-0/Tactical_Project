@@ -6,9 +6,9 @@
 
 | 데이터 범위 | 최신 정리 문서 | 내용 |
 |---|---|---|
-| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | WIP14 최종 수정·재검증 후 main 통합, 장전·장전수 상태의 후속 논의와 장기 계획·결정 대기·정보 공개 방향. **새 전투 수치 확정 없음** (최종 갱신 2026-11-09) |
+| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | WIP14 main 통합 완료. **WIP15 가변 장전·피격 동요·일시 이상·근접 비관통 피해 지시 등록, 구현 대기**. 장기 계획·결정 대기·정보 공개 방향 (최종 갱신 2026-11-09) |
 | **보병 설계 논의 백업** | [infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md](infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md) | 병사별 누적 부상·개별 파편 피격, AI/플레이어 역할, 보병 대전차탄 후보값, 재보급·프리셋 변경. **방향·예시·제안·미정 구분 / 코드 미구현** |
-| **작업 지시서 백업** | [instructions/](instructions/) | 완료한 WIP09~WIP14 지시서·기준표. 작업 상태와 완료 안내는 docs/tasks에서 관리 |
+| **작업 지시서 백업** | [instructions/](instructions/) | 완료한 WIP09~WIP14 지시서·기준표와 [WIP15 진행 지시서](../docs/tasks/TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) 링크. 완료 전 원본은 docs/tasks에서 관리 |
 | **M1 계열 상면도 뷰어** | [art/M1_Abrams_TopView.html](art/M1_Abrams_TopView.html) | M1A2/M1A1/M1A1 HA 단독 뷰어·삽입용 HTML, 원본 JS, 포탑 링 실측 확인 이미지 |
 | **전차 방호력·차량 HP (본편 32종 + 확장 2종)** | [tanks/README.md](tanks/README.md) | 7구역 KE(CE), ERA/BDD/D-Tech, **§9 차량 최대 HP 34종**, 계열·연식별 구분. **HP 확정 데이터 / 피해량·모듈 HP 미정** |
 | **관통·피해·모듈 HP 설계** | [combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md](combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) | M829A1 기준 피해 380 및 게임 피해 곡선. **M829A2는 A1형 배율 공유·100% 기준 405, WIP11 단일 시험탄**. M830은 시험 후보, 탄속·모듈 피해 미정 |
