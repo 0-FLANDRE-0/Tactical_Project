@@ -1,0 +1,153 @@
+{
+  "version": "0.4-WIP15",
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/{burst,fault}",
+  "checks": [
+    "both teams auto-reload and continue firing with conserved ammunition and friendly reload UI",
+    "seed 26 actual fireControl fault interrupts and recovers",
+    "seed 79 actual gunner fault interrupts and recovers",
+    "seed 560 actual commander fault interrupts and recovers"
+  ],
+  "passed": 4,
+  "failed": 0,
+  "evidence": {
+    "browser": "156.0.8078.79",
+    "standalone": "dist/index.html",
+    "forcedOutcomeControls": false,
+    "burst": {
+      "time": 32.50000000000029,
+      "a": {
+        "shots": 4,
+        "ammo": 38,
+        "burst": 4,
+        "fatigue": 0.35,
+        "times": [
+          4.799999999999991,
+          12.950000000000049,
+          22.350000000000183,
+          32.50000000000029
+        ]
+      },
+      "t": {
+        "shots": 5,
+        "ammo": 37,
+        "burst": 5,
+        "fatigue": 0.7,
+        "times": [
+          3.049999999999997,
+          9.049999999999994,
+          15.050000000000079,
+          21.050000000000164,
+          28.650000000000272
+        ]
+      },
+      "loadingText": "장전 0% · 예상 8.2초 · 동요 +2.17초"
+    },
+    "fireControl": {
+      "seed": 26,
+      "active": {
+        "time": 5.699999999999988,
+        "fault": {
+          "kind": "fireControl",
+          "duration": 3.880996339255944,
+          "until": 9.530996339255932,
+          "chance": 0.02,
+          "occurrence": 0.006487841485068202
+        },
+        "ammo": 42,
+        "shotCount": 0,
+        "local": {
+          "commander": true,
+          "gunner": true
+        }
+      },
+      "recovered": {
+        "time": 9.600000000000001,
+        "loading": {
+          "loaded": true,
+          "progress": 1,
+          "estimatedSeconds": 0,
+          "currentWorkSeconds": 5.98,
+          "chamber": 1,
+          "stored": 41,
+          "burstShots": 0,
+          "fatigueSeconds": 0,
+          "shockSeconds": 0
+        },
+        "aim": 1
+      },
+      "ui": "장전탄 1 · 저장 41 · 동요 +0.20초 · 대응 사통 3.7초"
+    },
+    "gunner": {
+      "seed": 79,
+      "active": {
+        "time": 6.099999999999986,
+        "fault": {
+          "kind": "gunner",
+          "duration": 7.2266381124500185,
+          "until": 13.276638112450005,
+          "chance": 0.02,
+          "occurrence": 0.013062258251011372
+        },
+        "ammo": 42,
+        "shotCount": 0,
+        "local": {
+          "commander": true,
+          "gunner": false
+        }
+      },
+      "recovered": {
+        "time": 13.300000000000054,
+        "loading": {
+          "loaded": true,
+          "progress": 1,
+          "estimatedSeconds": 0,
+          "currentWorkSeconds": 5.98,
+          "chamber": 1,
+          "stored": 41,
+          "burstShots": 0,
+          "fatigueSeconds": 0,
+          "shockSeconds": 0
+        },
+        "aim": 0
+      },
+      "ui": "장전탄 1 · 저장 41 · 동요 +0.20초 · 대응 포수 관측 7.1초"
+    },
+    "commander": {
+      "seed": 560,
+      "active": {
+        "time": 5.299999999999989,
+        "fault": {
+          "kind": "commander",
+          "duration": 4.361340560251847,
+          "until": 9.611340560251836,
+          "chance": 0.02,
+          "occurrence": 0.006849116878584027
+        },
+        "ammo": 42,
+        "shotCount": 0,
+        "local": {
+          "commander": false,
+          "gunner": true
+        }
+      },
+      "recovered": {
+        "time": 9.700000000000003,
+        "loading": {
+          "loaded": true,
+          "progress": 1,
+          "estimatedSeconds": 0,
+          "currentWorkSeconds": 5.98,
+          "chamber": 1,
+          "stored": 41,
+          "burstShots": 0,
+          "fatigueSeconds": 0,
+          "shockSeconds": 0
+        },
+        "aim": 1
+      },
+      "ui": "장전탄 1 · 저장 41 · 동요 +0.20초 · 대응 전차장 관측 4.2초"
+    }
+  },
+  "scope": "Actual standalone app, automatic reload/continuous fire for both teams, friendly readiness UI, deterministic unforced FCS/gunner/commander temporary faults and fresh-channel recovery."
+}

@@ -1,0 +1,29 @@
+{
+  "version": "0.4-WIP15",
+  "node": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "fixture": "50/100 independent fire-control states; one third begin reloading when the profile supports readiness; 1s warmup + 10s/200 fixed ticks; 40 rounds",
+  "scope": "Fire-control/readiness state only; no LOS, observation, pathfinding, mobility, effects or render.",
+  "results": [
+    {
+      "vehicles": 50,
+      "simulationSeconds": 10,
+      "ticks": 200,
+      "rounds": 40,
+      "medianMs": 1.485090999999997,
+      "p95Ms": 3.066787000000005,
+      "perTickMedianMs": 0.007425454999999985,
+      "perTickP95Ms": 0.015333935000000026
+    },
+    {
+      "vehicles": 100,
+      "simulationSeconds": 10,
+      "ticks": 200,
+      "rounds": 40,
+      "medianMs": 2.8497600000000034,
+      "p95Ms": 3.9505809999999997,
+      "perTickMedianMs": 0.014248800000000016,
+      "perTickP95Ms": 0.019752904999999998
+    }
+  ]
+}

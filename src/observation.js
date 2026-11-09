@@ -26,7 +26,13 @@ const TacticalObservation=(()=>{
     return true;
   }
   function resume(u,ch,time=0){if(!['commander','gunner'].includes(ch))return false;Object.assign(init(u)[ch],{mode:'auto',point:null,interestUntil:time+8,expiresAt:null,focus:null});return true;}
-  function create({profileOf,exposure,seed=7,onEvent=null}){
+  function interrupt(u,ch,time=0){
+    if(!['commander','gunner'].includes(ch))return false;const s=init(u);
+    for(const c of Object.values(s.contacts)){const source=c.sources?.[ch];if(source)source.current=false;c.channels=c.channels.filter(v=>v!==ch);c.current=!!(c.detected&&channels.some(v=>c.sources?.[v]?.current));if(ch==='gunner')c.gunnerSince=null;}
+    const d=mission(s);if(ch==='gunner'&&d?.status==='acquired'){d.status='acquiring';d.reason='gunner-fault';d.expiresAt=Number.MAX_VALUE;}
+    s[ch].focus=null;s[ch].interruptedAt=time;return true;
+  }
+  function create({profileOf,exposure,seed=7,onEvent=null,channelOperational=()=>true}){
     let tick=0,time=0,teams=new Map();
     const stats={queries:0,candidates:0,samples:0,rayQueries:0,rayCacheHits:0},geometryCaches=new WeakMap();
     function emit(u,type,c=null,extra={}){
@@ -111,7 +117,7 @@ const TacticalObservation=(()=>{
         if(target.team===u.team||target===u)continue;
         const tp=profileOf(target),pad=Math.hypot(tp.model.hullLength/2,tp.model.width/2),distance=Math.hypot(target.x-u.x,target.y-u.y);
         const eligible=channels.filter(ch=>{
-          const e=p.sensors[ch];if(!e.enabled||distance>e.range+pad)return false;if(ch==='ambient'||distance<=pad)return true;
+          const e=p.sensors[ch];if(!e.enabled||distance>e.range+pad)return false;if(ch!=='ambient'&&!channelOperational(u,ch,now))return false;if(ch==='ambient'||distance<=pad)return true;
           return Math.abs(diff(Math.atan2(target.y-u.y,target.x-u.x),ch==='gunner'?u.turret:u.commander))<=e.fov/2+Math.asin(Math.min(1,pad/distance));
         });if(!eligible.length)continue;stats.candidates++;
         const geometry=new Map(),result={};
@@ -275,6 +281,6 @@ const TacticalObservation=(()=>{
     return{advance,contacts,direct,ownStatus,retarget,stats};
   }
   function view(u,ch='commander',time=0){const o=init(u)[ch];return{mode:o.mode==='guard'?'fixed':'idle',turret:u.turret,gaze:u.commander,direction:o.mode==='guard'?Math.atan2(o.point.y-u.y,o.point.x-u.x):null,remaining:o.expiresAt===null?null:Math.max(0,o.expiresAt-time),point:o.point?{...o.point}:null};}
-  return Object.freeze({create,init,guard,resume,cancel,view,hash});
+  return Object.freeze({create,init,guard,resume,cancel,interrupt,view,hash});
 })();
 if(typeof module!=='undefined')module.exports=TacticalObservation;

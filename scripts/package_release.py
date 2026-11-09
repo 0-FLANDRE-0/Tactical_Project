@@ -14,7 +14,7 @@ html = root / f'Tactical_v0.4_{version}.html'
 archive = html.with_suffix('.zip')
 html.write_bytes(raw)
 # Stable timestamp and permissions make repeat packaging reproducible.
-info = ZipInfo(html.name, date_time=(2026, 11, 9 if version in {'WIP12', 'WIP13', 'WIP14'} else 8, 0, 0, 0))
+info = ZipInfo(html.name, date_time=(2026, 11, 9 if version in {'WIP12', 'WIP13', 'WIP14', 'WIP15'} else 8, 0, 0, 0))
 info.compress_type = ZIP_DEFLATED
 info.external_attr = 0o100644 << 16
 with ZipFile(archive, 'w', compression=ZIP_DEFLATED, compresslevel=9) as out:

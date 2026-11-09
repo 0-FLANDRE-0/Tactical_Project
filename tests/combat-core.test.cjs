@@ -11,7 +11,7 @@ test('V08 an unobserved resolved hit still damages internally without public arm
 });
 
 test('V09/V14 cumulative damage destroys once, rejects actions and leaves a blocking observed wreck',()=>{
- const f=ready(5),key=f.contact().key;let shots=0;while(f.t.combat.status!=='destroyed'&&shots<8){fireAndLand(f);shots++;if(f.t.combat.status!=='destroyed')f.step(44);}
+ const f=ready(5),key=f.contact().key;let shots=0;while(f.t.combat.status!=='destroyed'&&shots<8){fireAndLand(f);shots++;if(f.t.combat.status!=='destroyed')f.step(140);}
  assert.equal(f.t.combat.status,'destroyed');assert.equal(f.t.combat.hp,0);assert.equal(f.C.combatStats(f.s).destroyed,1);assert.equal(f.t.state,'격파');assert.equal(f.t.speed,0);assert.equal(f.t.path.length,0);
  const wreck=f.C.contacts(f.s).find(c=>c.key===key);assert(wreck?.wreck&&wreck.destroyed);assert(!wreck.current);assert.equal(f.C.designate(f.s,f.u,key),false);assert.equal(f.C.requestFire(f.s,f.u,key).ok,false);assert.equal(f.C.passable(f.t.x,f.t.y,f.s.units,f.u),false);
  assert.equal(f.C.issueMove(f.t,{x:f.t.x+20,y:f.t.y},false,f.s.units).ok,false);assert.equal(f.C.guard(f.s,f.t,'gunner',{x:0,y:0}),false);assert.equal(f.C.resumeObservation(f.s,f.t,'gunner'),false);assert.equal(f.C.cancelDesignation(f.s,f.t),false);
@@ -24,7 +24,7 @@ test('V10 a round already in flight survives shooter destruction; later rounds a
 });
 
 test('V12 fixed-step batching and repeated public/UI-style reads reproduce HP and records',()=>{
- function run(batch){const f=ready(31);for(let shot=0;shot<3;shot++){const key=f.contact().key;assert(f.C.requestFire(f.s,f.u,key).ok);for(let i=0;i<50;i+=batch){f.step(batch);for(let n=0;n<7;n++){f.C.contacts(f.s);f.C.fireEvents(f.s);f.C.fireStatus(f.s,f.u,key);f.C.combatView(f.t);}}}return{hp:f.t.combat.hp,status:f.t.combat.status,events:f.C.combatEvents(f.s),shots:f.C.fireEvents(f.s)};}
+ function run(batch){const f=ready(31);for(let shot=0;shot<3;shot++){const key=f.contact().key;assert(f.C.requestFire(f.s,f.u,key).ok);for(let i=0;i<140;i+=batch){f.step(batch);for(let n=0;n<7;n++){f.C.contacts(f.s);f.C.fireEvents(f.s);f.C.fireStatus(f.s,f.u,key);f.C.combatView(f.t);}}}return{hp:f.t.combat.hp,status:f.t.combat.status,events:f.C.combatEvents(f.s),shots:f.C.fireEvents(f.s)};}
  assert.deepEqual(run(1),run(2));
 });
 

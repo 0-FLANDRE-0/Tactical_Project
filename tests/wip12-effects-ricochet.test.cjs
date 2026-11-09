@@ -51,7 +51,7 @@ test('W12-06 hidden enemy firing still emits detached minimal effects while deta
 
 test('W12-07 public effect reads and visual frame batching do not change deterministic game results',()=>{
   const {fixture}=require('./helpers/hit-fixture.cjs');
-  function run(reads){const f=fixture(27);for(let shot=0;shot<3;shot++){f.step(3);assert(f.fire().ok);f.step();for(let i=0;i<reads;i++)f.runtime.effects(-Infinity);f.land();}return{unit:f.u,events:f.runtime.events('blue'),debug:f.runtime.debugRecords()};}
+  function run(reads){const f=fixture(27);for(let shot=0;shot<3;shot++){f.step(7);assert(f.fire().ok);f.step();for(let i=0;i<reads;i++)f.runtime.effects(-Infinity);f.land();}return{unit:f.u,events:f.runtime.events('blue'),debug:f.runtime.debugRecords()};}
   assert.deepEqual(run(0),run(250));
 });
 

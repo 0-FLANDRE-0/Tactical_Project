@@ -73,12 +73,12 @@
       "outsidePolicy": "clamp"
     }
   },
-  "status": "active WIP12 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP11A instructions plus TACTICAL_WIP12_EFFECTS_AND_RICOCHET",
+  "status": "active WIP15 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP11A, WIP12 effects/ricochet, and WIP15 reload/reaction instructions",
   "limits": [
     "Range endpoints clamp; 60–90° penetration interpolates to zero",
     "Ricochet uses an independent deterministic roll at 78/80/81° anchors",
-    "Non-penetration and ricochet damage 0",
+    "Ordinary non-penetration and ricochet damage 0; WIP15 adds a separate seeded 30% near-nonpenetration damage rule below 15 protection deficit",
     "Ricochet continuation is visual only",
     "No additional velocity damage multiplier"
   ]

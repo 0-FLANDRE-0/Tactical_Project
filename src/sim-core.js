@@ -310,7 +310,7 @@ const TacticalCore = (() => {
   }
   const observationRuntimes=new WeakMap();
   function observationFor(s){
-    if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
+    if(!observationRuntimes.has(s))observationRuntimes.set(s,TacticalObservation.create({profileOf,exposure,seed:s.seed??7,channelOperational:(u,ch,now)=>fireFor(s).channelOperational(u,ch,now),onEvent:s.recordObservationEvents?e=>{s.observationEvents??=[];s.observationEvents.push(e);if(s.observationEvents.length>4000)s.observationEvents.shift();}:null}));
     return observationRuntimes.get(s);
   }
   const aiRuntimes=new WeakMap();
@@ -324,6 +324,9 @@ const TacticalCore = (() => {
   function step(s,dt){
     s.time+=dt;
     for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}
+    // Flight arrivals and their temporary reactions precede sensing, AI and
+    // any new fire attempt at the same fixed-step timestamp.
+    fireFor(s).resolveImpacts(s.units,s.time);
     const alive=s.units.filter(u=>u.combat?.status!=='destroyed');
     // Only living vehicles observe and act; every vehicle remains a sensing
     // candidate so an unseen destruction can later be discovered as a wreck.
@@ -394,6 +397,7 @@ const TacticalCore = (() => {
       onImpactResolved:event=>{
         const target=s.units.find(v=>v.id===event.targetId),p=target?profileOf(target):null;
         const record=p?.combat?combatFor(s).apply(event,target,s.time):{applied:false,reason:target?'unsupported-profile':'target-unavailable',damage:0,destroyed:false};
+        if(target&&record.applied)fireFor(s).react(target,record,s.time);
         if(record.destroyed&&event.observed&&event.observation){
           const c=event.observation,w={key:c.key,x:event.pose.x,y:event.pose.y,heading:event.pose.heading,turret:event.pose.turret,commander:event.pose.commander??event.pose.turret,model:{...c.model,turretPivot:c.model?.turretPivot?.slice(),muzzleLocal:c.model?.muzzleLocal?.slice()},team:target.team,identified:true,current:false,memory:false,wreck:true,destroyed:true,observedAt:s.time,age:0,label:'격파 잔해',name:c.name??target.name,type:c.type??p.name};
           wreckMap(s,event.team).set(c.key,w);
@@ -404,6 +408,7 @@ const TacticalCore = (() => {
         }
         return TacticalCombatState.publicRecord(record);
       },
+      onTemporaryFault:(target,kind,now)=>{if(kind==='commander'||kind==='gunner')TacticalObservation.interrupt(target,kind,now);},
       onFireBlocked:(u,target,reason,now)=>observationFor(s).retarget(u,target,reason,now),
       freshSight:(u,id)=>{
       const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'fresh-sight-failed'};
