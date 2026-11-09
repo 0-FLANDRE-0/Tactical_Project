@@ -1,12 +1,12 @@
 {
-  "version": "0.4-WIP12",
+  "version": "0.4-WIP13",
   "passed": 9,
   "failed": 0,
   "evidence": [
     {
       "test": "0-20mph",
       "seconds": 7.199999999999982,
-      "speedMps": 8.940799999999998
+      "speedMps": 8.94045296363942
     },
     {
       "test": "road cap",

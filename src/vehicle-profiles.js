@@ -10,7 +10,19 @@ const VEHICLE_PROFILES=(()=>{
     model:{hullLength:inch(312),width:inch(144),overallLength:inch(387),roofHeight:inch(93.5),groundClearance:inch(19),barrelTip:inch(387)-inch(312)/2,turretLength:4.75,turretWidth:3.28,turretOrigin:.15,turretPivot:[.66,0],turretRingDiameter:2.159,muzzleLocal:[5.717,0]},
     mobility:{roadSpeed:mph(42),crossCountrySpeed:mph(30),reverseSpeed:mph(25),accelerationReferenceSpeed:mph(20),accelerationReferenceSeconds:7.2,brakeDeceleration:3,maxLongitudinalGrade:.60,maxSideGrade:.40,pivotRate:Math.PI/6,turretRate:40*Math.PI/180,
       gradeSpeedPoints:[[0,mph(42)],[.10,mph(17)],[.60,mph(4.1)]],
-      surfaceSpeed:{forest:6.5,scrub:8,stream:6/3.6}},
+      surfaceSpeed:{forest:6.5,scrub:8,stream:6/3.6},
+      // X1100 range ratios are an adopted public-reference profile. Force,
+      // shift schedule, steering and interlock values are lightweight game
+      // approximations calibrated only to the published 0-20 mph endpoint.
+      powertrain:{referenceMassKg:69.54*907.18474,referenceEngineHp:1500,efficiency:.90,
+        forwardRatios:[5.877,3.021,1.891,1.278],reverseRatios:[8.305,2.354],
+        forwardUpshiftMps:[4.2,8.1,13.2],forwardDownshiftMps:[3.4,7.1,11.8],
+        reverseUpshiftMps:[5.2],reverseDownshiftMps:[4.2],
+        shiftSeconds:.42,shiftDwellSeconds:1.20,minimumGearHoldSeconds:.65,rangeEngageSeconds:.28,
+        directionStopSpeed:.25,directionSettleSeconds:.18,holdSpeed:.08,zeroSpeedEpsilon:.015,targetSpeedTolerance:.015,
+        launchAcceleration:1.645,launchPowerExponent:.35,gearForceExponent:.22,powerFloorSpeed:4,
+        rollingDeceleration:.035,shiftDriveFraction:.12,lateralAcceleration:1.8,pivotMaxSpeed:1.2,
+        arrivalRadius:.8,arrivalSpeed:.18}},
     sensors:{name:'CITV',eyeHeight:2.65,observationLimit:4000,targetReferenceHeight:1.5,
       hunterKiller:true,
       ambient:{enabled:true,range:200,fov:Math.PI*2,eyeHeight:2.65},
@@ -51,6 +63,12 @@ const VEHICLE_PROFILES=(()=>{
       if(Object.hasOwn(profiles,id))throw Error('중복 차량 프로파일: '+id);
       if(p.artId!=='M1A2')throw Error('지원하지 않는 차량 도안: '+p.artId);
       for(const section of ['model','mobility','sensors','navigation','exposure','fireControl','weapons'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
+      const pt=p.mobility.powertrain;
+      if(!pt||!['forwardRatios','reverseRatios','forwardUpshiftMps','forwardDownshiftMps','reverseUpshiftMps','reverseDownshiftMps'].every(k=>Array.isArray(pt[k])))throw Error('구동 프로파일 누락: '+id);
+      if(pt.forwardRatios.length!==4||pt.reverseRatios.length!==2||pt.forwardUpshiftMps.length!==3||pt.forwardDownshiftMps.length!==3||pt.reverseUpshiftMps.length!==1||pt.reverseDownshiftMps.length!==1)throw Error('변속 표 길이 오류: '+id);
+      if(![...pt.forwardRatios,...pt.reverseRatios,...pt.forwardUpshiftMps,...pt.forwardDownshiftMps,...pt.reverseUpshiftMps,...pt.reverseDownshiftMps].every(v=>Number.isFinite(v)&&v>0))throw Error('변속 표 값 오류: '+id);
+      if(!pt.forwardUpshiftMps.every((v,i)=>v>pt.forwardDownshiftMps[i])||!pt.reverseUpshiftMps.every((v,i)=>v>pt.reverseDownshiftMps[i]))throw Error('변속 히스테리시스 오류: '+id);
+      for(const k of ['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','holdSpeed','zeroSpeedEpsilon','targetSpeedTolerance','launchAcceleration','launchPowerExponent','gearForceExponent','powerFloorSpeed','rollingDeceleration','shiftDriveFraction','lateralAcceleration','pivotMaxSpeed','arrivalRadius','arrivalSpeed'])if(!Number.isFinite(pt[k])||pt[k]<0||(['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','launchAcceleration','powerFloorSpeed','lateralAcceleration','arrivalRadius','arrivalSpeed'].includes(k)&&pt[k]===0))throw Error('구동 값 오류: '+id+'.'+k);
       for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
       if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
       const f=p.fireControl;

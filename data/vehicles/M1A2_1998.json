@@ -56,6 +56,56 @@
         "forest": 6.5,
         "scrub": 8,
         "stream": 1.6666666666666665
+      },
+      "powertrain": {
+        "referenceMassKg": 63085.62681960001,
+        "referenceEngineHp": 1500,
+        "efficiency": 0.9,
+        "forwardRatios": [
+          5.877,
+          3.021,
+          1.891,
+          1.278
+        ],
+        "reverseRatios": [
+          8.305,
+          2.354
+        ],
+        "forwardUpshiftMps": [
+          4.2,
+          8.1,
+          13.2
+        ],
+        "forwardDownshiftMps": [
+          3.4,
+          7.1,
+          11.8
+        ],
+        "reverseUpshiftMps": [
+          5.2
+        ],
+        "reverseDownshiftMps": [
+          4.2
+        ],
+        "shiftSeconds": 0.42,
+        "shiftDwellSeconds": 1.2,
+        "minimumGearHoldSeconds": 0.65,
+        "rangeEngageSeconds": 0.28,
+        "directionStopSpeed": 0.25,
+        "directionSettleSeconds": 0.18,
+        "holdSpeed": 0.08,
+        "zeroSpeedEpsilon": 0.015,
+        "targetSpeedTolerance": 0.015,
+        "launchAcceleration": 1.645,
+        "launchPowerExponent": 0.35,
+        "gearForceExponent": 0.22,
+        "powerFloorSpeed": 4,
+        "rollingDeceleration": 0.035,
+        "shiftDriveFraction": 0.12,
+        "lateralAcceleration": 1.8,
+        "pivotMaxSpeed": 1.2,
+        "arrivalRadius": 0.8,
+        "arrivalSpeed": 0.18
       }
     },
     "sensors": {
@@ -221,7 +271,7 @@
       }
     }
   },
-  "baseline": "Active symmetric WIP12 game fixture: M1A2 (1998) / M829A2",
+  "baseline": "Active WIP13 mobility and symmetric combat fixture: M1A2 (1998) / M829A2",
   "reviewed": "2026-11-09",
   "sources": [
     {
@@ -281,6 +331,12 @@
       "title": "ATP 3-20.15 Tank Platoon",
       "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/2F4F8430-78F6-459A-A9A5-DFC8E73007E0-1356018579249/atp3_20x15.pdf",
       "scope": "CITV independent commander observation role; no exact optical-axis height specified"
+    },
+    {
+      "id": "TANK_PROJECT_G4_62",
+      "title": "Tank_Project G4.62 powertrain reference",
+      "url": "https://github.com/0-FLANDRE-0/Tank_Project/blob/724d3421a9bd01a43c1c074743edff121422135c/M1A2_stage7_8_G4_62_LOCAL_BENDING_PUBLIC_E.html",
+      "scope": "Range ratios and direction-interlock structure only. No 240Hz rigid-body, track-contact, hydraulic or thermal code copied; inspected repository root exposed no license file."
     },
     {
       "id": "USER_WIP11A",
@@ -369,6 +425,11 @@
       "status": "game tuning",
       "note": "No measured timing/traction/braking curves claimed"
     },
+    "mobility.powertrain": {
+      "status": "lightweight game model",
+      "source": "TANK_PROJECT_G4_62",
+      "note": "Forward 5.877/3.021/1.891/1.278 and reverse 8.305/2.354 adopted reference ratios. Shift schedule, 1.645m/s² launch limit, force exponent, losses, 0.18s direction settle, 0.42s shift, 1.20s dwell, steering and arrival thresholds are TACTICAL game approximations. Mass and 1500hp come from this profile; calibration is limited to the published 0–20mph in 7.2s endpoint."
+    },
     "sensors.eyeHeight": {
       "status": "geometry estimate",
       "value": 2.65,
@@ -443,7 +504,7 @@
     }
   },
   "limits": [
-    "Mass and engine rating are profile metadata, not a full powertrain simulation",
+    "The WIP13 drivetrain is a deterministic lightweight game approximation, not a full engine, converter, hydraulic, track-contact or suspension simulation",
     "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
     "No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities",
     "WIP12 penetration, damage and ricochet are abstract game tables; ricochet continuation is display-only and has no further collision or damage; no module, crew, fire or ammunition-rack model"

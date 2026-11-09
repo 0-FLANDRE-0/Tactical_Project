@@ -217,7 +217,7 @@ const TacticalCore = (() => {
   }
   function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID,fireMode='auto') {
     registry.get(profileId);
-    const u={id,name,profileId,x,y,heading,turret:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
+    const u={id,name,profileId,x,y,heading,turret:heading,speed:0,drive:TacticalMobility.create(),path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
     const p=profileOf(u);TacticalObservation.init(u);TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
   }
   function legalNear(x,y,units=[]) {
@@ -242,9 +242,9 @@ const TacticalCore = (() => {
   function issueMove(u,goal,reverse,units) {
     if(u?.combat?.status==='destroyed')return{ok:false,reason:'격파 차량은 이동할 수 없음',points:[]};
     const r=planPath(u,goal,units,u);if(!r.ok)return r;
-    u.path=r.points;u.goal={...goal};u.reverse=reverse;u.state=reverse?'후진 이동':'이동';return r;
+    u.path=r.points;u.goal={...goal};u.reverse=reverse;u.drive.requestedDirection=reverse?-1:1;return r;
   }
-  function stop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.state=u.speed>.15?'감속':'대기';return true;}
+  function stop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.reverse=false;u.drive.requestedDirection=0;u.drive.pendingDirection=0;u.state=u.speed>.15?'감속':'대기';return true;}
   function routeDistance(u){let d=0,p=u;for(const q of u.path){d+=Math.hypot(q.x-p.x,q.y-p.y);p=q;}return d;}
   function mobilityLimit(type,along,side,reverse=false,p=PROFILE){
     const m=p.mobility,base=type==='road'||type==='bridge'?m.roadSpeed:Math.min(m.crossCountrySpeed,m.surfaceSpeed[type]??Infinity);
@@ -257,30 +257,51 @@ const TacticalCore = (() => {
     if(!gradePassable(along,side,p))return 0;
     return Math.min(base,gradeCap,reverse?m.reverseSpeed:Infinity)*(1-.35*clamp(Math.abs(side)/m.maxSideGrade,0,1));
   }
-  function driveAcceleration(speed,p=PROFILE){const m=p.mobility;return m.accelerationReferenceSpeed/m.accelerationReferenceSeconds*Math.min(1,m.accelerationReferenceSpeed/Math.max(speed,.01));}
+  function driveAcceleration(speed,p=PROFILE){const q=p.mobility.powertrain,ratio=q.forwardRatios[TacticalMobility.selectGearForSpeed(p,1,Math.abs(speed))-1];return Math.max(0,Math.min(q.launchAcceleration*(q.referenceMassKg/p.massKg)*Math.pow(p.engineHp/q.referenceEngineHp,q.launchPowerExponent)*Math.pow(ratio/q.forwardRatios[0],q.gearForceExponent),p.engineHp*745.6998715822702*q.efficiency/(p.massKg*Math.max(Math.abs(speed),q.powerFloorSpeed)))-q.rollingDeceleration);}
+  function ensureDrive(u){
+    if(u.drive)return u.drive;
+    u.drive=TacticalMobility.create();u.drive.velocity=(u.reverse?-1:1)*(Number(u.speed)||0);u.speed=Math.abs(u.drive.velocity);return u.drive;
+  }
+  function mobilityView(u){
+    const d=ensureDrive(u),requested=d.requestedDirection<0?'후진':d.requestedDirection>0?'전진':'정지',actualDirection=Math.abs(d.velocity)>.015?Math.sign(d.velocity):d.selectedDirection;
+    const actual=Math.abs(d.velocity)>.015?(d.velocity<0?'실제 후진':'실제 전진'):TacticalMobility.directionLabel(d);
+    return{requested,actual,requestMatches:!d.pendingDirection&&d.requestedDirection===actualDirection,gear:TacticalMobility.gearLabel(d),velocity:d.velocity,mode:d.mode,shiftCount:d.shiftCount};
+  }
   function stepTank(u,dt,units) {
-    if(u.combat?.status==='destroyed'){u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
+    const drive=ensureDrive(u);
+    if(u.combat?.status==='destroyed'){TacticalMobility.reset(drive);u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
     if(u.team!=='blue')return;
     const pVehicle=profileOf(u),motion=pVehicle.mobility;
     u.replanTimer=Math.max(0,u.replanTimer-dt);
     while(u.path.length>1&&Math.hypot(u.path[0].x-u.x,u.path[0].y-u.y)<4)u.path.shift();
-    let desired=0;
+    let desired=0,request=0,err=0;
     if(u.path.length) {
       const p=u.path[0],d=Math.hypot(p.x-u.x,p.y-u.y);
-      if(u.path.length===1&&d<2.5){u.path=[];u.goal=null;u.state='대기';u.speed=0;return;}
-      const aim=Math.atan2(p.y-u.y,p.x-u.x)+(u.reverse?Math.PI:0),err=angleDiff(aim,u.heading);
-      const turnLimit=motion.pivotRate/(1+u.speed*.12)*dt;
-      u.heading+=clamp(err,-turnLimit,turnLimit);
-      const type=surfaceAt(u.x,u.y),grade=gradeAt(u.x,u.y,u.heading),base=mobilityLimit(type,grade.along,grade.side,u.reverse,pVehicle),corner=Math.max(0,Math.cos(err));
-      desired=Math.min(base*corner*corner,Math.sqrt(Math.max(0,2*motion.brakeDeceleration*(routeDistance(u)-1))));
-      if(u.path.length>1&&d<24){const q=u.path[1],turn=Math.abs(angleDiff(Math.atan2(q.y-p.y,q.x-p.x),Math.atan2(p.y-u.y,p.x-u.x)));if(turn>.5)desired=Math.min(desired,2.5+Math.max(0,d-5)*.35);}
-      if(Math.abs(err)>1.15)desired=0;
-      u.state=desired<.2?'선회':u.reverse?'후진 이동':'이동';
-    } else u.state=u.speed>.1?'감속':'대기';
-    u.speed+=clamp(desired-u.speed,-motion.brakeDeceleration*dt,driveAcceleration(u.speed,pVehicle)*dt);if(u.speed<.025)u.speed=0;
-    const sign=u.reverse?-1:1,next={x:u.x+Math.cos(u.heading)*u.speed*sign*dt,y:u.y+Math.sin(u.heading)*u.speed*sign*dt};
+      if(u.path.length===1&&d<=motion.powertrain.arrivalRadius&&Math.abs(drive.velocity)<=motion.powertrain.arrivalSpeed){u.path=[];u.goal=null;u.reverse=false;}
+    }
+    if(u.path.length) {
+      request=u.reverse?-1:1;
+      const velocityDirection=Math.abs(drive.velocity)>motion.powertrain.directionStopSpeed?Math.sign(drive.velocity):0;
+      // A route direction only becomes steerable after the drivetrain has
+      // connected that direction. During direction-brake/direction-wait the
+      // old momentum keeps its heading while targetSpeed=0 performs braking.
+      const directionConnected=!drive.pendingDirection&&drive.selectedDirection===request&&(!velocityDirection||velocityDirection===request);
+      if(directionConnected) {
+        const p=u.path[0],d=Math.hypot(p.x-u.x,p.y-u.y);
+        const aim=Math.atan2(p.y-u.y,p.x-u.x)+(request<0?Math.PI:0);err=angleDiff(aim,u.heading);
+        const turnLimit=TacticalMobility.turnRate(drive.velocity,pVehicle)*dt;
+        u.heading+=clamp(err,-turnLimit,turnLimit);
+        const type=surfaceAt(u.x,u.y),grade=gradeAt(u.x,u.y,u.heading),base=mobilityLimit(type,grade.along,grade.side,request<0,pVehicle),corner=Math.max(0,Math.cos(err));
+        desired=Math.min(base*corner*corner,Math.sqrt(Math.max(0,2*motion.brakeDeceleration*(routeDistance(u)-motion.powertrain.arrivalRadius))));
+        if(u.path.length>1&&d<24){const q=u.path[1],turn=Math.abs(angleDiff(Math.atan2(q.y-p.y,q.x-p.x),Math.atan2(p.y-u.y,p.x-u.x)));if(turn>.5)desired=Math.min(desired,2.5+Math.max(0,d-5)*.35);}
+        if(Math.abs(err)>1.15)desired=0;
+      }
+    }
+    TacticalMobility.step(drive,{direction:request,targetSpeed:desired},pVehicle,dt);u.speed=Math.abs(drive.velocity);
+    u.state=TacticalMobility.directionLabel(drive);if(u.path.length&&desired<.2&&u.speed<.3&&!drive.pendingDirection)u.state='선회';
+    const next={x:u.x+Math.cos(u.heading)*drive.velocity*dt,y:u.y+Math.sin(u.heading)*drive.velocity*dt};
     if(u.speed>0&&segmentClear(u,next,units,u)){u.distanceTravelled+=u.speed*dt;u.x=next.x;u.y=next.y;}
-    else if(u.speed>0){u.speed=0;u.state='경로 대기';if(u.goal&&u.replanTimer<=0){const r=planPath(u,u.goal,units,u);if(r.ok)u.path=r.points;u.replanTimer=1.5;}}
+    else if(u.speed>0){drive.velocity=0;drive.selectedDirection=0;drive.gear=0;u.speed=0;u.state='경로 대기';if(u.goal&&u.replanTimer<=0){const r=planPath(u,u.goal,units,u);if(r.ok)u.path=r.points;u.replanTimer=1.5;}}
   }
   const observationRuntimes=new WeakMap();
   function observationFor(s){
@@ -335,7 +356,7 @@ const TacticalCore = (() => {
   const combatRuntimes=new WeakMap();
   function combatFor(s){
     if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,onDestroyed:(target)=>{
-      target.speed=0;target.path=[];target.goal=null;target.reverse=false;target.state='격파';
+      target.speed=0;if(target.drive)TacticalMobility.reset(target.drive);target.path=[];target.goal=null;target.reverse=false;target.state='격파';
       TacticalObservation.cancel(target,s.time,'destroyed');fireFor(s).cancel(target);
     }}));
     return combatRuntimes.get(s);
@@ -568,6 +589,6 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
