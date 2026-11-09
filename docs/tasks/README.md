@@ -6,6 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
+| WIP14 적 경로 이동·기본 AI·사격 시 이동 정책 | [작업 지시서](TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md) | 사용자 확정 · 지시서 등록 · 구현 대기 |
 | WIP13 경량 구동·자동변속·제동·조향 | [완료 안내](TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md) | 방향 전환 조향 수정·재검증 완료 · main 통합 |
 | WIP12 사격 이펙트·미관측 사격 표시·입사각/도탄 확장 | [완료 안내](TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) | 최종 수정·재검증 완료 · main 통합 6e5a510 |
 | WIP11E 9표본 LOS 중복 조회 최적화 | [완료 안내](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | 재검증 통과 · PR #10 main 통합 |
@@ -16,6 +17,8 @@ WIP11E는 main `a01ae8b`에서 만든 새 브랜치에서 구현하고 재검증
 WIP12는 main `687c624`에서 새 브랜치로 구현하고, 최종 `0314f7c`를 재검증한 뒤 `6e5a510`으로 main에 통합했다. [구현 문서](../COMBAT_EFFECTS_AND_RICOCHET_WIP12.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP12.md), [검증 JSON](../../tests/releases/WIP12-validation.json)을 참고한다.
 
 WIP13은 main `a789d53`에서 새 브랜치로 구현하고 방향 전환 조향을 보완한 최종 `94652dc`를 재검증해 main에 통합했다. 0.05초 고정 틱에서 전후진 interlock, 질량·출력 기반 구동, 자동변속, 연속 제동·도착과 속도별 조향을 연결했다. Tank_Project는 범위비와 상태 구조만 참고했고 적 이동 AI는 후속 작업이다. [구현 문서](../MOBILITY_WIP13.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP13.md), [병합 검토](../reviews/WIP13_MERGE_REVIEW_2026-11-09.md)를 참고한다.
+
+다음 작업은 사용자 확정 [WIP14](TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md)다. 적의 실제 경로 이동/순찰과 기본 접촉 반응을 기존 구동·자동교전에 연결한다. 기본 임무와 교전 정차/재개를 분리하고, 차량의 기동간 사격 가능 여부와 공통 발사 조건을 마련한다. 저주기 판단·경로 요청 예산·관측 정보 경계를 검증하며 아직 구현 완료로 취급하지 않는다.
 
 ## 관리 방법
 

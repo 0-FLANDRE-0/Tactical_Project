@@ -13,6 +13,7 @@
 | WIP11E 9표본 LOS 중복 조회 최적화 | [TACTICAL_WIP11E_LOS_OPTIMIZATION.md](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | — | #10 | 재검증 통과 · main 병합 |
 | WIP12 사격 이펙트·미관측 사격·도탄 | [TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md](TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) | — | main 6e5a510 | 최종 수정·재검증 완료 · main 병합 |
 | WIP13 경량 구동·자동변속·제동·조향 | [TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md](TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md) | — | 최종 구현 94652dc | 조향 보완·재검증 통과 · main 병합 |
+| WIP14 적 경로 이동·기본 AI·사격 시 이동 정책 | [현재 작업 지시서](../../docs/tasks/TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md) | — | 구현 대기 | 사용자 확정 · 완료 전 사본 없음 |
 
 - 스크립트는 표준 라이브러리만 사용한다. `python3 wip10_hit_reference.py`로 기준값 표를 출력한다.
 - WIP10 사본의 SHA-256은 지시서 `4e469d69…`, 스크립트 `142e5001…`로 PR #6 검증 기록(`tests/releases/WIP10-validation.json`)과 같다.
