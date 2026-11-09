@@ -12,9 +12,10 @@ const TacticalFireControl=(()=>{
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   function init(u,p,mode='auto'){
     if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
-      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0};
-    u.fireControl.fireMode??=mode;u.fireControl.lineProbeTarget??=null;u.fireControl.lineProbePose??=null;u.fireControl.lineProbeBlocked??=false;u.fireControl.lineProbeCandidateRevision??=null;u.fireControl.lineProbeQueries??=0;return u.fireControl;
+      shotCount:0,nextShotAt:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null};
+    u.fireControl.fireMode??=mode;u.fireControl.lineProbeTarget??=null;u.fireControl.lineProbePose??=null;u.fireControl.lineProbeBlocked??=false;u.fireControl.lineProbeCandidateRevision??=null;u.fireControl.lineProbeQueries??=0;u.fireControl.stationaryElapsed??=0;u.fireControl.autoSuppressed??=false;u.fireControl.lastRejection??=null;return u.fireControl;
   }
+  function motionReady(u,p,s=init(u,p)){const m=p.fireControl.movement;return m.fireOnMove||Math.abs(u.drive?.velocity??u.speed??0)<=m.stationarySpeedMps+1e-9&&s.stationaryElapsed+1e-9>=m.stationaryHoldSeconds;}
   // Fictional RTS error budget. Target manoeuvre is represented only by the
   // difference between predicted and actual pose at impact, never twice here.
   function normalCdf(x){
@@ -189,6 +190,7 @@ const TacticalFireControl=(()=>{
       pruneEffects(now);
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p),check=inspect(u,now),{d,c}=check;
+        if(Math.abs(u.drive?.velocity??u.speed??0)<=f.movement.stationarySpeedMps+1e-9)s.stationaryElapsed+=dt;else s.stationaryElapsed=0;
         if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
         if(s.previousSample&&now-s.previousSample.time>p.sensors.tuning.queryPeriod*5+1e-9)resetMotion(s);
         if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
@@ -219,7 +221,7 @@ const TacticalFireControl=(()=>{
         }
         // Auto creates the same queued request consumed below and never
         // overwrites a manual request already present for this step.
-        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto')s.pending={key:s.targetKey,source:'auto'};
+        if(s.status==='ready'&&!s.pending&&s.fireMode==='auto'&&!s.autoSuppressed&&motionReady(u,p,s))s.pending={key:s.targetKey,source:'auto'};
         // Hold still probes the real line and participates in hunter-killer
         // switching, while never creating an automatic firing request.
         if(s.status==='ready'&&!s.pending&&s.fireMode==='hold'&&(s.lineProbeTarget!==s.targetKey||changedLine||candidatesChanged)){
@@ -232,6 +234,11 @@ const TacticalFireControl=(()=>{
         if(!s.pending)continue;
         const request=s.pending;s.pending=null;
         if(s.status!=='ready'||request.key!==s.targetKey){s.lastRejection=check.reason||'target-changed';continue;}
+        // Recheck actual signed drivetrain speed immediately before every
+        // manual/automatic shot. A queued request cannot spend ammunition or
+        // decision RNG after the vehicle starts moving again.
+        if(!motionReady(u,p,s)){s.lastRejection='must-stop';continue;}
+        if(request.source==='auto'&&s.autoSuppressed){s.lastRejection='movement-policy';continue;}
         // A fire command must recheck its own current range/FOV/terrain samples;
         // an old 10Hz contact or team knowledge cannot authorize a shot.
         s.lineProbeQueries++;const sight=freshSight(u,d.target);
@@ -259,10 +266,11 @@ const TacticalFireControl=(()=>{
       finishDue(units,now);
     }
     function request(u,key,now){
-      const s=init(u,profileOf(u)),check=inspect(u,now);
+      const p=profileOf(u),s=init(u,p),check=inspect(u,now);
       if(s.pending)return{ok:false,reason:'pending'};
       if(s.hitChance===0)return{ok:false,reason:'no-presented-target'};
       if(check.reason||s.status!=='ready'||key!==s.targetKey)return{ok:false,reason:check.reason||'not-ready'};
+      if(!motionReady(u,p,s))return{ok:false,reason:'must-stop'};
       s.pending={key,source:'manual'};return{ok:true};
     }
     function setMode(u,mode){
@@ -272,16 +280,17 @@ const TacticalFireControl=(()=>{
       return true;
     }
     function view(u,key=null){
-      const s=init(u,profileOf(u)),same=!key||key===s.targetKey;
-      return{status:s.status,reason:s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
-        canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
+      const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
+      return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
+        canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
+    function suppressAuto(u,value){const s=init(u,profileOf(u));s.autoSuppressed=!!value;if(value&&s.pending?.source==='auto')s.pending=null;return s.autoSuppressed;}
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
-    return{step,request,setMode,view,cancel,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
+    return{step,request,setMode,view,cancel,suppressAuto,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,motionReady,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;

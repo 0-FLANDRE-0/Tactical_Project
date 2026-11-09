@@ -1,0 +1,87 @@
+{
+  "version": "0.4-WIP14",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "fixture": "default five-vehicle playable scenario, same placements/missions per seed, 2s warmup + 20s measurement",
+  "notes": [
+    "Total tick includes movement, observation/LOS, AI, fire and flight; it is not presented as isolated AI overhead.",
+    "WIP13 enemies were stationary, so no invalid before/after attribution is made."
+  ],
+  "summary": {
+    "medianOfTickMediansMs": 0.3118500000000495,
+    "medianOfTickP95Ms": 0.7636019999999917
+  },
+  "trials": [
+    {
+      "seed": 7,
+      "vehicles": 5,
+      "enemyVehicles": 3,
+      "simulationSeconds": 20,
+      "warmupSeconds": 2,
+      "medianTickMs": 0.3818160000000148,
+      "p95TickMs": 1.1410319999999956,
+      "maxTickMs": 2.82483400000001,
+      "aiDecisions": 90,
+      "pathRequests": 3,
+      "pathFailures": 0,
+      "visitedCells": 827,
+      "movingEnemies": 3,
+      "enemyDistanceM": 527.3381539302248,
+      "shots": 13,
+      "observation": {
+        "queries": 1005,
+        "candidates": 1281,
+        "samples": 1281,
+        "rayQueries": 10749,
+        "rayCacheHits": 780
+      }
+    },
+    {
+      "seed": 17,
+      "vehicles": 5,
+      "enemyVehicles": 3,
+      "simulationSeconds": 20,
+      "warmupSeconds": 2,
+      "medianTickMs": 0.2583190000000286,
+      "p95TickMs": 0.6040309999999636,
+      "maxTickMs": 2.2322789999999486,
+      "aiDecisions": 88,
+      "pathRequests": 3,
+      "pathFailures": 0,
+      "visitedCells": 827,
+      "movingEnemies": 2,
+      "enemyDistanceM": 365.5427356700271,
+      "shots": 18,
+      "observation": {
+        "queries": 970,
+        "candidates": 1653,
+        "samples": 1653,
+        "rayQueries": 9872,
+        "rayCacheHits": 5005
+      }
+    },
+    {
+      "seed": 27,
+      "vehicles": 5,
+      "enemyVehicles": 3,
+      "simulationSeconds": 20,
+      "warmupSeconds": 2,
+      "medianTickMs": 0.3118500000000495,
+      "p95TickMs": 0.7636019999999917,
+      "maxTickMs": 7.460972000000083,
+      "aiDecisions": 90,
+      "pathRequests": 3,
+      "pathFailures": 0,
+      "visitedCells": 827,
+      "movingEnemies": 3,
+      "enemyDistanceM": 524.6095928221137,
+      "shots": 22,
+      "observation": {
+        "queries": 1097,
+        "candidates": 1764,
+        "samples": 1764,
+        "rayQueries": 14849,
+        "rayCacheHits": 1027
+      }
+    }
+  ]
+}

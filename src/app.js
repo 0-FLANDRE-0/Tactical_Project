@@ -15,7 +15,7 @@
   const effectRenderer=TacticalEffects.create(),reducedMotionMedia=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
   let effectsEnabled=true,effectQuality=1,reducedMotionOverride=null;
   let visibility=null,visibilityPath=null;
-  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','mobility','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
+  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','vehicle-profiles','mobility','tactical-ai','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
   let sightRevision=0;
   function fitCamera(){
@@ -100,7 +100,7 @@
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{const u=selectedUnit();if(u&&targetId&&C.designate(sim,u,targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
-  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',interval:'발사 간격 대기','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실','must-stop':'정차·안정화 대기','movement-policy':'교전 정차 대기'};
   function fireSelected(){
     if(portraitBlocked)return;
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
@@ -585,7 +585,7 @@
     const vehicle=C.profileOf(u),model=vehicle.model,motion=vehicle.mobility,s=vehicle.sensors,degrees=r=>Math.round(r*180/Math.PI);
     ui.setText($('unitType'),vehicle.name+' · '+vehicle.weapons.mainGun.calibreMm+'mm '+vehicle.weapons.mainGun.name);
     ui.setText($('profileTitle'),vehicle.id+' 제원 · 적용값');
-    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['자동변속',motion.powertrain.forwardRatios.length+'단 전진 · '+motion.powertrain.reverseRatios.length+'단 후진'],['방향 전환',motion.powertrain.directionSettleSeconds.toFixed(2)+' 초 정차 확인'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
+    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['자동변속',motion.powertrain.forwardRatios.length+'단 전진 · '+motion.powertrain.reverseRatios.length+'단 후진'],['방향 전환',motion.powertrain.directionSettleSeconds.toFixed(2)+' 초 정차 확인'],['기동간 사격',vehicle.fireControl.movement.fireOnMove?'가능 · 이동 오차 적용':'불가 · '+vehicle.fireControl.movement.stationaryHoldSeconds.toFixed(2)+'초 정차'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
   }
   for(const u of sim.units.filter(u=>u.team==='blue')){
     const b=document.createElement('button');
@@ -799,7 +799,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP13',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP14',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
