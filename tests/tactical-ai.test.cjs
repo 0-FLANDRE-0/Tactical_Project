@@ -2,14 +2,18 @@ const test=require('node:test'),assert=require('node:assert/strict'),performance
 const AI=require('../src/tactical-ai.js'),Profiles=require('../src/vehicle-profiles.js');
 const baseProfile=Profiles.M1A2_1998;
 function unit(id='R1'){
-  return{id,team:'red',x:0,y:0,speed:0,drive:{velocity:0},path:[],goal:null,combat:{status:'alive'},fireControl:{ammo:42,autoSuppressed:false},observation:{contacts:{}}};
+  return{id,team:'red',x:0,y:0,speed:0,drive:{velocity:0},path:[],goal:null,combat:{status:'alive'},fireControl:{ammo:42,autoSuppressed:false},observation:{contacts:{},designation:{status:'idle'},tracking:{status:'idle'}}};
 }
 function contact(u,key='B1'){
   u.observation.contacts[key]={key,current:true,identified:true,enemyConfirmed:true,wreckConfirmed:false,lastSeen:1,pose:{x:100,y:0}};
 }
 function harness(profile=baseProfile,settings={}){
   const calls={move:[],stop:[],suppress:[],events:[]};
-  const runtime=AI.create({profileOf:()=>profile,settings,move:(u,p,reverse)=>{calls.move.push({id:u.id,p:{...p},reverse});u.goal={x:p.x,y:p.y};u.path=[{x:p.x,y:p.y}];return{ok:true,visits:7};},stop:u=>{calls.stop.push(u.id);u.goal=null;u.path=[];u.drive.velocity=0;u.speed=0;},suppressAuto:(u,value)=>{calls.suppress.push(value);u.fireControl.autoSuppressed=value;},onEvent:e=>calls.events.push(e)});
+  const active=d=>d&&['designated','waiting','acquiring','acquired'].includes(d.status);
+  const runtime=AI.create({profileOf:()=>profile,settings,move:(u,p,reverse)=>{calls.move.push({id:u.id,p:{...p},reverse});u.goal={x:p.x,y:p.y};u.path=[{x:p.x,y:p.y}];return{ok:true,visits:7};},stop:u=>{calls.stop.push(u.id);u.goal=null;u.path=[];u.drive.velocity=0;u.speed=0;},suppressAuto:(u,value)=>{calls.suppress.push(value);u.fireControl.autoSuppressed=value;},
+    selectTarget:(u,id,now)=>{const c=u.observation.contacts[id];if(!c)return false;u.observation.designation={status:'designated',source:'ai',target:id,key:c.key,pose:{...c.pose},startedAt:now};return true;},
+    clearTarget:(u,now,reason,target)=>{const d=[u.observation.designation,u.observation.tracking].find(active);if(d?.source==='ai'&&(target==null||d.target===target)){d.status='lost';d.reason=reason;d.endedAt=now;return true;}return false;},
+    targetStatus:u=>[u.observation.designation,u.observation.tracking].find(active)||null,onEvent:e=>calls.events.push(e)});
   const tick=(units,seconds,start=0)=>{let now=start;for(let i=0;i<Math.round(seconds/.05);i++){now+=.05;runtime.advance(units,.05,now);}return now;};
   return{runtime,calls,tick};
 }

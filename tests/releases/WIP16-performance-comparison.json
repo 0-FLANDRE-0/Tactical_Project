@@ -65,9 +65,9 @@
         "measuredDecisionsPerVehicle": 1000,
         "repetitions": 1000,
         "simulationDecisionPeriodSeconds": 0.75,
-        "medianMs": 0.088641999999993,
-        "p95Ms": 0.20501600000000053,
-        "maxMs": 0.5387740000000036,
+        "medianMs": 0.05602299999999616,
+        "p95Ms": 0.15948799999999608,
+        "maxMs": 2.2189209999999946,
         "decisions": 50000,
         "expectedDecisions": 50000,
         "allVehiclesEvaluated": true,
@@ -87,9 +87,9 @@
         "measuredDecisionsPerVehicle": 1000,
         "repetitions": 1000,
         "simulationDecisionPeriodSeconds": 0.75,
-        "medianMs": 0.1687119999999993,
-        "p95Ms": 0.3049749999999847,
-        "maxMs": 1.831893000000008,
+        "medianMs": 0.10945300000000202,
+        "p95Ms": 0.22127000000000407,
+        "maxMs": 1.219019000000003,
         "decisions": 100000,
         "expectedDecisions": 100000,
         "allVehiclesEvaluated": true,
@@ -106,17 +106,17 @@
     "deltas": [
       {
         "vehicles": 50,
-        "medianMs": 0.07402999999999338,
-        "p95Ms": 0.18128100000000558,
-        "medianPercent": 506.6383794141478,
-        "p95Percent": 763.7708026123619
+        "medianMs": 0.041410999999996534,
+        "p95Ms": 0.13575300000000112,
+        "medianPercent": 283.40405146453327,
+        "p95Percent": 571.9528123026332
       },
       {
         "vehicles": 100,
-        "medianMs": 0.14086000000000354,
-        "p95Ms": 0.24708899999998835,
-        "medianPercent": 505.74465029450283,
-        "p95Percent": 426.85450713472
+        "medianMs": 0.08160100000000625,
+        "p95Ms": 0.16338400000000775,
+        "medianPercent": 292.9807554215807,
+        "p95Percent": 282.2513215631035
       }
     ]
   },
@@ -255,8 +255,8 @@
       "fixture": "default five-vehicle playable scenario, same placements/missions and seeds 7/17/27, 2s warmup + 20s measurement",
       "scope": "Total fixed tick including movement, observation/LOS, AI, fire, readiness, flight and impacts; excludes rendering.",
       "summary": {
-        "medianOfTickMediansMs": 0.2842640000000074,
-        "medianOfTickP95Ms": 0.641226999999958
+        "medianOfTickMediansMs": 0.2832029999999577,
+        "medianOfTickP95Ms": 0.6237909999999829
       },
       "trials": [
         {
@@ -265,9 +265,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.4133370000000127,
-          "p95TickMs": 1.3549820000000068,
-          "maxTickMs": 4.192847000000029,
+          "medianTickMs": 0.40461299999998346,
+          "p95TickMs": 1.2261990000000083,
+          "maxTickMs": 3.48413800000003,
           "aiDecisions": 90,
           "targetSelections": 1,
           "targetSwitches": 0,
@@ -301,9 +301,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.2842640000000074,
-          "p95TickMs": 0.641226999999958,
-          "maxTickMs": 0.8141150000000152,
+          "medianTickMs": 0.2832029999999577,
+          "p95TickMs": 0.6237909999999829,
+          "maxTickMs": 3.923813999999993,
           "aiDecisions": 90,
           "targetSelections": 2,
           "targetSwitches": 0,
@@ -337,9 +337,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.261058999999932,
-          "p95TickMs": 0.5908820000000787,
-          "maxTickMs": 1.198158000000035,
+          "medianTickMs": 0.24977300000000469,
+          "p95TickMs": 0.5392340000000786,
+          "maxTickMs": 1.2742510000000493,
           "aiDecisions": 90,
           "targetSelections": 1,
           "targetSwitches": 0,
@@ -370,10 +370,10 @@
       ]
     },
     "deltas": {
-      "medianMs": 0.006830000000036307,
-      "p95Ms": 0.08512699999994311,
-      "medianPercent": 2.4618467815902267,
-      "p95Percent": 15.30785829885648
+      "medianMs": 0.00576899999998659,
+      "p95Ms": 0.06769099999996797,
+      "medianPercent": 2.079413482120862,
+      "p95Percent": 12.172450998015849
     }
   },
   "notes": [

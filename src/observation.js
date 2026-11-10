@@ -80,16 +80,18 @@ const TacticalObservation=(()=>{
     }
     function automatic(u,id,now=time){
       const ctl=automaticControllers.get(u);if(!ctl)return false;const s=init(u),c=s.contacts[id],d=mission(s);
+      // A manual order owns the observation mission even when its current pose
+      // is outside gunner range. Tactical AI separately decides whether that
+      // order is engageable and must observe this rejection as a real failure.
       if(d?.source==='manual')return false;
       if(!c?.current||!c.identified||!c.enemyConfirmed||c.wreckConfirmed||!c.pose)return false;
-      ctl.desired=id;
-      if(d?.target===id){if(d.source!=='ai'){d.source='ai';emit(u,'target-owner',c,{source:'ai',status:d.status});}return true;}
+      if(d?.target===id){if(d.source!=='ai'){d.source='ai';emit(u,'target-owner',c,{source:'ai',status:d.status});}ctl.desired=id;return true;}
       if(d){
         if(d.source==='ai')endAutomatic(u,'ai-switch',now);
         else{const previousSource=d.source;d.status='lost';d.reason='ai-switch';d.endedAt=now;s.gunner.focus=null;releaseCommander(s,d.target);emit(u,'target-lost',s.contacts[d.target],{source:previousSource,status:'lost',reason:'ai-switch'});}
       }
       const before=s.pending.length;s.pending=[];if(before)s.candidateRevision++;
-      return designate(u,id,'ai');
+      const accepted=designate(u,id,'ai');if(accepted)ctl.desired=id;return accepted;
     }
     function releaseAutomatic(u,now=time,reason='ai-release',target=null){
       const ctl=automaticControllers.get(u);if(!ctl)return false;ctl.desired=null;return endAutomatic(u,reason,now,target);

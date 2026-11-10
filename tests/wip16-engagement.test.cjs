@@ -8,14 +8,14 @@ function unit(id='AI'){
 function addContact(u,id,{x=1000,y=0,key='contact-'+id,current=true,identified=true,enemyConfirmed=true,wreckConfirmed=false,gunner=false,identifiedAt=1,lastSeen=1}={}){
   u.observation.contacts[id]={key,current,identified,enemyConfirmed,wreckConfirmed,lastSeen,identifiedAt,pose:{x,y,heading:0,turret:0},sources:{gunner:{current:gunner}}};return u.observation.contacts[id];
 }
-function harness(settings={}){
+function harness(settings={},options={}){
   const calls={select:[],clear:[],stop:[],move:[],suppress:[],events:[]};
   const active=d=>d&&['designated','waiting','acquiring','acquired'].includes(d.status);
   const runtime=AI.create({profileOf:()=>profile,settings,
     move:(u,p)=>{calls.move.push({id:u.id,p:{...p}});u.goal={...p};u.path=[{...p}];return{ok:true};},
     stop:u=>{calls.stop.push(u.id);u.goal=null;u.path=[];u.drive.velocity=0;},
     suppressAuto:(u,v)=>{calls.suppress.push(v);u.fireControl.autoSuppressed=v;},
-    selectTarget:(u,id,now)=>{const previous=[u.observation.designation,u.observation.tracking].find(active);if(previous?.target!==id)u.fireControl.aimProgress=0;const c=u.observation.contacts[id];u.observation.designation={status:'designated',target:id,key:c.key,source:'ai',pose:{...c.pose},startedAt:now};u.observation.tracking={status:'idle'};calls.select.push({id,now});return true;},
+    selectTarget:(u,id,now)=>{calls.select.push({id,now});if(options.reject?.has(id))return false;const previous=[u.observation.designation,u.observation.tracking].find(active);if(previous?.target!==id)u.fireControl.aimProgress=0;const c=u.observation.contacts[id];u.observation.designation={status:'designated',target:id,key:c.key,source:'ai',pose:{...c.pose},startedAt:now};u.observation.tracking={status:'idle'};return true;},
     clearTarget:(u,now,reason,target)=>{const d=[u.observation.designation,u.observation.tracking].find(active);if(d?.source==='ai'&&(target==null||d.target===target))d.status='lost';calls.clear.push({now,reason,target});return true;},
     targetStatus:u=>[u.observation.designation,u.observation.tracking].find(active)||null,onEvent:e=>calls.events.push(e)});
   const assign=(u,policy='maintain')=>runtime.assign(u,{id:'mission',type:'patrol',policy,loop:true,waypoints:[{x:100,y:0},{x:200,y:0}]},0);
@@ -54,7 +54,7 @@ test('W16 automatic candidates exclude shared memory, unidentified, wreck and ou
 
 test('W16 fire-line block uses the existing result, changes target once and invalidates retry on geometry change',()=>{
   const u=unit('BLOCK'),h=harness({decisionPeriod:.25,blockedRetry:2});const a=addContact(u,'A',{x:400}),b=addContact(u,'B',{x:800});h.assign(u);let now=h.advance([u],.5);assert.equal(h.runtime.inspect(u).autoTargetId,'A');assert(h.runtime.fireBlocked(u,'A','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],.8,now);let state=h.runtime.inspect(u);assert.equal(state.autoTargetId,'B');assert.equal(state.counters.blockedTargets,1);assert.deepEqual(h.calls.select.map(v=>v.id),['A','B']);
-  a.pose.y=1;now=h.advance([u],1.1,now);state=h.runtime.inspect(u);assert(!Object.hasOwn(state.blockedCandidates,'A'));assert.equal(h.calls.select.length,2);
+  a.pose.y=20;now=h.advance([u],1.1,now);state=h.runtime.inspect(u);assert(!Object.hasOwn(state.blockedCandidates,'A'));assert.equal(h.calls.select.length,2);
 });
 
 test('W16 reload keeps engagement while total ammunition zero releases stop and resumes once',()=>{
@@ -64,4 +64,24 @@ test('W16 reload keeps engagement while total ammunition zero releases stop and 
 
 test('W16 confirmed wreck bypasses target hold and loss grace',()=>{
   const u=unit('WRECK'),h=harness({decisionPeriod:.75,lossGrace:1.5,observationHold:2.5});const c=addContact(u,'A',{x:500});h.assign(u,'halt');let now=h.advance([u],1);assert.equal(h.runtime.inspect(u).mission.status,'paused');c.wreckConfirmed=true;now=h.advance([u],now+.05,now);const state=h.runtime.inspect(u);assert.equal(state.autoTargetId,null);assert.equal(state.mission.status,'active');assert.equal(state.counters.resumes,1);assert(h.calls.clear.some(v=>v.reason==='confirmed-wreck'));
+});
+
+test('W16 persistent blocked geometry retries separately, then resumes one preserved mission without stop loops',()=>{
+  const u=unit('BLOCK-TIMEOUT'),h=harness({decisionPeriod:.25,blockedRetry:2,lossGrace:1.5,observationHold:2.5});addContact(u,'A',{x:500});h.assign(u,'halt');let now=h.advance([u],.5);assert.equal(h.calls.stop.length,1);
+  assert(h.runtime.fireBlocked(u,'A','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],2.8,now);assert.equal(h.runtime.inspect(u).autoTargetId,'A');assert(h.runtime.fireBlocked(u,'A','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],5,now);
+  let state=h.runtime.inspect(u);assert.equal(state.mission.id,'mission');assert.equal(state.mission.index,0);assert.equal(state.mission.status,'active');assert.equal(state.counters.stops,1);assert.equal(state.counters.resumes,1);assert.equal(state.counters.blockedTargets,2);assert.equal(state.autoTargetId,null);assert(state.blockedCandidates.A.abandoned);const commands=state.counters.targetCommands;
+  now=h.advance([u],8,now);state=h.runtime.inspect(u);assert.equal(state.counters.stops,1);assert.equal(state.counters.resumes,1);assert.equal(state.counters.targetCommands,commands);
+});
+
+test('W16 all blocked candidates share one termination wait while a new alternative or changed line remains eligible',()=>{
+  const u=unit('BLOCK-MULTI'),h=harness({decisionPeriod:.25,blockedRetry:2,lossGrace:.5,observationHold:.5});const a=addContact(u,'A',{x:400}),b=addContact(u,'B',{x:700});h.assign(u,'halt');let now=h.advance([u],.5);assert(h.runtime.fireBlocked(u,'A','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],.8,now);assert.equal(h.runtime.inspect(u).autoTargetId,'B');assert(h.runtime.fireBlocked(u,'B','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],2,now);
+  let state=h.runtime.inspect(u);assert.equal(state.mission.status,'active');assert.equal(state.counters.stops,1);assert.equal(state.counters.resumes,1);assert(state.blockedCandidates.A.abandoned&&state.blockedCandidates.B.abandoned);
+  addContact(u,'C',{x:600});now=h.advance([u],2.5,now);state=h.runtime.inspect(u);assert.equal(state.autoTargetId,'C');assert.equal(state.mission.status,'paused');assert.equal(state.counters.stops,2);
+  h.runtime.fireBlocked(u,'C','fire-line-blocked',now);u.observation.designation.status='lost';a.pose.y=24;now=h.advance([u],3,now);state=h.runtime.inspect(u);assert.equal(state.autoTargetId,'A');assert(!Object.hasOwn(state.blockedCandidates,'A'));
+});
+
+test('W16 manual ownership outside range and rejected automatic handoff are not successful engagements',()=>{
+  const u=unit('MANUAL-RANGE'),h=harness({decisionPeriod:.25,lossGrace:.5,observationHold:.5});addContact(u,'A',{x:500});addContact(u,'B',{x:2200});u.observation.designation={status:'waiting',target:'B',key:'contact-B',source:'manual',pose:{x:2200,y:0},reason:'range'};h.assign(u,'halt');let now=h.advance([u],1);let state=h.runtime.inspect(u);assert.equal(u.observation.designation.source,'manual');assert.equal(u.observation.designation.target,'B');assert.equal(state.mission.status,'active');assert.equal(state.counters.stops,0);assert.equal(state.counters.targetCommands,0);assert.equal(h.calls.select.length,0);
+  u.observation.designation={status:'cancelled',source:'manual'};h.runtime.manualChanged(u,now);now=h.advance([u],1.5,now);state=h.runtime.inspect(u);assert.equal(state.autoTargetId,'A');assert.equal(state.mission.status,'paused');assert.equal(state.counters.stops,1);
+  const rejected=unit('REJECTED'),r=harness({decisionPeriod:.25},{reject:new Set(['A'])});addContact(rejected,'A',{x:500});r.assign(rejected,'halt');r.advance([rejected],1);const rejectedState=r.runtime.inspect(rejected);assert.equal(rejectedState.counters.targetCommands,0);assert.equal(rejectedState.counters.stops,0);assert.equal(rejectedState.mission.status,'active');assert.equal(rejected.observation.designation.status,'idle');assert(r.calls.events.some(e=>e.type==='target-command-rejected'));
 });
