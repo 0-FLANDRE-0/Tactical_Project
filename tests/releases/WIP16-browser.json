@@ -1,0 +1,79 @@
+{
+  "version": "0.4-WIP16",
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/{maintain,halt}",
+  "checks": [
+    "multiple observed targets use one AI-owned handoff shared by fire-control without public-state leaks",
+    "halt policy actually brakes and retains the same selected gunner target",
+    "actual loss resumes the preserved waypoint once without repeated stop or route commands"
+  ],
+  "passed": 3,
+  "failed": 0,
+  "evidence": {
+    "browser": "156.0.8078.79",
+    "standalone": "dist/index.html",
+    "forcedOutcomeControls": false,
+    "maintain": {
+      "time": 8.499999999999986,
+      "target": "D",
+      "targetKey": "접촉-1z0t72o",
+      "commands": 1,
+      "distance": 39.802137226798536,
+      "own": {
+        "current": true,
+        "channels": [
+          "commander",
+          "gunner"
+        ],
+        "identified": true,
+        "gunnerCurrent": true,
+        "acquired": true,
+        "targetKey": "접촉-1z0t72o",
+        "status": "acquired",
+        "source": "ai",
+        "reason": "gunner",
+        "pending": 0
+      },
+      "fire": {
+        "targetKey": "접촉-1z0t72o",
+        "aim": 1,
+        "status": "reloading"
+      }
+    },
+    "halt": {
+      "time": 10.500000000000014,
+      "velocity": 0,
+      "target": "D",
+      "own": {
+        "current": true,
+        "channels": [
+          "commander",
+          "gunner"
+        ],
+        "identified": true,
+        "gunnerCurrent": true,
+        "acquired": true,
+        "targetKey": "접촉-1z0t72o",
+        "status": "acquired",
+        "source": "ai",
+        "reason": "gunner",
+        "pending": 0
+      }
+    },
+    "loss": {
+      "before": {
+        "index": 0,
+        "stops": 1,
+        "pathRequests": 1
+      },
+      "after": {
+        "time": 17.500000000000114,
+        "status": "active",
+        "resumes": 1,
+        "pathRequests": 2,
+        "velocity": 2.5759999999999987
+      }
+    }
+  },
+  "scope": "Actual standalone app: multiple-target AI-owned handoff, moving engagement, halt braking, private-state boundary, and one-time mission resume after actual observation loss."
+}

@@ -561,7 +561,7 @@
     ui.setText($('simState'),paused?'일시정지':'기동·관측·사격 시험');
     const own=C.ownObservation(sim,u),d=own,status={idle:'없음',designated:'지정 전달',waiting:'확보 대기',acquiring:'포수 확인 중',acquired:'포수 확보',expired:'지정 만료',cancelled:'지정 취소',lost:'표적 유지 해제'};
     ui.setText($('lookStatus'),'전차장 '+guardLabel('commander')+' · 포수 '+guardLabel('gunner')+' · 후보 '+own.pending);
-    ui.setText($('designationStatus'),(d.source==='gunner'?'포수 자체 · ':d.source==='commander'?'전차장 인계 · ':d.source==='manual'?'직접 지정 · ':'')+(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':''));
+    ui.setText($('designationStatus'),(d.source==='gunner'?'포수 자체 · ':d.source==='commander'?'전차장 인계 · ':d.source==='manual'?'직접 지정 · ':d.source==='ai'?'자동 인계 · ':'')+(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':''));
     let target=C.contacts(sim).find(v=>v.key===targetId);if(target?.wreck){targetId=null;target=null;}
     $('targetPanel').classList.toggle('visible',!!target);
     if(target){
@@ -803,7 +803,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP15',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP16',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

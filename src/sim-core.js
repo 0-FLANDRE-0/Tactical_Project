@@ -316,11 +316,16 @@ const TacticalCore = (() => {
   const aiRuntimes=new WeakMap();
   function aiFor(s){
     if(!aiRuntimes.has(s))aiRuntimes.set(s,TacticalAI.create({profileOf,move:applyMove,stop:applyStop,suppressAuto:(u,value)=>fireFor(s).suppressAuto(u,value),
+      selectTarget:(u,id,now)=>observationFor(s).automatic(u,id,now),clearTarget:(u,now,reason,target)=>observationFor(s).releaseAutomatic(u,now,reason,target),targetStatus:u=>observationFor(s).targetStatus(u),
+      onDisable:(u,now)=>observationFor(s).controlAutomatic(u,false,now),
       onEvent:s.recordAIEvents?event=>{s.aiEvents??=[];s.aiEvents.push(event);if(s.aiEvents.length>2000)s.aiEvents.shift();}:null}));
     return aiRuntimes.get(s);
   }
-  const assignMission=(s,u,spec)=>aliveCommand(u)?aiFor(s).assign(u,spec,s.time):null;
+  const assignMission=(s,u,spec)=>{if(!aliveCommand(u))return null;observationFor(s).controlAutomatic(u,true,s.time);return aiFor(s).assign(u,spec,s.time);};
   const cancelMission=(s,u,halt=true)=>{const changed=TacticalAI.override(u,'mission-cancelled');if(changed&&halt)applyStop(u);return changed;};
+  const aiStatus=(s,u)=>aiFor(s).inspect(u);
+  const aiStats=s=>aiFor(s).aggregate(s.units);
+  const aiEventLog=s=>s.recordAIEvents?JSON.parse(JSON.stringify(s.aiEvents||[])):[];
   function step(s,dt){
     s.time+=dt;
     for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}
@@ -365,8 +370,8 @@ const TacticalCore = (() => {
   const resumeObservation=(s,u,ch)=>aliveCommand(u)&&TacticalObservation.resume(u,ch,s.time);
   // Command acceptance depends only on the team's public contact. A hidden
   // destruction must not be disclosed by a different success/failure result.
-  const designate=(s,u,key)=>aliveCommand(u)&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);
-  const cancelDesignation=(s,u)=>{if(!aliveCommand(u))return false;TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);return true;};
+  const designate=(s,u,key)=>{const accepted=aliveCommand(u)&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);if(accepted)aiFor(s).manualChanged(u,s.time);return accepted;};
+  const cancelDesignation=(s,u)=>{if(!aliveCommand(u))return false;TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);aiFor(s).manualChanged(u,s.time);return true;};
   const observationView=(s,u,ch='commander')=>TacticalObservation.view(u,ch,s.time);
   const ownObservation=(s,u,key=null)=>observationFor(s).ownStatus(u,key);
   const observationStats=s=>({...observationFor(s).stats});
@@ -408,7 +413,7 @@ const TacticalCore = (() => {
         }
         return TacticalCombatState.publicRecord(record);
       },
-      onFireBlocked:(u,target,reason,now)=>observationFor(s).retarget(u,target,reason,now),
+      onFireBlocked:(u,target,reason,now)=>{if(aiFor(s).fireBlocked(u,target,reason,now)){observationFor(s).releaseAutomatic(u,now,reason,target);return true;}return observationFor(s).retarget(u,target,reason,now);},
       freshSight:(u,id)=>{
       const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'fresh-sight-failed'};
       // A private destruction may physically stop a shot, but its public reason
@@ -608,6 +613,6 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

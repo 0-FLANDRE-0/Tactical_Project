@@ -1,16 +1,16 @@
-# TACTICAL v0.4 WIP15 — 가변 장전·피격 반응
+# TACTICAL v0.4 WIP16 — 적 AI 교전 판단·표적 선택
 
-WIP15는 5.98초 실제 장전, 연속 사격 피로, 피격 동요, 근접 비관통 HP 피해와 포탑 피격의 사통·전차장·포수 일시 이상을 기존 관측·자동교전·전투 경로에 연결한다. 전차장·포수 이상 중에도 정상 관측과 표적 명령을 유지하며 조준 진행은 0.70배, 유효 오차는 1.25배가 된다. 양 팀은 같은 프로파일·고정 틱·결정 난수 규칙을 사용한다.
+WIP16은 적 AI가 자체 현재 관측·식별·사거리 안 접촉에서 안정적으로 표적을 선택하고, 그 선택을 실제 관측 인계·포수 확보·사격과 이동 유지/정차/임무 복귀에 연결한다. 수동 지정과 정보 비공개, WIP15 장전·일시 이상 규칙을 유지한다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP15.zip). 압축을 풀면 `Tactical_v0.4_WIP15.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP15.html](Tactical_v0.4_WIP15.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP15 구현](docs/RELOAD_AND_TEMPORARY_REACTIONS_WIP15.md) · [릴리스·검증](TACTICAL_RELEASE_WIP15.md) · [체크섬](SHA256SUMS_WIP15.txt) · [병합 검토](docs/reviews/WIP15_MERGE_REVIEW_2026-11-09.md) · [작업 목차](docs/tasks/README.md).
-- 기준 main `c83024a`에서 `feat/wip15-reload-reactions` 브랜치를 만들었다. main 병합은 별도 검토에서 결정한다.
-- 실제 Chromium에서 양 팀 자동 장전·연속 사격, 사통 차단, 포수·전차장 이상 중 관측·지정·자동사격 유지와 배율 복원을 확인했다. 수치는 게임 튜닝값이며 실장비 성능이나 승무원·장비 신뢰도 측정값이 아니다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip16-engagement-decisions/Tactical_v0.4_WIP16.zip). 압축을 풀면 `Tactical_v0.4_WIP16.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP16.html](Tactical_v0.4_WIP16.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP16 구현](docs/ENGAGEMENT_DECISIONS_WIP16.md) · [릴리스·검증](TACTICAL_RELEASE_WIP16.md) · [체크섬](SHA256SUMS_WIP16.txt) · [작업 목차](docs/tasks/README.md).
+- 최신 main `bb479ad`에서 `feat/wip16-engagement-decisions` 브랜치를 만들었다. main 병합은 별도 검토에서 결정한다.
+- 실제 Chromium에서 복수 표적 자동 인계, 이동 유지, 실제 제동·정차, 관측 상실 뒤 동일 경유점 단일 복귀와 기존 WIP15/WIP12 회귀를 확인했다. 판단 계수는 조정 가능한 게임 시험값이다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP15.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP15.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip16-engagement-decisions/Tactical_v0.4_WIP16.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP16.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -21,7 +21,7 @@ WIP15는 5.98초 실제 장전, 연속 사격 피로, 피격 동요, 근접 비�
 - 관측 표적 탭: 미식별 실루엣은 일반 정보만, 식별한 현재 접촉은 차종·부위 관측 비율을 표시한다. 흐린 잔상은 마지막 관측 위치다.
 - 하단 **경계** 버튼 → 전차장/포수 선택 → 방향 지정(L) → 지도 탭. 이동 중에도 지정 월드 지점을 바라본다. 기본 유지 시간은 해제까지이며 추가 옵션에서 5/10/30초를 고를 수 있다. 자동 경계 복귀로 해당 장비의 지점 명령만 해제한다. Esc·팝업 닫기·선택 변경은 완료하지 않은 입력만 취소한다.
 - 표적 패널의 포수 직접 지정과 인계 취소를 사용할 수 있다. 지정한 표적은 현재 임무보다 우선하며 `auto`에서는 별도 G 입력 없이 확보·조준 후 사격한다. 지정 전달과 포수 확보는 별도 상태다.
-- 정상 시나리오의 적은 실제 경로로 이동·순찰한다. 한 차량은 접촉 중 이동을 유지하고, 다른 차량은 정차 교전 후 상실 유예·관측 대기를 거쳐 원래 순찰을 재개한다. 적의 임무·예정 경로·AI 상태는 아군 UI에 공개하지 않는다.
+- 정상 시나리오의 적은 실제 경로로 이동·순찰한다. 자체 현재 관측·식별·사거리 안 접촉만 점수화해 실제 포수 표적과 공유한다. 한 차량은 접촉 중 이동을 유지하고, 다른 차량은 정차 교전 후 상실 유예·관측 대기를 거쳐 같은 임무·경유점으로 한 번 복귀한다. 적의 점수·임무·예정 경로·AI 상태는 아군 UI에 공개하지 않는다.
 - 실행 시 양측 차량은 **자동 사격**이다. 자체 확보·조준·발사선 조건이 맞으면 버튼 입력 없이 단발을 반복한다. 우측 교전 영역의 `자동` 버튼으로 `보류`를 전환할 수 있다. 보류는 관측·인계·조준을 유지하며 **발사 버튼 또는 G**의 수동 단발을 허용한다.
 - 황백색 포구 섬광·짧은 예광·회갈색 탄착 먼지·충돌 불꽃을 표시한다. 미관측 적의 사격도 효과 위치와 방향은 보이지만 적 차량 정보나 현재 위치 추적을 새로 공개하지 않는다. 도탄 탄광은 표시 전용이다.
 - 확인된 잔해는 전투 종료까지 팀별로 계속 표시되고 통행을 막지만, 지도·명단·직접 API에서 선택하거나 표적으로 지정할 수 없다. 미관측 격파는 나중에 실제 관측·식별하기 전까지 공개되지 않는다.
@@ -58,7 +58,7 @@ WIP15는 5.98초 실제 장전, 연속 사격 피로, 피격 동요, 근접 비�
 - 길찾기: 16m A*와 고정 연결 캐시. 실제 차량 반경과 건물 외곽선으로 연결 구간을 미리 검사한다.
 - 경로 정리: 지형 비용을 고려해 경로를 줄이고 실제 충돌 조회로 재확인한다.
 - 이동: 부호 있는 실제 종방향 속도, 전후진 interlock, 질량·출력 기반 구동, 4단 전진/2단 후진 자동변속, 속도별 조향과 지표/경사별 목표 속도. 정지·도착·충돌 대기를 구분한다. 양 팀이 같은 적분기를 사용한다.
-- 적 AI: 물리 path/goal 밖에 이동·순찰 임무를 보존하고 0.75초 분산 판단으로 이동 유지/정차 교전/재개를 명령한다. 틱당 경로 요청 2건, 실패 재시도 2초다.
+- 적 AI: 물리 path/goal 밖에 이동·순찰 임무를 보존하고 0.75초 분산 판단으로 자체 접촉을 선택한다. 자동 표적은 2.25초 유지하며 0.20 초과 우위가 2회 이어질 때 전환한다. 이동 유지/정차 교전/재개를 연결하고, 틱당 경로 요청 2건과 실패 재시도 2초를 유지한다.
 - 발사 이동 조건: M1A2 시험 프로파일은 기동간 사격을 허용하며 기존 이동 오차를 쓴다. 정차 필수 프로파일은 실제 종방향 속도 0.10m/s 이하를 0.35초 유지해야 하며 발사 직전에 다시 검사한다.
 - 관측: 지형·건물·숲 차폐. 차량 부위 관측은 2m 간격의 경로 표본과 실제 건물 외곽선을 사용한다.
 - 홀드 표시: 지면 위 1.5m 표적 기준. 720개 기본 방위와 건물 윤곽 방향의 추가 가시선(총 최대 1,980개)을 따라 2m 간격으로 지형·지붕 수평선을 계산한다. 숲은 시선 높이에 따른 광학 깊이로 누적한다. 4m 거리 표본 사이의 가시 경계를 보간·연결해 벡터 폐곡선으로 표시한다. 25m 표시 격자는 제거했다.
@@ -93,13 +93,13 @@ WIP15는 5.98초 실제 장전, 연속 사격 피로, 피격 동요, 근접 비�
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP15.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP16.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `tests/fixtures/sim-core-WIP11D.js`, `tests/helpers/los-wip11d-reference.cjs` | 빌드에 포함되지 않는 해시 고정 WIP11D 비교 코어와 로더 |
 | `tests/los-shared-path.test.cjs` | 같은 경로의 다중 높이·캐시·합성 차폐 정확성 대조 |
 | `scripts/benchmark_los_shared_compare.cjs`, `benchmark_los_scenes.cjs`, `benchmark_los_browser.cjs` | 분리 프로세스 기본/고정 장면/실제 Chromium LOS 성능 비교 |
 | `src/page.html`, `styles.css`, `app.js`, `sim-core.js` | UI·표시·입력·독립 시뮬레이션 코어 |
 | `src/mobility.js` | 방향 interlock·자동변속·질량/출력 구동·제동·속도별 조향의 순수 고정 틱 모듈 |
-| `src/tactical-ai.js` | 비공개 이동·순찰 임무, 교전 이동 정책, 저주기 결정·경로 요청 예산 |
+| `src/tactical-ai.js` | 비공개 이동·순찰 임무, 자체 관측 표적 점수·유지/전환, 교전 이동 정책, 저주기 결정·경로 요청 예산 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
 | `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
 | `src/vehicle-geometry.js` | 차체 고정 링·포탑 로컬 점·실제 포구의 공통 2D 변환 |
@@ -136,7 +136,7 @@ WIP15는 5.98초 실제 장전, 연속 사격 피로, 피격 동요, 근접 비�
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP15
+python3 scripts/package_release.py WIP16
 node --check src/combat-state.js
 node --check src/mobility.js
 node --check src/tactical-ai.js
@@ -154,9 +154,13 @@ node --test tests/mobility.test.cjs
 node scripts/benchmark_mobility.cjs
 node scripts/benchmark_ai.cjs
 node scripts/benchmark_ai_map.cjs
+node scripts/benchmark_wip16_engagement.cjs
+node scripts/benchmark_wip16_map.cjs
 # Playwright 개발 의존성과 시스템 Chromium이 있는 환경:
 node tests/browser.test.cjs
 node tests/wip12-effects-browser.test.cjs
+node tests/wip15-browser.test.cjs
+node tests/wip16-browser.test.cjs
 WIP13_BASELINE_HTML=/path/to/baseline/dist/index.html node scripts/benchmark_mobility_browser.cjs
 node scripts/benchmark_observation.cjs
 node scripts/benchmark_combat.cjs
@@ -208,7 +212,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 적 경로 이동·기본 AI, 경량 구동·실제 지도, 관측, 자동교전, 가변 장전과 기본 HP 전투·표시 효과를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2 한 종류와 1,450 HP, 장전탄을 포함한 42발을 사용한다. 기본 장전은 5.98초이며 피로·피격 동요를 합친 장전 작업은 14초를 넘지 않는다. 기존 0/30/60° 관통 표, 고각 보간, 도탄과 과관통 피해 곡선은 유지한다. 비도탄 비관통의 방호력 부족이 15 미만일 때만 30% 확률의 근접 HP 피해를 별도로 시험한다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. 포탑 피격의 3~8초 일시 이상은 관측·사통 대응을 나타내며 영구 모듈 손상이나 승무원 부상이 아니다. WIP12 효과는 내부 결과가 확정된 뒤 생성되며 입자 충돌이나 화면 표시가 판정을 바꾸지 않는다. 도탄 후 추가 충돌·피해, 새 탄종, 영구 모듈/승무원 피해·화재·유폭·수리, 탄약 구획별 이전·재보급, 자동장전 차량과 보병은 후속 범위다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 전체 검사 결과와 미실행 항목은 WIP15 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. 포탑 피격의 3~8초 일시 이상은 관측·사통 대응을 나타내며 영구 모듈 손상이나 승무원 부상이 아니다. WIP12 효과는 내부 결과가 확정된 뒤 생성되며 입자 충돌이나 화면 표시가 판정을 바꾸지 않는다. 도탄 후 추가 충돌·피해, 새 탄종, 영구 모듈/승무원 피해·화재·유폭·수리, 탄약 구획별 이전·재보급, 자동장전 차량과 보병은 후속 범위다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 전체 검사 결과와 미실행 항목은 WIP16 릴리스 문서에 있다.
 
 ## 출처
 
