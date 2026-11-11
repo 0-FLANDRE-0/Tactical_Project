@@ -11,13 +11,13 @@
     {
       "name": "complete Node test runner including browser scripts",
       "status": "passed",
-      "passed": 302,
+      "passed": 304,
       "failed": 0
     },
     {
       "name": "non-browser Node test runner",
       "status": "passed",
-      "passed": 298,
+      "passed": 300,
       "failed": 0
     },
     {
@@ -69,11 +69,11 @@
     {
       "name": "actual Chromium WIP16 engagement scenarios",
       "status": "passed",
-      "passed": 6,
+      "passed": 7,
       "failed": 0,
       "browser": "156.0.8078.79",
       "evidence": "tests/releases/WIP16-browser.json",
-      "note": "Includes persistent single-line block timeout, out-of-range manual ownership/cancellation, and same-line forward/actual-reverse ridge reopening with automatic fire in the actual standalone app."
+      "note": "Includes persistent single-line block timeout, out-of-range manual ownership/cancellation, same-line forward/actual-reverse ridge reopening, maintain moving fire, and resource-free halt probes followed by braking plus stationary hold in the actual standalone app."
     },
     {
       "name": "actual Chromium WIP15 reload/reaction regression",
@@ -104,25 +104,25 @@
   "performance": {
     "engagement50": {
       "baselineMedianMs": 0.014611999999999625,
-      "currentMedianMs": 0.05874800000000846,
-      "currentP95Ms": 0.1533889999999971,
+      "currentMedianMs": 0.058447000000001026,
+      "currentP95Ms": 0.16877099999999245,
       "targetSelections": 50,
       "targetSwitches": 50,
       "targetCommands": 100
     },
     "engagement100": {
       "baselineMedianMs": 0.02785199999999577,
-      "currentMedianMs": 0.11161600000002636,
-      "currentP95Ms": 0.19199599999998895,
+      "currentMedianMs": 0.14536699999999314,
+      "currentP95Ms": 0.2738589999999874,
       "targetSelections": 100,
       "targetSwitches": 100,
       "targetCommands": 200
     },
     "map": {
       "baselineMedianMs": 0.2774339999999711,
-      "currentMedianMs": 0.26916300000004867,
+      "currentMedianMs": 0.3021400000000085,
       "baselineP95Ms": 0.5561000000000149,
-      "currentP95Ms": 0.5784360000000106,
+      "currentP95Ms": 0.6745170000000371,
       "pathRequestsPerSeed": 3,
       "pathFailuresPerSeed": 0
     },
@@ -135,18 +135,18 @@
   "artifacts": {
     "html": {
       "path": "Tactical_v0.4_WIP16.html",
-      "bytes": 8468919,
-      "sha256": "c650871880c617ddde6261fcdcc9fe5e6475fe5ecbf3f69b045d81ac832330c4",
+      "bytes": 8470662,
+      "sha256": "03d36c308e2f190458cfd198abf54332e2d782524756a0211d1a572551ab663e",
       "matchesDist": true,
       "repeatBuildByteIdentical": true
     },
     "zip": {
       "path": "Tactical_v0.4_WIP16.zip",
-      "bytes": 1671740,
-      "sha256": "1fddb4d5da5b6dcfb2f07dadfdd33b5edf3890960ed6eb48673c99b1ce14fe36",
+      "bytes": 1672040,
+      "sha256": "6d293cc643e4f917bcba19436bacf7808ee670db8218cc942bd5b38f2ea4b69d",
       "entry": "Tactical_v0.4_WIP16.html",
-      "entryBytes": 8468919,
-      "crc32": "304e53b1",
+      "entryBytes": 8470662,
+      "crc32": "5d22213d",
       "repeatPackageByteIdentical": true,
       "extractedMatchesDist": true
     }
@@ -188,7 +188,30 @@
       "cacheClearedAfterExistingFireLineProbe": true,
       "additionalLosPerCandidate": false,
       "smallJitterRetargetLoop": false
+    },
+    "haltProbe": {
+      "lineProbeSeparatedFromFire": true,
+      "ammoShotNumberDecisionRngFlightEffectsOnProbe": false,
+      "haltAutoSuppressedDuringProbe": true,
+      "forwardAndActualReverseCore": true,
+      "forwardAndActualReverseChromium": true,
+      "probeClearAmmo": 42,
+      "probeClearShotCount": 0,
+      "probeClearEffects": 0,
+      "probeClearFlights": 0,
+      "firstFireActualSpeedMps": {
+        "forward": 0,
+        "reverse": 0
+      },
+      "firstFireStationaryElapsedSeconds": {
+        "forward": 0.5,
+        "reverse": 1.0
+      },
+      "requiredStationaryHoldSeconds": 0.35,
+      "maintainMovingFirePreserved": true,
+      "persistentBlockedLoopPrevented": true
     }
   },
-  "ridgeReviewBaseline": "311ec5b8ec96075bd5f23c14552bb1d22025b7f0"
+  "ridgeReviewBaseline": "311ec5b8ec96075bd5f23c14552bb1d22025b7f0",
+  "haltProbeReviewBaseline": "2d68725c89d4ec3e01de6bfb41e42a107c3fe440"
 }

@@ -50,7 +50,7 @@ const TacticalAI=(()=>{
   }
   function geometrySignature(u,c,groundHeight=()=>0){const g=geometryState(u,c,groundHeight);return[g.beta,g.lineOffset,g.observerAlong,g.observerGround,g.targetX,g.targetY,g.targetHeading,g.targetTurret].map(v=>Number.isFinite(v)?v:null).join(':');}
   function probeCleared(blocked,u,c){
-    const fire=u.fireControl;return!!(blocked.probePending&&fire&&fire.lineProbeQueries>blocked.probeQueries&&fire.lineProbeTarget===c.key&&!fire.lineProbeBlocked);
+    const fire=u.fireControl;return!!(blocked.probePending&&fire&&fire.lineProbeQueries>blocked.probeQueries&&fire.lineProbeTarget===c.key&&fire.lineProbeResult==='clear');
   }
   function armBlockedProbe(blocked,u,c,now,groundHeight){
     blocked.geometry=geometryState(u,c,groundHeight);blocked.signature=geometrySignature(u,c,groundHeight);blocked.probePending=true;blocked.probeQueries=u.fireControl?.lineProbeQueries??0;blocked.probeAt=now;
@@ -84,7 +84,7 @@ const TacticalAI=(()=>{
     const out={active:0,...Object.fromEntries(counterKeys.map(k=>[k,0])),behaviors:{}};
     for(const u of units){const s=state(u);if(!s)continue;if(s.enabled)out.active++;for(const k of counterKeys)out[k]+=s.counters[k];out.behaviors[s.behavior]=(out.behaviors[s.behavior]||0)+1;}return out;
   }
-  function create({profileOf,move,stop,suppressAuto,selectTarget=()=>true,clearTarget=()=>false,targetStatus=u=>mission(u),groundHeight=()=>0,onDisable=()=>{},onEvent=null,settings={}}){
+  function create({profileOf,move,stop,suppressAuto,selectTarget=()=>true,clearTarget=()=>false,targetStatus=u=>mission(u),probeTarget=()=>false,groundHeight=()=>0,onDisable=()=>{},onEvent=null,settings={}}){
     const config=Object.freeze({...DEFAULTS,...settings});
     if(!Number.isFinite(config.targetMinHold)||config.targetMinHold<0||!Number.isFinite(config.switchMargin)||config.switchMargin<0||!Number.isInteger(config.switchConfirmations)||config.switchConfirmations<1||!Number.isFinite(config.blockedRetry)||config.blockedRetry<0||!Number.isFinite(config.blockedAlongChange)||config.blockedAlongChange<=0||!Number.isFinite(config.blockedHeightChange)||config.blockedHeightChange<=0)throw Error('AI 교전 판단 설정 오류');
     function emit(u,s,type,now,extra={}){onEvent?.({time:now,unit:u.id,mission:s.mission.id,revision:s.mission.revision,type,behavior:s.behavior,...extra});}
@@ -164,6 +164,7 @@ const TacticalAI=(()=>{
         do{s.nextThinkAt+=config.decisionPeriod;}while(s.nextThinkAt<=now+1e-9);
         s.counters.decisions++;
         let contact=ammo?chooseTarget(u,s,p,now):null;
+        const haltProbe=!!(contact?.retryBlocked&&halt);if(haltProbe){setSuppressed(u,s,true,suppressAuto);probeTarget(u,contact.key);}
         if(!ammo){dropAutomatic(u,s,now,'out-of-ammo');s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);if(s.mission.status==='paused'||['observe','braking','engaging'].includes(s.behavior))finishEngagement(u,s,now,'out-of-ammo-resume');}
         else if(contact&&!contact.retryBlocked){
           s.lastContactKey=contact.key;s.lostAt=null;
@@ -179,11 +180,13 @@ const TacticalAI=(()=>{
           // An expired retry interval may re-apply the same target so the
           // existing fire-line can be tested again. It does not make the
           // engagement healthy or restart the termination clock.
-          if(contact?.retryBlocked&&halt){s.behavior='engaging';setSuppressed(u,s,false,suppressAuto);}
+          if(contact?.retryBlocked&&halt)s.behavior='observe';
           if(now-s.lostAt+1e-9>=config.lossGrace+config.observationHold){
             for(const blocked of Object.values(s.blockedCandidates))blocked.abandoned=true;
             dropAutomatic(u,s,now,'observation-timeout');s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);if(halt)finishEngagement(u,s,now);
           }
+        }else if(haltProbe){
+          if(s.mission.status==='paused')s.behavior='observe';
         }else{
           if(halt&&(s.mission.status==='paused'||['observe','braking','engaging'].includes(s.behavior)))finishEngagement(u,s,now);
           setSuppressed(u,s,false,suppressAuto);

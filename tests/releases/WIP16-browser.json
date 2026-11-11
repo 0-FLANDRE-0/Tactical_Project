@@ -1,16 +1,17 @@
 {
   "version": "0.4-WIP16",
   "browser": "156.0.8078.79",
-  "url": "http://127.0.0.1:<ephemeral>/{maintain,halt,blocked,manual,ridge-forward,ridge-reverse}",
+  "url": "http://127.0.0.1:<ephemeral>/{maintain,halt,blocked,manual,ridge-forward,ridge-reverse,ridge-halt-forward,ridge-halt-reverse}",
   "checks": [
     "multiple observed targets use one AI-owned handoff shared by fire-control without public-state leaks",
     "halt policy actually brakes and retains the same selected gunner target",
     "actual loss resumes the preserved waypoint once without repeated stop or route commands",
     "persistent fire-line block retries twice then resumes once without a second stop",
     "out-of-range manual ownership resumes the mission and cancellation restores actual AI handoff",
-    "forward and backward ridge crossings reopen abandoned lines and complete automatic fire"
+    "forward and backward ridge crossings reopen abandoned lines and complete automatic fire",
+    "halt ridge probes spend no firing resources and the first shot follows braking plus stationary hold"
   ],
-  "passed": 6,
+  "passed": 7,
   "failed": 0,
   "evidence": {
     "browser": "156.0.8078.79",
@@ -229,7 +230,189 @@
         },
         "clearedAfterFire": true
       }
+    },
+    "haltRidge": {
+      "forward": {
+        "resumed": true,
+        "atClear": {
+          "time": 54.09999999999906,
+          "x": 1005.1028749423153,
+          "velocity": 9.761248848330904,
+          "ammo": 42,
+          "shotCount": 0,
+          "stationaryElapsed": 0,
+          "autoSuppressed": true,
+          "counters": {
+            "decisions": 76,
+            "pathRequests": 2,
+            "pathFailures": 0,
+            "stops": 2,
+            "resumes": 1,
+            "waypoints": 0,
+            "duplicateCommandsAvoided": 62,
+            "targetSelections": 8,
+            "targetSwitches": 0,
+            "targetCommands": 8,
+            "blockedTargets": 7
+          },
+          "events": [],
+          "effects": [],
+          "flights": []
+        },
+        "atFire": {
+          "time": 57.79999999999885,
+          "x": 1020.7381596213546,
+          "velocity": 0,
+          "ammo": 41,
+          "shotCount": 1,
+          "stationaryElapsed": 0.49999999999999994,
+          "counters": {
+            "decisions": 81,
+            "pathRequests": 2,
+            "pathFailures": 0,
+            "stops": 2,
+            "resumes": 1,
+            "waypoints": 0,
+            "duplicateCommandsAvoided": 62,
+            "targetSelections": 8,
+            "targetSwitches": 0,
+            "targetCommands": 8,
+            "blockedTargets": 7
+          },
+          "shot": {
+            "type": "fired",
+            "id": "HALT-Ufalse-shot-1",
+            "time": 57.79999999999885,
+            "team": "red",
+            "shooterId": "HALT-Ufalse",
+            "targetKey": "접촉-4blov3",
+            "source": "auto",
+            "origin": {
+              "x": 1026.60511941661,
+              "y": 1000.9304752995374
+            },
+            "muzzleHeading": -0.001965534777534985,
+            "tof": 0.30348453401356157,
+            "impactAt": 58.103484534012416,
+            "hitChanceAtFire": 0.9999999999994763,
+            "ammoRemaining": 41
+          },
+          "effects": [
+            {
+              "id": "fx-1",
+              "kind": "fire",
+              "time": 57.79999999999885,
+              "expiresAt": 58.45348453401242,
+              "origin": {
+                "x": 1026.60511941661,
+                "y": 1000.9304752995374
+              },
+              "heading": -0.001965534777534985,
+              "distanceM": 479.26277611421636,
+              "duration": 0.30348453401356157,
+              "visualSeed": 1537437111
+            }
+          ],
+          "flights": [
+            {
+              "id": "HALT-Ufalse-shot-1",
+              "impactAt": 58.103484534012416,
+              "remaining": 0.30348453401356323
+            }
+          ]
+        }
+      },
+      "reverse": {
+        "resumed": true,
+        "atClear": {
+          "time": 61.89999999999862,
+          "x": 991.0283312384762,
+          "velocity": -6.107407424818394,
+          "ammo": 42,
+          "shotCount": 0,
+          "stationaryElapsed": 0,
+          "autoSuppressed": true,
+          "counters": {
+            "decisions": 87,
+            "pathRequests": 2,
+            "pathFailures": 0,
+            "stops": 2,
+            "resumes": 1,
+            "waypoints": 0,
+            "duplicateCommandsAvoided": 71,
+            "targetSelections": 9,
+            "targetSwitches": 0,
+            "targetCommands": 9,
+            "blockedTargets": 8
+          },
+          "events": [],
+          "effects": [],
+          "flights": []
+        },
+        "atFire": {
+          "time": 64.89999999999846,
+          "x": 984.9638342385642,
+          "velocity": 0,
+          "ammo": 41,
+          "shotCount": 1,
+          "stationaryElapsed": 1.0000000000000002,
+          "counters": {
+            "decisions": 91,
+            "pathRequests": 2,
+            "pathFailures": 0,
+            "stops": 2,
+            "resumes": 1,
+            "waypoints": 0,
+            "duplicateCommandsAvoided": 71,
+            "targetSelections": 9,
+            "targetSwitches": 0,
+            "targetCommands": 9,
+            "blockedTargets": 8
+          },
+          "shot": {
+            "type": "fired",
+            "id": "HALT-Utrue-shot-1",
+            "time": 64.84999999999846,
+            "team": "red",
+            "shooterId": "HALT-Utrue",
+            "targetKey": "접촉-4blov3",
+            "source": "auto",
+            "origin": {
+              "x": 980.4168124332895,
+              "y": 1001.0698854502377
+            },
+            "muzzleHeading": -3.1393656630810223,
+            "tof": 0.30709538054320734,
+            "impactAt": 65.15709538054166,
+            "hitChanceAtFire": 0.999999999998993,
+            "ammoRemaining": 41
+          },
+          "effects": [
+            {
+              "id": "fx-1",
+              "kind": "fire",
+              "time": 64.84999999999846,
+              "expiresAt": 65.50709538054166,
+              "origin": {
+                "x": 980.4168124332895,
+                "y": 1001.0698854502377
+              },
+              "heading": -3.1393656630810223,
+              "distanceM": 484.96502495383294,
+              "duration": 0.30709538054320734,
+              "visualSeed": 2293635687
+            }
+          ],
+          "flights": [
+            {
+              "id": "HALT-Utrue-shot-1",
+              "impactAt": 65.15709538054166,
+              "remaining": 0.25709538054320547
+            }
+          ]
+        }
+      }
     }
   },
-  "scope": "Actual standalone app: multiple-target AI-owned handoff, moving engagement, halt braking, private-state boundary, one-time mission resume, persistent fire-line timeout, out-of-range manual ownership, and forward/backward ridge line reopening."
+  "scope": "Actual standalone app: multiple-target AI-owned handoff, moving engagement, halt braking, private-state boundary, one-time mission resume, persistent fire-line timeout, out-of-range manual ownership, forward/backward ridge line reopening, and resource-free halt probes followed by the required stationary hold."
 }

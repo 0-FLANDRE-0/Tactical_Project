@@ -65,9 +65,9 @@
         "measuredDecisionsPerVehicle": 1000,
         "repetitions": 1000,
         "simulationDecisionPeriodSeconds": 0.75,
-        "medianMs": 0.05874800000000846,
-        "p95Ms": 0.1533889999999971,
-        "maxMs": 0.33769500000000363,
+        "medianMs": 0.058447000000001026,
+        "p95Ms": 0.16877099999999245,
+        "maxMs": 0.44885999999999626,
         "decisions": 50000,
         "expectedDecisions": 50000,
         "allVehiclesEvaluated": true,
@@ -87,9 +87,9 @@
         "measuredDecisionsPerVehicle": 1000,
         "repetitions": 1000,
         "simulationDecisionPeriodSeconds": 0.75,
-        "medianMs": 0.11161600000002636,
-        "p95Ms": 0.19199599999998895,
-        "maxMs": 0.48740799999998785,
+        "medianMs": 0.14536699999999314,
+        "p95Ms": 0.2738589999999874,
+        "maxMs": 0.4391149999999868,
         "decisions": 100000,
         "expectedDecisions": 100000,
         "allVehiclesEvaluated": true,
@@ -106,17 +106,17 @@
     "deltas": [
       {
         "vehicles": 50,
-        "medianMs": 0.044136000000008835,
-        "p95Ms": 0.12965400000000216,
-        "medianPercent": 302.05310703538163,
-        "p95Percent": 546.2565831052442
+        "medianMs": 0.0438350000000014,
+        "p95Ms": 0.1450359999999975,
+        "medianPercent": 299.9931563098996,
+        "p95Percent": 611.0638297873534
       },
       {
         "vehicles": 100,
-        "medianMs": 0.08376400000003059,
-        "p95Ms": 0.13410999999999262,
-        "medianPercent": 300.7468045384292,
-        "p95Percent": 231.67950799848174
+        "medianMs": 0.11751499999999737,
+        "p95Ms": 0.2159729999999911,
+        "medianPercent": 421.9266120925435,
+        "p95Percent": 373.1005769961731
       }
     ]
   },
@@ -248,15 +248,15 @@
     },
     "current": {
       "version": "0.4-WIP16",
-      "ref": "feat/wip16-engagement-decisions",
+      "ref": null,
       "runtime": "v24.22.1",
       "cpu": "AMD EPYC 9V74 80-Core Processor",
       "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
       "fixture": "default five-vehicle playable scenario, same placements/missions and seeds 7/17/27, 2s warmup + 20s measurement",
       "scope": "Total fixed tick including movement, observation/LOS, AI, fire, readiness, flight and impacts; excludes rendering.",
       "summary": {
-        "medianOfTickMediansMs": 0.26916300000004867,
-        "medianOfTickP95Ms": 0.5784360000000106
+        "medianOfTickMediansMs": 0.3021400000000085,
+        "medianOfTickP95Ms": 0.6745170000000371
       },
       "trials": [
         {
@@ -265,9 +265,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.35720500000002176,
-          "p95TickMs": 0.9899020000000291,
-          "maxTickMs": 3.3620050000000106,
+          "medianTickMs": 0.3477280000000178,
+          "p95TickMs": 0.9852899999999636,
+          "maxTickMs": 3.4624860000000126,
           "aiDecisions": 90,
           "targetSelections": 1,
           "targetSwitches": 0,
@@ -301,9 +301,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.26916300000004867,
-          "p95TickMs": 0.5530790000000252,
-          "maxTickMs": 1.7532449999999926,
+          "medianTickMs": 0.3021400000000085,
+          "p95TickMs": 0.6745170000000371,
+          "maxTickMs": 1.7212279999999964,
           "aiDecisions": 90,
           "targetSelections": 2,
           "targetSwitches": 0,
@@ -337,9 +337,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.24957399999993868,
-          "p95TickMs": 0.5784360000000106,
-          "maxTickMs": 1.556069999999977,
+          "medianTickMs": 0.25830499999995027,
+          "p95TickMs": 0.5519330000000764,
+          "maxTickMs": 2.160103000000049,
           "aiDecisions": 90,
           "targetSelections": 1,
           "targetSwitches": 0,
@@ -370,10 +370,10 @@
       ]
     },
     "deltas": {
-      "medianMs": -0.008270999999922424,
-      "p95Ms": 0.022335999999995693,
-      "medianPercent": -2.981249594470503,
-      "p95Percent": 4.0165437870877785
+      "medianMs": 0.02470600000003742,
+      "p95Ms": 0.1184170000000222,
+      "medianPercent": 8.905181052084465,
+      "p95Percent": 21.294191692145127
     }
   },
   "notes": [

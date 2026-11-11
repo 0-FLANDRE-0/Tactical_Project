@@ -86,3 +86,19 @@ test('W16-C11 actual forward and backward ridge crossings reopen abandoned lines
     assert(fired);const atFire=core.aiStatus(s,u),own=core.ownObservation(s,u,fired.targetKey),events=core.aiEventLog(s),x=u.x,height=core.heightAt(u.x,u.y),velocity=u.drive.velocity;assert.equal(fired.source,'auto');assert.equal(own.source,'ai');assert.equal(own.status,'acquired');assert(atFire.counters.blockedTargets>=2);assert.equal(atFire.counters.stops,0);assert.equal(atFire.counters.resumes,0);assert(atFire.blockedCandidates.T.abandoned&&atFire.blockedCandidates.T.probePending);assert(events.some(e=>e.type==='target-commanded')&&events.some(e=>e.type==='target-blocked'));assert(Math.abs(x-1000)<12);assert(height>1);assert.equal(u.y,1000);assert(reverse?velocity<0:velocity>0);for(let i=0;i<20;i++)core.step(s,.05);assert(!Object.hasOwn(core.aiStatus(s,u).blockedCandidates,'T'));
   }
 });
+
+test('W16-C12 halt ridge probes preserve the first round, then brake and hold before the first automatic shot',()=>{
+  for(const reverse of [false,true]){
+    const core=syntheticCore('fire-ridge'),u=core.makeTank('HALT-'+reverse,'RIDGE HALT AI',reverse?1500:500,1000,0,'blue',undefined,'auto'),target=core.makeTank('T','RIDGE TARGET',reverse?500:1500,1000,reverse?0:Math.PI,'red',undefined,'hold');target.combat.hp=target.combat.maxHp=100000;const goal={x:reverse?880:1120,y:1000,reverse};
+    const s={time:0,seed:16,units:[u,target],recordAIEvents:true,recordObservationEvents:true,recordFireEvents:true};for(const ch of ['commander','gunner'])core.guard(s,u,ch,{x:target.x,y:target.y});core.assignMission(s,u,{id:'ridge-halt-'+(reverse?'reverse':'forward'),type:'move',policy:'halt',waypoints:[goal]});
+    let resumed=false,hadBlock=false,atClear=null,fired=null;
+    for(let i=0;i<2400&&!fired;i++){
+      core.step(s,.05);const ai=core.aiStatus(s,u);hadBlock||=ai.counters.blockedTargets>0;
+      if(!resumed&&ai.counters.resumes===1){resumed=true;u.goal={x:goal.x,y:goal.y};u.path=[{x:goal.x,y:goal.y}];u.reverse=reverse;u.drive.requestedDirection=reverse?-1:1;}
+      if(resumed&&hadBlock&&!atClear&&!Object.hasOwn(ai.blockedCandidates,'T'))atClear={velocity:u.drive.velocity,ammo:u.fireControl.ammo,shots:u.fireControl.shotCount,stationary:u.fireControl.stationaryElapsed,suppressed:u.fireControl.autoSuppressed,counters:structuredClone(ai.counters),events:core.fireEvents(s,'blue'),effects:core.effectEvents(s),flights:core.fireStatus(s,u).inFlight};
+      fired=core.fireEvents(s,'blue').find(e=>e.type==='fired');
+    }
+    assert(resumed&&atClear&&fired);assert(reverse?atClear.velocity<0:atClear.velocity>0);assert.equal(atClear.ammo,42);assert.equal(atClear.shots,0);assert.equal(atClear.stationary,0);assert(atClear.suppressed);assert.deepEqual(atClear.events,[]);assert.deepEqual(atClear.effects,[]);assert.deepEqual(atClear.flights,[]);assert.equal(atClear.counters.stops,2);assert.equal(atClear.counters.resumes,1);
+    const movement=u.profileOverride?.fireControl?.movement??core.PROFILE.fireControl.movement,ai=core.aiStatus(s,u);assert.equal(fired.source,'auto');assert(Math.abs(u.drive.velocity)<=movement.stationarySpeedMps+1e-9);assert(u.fireControl.stationaryElapsed+1e-9>=movement.stationaryHoldSeconds);assert.equal(u.fireControl.ammo,41);assert.equal(u.fireControl.shotCount,1);assert.equal(core.effectEvents(s).filter(e=>e.kind==='fire').length,1);assert.equal(core.fireStatus(s,u).inFlight.length,1);assert.equal(ai.counters.stops,2);assert.equal(ai.counters.resumes,1);
+  }
+});
