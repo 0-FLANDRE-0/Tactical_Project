@@ -1,6 +1,6 @@
 {
   "version": "0.4-WIP16",
-  "date": "2026-11-10",
+  "date": "2026-11-11",
   "baseline": {
     "ref": "5249737ee4266a2bdd726c4dcd314b9cdf52540d",
     "label": "merged WIP15 main before WIP16 instructions"
@@ -65,9 +65,9 @@
         "measuredDecisionsPerVehicle": 1000,
         "repetitions": 1000,
         "simulationDecisionPeriodSeconds": 0.75,
-        "medianMs": 0.05602299999999616,
-        "p95Ms": 0.15948799999999608,
-        "maxMs": 2.2189209999999946,
+        "medianMs": 0.05874800000000846,
+        "p95Ms": 0.1533889999999971,
+        "maxMs": 0.33769500000000363,
         "decisions": 50000,
         "expectedDecisions": 50000,
         "allVehiclesEvaluated": true,
@@ -87,9 +87,9 @@
         "measuredDecisionsPerVehicle": 1000,
         "repetitions": 1000,
         "simulationDecisionPeriodSeconds": 0.75,
-        "medianMs": 0.10945300000000202,
-        "p95Ms": 0.22127000000000407,
-        "maxMs": 1.219019000000003,
+        "medianMs": 0.11161600000002636,
+        "p95Ms": 0.19199599999998895,
+        "maxMs": 0.48740799999998785,
         "decisions": 100000,
         "expectedDecisions": 100000,
         "allVehiclesEvaluated": true,
@@ -106,17 +106,17 @@
     "deltas": [
       {
         "vehicles": 50,
-        "medianMs": 0.041410999999996534,
-        "p95Ms": 0.13575300000000112,
-        "medianPercent": 283.40405146453327,
-        "p95Percent": 571.9528123026332
+        "medianMs": 0.044136000000008835,
+        "p95Ms": 0.12965400000000216,
+        "medianPercent": 302.05310703538163,
+        "p95Percent": 546.2565831052442
       },
       {
         "vehicles": 100,
-        "medianMs": 0.08160100000000625,
-        "p95Ms": 0.16338400000000775,
-        "medianPercent": 292.9807554215807,
-        "p95Percent": 282.2513215631035
+        "medianMs": 0.08376400000003059,
+        "p95Ms": 0.13410999999999262,
+        "medianPercent": 300.7468045384292,
+        "p95Percent": 231.67950799848174
       }
     ]
   },
@@ -255,8 +255,8 @@
       "fixture": "default five-vehicle playable scenario, same placements/missions and seeds 7/17/27, 2s warmup + 20s measurement",
       "scope": "Total fixed tick including movement, observation/LOS, AI, fire, readiness, flight and impacts; excludes rendering.",
       "summary": {
-        "medianOfTickMediansMs": 0.2832029999999577,
-        "medianOfTickP95Ms": 0.6237909999999829
+        "medianOfTickMediansMs": 0.26916300000004867,
+        "medianOfTickP95Ms": 0.5784360000000106
       },
       "trials": [
         {
@@ -265,9 +265,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.40461299999998346,
-          "p95TickMs": 1.2261990000000083,
-          "maxTickMs": 3.48413800000003,
+          "medianTickMs": 0.35720500000002176,
+          "p95TickMs": 0.9899020000000291,
+          "maxTickMs": 3.3620050000000106,
           "aiDecisions": 90,
           "targetSelections": 1,
           "targetSwitches": 0,
@@ -301,9 +301,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.2832029999999577,
-          "p95TickMs": 0.6237909999999829,
-          "maxTickMs": 3.923813999999993,
+          "medianTickMs": 0.26916300000004867,
+          "p95TickMs": 0.5530790000000252,
+          "maxTickMs": 1.7532449999999926,
           "aiDecisions": 90,
           "targetSelections": 2,
           "targetSwitches": 0,
@@ -337,9 +337,9 @@
           "enemyVehicles": 3,
           "simulationSeconds": 20,
           "warmupSeconds": 2,
-          "medianTickMs": 0.24977300000000469,
-          "p95TickMs": 0.5392340000000786,
-          "maxTickMs": 1.2742510000000493,
+          "medianTickMs": 0.24957399999993868,
+          "p95TickMs": 0.5784360000000106,
+          "maxTickMs": 1.556069999999977,
           "aiDecisions": 90,
           "targetSelections": 1,
           "targetSwitches": 0,
@@ -370,10 +370,10 @@
       ]
     },
     "deltas": {
-      "medianMs": 0.00576899999998659,
-      "p95Ms": 0.06769099999996797,
-      "medianPercent": 2.079413482120862,
-      "p95Percent": 12.172450998015849
+      "medianMs": -0.008270999999922424,
+      "p95Ms": 0.022335999999995693,
+      "medianPercent": -2.981249594470503,
+      "p95Percent": 4.0165437870877785
     }
   },
   "notes": [

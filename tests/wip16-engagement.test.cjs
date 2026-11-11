@@ -3,7 +3,7 @@ const AI=require('../src/tactical-ai.js'),Profiles=require('../src/vehicle-profi
 const profile=Profiles.M1A2_1998;
 
 function unit(id='AI'){
-  return{id,team:'red',x:0,y:0,heading:0,turret:0,speed:0,drive:{velocity:0},path:[],goal:null,combat:{status:'alive'},fireControl:{ammo:42,fireMode:'auto',autoSuppressed:false,aimProgress:.6},observation:{contacts:{},designation:{status:'idle'},tracking:{status:'idle'}}};
+  return{id,team:'red',x:0,y:0,heading:0,turret:0,speed:0,drive:{velocity:0},path:[],goal:null,combat:{status:'alive'},fireControl:{ammo:42,fireMode:'auto',autoSuppressed:false,aimProgress:.6,lineProbeQueries:0,lineProbeTarget:null,lineProbeBlocked:false},observation:{contacts:{},designation:{status:'idle'},tracking:{status:'idle'}}};
 }
 function addContact(u,id,{x=1000,y=0,key='contact-'+id,current=true,identified=true,enemyConfirmed=true,wreckConfirmed=false,gunner=false,identifiedAt=1,lastSeen=1}={}){
   u.observation.contacts[id]={key,current,identified,enemyConfirmed,wreckConfirmed,lastSeen,identifiedAt,pose:{x,y,heading:0,turret:0},sources:{gunner:{current:gunner}}};return u.observation.contacts[id];
@@ -11,7 +11,7 @@ function addContact(u,id,{x=1000,y=0,key='contact-'+id,current=true,identified=t
 function harness(settings={},options={}){
   const calls={select:[],clear:[],stop:[],move:[],suppress:[],events:[]};
   const active=d=>d&&['designated','waiting','acquiring','acquired'].includes(d.status);
-  const runtime=AI.create({profileOf:()=>profile,settings,
+  const runtime=AI.create({profileOf:()=>profile,settings,groundHeight:options.groundHeight||(()=>0),
     move:(u,p)=>{calls.move.push({id:u.id,p:{...p}});u.goal={...p};u.path=[{...p}];return{ok:true};},
     stop:u=>{calls.stop.push(u.id);u.goal=null;u.path=[];u.drive.velocity=0;},
     suppressAuto:(u,v)=>{calls.suppress.push(v);u.fireControl.autoSuppressed=v;},
@@ -24,7 +24,7 @@ function harness(settings={},options={}){
 }
 
 test('W16 tuning defaults retain distributed decisions and define stable target switching',()=>{
-  assert.deepEqual({period:AI.defaults.decisionPeriod,hold:AI.defaults.targetMinHold,margin:AI.defaults.switchMargin,confirmations:AI.defaults.switchConfirmations,blockedRetry:AI.defaults.blockedRetry},{period:.75,hold:2.25,margin:.20,confirmations:2,blockedRetry:2});
+  assert.deepEqual({period:AI.defaults.decisionPeriod,hold:AI.defaults.targetMinHold,margin:AI.defaults.switchMargin,confirmations:AI.defaults.switchConfirmations,blockedRetry:AI.defaults.blockedRetry,blockedAlongChange:AI.defaults.blockedAlongChange,blockedHeightChange:AI.defaults.blockedHeightChange},{period:.75,hold:2.25,margin:.20,confirmations:2,blockedRetry:2,blockedAlongChange:192,blockedHeightChange:.5});
 });
 
 test('W16 target score ignores recency, uses gunner/retention bonuses and deterministic tie breaks',()=>{
@@ -77,7 +77,17 @@ test('W16 all blocked candidates share one termination wait while a new alternat
   const u=unit('BLOCK-MULTI'),h=harness({decisionPeriod:.25,blockedRetry:2,lossGrace:.5,observationHold:.5});const a=addContact(u,'A',{x:400}),b=addContact(u,'B',{x:700});h.assign(u,'halt');let now=h.advance([u],.5);assert(h.runtime.fireBlocked(u,'A','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],.8,now);assert.equal(h.runtime.inspect(u).autoTargetId,'B');assert(h.runtime.fireBlocked(u,'B','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],2,now);
   let state=h.runtime.inspect(u);assert.equal(state.mission.status,'active');assert.equal(state.counters.stops,1);assert.equal(state.counters.resumes,1);assert(state.blockedCandidates.A.abandoned&&state.blockedCandidates.B.abandoned);
   addContact(u,'C',{x:600});now=h.advance([u],2.5,now);state=h.runtime.inspect(u);assert.equal(state.autoTargetId,'C');assert.equal(state.mission.status,'paused');assert.equal(state.counters.stops,2);
-  h.runtime.fireBlocked(u,'C','fire-line-blocked',now);u.observation.designation.status='lost';a.pose.y=24;now=h.advance([u],3,now);state=h.runtime.inspect(u);assert.equal(state.autoTargetId,'A');assert(!Object.hasOwn(state.blockedCandidates,'A'));
+  h.runtime.fireBlocked(u,'C','fire-line-blocked',now);u.observation.designation.status='lost';a.pose.y=24;now=h.advance([u],3,now);state=h.runtime.inspect(u);assert.equal(state.autoTargetId,'A');assert(state.blockedCandidates.A.probePending);u.fireControl.lineProbeQueries=state.blockedCandidates.A.probeQueries+1;u.fireControl.lineProbeTarget=a.key;u.fireControl.lineProbeBlocked=false;now=h.advance([u],3.3,now);state=h.runtime.inspect(u);assert(!Object.hasOwn(state.blockedCandidates,'A'));
+});
+
+test('W16 abandoned line reopens on material forward, backward or height movement but ignores small jitter',()=>{
+  const exercise=({delta=0,height=.0})=>{
+    let ground=0;const u=unit('MOVE-'+delta+'-'+height),h=harness({decisionPeriod:.25,blockedRetry:.5,lossGrace:.5,observationHold:.5,blockedAlongChange:192,blockedHeightChange:.5},{groundHeight:()=>ground});const a=addContact(u,'A',{x:500});h.assign(u,'halt');let now=h.advance([u],.5);assert(h.runtime.fireBlocked(u,'A','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],1.1,now);assert(h.runtime.fireBlocked(u,'A','fire-line-blocked',now));u.observation.designation.status='lost';now=h.advance([u],1.8,now);let state=h.runtime.inspect(u);assert(state.blockedCandidates.A.abandoned);const commands=state.counters.targetCommands;
+    u.x+=Math.sign(delta)*4;ground=.2;now=h.advance([u],2.3,now);state=h.runtime.inspect(u);assert.equal(state.counters.targetCommands,commands);assert(!state.blockedCandidates.A.probePending);
+    u.x+=delta;ground=height;now=h.advance([u],2.8,now);state=h.runtime.inspect(u);assert.equal(state.autoTargetId,'A');assert(state.blockedCandidates.A.probePending);assert.equal(state.counters.stops,1);assert.equal(state.counters.resumes,1);
+    u.fireControl.lineProbeQueries=state.blockedCandidates.A.probeQueries+1;u.fireControl.lineProbeTarget=a.key;u.fireControl.lineProbeBlocked=false;now=h.advance([u],3.1,now);state=h.runtime.inspect(u);assert(!Object.hasOwn(state.blockedCandidates,'A'));return state;
+  };
+  exercise({delta:193});exercise({delta:-193});exercise({height:.6});
 });
 
 test('W16 manual ownership outside range and rejected automatic handoff are not successful engagements',()=>{

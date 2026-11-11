@@ -4,7 +4,7 @@
 
 | 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-10) |
 |---|---|---|---|---|
-| WIP16 적 AI 교전 판단·표적 선택·행동 안정화 | [기본 지시서](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) | — | PR #15 | 지속 차폐·수동 지정 보완 및 재검증 완료 · main 미병합 |
+| WIP16 적 AI 교전 판단·표적 선택·행동 안정화 | [기본 지시서](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) · [능선 캐시 보완](TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md) | — | PR #15 | 지속 차폐·수동 지정·능선 통과 보완 및 재검증 완료 · main 미병합 |
 | WIP15 가변 장전·피격 동요·장비 일시 이상 | [기본 지시서](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) · [관측 이상 수정](TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md) | — | PR #14 | 최종 5a0b516 독립 재검증 통과 · main 병합 |
 | WIP09 명중 확률 | [TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md](TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md) | [wip09_hit_reference.py](wip09_hit_reference.py) | #5 | 검토 통과 · main 병합 |
 | WIP10 발사·비행·착탄 | [TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md](TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md) | [wip10_hit_reference.py](wip10_hit_reference.py) | #6 | 검토 통과 · main 병합 |

@@ -1,15 +1,16 @@
 {
   "version": "0.4-WIP16",
   "browser": "156.0.8078.79",
-  "url": "http://127.0.0.1:<ephemeral>/{maintain,halt,blocked,manual}",
+  "url": "http://127.0.0.1:<ephemeral>/{maintain,halt,blocked,manual,ridge-forward,ridge-reverse}",
   "checks": [
     "multiple observed targets use one AI-owned handoff shared by fire-control without public-state leaks",
     "halt policy actually brakes and retains the same selected gunner target",
     "actual loss resumes the preserved waypoint once without repeated stop or route commands",
     "persistent fire-line block retries twice then resumes once without a second stop",
-    "out-of-range manual ownership resumes the mission and cancellation restores actual AI handoff"
+    "out-of-range manual ownership resumes the mission and cancellation restores actual AI handoff",
+    "forward and backward ridge crossings reopen abandoned lines and complete automatic fire"
   ],
-  "passed": 5,
+  "passed": 6,
   "failed": 0,
   "evidence": {
     "browser": "156.0.8078.79",
@@ -144,7 +145,91 @@
           "blockedTargets": 0
         }
       }
+    },
+    "ridge": {
+      "forward": {
+        "time": 42.59999999999972,
+        "x": 998.9654387248178,
+        "y": 1000,
+        "height": 2.391359774511862,
+        "velocity": 10.411199999999992,
+        "counters": {
+          "decisions": 60,
+          "pathRequests": 0,
+          "pathFailures": 0,
+          "stops": 0,
+          "resumes": 0,
+          "waypoints": 0,
+          "duplicateCommandsAvoided": 60,
+          "targetSelections": 8,
+          "targetSwitches": 0,
+          "targetCommands": 8,
+          "blockedTargets": 7
+        },
+        "shot": {
+          "id": "Ufalse-shot-1",
+          "source": "auto",
+          "targetKey": "접촉-4blov3"
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-4blov3",
+          "status": "acquired",
+          "source": "ai",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "clearedAfterFire": true
+      },
+      "reverse": {
+        "time": 48.599999999999376,
+        "x": 1005.4114456406722,
+        "y": 1000,
+        "height": 1.2971385659900818,
+        "velocity": -9.225999999999996,
+        "counters": {
+          "decisions": 68,
+          "pathRequests": 0,
+          "pathFailures": 0,
+          "stops": 0,
+          "resumes": 0,
+          "waypoints": 0,
+          "duplicateCommandsAvoided": 68,
+          "targetSelections": 8,
+          "targetSwitches": 0,
+          "targetCommands": 8,
+          "blockedTargets": 7
+        },
+        "shot": {
+          "id": "Utrue-shot-1",
+          "source": "auto",
+          "targetKey": "접촉-4blov3"
+        },
+        "own": {
+          "current": true,
+          "channels": [
+            "commander",
+            "gunner"
+          ],
+          "identified": true,
+          "gunnerCurrent": true,
+          "acquired": true,
+          "targetKey": "접촉-4blov3",
+          "status": "acquired",
+          "source": "ai",
+          "reason": "gunner",
+          "pending": 0
+        },
+        "clearedAfterFire": true
+      }
     }
   },
-  "scope": "Actual standalone app: multiple-target AI-owned handoff, moving engagement, halt braking, private-state boundary, one-time mission resume, persistent fire-line timeout, and out-of-range manual ownership."
+  "scope": "Actual standalone app: multiple-target AI-owned handoff, moving engagement, halt braking, private-state boundary, one-time mission resume, persistent fire-line timeout, out-of-range manual ownership, and forward/backward ridge line reopening."
 }

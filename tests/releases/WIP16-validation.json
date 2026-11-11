@@ -2,7 +2,7 @@
   "version": "0.4-WIP16",
   "baselineMain": "bb479ad97df0fd8ab22ad3fd38f54475ccac13cb",
   "branch": "feat/wip16-engagement-decisions",
-  "date": "2026-11-10",
+  "date": "2026-11-11",
   "checks": [
     {
       "name": "JavaScript syntax checks for src, scripts and tests",
@@ -11,13 +11,13 @@
     {
       "name": "complete Node test runner including browser scripts",
       "status": "passed",
-      "passed": 300,
+      "passed": 302,
       "failed": 0
     },
     {
       "name": "non-browser Node test runner",
       "status": "passed",
-      "passed": 296,
+      "passed": 298,
       "failed": 0
     },
     {
@@ -69,11 +69,11 @@
     {
       "name": "actual Chromium WIP16 engagement scenarios",
       "status": "passed",
-      "passed": 5,
+      "passed": 6,
       "failed": 0,
       "browser": "156.0.8078.79",
       "evidence": "tests/releases/WIP16-browser.json",
-      "note": "Includes persistent single-line block timeout and out-of-range manual ownership/cancellation in the actual standalone app."
+      "note": "Includes persistent single-line block timeout, out-of-range manual ownership/cancellation, and same-line forward/actual-reverse ridge reopening with automatic fire in the actual standalone app."
     },
     {
       "name": "actual Chromium WIP15 reload/reaction regression",
@@ -104,25 +104,25 @@
   "performance": {
     "engagement50": {
       "baselineMedianMs": 0.014611999999999625,
-      "currentMedianMs": 0.05602299999999616,
-      "currentP95Ms": 0.15948799999999608,
+      "currentMedianMs": 0.05874800000000846,
+      "currentP95Ms": 0.1533889999999971,
       "targetSelections": 50,
       "targetSwitches": 50,
       "targetCommands": 100
     },
     "engagement100": {
       "baselineMedianMs": 0.02785199999999577,
-      "currentMedianMs": 0.10945300000000202,
-      "currentP95Ms": 0.22127000000000407,
+      "currentMedianMs": 0.11161600000002636,
+      "currentP95Ms": 0.19199599999998895,
       "targetSelections": 100,
       "targetSwitches": 100,
       "targetCommands": 200
     },
     "map": {
       "baselineMedianMs": 0.2774339999999711,
-      "currentMedianMs": 0.2832029999999577,
+      "currentMedianMs": 0.26916300000004867,
       "baselineP95Ms": 0.5561000000000149,
-      "currentP95Ms": 0.6237909999999829,
+      "currentP95Ms": 0.5784360000000106,
       "pathRequestsPerSeed": 3,
       "pathFailuresPerSeed": 0
     },
@@ -135,18 +135,18 @@
   "artifacts": {
     "html": {
       "path": "Tactical_v0.4_WIP16.html",
-      "bytes": 8467287,
-      "sha256": "e96fde6c535209d8d2ba7e3359939b1b66c4107bec5c3979b1af7677b6e26123",
+      "bytes": 8468919,
+      "sha256": "c650871880c617ddde6261fcdcc9fe5e6475fe5ecbf3f69b045d81ac832330c4",
       "matchesDist": true,
       "repeatBuildByteIdentical": true
     },
     "zip": {
       "path": "Tactical_v0.4_WIP16.zip",
-      "bytes": 1671470,
-      "sha256": "5e5ebfaac832d767a39869bb3ff3e852e6335566ab04cb55632c840203bd94bf",
+      "bytes": 1671740,
+      "sha256": "1fddb4d5da5b6dcfb2f07dadfdd33b5edf3890960ed6eb48673c99b1ce14fe36",
       "entry": "Tactical_v0.4_WIP16.html",
-      "entryBytes": 8467287,
-      "crc32": "f53de632",
+      "entryBytes": 8468919,
+      "crc32": "304e53b1",
       "repeatPackageByteIdentical": true,
       "extractedMatchesDist": true
     }
@@ -178,6 +178,17 @@
       "automaticRejectionCountedAsEngagement": false,
       "missionResumesOnce": true,
       "cancelExpiryReentryCovered": true
+    },
+    "ridgeCache": {
+      "observerAlongThresholdM": 192,
+      "observerGroundThresholdM": 0.5,
+      "forwardAndActualReverseCore": true,
+      "forwardAndActualReverseChromium": true,
+      "automaticHandoffAcquireFire": true,
+      "cacheClearedAfterExistingFireLineProbe": true,
+      "additionalLosPerCandidate": false,
+      "smallJitterRetargetLoop": false
     }
-  }
+  },
+  "ridgeReviewBaseline": "311ec5b8ec96075bd5f23c14552bb1d22025b7f0"
 }

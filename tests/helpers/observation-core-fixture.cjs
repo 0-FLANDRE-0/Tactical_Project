@@ -6,9 +6,13 @@ function heightsForRidge(){
  const row=[];let previous=0;for(let x=0;x<2000;x++){const metres=x*2+1,z=Math.round(Math.max(0,40-Math.abs(metres-1000)*.4)*10),d=z-previous;previous=z;let n=(d<<1)^(d>>31);do{const b=n&127;n>>>=7;row.push(b|(n?128:0));}while(n);}
  const encoded=Buffer.from(row);return Buffer.concat(Array.from({length:2000},()=>encoded)).toString('base64');
 }
+function heightsForFireRidge(){
+ const row=[];let previous=0;for(let x=0;x<2000;x++){const metres=x*2+1,z=Math.round(Math.max(0,2.60-Math.abs(metres-1000)*.25)*10),d=z-previous;previous=z;let n=(d<<1)^(d>>31);do{const b=n&127;n>>>=7;row.push(b|(n?128:0));}while(n);}
+ const encoded=Buffer.from(row);return Buffer.concat(Array.from({length:2000},()=>encoded)).toString('base64');
+}
 function mapFor(kind='flat'){
  const map=structuredClone(original.MAP);map.meta.mapHash='observation-test-'+kind+'-v1';map.navigation.sourceHash=map.meta.mapHash;
- map.heightmap.data=kind==='ridge'?heightsForRidge():Buffer.alloc(4000000).toString('base64');
+ map.heightmap.data=kind==='ridge'?heightsForRidge():kind==='fire-ridge'?heightsForFireRidge():Buffer.alloc(4000000).toString('base64');
  const surface=Buffer.alloc(1000000);if(kind==='forest')for(let y=0;y<1000;y++)for(let x=200;x<225;x++)surface[y*1000+x]=2;
  map.terrain.data=surface.toString('base64');map.features={roads:[],forests:[],fields:[],water:[],waterways:[],trees:[],labels:[],buildings:['building','low-wall','fire-wall'].includes(kind)?[{id:'test-wall',z:kind==='low-wall'?2.3:kind==='fire-wall'?2.55:20,geometry:{type:'Polygon',coordinates:[[[980,900],[1020,900],[1020,1100],[980,1100],[980,900]]]}}]:[]};
  return map;

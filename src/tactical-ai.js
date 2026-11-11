@@ -6,7 +6,7 @@ const TacticalAI=(()=>{
   const STATE=Symbol('tactical-ai-state');
   const POLICIES=Object.freeze(['maintain','halt','auto']);
   const DEFAULTS=Object.freeze({decisionPeriod:.75,lossGrace:1.5,observationHold:2.5,pathRetry:2,pathBudget:2,maxWaypoints:8,
-    targetMinHold:2.25,switchMargin:.20,switchConfirmations:2,blockedRetry:2});
+    targetMinHold:2.25,switchMargin:.20,switchConfirmations:2,blockedRetry:2,blockedAlongChange:192,blockedHeightChange:.5});
   const clone=v=>JSON.parse(JSON.stringify(v));
   const active=d=>d&&['designated','waiting','acquiring','acquired'].includes(d.status);
   const mission=u=>[u.observation?.designation,u.observation?.tracking].find(active)||null;
@@ -37,23 +37,36 @@ const TacticalAI=(()=>{
   }
   function destroy(u){const s=state(u);if(!s?.enabled)return false;s.onDisable?.(u,s.currentTime??0,'destroyed');s.enabled=false;s.mission.status='destroyed';s.behavior='destroyed';s.lastContactKey=null;s.lostAt=null;s.autoSuppressed=false;s.autoTargetId=null;s.autoTargetKey=null;if(u.fireControl)u.fireControl.autoSuppressed=false;return true;}
   const effectiveRange=(u,p)=>Math.min(p.fireControl.maxRange,p.sensors.gunner.range);
-  function geometryState(u,c){const beta=Math.atan2(c.pose.y-u.y,c.pose.x-u.x);return{beta,lineOffset:-Math.sin(beta)*u.x+Math.cos(beta)*u.y,targetX:c.pose.x,targetY:c.pose.y,targetHeading:c.pose.heading,targetTurret:c.pose.turret};}
+  function geometryState(u,c,groundHeight=()=>0){
+    const beta=Math.atan2(c.pose.y-u.y,c.pose.x-u.x),cos=Math.cos(beta),sin=Math.sin(beta),ground=groundHeight(u.x,u.y);
+    return{beta,lineOffset:-sin*u.x+cos*u.y,observerAlong:cos*u.x+sin*u.y,observerGround:Number.isFinite(ground)?ground:0,targetX:c.pose.x,targetY:c.pose.y,targetHeading:c.pose.heading,targetTurret:c.pose.turret};
+  }
   const angleDelta=(a,b)=>Math.abs(Math.atan2(Math.sin(a-b),Math.cos(a-b)));
-  function sameBlockedGeometry(blocked,u,c){
-    const a=blocked.geometry,b=geometryState(u,c);if(!a)return blocked.signature===geometrySignature(u,c);
+  function sameBlockedGeometry(blocked,u,c,groundHeight=()=>0,config=DEFAULTS){
+    const a=blocked.geometry,b=geometryState(u,c,groundHeight);if(!a)return blocked.signature===geometrySignature(u,c,groundHeight);
     // Compare to the geometry that actually failed instead of rounded buckets,
     // so small movement cannot cross a bucket edge and restart an engagement.
-    return angleDelta(a.beta,b.beta)<=.035&&Math.abs(a.lineOffset-b.lineOffset)<=16&&Math.hypot(a.targetX-b.targetX,a.targetY-b.targetY)<=16&&angleDelta(a.targetHeading,b.targetHeading)<=.1&&angleDelta(a.targetTurret,b.targetTurret)<=.1;
+    return angleDelta(a.beta,b.beta)<=.035&&Math.abs(a.lineOffset-b.lineOffset)<=16&&Math.abs(a.observerAlong-b.observerAlong)<=config.blockedAlongChange&&Math.abs(a.observerGround-b.observerGround)<=config.blockedHeightChange&&Math.hypot(a.targetX-b.targetX,a.targetY-b.targetY)<=16&&angleDelta(a.targetHeading,b.targetHeading)<=.1&&angleDelta(a.targetTurret,b.targetTurret)<=.1;
   }
-  function geometrySignature(u,c){const g=geometryState(u,c);return[g.beta,g.lineOffset,g.targetX,g.targetY,g.targetHeading,g.targetTurret].map(v=>Number.isFinite(v)?v:null).join(':');}
-  function automaticCandidates(u,s,p,now){
+  function geometrySignature(u,c,groundHeight=()=>0){const g=geometryState(u,c,groundHeight);return[g.beta,g.lineOffset,g.observerAlong,g.observerGround,g.targetX,g.targetY,g.targetHeading,g.targetTurret].map(v=>Number.isFinite(v)?v:null).join(':');}
+  function probeCleared(blocked,u,c){
+    const fire=u.fireControl;return!!(blocked.probePending&&fire&&fire.lineProbeQueries>blocked.probeQueries&&fire.lineProbeTarget===c.key&&!fire.lineProbeBlocked);
+  }
+  function armBlockedProbe(blocked,u,c,now,groundHeight){
+    blocked.geometry=geometryState(u,c,groundHeight);blocked.signature=geometrySignature(u,c,groundHeight);blocked.probePending=true;blocked.probeQueries=u.fireControl?.lineProbeQueries??0;blocked.probeAt=now;
+  }
+  function automaticCandidates(u,s,p,now,groundHeight=()=>0,config=DEFAULTS){
     const range=effectiveRange(u,p),out=[];
     for(const[id,c]of Object.entries(u.observation?.contacts||{})){
       if(!c.current||!c.identified||!c.enemyConfirmed||c.wreckConfirmed||!c.pose)continue;
       const distance=Math.hypot(c.pose.x-u.x,c.pose.y-u.y);if(distance>range)continue;
       const blocked=s.blockedCandidates[id];
-      if(blocked&&!sameBlockedGeometry(blocked,u,c))delete s.blockedCandidates[id];
-      else if(blocked&&(blocked.abandoned||blocked.until>now+1e-9))continue;
+      if(blocked&&probeCleared(blocked,u,c))delete s.blockedCandidates[id];
+      else if(blocked&&!blocked.probePending&&!sameBlockedGeometry(blocked,u,c,groundHeight,config)){
+        if(blocked.abandoned)armBlockedProbe(blocked,u,c,now,groundHeight);else delete s.blockedCandidates[id];
+      }
+      const currentBlock=s.blockedCandidates[id];
+      if(currentBlock&&!currentBlock.probePending&&(currentBlock.abandoned||currentBlock.until>now+1e-9))continue;
       const retryBlocked=!!s.blockedCandidates[id];
       const score=1-Math.max(0,Math.min(1,distance/range))+(c.sources?.gunner?.current?.15:0)+(s.autoTargetId===id?.15:0);
       out.push({id,key:c.key,contact:c,distance,score,identifiedAt:Number.isFinite(c.identifiedAt)?c.identifiedAt:Infinity,retryBlocked});
@@ -71,9 +84,9 @@ const TacticalAI=(()=>{
     const out={active:0,...Object.fromEntries(counterKeys.map(k=>[k,0])),behaviors:{}};
     for(const u of units){const s=state(u);if(!s)continue;if(s.enabled)out.active++;for(const k of counterKeys)out[k]+=s.counters[k];out.behaviors[s.behavior]=(out.behaviors[s.behavior]||0)+1;}return out;
   }
-  function create({profileOf,move,stop,suppressAuto,selectTarget=()=>true,clearTarget=()=>false,targetStatus=u=>mission(u),onDisable=()=>{},onEvent=null,settings={}}){
+  function create({profileOf,move,stop,suppressAuto,selectTarget=()=>true,clearTarget=()=>false,targetStatus=u=>mission(u),groundHeight=()=>0,onDisable=()=>{},onEvent=null,settings={}}){
     const config=Object.freeze({...DEFAULTS,...settings});
-    if(!Number.isFinite(config.targetMinHold)||config.targetMinHold<0||!Number.isFinite(config.switchMargin)||config.switchMargin<0||!Number.isInteger(config.switchConfirmations)||config.switchConfirmations<1||!Number.isFinite(config.blockedRetry)||config.blockedRetry<0)throw Error('AI 교전 판단 설정 오류');
+    if(!Number.isFinite(config.targetMinHold)||config.targetMinHold<0||!Number.isFinite(config.switchMargin)||config.switchMargin<0||!Number.isInteger(config.switchConfirmations)||config.switchConfirmations<1||!Number.isFinite(config.blockedRetry)||config.blockedRetry<0||!Number.isFinite(config.blockedAlongChange)||config.blockedAlongChange<=0||!Number.isFinite(config.blockedHeightChange)||config.blockedHeightChange<=0)throw Error('AI 교전 판단 설정 오류');
     function emit(u,s,type,now,extra={}){onEvent?.({time:now,unit:u.id,mission:s.mission.id,revision:s.mission.revision,type,behavior:s.behavior,...extra});}
     function progress(u,s,now){
       s.counters.waypoints++;s.mission.index++;
@@ -127,7 +140,7 @@ const TacticalAI=(()=>{
         // it cannot replace or masquerade as the applied target.
         return manualEngagement(u,p,actual);
       }
-      const candidates=automaticCandidates(u,s,p,now),current=candidates.find(v=>v.id===s.autoTargetId)||null;
+      const candidates=automaticCandidates(u,s,p,now,groundHeight,config),current=candidates.find(v=>v.id===s.autoTargetId)||null;
       if(!current){if(!candidates.length)return null;return commandAutomatic(u,s,candidates[0],now,s.autoTargetId===null?'initial':'invalid-current');}
       const challenger=candidates.find(v=>v.id!==current.id);
       if(challenger&&now-s.targetSelectedAt+1e-9>=config.targetMinHold&&challenger.score>current.score+config.switchMargin){
@@ -184,14 +197,14 @@ const TacticalAI=(()=>{
       const previous=state(u);if(previous?.autoSuppressed||u.fireControl?.autoSuppressed)suppressAuto(u,false);
       if(previous?.autoTargetId)clearTarget(u,now,'mission-reassigned',previous.autoTargetId);
       assign(u,spec,now,config.decisionPeriod);const s=state(u);Object.defineProperties(s,{currentTime:{value:now,writable:true,enumerable:false},onDisable:{value:onDisable,writable:true,enumerable:false}});
-      const p=profileOf(u),hasTarget=manualEngagement(u,p,targetStatus(u))||automaticCandidates(u,s,p,now).length>0;if((u.fireControl?.ammo??0)>0&&hasTarget&&shouldHalt(s,p))setSuppressed(u,s,true,suppressAuto);return inspect(u);
+      const p=profileOf(u),hasTarget=manualEngagement(u,p,targetStatus(u))||automaticCandidates(u,s,p,now,groundHeight,config).length>0;if((u.fireControl?.ammo??0)>0&&hasTarget&&shouldHalt(s,p))setSuppressed(u,s,true,suppressAuto);return inspect(u);
     }
     function manualChanged(u,now){const s=state(u);if(!s?.enabled)return false;s.nextThinkAt=Math.min(s.nextThinkAt,now);s.challengerId=null;s.challengerCount=0;return true;}
     function fireBlocked(u,target,reason,now){
       const s=state(u);if(!s?.enabled||s.autoTargetId!==target||targetStatus(u)?.source==='manual')return false;
-      const c=u.observation?.contacts?.[target],old=s.blockedCandidates[target];if(c?.pose)s.blockedCandidates[target]={until:now+config.blockedRetry,signature:geometrySignature(u,c),geometry:geometryState(u,c),reason,firstBlockedAt:old?.firstBlockedAt??now,lastBlockedAt:now,attempts:(old?.attempts??0)+1,abandoned:false};
+      const c=u.observation?.contacts?.[target],old=s.blockedCandidates[target],reprobe=!!old?.probePending;if(c?.pose)s.blockedCandidates[target]={until:now+config.blockedRetry,signature:geometrySignature(u,c,groundHeight),geometry:geometryState(u,c,groundHeight),reason,firstBlockedAt:old?.firstBlockedAt??now,lastBlockedAt:now,attempts:(old?.attempts??0)+1,abandoned:reprobe||!!old?.abandoned,probePending:false};
       s.counters.blockedTargets++;s.nextThinkAt=Math.min(s.nextThinkAt,now);s.autoTargetId=null;s.autoTargetKey=null;s.challengerId=null;s.challengerCount=0;
-      const p=profileOf(u),healthyAlternative=automaticCandidates(u,s,p,now).some(v=>!v.retryBlocked);
+      const p=profileOf(u),healthyAlternative=automaticCandidates(u,s,p,now,groundHeight,config).some(v=>!v.retryBlocked);
       if(!healthyAlternative&&s.lastContactKey){s.lostAt??=now;if(shouldHalt(s,p)){s.behavior='observe';setSuppressed(u,s,true,suppressAuto);}}
       emit(u,s,'target-blocked',now,{target,reason,retryAt:now+config.blockedRetry});return true;
     }

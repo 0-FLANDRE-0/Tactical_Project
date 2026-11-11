@@ -315,7 +315,7 @@ const TacticalCore = (() => {
   }
   const aiRuntimes=new WeakMap();
   function aiFor(s){
-    if(!aiRuntimes.has(s))aiRuntimes.set(s,TacticalAI.create({profileOf,move:applyMove,stop:applyStop,suppressAuto:(u,value)=>fireFor(s).suppressAuto(u,value),
+    if(!aiRuntimes.has(s))aiRuntimes.set(s,TacticalAI.create({profileOf,move:applyMove,stop:applyStop,suppressAuto:(u,value)=>fireFor(s).suppressAuto(u,value),groundHeight:heightAt,
       selectTarget:(u,id,now)=>observationFor(s).automatic(u,id,now),clearTarget:(u,now,reason,target)=>observationFor(s).releaseAutomatic(u,now,reason,target),targetStatus:u=>observationFor(s).targetStatus(u),
       onDisable:(u,now)=>observationFor(s).controlAutomatic(u,false,now),
       onEvent:s.recordAIEvents?event=>{s.aiEvents??=[];s.aiEvents.push(event);if(s.aiEvents.length>2000)s.aiEvents.shift();}:null}));
