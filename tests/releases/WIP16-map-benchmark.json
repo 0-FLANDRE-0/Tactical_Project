@@ -1,0 +1,123 @@
+{
+  "version": "0.4-WIP16",
+  "ref": null,
+  "runtime": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "fixture": "default five-vehicle playable scenario, same placements/missions and seeds 7/17/27, 2s warmup + 20s measurement",
+  "scope": "Total fixed tick including movement, observation/LOS, AI, fire, readiness, flight and impacts; excludes rendering.",
+  "summary": {
+    "medianOfTickMediansMs": 0.3021400000000085,
+    "medianOfTickP95Ms": 0.6745170000000371
+  },
+  "trials": [
+    {
+      "seed": 7,
+      "vehicles": 5,
+      "enemyVehicles": 3,
+      "simulationSeconds": 20,
+      "warmupSeconds": 2,
+      "medianTickMs": 0.3477280000000178,
+      "p95TickMs": 0.9852899999999636,
+      "maxTickMs": 3.4624860000000126,
+      "aiDecisions": 90,
+      "targetSelections": 1,
+      "targetSwitches": 0,
+      "targetCommands": 1,
+      "pathRequests": 3,
+      "pathFailures": 0,
+      "visitedCells": 827,
+      "movingEnemies": 3,
+      "enemyDistanceM": 527.3381539302248,
+      "shots": 5,
+      "observation": {
+        "queries": 1100,
+        "candidates": 1683,
+        "samples": 1683,
+        "rayQueries": 14367,
+        "rayCacheHits": 780
+      },
+      "los": {
+        "enabled": false,
+        "groups": 4808,
+        "rays": 9616,
+        "heightSamples": 424535,
+        "heightReadsAvoided": 359886,
+        "buildingSamples": 349591,
+        "forestSamples": 387924
+      }
+    },
+    {
+      "seed": 17,
+      "vehicles": 5,
+      "enemyVehicles": 3,
+      "simulationSeconds": 20,
+      "warmupSeconds": 2,
+      "medianTickMs": 0.3021400000000085,
+      "p95TickMs": 0.6745170000000371,
+      "maxTickMs": 1.7212279999999964,
+      "aiDecisions": 90,
+      "targetSelections": 2,
+      "targetSwitches": 0,
+      "targetCommands": 2,
+      "pathRequests": 3,
+      "pathFailures": 0,
+      "visitedCells": 827,
+      "movingEnemies": 2,
+      "enemyDistanceM": 382.16159680861784,
+      "shots": 10,
+      "observation": {
+        "queries": 1100,
+        "candidates": 2109,
+        "samples": 2109,
+        "rayQueries": 12926,
+        "rayCacheHits": 6055
+      },
+      "los": {
+        "enabled": false,
+        "groups": 4174,
+        "rays": 8348,
+        "heightSamples": 401144,
+        "heightReadsAvoided": 343363,
+        "buildingSamples": 334256,
+        "forestSamples": 372483
+      }
+    },
+    {
+      "seed": 27,
+      "vehicles": 5,
+      "enemyVehicles": 3,
+      "simulationSeconds": 20,
+      "warmupSeconds": 2,
+      "medianTickMs": 0.25830499999995027,
+      "p95TickMs": 0.5519330000000764,
+      "maxTickMs": 2.160103000000049,
+      "aiDecisions": 90,
+      "targetSelections": 1,
+      "targetSwitches": 0,
+      "targetCommands": 1,
+      "pathRequests": 3,
+      "pathFailures": 0,
+      "visitedCells": 827,
+      "movingEnemies": 3,
+      "enemyDistanceM": 527.3381539302248,
+      "shots": 8,
+      "observation": {
+        "queries": 1100,
+        "candidates": 1856,
+        "samples": 1856,
+        "rayQueries": 15713,
+        "rayCacheHits": 991
+      },
+      "los": {
+        "enabled": false,
+        "groups": 5301,
+        "rays": 10602,
+        "heightSamples": 453995,
+        "heightReadsAvoided": 387267,
+        "buildingSamples": 375754,
+        "forestSamples": 415256
+      }
+    }
+  ]
+}

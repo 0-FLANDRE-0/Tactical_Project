@@ -35,6 +35,7 @@ const TacticalObservation=(()=>{
   function create({profileOf,exposure,seed=7,onEvent=null,channelOperational=()=>true}){
     let tick=0,time=0,teams=new Map();
     const stats={queries:0,candidates:0,samples:0,rayQueries:0,rayCacheHits:0},geometryCaches=new WeakMap();
+    const automaticControllers=new WeakMap();
     function emit(u,type,c=null,extra={}){
       if(onEvent)onEvent({time,observer:u.id,type,key:c?.key??null,detectedBy:c?.detectedBy??null,identifiedBy:c?.identifiedBy??null,current:c?.current??false,turret:u.turret,commander:u.commander,heading:u.heading,...extra});
     }
@@ -65,6 +66,35 @@ const TacticalObservation=(()=>{
       }
       s.designation={status:'designated',target:id,key:local.key,source,pose:copyPose(c.pose),observedAt:c.lastSeen,startedAt:time,expiresAt:time+t.designationSeconds,reason:'slewing'};
       const before=s.pending.length;s.pending=s.pending.filter(v=>v.target!==id);if(s.pending.length!==before)s.candidateRevision++;emit(u,'designated',local,{source,status:'designated'});return true;
+    }
+    function targetStatus(u){
+      const d=mission(init(u));return d?{target:d.target,key:d.key,source:d.source,status:d.status,reason:d.reason,pose:d.pose?{x:d.pose.x,y:d.pose.y}:null}:null;
+    }
+    function endAutomatic(u,reason,now,target=null){
+      const s=init(u),d=mission(s);if(!d||d.source!=='ai'||target!==null&&d.target!==target)return false;
+      d.status='lost';d.reason=reason;d.endedAt=now;s.gunner.focus=null;releaseCommander(s,d.target);emit(u,'target-lost',s.contacts[d.target],{source:'ai',status:'lost',reason});return true;
+    }
+    function controlAutomatic(u,enabled=true,now=time){
+      if(enabled){const old=automaticControllers.get(u);automaticControllers.set(u,old||{desired:null});return true;}
+      endAutomatic(u,'ai-disabled',now);automaticControllers.delete(u);return true;
+    }
+    function automatic(u,id,now=time){
+      const ctl=automaticControllers.get(u);if(!ctl)return false;const s=init(u),c=s.contacts[id],d=mission(s);
+      // A manual order owns the observation mission even when its current pose
+      // is outside gunner range. Tactical AI separately decides whether that
+      // order is engageable and must observe this rejection as a real failure.
+      if(d?.source==='manual')return false;
+      if(!c?.current||!c.identified||!c.enemyConfirmed||c.wreckConfirmed||!c.pose)return false;
+      if(d?.target===id){if(d.source!=='ai'){d.source='ai';emit(u,'target-owner',c,{source:'ai',status:d.status});}ctl.desired=id;return true;}
+      if(d){
+        if(d.source==='ai')endAutomatic(u,'ai-switch',now);
+        else{const previousSource=d.source;d.status='lost';d.reason='ai-switch';d.endedAt=now;s.gunner.focus=null;releaseCommander(s,d.target);emit(u,'target-lost',s.contacts[d.target],{source:previousSource,status:'lost',reason:'ai-switch'});}
+      }
+      const before=s.pending.length;s.pending=[];if(before)s.candidateRevision++;
+      const accepted=designate(u,id,'ai');if(accepted)ctl.desired=id;return accepted;
+    }
+    function releaseAutomatic(u,now=time,reason='ai-release',target=null){
+      const ctl=automaticControllers.get(u);if(!ctl)return false;ctl.desired=null;return endAutomatic(u,reason,now,target);
     }
     function focus(u,ch,now){
       const s=init(u),o=s[ch],t=profileOf(u).sensors.tuning,currentMission=mission(s);
@@ -201,6 +231,11 @@ const TacticalObservation=(()=>{
           d.reason=Math.hypot(d.pose.x-u.x,d.pose.y-u.y)>sensors.gunner.range?'range':Math.abs(diff(Math.atan2(d.pose.y-u.y,d.pose.x-u.x),u.turret))>sensors.gunner.fov/2?'slewing':'occluded';
         }
       }
+      const controller=automaticControllers.get(u);
+      if(controller){
+        if(s.pending.length){s.pending=[];s.candidateRevision++;}
+        return;
+      }
       // Refresh pending candidates only from this commander's actual samples.
       const beforePending=s.pending.length;
       s.pending=s.pending.filter(v=>now-v.observedAt<=t.memorySeconds&&v.target!==d?.target&&!s.contacts[v.target]?.wreckConfirmed);
@@ -232,6 +267,7 @@ const TacticalObservation=(()=>{
     }
     function retarget(u,target,reason,now){
       const s=init(u),d=mission(s),t=profileOf(u).sensors.tuning;
+      if(automaticControllers.has(u))return false;
       if(!d||d.target!==target||d.status!=='acquired')return false;
       const next=s.pending.find(v=>v.target!==target&&now-v.observedAt<=t.designationStale&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
       if(!next)return false;
@@ -278,7 +314,7 @@ const TacticalObservation=(()=>{
         gunnerCurrent:entry?.sources.gunner.current??false,acquired:!!(d?.status==='acquired'&&(!key||d.key===key)),
         targetKey:d?.key??null,status:d?.status??last.status,source:d?.source??last.source??null,reason:d?.reason??last.reason??null,pending:s.pending.length};
     }
-    return{advance,contacts,direct,ownStatus,retarget,stats};
+    return{advance,contacts,direct,ownStatus,retarget,controlAutomatic,automatic,releaseAutomatic,targetStatus,stats};
   }
   function view(u,ch='commander',time=0){const o=init(u)[ch];return{mode:o.mode==='guard'?'fixed':'idle',turret:u.turret,gaze:u.commander,direction:o.mode==='guard'?Math.atan2(o.point.y-u.y,o.point.x-u.x):null,remaining:o.expiresAt===null?null:Math.max(0,o.expiresAt-time),point:o.point?{...o.point}:null};}
   return Object.freeze({create,init,guard,resume,cancel,interrupt,view,hash});

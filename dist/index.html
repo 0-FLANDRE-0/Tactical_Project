@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP15</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP16</title>
 <style>
 :root{
   color-scheme:dark;
@@ -914,7 +914,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP15</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle">라스도르프 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP16</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -961,7 +961,7 @@ footer{
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
 <div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
 <div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·장전·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · RELOAD · REACTIONS · ENEMY AI / WIP15</div>
+<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p>4×4km · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · RELOAD · REACTIONS · ENGAGEMENT AI / WIP16</div>
 </aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
@@ -1196,14 +1196,17 @@ if(typeof module!=='undefined')module.exports=TacticalMobility;
 </script>
 <script id="tactical-ai">
 'use strict';
-/* Lightweight mission and engagement-movement policy. It reads only a unit's
- * own observation records and drivetrain state. Terrain paths remain owned by
- * sim-core and firing remains owned by fire-control. */
+/* Lightweight mission and engagement policy. Decisions use only a unit's own
+ * observation copies and private readiness. Observation owns handoff, sim-core
+ * owns paths, and fire-control remains the final firing authority. */
 const TacticalAI=(()=>{
   const STATE=Symbol('tactical-ai-state');
   const POLICIES=Object.freeze(['maintain','halt','auto']);
-  const DEFAULTS=Object.freeze({decisionPeriod:.75,lossGrace:1.5,observationHold:2.5,pathRetry:2,pathBudget:2,maxWaypoints:8});
+  const DEFAULTS=Object.freeze({decisionPeriod:.75,lossGrace:1.5,observationHold:2.5,pathRetry:2,pathBudget:2,maxWaypoints:8,
+    targetMinHold:2.25,switchMargin:.20,switchConfirmations:2,blockedRetry:2,blockedAlongChange:192,blockedHeightChange:.5});
   const clone=v=>JSON.parse(JSON.stringify(v));
+  const active=d=>d&&['designated','waiting','acquiring','acquired'].includes(d.status);
+  const mission=u=>[u.observation?.designation,u.observation?.tracking].find(active)||null;
   function phase(id,period){let h=2166136261;for(const c of String(id))h=Math.imul(h^c.charCodeAt(0),16777619);const slots=Math.max(1,Math.round(period/.05));return((h>>>0)%slots)*period/slots;}
   function state(u){return u?.[STATE]||null;}
   function validate(spec){
@@ -1215,30 +1218,72 @@ const TacticalAI=(()=>{
     if(!spec.waypoints.every(p=>Number.isFinite(p?.x)&&Number.isFinite(p?.y)&&(!Object.hasOwn(p,'reverse')||typeof p.reverse==='boolean')))throw Error('AI 경유점 값 오류');
     if(spec.type==='move'&&spec.loop)throw Error('지점 이동 임무는 반복할 수 없음');
   }
+  const counterKeys=['decisions','pathRequests','pathFailures','stops','resumes','waypoints','duplicateCommandsAvoided','targetSelections','targetSwitches','targetCommands','blockedTargets'];
   function assign(u,spec,now=0,decisionPeriod=DEFAULTS.decisionPeriod){
     validate(spec);const previous=state(u),revision=(previous?.mission.revision||0)+1;
+    const counters=Object.fromEntries(counterKeys.map(k=>[k,0]));
     const value={enabled:true,mission:{id:String(spec.id||u.id+'-mission'),revision,type:spec.type,waypoints:spec.waypoints.map(p=>({x:p.x,y:p.y,reverse:!!p.reverse})),index:0,loop:spec.type==='patrol'&&spec.loop!==false,status:'active'},
       policy:spec.policy,stopPreference:spec.stopPreference||'maintain',behavior:'mission',nextThinkAt:now+phase(u.id,decisionPeriod),retryAt:now,lastContactKey:null,lostAt:null,haltElapsed:0,autoSuppressed:false,resumeStatus:null,
-      counters:{decisions:0,pathRequests:0,pathFailures:0,stops:0,resumes:0,waypoints:0,duplicateCommandsAvoided:0}};
+      autoTargetId:null,autoTargetKey:null,targetSelectedAt:-Infinity,challengerId:null,challengerCount:0,blockedCandidates:{},counters};
     Object.defineProperty(u,STATE,{value,writable:true,configurable:true,enumerable:false});return inspect(u);
   }
   function setSuppressed(u,s,value,callback){if(s.autoSuppressed===value)return;s.autoSuppressed=value;callback(u,value);}
   function override(u,reason='manual-command'){
-    const s=state(u);if(!s)return false;s.enabled=false;s.mission.status='cancelled';s.behavior=reason;s.lastContactKey=null;s.lostAt=null;s.autoSuppressed=false;
+    const s=state(u);if(!s?.enabled)return false;s.onDisable?.(u,s.currentTime??0,reason);s.enabled=false;s.mission.status='cancelled';s.behavior=reason;s.lastContactKey=null;s.lostAt=null;s.autoSuppressed=false;s.autoTargetId=null;s.autoTargetKey=null;s.challengerId=null;s.challengerCount=0;
     if(u.fireControl)u.fireControl.autoSuppressed=false;return true;
   }
-  function destroy(u){const s=state(u);if(!s)return false;s.enabled=false;s.mission.status='destroyed';s.behavior='destroyed';s.lastContactKey=null;s.lostAt=null;s.autoSuppressed=false;if(u.fireControl)u.fireControl.autoSuppressed=false;return true;}
-  function ownContact(u){
-    let best=null;for(const c of Object.values(u.observation?.contacts||{}))if(c.current&&c.identified&&c.enemyConfirmed&&!c.wreckConfirmed){if(!best||c.lastSeen>best.lastSeen||c.lastSeen===best.lastSeen&&c.key<best.key)best=c;}return best;
+  function destroy(u){const s=state(u);if(!s?.enabled)return false;s.onDisable?.(u,s.currentTime??0,'destroyed');s.enabled=false;s.mission.status='destroyed';s.behavior='destroyed';s.lastContactKey=null;s.lostAt=null;s.autoSuppressed=false;s.autoTargetId=null;s.autoTargetKey=null;if(u.fireControl)u.fireControl.autoSuppressed=false;return true;}
+  const effectiveRange=(u,p)=>Math.min(p.fireControl.maxRange,p.sensors.gunner.range);
+  function geometryState(u,c,groundHeight=()=>0){
+    const beta=Math.atan2(c.pose.y-u.y,c.pose.x-u.x),cos=Math.cos(beta),sin=Math.sin(beta),ground=groundHeight(u.x,u.y);
+    return{beta,lineOffset:-sin*u.x+cos*u.y,observerAlong:cos*u.x+sin*u.y,observerGround:Number.isFinite(ground)?ground:0,targetX:c.pose.x,targetY:c.pose.y,targetHeading:c.pose.heading,targetTurret:c.pose.turret};
+  }
+  const angleDelta=(a,b)=>Math.abs(Math.atan2(Math.sin(a-b),Math.cos(a-b)));
+  function sameBlockedGeometry(blocked,u,c,groundHeight=()=>0,config=DEFAULTS){
+    const a=blocked.geometry,b=geometryState(u,c,groundHeight);if(!a)return blocked.signature===geometrySignature(u,c,groundHeight);
+    // Compare to the geometry that actually failed instead of rounded buckets,
+    // so small movement cannot cross a bucket edge and restart an engagement.
+    return angleDelta(a.beta,b.beta)<=.035&&Math.abs(a.lineOffset-b.lineOffset)<=16&&Math.abs(a.observerAlong-b.observerAlong)<=config.blockedAlongChange&&Math.abs(a.observerGround-b.observerGround)<=config.blockedHeightChange&&Math.hypot(a.targetX-b.targetX,a.targetY-b.targetY)<=16&&angleDelta(a.targetHeading,b.targetHeading)<=.1&&angleDelta(a.targetTurret,b.targetTurret)<=.1;
+  }
+  function geometrySignature(u,c,groundHeight=()=>0){const g=geometryState(u,c,groundHeight);return[g.beta,g.lineOffset,g.observerAlong,g.observerGround,g.targetX,g.targetY,g.targetHeading,g.targetTurret].map(v=>Number.isFinite(v)?v:null).join(':');}
+  function probeCleared(blocked,u,c){
+    const fire=u.fireControl;return!!(blocked.probePending&&fire&&fire.lineProbeQueries>blocked.probeQueries&&fire.lineProbeTarget===c.key&&fire.lineProbeResult==='clear');
+  }
+  function armBlockedProbe(blocked,u,c,now,groundHeight){
+    blocked.geometry=geometryState(u,c,groundHeight);blocked.signature=geometrySignature(u,c,groundHeight);blocked.probePending=true;blocked.probeQueries=u.fireControl?.lineProbeQueries??0;blocked.probeAt=now;
+  }
+  function automaticCandidates(u,s,p,now,groundHeight=()=>0,config=DEFAULTS){
+    const range=effectiveRange(u,p),out=[];
+    for(const[id,c]of Object.entries(u.observation?.contacts||{})){
+      if(!c.current||!c.identified||!c.enemyConfirmed||c.wreckConfirmed||!c.pose)continue;
+      const distance=Math.hypot(c.pose.x-u.x,c.pose.y-u.y);if(distance>range)continue;
+      const blocked=s.blockedCandidates[id];
+      if(blocked&&probeCleared(blocked,u,c))delete s.blockedCandidates[id];
+      else if(blocked&&!blocked.probePending&&!sameBlockedGeometry(blocked,u,c,groundHeight,config)){
+        if(blocked.abandoned)armBlockedProbe(blocked,u,c,now,groundHeight);else delete s.blockedCandidates[id];
+      }
+      const currentBlock=s.blockedCandidates[id];
+      if(currentBlock&&!currentBlock.probePending&&(currentBlock.abandoned||currentBlock.until>now+1e-9))continue;
+      const retryBlocked=!!s.blockedCandidates[id];
+      const score=1-Math.max(0,Math.min(1,distance/range))+(c.sources?.gunner?.current?.15:0)+(s.autoTargetId===id?.15:0);
+      out.push({id,key:c.key,contact:c,distance,score,identifiedAt:Number.isFinite(c.identifiedAt)?c.identifiedAt:Infinity,retryBlocked});
+    }
+    out.sort((a,b)=>Number(a.retryBlocked)-Number(b.retryBlocked)||b.score-a.score||a.identifiedAt-b.identifiedAt||(a.key<b.key?-1:a.key>b.key?1:0)||(a.id<b.id?-1:a.id>b.id?1:0));return out;
+  }
+  function manualEngagement(u,p,status){
+    const d=status||mission(u);if(!active(d)||d.source!=='manual')return null;
+    const c=u.observation?.contacts?.[d.target],pose=c?.pose||d.pose;if(!pose||c?.wreckConfirmed||Math.hypot(pose.x-u.x,pose.y-u.y)>effectiveRange(u,p))return null;
+    return{id:d.target,key:d.key||c?.key||null,contact:c||null,pose,manual:true,status:d.status};
   }
   function shouldHalt(s,p){return s.policy==='halt'||s.policy==='auto'&&(!p.fireControl.movement.fireOnMove||s.stopPreference==='halt');}
   function inspect(u){const s=state(u);return s?clone(s):null;}
   function aggregate(units){
-    const out={active:0,decisions:0,pathRequests:0,pathFailures:0,stops:0,resumes:0,waypoints:0,duplicateCommandsAvoided:0,behaviors:{}};
-    for(const u of units){const s=state(u);if(!s)continue;if(s.enabled)out.active++;for(const k of ['decisions','pathRequests','pathFailures','stops','resumes','waypoints','duplicateCommandsAvoided'])out[k]+=s.counters[k];out.behaviors[s.behavior]=(out.behaviors[s.behavior]||0)+1;}return out;
+    const out={active:0,...Object.fromEntries(counterKeys.map(k=>[k,0])),behaviors:{}};
+    for(const u of units){const s=state(u);if(!s)continue;if(s.enabled)out.active++;for(const k of counterKeys)out[k]+=s.counters[k];out.behaviors[s.behavior]=(out.behaviors[s.behavior]||0)+1;}return out;
   }
-  function create({profileOf,move,stop,suppressAuto,onEvent=null,settings={}}){
+  function create({profileOf,move,stop,suppressAuto,selectTarget=()=>true,clearTarget=()=>false,targetStatus=u=>mission(u),probeTarget=()=>false,groundHeight=()=>0,onDisable=()=>{},onEvent=null,settings={}}){
     const config=Object.freeze({...DEFAULTS,...settings});
+    if(!Number.isFinite(config.targetMinHold)||config.targetMinHold<0||!Number.isFinite(config.switchMargin)||config.switchMargin<0||!Number.isInteger(config.switchConfirmations)||config.switchConfirmations<1||!Number.isFinite(config.blockedRetry)||config.blockedRetry<0||!Number.isFinite(config.blockedAlongChange)||config.blockedAlongChange<=0||!Number.isFinite(config.blockedHeightChange)||config.blockedHeightChange<=0)throw Error('AI 교전 판단 설정 오류');
     function emit(u,s,type,now,extra={}){onEvent?.({time:now,unit:u.id,mission:s.mission.id,revision:s.mission.revision,type,behavior:s.behavior,...extra});}
     function progress(u,s,now){
       s.counters.waypoints++;s.mission.index++;
@@ -1270,31 +1315,78 @@ const TacticalAI=(()=>{
       if(result.ok){s.mission.status='active';s.retryAt=now;emit(u,s,'path-issued',now,{index:s.mission.index,visits:result.visits||0});return budget-1;}
       s.counters.pathFailures++;s.mission.status='blocked';s.retryAt=now+config.pathRetry;emit(u,s,'path-failed',now,{index:s.mission.index,reason:result.reason});return budget-1;
     }
+    function commandAutomatic(u,s,next,now,reason){
+      const previous=s.autoTargetId,changed=previous!==next.id;
+      if(changed){s.autoTargetId=next.id;s.autoTargetKey=next.key;s.targetSelectedAt=now;s.challengerId=null;s.challengerCount=0;if(previous===null)s.counters.targetSelections++;else s.counters.targetSwitches++;emit(u,s,previous===null?'target-selected':'target-switched',now,{targetKey:next.key,previousTarget:previous,reason,score:next.score});}
+      let actual=targetStatus(u);if(changed||!active(actual)||actual.target!==next.id||actual.source!=='ai'){
+        const result=selectTarget(u,next.id,now);actual=targetStatus(u);
+        if(result===false||!active(actual)||actual.target!==next.id||actual.source!=='ai'){emit(u,s,'target-command-rejected',now,{targetKey:next.key,reason});return null;}
+        s.counters.targetCommands++;emit(u,s,'target-commanded',now,{targetKey:next.key,reason});
+      }
+      return next;
+    }
+    function dropAutomatic(u,s,now,reason){
+      if(s.autoTargetId===null)return false;const previous=s.autoTargetId,key=s.autoTargetKey;s.autoTargetId=null;s.autoTargetKey=null;s.targetSelectedAt=-Infinity;s.challengerId=null;s.challengerCount=0;clearTarget(u,now,reason,previous);emit(u,s,'target-released',now,{targetKey:key,previousTarget:previous,reason});return true;
+    }
+    function chooseTarget(u,s,p,now){
+      const actual=targetStatus(u);
+      if(active(actual)&&actual.source==='manual'){
+        s.challengerId=null;s.challengerCount=0;
+        // Manual ownership remains intact even when it is not currently a
+        // viable engagement. An automatic preference may be remembered, but
+        // it cannot replace or masquerade as the applied target.
+        return manualEngagement(u,p,actual);
+      }
+      const candidates=automaticCandidates(u,s,p,now,groundHeight,config),current=candidates.find(v=>v.id===s.autoTargetId)||null;
+      if(!current){if(!candidates.length)return null;return commandAutomatic(u,s,candidates[0],now,s.autoTargetId===null?'initial':'invalid-current');}
+      const challenger=candidates.find(v=>v.id!==current.id);
+      if(challenger&&now-s.targetSelectedAt+1e-9>=config.targetMinHold&&challenger.score>current.score+config.switchMargin){
+        if(s.challengerId===challenger.id)s.challengerCount++;else{s.challengerId=challenger.id;s.challengerCount=1;}
+        if(s.challengerCount>=config.switchConfirmations)return commandAutomatic(u,s,challenger,now,'sustained-advantage');
+      }else{s.challengerId=null;s.challengerCount=0;}
+      return commandAutomatic(u,s,current,now,'retain');
+    }
     function advance(units,dt,now){
       let budget=config.pathBudget;
       for(const u of units){
         const s=state(u);if(!s?.enabled)continue;
+        s.currentTime=now;
         if(u.combat?.status==='destroyed'){destroy(u);continue;}
-        const p=profileOf(u),movement=p.fireControl.movement,contact=ownContact(u),ammo=(u.fireControl?.ammo??0)>0,halt=shouldHalt(s,p);
+        const p=profileOf(u),movement=p.fireControl.movement,ammo=(u.fireControl?.ammo??0)>0,halt=shouldHalt(s,p);
         if(Math.abs(u.drive?.velocity??u.speed??0)<=movement.stationarySpeedMps+1e-9)s.haltElapsed+=dt;else s.haltElapsed=0;
-        /* Suppress halt-policy auto fire immediately after a contact appears.
-         * Route and behavior changes stay on the distributed low-rate clock. */
-        if(halt&&ammo&&(contact||s.lastContactKey)&&s.behavior!=='engaging')setSuppressed(u,s,true,suppressAuto);
+        if(s.autoTargetId&&u.observation?.contacts?.[s.autoTargetId]?.wreckConfirmed){dropAutomatic(u,s,now,'confirmed-wreck');s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);if(halt&&(s.mission.status==='paused'||['observe','braking','engaging'].includes(s.behavior)))finishEngagement(u,s,now,'confirmed-wreck-resume');}
+        const applied=targetStatus(u),appliedCurrent=manualEngagement(u,p,applied)||(active(applied)&&applied.source==='ai'&&s.autoTargetId===applied.target&&u.observation?.contacts?.[applied.target]?.current);
+        if(halt&&ammo&&(appliedCurrent||s.lastContactKey)&&s.behavior!=='engaging')setSuppressed(u,s,true,suppressAuto);
         if(now+1e-9<s.nextThinkAt)continue;
         do{s.nextThinkAt+=config.decisionPeriod;}while(s.nextThinkAt<=now+1e-9);
         s.counters.decisions++;
-        if(contact&&ammo&&halt){
+        let contact=ammo?chooseTarget(u,s,p,now):null;
+        const haltProbe=!!(contact?.retryBlocked&&halt);if(haltProbe){setSuppressed(u,s,true,suppressAuto);probeTarget(u,contact.key);}
+        if(!ammo){dropAutomatic(u,s,now,'out-of-ammo');s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);if(s.mission.status==='paused'||['observe','braking','engaging'].includes(s.behavior))finishEngagement(u,s,now,'out-of-ammo-resume');}
+        else if(contact&&!contact.retryBlocked){
           s.lastContactKey=contact.key;s.lostAt=null;
-          if(!['braking','engaging'].includes(s.behavior)){
-            suspendMission(s);s.behavior='braking';stop(u);s.counters.stops++;emit(u,s,'engagement-stop',now,{contactKey:contact.key});
+          if(halt){
+            if(!['braking','engaging'].includes(s.behavior)){
+              const alreadyPaused=s.mission.status==='paused';suspendMission(s);s.behavior='braking';
+              if(!alreadyPaused){stop(u);s.counters.stops++;emit(u,s,'engagement-stop',now,{contactKey:contact.key});}
+            }
+            if(s.haltElapsed+1e-9>=movement.stationaryHoldSeconds){s.behavior='engaging';setSuppressed(u,s,false,suppressAuto);}else setSuppressed(u,s,true,suppressAuto);
+          }else setSuppressed(u,s,false,suppressAuto);
+        }else if(s.lastContactKey){
+          if(s.lostAt===null){s.lostAt=now;if(halt)s.behavior='observe';setSuppressed(u,s,halt,suppressAuto);emit(u,s,'contact-lost',now,{contactKey:s.lastContactKey});}
+          // An expired retry interval may re-apply the same target so the
+          // existing fire-line can be tested again. It does not make the
+          // engagement healthy or restart the termination clock.
+          if(contact?.retryBlocked&&halt)s.behavior='observe';
+          if(now-s.lostAt+1e-9>=config.lossGrace+config.observationHold){
+            for(const blocked of Object.values(s.blockedCandidates))blocked.abandoned=true;
+            dropAutomatic(u,s,now,'observation-timeout');s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);if(halt)finishEngagement(u,s,now);
           }
-          if(s.haltElapsed+1e-9>=movement.stationaryHoldSeconds){s.behavior='engaging';setSuppressed(u,s,false,suppressAuto);}else setSuppressed(u,s,true,suppressAuto);
-        }else if(s.lastContactKey&&halt&&ammo){
-          if(s.lostAt===null){s.lostAt=now;s.behavior='observe';setSuppressed(u,s,true,suppressAuto);emit(u,s,'contact-lost',now,{contactKey:s.lastContactKey});}
-          if(now-s.lostAt+1e-9>=config.lossGrace+config.observationHold){s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);finishEngagement(u,s,now);}
+        }else if(haltProbe){
+          if(s.mission.status==='paused')s.behavior='observe';
         }else{
-          if(s.mission.status==='paused'||s.behavior==='observe'||s.behavior==='braking'||s.behavior==='engaging')finishEngagement(u,s,now,ammo?'mission-resume':'out-of-ammo-resume');
-          s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);
+          if(halt&&(s.mission.status==='paused'||['observe','braking','engaging'].includes(s.behavior)))finishEngagement(u,s,now);
+          setSuppressed(u,s,false,suppressAuto);
         }
         if(s.behavior==='resume')s.behavior='mission';
         if((s.behavior==='mission'||s.mission.status==='blocked')&&s.mission.status!=='completed')budget=requestRoute(u,s,now,units,budget);
@@ -1303,13 +1395,22 @@ const TacticalAI=(()=>{
     }
     function assignRuntime(u,spec,now=0){
       const previous=state(u);if(previous?.autoSuppressed||u.fireControl?.autoSuppressed)suppressAuto(u,false);
-      assign(u,spec,now,config.decisionPeriod);const s=state(u),p=profileOf(u),contact=ownContact(u),ammo=(u.fireControl?.ammo??0)>0;
-      if(contact&&ammo&&shouldHalt(s,p))setSuppressed(u,s,true,suppressAuto);
-      return inspect(u);
+      if(previous?.autoTargetId)clearTarget(u,now,'mission-reassigned',previous.autoTargetId);
+      assign(u,spec,now,config.decisionPeriod);const s=state(u);Object.defineProperties(s,{currentTime:{value:now,writable:true,enumerable:false},onDisable:{value:onDisable,writable:true,enumerable:false}});
+      const p=profileOf(u),hasTarget=manualEngagement(u,p,targetStatus(u))||automaticCandidates(u,s,p,now,groundHeight,config).length>0;if((u.fireControl?.ammo??0)>0&&hasTarget&&shouldHalt(s,p))setSuppressed(u,s,true,suppressAuto);return inspect(u);
     }
-    return Object.freeze({assign:assignRuntime,advance,inspect,aggregate,config});
+    function manualChanged(u,now){const s=state(u);if(!s?.enabled)return false;s.nextThinkAt=Math.min(s.nextThinkAt,now);s.challengerId=null;s.challengerCount=0;return true;}
+    function fireBlocked(u,target,reason,now){
+      const s=state(u);if(!s?.enabled||s.autoTargetId!==target||targetStatus(u)?.source==='manual')return false;
+      const c=u.observation?.contacts?.[target],old=s.blockedCandidates[target],reprobe=!!old?.probePending;if(c?.pose)s.blockedCandidates[target]={until:now+config.blockedRetry,signature:geometrySignature(u,c,groundHeight),geometry:geometryState(u,c,groundHeight),reason,firstBlockedAt:old?.firstBlockedAt??now,lastBlockedAt:now,attempts:(old?.attempts??0)+1,abandoned:reprobe||!!old?.abandoned,probePending:false};
+      s.counters.blockedTargets++;s.nextThinkAt=Math.min(s.nextThinkAt,now);s.autoTargetId=null;s.autoTargetKey=null;s.challengerId=null;s.challengerCount=0;
+      const p=profileOf(u),healthyAlternative=automaticCandidates(u,s,p,now,groundHeight,config).some(v=>!v.retryBlocked);
+      if(!healthyAlternative&&s.lastContactKey){s.lostAt??=now;if(shouldHalt(s,p)){s.behavior='observe';setSuppressed(u,s,true,suppressAuto);}}
+      emit(u,s,'target-blocked',now,{target,reason,retryAt:now+config.blockedRetry});return true;
+    }
+    return Object.freeze({assign:assignRuntime,advance,inspect,aggregate,manualChanged,fireBlocked,config});
   }
-  return Object.freeze({create,assign,override,destroy,inspect,aggregate,policies:POLICIES,defaults:DEFAULTS});
+  return Object.freeze({create,assign,override,destroy,inspect,aggregate,automaticCandidates,effectiveRange,policies:POLICIES,defaults:DEFAULTS});
 })();
 if(typeof module!=='undefined')module.exports=TacticalAI;
 
@@ -1375,6 +1476,7 @@ const TacticalObservation=(()=>{
   function create({profileOf,exposure,seed=7,onEvent=null,channelOperational=()=>true}){
     let tick=0,time=0,teams=new Map();
     const stats={queries:0,candidates:0,samples:0,rayQueries:0,rayCacheHits:0},geometryCaches=new WeakMap();
+    const automaticControllers=new WeakMap();
     function emit(u,type,c=null,extra={}){
       if(onEvent)onEvent({time,observer:u.id,type,key:c?.key??null,detectedBy:c?.detectedBy??null,identifiedBy:c?.identifiedBy??null,current:c?.current??false,turret:u.turret,commander:u.commander,heading:u.heading,...extra});
     }
@@ -1405,6 +1507,35 @@ const TacticalObservation=(()=>{
       }
       s.designation={status:'designated',target:id,key:local.key,source,pose:copyPose(c.pose),observedAt:c.lastSeen,startedAt:time,expiresAt:time+t.designationSeconds,reason:'slewing'};
       const before=s.pending.length;s.pending=s.pending.filter(v=>v.target!==id);if(s.pending.length!==before)s.candidateRevision++;emit(u,'designated',local,{source,status:'designated'});return true;
+    }
+    function targetStatus(u){
+      const d=mission(init(u));return d?{target:d.target,key:d.key,source:d.source,status:d.status,reason:d.reason,pose:d.pose?{x:d.pose.x,y:d.pose.y}:null}:null;
+    }
+    function endAutomatic(u,reason,now,target=null){
+      const s=init(u),d=mission(s);if(!d||d.source!=='ai'||target!==null&&d.target!==target)return false;
+      d.status='lost';d.reason=reason;d.endedAt=now;s.gunner.focus=null;releaseCommander(s,d.target);emit(u,'target-lost',s.contacts[d.target],{source:'ai',status:'lost',reason});return true;
+    }
+    function controlAutomatic(u,enabled=true,now=time){
+      if(enabled){const old=automaticControllers.get(u);automaticControllers.set(u,old||{desired:null});return true;}
+      endAutomatic(u,'ai-disabled',now);automaticControllers.delete(u);return true;
+    }
+    function automatic(u,id,now=time){
+      const ctl=automaticControllers.get(u);if(!ctl)return false;const s=init(u),c=s.contacts[id],d=mission(s);
+      // A manual order owns the observation mission even when its current pose
+      // is outside gunner range. Tactical AI separately decides whether that
+      // order is engageable and must observe this rejection as a real failure.
+      if(d?.source==='manual')return false;
+      if(!c?.current||!c.identified||!c.enemyConfirmed||c.wreckConfirmed||!c.pose)return false;
+      if(d?.target===id){if(d.source!=='ai'){d.source='ai';emit(u,'target-owner',c,{source:'ai',status:d.status});}ctl.desired=id;return true;}
+      if(d){
+        if(d.source==='ai')endAutomatic(u,'ai-switch',now);
+        else{const previousSource=d.source;d.status='lost';d.reason='ai-switch';d.endedAt=now;s.gunner.focus=null;releaseCommander(s,d.target);emit(u,'target-lost',s.contacts[d.target],{source:previousSource,status:'lost',reason:'ai-switch'});}
+      }
+      const before=s.pending.length;s.pending=[];if(before)s.candidateRevision++;
+      const accepted=designate(u,id,'ai');if(accepted)ctl.desired=id;return accepted;
+    }
+    function releaseAutomatic(u,now=time,reason='ai-release',target=null){
+      const ctl=automaticControllers.get(u);if(!ctl)return false;ctl.desired=null;return endAutomatic(u,reason,now,target);
     }
     function focus(u,ch,now){
       const s=init(u),o=s[ch],t=profileOf(u).sensors.tuning,currentMission=mission(s);
@@ -1541,6 +1672,11 @@ const TacticalObservation=(()=>{
           d.reason=Math.hypot(d.pose.x-u.x,d.pose.y-u.y)>sensors.gunner.range?'range':Math.abs(diff(Math.atan2(d.pose.y-u.y,d.pose.x-u.x),u.turret))>sensors.gunner.fov/2?'slewing':'occluded';
         }
       }
+      const controller=automaticControllers.get(u);
+      if(controller){
+        if(s.pending.length){s.pending=[];s.candidateRevision++;}
+        return;
+      }
       // Refresh pending candidates only from this commander's actual samples.
       const beforePending=s.pending.length;
       s.pending=s.pending.filter(v=>now-v.observedAt<=t.memorySeconds&&v.target!==d?.target&&!s.contacts[v.target]?.wreckConfirmed);
@@ -1572,6 +1708,7 @@ const TacticalObservation=(()=>{
     }
     function retarget(u,target,reason,now){
       const s=init(u),d=mission(s),t=profileOf(u).sensors.tuning;
+      if(automaticControllers.has(u))return false;
       if(!d||d.target!==target||d.status!=='acquired')return false;
       const next=s.pending.find(v=>v.target!==target&&now-v.observedAt<=t.designationStale&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
       if(!next)return false;
@@ -1618,7 +1755,7 @@ const TacticalObservation=(()=>{
         gunnerCurrent:entry?.sources.gunner.current??false,acquired:!!(d?.status==='acquired'&&(!key||d.key===key)),
         targetKey:d?.key??null,status:d?.status??last.status,source:d?.source??last.source??null,reason:d?.reason??last.reason??null,pending:s.pending.length};
     }
-    return{advance,contacts,direct,ownStatus,retarget,stats};
+    return{advance,contacts,direct,ownStatus,retarget,controlAutomatic,automatic,releaseAutomatic,targetStatus,stats};
   }
   function view(u,ch='commander',time=0){const o=init(u)[ch];return{mode:o.mode==='guard'?'fixed':'idle',turret:u.turret,gaze:u.commander,direction:o.mode==='guard'?Math.atan2(o.point.y-u.y,o.point.x-u.x):null,remaining:o.expiresAt===null?null:Math.max(0,o.expiresAt-time),point:o.point?{...o.point}:null};}
   return Object.freeze({create,init,guard,resume,cancel,interrupt,view,hash});
@@ -1776,9 +1913,9 @@ const TacticalFireControl=(()=>{
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   function init(u,p,mode='auto'){
     if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
-      shotCount:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null,
+      shotCount:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeResult:null,lineProbeRequest:null,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null,
       loaded:true,reloadProgress:1,reloadStartedAt:null,reloadCompletedAt:0,readyIdleSeconds:0,burstShots:0,fatigueSeconds:0,shockSeconds:0,faultUntil:{fireControl:0,commander:0,gunner:0},lastReaction:null};
-    const s=u.fireControl;s.fireMode??=mode;s.lineProbeTarget??=null;s.lineProbePose??=null;s.lineProbeBlocked??=false;s.lineProbeCandidateRevision??=null;s.lineProbeQueries??=0;s.stationaryElapsed??=0;s.autoSuppressed??=false;s.lastRejection??=null;
+    const s=u.fireControl;s.fireMode??=mode;s.lineProbeTarget??=null;s.lineProbePose??=null;s.lineProbeBlocked??=false;s.lineProbeResult??=null;s.lineProbeRequest??=null;s.lineProbeCandidateRevision??=null;s.lineProbeQueries??=0;s.stationaryElapsed??=0;s.autoSuppressed??=false;s.lastRejection??=null;
     s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;return s;
   }
   const readiness=p=>p.fireControl.readiness;
@@ -1994,7 +2131,7 @@ const TacticalFireControl=(()=>{
       for(const u of units){
         const p=profileOf(u),f=p.fireControl,s=init(u,p);advanceReadiness(u,p,s,dt,now);const check=inspect(u,now),{d,c}=check;
         if(Math.abs(u.drive?.velocity??u.speed??0)<=f.movement.stationarySpeedMps+1e-9)s.stationaryElapsed+=dt;else s.stationaryElapsed=0;
-        if(s.targetKey!==d?.key){s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
+        if(s.targetKey!==d?.key){const requested=s.lineProbeRequest;s.targetKey=d?.key??null;s.lineProbeTarget=null;s.lineProbePose=null;s.lineProbeBlocked=false;s.lineProbeResult=null;s.lineProbeRequest=requested===s.targetKey?requested:null;s.lineProbeCandidateRevision=null;resetAim(s);resetMotion(s);if(s.pending?.key!==s.targetKey)s.pending=null;}
         if(s.previousSample&&now-s.previousSample.time>p.sensors.tuning.queryPeriod*5+1e-9)resetMotion(s);
         if(c?.sources.gunner.current&&c.pose&&s.previousSample?.time!==c.sources.gunner.lastSeen){
           const previous=s.previousSample;
@@ -2017,12 +2154,20 @@ const TacticalFireControl=(()=>{
         const linePose=c?.pose?[u.x,u.y,u.heading,u.turret,c.pose.x,c.pose.y,c.pose.heading,c.pose.turret]:null;
         const changedLine=!linePose||!s.lineProbePose||linePose.some((v,i)=>v!==s.lineProbePose[i]);
         const candidateRevision=u.observation?.candidateRevision??0,candidatesChanged=s.lineProbeCandidateRevision!==candidateRevision;
+        // AI may request the same authoritative firing-line query without
+        // authorising a shot. This path stops before ammunition, shot number,
+        // decision RNG, flight and effect creation regardless of the result.
+        if(s.status==='ready'&&!s.pending&&s.lineProbeRequest===s.targetKey){
+          s.lineProbeRequest=null;s.lineProbeQueries++;const probe=freshSight(u,d.target),blocked=!probe?.visible&&(probe?.reason||'fresh-sight-failed');s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=blocked==='fire-line-blocked';s.lineProbeResult=probe?.visible?'clear':blocked;s.lineProbeCandidateRevision=candidateRevision;
+          if(!probe?.visible){const switched=s.lineProbeBlocked&&onFireBlocked?.(u,d.target,'fire-line-blocked',now);s.status='blocked';s.reason=switched?'retargeted':blocked;resetAim(s);s.lastRejection=s.reason;clearPreview(s);}else{s.status='ready';s.reason=null;}
+          continue;
+        }
         if(s.status==='ready'&&!s.pending&&s.fireMode==='auto'&&s.lineProbeBlocked&&s.lineProbeTarget===s.targetKey&&!changedLine){
           s.lineProbeCandidateRevision=candidateRevision;
           if(candidatesChanged&&onFireBlocked?.(u,d.target,'fire-line-blocked',now)){
             s.status='blocked';s.reason='retargeted';resetAim(s);clearPreview(s);continue;
           }
-          s.status='blocked';s.reason='fire-line-blocked';clearPreview(s);continue;
+          s.lineProbeResult='fire-line-blocked';s.status='blocked';s.reason='fire-line-blocked';clearPreview(s);continue;
         }
         // Auto creates the same queued request consumed below and never
         // overwrites a manual request already present for this step.
@@ -2030,7 +2175,7 @@ const TacticalFireControl=(()=>{
         // Hold still probes the real line and participates in hunter-killer
         // switching, while never creating an automatic firing request.
         if(s.status==='ready'&&!s.pending&&s.fireMode==='hold'&&(s.lineProbeTarget!==s.targetKey||changedLine||candidatesChanged)){
-          if(s.lineProbeTarget!==s.targetKey||changedLine){s.lineProbeQueries++;const probe=freshSight(u,d.target);s.lineProbeBlocked=!probe?.visible&&probe?.reason==='fire-line-blocked';}
+          if(s.lineProbeTarget!==s.targetKey||changedLine){s.lineProbeQueries++;const probe=freshSight(u,d.target);s.lineProbeBlocked=!probe?.visible&&probe?.reason==='fire-line-blocked';s.lineProbeResult=probe?.visible?'clear':probe?.reason||'fresh-sight-failed';}
           s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeCandidateRevision=candidateRevision;
           if(s.lineProbeBlocked&&onFireBlocked?.(u,d.target,'fire-line-blocked',now)){
             s.status='blocked';s.reason='retargeted';resetAim(s);clearPreview(s);continue;
@@ -2049,10 +2194,10 @@ const TacticalFireControl=(()=>{
         s.lineProbeQueries++;const sight=freshSight(u,d.target);
         if(!sight?.visible){
           const blocked=sight?.reason||'fresh-sight-failed',switched=blocked==='fire-line-blocked'&&onFireBlocked?.(u,d.target,blocked,now);
-          if(blocked==='fire-line-blocked'){s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=true;s.lineProbeCandidateRevision=candidateRevision;}
+          s.lineProbeResult=blocked;if(blocked==='fire-line-blocked'){s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=true;s.lineProbeCandidateRevision=candidateRevision;}
           s.status='blocked';s.reason=switched?'retargeted':blocked;resetAim(s);s.lastRejection=s.reason;clearPreview(s);continue;
         }
-        s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=false;s.lineProbeCandidateRevision=candidateRevision;
+        s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=false;s.lineProbeResult='clear';s.lineProbeCandidateRevision=candidateRevision;
         const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
         if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
         const firePenalty=observationPenalty(p,s,now),chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime,firePenalty.errorSigmaMultiplier),number=s.shotCount+1;
@@ -2087,6 +2232,7 @@ const TacticalFireControl=(()=>{
       if(mode==='hold'&&s.pending?.source==='auto')s.pending=null;
       return true;
     }
+    function probe(u,key){const s=init(u,profileOf(u));if(!key)return false;s.lineProbeRequest=key;return true;}
     function view(u,key=null){
       const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
       const aimPenalty=observationPenalty(p,s,currentTime);
@@ -2098,10 +2244,10 @@ const TacticalFireControl=(()=>{
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
     function suppressAuto(u,value){const s=init(u,profileOf(u));s.autoSuppressed=!!value;if(value&&s.pending?.source==='auto')s.pending=null;return s.autoSuppressed;}
-    function cancel(u){const s=init(u,profileOf(u));s.pending=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
+    function cancel(u){const s=init(u,profileOf(u));s.pending=null;s.lineProbeRequest=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
-    return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,setMode,view,cancel,suppressAuto,react,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
+    return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,probe,setMode,view,cancel,suppressAuto,react,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
   return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
@@ -2426,12 +2572,17 @@ const TacticalCore = (() => {
   }
   const aiRuntimes=new WeakMap();
   function aiFor(s){
-    if(!aiRuntimes.has(s))aiRuntimes.set(s,TacticalAI.create({profileOf,move:applyMove,stop:applyStop,suppressAuto:(u,value)=>fireFor(s).suppressAuto(u,value),
+    if(!aiRuntimes.has(s))aiRuntimes.set(s,TacticalAI.create({profileOf,move:applyMove,stop:applyStop,suppressAuto:(u,value)=>fireFor(s).suppressAuto(u,value),probeTarget:(u,key)=>fireFor(s).probe(u,key),groundHeight:heightAt,
+      selectTarget:(u,id,now)=>observationFor(s).automatic(u,id,now),clearTarget:(u,now,reason,target)=>observationFor(s).releaseAutomatic(u,now,reason,target),targetStatus:u=>observationFor(s).targetStatus(u),
+      onDisable:(u,now)=>observationFor(s).controlAutomatic(u,false,now),
       onEvent:s.recordAIEvents?event=>{s.aiEvents??=[];s.aiEvents.push(event);if(s.aiEvents.length>2000)s.aiEvents.shift();}:null}));
     return aiRuntimes.get(s);
   }
-  const assignMission=(s,u,spec)=>aliveCommand(u)?aiFor(s).assign(u,spec,s.time):null;
+  const assignMission=(s,u,spec)=>{if(!aliveCommand(u))return null;observationFor(s).controlAutomatic(u,true,s.time);return aiFor(s).assign(u,spec,s.time);};
   const cancelMission=(s,u,halt=true)=>{const changed=TacticalAI.override(u,'mission-cancelled');if(changed&&halt)applyStop(u);return changed;};
+  const aiStatus=(s,u)=>aiFor(s).inspect(u);
+  const aiStats=s=>aiFor(s).aggregate(s.units);
+  const aiEventLog=s=>s.recordAIEvents?JSON.parse(JSON.stringify(s.aiEvents||[])):[];
   function step(s,dt){
     s.time+=dt;
     for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}
@@ -2476,8 +2627,8 @@ const TacticalCore = (() => {
   const resumeObservation=(s,u,ch)=>aliveCommand(u)&&TacticalObservation.resume(u,ch,s.time);
   // Command acceptance depends only on the team's public contact. A hidden
   // destruction must not be disclosed by a different success/failure result.
-  const designate=(s,u,key)=>aliveCommand(u)&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);
-  const cancelDesignation=(s,u)=>{if(!aliveCommand(u))return false;TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);return true;};
+  const designate=(s,u,key)=>{const accepted=aliveCommand(u)&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);if(accepted)aiFor(s).manualChanged(u,s.time);return accepted;};
+  const cancelDesignation=(s,u)=>{if(!aliveCommand(u))return false;TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);aiFor(s).manualChanged(u,s.time);return true;};
   const observationView=(s,u,ch='commander')=>TacticalObservation.view(u,ch,s.time);
   const ownObservation=(s,u,key=null)=>observationFor(s).ownStatus(u,key);
   const observationStats=s=>({...observationFor(s).stats});
@@ -2519,7 +2670,7 @@ const TacticalCore = (() => {
         }
         return TacticalCombatState.publicRecord(record);
       },
-      onFireBlocked:(u,target,reason,now)=>observationFor(s).retarget(u,target,reason,now),
+      onFireBlocked:(u,target,reason,now)=>{if(aiFor(s).fireBlocked(u,target,reason,now)){observationFor(s).releaseAutomatic(u,now,reason,target);return true;}return observationFor(s).retarget(u,target,reason,now);},
       freshSight:(u,id)=>{
       const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'fresh-sight-failed'};
       // A private destruction may physically stop a shot, but its public reason
@@ -2719,7 +2870,7 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -4105,7 +4256,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     ui.setText($('simState'),paused?'일시정지':'기동·관측·사격 시험');
     const own=C.ownObservation(sim,u),d=own,status={idle:'없음',designated:'지정 전달',waiting:'확보 대기',acquiring:'포수 확인 중',acquired:'포수 확보',expired:'지정 만료',cancelled:'지정 취소',lost:'표적 유지 해제'};
     ui.setText($('lookStatus'),'전차장 '+guardLabel('commander')+' · 포수 '+guardLabel('gunner')+' · 후보 '+own.pending);
-    ui.setText($('designationStatus'),(d.source==='gunner'?'포수 자체 · ':d.source==='commander'?'전차장 인계 · ':d.source==='manual'?'직접 지정 · ':'')+(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':''));
+    ui.setText($('designationStatus'),(d.source==='gunner'?'포수 자체 · ':d.source==='commander'?'전차장 인계 · ':d.source==='manual'?'직접 지정 · ':d.source==='ai'?'자동 인계 · ':'')+(status[d.status]||d.status)+(d.reason==='range'?' · 포수 거리 밖':''));
     let target=C.contacts(sim).find(v=>v.key===targetId);if(target?.wreck){targetId=null;target=null;}
     $('targetPanel').classList.toggle('visible',!!target);
     if(target){
@@ -4347,7 +4498,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP15',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP16',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

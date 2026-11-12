@@ -1,0 +1,217 @@
+{
+  "version": "0.4-WIP16",
+  "baselineMain": "bb479ad97df0fd8ab22ad3fd38f54475ccac13cb",
+  "branch": "feat/wip16-engagement-decisions",
+  "date": "2026-11-11",
+  "checks": [
+    {
+      "name": "JavaScript syntax checks for src, scripts and tests",
+      "status": "passed"
+    },
+    {
+      "name": "complete Node test runner including browser scripts",
+      "status": "passed",
+      "passed": 304,
+      "failed": 0
+    },
+    {
+      "name": "non-browser Node test runner",
+      "status": "passed",
+      "passed": 300,
+      "failed": 0
+    },
+    {
+      "name": "terrain readability Python unittest",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "name": "source quality with system Python GDAL/OGR",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0,
+      "note": "default Python lacked osgeo; /usr/bin/python3 used the installed system binding"
+    },
+    {
+      "name": "standalone real-map checks",
+      "status": "passed",
+      "passed": 16,
+      "failed": 0
+    },
+    {
+      "name": "standalone fake-DOM input checks",
+      "status": "passed",
+      "passed": 42,
+      "failed": 0,
+      "kind": "fake DOM, not a browser"
+    },
+    {
+      "name": "standalone visibility checks",
+      "status": "passed",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "standalone vehicle/Worker checks",
+      "status": "passed",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "name": "actual Chromium full application regression",
+      "status": "passed",
+      "passed": 31,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP16-full-browser.json"
+    },
+    {
+      "name": "actual Chromium WIP16 engagement scenarios",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP16-browser.json",
+      "note": "Includes persistent single-line block timeout, out-of-range manual ownership/cancellation, same-line forward/actual-reverse ridge reopening, maintain moving fire, and resource-free halt probes followed by braking plus stationary hold in the actual standalone app."
+    },
+    {
+      "name": "actual Chromium WIP15 reload/reaction regression",
+      "status": "passed",
+      "passed": 4,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP15-browser.json"
+    },
+    {
+      "name": "actual Chromium WIP12 effects regression",
+      "status": "passed",
+      "passed": 18,
+      "failed": 0,
+      "browser": "156.0.8078.79",
+      "evidence": "tests/releases/WIP12-effects-browser.json"
+    },
+    {
+      "name": "repeat build and package byte identity, ZIP CRC and extracted HTML comparison",
+      "status": "passed"
+    },
+    {
+      "name": "physical mobile device long-run/thermal check",
+      "status": "not-run",
+      "reason": "no physical mobile device attached; Chromium mobile viewports passed"
+    }
+  ],
+  "performance": {
+    "engagement50": {
+      "baselineMedianMs": 0.014611999999999625,
+      "currentMedianMs": 0.058447000000001026,
+      "currentP95Ms": 0.16877099999999245,
+      "targetSelections": 50,
+      "targetSwitches": 50,
+      "targetCommands": 100
+    },
+    "engagement100": {
+      "baselineMedianMs": 0.02785199999999577,
+      "currentMedianMs": 0.14536699999999314,
+      "currentP95Ms": 0.2738589999999874,
+      "targetSelections": 100,
+      "targetSwitches": 100,
+      "targetCommands": 200
+    },
+    "map": {
+      "baselineMedianMs": 0.2774339999999711,
+      "currentMedianMs": 0.3021400000000085,
+      "baselineP95Ms": 0.5561000000000149,
+      "currentP95Ms": 0.6745170000000371,
+      "pathRequestsPerSeed": 3,
+      "pathFailuresPerSeed": 0
+    },
+    "evidence": [
+      "tests/releases/WIP16-engagement-benchmark.json",
+      "tests/releases/WIP16-map-benchmark.json",
+      "tests/releases/WIP16-performance-comparison.json"
+    ]
+  },
+  "artifacts": {
+    "html": {
+      "path": "Tactical_v0.4_WIP16.html",
+      "bytes": 8470662,
+      "sha256": "03d36c308e2f190458cfd198abf54332e2d782524756a0211d1a572551ab663e",
+      "matchesDist": true,
+      "repeatBuildByteIdentical": true
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP16.zip",
+      "bytes": 1672040,
+      "sha256": "6d293cc643e4f917bcba19436bacf7808ee670db8218cc942bd5b38f2ea4b69d",
+      "entry": "Tactical_v0.4_WIP16.html",
+      "entryBytes": 8470662,
+      "crc32": "5d22213d",
+      "repeatPackageByteIdentical": true,
+      "extractedMatchesDist": true
+    }
+  },
+  "notImplemented": [
+    "cover or ridge position search",
+    "pursuit, flanking or retreat",
+    "team focus fire or a global threat map",
+    "crew skill or morale",
+    "new vehicle or ammunition profiles"
+  ],
+  "reviewBaseline": "adda7bf7245e22627c8f8afa9a7fd60dabf08825",
+  "corrections": {
+    "persistentBlockedLine": {
+      "before40Seconds": {
+        "stops": 10,
+        "targetCommands": 10,
+        "resumes": 0
+      },
+      "after40Seconds": {
+        "stops": 1,
+        "targetCommands": 2,
+        "resumes": 1
+      },
+      "additionalLosPerCandidate": false
+    },
+    "manualOutOfRange": {
+      "ownershipPreserved": "manual/waiting/range",
+      "automaticRejectionCountedAsEngagement": false,
+      "missionResumesOnce": true,
+      "cancelExpiryReentryCovered": true
+    },
+    "ridgeCache": {
+      "observerAlongThresholdM": 192,
+      "observerGroundThresholdM": 0.5,
+      "forwardAndActualReverseCore": true,
+      "forwardAndActualReverseChromium": true,
+      "automaticHandoffAcquireFire": true,
+      "cacheClearedAfterExistingFireLineProbe": true,
+      "additionalLosPerCandidate": false,
+      "smallJitterRetargetLoop": false
+    },
+    "haltProbe": {
+      "lineProbeSeparatedFromFire": true,
+      "ammoShotNumberDecisionRngFlightEffectsOnProbe": false,
+      "haltAutoSuppressedDuringProbe": true,
+      "forwardAndActualReverseCore": true,
+      "forwardAndActualReverseChromium": true,
+      "probeClearAmmo": 42,
+      "probeClearShotCount": 0,
+      "probeClearEffects": 0,
+      "probeClearFlights": 0,
+      "firstFireActualSpeedMps": {
+        "forward": 0,
+        "reverse": 0
+      },
+      "firstFireStationaryElapsedSeconds": {
+        "forward": 0.5,
+        "reverse": 1.0
+      },
+      "requiredStationaryHoldSeconds": 0.35,
+      "maintainMovingFirePreserved": true,
+      "persistentBlockedLoopPrevented": true
+    }
+  },
+  "ridgeReviewBaseline": "311ec5b8ec96075bd5f23c14552bb1d22025b7f0",
+  "haltProbeReviewBaseline": "2d68725c89d4ec3e01de6bfb41e42a107c3fe440"
+}
