@@ -1,0 +1,128 @@
+{
+  "version": "0.4-WIP17",
+  "runtime": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "platform": "linux",
+  "fixture": "Sequential current Rasdorf 4x4 and actual-resolution synthetic 8x8; 3 core initializations, 20-unit-pair 1s warm-up + 10s fixed ticks, 15 short and 10 long A* routes. Rendering and Worker are measured by WIP17-browser.json.",
+  "generationMs": 154.552822,
+  "cases": [
+    {
+      "name": "rasdorf-4x4",
+      "width": 4000,
+      "height": 4000,
+      "init": {
+        "samples": 3,
+        "medianMs": 85.22661400000004,
+        "p95Ms": 85.22661400000004,
+        "maxMs": 125.34789899999998
+      },
+      "heapDeltaBytes": {
+        "samples": [
+          748296,
+          377904,
+          276144
+        ],
+        "median": 377904
+      },
+      "estimatedRuntimeArrays": {
+        "decodedHeightBytes": 16000000,
+        "surfaceBytes": 1000000,
+        "navigationBytes": 312500,
+        "roofBytes": 4000000,
+        "losSummaryBytes": 265625,
+        "totalBytes": 21578125
+      },
+      "tick": {
+        "samples": 200,
+        "medianMs": 1.1051800000000185,
+        "p95Ms": 4.656849999999963,
+        "maxMs": 15.309056000000055
+      },
+      "shortPath": {
+        "timing": {
+          "samples": 15,
+          "medianMs": 4.435628999999949,
+          "p95Ms": 10.281481999999983,
+          "maxMs": 12.297421999999983
+        },
+        "visits": {
+          "median": 2667,
+          "p95": 2667,
+          "max": 2667
+        }
+      },
+      "longPath": {
+        "timing": {
+          "samples": 10,
+          "medianMs": 22.341228,
+          "p95Ms": 24.11052800000016,
+          "maxMs": 42.94519299999979
+        },
+        "visits": {
+          "median": 30785,
+          "p95": 30785,
+          "max": 30785
+        }
+      }
+    },
+    {
+      "name": "synthetic-8x8",
+      "width": 8000,
+      "height": 8000,
+      "init": {
+        "samples": 3,
+        "medianMs": 258.11128600000006,
+        "p95Ms": 258.11128600000006,
+        "maxMs": 350.1787989999998
+      },
+      "heapDeltaBytes": {
+        "samples": [
+          23464,
+          -680,
+          -969592
+        ],
+        "median": -680
+      },
+      "estimatedRuntimeArrays": {
+        "decodedHeightBytes": 64000000,
+        "surfaceBytes": 4000000,
+        "navigationBytes": 1250000,
+        "roofBytes": 16000000,
+        "losSummaryBytes": 1062500,
+        "totalBytes": 86312500
+      },
+      "tick": {
+        "samples": 200,
+        "medianMs": 1.4555019999997967,
+        "p95Ms": 2.714390000000094,
+        "maxMs": 5.39946800000007
+      },
+      "shortPath": {
+        "timing": {
+          "samples": 15,
+          "medianMs": 3.102810000000318,
+          "p95Ms": 8.781503000000157,
+          "maxMs": 10.703142000000298
+        },
+        "visits": {
+          "median": 1768,
+          "p95": 1768,
+          "max": 1768
+        }
+      },
+      "longPath": {
+        "timing": {
+          "samples": 10,
+          "medianMs": 67.46580300000005,
+          "p95Ms": 72.65225599999985,
+          "maxMs": 101.3179839999998
+        },
+        "visits": {
+          "median": 108273,
+          "p95": 108273,
+          "max": 108273
+        }
+      }
+    }
+  ]
+}

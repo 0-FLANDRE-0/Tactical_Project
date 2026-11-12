@@ -10,11 +10,14 @@ import argparse
 import base64
 import json
 import math
+import sys
 from pathlib import Path
 from typing import Iterable
 
 import numpy as np
 from scipy.ndimage import gaussian_filter, map_coordinates
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from map_spec import validate_map, signature
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data/rasdorf_4km.json"
@@ -280,8 +283,8 @@ def derive_from_grid(heights: np.ndarray, spacing: float, parameters: dict | Non
     return features
 
 
-def build() -> dict:
-    data = json.loads(SOURCE.read_text(encoding="utf-8"))
+def build(source: Path = SOURCE) -> dict:
+    data = json.loads(source.read_text(encoding="utf-8")); spec = validate_map(data)
     source_spacing = float(data["heightmap"]["spacing"])
     heights = decode_heights(data)
     analysis = downsample_mean(heights, source_spacing, PARAMETERS["analysisSpacingMetres"])
@@ -291,6 +294,7 @@ def build() -> dict:
         "algorithm": "inverted-d8-cross-relief",
         "algorithmVersion": "1.0.0",
         "sourceMapHash": data["meta"]["mapHash"],
+        "mapSpec": signature(spec),
         "sourceHeightSpacingMetres": source_spacing,
         **PARAMETERS,
         "lineCounts": {
@@ -309,17 +313,24 @@ def encoded_outputs(result: dict) -> tuple[str, str]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="fail if committed outputs are stale")
+    parser.add_argument("--input", default=str(SOURCE.relative_to(ROOT)))
+    parser.add_argument("--output")
+    parser.add_argument("--script-output")
     args = parser.parse_args()
-    result = build()
+    custom=args.input!=str(SOURCE.relative_to(ROOT))
+    if custom and not args.output: parser.error("--output is required with a custom --input")
+    source=ROOT/args.input;output=ROOT/(args.output or str(OUTPUT.relative_to(ROOT)))
+    script_output=ROOT/args.script_output if args.script_output else (None if custom else SCRIPT_OUTPUT)
+    result = build(source)
     data_text, script_text = encoded_outputs(result)
     if args.check:
-        if not OUTPUT.exists() or OUTPUT.read_text(encoding="utf-8") != data_text:
-            raise SystemExit("data/terrain-readability.json is stale")
-        if not SCRIPT_OUTPUT.exists() or SCRIPT_OUTPUT.read_text(encoding="utf-8") != script_text:
-            raise SystemExit("src/terrain-data.js is stale")
+        if not output.exists() or output.read_text(encoding="utf-8") != data_text:
+            raise SystemExit(f"{args.output} is stale")
+        if script_output and (not script_output.exists() or script_output.read_text(encoding="utf-8") != script_text):
+            raise SystemExit(f"{args.script_output} is stale")
     else:
-        OUTPUT.write_text(data_text, encoding="utf-8")
-        SCRIPT_OUTPUT.write_text(script_text, encoding="utf-8")
+        output.parent.mkdir(parents=True,exist_ok=True);output.write_text(data_text, encoding="utf-8")
+        if script_output: script_output.parent.mkdir(parents=True,exist_ok=True);script_output.write_text(script_text, encoding="utf-8")
     total = sum(line["lengthMetres"] for line in result["lines"])
     print(json.dumps({"lines": result["lineCounts"], "lengthMetres": round(total, 1),
                       "sourceMapHash": result["sourceMapHash"], "checked": args.check}, ensure_ascii=False))

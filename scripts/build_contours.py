@@ -1,12 +1,22 @@
 #!/usr/bin/python3
 """Bake vector contours from the same decoded 2 m gameplay heights (not the DEM)."""
 from pathlib import Path
-import base64, json
+import argparse, base64, json
 import numpy as np
 from osgeo import gdal, ogr
+from map_spec import validate_map, signature
 
 root = Path(__file__).resolve().parents[1]
-data = json.loads((root/'data/rasdorf_4km.json').read_text())
+parser=argparse.ArgumentParser()
+parser.add_argument('--input',default='data/rasdorf_4km.json')
+parser.add_argument('--output')
+parser.add_argument('--script-output')
+args=parser.parse_args()
+custom=args.input!='data/rasdorf_4km.json'
+if custom and not args.output: parser.error('--output is required with a custom --input')
+output_path=root/(args.output or 'data/contours.json')
+script_path=root/args.script_output if args.script_output else (None if custom else root/'src/contour-data.js')
+data = json.loads((root/args.input).read_text());spec=validate_map(data)
 h = data['heightmap']
 raw = base64.b64decode(h['data'])
 heights = np.empty((h['rows'], h['columns']), dtype=np.float32)
@@ -39,8 +49,8 @@ for feature in layer:
     lines.append({'level': round(feature.GetField('level')), 'points': points,
                   'bounds': [min(xs), min(ys), max(xs), max(ys)]})
 output = {'sourceMapHash': data['meta']['mapHash'], 'interval': 10,
-          'sampleSpacing': 2, 'simplifyTolerance': 0.25, 'lines': lines}
+          'mapSpec':signature(spec),'sampleSpacing': h['spacing'], 'simplifyTolerance': 0.25, 'lines': lines}
 encoded = json.dumps(output, separators=(',', ':'))
-(root/'data/contours.json').write_text(encoded)
-(root/'src/contour-data.js').write_text('const CONTOUR_DATA='+encoded+';\n')
+output_path.parent.mkdir(parents=True,exist_ok=True);output_path.write_text(encoded)
+if script_path: script_path.parent.mkdir(parents=True,exist_ok=True);script_path.write_text('const CONTOUR_DATA='+encoded+';\n')
 print(f'Baked {len(lines)} vector contours, {sum(len(v["points"]) for v in lines)} vertices')

@@ -1,0 +1,14 @@
+{
+  "id": "rasdorf-west-4km-v1",
+  "name": "RASDORF",
+  "subtitle": "라스도르프 서부 · 독일 헤센",
+  "epsg": 25832,
+  "bounds": [560500, 5616500, 564500, 5620500],
+  "dem": "data/raw/rasdorf_dgm1.tif",
+  "osm": "data/raw/rasdorf_osm.json",
+  "output": "data/rasdorf_4km.json",
+  "scriptOutput": "src/battlefield-data.js",
+  "manifestOutput": "data/map_manifest.json",
+  "overviewOutput": "data/overview.png",
+  "overviewLabels": [["WEST", 450, 2800], ["EAST", 3450, 2850], ["RIDGE", 1750, 950]]
+}

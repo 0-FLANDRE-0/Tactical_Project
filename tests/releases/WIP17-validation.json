@@ -1,0 +1,51 @@
+{
+  "version": "0.4-WIP17",
+  "date": "2026-11-12",
+  "branch": "feat/wip17-variable-map-foundation",
+  "baselineMain": "c13765ec1c46468996950c94d5f6b666bbcf07c0",
+  "scope": "Variable-size map foundation; default Rasdorf 4x4 retained; actual real-world 8x8 map excluded",
+  "contracts": {
+    "worldMetres": {"integer": true, "maximumWidth": 8000, "maximumHeight": 8000, "navigationAlignedMetres": 16},
+    "height": {"spacingMetres": 2, "sampleOriginMetres": 1},
+    "surface": {"spacingMetres": 4},
+    "navigation": {"spacingMetres": 16, "partialCells": "rejected"}
+  },
+  "checks": [
+    {"name": "non-browser Node test runner", "status": "passed", "passed": 305, "failed": 0},
+    {"name": "map specification, rectangle and actual-resolution synthetic 8x8 movement/observation/fire/effects", "status": "passed", "passed": 5, "failed": 0, "evidence": "tests/map-spec.test.cjs"},
+    {"name": "terrain readability Python unittest", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "source quality with system Python GDAL/OGR", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "terrain derived-data reproducibility and interpretation validation", "status": "passed"},
+    {"name": "standalone real 4x4 map regression", "status": "passed", "passed": 16, "failed": 0},
+    {"name": "fake-DOM input regression", "status": "passed", "passed": 42, "failed": 0, "kind": "fake DOM, not a browser"},
+    {"name": "standalone visibility regression", "status": "passed", "passed": 12, "failed": 0},
+    {"name": "standalone vehicle and embedded Worker regression", "status": "passed", "passed": 9, "failed": 0},
+    {"name": "actual Chromium WIP17 8x8 and rectangle app/Worker", "status": "passed", "passed": 3, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP17-browser.json"},
+    {"name": "actual Chromium full default application regression", "status": "passed", "passed": 31, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP16-full-browser.json"},
+    {"name": "actual Chromium WIP16 engagement regression", "status": "passed", "passed": 7, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP16-browser.json"},
+    {"name": "actual Chromium WIP15 reload/reaction regression", "status": "passed", "passed": 4, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP15-browser.json"},
+    {"name": "actual Chromium WIP12 effects regression", "status": "passed", "passed": 18, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP12-effects-browser.json"},
+    {"name": "JavaScript and Python syntax checks", "status": "passed"},
+    {"name": "default battlefield regeneration structured equality excluding separately baked navigation", "status": "passed", "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801"},
+    {"name": "repeat build/package byte identity, ZIP CRC and extracted HTML comparison", "status": "passed"},
+    {"name": "physical mobile device memory/thermal test", "status": "not-run", "reason": "no physical mobile device attached; actual Chromium desktop and mobile-view regressions passed"}
+  ],
+  "performance": {
+    "environment": {"cpu": "AMD EPYC 9V74 80-Core Processor", "node": "v24.22.1", "browser": "Chromium 156.0.8078.79"},
+    "nodeEvidence": "tests/releases/WIP17-map-benchmark.json",
+    "browserEvidence": "tests/releases/WIP17-browser.json",
+    "rasdorf4x4": {"initMedianMs": 85.226614, "tickMedianMs": 1.10518, "tickP95Ms": 4.65685, "longPathMedianMs": 22.341228, "longPathVisits": 30785, "estimatedRuntimeArrayBytes": 21578125},
+    "synthetic8x8": {"initMedianMs": 258.111286, "tickMedianMs": 1.455502, "tickP95Ms": 2.71439, "longPathMedianMs": 67.465803, "longPathVisits": 108273, "estimatedRuntimeArrayBytes": 86312500, "browserRenderMedianMs": 7.7, "browserRenderP95Ms": 14.6, "workerElapsedMs": 485, "mainPageHeapBytes": 230848502},
+    "notes": "Sequential synthetic measurements, not whole-game FPS or a mobile guarantee. Browser heap excludes Worker/browser process memory."
+  },
+  "artifacts": {
+    "html": {"path": "Tactical_v0.4_WIP17.html", "bytes": 8477532, "sha256": "e0ae131f24407a5ad295d188a0148b0be28655928226e463e4611b2219589551", "matchesDist": true, "repeatBuildByteIdentical": true},
+    "zip": {"path": "Tactical_v0.4_WIP17.zip", "bytes": 1673681, "sha256": "7f173572ea93404daf74111f36aad9e6c72d691d7b8debc7e6d3c26bfd73deb2", "entry": "Tactical_v0.4_WIP17.html", "entryBytes": 8477532, "crc32": "0a8fe9b3", "repeatPackageByteIdentical": true, "extractedMatchesDist": true}
+  },
+  "notImplemented": [
+    "actual real-world 8x8 DEM/OSM map or product download",
+    "runtime map picker or hot swapping",
+    "streaming/chunking or hierarchical pathfinding",
+    "physical mobile-device performance guarantee"
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "version": "0.4-WIP17",
+  "browser": "156.0.8078.79",
+  "checks": [
+    "8x8 app pans, selects and commands beyond 4km with matching labels and overlays",
+    "8x8 embedded Worker computes the selected vehicle visibility beyond 4km",
+    "asymmetric 8x4.096 app keeps independent bounds, click selection and overlay rendering"
+  ],
+  "passed": 3,
+  "failed": 0,
+  "evidence": {
+    "app8x8": {
+      "world": {
+        "w": 8000,
+        "h": 8000,
+        "step": 2,
+        "nav": 16
+      },
+      "spec": {
+        "version": 1,
+        "id": "wip17-browser-8000x8000",
+        "hash": "1d4efbdcba686a406b7e2ff988439abd86f7781834d0f33628491c31bf23e9d8",
+        "width": 8000,
+        "height": 8000,
+        "heightmap": {
+          "columns": 4000,
+          "rows": 4000,
+          "spacing": 2,
+          "cells": 16000000
+        },
+        "terrain": {
+          "columns": 2000,
+          "rows": 2000,
+          "spacing": 4,
+          "cells": 4000000
+        },
+        "navigation": {
+          "columns": 500,
+          "rows": 500,
+          "spacing": 16,
+          "cells": 250000
+        }
+      },
+      "camera": {
+        "x": 5130,
+        "y": 6070,
+        "zoom": 0.2,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "point": {
+        "x": 968,
+        "y": -108
+      },
+      "command": {
+        "ok": true,
+        "points": [
+          {
+            "x": 5544,
+            "y": 5496
+          },
+          {
+            "x": 5912,
+            "y": 5864
+          },
+          {
+            "x": 6280,
+            "y": 6232
+          },
+          {
+            "x": 6648,
+            "y": 6600
+          },
+          {
+            "x": 7016,
+            "y": 6616
+          },
+          {
+            "x": 7384,
+            "y": 6984
+          },
+          {
+            "x": 7400,
+            "y": 7000
+          }
+        ],
+        "visits": 25643,
+        "cost": 2956.8981207705574
+      },
+      "footer": "8000 × 8000 m",
+      "dimensions": "8×8km",
+      "renderer": {
+        "key": "4000|4000|0.09541|1188|812|1|true|false|false|1.0.0|synthetic",
+        "rebuildCount": 1,
+        "cacheHits": 4,
+        "lastRebuildMs": 14.5,
+        "rebuildTimes": [
+          14.5
+        ],
+        "terrainValid": true,
+        "terrainLines": 0
+      },
+      "render": {
+        "samples": 24,
+        "medianMs": 7.7000000001862645,
+        "p95Ms": 14.600000000558794,
+        "maxMs": 15.400000000372529,
+        "heapBytes": 230848502
+      }
+    },
+    "worker": {
+      "client": {
+        "mode": "worker",
+        "failed": false,
+        "pending": false
+      },
+      "origin": {
+        "x": 5200,
+        "y": 5200
+      },
+      "loops": 1,
+      "elapsedMs": 485
+    },
+    "rectangle": {
+      "selected": "A12",
+      "camera": {
+        "x": 6120,
+        "y": 2842.6666666666665,
+        "zoom": 0.3,
+        "w": 1188,
+        "h": 812,
+        "dpr": 1
+      },
+      "world": {
+        "w": 8000,
+        "h": 4096,
+        "step": 2,
+        "nav": 16
+      },
+      "footer": "8000 × 4096 m",
+      "renderer": {
+        "key": "6120|2842.6666666666665|0.3|1188|812|1|true|false|false|1.0.0|synthetic",
+        "rebuildCount": 2,
+        "cacheHits": 12,
+        "lastRebuildMs": 9.700000000186265,
+        "rebuildTimes": [
+          13.599999999627471,
+          9.700000000186265
+        ],
+        "terrainValid": true,
+        "terrainLines": 0
+      }
+    }
+  }
+}
