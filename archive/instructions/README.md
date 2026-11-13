@@ -4,7 +4,7 @@
 
 | 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-13) |
 |---|---|---|---|---|
-| WIP18 일시 기능 이상·승무원 경중상 | [진행 지시서](../../docs/tasks/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | — | 구현 대기 | 지시 등록 · 확률/능률/회복 정책은 초기 시험 제안 · 완료 전 원본은 docs/tasks에서 관리 |
+| WIP18 일시 기능 이상·승무원 경중상 | [원본 지시서](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | — | `feat/wip18-hit-reactions` | 구현·검증 완료 · M1A2_1998 전용 초기 시험 제안 · 다른 차량 자동 상속 없음 |
 | WIP17 가변 맵 크기 지원 기반 | [원본 지시서](TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) | — | `feat/wip17-variable-map-foundation` | 최종 624d80d 독립 재검증 통과 · main 병합 (2026-11-13) · 실제 8×8 지도 제작 제외 |
 | WIP16 적 AI 교전 판단·표적 선택·행동 안정화 | [기본 지시서](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) · [능선 캐시 보완](TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md) · [halt 재확인 보완](TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md) | — | PR #15 | 최종 47f9e07 독립 재검증 통과 · main 병합 |
 | WIP15 가변 장전·피격 동요·장비 일시 이상 | [기본 지시서](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) · [관측 이상 수정](TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md) | — | PR #14 | 최종 5a0b516 독립 재검증 통과 · main 병합 |

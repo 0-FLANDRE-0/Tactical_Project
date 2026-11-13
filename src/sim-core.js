@@ -276,10 +276,11 @@ const TacticalCore = (() => {
     const actual=Math.abs(d.velocity)>.015?(d.velocity<0?'실제 후진':'실제 전진'):TacticalMobility.directionLabel(d);
     return{requested,actual,requestMatches:!d.pendingDirection&&d.requestedDirection===actualDirection,gear:TacticalMobility.gearLabel(d),velocity:d.velocity,mode:d.mode,shiftCount:d.shiftCount};
   }
-  function stepTank(u,dt,units) {
+  function updateHitReactionModifiers(u,now){const p=profileOf(u);u.hitReactionModifiers=TacticalCombatState.hitReactionModifiers(u,p,now);u.hitReactionTime=now;return u.hitReactionModifiers;}
+  function stepTank(u,dt,units,now=0) {
     const drive=ensureDrive(u);
     if(u.combat?.status==='destroyed'){TacticalAI.destroy(u);TacticalMobility.reset(drive);u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
-    const pVehicle=profileOf(u),motion=pVehicle.mobility;
+    const pVehicle=profileOf(u),motion=pVehicle.mobility,reaction=updateHitReactionModifiers(u,now);
     u.replanTimer=Math.max(0,u.replanTimer-dt);
     while(u.path.length>1&&Math.hypot(u.path[0].x-u.x,u.path[0].y-u.y)<4)u.path.shift();
     let desired=0,request=0,err=0;
@@ -297,7 +298,7 @@ const TacticalCore = (() => {
       if(directionConnected) {
         const p=u.path[0],d=Math.hypot(p.x-u.x,p.y-u.y);
         const aim=Math.atan2(p.y-u.y,p.x-u.x)+(request<0?Math.PI:0);err=angleDiff(aim,u.heading);
-        const turnLimit=TacticalMobility.turnRate(drive.velocity,pVehicle)*dt;
+        const turnLimit=TacticalMobility.turnRate(drive.velocity,pVehicle,reaction.hullTurn)*dt;
         u.heading+=clamp(err,-turnLimit,turnLimit);
         const type=surfaceAt(u.x,u.y),grade=gradeAt(u.x,u.y,u.heading),base=mobilityLimit(type,grade.along,grade.side,request<0,pVehicle),corner=Math.max(0,Math.cos(err));
         desired=Math.min(base*corner*corner,Math.sqrt(Math.max(0,2*motion.brakeDeceleration*(routeDistance(u)-motion.powertrain.arrivalRadius))));
@@ -305,7 +306,7 @@ const TacticalCore = (() => {
         if(Math.abs(err)>1.15)desired=0;
       }
     }
-    TacticalMobility.step(drive,{direction:request,targetSpeed:desired},pVehicle,dt);u.speed=Math.abs(drive.velocity);
+    TacticalMobility.step(drive,{direction:request,targetSpeed:desired,powerMultiplier:reaction.drivePower},pVehicle,dt);u.speed=Math.abs(drive.velocity);
     u.state=TacticalMobility.directionLabel(drive);if(u.path.length&&desired<.2&&u.speed<.3&&!drive.pendingDirection)u.state='선회';
     const next={x:u.x+Math.cos(u.heading)*drive.velocity*dt,y:u.y+Math.sin(u.heading)*drive.velocity*dt};
     if(u.speed>0&&segmentClear(u,next,units,u)){u.distanceTravelled+=u.speed*dt;u.x=next.x;u.y=next.y;}
@@ -331,10 +332,12 @@ const TacticalCore = (() => {
   const aiEventLog=s=>s.recordAIEvents?JSON.parse(JSON.stringify(s.aiEvents||[])):[];
   function step(s,dt){
     s.time+=dt;
-    for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units);}
+    for(const u of s.units){const p=profileOf(u);if(p.combat&&!u.combat)TacticalCombatState.initUnit(u,p);stepTank(u,dt,s.units,s.time);}
     // Flight arrivals and their temporary reactions precede sensing, AI and
     // any new fire attempt at the same fixed-step timestamp.
     fireFor(s).resolveImpacts(s.units,s.time);
+    // Reactions from a due impact affect observation, AI and fire in this tick.
+    for(const u of s.units)updateHitReactionModifiers(u,s.time);
     const alive=s.units.filter(u=>u.combat?.status!=='destroyed');
     // Only living vehicles observe and act; every vehicle remains a sensing
     // candidate so an unseen destruction can later be discovered as a wreck.
@@ -380,7 +383,7 @@ const TacticalCore = (() => {
   const observationStats=s=>({...observationFor(s).stats});
   const combatRuntimes=new WeakMap();
   function combatFor(s){
-    if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,onDestroyed:(target)=>{
+    if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,seed:s.seed??7,onDestroyed:(target)=>{
       target.speed=0;if(target.drive)TacticalMobility.reset(target.drive);target.path=[];target.goal=null;target.reverse=false;target.state='격파';
       TacticalAI.destroy(target);
       TacticalObservation.cancel(target,s.time,'destroyed');fireFor(s).cancel(target);
@@ -390,7 +393,7 @@ const TacticalCore = (() => {
   const combatView=u=>{
     if(!u?.combat)return null;let lastDamage=null;
     if(u.combat.lastDamage){const{id,targetId,...safe}=u.combat.lastDamage;lastDamage=JSON.parse(JSON.stringify(safe));}
-    return{maxHp:u.combat.maxHp,hp:u.combat.hp,status:u.combat.status,ammoId:u.combat.ammoId,destroyedAt:u.combat.destroyedAt,lastDamage};
+    return{maxHp:u.combat.maxHp,hp:u.combat.hp,status:u.combat.status,ammoId:u.combat.ammoId,destroyedAt:u.combat.destroyedAt,lastDamage,reactions:TacticalCombatState.hitReactionView(u,profileOf(u),u.hitReactionTime??0)};
   };
   const combatEvents=s=>s.recordFireEvents?combatFor(s).records():[];
   const combatStats=s=>combatFor(s).stats();

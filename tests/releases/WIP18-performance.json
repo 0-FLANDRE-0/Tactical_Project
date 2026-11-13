@@ -1,0 +1,141 @@
+{
+  "version": "0.4-WIP18",
+  "node": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "baselineRoot": "/workspace/Tactical_Project_WIP17",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "scope": {
+    "state": "50/100 independent constant-time reaction state updates; no LOS/render",
+    "map": "actual default five-vehicle app tick including movement, LOS, AI, fire and impacts; no render"
+  },
+  "state": [
+    {
+      "mode": "main-no-wip18",
+      "vehicles": 50,
+      "ticks": 200,
+      "rounds": 40,
+      "medianMs": 0.20143000000007305,
+      "p95Ms": 0.3515939999999773,
+      "perTickMedianMs": 0.0010071500000003652,
+      "perTickP95Ms": 0.0017579699999998866,
+      "reactionStateBytes": 0
+    },
+    {
+      "mode": "disabled",
+      "vehicles": 50,
+      "ticks": 200,
+      "rounds": 40,
+      "medianMs": 0.1816710000000512,
+      "p95Ms": 0.8155659999999898,
+      "perTickMedianMs": 0.000908355000000256,
+      "perTickP95Ms": 0.004077829999999949,
+      "reactionStateBytes": 0
+    },
+    {
+      "mode": "active",
+      "vehicles": 50,
+      "ticks": 200,
+      "rounds": 40,
+      "medianMs": 1.0498760000000402,
+      "p95Ms": 3.1902990000000955,
+      "perTickMedianMs": 0.005249380000000201,
+      "perTickP95Ms": 0.01595149500000048,
+      "reactionStateBytes": 12350
+    },
+    {
+      "mode": "main-no-wip18",
+      "vehicles": 100,
+      "ticks": 200,
+      "rounds": 40,
+      "medianMs": 0.18184100000007675,
+      "p95Ms": 0.6617969999999787,
+      "perTickMedianMs": 0.0009092050000003838,
+      "perTickP95Ms": 0.0033089849999998933,
+      "reactionStateBytes": 0
+    },
+    {
+      "mode": "disabled",
+      "vehicles": 100,
+      "ticks": 200,
+      "rounds": 40,
+      "medianMs": 0.35026300000004085,
+      "p95Ms": 0.5949969999999212,
+      "perTickMedianMs": 0.0017513150000002043,
+      "perTickP95Ms": 0.0029749849999996057,
+      "reactionStateBytes": 0
+    },
+    {
+      "mode": "active",
+      "vehicles": 100,
+      "ticks": 200,
+      "rounds": 40,
+      "medianMs": 2.0581700000000183,
+      "p95Ms": 2.761760000000095,
+      "perTickMedianMs": 0.010290850000000091,
+      "perTickP95Ms": 0.013808800000000475,
+      "reactionStateBytes": 24700
+    }
+  ],
+  "map": [
+    {
+      "label": "latest-main-baseline",
+      "seed": 7,
+      "vehicles": 5,
+      "warmupSeconds": 2,
+      "simulationSeconds": 20,
+      "medianTickMs": 0.34871000000009644,
+      "p95TickMs": 1.0206830000000764,
+      "maxTickMs": 3.886897000000033
+    },
+    {
+      "label": "WIP18-active-default-app",
+      "seed": 7,
+      "vehicles": 5,
+      "warmupSeconds": 2,
+      "simulationSeconds": 20,
+      "medianTickMs": 0.39333699999997407,
+      "p95TickMs": 1.2375659999999016,
+      "maxTickMs": 6.474306999999953
+    },
+    {
+      "label": "latest-main-baseline",
+      "seed": 17,
+      "vehicles": 5,
+      "warmupSeconds": 2,
+      "simulationSeconds": 20,
+      "medianTickMs": 0.30912100000000464,
+      "p95TickMs": 1.184978000000001,
+      "maxTickMs": 3.320752999999968
+    },
+    {
+      "label": "WIP18-active-default-app",
+      "seed": 17,
+      "vehicles": 5,
+      "warmupSeconds": 2,
+      "simulationSeconds": 20,
+      "medianTickMs": 0.2772140000001855,
+      "p95TickMs": 0.6393040000000383,
+      "maxTickMs": 2.9714930000000095
+    },
+    {
+      "label": "latest-main-baseline",
+      "seed": 27,
+      "vehicles": 5,
+      "warmupSeconds": 2,
+      "simulationSeconds": 20,
+      "medianTickMs": 0.26672800000005736,
+      "p95TickMs": 0.6316420000000562,
+      "maxTickMs": 1.3019919999999274
+    },
+    {
+      "label": "WIP18-active-default-app",
+      "seed": 27,
+      "vehicles": 5,
+      "warmupSeconds": 2,
+      "simulationSeconds": 20,
+      "medianTickMs": 0.29666199999996934,
+      "p95TickMs": 0.7093280000001414,
+      "maxTickMs": 2.3093840000001364
+    }
+  ]
+}

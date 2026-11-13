@@ -60,7 +60,7 @@ const TacticalMobility=(()=>{
     }
     if(next!==state.gear){state.fromGear=state.gear;state.gear=next;state.shiftRemaining=p.shiftSeconds;state.shiftCooldown=p.shiftDwellSeconds;state.gearHold=0;state.shiftCount++;}
   }
-  function driveAcceleration(state,profile){
+  function driveAcceleration(state,profile,powerMultiplier=1){
     const m=profile.mobility,p=m.powertrain,direction=state.selectedDirection,ratios=gearTable(profile,direction),ratio=ratios[Math.max(0,state.gear-1)]||ratios[0];
     const speed=Math.abs(state.velocity),power=profile.engineHp*745.6998715822702*p.efficiency;
     const engineScale=Math.pow(profile.engineHp/p.referenceEngineHp,p.launchPowerExponent);
@@ -68,7 +68,8 @@ const TacticalMobility=(()=>{
     const traction=p.launchAcceleration*engineScale*(p.referenceMassKg/profile.massKg)*gearFactor;
     const powerLimited=power/(profile.massKg*Math.max(speed,p.powerFloorSpeed));
     const connected=state.shiftRemaining>0?p.shiftDriveFraction:1;
-    const acceleration=Math.max(0,Math.min(traction,powerLimited)*connected-p.rollingDeceleration);
+    const multiplier=Number.isFinite(powerMultiplier)?clamp(powerMultiplier,0,1):1;
+    const acceleration=Math.max(0,Math.min(traction,powerLimited)*connected*multiplier-p.rollingDeceleration);
     state.driveForceN=acceleration*profile.massKg;return acceleration;
   }
   function approachZero(v,amount){return v>0?Math.max(0,v-amount):v<0?Math.min(0,v+amount):0;}
@@ -82,7 +83,7 @@ const TacticalMobility=(()=>{
       const direction=state.selectedDirection,signedTarget=direction*target,speed=Math.abs(state.velocity);
       if(speed>target+p.targetSpeedTolerance)state.velocity=approachZero(state.velocity,profile.mobility.brakeDeceleration*dt);
       else if(target>p.holdSpeed&&speed<target-p.targetSpeedTolerance){
-        const a=driveAcceleration(state,profile);state.velocity+=direction*Math.min(a*dt,Math.max(0,target-speed));
+        const a=driveAcceleration(state,profile,input.powerMultiplier);state.velocity+=direction*Math.min(a*dt,Math.max(0,target-speed));
       }else{state.driveForceN=0;if(target<=p.holdSpeed)state.velocity=approachZero(state.velocity,profile.mobility.brakeDeceleration*dt);}
       if((direction>0&&state.velocity<0)||(direction<0&&state.velocity>0))state.velocity=0;
       if(Math.abs(state.velocity)>Math.abs(signedTarget)&&Math.abs(state.velocity)-Math.abs(signedTarget)<p.targetSpeedTolerance)state.velocity=signedTarget;
@@ -91,7 +92,7 @@ const TacticalMobility=(()=>{
     state.lastAcceleration=(state.velocity-before)/dt;
     return state;
   }
-  function turnRate(speed,profile){const m=profile.mobility,p=m.powertrain,s=Math.abs(speed);return s<=p.pivotMaxSpeed?m.pivotRate:Math.min(m.pivotRate,p.lateralAcceleration/Math.max(s,.01));}
+  function turnRate(speed,profile,multiplier=1){const m=profile.mobility,p=m.powertrain,s=Math.abs(speed),rate=s<=p.pivotMaxSpeed?m.pivotRate:Math.min(m.pivotRate,p.lateralAcceleration/Math.max(s,.01));return rate*(Number.isFinite(multiplier)?clamp(multiplier,0,1):1);}
   function directionLabel(state){
     if(state.mode==='direction-brake')return state.pendingDirection<0?'감속 · 후진 대기':'감속 · 전진 대기';
     if(state.mode==='direction-wait')return state.pendingDirection<0?'정차 · 후진 연결':'정차 · 전진 연결';

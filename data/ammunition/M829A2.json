@@ -5,6 +5,7 @@
     "kind": "KE",
     "baseDamage": 405,
     "muzzleVelocity": 1680,
+    "hitReactionPolicyId": "tank-ke/M829A2",
     "penetration": {
       "rangesM": [
         10,
@@ -73,12 +74,13 @@
       "outsidePolicy": "clamp"
     }
   },
-  "status": "active WIP15 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP11A, WIP12 effects/ricochet, and WIP15 reload/reaction instructions",
+  "status": "active WIP18 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP11A, WIP12, WIP15 and WIP18 instructions",
   "limits": [
     "Range endpoints clamp; 60–90° penetration interpolates to zero",
     "Ricochet uses an independent deterministic roll at 78/80/81° anchors",
     "Ordinary non-penetration and ricochet damage 0; WIP15 adds a separate seeded 30% near-nonpenetration damage rule below 15 protection deficit",
+    "tank-ke/M829A2 is only a policy identifier; victim-specific WIP18 rates live solely on M1A2_1998",
     "Ricochet continuation is visual only",
     "No additional velocity damage multiplier"
   ]
