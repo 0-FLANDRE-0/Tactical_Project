@@ -8,7 +8,7 @@
 |---|---|---|
 | **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | WIP16 main 통합. **WIP17 가변 맵 크기 기반 지시 등록·구현 대기, 실제 8×8 지도 제작은 후속**. 장기 계획·결정 대기·정보 공개 방향 (최종 갱신 2026-11-12) |
 | **모듈 일시 성능 저하·승무원 부상·탄약고 예외 (2026-11-12)** | [combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md](combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md) | **모듈 영구 손상·파괴 제외 [확정]**. 승무원 경상/중상·탄약고 즉시 격파는 **검토 중**. 기존 모듈 HP·영구 수리 구상보다 새로운 방향 우선 |
-| **주독미육군 IFV·CFV 라인업 (2026-11-12)** | [vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md](vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) | IFV/CFV **별도 분류**. IFV M2·M2A1·M2A2부터 제원 설계 예정. CFV 세부 형식/수치 미정, **미구현** |
+| **주독미육군 IFV·CFV 라인업 (2026-11-12)** | [vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md](vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) | IFV/CFV **별도 분류**. **M2 기본형 7구역 게임 장갑값 채택 (차체 40/35/30)**, M2 HP 550은 잠정. M2A1·M2A2 세부 스펙 및 CFV 차종 미정, **미구현** |
 | **보병 설계 논의 백업** | [infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md](infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md) | 병사별 누적 부상·개별 파편 피격, AI/플레이어 역할, 보병 대전차탄 후보값, 재보급·프리셋 변경. **방향·예시·제안·미정 구분 / 코드 미구현** |
 | **작업 지시서 백업** | [instructions/](instructions/) | 완료한 WIP09~WIP16 지시서·기준표와 [WIP17 진행 지시서](../docs/tasks/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) 링크. 완료 전 원본은 docs/tasks에서 관리 |
 | **M1 계열 상면도 뷰어** | [art/M1_Abrams_TopView.html](art/M1_Abrams_TopView.html) | M1A2/M1A1/M1A1 HA 단독 뷰어·삽입용 HTML, 원본 JS, 포탑 링 실측 확인 이미지 |
