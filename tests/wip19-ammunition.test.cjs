@@ -1,6 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const Profiles=require('../src/vehicle-profiles.js'),Combat=require('../src/combat-state.js'),F=require('../src/fire-control.js');
 const {fixture}=require('./helpers/hit-fixture.cjs');
+const {core:syntheticCore}=require('./helpers/observation-core-fixture.cjs');
 const profile=Profiles.M1A2_1998,near=(a,b,e=1e-9)=>assert(Math.abs(a-b)<=e,`${a} != ${b}`);
 
 test('W19-D01 three ammunition records keep independent KE/CE, velocity, penetration, damage and policy data',()=>{
@@ -56,8 +57,35 @@ test('W19-R02 observed threat pauses replenishment and an actual empty chamber c
  f.u.observation.contacts.THREAT={enemyConfirmed:true,sources:{commander:{current:true}}};f.step();assert(f.view().ammunition.task.paused);delete f.u.observation.contacts.THREAT;a.loadedAmmoId=null;const totalBefore=f.view().ammunition.total;f.step();const task=f.view().ammunition.task;assert.equal(task.purpose,'load');assert.equal(task.source,'ready');assert.equal(f.view().ammunition.total,totalBefore);assert.equal(a.sections.semiReady.M829A2,9);
 });
 
+test('W19-R03 a currently observed confirmed wreck permits replenishment while a living contact still blocks it',()=>{
+ const prepare=f=>{const a=f.u.fireControl.ammunition;a.sections.ready.M829A2--;a.lastShotAt=0;return a;};
+ const wreck=fixture(20,profile);prepare(wreck);wreck.c.wreckConfirmed=true;wreck.step(10);assert.equal(wreck.view().ammunition.task?.purpose,'replenish');assert.equal(wreck.view().ammunition.task?.ammoId,'M829A2');
+ const threat=fixture(20,profile);prepare(threat);threat.c.wreckConfirmed=false;threat.step(10.5);assert.equal(threat.view().ammunition.task,null);assert.equal(threat.view().ammunition.total,41);
+});
+
+test('W19-R04 manual preference replenishes its deficit first and cannot change an already reserved round',()=>{
+ const f=fixture(21,profile),a=f.u.fireControl.ammunition,ready=a.sections.ready;ready.M829A2--;ready.M830--;a.lastShotAt=0;f.c.enemyConfirmed=false;
+ const before=f.view().ammunition.totals;assert.equal(f.view().ammunition.total,40);assert(f.runtime.setAmmoPreference(f.u,'M830'));f.step(10);let task=f.view().ammunition.task;assert.equal(task.purpose,'replenish');assert.equal(task.ammoId,'M830');assert.equal(task.source,'semiReady');assert.deepEqual(f.view().ammunition.totals,before);assert(Object.values(f.view().ammunition.sections).every(section=>section.total<=section.capacity));
+ const progress=task.progress;assert(f.runtime.setAmmoPreference(f.u,'M829A2'));f.step();task=f.view().ammunition.task;assert.equal(task.ammoId,'M830');assert.equal(task.source,'semiReady');assert(task.progress>progress);assert.deepEqual(f.view().ammunition.totals,before);
+});
+
 test('W19-A01 manual unavailable preference never falls back and exposes non-engageable state without deleting the choice',()=>{
  const f=fixture(19,profile),a=f.u.fireControl.ammunition;for(const section of Object.values(a.sections)){section.M829A2+=section.M830;section.M830=0;}assert(f.runtime.setAmmoPreference(f.u,'M830'));a.loadedAmmoId=null;const v=f.view();assert.equal(v.ammunition.preference,'M830');assert.equal(v.ammunition.total,41);assert.equal(v.ammunition.engageable,false);f.step();assert.equal(f.view().reason,'selected-ammo-unavailable');assert.equal(f.view().ammunition.task,null);
+});
+
+test('W19-A02 the final reserved load remains engageable and reloading across a preference change',()=>{
+ const f=fixture(22,profile),a=f.u.fireControl.ammunition;a.loadedAmmoId=null;a.task=null;for(const counts of Object.values(a.sections))for(const id of profile.ammunition.supported)counts[id]=0;a.sections.semiReady.M829A1=1;a.preference='M829A1';f.step();let v=f.view(),task=v.ammunition.task;
+ assert.equal(v.ammunition.total,1);assert.equal(v.ammunition.engageable,true);assert.equal(v.reason,'reloading');assert.equal(task.purpose,'load');assert.equal(task.stage,'prepare');assert.equal(task.ammoId,'M829A1');const progress=task.progress;
+ assert(f.runtime.setAmmoPreference(f.u,'M830'));v=f.view();assert.equal(v.ammunition.preference,'M830');assert.equal(v.ammunition.engageable,true);assert.equal(v.reason,'reloading');assert.equal(v.ammunition.task.ammoId,'M829A1');assert.equal(v.ammunition.task.progress,progress);f.step();assert(f.view().ammunition.task.progress>progress);
+});
+
+test('W19-A03 actual halt AI keeps its target and paused mission while the final stored round loads',()=>{
+ const C=syntheticCore('flat'),u=C.makeTank('LAST','LAST ROUND AI',500,1000,0,'blue',undefined,'auto'),target=C.makeTank('TARGET','TARGET',1200,1000,Math.PI,'red',undefined,'hold');target.combat.hp=target.combat.maxHp=100000;
+ const s={time:0,seed:23,units:[u,target],recordAIEvents:true,recordObservationEvents:true,recordFireEvents:true};for(const channel of['commander','gunner'])assert(C.guard(s,u,channel,{x:target.x,y:target.y}));C.assignMission(s,u,{id:'last-round-halt',type:'patrol',policy:'halt',loop:true,waypoints:[{x:700,y:1000},{x:500,y:1000}]});
+ let ai;for(let i=0;i<800;i++){C.step(s,.05);ai=C.aiStatus(s,u);if(ai.mission.status==='paused'&&ai.behavior==='engaging'&&Math.abs(u.drive.velocity)<.001&&ai.autoTargetId==='TARGET'&&C.ownObservation(s,u,ai.autoTargetKey).acquired)break;}assert.equal(ai.mission.status,'paused');assert.equal(ai.behavior,'engaging');assert(Math.abs(u.drive.velocity)<.001);
+ const ammunition=u.fireControl.ammunition;ammunition.loadedAmmoId=null;ammunition.task=null;for(const counts of Object.values(ammunition.sections))for(const id of profile.ammunition.supported)counts[id]=0;ammunition.sections.semiReady.M829A1=1;ammunition.preference='M829A1';u.fireControl.loaded=false;u.fireControl.ammo=1;u.fireControl.engageableAmmo=true;C.step(s,.05);
+ let fire=C.fireStatus(s,u),before=C.aiStatus(s,u);assert.equal(fire.ammunition.total,1);assert.equal(fire.ammunition.task?.ammoId,'M829A1');assert.equal(fire.ammunition.engageable,true);assert(C.ammoPreference(s,u,'M830'));const counters=structuredClone(before.counters),distance=u.distanceTravelled,targetId=before.autoTargetId,waypoints=structuredClone(before.mission.waypoints),progress=fire.ammunition.task.progress;
+ for(let i=0;i<80;i++)C.step(s,.05);ai=C.aiStatus(s,u);fire=C.fireStatus(s,u);assert.equal(ai.mission.status,'paused');assert.equal(ai.autoTargetId,targetId);assert.deepEqual(ai.mission.waypoints,waypoints);assert.equal(ai.counters.stops,counters.stops);assert.equal(ai.counters.resumes,counters.resumes);assert.equal(ai.counters.pathRequests,counters.pathRequests);assert.equal(ai.counters.targetCommands,counters.targetCommands);assert.equal(u.distanceTravelled,distance);assert.equal(fire.ammunition.preference,'M830');assert.equal(fire.ammunition.task?.ammoId,'M829A1');assert(fire.ammunition.task.progress>progress);assert.equal(fire.ammunition.engageable,true);assert.equal(fire.reason,'reloading');
 });
 
 test('W19-F01 fired projectile freezes actual loaded ammunition and preference changes cannot alter flight or impact',()=>{

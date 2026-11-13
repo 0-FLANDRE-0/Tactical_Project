@@ -23,7 +23,8 @@ const TacticalFireControl=(()=>{
   function ammunitionTotal(s,ammoId=null){const a=s.ammunition;if(!a)return s.ammo;let total=ammoId?(a.loadedAmmoId===ammoId?1:0):(a.loadedAmmoId?1:0);for(const counts of Object.values(a.sections))for(const[id,count]of Object.entries(counts))if(!ammoId||id===ammoId)total+=count;if(a.task&&(!ammoId||a.task.ammoId===ammoId))total+=taskRound(a.task);return total;}
   function sectionTotal(a,section){return Object.values(a.sections[section]).reduce((sum,count)=>sum+count,0);}
   function loadChoice(p,s){const a=s.ammunition,ids=a.preference==='auto'?p.ammunition.autoPriority:[a.preference];for(const ammoId of ids)for(const source of p.ammunition.sourcePriority)if(a.sections[source][ammoId]>0)return{ammoId,source};return null;}
-  function engageableAmmo(p,s){return managed(p)?!!s.ammunition.loadedAmmoId||!!loadChoice(p,s):s.ammo>0;}
+  function validLoadTask(p,s){const task=s.ammunition?.task;return!!task&&task.purpose==='load'&&task.reserved===true&&p.ammunition.supported.includes(task.ammoId)&&p.ammunition.sourcePriority.includes(task.source)&&['prepare','reload'].includes(task.stage);}
+  function engageableAmmo(p,s){return managed(p)?!!s.ammunition.loadedAmmoId||validLoadTask(p,s)||!!loadChoice(p,s):s.ammo>0;}
   function syncAmmo(p,s){if(!managed(p))return s.ammo;s.loaded=!!s.ammunition.loadedAmmoId;s.loadedAmmoId=s.ammunition.loadedAmmoId;s.ammo=ammunitionTotal(s);s.engageableAmmo=engageableAmmo(p,s);return s.ammo;}
   function init(u,p,mode='auto'){
     if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
@@ -45,8 +46,12 @@ const TacticalFireControl=(()=>{
   function faultKind(p,roll){let cumulative=0;for(const kind of faultKinds){cumulative+=readiness(p).temporaryFault.kinds[kind];if(roll<cumulative)return kind;}return faultKinds.at(-1);}
   function cancelAmmoTask(p,s,purpose=null){const a=s.ammunition,task=a?.task;if(!task||purpose&&task.purpose!==purpose)return false;if(task.reserved)a.sections[task.source][task.ammoId]++;a.task=null;s.reloadProgress=a.loadedAmmoId?1:0;s.reloadStartedAt=null;syncAmmo(p,s);return true;}
   function beginLoad(p,s,now){const a=s.ammunition,choice=loadChoice(p,s);if(!choice)return null;a.sections[choice.source][choice.ammoId]--;const prep=p.ammunition.sections[choice.source].prepareSeconds;a.task={purpose:'load',ammoId:choice.ammoId,source:choice.source,reserved:true,stage:prep>0?'prepare':'reload',progress:0,startedAt:now,paused:false};s.reloadStartedAt=now;s.reloadProgress=0;syncAmmo(p,s);return a.task;}
-  function currentThreat(u){return Object.values(u.observation?.contacts||{}).some(c=>c?.enemyConfirmed&&Object.values(c.sources||{}).some(source=>source?.current));}
-  function replenishChoice(p,s){const a=s.ammunition,rule=p.ammunition.replenish;if(sectionTotal(a,'ready')>=p.ammunition.sections.ready.capacity)return null;for(const ammoId of p.ammunition.autoPriority){if(a.sections.ready[ammoId]>=rule.targets[ammoId])continue;for(const source of rule.sourcePriority)if(a.sections[source][ammoId]>0)return{ammoId,source};}return null;}
+  function currentThreat(u){return Object.values(u.observation?.contacts||{}).some(c=>c?.enemyConfirmed&&!c.wreckConfirmed&&Object.values(c.sources||{}).some(source=>source?.current));}
+  function replenishChoice(p,s){
+    const a=s.ammunition,rule=p.ammunition.replenish;if(sectionTotal(a,'ready')>=p.ammunition.sections.ready.capacity)return null;
+    const ids=a.preference==='auto'?p.ammunition.autoPriority:[a.preference,...p.ammunition.autoPriority.filter(id=>id!==a.preference)];
+    for(const ammoId of ids){if(a.sections.ready[ammoId]>=rule.targets[ammoId])continue;for(const source of rule.sourcePriority)if(a.sections[source][ammoId]>0)return{ammoId,source};}return null;
+  }
   function canReplenish(u,p,s,now){const a=s.ammunition,rule=p.ammunition.replenish;return!!a.loadedAmmoId&&Math.abs(u.drive?.velocity??u.speed??0)<=rule.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=rule.idleSeconds-1e-9&&!currentThreat(u)&&!!replenishChoice(p,s);}
   function beginReplenish(p,s,now){const a=s.ammunition,choice=replenishChoice(p,s);if(!choice)return null;a.sections[choice.source][choice.ammoId]--;a.task={purpose:'replenish',ammoId:choice.ammoId,source:choice.source,reserved:true,stage:'replenish',progress:0,startedAt:now,paused:false};syncAmmo(p,s);return a.task;}
   function advanceManagedReadiness(u,p,s,dt,now){
@@ -269,7 +274,7 @@ const TacticalFireControl=(()=>{
       if(error>f.alignmentTolerance)return{reason:'aligning',d,c};
       if(faultActive(s,'fireControl',now))return{reason:'fcs-fault',d,c};
       if(s.ammo<=0)return{reason:'out-of-ammo',d,c};
-      if(!s.loaded)return{reason:managed(p)&&s.ammunition.preference!=='auto'&&!loadChoice(p,s)?'selected-ammo-unavailable':'reloading',d,c};
+      if(!s.loaded)return{reason:managed(p)&&!validLoadTask(p,s)&&s.ammunition.preference!=='auto'&&!loadChoice(p,s)?'selected-ammo-unavailable':'reloading',d,c};
       return{reason:null,d,c};
     }
     function step(units,dt,now){

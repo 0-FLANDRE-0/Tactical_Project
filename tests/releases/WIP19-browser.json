@@ -6,7 +6,7 @@
     "desktop command deck owns every moved control and removes the old roster/spec art DOM",
     "actual loaded A2 shot freezes its ammo while the selected A1 becomes the next completed load",
     "friendly overhead status is active-only, capped and never exposes crew injury",
-    "844x390 keeps the sidebar and independently scrollable info below wrapped commands",
+    "844x390 and DPR2 keep every map command readable, non-overlapping and touch-accessible above scrolling info",
     "390x844 portrait blocks commands and public snapshots keep enemy inventory private"
   ],
   "passed": 5,
@@ -123,23 +123,222 @@
       "즉응탄 보충 M829A2 · 3초"
     ],
     "landscape": {
-      "side": {
-        "x": 558,
-        "y": 44,
-        "width": 286,
-        "height": 322
+      "dpr1": {
+        "side": {
+          "x": 558,
+          "y": 44,
+          "width": 286,
+          "height": 322
+        },
+        "command": {
+          "y": 44,
+          "height": 135
+        },
+        "info": {
+          "y": 179,
+          "height": 187,
+          "scrollHeight": 702,
+          "overflow": "auto"
+        },
+        "group": {
+          "x": 566,
+          "y": 81,
+          "width": 271,
+          "height": 25
+        },
+        "tools": {
+          "x": 604,
+          "y": 81,
+          "width": 233,
+          "height": 25
+        },
+        "buttons": [
+          {
+            "id": "terrainMode",
+            "x": 604,
+            "y": 81,
+            "width": 43.390625,
+            "height": 25,
+            "right": 647.390625,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          },
+          {
+            "id": "zoomIn",
+            "x": 651.390625,
+            "y": 81,
+            "width": 43.40625,
+            "height": 25,
+            "right": 694.796875,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          },
+          {
+            "id": "zoomOut",
+            "x": 698.796875,
+            "y": 81,
+            "width": 43.390625,
+            "height": 25,
+            "right": 742.1875,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          },
+          {
+            "id": "fit",
+            "x": 746.1875,
+            "y": 81,
+            "width": 43.40625,
+            "height": 25,
+            "right": 789.59375,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          },
+          {
+            "id": "contours",
+            "x": 793.59375,
+            "y": 81,
+            "width": 43.40625,
+            "height": 25,
+            "right": 837,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          }
+        ],
+        "portrait": false,
+        "touched": {
+          "terrain": "true",
+          "contours": "false",
+          "zoom": 0.07567
+        }
       },
-      "command": {
-        "y": 44,
-        "height": 135
-      },
-      "info": {
-        "y": 179,
-        "height": 187,
-        "scrollHeight": 702,
-        "overflow": "auto"
-      },
-      "portrait": false
+      "dpr2": {
+        "side": {
+          "x": 558,
+          "y": 44,
+          "width": 286,
+          "height": 322
+        },
+        "command": {
+          "y": 44,
+          "height": 135
+        },
+        "info": {
+          "y": 179,
+          "height": 187,
+          "scrollHeight": 702,
+          "overflow": "auto"
+        },
+        "group": {
+          "x": 566,
+          "y": 81,
+          "width": 271,
+          "height": 25
+        },
+        "tools": {
+          "x": 604,
+          "y": 81,
+          "width": 233,
+          "height": 25
+        },
+        "buttons": [
+          {
+            "id": "terrainMode",
+            "x": 604,
+            "y": 81,
+            "width": 43.390625,
+            "height": 25,
+            "right": 647.390625,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          },
+          {
+            "id": "zoomIn",
+            "x": 651.390625,
+            "y": 81,
+            "width": 43.40625,
+            "height": 25,
+            "right": 694.796875,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          },
+          {
+            "id": "zoomOut",
+            "x": 698.796875,
+            "y": 81,
+            "width": 43.390625,
+            "height": 25,
+            "right": 742.1875,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          },
+          {
+            "id": "fit",
+            "x": 746.1875,
+            "y": 81,
+            "width": 43.40625,
+            "height": 25,
+            "right": 789.59375,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          },
+          {
+            "id": "contours",
+            "x": 793.59375,
+            "y": 81,
+            "width": 43.40625,
+            "height": 25,
+            "right": 837,
+            "bottom": 106,
+            "clientWidth": 41,
+            "clientHeight": 23,
+            "scrollWidth": 41,
+            "scrollHeight": 23,
+            "pointer": "auto"
+          }
+        ],
+        "portrait": false,
+        "touched": {
+          "terrain": "true",
+          "contours": "false",
+          "zoom": 0.07567
+        }
+      }
     },
     "portrait": {
       "portrait": true,
@@ -148,5 +347,5 @@
       "privateLeak": false
     }
   },
-  "scope": "Actual standalone Chromium: moved command DOM, real observation/designation/fire/flight/reload, active-only friendly status, 844x390/390x844 layout and enemy inventory privacy."
+  "scope": "Actual standalone Chromium: moved command DOM, real observation/designation/fire/flight/reload, active-only friendly status, 844x390 DPR1/2 map-command overflow/overlap/touch access, 390x844 layout and enemy inventory privacy."
 }
