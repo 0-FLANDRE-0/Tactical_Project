@@ -1,0 +1,22 @@
+/* WIP19 ammunition state/view cost and whole default-map tick comparison.
+ * BASELINE_ROOT must point to an unchanged WIP18/main worktree. Rendering is
+ * intentionally excluded; scripts/benchmark_wip19_browser.cjs measures it. */
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),{performance}=require('node:perf_hooks');
+const root=path.resolve(__dirname,'..'),baselineRoot=path.resolve(process.env.BASELINE_ROOT||path.join(root,'../Tactical_Project_WIP18'));
+const map=require(path.join(root,'data/rasdorf_4km.json')),MapSpec=require(path.join(root,'src/map-spec.js'));
+const percentile=(values,p)=>values[Math.min(values.length-1,Math.floor(values.length*p))];
+function load(base){const profiles=require(path.join(base,'src/vehicle-profiles.js')),Mobility=require(path.join(base,'src/mobility.js')),AI=require(path.join(base,'src/tactical-ai.js')),Observation=require(path.join(base,'src/observation.js')),Combat=require(path.join(base,'src/combat-state.js')),Fire=require(path.join(base,'src/fire-control.js')),Geometry=require(path.join(base,'src/vehicle-geometry.js')),source=fs.readFileSync(path.join(base,'src/sim-core.js'),'utf8');return{profiles,Fire,Core:new Function('BATTLEFIELD_DATA','TacticalMapSpec','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,MapSpec,profiles,Mobility,AI,Observation,Combat,Fire,Geometry,{exports:{}})}}
+const baseline=load(baselineRoot),current=load(root);
+function summary(values){values.sort((a,b)=>a-b);return{medianMs:percentile(values,.5),p95Ms:percentile(values,.95),maxMs:values.at(-1)}}
+function statusText(view){const task=view.ammunition?.task;if(!task)return'';if(task.stage==='prepare')return'탄 준비 '+task.ammoId+' '+Math.max(1,Math.ceil(task.remaining||0))+'초';if(task.purpose==='replenish')return task.paused?'즉응탄 보충 대기':'즉응탄 보충 '+task.ammoId+' '+Math.max(1,Math.ceil(task.remaining||0))+'초';return''}
+function ammunitionTrial(loaded,count,mode){
+ const profile=mode==='baseline-legacy'?loaded.profiles.M1A2_1998:current.profiles.M1A2_1998,Fire=loaded.Fire,runtime=Fire.create({profileOf:()=>profile,freshSight:()=>null,seed:19});
+ const units=Array.from({length:count},(_,i)=>({id:'U'+i,team:'blue',speed:0,drive:{velocity:0},combat:{status:'alive'},observation:{designation:{status:'idle'},tracking:{status:'idle'},contacts:{}}}));
+ for(const unit of units){Fire.init(unit,profile,'hold');if(mode==='managed-work'){const a=unit.fireControl.ammunition;a.sections.ready.M829A2--;a.lastShotAt=0;}}
+ let now=0;for(let i=0;i<220;i++){now+=.05;runtime.step(units,.05,now)}
+ const update=[],read=[];let chars=0;for(let round=0;round<80;round++){let start=performance.now();now+=.05;runtime.step(units,.05,now);update.push(performance.now()-start);start=performance.now();for(const unit of units)chars+=statusText(runtime.view(unit)).length;read.push(performance.now()-start)}
+ return{mode,vehicles:count,fixedStepSeconds:.05,samples:80,update:summary(update),viewAndStatus:summary(read),stateBytes:units.reduce((sum,u)=>sum+Buffer.byteLength(JSON.stringify(u.fireControl.ammunition||null)),0),statusCharactersProcessed:chars};
+}
+function mapTrial(loaded,label,seed){const s=loaded.Core.createScenario(seed);for(let i=0;i<40;i++)loaded.Core.step(s,.05);const samples=[];for(let i=0;i<300;i++){const start=performance.now();loaded.Core.step(s,.05);samples.push(performance.now()-start)}return{label,seed,vehicles:s.units.length,warmupSeconds:2,simulationSeconds:15,...Object.fromEntries(Object.entries(summary(samples)).map(([key,value])=>[key.replace('Ms','TickMs'),value]))}}
+const report={version:'0.4-WIP19',node:process.version,cpu:os.cpus()[0]?.model||null,baselineRoot,mapHash:map.meta.mapHash,scope:{ammunition:'50/100 vehicle fixed-step ammunition update plus detached view/status-string read; no LOS, Canvas or DOM',map:'actual default five-vehicle core tick including movement, LOS, AI, fire and impacts; no render',browser:'see WIP19-browser-performance.json'},ammunition:[50,100].flatMap(count=>[ammunitionTrial(baseline,count,'baseline-legacy'),ammunitionTrial(current,count,'managed-idle'),ammunitionTrial(current,count,'managed-work')]),map:[7,17,27].flatMap(seed=>[mapTrial(baseline,'WIP18-main-baseline',seed),mapTrial(current,'WIP19',seed)])};
+const out=path.join(root,'tests/releases/WIP19-performance.json');fs.writeFileSync(out,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

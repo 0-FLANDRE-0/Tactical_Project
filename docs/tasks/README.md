@@ -6,7 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [작업 지시서](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | 지시서 등록 · 구현/검증 대기 · 승무원 피해는 우측 선택 정보에만 표시 |
+| WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [완료 안내](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | 최종 5bf1bb5 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
 | WIP18 일시 기능 이상·승무원 경중상 | [완료 안내](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 최종 6c5e4f3 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
 | WIP17 가변 맵 크기 지원 기반 | [완료 안내](TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) | 최종 624d80d 독립 재검증 통과 · main 통합 · 실제 8×8 지도 제작은 후속 |
 | WIP16 적 AI 교전 판단·표적 선택·행동 안정화 | [완료 안내](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) · [능선 캐시 보완](TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md) · [halt 재확인 보완](TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) | 최종 47f9e07 독립 재검증 통과 · main 통합 |
@@ -33,9 +33,11 @@ WIP17은 main `c13765e`에서 `feat/wip17-variable-map-foundation` 브랜치로 
 
 WIP18은 지시서가 등록된 main에서 `feat/wip18-hit-reactions` 브랜치로 구현하고 최신 main `cb3f68f`의 설계 기록을 반영했다. 전차장 자동 탐색·차량별 승무원 구성·범주별 감수성·효과 정책 연결을 보완한 최종 `6c5e4f3`를 독립 재검증해 2026-11-13 main에 통합했다. `tank-ke/M829A2`와 7개 피격 구역의 시험 데이터는 `M1A2_1998` 전용이며 다른 차종에 자동 상속하지 않는다. 일시 구동/포탑 이상과 경상/중상을 실제 동작에 연결하고 WIP15 반응·중첩 제어·정보 경계를 유지했다. [구현 문서](../HIT_REACTIONS_AND_CREW_INJURIES_WIP18.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP18.md), [병합 검토](../reviews/WIP18_MERGE_REVIEW_2026-11-13.md)를 참고한다.
 
+WIP19는 WIP18이 통합된 main `62a7658`에서 `feat/wip19-ammunition-command-panel` 브랜치로 구현했다. `M1A2_1998`에만 M829A2/A1/M830 혼합 42발, 장전탄·세 저장 구획, 준비/장전·즉응탄 보충과 탄종별 실제 발사/착탄을 연결했다. 지도 도구와 명령은 우측 상단, 선택 유닛 정보는 아래 독립 스크롤 영역으로 옮기고 큰 명단·정적 도안/제원은 제거했다. 아군 활성 고장/작업만 지도에 최대 두 줄 표시하며 승무원 상태와 적 내부 정보 공개 경계를 유지한다. [구현 문서](../AMMUNITION_AND_COMMAND_PANEL_WIP19.md)와 [릴리스·검증](../../TACTICAL_RELEASE_WIP19.md)을 참고한다.
+
 ## 관리 방법
 
-WIP19는 WIP18이 통합된 최신 main에서 새 브랜치로 시작한다. M1A2_1998 전용 탄종/구획별 재고·장전·즉응탄 보충에 M829A1/M830을 연결하고, 지도 위 조작을 우측 상단으로 옮겨 그 아래에 선택 유닛 정보를 둔다. 승무원 피해는 우측 정보에만, 아군 장비 이상·탄 준비/보충은 유닛 위 짧은 문구에도 표시한다. 혼합량·공급/보충 시간·미정 탄약 정책의 임시값은 조정 가능한 초기 시험 제안이다. **지시서 작성 완료와 게임 구현 완료를 구분한다.**
+WIP19는 마지막 예약탄 장전 중 AI 임무 복귀, 확인 잔해의 보충 차단, 선호 탄종 보충 순서와 모바일 지도 버튼을 보완한 최종 `5bf1bb5`를 독립 재검증해 2026-11-14 main에 통합했다. [병합 검토](../reviews/WIP19_MERGE_REVIEW_2026-11-14.md)에 재현·검증 범위를 기록했다. 혼합량·공급/보충 시간·미정 탄약 정책의 임시값은 계속 조정 가능한 초기 시험 제안이다. 완료 안내와 원본 지시서, 기계 판독 검증 기록을 구분한다.
 
 - 요구사항은 이 폴더의 지시서에서 관리하고, 구현 설명·테스트 결과는 별도 문서에 남겨 지시서와 연결한다.
 - 변경된 요구사항은 지시서에 반영한다. 실제로 실행하지 않은 검사를 통과로 적지 않는다.

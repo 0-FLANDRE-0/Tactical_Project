@@ -60,6 +60,12 @@ const VEHICLE_PROFILES=(()=>{
   Object.assign(M1A2_1998,{id:'M1A2_1998',name:'M1A2 Abrams (1998)',variant:'M1A2 (1998) 시험 구성'});
   Object.assign(M1A2_1998.weapons.mainGun,{ammunitionId:'M829A2',ammunitionName:'M829A2'});
   M1A2_1998.fireControl.muzzleVelocity=1680;
+  // WIP19 game-trial ammunition layout. It belongs only to the 1998 trial
+  // profile and does not alter the baseline M1A2 or the archived 1989 presets.
+  M1A2_1998.ammunition={enabled:true,supported:['M829A2','M829A1','M830'],autoPriority:['M829A2','M829A1','M830'],sourcePriority:['ready','semiReady','reserve'],
+    initial:{loaded:'M829A2',preference:'auto',sections:{ready:{M829A2:7,M829A1:4,M830:6},semiReady:{M829A2:8,M829A1:6,M830:4},reserve:{M829A2:2,M829A1:2,M830:2}}},
+    sections:{ready:{capacity:17,prepareSeconds:0},semiReady:{capacity:18,prepareSeconds:3},reserve:{capacity:6,prepareSeconds:10}},
+    replenish:{idleSeconds:10,stationarySpeedMps:.10,targets:{M829A2:7,M829A1:4,M830:6},seconds:{semiReady:4,reserve:8},sourcePriority:['semiReady','reserve']}};
   M1A2_1998.combat={maxHp:1450,armor:{
     hullFront:{ke:390,ce:720},hullSide:{ke:120,ce:280},hullRear:{ke:40,ce:40},
     turretFront:{ke:720,ce:1150},turretSide:{ke:340,ce:630},turretRear:{ke:55,ce:55},upper:{ke:40,ce:40}
@@ -88,6 +94,14 @@ const VEHICLE_PROFILES=(()=>{
         turretFront:{driver:.05,commander:.20,gunner:.50,loader:.25},turretSide:{driver:.05,commander:.30,gunner:.30,loader:.35},turretRear:{driver:.05,commander:.20,gunner:.25,loader:.50},upper:{driver:.25,commander:.25,gunner:.25,loader:.25}}}}},
     faults:{mobility:{factor:.65,durationSeconds:[6,10]},turretDrive:{factor:.60,durationSeconds:[6,10]}},
     crewEffects:{driver:{light:{drivePower:.85,hullTurn:.90},serious:{drivePower:.65,hullTurn:.75}},commander:{light:{commanderTurn:.85},serious:{commanderTurn:.65}},gunner:{light:{aimRate:.85,sigma:1.10},serious:{aimRate:.65,sigma:1.30}},loader:{light:{reloadEfficiency:.85},serious:{reloadEfficiency:.65}}}};
+  const a2Reaction=M1A2_1998.hitReactions.policies['tank-ke/M829A2'];
+  M1A2_1998.hitReactions.policies['tank-ke/M829A1']=clone(a2Reaction);
+  M1A2_1998.hitReactions.policies['tank-ke/M829A1'].ammoId='M829A1';
+  M1A2_1998.hitReactions.policies['tank-heat/M830']=clone(a2Reaction);
+  M1A2_1998.hitReactions.policies['tank-heat/M830'].ammoId='M830';
+  M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.ricochet=zero();
+  M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nonPenetration=zero();
+  M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nearNonPenetration=zero();
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
   function createRegistry(entries){
     const profiles=Object.create(null);
@@ -124,6 +138,17 @@ const VEHICLE_PROFILES=(()=>{
         if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
         if(typeof p.weapons.mainGun.ammunitionId!=='string'||!p.weapons.mainGun.ammunitionId)throw Error('탄약 ID 누락: '+id);
         for(const zone of ['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'])for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
+      }
+      if(p.ammunition){
+        const a=p.ammunition,ids=a.supported,sections=['ready','semiReady','reserve'];
+        if(a.enabled!==true||!Array.isArray(ids)||!ids.length||ids.length!==new Set(ids).size||!ids.every(v=>typeof v==='string'&&v))throw Error('탄약 운용 설정 오류: '+id);
+        if(!Array.isArray(a.autoPriority)||a.autoPriority.length!==ids.length||new Set(a.autoPriority).size!==ids.length||!a.autoPriority.every(v=>ids.includes(v)))throw Error('탄약 자동 우선순위 오류: '+id);
+        if(!Array.isArray(a.sourcePriority)||a.sourcePriority.length!==sections.length||!sections.every(v=>a.sourcePriority.includes(v)))throw Error('탄약 구획 우선순위 오류: '+id);
+        if(!ids.includes(a.initial?.loaded)||!['auto',...ids].includes(a.initial?.preference))throw Error('초기 장전탄/선택 오류: '+id);
+        let total=1;
+        for(const section of sections){const rule=a.sections?.[section],stock=a.initial?.sections?.[section];if(!rule||!Number.isInteger(rule.capacity)||rule.capacity<0||!Number.isFinite(rule.prepareSeconds)||rule.prepareSeconds<0||!stock||Object.keys(stock).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(stock,ammoId)&&Number.isInteger(stock[ammoId])&&stock[ammoId]>=0))throw Error('탄약 구획 설정 오류: '+id+'.'+section);const count=ids.reduce((sum,ammoId)=>sum+stock[ammoId],0);if(count!==rule.capacity)throw Error('탄약 구획 용량 불일치: '+id+'.'+section);total+=count;}
+        if(total!==p.weapons.mainGun.ammunitionCapacity)throw Error('탄약 총량 불일치: '+id);
+        const rep=a.replenish;if(!rep||!Number.isFinite(rep.idleSeconds)||rep.idleSeconds<0||!Number.isFinite(rep.stationarySpeedMps)||rep.stationarySpeedMps<0||!Array.isArray(rep.sourcePriority)||!rep.sourcePriority.every(v=>['semiReady','reserve'].includes(v))||Object.keys(rep.targets||{}).length!==ids.length||!ids.every(ammoId=>Number.isInteger(rep.targets[ammoId])&&rep.targets[ammoId]>=0)||ids.reduce((sum,ammoId)=>sum+rep.targets[ammoId],0)>a.sections.ready.capacity||!['semiReady','reserve'].every(section=>Number.isFinite(rep.seconds?.[section])&&rep.seconds[section]>0))throw Error('탄약 보충 설정 오류: '+id);
       }
       if(p.hitReactions){
         const h=p.hitReactions;

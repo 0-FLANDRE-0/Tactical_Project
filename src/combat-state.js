@@ -14,6 +14,24 @@ const TacticalCombatState=(()=>{
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'}
+    },
+    M829A1:{
+      id:'M829A1',name:'M829A1',kind:'KE',baseDamage:380,muzzleVelocity:1575,
+      hitReactionPolicyId:'tank-ke/M829A1',
+      penetration:{rangesM:[10,100,500,1000,1500,2000],anglesDeg:[0,30,60],values:[
+        [600,505,345],[595,503.643216080402,344.09547738693465],[590,497.61306532663315,340.0753768844221],
+        [580,490.0753768844221,335.0502512562814],[570,482.53768844221105,330.0251256281407],[560,475,325]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
+      damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'},
+      nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
+    },
+    M830:{
+      id:'M830',name:'M830 HEAT-MP',kind:'CE',baseDamage:435,muzzleVelocity:1140,
+      hitReactionPolicyId:'tank-heat/M830',
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[480,415,240],[480,415,240]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      ricochet:{anglesDeg:[65,72,77],chances:[0,.5,1],comparison:'roll<chance'},
+      damageMultiplier:{points:[[0,1],[1,1]],outsidePolicy:'clamp'},
+      nearNonPenetration:false,armoredBlastRadiusM:0
     }
   });
   const ammunitionRegistry=Object.freeze({
@@ -36,8 +54,18 @@ const TacticalCombatState=(()=>{
   }
   function validateProfileRegistry(registry){
     if(!registry||typeof registry.list!=='function')throw Error('차량 프로파일 레지스트리 누락');
-    for(const profile of registry.list())validateHitReactionBindings(profile);
+    for(const profile of registry.list()){validateHitReactionBindings(profile);validateAmmunitionBindings(profile);}
     return registry;
+  }
+  function validateAmmunitionBindings(p){
+    if(!p?.ammunition)return'legacy';
+    if(p.ammunition.enabled!==true)throw Error('탄약 운용 활성 상태 오류: '+p.id);
+    for(const ammoId of p.ammunition.supported||[]){
+      if(!ammunitionRegistry.has(ammoId))throw Error('탄약 운용 레지스트리 연결 오류: '+p.id+'.'+ammoId);
+      if(p.hitReactions?.enabled===true){const policyId=ammunitionRegistry.get(ammoId).hitReactionPolicyId,policy=p.hitReactions.policies?.[policyId];if(policy?.ammoId!==ammoId)throw Error('탄약 효과 정책 연결 오류: '+p.id+'.'+ammoId);}
+    }
+    if(!p.ammunition.supported.includes(p.ammunition.initial?.loaded))throw Error('초기 장전탄 연결 오류: '+p.id);
+    return'active';
   }
   function finitePositive(v,label){if(!Number.isFinite(v)||v<=0)throw Error(label+' 값 오류');return v;}
   function validateProfile(p){
@@ -46,7 +74,8 @@ const TacticalCombatState=(()=>{
     if(!p.weapons?.mainGun?.ammunitionId)throw Error('주포 탄약 ID 누락');
     ammunitionRegistry.get(p.weapons.mainGun.ammunitionId);
     validateHitReactionBindings(p);
-    for(const zone of ZONES){const a=p.combat.armor?.[zone];if(!a||!Number.isFinite(a.ke)||a.ke<0)throw Error('장갑 값 오류: '+zone);}
+    validateAmmunitionBindings(p);
+    for(const zone of ZONES){const a=p.combat.armor?.[zone];if(!a||!['ke','ce'].every(kind=>Number.isFinite(a[kind])&&a[kind]>=0))throw Error('장갑 값 오류: '+zone);}
     return p;
   }
   function initUnit(u,p){
@@ -137,8 +166,8 @@ const TacticalCombatState=(()=>{
     for(let i=1;i<points.length;i++)if(residualRatio<=points[i][0]){const[a,x]=points[i-1],[b,y]=points[i];return x+(y-x)*(residualRatio-a)/(b-a);}
     return points.at(-1)[1];
   }
-  function nearDamageAt(profile,deficit){
-    const rule=profile.fireControl.readiness.nearNonPenetration,points=rule.damagePoints;
+  function nearDamageAt(profileOrRule,deficit){
+    const rule=profileOrRule?.damagePoints?profileOrRule:profileOrRule.fireControl.readiness.nearNonPenetration,points=rule.damagePoints;
     if(!(deficit>0&&deficit<rule.maxDeficit))return 0;
     for(let i=1;i<points.length;i++)if(deficit<=points[i][0]){const[a,x]=points[i-1],[b,y]=points[i];return x+(y-x)*(deficit-a)/(b-a);}
     return 0;
@@ -162,12 +191,12 @@ const TacticalCombatState=(()=>{
     validateProfile(profile);
     if(!ZONES.includes(zone))throw Error('지원하지 않는 피격 구역: '+zone);
     if(!Number.isFinite(ricochetRoll)||ricochetRoll<0||ricochetRoll>=1)throw Error('도탄 난수 값 오류');
-    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone].ke;
+    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone][ammo.kind.toLowerCase()];
     if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,protectionDeficit:Math.max(0,protection-pen.value),nearNonPenetration:false,nearDamageChance:0,nearDamageRoll:null,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
-    const penetrated=pen.value>0&&pen.value>=protection,protectionDeficit=Math.max(0,protection-pen.value),nearRule=profile.fireControl.readiness.nearNonPenetration,nearNonPenetration=!penetrated&&pen.value>0&&protectionDeficit>0&&protectionDeficit<nearRule.maxDeficit;
+    const penetrated=pen.value>0&&pen.value>=protection,protectionDeficit=Math.max(0,protection-pen.value),nearRule=ammo.nearNonPenetration===false?null:ammo.nearNonPenetration||profile.fireControl.readiness.nearNonPenetration,nearNonPenetration=!!nearRule&&!penetrated&&pen.value>0&&protectionDeficit>0&&protectionDeficit<nearRule.maxDeficit;
     if(nearNonPenetration&&(!Number.isFinite(nearDamageRoll)||nearDamageRoll<0||nearDamageRoll>=1))throw Error('근접 비관통 난수 값 오류');
     const residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0;
-    const damage=penetrated?ammo.baseDamage*multiplier:nearNonPenetration&&nearDamageRoll<nearRule.chance?nearDamageAt(profile,protectionDeficit):0;
+    const damage=penetrated?ammo.baseDamage*multiplier:nearNonPenetration&&nearDamageRoll<nearRule.chance?nearDamageAt(nearRule,protectionDeficit):0;
     if(!Number.isFinite(damage)||damage<0)throw Error('피해 계산 오류');
     return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,protectionDeficit,nearNonPenetration,nearDamageChance:nearNonPenetration?nearRule.chance:0,nearDamageRoll:nearNonPenetration?nearDamageRoll:null,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
   }
@@ -213,6 +242,6 @@ const TacticalCombatState=(()=>{
   const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,protectionDeficit:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
   const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:typeof require==='function'?require('./vehicle-profiles.js'):null;
   if(loadedProfiles?.registry)validateProfileRegistry(loadedProfiles.registry);
-  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES,ALLOWED_CREW_ROLES});
+  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES,ALLOWED_CREW_ROLES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;

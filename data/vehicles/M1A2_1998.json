@@ -297,6 +297,76 @@
       "contract": "nav16-M1A2-r4.62-long0.60-side0.40-v2",
       "radius": 4.62
     },
+    "ammunition": {
+      "enabled": true,
+      "supported": [
+        "M829A2",
+        "M829A1",
+        "M830"
+      ],
+      "autoPriority": [
+        "M829A2",
+        "M829A1",
+        "M830"
+      ],
+      "sourcePriority": [
+        "ready",
+        "semiReady",
+        "reserve"
+      ],
+      "initial": {
+        "loaded": "M829A2",
+        "preference": "auto",
+        "sections": {
+          "ready": {
+            "M829A2": 7,
+            "M829A1": 4,
+            "M830": 6
+          },
+          "semiReady": {
+            "M829A2": 8,
+            "M829A1": 6,
+            "M830": 4
+          },
+          "reserve": {
+            "M829A2": 2,
+            "M829A1": 2,
+            "M830": 2
+          }
+        }
+      },
+      "sections": {
+        "ready": {
+          "capacity": 17,
+          "prepareSeconds": 0
+        },
+        "semiReady": {
+          "capacity": 18,
+          "prepareSeconds": 3
+        },
+        "reserve": {
+          "capacity": 6,
+          "prepareSeconds": 10
+        }
+      },
+      "replenish": {
+        "idleSeconds": 10,
+        "stationarySpeedMps": 0.1,
+        "targets": {
+          "M829A2": 7,
+          "M829A1": 4,
+          "M830": 6
+        },
+        "seconds": {
+          "semiReady": 4,
+          "reserve": 8
+        },
+        "sourcePriority": [
+          "semiReady",
+          "reserve"
+        ]
+      }
+    },
     "combat": {
       "maxHp": 1450,
       "armor": {
@@ -617,6 +687,552 @@
               }
             }
           }
+        },
+        "tank-ke/M829A1": {
+          "ammoId": "M829A1",
+          "rows": {
+            "ricochet": {
+              "hullFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "nonPenetration": {
+              "hullFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "nearNonPenetration": {
+              "hullFront": {
+                "temporaryFault": 0.015,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0.025,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0.035,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0.015,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0.025,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0.03,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0.025,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "penetration": {
+              "hullFront": {
+                "temporaryFault": 0.05,
+                "crewLight": 0.03,
+                "crewSerious": 0.005
+              },
+              "hullSide": {
+                "temporaryFault": 0.07,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              },
+              "hullRear": {
+                "temporaryFault": 0.1,
+                "crewLight": 0.03,
+                "crewSerious": 0.005
+              },
+              "turretFront": {
+                "temporaryFault": 0.04,
+                "crewLight": 0.04,
+                "crewSerious": 0.005
+              },
+              "turretSide": {
+                "temporaryFault": 0.06,
+                "crewLight": 0.07,
+                "crewSerious": 0.01
+              },
+              "turretRear": {
+                "temporaryFault": 0.08,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              },
+              "upper": {
+                "temporaryFault": 0.06,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              }
+            }
+          },
+          "faultWeights": {
+            "hullFront": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "hullSide": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "hullRear": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "turretFront": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "turretSide": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "turretRear": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "upper": {
+              "mobility": 0.5,
+              "turretDrive": 0.5
+            }
+          },
+          "crewWeights": {
+            "light": {
+              "hullFront": {
+                "driver": 0.7,
+                "commander": 0.1,
+                "gunner": 0.1,
+                "loader": 0.1
+              },
+              "hullSide": {
+                "driver": 0.4,
+                "commander": 0.2,
+                "gunner": 0.2,
+                "loader": 0.2
+              },
+              "hullRear": {
+                "driver": 0.55,
+                "commander": 0.15,
+                "gunner": 0.15,
+                "loader": 0.15
+              },
+              "turretFront": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.5,
+                "loader": 0.25
+              },
+              "turretSide": {
+                "driver": 0.05,
+                "commander": 0.3,
+                "gunner": 0.3,
+                "loader": 0.35
+              },
+              "turretRear": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.25,
+                "loader": 0.5
+              },
+              "upper": {
+                "driver": 0.25,
+                "commander": 0.25,
+                "gunner": 0.25,
+                "loader": 0.25
+              }
+            },
+            "serious": {
+              "hullFront": {
+                "driver": 0.7,
+                "commander": 0.1,
+                "gunner": 0.1,
+                "loader": 0.1
+              },
+              "hullSide": {
+                "driver": 0.4,
+                "commander": 0.2,
+                "gunner": 0.2,
+                "loader": 0.2
+              },
+              "hullRear": {
+                "driver": 0.55,
+                "commander": 0.15,
+                "gunner": 0.15,
+                "loader": 0.15
+              },
+              "turretFront": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.5,
+                "loader": 0.25
+              },
+              "turretSide": {
+                "driver": 0.05,
+                "commander": 0.3,
+                "gunner": 0.3,
+                "loader": 0.35
+              },
+              "turretRear": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.25,
+                "loader": 0.5
+              },
+              "upper": {
+                "driver": 0.25,
+                "commander": 0.25,
+                "gunner": 0.25,
+                "loader": 0.25
+              }
+            }
+          }
+        },
+        "tank-heat/M830": {
+          "ammoId": "M830",
+          "rows": {
+            "ricochet": {
+              "hullFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "nonPenetration": {
+              "hullFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "nearNonPenetration": {
+              "hullFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "penetration": {
+              "hullFront": {
+                "temporaryFault": 0.05,
+                "crewLight": 0.03,
+                "crewSerious": 0.005
+              },
+              "hullSide": {
+                "temporaryFault": 0.07,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              },
+              "hullRear": {
+                "temporaryFault": 0.1,
+                "crewLight": 0.03,
+                "crewSerious": 0.005
+              },
+              "turretFront": {
+                "temporaryFault": 0.04,
+                "crewLight": 0.04,
+                "crewSerious": 0.005
+              },
+              "turretSide": {
+                "temporaryFault": 0.06,
+                "crewLight": 0.07,
+                "crewSerious": 0.01
+              },
+              "turretRear": {
+                "temporaryFault": 0.08,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              },
+              "upper": {
+                "temporaryFault": 0.06,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              }
+            }
+          },
+          "faultWeights": {
+            "hullFront": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "hullSide": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "hullRear": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "turretFront": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "turretSide": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "turretRear": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "upper": {
+              "mobility": 0.5,
+              "turretDrive": 0.5
+            }
+          },
+          "crewWeights": {
+            "light": {
+              "hullFront": {
+                "driver": 0.7,
+                "commander": 0.1,
+                "gunner": 0.1,
+                "loader": 0.1
+              },
+              "hullSide": {
+                "driver": 0.4,
+                "commander": 0.2,
+                "gunner": 0.2,
+                "loader": 0.2
+              },
+              "hullRear": {
+                "driver": 0.55,
+                "commander": 0.15,
+                "gunner": 0.15,
+                "loader": 0.15
+              },
+              "turretFront": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.5,
+                "loader": 0.25
+              },
+              "turretSide": {
+                "driver": 0.05,
+                "commander": 0.3,
+                "gunner": 0.3,
+                "loader": 0.35
+              },
+              "turretRear": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.25,
+                "loader": 0.5
+              },
+              "upper": {
+                "driver": 0.25,
+                "commander": 0.25,
+                "gunner": 0.25,
+                "loader": 0.25
+              }
+            },
+            "serious": {
+              "hullFront": {
+                "driver": 0.7,
+                "commander": 0.1,
+                "gunner": 0.1,
+                "loader": 0.1
+              },
+              "hullSide": {
+                "driver": 0.4,
+                "commander": 0.2,
+                "gunner": 0.2,
+                "loader": 0.2
+              },
+              "hullRear": {
+                "driver": 0.55,
+                "commander": 0.15,
+                "gunner": 0.15,
+                "loader": 0.15
+              },
+              "turretFront": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.5,
+                "loader": 0.25
+              },
+              "turretSide": {
+                "driver": 0.05,
+                "commander": 0.3,
+                "gunner": 0.3,
+                "loader": 0.35
+              },
+              "turretRear": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.25,
+                "loader": 0.5
+              },
+              "upper": {
+                "driver": 0.25,
+                "commander": 0.25,
+                "gunner": 0.25,
+                "loader": 0.25
+              }
+            }
+          }
         }
       },
       "faults": {
@@ -675,8 +1291,8 @@
       }
     }
   },
-  "baseline": "Active WIP18 hit-reaction and symmetric combat fixture: M1A2 (1998) / M829A2",
-  "reviewed": "2026-11-13",
+  "baseline": "Active WIP19 ammunition-management and symmetric combat fixture: M1A2 (1998) / M829A2, M829A1, M830",
+  "reviewed": "2026-11-14",
   "sources": [
     {
       "id": "USER_WIP09",
@@ -777,6 +1393,12 @@
       "title": "TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md",
       "path": "../../archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md",
       "scope": "M1A2_1998-only fictional temporary mobility/turret-drive and crew light/serious injury trial values; not real vulnerability or medical data"
+    },
+    {
+      "id": "TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL",
+      "title": "TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md",
+      "path": "../../archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md",
+      "scope": "M1A2_1998-only three-ammunition inventory, preparation, reload, ready-rack replenishment and command-panel game trial; not a real loading drill or stowage certification"
     }
   ],
   "fieldEvidence": {
@@ -908,10 +1530,13 @@
       "note": "64 rejection samples, 2m terrain/building march and 3000m beyond-target cap generate a post-result visual point. The point never determines hit, penetration or damage."
     },
     "weapons.mainGun.ammunitionCapacity": {
-      "status": "published capacity only",
-      "source": "GDLS",
+      "status": "published total capacity plus fictional WIP19 layout",
+      "sources": [
+        "GDLS",
+        "TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL"
+      ],
       "value": 42,
-      "note": "One chambered round plus stored rounds share the 42-round game counter. No ammo split, rack transfer or loader animation is modelled."
+      "note": "The published total is retained. Loaded 1 + ready 17 + semi-ready 18 + reserve 6 and their ammunition mix are adjustable game trial values, not a certified stowage layout or loading drill."
     },
     "exposure": {
       "status": "game geometry samples",
@@ -929,9 +1554,9 @@
     },
     "weapons.mainGun.ammunitionId": {
       "status": "user game data",
-      "source": "USER_WIP11A",
+      "source": "TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL",
       "value": "M829A2",
-      "note": "Single symmetric trial ammunition"
+      "note": "Legacy/default registry binding remains M829A2; actual WIP19 firing uses the chambered M829A2, M829A1 or M830 round"
     },
     "weapons.mainGun.ricochet": {
       "status": "user game data",
@@ -946,7 +1571,12 @@
     "hitReactions": {
       "status": "fictional game trial",
       "source": "TACTICAL_WIP18_HIT_REACTIONS",
-      "note": "Explicitly enabled only for victim profile M1A2_1998 and bound attack policy tank-ke/M829A2. Profile roles, category-specific susceptibility, zone rates, target weights, 6–10s faults and crew efficiency factors are adjustable game proposals, not measured vehicle vulnerability or human injury data."
+      "note": "Explicitly enabled only for victim profile M1A2_1998 with independently bound tank-ke/M829A2, tank-ke/M829A1 and tank-heat/M830 attack policies. Profile roles, category-specific susceptibility, zone rates, target weights, 6–10s faults and crew efficiency factors are adjustable game proposals, not measured vehicle vulnerability or human injury data."
+    },
+    "ammunition": {
+      "status": "fictional game trial",
+      "source": "TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL",
+      "note": "42 rounds are split into loaded 1, ready 17, semi-ready 18 and reserve 6 with M829A2/A1/M830 counts. Preparation and replenishment seconds are adjustable game values and apply only to M1A2_1998."
     }
   },
   "limits": [
@@ -956,6 +1586,7 @@
     "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
     "No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities",
     "WIP12 penetration, damage and ricochet are abstract game tables; ricochet continuation is display-only and has no further collision or damage",
-    "WIP18 reactions are M1A2_1998-only trial rules; no permanent module damage, crew death/healing/replacement, fire, ammunition-rack explosion or vehicle-to-vehicle inheritance"
+    "WIP18 reactions are M1A2_1998-only trial rules; no permanent module damage, crew death/healing/replacement, fire, ammunition-rack explosion or vehicle-to-vehicle inheritance",
+    "WIP19 has no fire/cookoff, external resupply, forced unload, autoloader, loadout editor, infantry blast damage or other vehicle ammunition inheritance"
   ]
 }

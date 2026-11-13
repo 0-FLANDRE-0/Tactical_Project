@@ -24,7 +24,7 @@ test('W18-P02 cumulative half-open category, zone target and near-penetration bo
 
 test('W18-P03 profile roles own crew state, weights and effects without forcing an absent loader',()=>{
  const p=structuredClone(profile),id='TEST_THREE_CREW';p.id=id;p.name='Test three-crew fixture';p.crew=3;p.hitReactions.victimProfileId=id;p.hitReactions.roles=['driver','commander','gunner'];delete p.hitReactions.crewEffects.loader;
- const policy=p.hitReactions.policies['tank-ke/M829A2'];for(const severity of ['light','serious'])for(const zone of Combat.ZONES)policy.crewWeights[severity][zone]={driver:.4,commander:.3,gunner:.3};
+ for(const policy of Object.values(p.hitReactions.policies))for(const severity of ['light','serious'])for(const zone of Combat.ZONES)policy.crewWeights[severity][zone]={driver:.4,commander:.3,gunner:.3};
  const profiles=Profiles.registry.create([p]),registry=profiles.registry;assert.equal(Combat.validateProfileRegistry(registry),registry);const three=registry.get(id),u={id:'THREE'};Combat.initUnit(u,three);
  assert.deepEqual(Object.keys(u.hitReactions.crew),['driver','commander','gunner']);assert.equal(u.hitReactions.crew.loader,undefined);assert.equal(three.hitReactions.crewEffects.loader,undefined);
  const outcome=Combat.resolveHitReaction(three,'M829A2',result(),{occurrence:.05,target:.999,duration:0});assert.equal(outcome.category,'crewLight');assert.equal(outcome.target,'gunner');Combat.applyResolvedHitReaction(u,three,outcome,0);assert.equal(u.hitReactions.crew.gunner,'light');assert(!Object.hasOwn(u.hitReactions.crew,'loader'));assert.equal(Combat.hitReactionModifiers(u,three,0).loaderEfficiency,1);

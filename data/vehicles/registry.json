@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 7,
+  "schemaVersion": 8,
   "activeProfileId": "M1A2_1998",
   "ids": [
     "M1A2",
@@ -9,7 +9,9 @@
     "M1A2"
   ],
   "ammunitionIds": [
-    "M829A2"
+    "M829A2",
+    "M829A1",
+    "M830"
   ],
-  "note": "M1A2 is a non-participant with no WIP18 field; M1A2_1998 explicitly enables its own roles, category susceptibility and registry-bound victim reaction policy."
+  "note": "M1A2 remains a legacy non-participant. M1A2_1998 alone enables WIP19 compartment inventory, three supported rounds and registry-bound reaction policies."
 }

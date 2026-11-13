@@ -155,7 +155,7 @@ const TacticalAI=(()=>{
         const s=state(u);if(!s?.enabled)continue;
         s.currentTime=now;
         if(u.combat?.status==='destroyed'){destroy(u);continue;}
-        const p=profileOf(u),movement=p.fireControl.movement,ammo=(u.fireControl?.ammo??0)>0,halt=shouldHalt(s,p);
+        const p=profileOf(u),movement=p.fireControl.movement,ammo=u.fireControl?.engageableAmmo??(u.fireControl?.ammo??0)>0,halt=shouldHalt(s,p);
         if(Math.abs(u.drive?.velocity??u.speed??0)<=movement.stationarySpeedMps+1e-9)s.haltElapsed+=dt;else s.haltElapsed=0;
         if(s.autoTargetId&&u.observation?.contacts?.[s.autoTargetId]?.wreckConfirmed){dropAutomatic(u,s,now,'confirmed-wreck');s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);if(halt&&(s.mission.status==='paused'||['observe','braking','engaging'].includes(s.behavior)))finishEngagement(u,s,now,'confirmed-wreck-resume');}
         const applied=targetStatus(u),appliedCurrent=manualEngagement(u,p,applied)||(active(applied)&&applied.source==='ai'&&s.autoTargetId===applied.target&&u.observation?.contacts?.[applied.target]?.current);
@@ -200,7 +200,7 @@ const TacticalAI=(()=>{
       const previous=state(u);if(previous?.autoSuppressed||u.fireControl?.autoSuppressed)suppressAuto(u,false);
       if(previous?.autoTargetId)clearTarget(u,now,'mission-reassigned',previous.autoTargetId);
       assign(u,spec,now,config.decisionPeriod);const s=state(u);Object.defineProperties(s,{currentTime:{value:now,writable:true,enumerable:false},onDisable:{value:onDisable,writable:true,enumerable:false}});
-      const p=profileOf(u),hasTarget=manualEngagement(u,p,targetStatus(u))||automaticCandidates(u,s,p,now,groundHeight,config).length>0;if((u.fireControl?.ammo??0)>0&&hasTarget&&shouldHalt(s,p))setSuppressed(u,s,true,suppressAuto);return inspect(u);
+      const p=profileOf(u),hasTarget=manualEngagement(u,p,targetStatus(u))||automaticCandidates(u,s,p,now,groundHeight,config).length>0;if((u.fireControl?.engageableAmmo??(u.fireControl?.ammo??0)>0)&&hasTarget&&shouldHalt(s,p))setSuppressed(u,s,true,suppressAuto);return inspect(u);
     }
     function manualChanged(u,now){const s=state(u);if(!s?.enabled)return false;s.nextThinkAt=Math.min(s.nextThinkAt,now);s.challengerId=null;s.challengerCount=0;return true;}
     function fireBlocked(u,target,reason,now){

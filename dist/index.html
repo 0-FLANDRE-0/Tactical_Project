@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP18</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP19</title>
 <style>
 :root{
   color-scheme:dark;
@@ -398,59 +398,6 @@ header{
   color:var(--accent);
   font-size:11px
 }
-.roster{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-  margin-bottom:22px
-}
-.unit-card{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  text-align:left;
-  width:100%;
-  background:#1d2a24;
-  border:1px solid #3a493a;
-  border-radius:5px;
-  padding:10px;
-  min-height:59px
-}
-.unit-card.active{
-  background:#2c3b2a;
-  border-color:#a6bf73
-}
-.unit-symbol{
-  width:35px;
-  height:27px;
-  border:1px solid var(--blue);
-  display:grid;
-  place-items:center;
-  color:var(--blue);
-  flex-shrink:0
-}
-.unit-symbol span{
-  width:23px;
-  height:12px;
-  border:1px solid currentColor;
-  border-radius:50%
-}
-.unit-title{
-  font-size:12px;
-  font-weight:700
-}
-.unit-sub{
-  font-size:10px;
-  color:#a2b29b;
-  margin-top:2px
-}
-.unit-status{
-  width:5px;
-  height:5px;
-  background:var(--accent);
-  border-radius:50%;
-  margin-left:auto
-}
 .selected-heading{
   border-top:1px solid var(--line);
   padding-top:17px
@@ -465,20 +412,6 @@ header{
   margin:0;
   color:#a3b49a;
   font-size:11px
-}
-.tank-profile{
-  height:101px;
-  position:relative;
-  display:grid;
-  place-items:center;
-  color:#9baa83
-}
-.tank-profile svg{
-  width:173px;
-  height:73px;
-  fill:#32442e;
-  stroke:#a6b786;
-  stroke-width:1.1
 }
 .telemetry-main{
   display:flex;
@@ -633,12 +566,6 @@ footer{
 #coords{
   color:#b4c3a2
 }
-.focus-mode .workspace{
-  grid-template-columns:minmax(0,1fr)
-}
-.focus-mode .sidebar{
-  display:none
-}
 .focus-mode .subtitle{
   display:none
 }
@@ -678,36 +605,11 @@ footer{
   .section-label{
     margin-bottom:7px
   }
-  .roster{
-    gap:5px;
-    margin-bottom:12px
-  }
-  .unit-card{
-    padding:6px 8px;
-    min-height:44px
-  }
-  .unit-title{
-    font-size:11px
-  }
-  .unit-sub{
-    font-size:9px
-  }
-  .unit-symbol{
-    width:29px;
-    height:22px
-  }
-  .unit-symbol span{
-    width:19px;
-    height:10px
-  }
   .selected-heading{
     padding-top:10px
   }
   .selected-heading h2{
     font-size:17px
-  }
-  .tank-profile{
-    display:none
   }
   .telemetry-main{
     margin-top:12px;
@@ -874,10 +776,6 @@ footer{
 
 .loading{position:absolute;inset:0;display:grid;place-items:center;background:#18271f;color:#d6e6b4;font-size:15px;z-index:20}.map-info{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;color:#9eaf94;font-size:10px}.map-info summary{cursor:pointer;color:#c4d3b6;padding:6px 0}.map-info a,.attribution{color:#a8ba97;text-decoration:none}.map-info a:hover,.attribution:hover{text-decoration:underline}.map-info p{line-height:1.8}.attribution{font:9px system-ui,sans-serif;white-space:nowrap}@media(max-width:850px){.attribution{font-size:8px}}@media(orientation:portrait){.attribution{font-size:7px}footer{gap:7px}}
 
-.vehicle-specs{margin:0 0 16px;border:1px solid #50604b66;border-radius:4px;padding:10px 12px;font-size:10px;color:#b9c4ab}.vehicle-specs summary{cursor:pointer;color:#cbd6b8}.vehicle-specs dl{margin:10px 0}.vehicle-specs dl>div{display:flex;justify-content:space-between;gap:8px;margin:7px 0}.vehicle-specs dt{color:#9eab94}.vehicle-specs dd{margin:0;text-align:right;font-family:ui-monospace,monospace}.vehicle-specs p{font-size:9px;line-height:1.6;color:#a0ae94}.vehicle-specs a{color:#aabf98}
-
-.tank-profile svg{width:200px;height:83px;fill:initial;stroke:none;stroke-width:0}
-
 /* Look controls are in the map so they remain reachable in portrait/focus mode. */
 .look-panel{position:absolute;left:16px;top:108px;z-index:4;max-width:calc(100% - 76px);padding:9px 10px;border:1px solid #7eacb57a;border-radius:7px;background:#142b2bed;color:#d6e9e7;font-size:10px;box-shadow:0 3px 14px #0003}
 .look-title{display:flex;align-items:center;gap:10px;font-weight:600}.look-title output{color:#b7d9d7;font-size:10px;font-weight:400}.look-controls{display:flex;align-items:center;gap:6px;margin-top:7px}.look-controls button,.look-controls select{min-height:36px;border:1px solid #63858c;border-radius:4px;background:#253f43;color:#e0f0ee;padding:5px 7px;font:inherit}.look-controls button.active{background:#49777c;border-color:#b1e6e8}.look-controls button:focus-visible,.look-controls select:focus-visible{outline:2px solid #c9f8ff;outline-offset:2px}.look-duration{display:flex;align-items:center;gap:4px}.look-panel p{margin:6px 0 0;color:#a9bfc1;font-size:9px}.look-picking canvas{cursor:crosshair}.sight-on .look-panel{top:145px}
@@ -903,66 +801,66 @@ footer{
 .guard-popup.open{display:block}.guard-popup-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.guard-popup-title button{width:30px;height:30px;padding:0;font-size:18px}.guard-popup label{display:flex;align-items:center;justify-content:space-between;gap:8px}.guard-popup button,.guard-popup select,.engagement-panel button{min-height:34px;border:1px solid #66817a;border-radius:4px;background:#223b34;color:#e0eee7;padding:5px 8px;font:inherit}.guard-popup button:hover,.engagement-panel button:hover{background:#315044}.guard-popup button:focus-visible,.guard-popup select:focus-visible,.engagement-panel button:focus-visible{outline:2px solid #c9f8df;outline-offset:2px}.guard-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.guard-options{margin-top:7px;color:#abbdb5}.guard-options summary{cursor:pointer;padding:3px 0}.guard-options label{margin-top:5px}.look-picking canvas{cursor:crosshair}
 .engagement-panel{margin:-2px 0 12px;padding:8px 9px;border:1px solid #4b6155;border-radius:5px;background:#162720;color:#c9d6c4;font-size:10px}.engagement-line{display:grid;grid-template-columns:38px minmax(0,1fr);gap:6px;margin:3px 0}.engagement-line b{color:#8fa597;font-weight:500}.engagement-line output{min-width:0;overflow-wrap:anywhere}.flight-state{display:block;color:#d9ceaa;line-height:1.5}.engagement-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:7px}.engagement-panel button:disabled{opacity:.4}.engagement-panel #fire:not(:disabled){border-color:#bd9b5d;color:#ffdfa0}.engagement-panel #fireMode.active{border-color:#82a76f;background:#314b38;color:#e5f2d5}
 .orientation-block{display:none;position:fixed;inset:0;z-index:1000;place-items:center;padding:24px;background:#101d19f7;color:#e9f1dd;text-align:center;touch-action:none}.orientation-block>div{max-width:330px;padding:24px;border:1px solid #718469;border-radius:10px;background:#182922}.orientation-block span{display:block;font-size:44px;line-height:1;margin-bottom:12px}.orientation-block strong{display:block;font-size:20px}.orientation-block p{margin:9px 0 0;color:#b7c5ae;font-size:12px;line-height:1.6}
-@media(max-height:560px) and (orientation:landscape){.guard-popup{left:auto;right:11px;bottom:72px;transform:none;width:268px;padding:8px}.engagement-panel{padding:6px 7px;margin-bottom:8px}.engagement-line{margin:2px 0}.engagement-actions{margin-top:5px}.engagement-panel button{min-height:30px;padding:3px 4px}.vehicle-specs{margin-bottom:10px}}
+@media(max-height:560px) and (orientation:landscape){.engagement-panel{padding:6px 7px;margin-bottom:8px}.engagement-line{margin:2px 0}.engagement-panel button{min-height:30px;padding:3px 4px}}
 @media(orientation:portrait){.orientation-block{display:grid}}
 
 /* WIP11D fixed-scale terrain interpretation controls and legend */
 .map-tools button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7}.map-tools #terrainMode{height:46px;grid-template-rows:20px 10px;gap:1px;color:#324638}.map-tools #terrainMode span{font:700 8px ui-monospace,monospace;line-height:9px}.map-tools #terrainMode.active{color:#e8edd9;background:#405847;border-color:#70866e}.terrain-legend{position:absolute;left:21px;bottom:122px;z-index:3;display:flex;align-items:center;gap:11px;padding:5px 8px;border:1px solid #53645566;border-radius:3px;background:#d8ddc5e8;color:#263a31;font-size:9px;pointer-events:none}.terrain-legend[hidden]{display:none}.terrain-legend span{display:flex;align-items:center;gap:5px;white-space:nowrap}.terrain-legend small{color:#53635a;font-size:8px;white-space:nowrap}.terrain-legend i{display:inline-block}.height-key i{width:44px;height:7px;border:1px solid #5b685c66;background:linear-gradient(90deg,#4b6565,#697e52,#979752,#bea461,#dcc48b)}.ridge-key{width:24px;border-top:2px solid #a2704f}.valley-key{width:24px;border-top:2px dashed #647f8c}.sight-on .terrain-legend{opacity:.28}.terrain-emphasis .map-legend{background:#d9dec5e8}.map-legend [hidden]{display:none}
 @media(max-height:560px) and (orientation:landscape){.terrain-legend{left:13px;bottom:105px;gap:7px;padding:4px 6px}.terrain-legend small{display:none}.map-tools #terrainMode{height:42px}}
 
+/* WIP19 right-side command deck and selected-unit information */
+.workspace{grid-template-columns:minmax(0,1fr) 306px}
+.sidebar{position:relative;padding:0;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr);background:#14201d}
+.command-panel{padding:10px 11px 8px;border-bottom:1px solid #445249;background:#111c19;box-shadow:0 4px 14px #07100d55;z-index:4}
+.command-panel .section-label{margin-bottom:7px}.reset.compact{min-height:27px;padding:3px 8px;margin:0;border:1px solid #56665a;border-radius:4px;background:#1e2d27;font-size:9px}
+.command-group{display:grid;grid-template-columns:47px minmax(0,1fr);align-items:center;gap:6px;margin:5px 0}.command-group>b,.ammo-command label b{font-size:9px;color:#94a696;font-weight:600}.command-row,.map-tools{position:static;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;min-width:0}.command-panel button,.command-panel select,.unit-picker select{min-width:0;min-height:31px;border:1px solid #52685d;border-radius:4px;background:#21342d;color:#e1eadc;padding:4px 5px;font:10px system-ui,sans-serif}.command-panel button.active,.command-panel button[aria-pressed="true"]{border-color:#8cac71;background:#334d3a;color:#edf5d9}.command-panel button:focus-visible,.command-panel select:focus-visible,.unit-picker select:focus-visible{outline:2px solid #a8e4d2;outline-offset:1px}.map-tools button{position:static;width:auto;height:31px;display:flex;align-items:center;justify-content:center;gap:2px;box-shadow:none}.map-tools button svg{width:15px;height:15px}.map-tools #terrainMode{height:31px;display:flex;grid-template-rows:none;color:#dfe9da}.map-tools #terrainMode span{font:9px system-ui,sans-serif}.ammo-command select{width:100%}
+.guard-popup{position:absolute;left:9px;right:9px;top:38px;bottom:auto;transform:none;width:auto;z-index:20;padding:9px;background:#142725fa}.guard-duration{margin-top:7px}.guard-popup label{font-size:10px}.guard-popup select{min-height:29px}.guard-popup button{min-height:29px}
+.selected-scroll{min-height:0;overflow:auto;padding:10px 13px 18px;scrollbar-width:thin;scrollbar-color:#526047 transparent}.unit-picker{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;margin-bottom:9px}.unit-picker label{font:9px ui-monospace,monospace;color:#93a594}.unit-picker select{width:100%;background:#1e3029}.selected-heading{padding-top:10px}.selected-heading h2{font-size:18px}.telemetry-main{margin:10px 0 8px}.speed{font-size:30px}.combat-summary{margin-bottom:8px}.engagement-panel{margin:0 0 9px}.engagement-actions{display:none}
+.ammo-panel,.status-panel{margin:0 0 9px;padding:8px;border:1px solid #455a4f;border-radius:5px;background:#172720;font-size:10px}.ammo-panel .section-label,.status-panel .section-label{margin-bottom:5px}.ammo-panel #ammoLoaded{color:#e3e9cf}.ammo-panel #ammoTask{color:#d9c88e;margin:3px 0 6px}.ammo-panel table{width:100%;border-collapse:collapse;font:9px ui-monospace,monospace}.ammo-panel th,.ammo-panel td{padding:3px 2px;border-top:1px solid #405047;text-align:right}.ammo-panel th:first-child{text-align:left;color:#9fb09e}.status-panel #faultStatus{color:#e1c28b;margin-bottom:4px}.status-panel #crewStatus{color:#bbcbb8;line-height:1.55}.metrics{padding:9px 0;gap:8px;margin-bottom:9px}.route-panel{min-height:30px}.target-panel{margin-bottom:8px}.map-info{margin-top:8px}.focus-mode .workspace{grid-template-columns:minmax(0,1fr) 306px}.focus-mode .sidebar{display:grid}
+@media(max-width:900px){.workspace,.focus-mode .workspace{grid-template-columns:minmax(0,1fr) 278px}.sidebar{font-size:11px}.command-panel{padding:7px 8px 5px}.command-group{grid-template-columns:40px minmax(0,1fr);gap:4px;margin:3px 0}.command-panel button,.command-panel select{min-height:28px;padding:3px;font-size:9px}.map-tools button,.map-tools #terrainMode{height:28px}.selected-scroll{padding:8px 10px 14px}}
+@media(max-height:560px) and (orientation:landscape){.workspace,.focus-mode .workspace{grid-template-columns:minmax(0,1fr) 286px}.command-panel{padding:5px 7px 4px}.command-panel .section-label{margin-bottom:3px}.command-group{display:inline-grid;vertical-align:top;width:calc(50% - 3px);grid-template-columns:35px minmax(0,1fr);margin:2px 0;gap:3px}.map-command-group{width:100%;grid-template-columns:35px minmax(0,1fr)}.command-panel button,.command-panel select,.map-tools button,.map-tools #terrainMode{min-height:25px;height:25px;font-size:8px}.selected-scroll{padding:6px 9px 10px}.unit-picker{margin-bottom:5px}.selected-heading{padding-top:5px}.selected-heading h2{font-size:15px}.telemetry-main{margin:5px 0}.speed{font-size:24px}.combat-summary,.engagement-panel,.ammo-panel,.status-panel{margin-bottom:6px;padding:5px 6px}.metrics{padding:6px 0;margin-bottom:6px}.guard-popup{top:30px}}
+
 </style>
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">라스도르프 서부 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP18</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">라스도르프 서부 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP19</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
 <div id="loading" class="loading">전장 불러오는 중…</div>
 <div class="map-heading"><div class="eyebrow" id="mapEyebrow">RASDORF</div><h1 id="mapHeading">라스도르프 서부</h1><div class="small">실제 지형 · 농경지 · 마을 · 숲</div></div>
 
-<div class="map-tools"><div class="north">N</div><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button><button id="zoomOut" aria-label="지도 축소"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/></svg></button></div>
 <div class="visibility-key"><b>선택 전차의 관측 범위</b><div class="keys"><span><i class="dot" style="background:#8bedd0"></i> 보이는 곳</span><span><i class="dot" style="background:#d89579"></i> 가려진 곳</span></div><div class="note" id="sightNote">지형 가능 영역 · 실제 탐지와 다름<br>주변 200m · 전차장 2500m · 포수 2000m</div></div>
-<section class="guard-popup" id="guardPopup" aria-label="경계 명령" aria-hidden="true">
-<div class="guard-popup-title"><strong>경계 명령</strong><button id="guardClose" aria-label="경계 메뉴 닫기">×</button></div>
-<label>장비 <select id="lookChannel" aria-label="제어할 관측 장비"><option value="commander">전차장</option><option value="gunner">포수</option></select></label>
-<div class="guard-actions"><button id="lookDirection" aria-pressed="false" title="지도에서 경계할 지점 지정 · L">방향 지정</button><button id="lookResume">자동 경계 복귀</button></div>
-<details class="guard-options"><summary>추가 옵션</summary><label>유지 시간 <select id="lookDuration" aria-label="지점 경계 유지 시간"><option value="0" selected>해제까지</option><option value="5">5초</option><option value="10">10초</option><option value="30">30초</option></select></label></details>
-</section>
 <div class="pause-tag">일시정지</div>
 <div class="terrain-legend" id="terrainLegend" hidden><span class="height-key"><i></i>낮음 → 높음</span><span><i class="ridge-key"></i>능선</span><span><i class="valley-key"></i>골짜기</span><small>골짜기 ≠ 물길</small></div>
 <div class="map-legend"><span class="legend-item"><i class="dot" style="background:#247e99"></i>아군</span><span class="legend-item"><i class="dot" style="background:#b9683d"></i>관측 표적</span><span class="legend-item"><i class="dot" style="background:#3b6242"></i>숲</span><span class="legend-item" id="contourLegend">등고선 10m · 주요 50m</span></div>
 <div class="scale"><div class="scale-line" id="scaleLine"></div><span id="scaleText">200m</span></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<nav class="dock" aria-label="전차 명령">
-<button class="command active" id="move" aria-pressed="true" title="지면 탭으로 이동"><svg viewBox="0 0 24 24"><path d="M12 20V4m-6 6 6-6 6 6"/></svg><span>이동</span></button>
-<button class="command" id="reverse" aria-pressed="false" title="후진 이동 · R"><svg viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></svg><span>후진</span></button>
-<button class="command" id="stop" title="정지 · X"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><span>정지</span></button><div class="dock-sep"></div>
-<button class="command sight" id="sight" aria-pressed="false" aria-label="누르는 동안 선택 전차 시야 표시" title="누르는 동안 시야 표시 · V"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>시야 · 홀드</span></button>
-<button class="command" id="guardMenu" aria-expanded="false" aria-controls="guardPopup" title="전차장·포수 경계 명령 · L"><svg viewBox="0 0 24 24"><path d="M4 18 12 4l8 14M7 14h10M12 4v16"/></svg><span>경계</span></button>
-<button class="command active" id="contours" aria-pressed="true" title="등고선 표시"><svg viewBox="0 0 24 24"><path d="m2 18 5-6 4 3 5-10 6 13M3 21h18M8 9l3-5 3 2"/></svg><span>등고선</span></button>
-</nav></main>
-<aside class="sidebar">
-<div class="section-label"><span>기동 분대</span><span class="count" id="rosterCount">02</span></div><div class="roster" id="roster"></div>
-<div class="selected-heading"><div class="eyebrow" style="color:#9db48e">SELECTED VEHICLE</div><h2 id="unitName">ALPHA 11</h2><p id="unitType">M1A2 Abrams · 120mm M256</p></div>
-<div class="tank-profile" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="-5 -2.5 12 5" role="img" aria-label="M1A2 Abrams top view"><title>M1A2 Abrams · top view</title><desc>Original vector interpretation. Planform traced from USMC MCWP 3-12 A-3; M1A2 fittings from US Army DVIDS 3055956. Exterior detail is approximate.</desc><g stroke-linejoin="round" stroke-linecap="round" transform="rotate(0)"><path d="M-3.8 -1.8288H3.9624V1.8288H-3.8V1.13H-3.9624V-1.13H-3.8Z" transform="translate(.14 .18)" fill="#17201745"/><g class="hull"><path d="M-3.8 -1.8288H3.9224Q3.9624 -1.8288 3.9624 -1.7888V1.7888Q3.9624 1.8288 3.9224 1.8288H-3.8V1.13H-3.9624V-1.13H-3.8Z" fill="#69745a" stroke="#384633" stroke-width="0.045"/><path d="M-3.78 -1.8h6.18v0.75h-6.18Z" fill="#727d61" stroke="#44503a" stroke-width="0.028"/><path d="M-3.74 -1.765H2.36" fill="none" stroke="#a0a98a" stroke-width="0.022"/><path d="M1.42 -1.07V-1.79M0.3 -1.07V-1.79M-0.82 -1.07V-1.79M-1.94 -1.07V-1.79M-3.06 -1.07V-1.79" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M3.02 -1.81h0.87v0.77h-0.87Z" fill="#7b8468" stroke="#384633" stroke-width="0.03"/><path d="M3.89 -1.8h0.07v0.75h-0.07Z" fill="#232a23" stroke="#384633" stroke-width="0.015"/><path d="M3.82 -1.13H3.20M3.13 -1.12V-1.72" fill="none" stroke="#44503a" stroke-width="0.02"/><path d="M3.73 -1.63a0.17 0.13 0 1 0 -0.34 0a0.17 0.13 0 1 0 0.34 0Z" fill="#69745a" stroke="#384633" stroke-width="0.022"/><path d="M3.46 -1.55L3.66 -1.71M3.46 -1.71L3.66 -1.55" fill="none" stroke="#a0a98a" stroke-width="0.02"/><path d="M3.877 -1.16a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.28a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.4a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.52a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.64a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 -1.76a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M2.4 -1.78h0.62v0.72h-0.62Z" fill="#7b8468" stroke="#44503a" stroke-width="0.025"/><path d="M2.45 -1.1V-1.74" fill="none" stroke="#44503a" stroke-width="0.018"/><path d="M3.00 -1.1V-1.7" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M3.032 -1.1a0.032 0.032 0 1 0 -0.064 0a0.032 0.032 0 1 0 0.064 0ZM3.032 -1.7a0.032 0.032 0 1 0 -0.064 0a0.032 0.032 0 1 0 0.064 0Z" fill="#9ba38e"/><path d="M2.30 -1.82V-1.66M2.24 -1.66H2.36" fill="none" stroke="#384633" stroke-width="0.03"/><path d="M-3.78 1.05h6.18v0.75h-6.18Z" fill="#727d61" stroke="#44503a" stroke-width="0.028"/><path d="M-3.74 1.765H2.36" fill="none" stroke="#a0a98a" stroke-width="0.022"/><path d="M1.42 1.07V1.79M0.3 1.07V1.79M-0.82 1.07V1.79M-1.94 1.07V1.79M-3.06 1.07V1.79" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M3.02 1.04h0.87v0.77h-0.87Z" fill="#7b8468" stroke="#384633" stroke-width="0.03"/><path d="M3.89 1.05h0.07v0.75h-0.07Z" fill="#232a23" stroke="#384633" stroke-width="0.015"/><path d="M3.82 1.13H3.20M3.13 1.12V1.72" fill="none" stroke="#44503a" stroke-width="0.02"/><path d="M3.73 1.63a0.17 0.13 0 1 0 -0.34 0a0.17 0.13 0 1 0 0.34 0Z" fill="#69745a" stroke="#384633" stroke-width="0.022"/><path d="M3.46 1.55L3.66 1.71M3.46 1.71L3.66 1.55" fill="none" stroke="#a0a98a" stroke-width="0.02"/><path d="M3.877 1.16a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.28a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.4a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.52a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.64a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM3.877 1.76a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M2.4 1.06h0.62v0.72h-0.62Z" fill="#7b8468" stroke="#44503a" stroke-width="0.025"/><path d="M2.45 1.1V1.74" fill="none" stroke="#44503a" stroke-width="0.018"/><path d="M3.00 1.1V1.7" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M3.032 1.1a0.032 0.032 0 1 0 -0.064 0a0.032 0.032 0 1 0 0.064 0ZM3.032 1.7a0.032 0.032 0 1 0 -0.064 0a0.032 0.032 0 1 0 0.064 0Z" fill="#9ba38e"/><path d="M2.30 1.82V1.66M2.24 1.66H2.36" fill="none" stroke="#384633" stroke-width="0.03"/><path d="M2.55 -1.52L2.66 -1.62" fill="none" stroke="#384633" stroke-width="0.07"/><path d="M2.55 -1.52L2.66 -1.62" fill="none" stroke="#9ba38e" stroke-width="0.035"/><path d="M2.4 -1.04h1.53v2.08h-1.53Z" fill="#788366" stroke="#44503a" stroke-width="0.03"/><path d="M3.44 -1.0V1.0" fill="none" stroke="#a0a98a" stroke-width="0.025"/><path d="M3.90 -.70V.70" fill="none" stroke="#384633" stroke-width="0.03"/><path d="M2.391 -0.103Q2.5 0 2.391 0.103L2.159 0.322Q2.05 0.425 2.05 0.275L2.05 -0.275Q2.05 -0.425 2.159 -0.322Z" fill="#69745a" stroke="#384633" stroke-width="0.03"/><path d="M2.349 -0.071Q2.42 0 2.349 0.071L2.171 0.249Q2.1 0.32 2.1 0.22L2.1 -0.22Q2.1 -0.32 2.171 -0.249Z" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M2.34 -0.075L2.44 -0.075L2.44 0.075L2.34 0.075ZM2.298 0.122L2.368 0.192L2.262 0.298L2.192 0.228ZM2.192 -0.228L2.262 -0.298L2.368 -0.192L2.298 -0.122Z" fill="#243b3d" stroke="#384633" stroke-width="0.02"/><path d="M2.12 0.1v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M2.145 0.09v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M2.28 -0.83a0.09 0.09 0 1 0 -0.18 0a0.09 0.09 0 1 0 0.18 0Z" fill="#7b8468" stroke="#384633" stroke-width="0.02"/><path d="M2.23 -0.83a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="none" stroke="#9ba38e" stroke-width="0.014"/><path d="M2.28 0.83a0.09 0.09 0 1 0 -0.18 0a0.09 0.09 0 1 0 0.18 0Z" fill="#7b8468" stroke="#384633" stroke-width="0.02"/><path d="M2.23 0.83a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="none" stroke="#9ba38e" stroke-width="0.014"/><path d="M3.75 -1.03h0.21v0.31h-0.21Z" fill="#384633" stroke="#44503a" stroke-width="0.02"/><path d="M3.79 -0.75V-1M3.83 -0.75V-1M3.87 -0.75V-1" fill="none" stroke="#a0a98a" stroke-width="0.014"/><path d="M3.92 -0.99h0.04v0.23h-0.04Z" fill="#d4d9bb"/><path d="M3.55 -1.01h0.07v0.29h-0.07Z" fill="#69745a" stroke="#44503a" stroke-width="0.018"/><path d="M3.755 -0.87a0.075 0.075 0 1 0 -0.15 0a0.075 0.075 0 1 0 0.15 0Z" fill="#69745a" stroke="#384633" stroke-width="0.02"/><path d="M3.72 -0.87a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="none" stroke="#9ba38e" stroke-width="0.015"/><path d="M3.75 0.72h0.21v0.31h-0.21Z" fill="#384633" stroke="#44503a" stroke-width="0.02"/><path d="M3.79 0.75V1M3.83 0.75V1M3.87 0.75V1" fill="none" stroke="#a0a98a" stroke-width="0.014"/><path d="M3.92 0.76h0.04v0.23h-0.04Z" fill="#d4d9bb"/><path d="M3.55 0.72h0.07v0.29h-0.07Z" fill="#69745a" stroke="#44503a" stroke-width="0.018"/><path d="M3.755 0.87a0.075 0.075 0 1 0 -0.15 0a0.075 0.075 0 1 0 0.15 0Z" fill="#69745a" stroke="#384633" stroke-width="0.02"/><path d="M3.72 0.87a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="none" stroke="#9ba38e" stroke-width="0.015"/><path d="M-3.74 -1.05h6.14v2.1h-6.14Z" fill="#7b8468" stroke="#44503a" stroke-width="0.03"/><path d="M-.98 -1.03V1.03" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M-2.55 -0.56h0.67v0.53h-0.67Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-2.515 -0.53v0.47M-2.445 -0.53v0.47M-2.375 -0.53v0.47M-2.305 -0.53v0.47M-2.235 -0.53v0.47M-2.165 -0.53v0.47M-2.095 -0.53v0.47M-2.025 -0.53v0.47M-1.955 -0.53v0.47" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-2.525 -0.535h0.62v0.48h-0.62Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/><path d="M-2.55 0.03h0.67v0.53h-0.67Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-2.515 0.06v0.47M-2.445 0.06v0.47M-2.375 0.06v0.47M-2.305 0.06v0.47M-2.235 0.06v0.47M-2.165 0.06v0.47M-2.095 0.06v0.47M-2.025 0.06v0.47M-1.955 0.06v0.47" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-2.525 0.055h0.62v0.48h-0.62Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/><path d="M-2.78 -1h0.68v0.38h-0.68Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-2.745 -0.97v0.32M-2.675 -0.97v0.32M-2.605 -0.97v0.32M-2.535 -0.97v0.32M-2.465 -0.97v0.32M-2.395 -0.97v0.32M-2.325 -0.97v0.32M-2.255 -0.97v0.32M-2.185 -0.97v0.32M-2.115 -0.97v0.32" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-2.755 -0.975h0.63v0.33h-0.63Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/><path d="M-2.27 -1.74h1.17v0.29h-1.17Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-2.25 -1.53L-2.19 -1.47M-2.25 -1.66L-2.19 -1.72M-2.25 -1.59L-2.13 -1.47M-2.25 -1.6L-2.13 -1.72M-2.25 -1.65L-2.07 -1.47M-2.25 -1.54L-2.07 -1.72M-2.25 -1.71L-2.01 -1.47M-2.25 -1.48L-2.01 -1.72M-2.2 -1.72L-1.95 -1.47M-2.2 -1.47L-1.95 -1.72M-2.14 -1.72L-1.89 -1.47M-2.14 -1.47L-1.89 -1.72M-2.08 -1.72L-1.83 -1.47M-2.08 -1.47L-1.83 -1.72M-2.02 -1.72L-1.77 -1.47M-2.02 -1.47L-1.77 -1.72M-1.96 -1.72L-1.71 -1.47M-1.96 -1.47L-1.71 -1.72M-1.9 -1.72L-1.65 -1.47M-1.9 -1.47L-1.65 -1.72M-1.84 -1.72L-1.59 -1.47M-1.84 -1.47L-1.59 -1.72M-1.78 -1.72L-1.53 -1.47M-1.78 -1.47L-1.53 -1.72M-1.72 -1.72L-1.47 -1.47M-1.72 -1.47L-1.47 -1.72M-1.66 -1.72L-1.41 -1.47M-1.66 -1.47L-1.41 -1.72M-1.6 -1.72L-1.35 -1.47M-1.6 -1.47L-1.35 -1.72M-1.54 -1.72L-1.29 -1.47M-1.54 -1.47L-1.29 -1.72M-1.48 -1.72L-1.23 -1.47M-1.48 -1.47L-1.23 -1.72M-1.42 -1.72L-1.17 -1.47M-1.42 -1.47L-1.17 -1.72M-1.36 -1.72L-1.12 -1.48M-1.36 -1.47L-1.12 -1.71M-1.3 -1.72L-1.12 -1.54M-1.3 -1.47L-1.12 -1.65M-1.24 -1.72L-1.12 -1.6M-1.24 -1.47L-1.12 -1.59M-1.18 -1.72L-1.12 -1.66M-1.18 -1.47L-1.12 -1.53" fill="none" stroke="#66725a" stroke-width="0.014"/><path d="M-2.84 -1.12H-3.76V1.12H-2.84Z" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M-3.64 -1.02h0.37v0.43h-0.37Z" fill="#69745a" stroke="#44503a" stroke-width="0.025"/><path d="M-3.52 -0.77v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-3.495 -0.78v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-3.3 -0.8a0.02 0.02 0 1 0 -0.04 0a0.02 0.02 0 1 0 0.04 0Z" fill="#9ba38e"/><path d="M-2.908 -1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.378 -1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.698 -1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.698 -1.17a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-3.41 -1.57a0.11 0.11 0 1 0 -0.22 0a0.11 0.11 0 1 0 0.22 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.02"/><path d="M-3.46 -1.57a0.06 0.06 0 1 0 -0.12 0a0.06 0.06 0 1 0 0.12 0Z" fill="none" stroke="#9ba38e" stroke-width="0.016"/><path d="M-3.60 -1.49L-3.44 -1.65" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M-3.96 -1.75h0.16v0.23h-0.16Z" fill="#384633" stroke="#44503a" stroke-width="0.02"/><path d="M-3.95 -1.71h0.05v0.15h-0.05Z" fill="#7c3a2c"/><path d="M-3.64 0.59h0.37v0.43h-0.37Z" fill="#69745a" stroke="#44503a" stroke-width="0.025"/><path d="M-3.52 0.87v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-3.495 0.86v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-3.3 0.8a0.02 0.02 0 1 0 -0.04 0a0.02 0.02 0 1 0 0.04 0Z" fill="#9ba38e"/><path d="M-2.908 1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.378 1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.698 1.775a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-3.698 1.17a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-3.41 1.57a0.11 0.11 0 1 0 -0.22 0a0.11 0.11 0 1 0 0.22 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.02"/><path d="M-3.46 1.57a0.06 0.06 0 1 0 -0.12 0a0.06 0.06 0 1 0 0.12 0Z" fill="none" stroke="#9ba38e" stroke-width="0.016"/><path d="M-3.60 1.49L-3.44 1.65" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M-3.96 1.52h0.16v0.23h-0.16Z" fill="#384633" stroke="#44503a" stroke-width="0.02"/><path d="M-3.95 1.56h0.05v0.15h-0.05Z" fill="#7c3a2c"/><path d="M-2.86 1.41H-3.78" fill="none" stroke="#9ba38e" stroke-width="0.035"/><path d="M-3.17 1.36h0.04v0.11h-0.04Z" fill="#384633"/><path d="M-3.49 1.36h0.04v0.11h-0.04Z" fill="#384633"/><path d="M-3.96 -1.12h0.2v0.79h-0.2Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-3.93 -1.065h0.14M-3.93 -0.955h0.14M-3.93 -0.845h0.14M-3.93 -0.735h0.14M-3.93 -0.625h0.14M-3.93 -0.515h0.14M-3.93 -0.405h0.14" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-3.935 -1.095h0.15v0.74h-0.15Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/><path d="M-3.96 -0.29h0.2v1.34h-0.2Z" fill="#293628" stroke="#384633" stroke-width="0.025"/><path d="M-3.93 -0.235h0.14M-3.93 -0.125h0.14M-3.93 -0.015h0.14M-3.93 0.095h0.14M-3.93 0.205h0.14M-3.93 0.315h0.14M-3.93 0.425h0.14M-3.93 0.535h0.14M-3.93 0.645h0.14M-3.93 0.755h0.14M-3.93 0.865h0.14M-3.93 0.975h0.14" fill="none" stroke="#66725a" stroke-width="0.026"/><path d="M-3.935 -0.265h0.15v1.29h-0.15Z" fill="none" stroke="#9ba38e" stroke-width="0.012"/></g><g class="race" transform="translate(0.66 0)"><circle r="1.18" fill="#384633" stroke="#44503a" stroke-width=".04"/><circle r="1.08" fill="#69745a" stroke="#9ba38e" stroke-width=".025"/></g><g class="turret" transform="translate(0.66 0) rotate(0) translate(-0.51 0)"><path d="M2.33 -.31H2.13L2.06 -.66L1.31 -1.56L-1.25 -1.57L-2.29 -1.43H-2.97V1.58H-2.29L.06 1.71L1.65 1.67L2.04 .78L2.13 .31H2.33ZM2.33 -.12H5.72V.12H2.33Z" transform="translate(.11 .13)" fill="#15201345"/><path d="M-2.25 -1.43H-2.79Q-2.97 -1.43 -2.97 -1.25V1.40Q-2.97 1.58 -2.79 1.58H-2.25Z" fill="#56634b" stroke="#384633" stroke-width="0.03"/><path d="M-2.95 1.45L-2.85 1.55M-2.95 -1.3L-2.85 -1.4M-2.95 1.35L-2.75 1.55M-2.95 -1.2L-2.75 -1.4M-2.95 1.25L-2.65 1.55M-2.95 -1.1L-2.65 -1.4M-2.95 1.15L-2.55 1.55M-2.95 -1L-2.55 -1.4M-2.95 1.05L-2.45 1.55M-2.95 -0.9L-2.45 -1.4M-2.95 0.95L-2.4 1.5M-2.95 -0.8L-2.4 -1.35M-2.95 0.85L-2.4 1.4M-2.95 -0.7L-2.4 -1.25M-2.95 0.75L-2.4 1.3M-2.95 -0.6L-2.4 -1.15M-2.95 0.65L-2.4 1.2M-2.95 -0.5L-2.4 -1.05M-2.95 0.55L-2.4 1.1M-2.95 -0.4L-2.4 -0.95M-2.95 0.45L-2.4 1M-2.95 -0.3L-2.4 -0.85M-2.95 0.35L-2.4 0.9M-2.95 -0.2L-2.4 -0.75M-2.95 0.25L-2.4 0.8M-2.95 -0.1L-2.4 -0.65M-2.95 0.15L-2.4 0.7M-2.95 0L-2.4 -0.55M-2.95 0.05L-2.4 0.6M-2.95 0.1L-2.4 -0.45M-2.95 -0.05L-2.4 0.5M-2.95 0.2L-2.4 -0.35M-2.95 -0.15L-2.4 0.4M-2.95 0.3L-2.4 -0.25M-2.95 -0.25L-2.4 0.3M-2.95 0.4L-2.4 -0.15M-2.95 -0.35L-2.4 0.2M-2.95 0.5L-2.4 -0.05M-2.95 -0.45L-2.4 0.1M-2.95 0.6L-2.4 0.05M-2.95 -0.55L-2.4 0M-2.95 0.7L-2.4 0.15M-2.95 -0.65L-2.4 -0.1M-2.95 0.8L-2.4 0.25M-2.95 -0.75L-2.4 -0.2M-2.95 0.9L-2.4 0.35M-2.95 -0.85L-2.4 -0.3M-2.95 1L-2.4 0.45M-2.95 -0.95L-2.4 -0.4M-2.95 1.1L-2.4 0.55M-2.95 -1.05L-2.4 -0.5M-2.95 1.2L-2.4 0.65M-2.95 -1.15L-2.4 -0.6M-2.95 1.3L-2.4 0.75M-2.95 -1.25L-2.4 -0.7M-2.95 1.4L-2.4 0.85M-2.95 -1.35L-2.4 -0.8M-2.95 1.5L-2.4 0.95M-2.9 -1.4L-2.4 -0.9M-2.9 1.55L-2.4 1.05M-2.8 -1.4L-2.4 -1M-2.8 1.55L-2.4 1.15M-2.7 -1.4L-2.4 -1.1M-2.7 1.55L-2.4 1.25M-2.6 -1.4L-2.4 -1.2M-2.6 1.55L-2.4 1.35M-2.5 -1.4L-2.4 -1.3M-2.5 1.55L-2.4 1.45" fill="none" stroke="#2c3828" stroke-width="0.014"/><path d="M-2.25 -1.43H-2.79Q-2.97 -1.43 -2.97 -1.25V1.40Q-2.97 1.58 -2.79 1.58H-2.25M-2.95 -.92H-2.42M-2.95 -.25H-2.42M-2.95 .08H-2.42M-2.95 .57H-2.42M-2.95 1.06H-2.42" fill="none" stroke="#9ba38e" stroke-width="0.03"/><path d="M-2.95 -0.9h0.5v0.63h-0.5Z" fill="#687258" stroke="#384633" stroke-width="0.022"/><path d="M-2.90 -.585H-2.50" fill="none" stroke="#44503a" stroke-width="0.018"/><path d="M-2.9 0.62h0.32v0.8h-0.32Z" fill="#6c735e" stroke="#384633" stroke-width="0.022"/><path d="M-2.86 0.75H-2.62M-2.86 1.29H-2.62" fill="none" stroke="#454b3c" stroke-width="0.032"/><path d="M-2.88 -0.2h0.36v0.7h-0.36Z" fill="#6c735e" stroke="#384633" stroke-width="0.022"/><path d="M-2.84 -0.07H-2.56M-2.84 0.37H-2.56" fill="none" stroke="#454b3c" stroke-width="0.032"/><path d="M2.13 0.31L2.04 0.78L1.65 1.67L0.06 1.71L-2.29 1.6L-2.42 1.42L-2.42 -1.3L-2.29 -1.43L-1.25 -1.57L1.31 -1.56L2.06 -0.66L2.13 -0.31Z" fill="#69745a" stroke="#384633" stroke-width="0.045"/><path d="M2.13 0.31L2.04 0.78L1.65 1.67L1.44 1.33L1.87 0.31Z" fill="#606d52" stroke="#44503a" stroke-width="0.022"/><path d="M2.13 -0.31L2.06 -0.66L1.31 -1.56L1.1 -1.21L1.87 -0.31Z" fill="#7d886b" stroke="#44503a" stroke-width="0.022"/><path d="M1.87 0.31L1.44 1.33L-1.24 1.29L-2.28 1.24L-2.28 -1.12L-0.2 -1.21L1.1 -1.21L1.87 -0.31Z" fill="#828b70" stroke="#44503a" stroke-width="0.025"/><path d="M1.84 .40L1.46 1.29M1.84 -.40L1.13 -1.17" fill="none" stroke="#a0a98a" stroke-width="0.022"/><path d="M0.06 1.335L0.06 1.7L-1.95 1.625L-1.95 1.275Z" fill="#687258" stroke="#384633" stroke-width="0.028"/><path d="M0.06 -1.215L0.06 -1.565L-1.25 -1.57L-1.95 -1.476L-1.95 -1.155Z" fill="#687258" stroke="#384633" stroke-width="0.028"/><path d="M-.62 1.33V1.68M-1.30 1.30V1.65M-.62 -1.21V-1.57M-1.30 -1.19V-1.55" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M.02 1.645L-1.91 1.575M.02 -1.515H-1.25L-1.91 -1.43" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M0.022 1.683a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.278 1.672a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.578 1.661a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.878 1.649a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.178 1.638a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.478 1.627a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.778 1.616a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM0.022 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.278 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.578 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-0.878 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.178 -1.55a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-0.38 1.55v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-0.355 1.54v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-1.06 1.52v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.035 1.51v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-1.68 1.5v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.655 1.49v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-0.38 -1.34v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-0.355 -1.35v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-1.06 -1.33v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.035 -1.34v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-1.68 -1.28v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.655 -1.29v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M0.27 -1.53h0.34v0.32h-0.34Z" fill="#384633" stroke="#44503a" stroke-width="0.022"/><path d="M0.385 -1.3a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.485 -1.3a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.585 -1.3a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.425 -1.44a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.525 -1.44a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.625 -1.44a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0Z" fill="#232a23" stroke="#9ba38e" stroke-width="0.014"/><path d="M0.27 1.36h0.34v0.32h-0.34Z" fill="#384633" stroke="#44503a" stroke-width="0.022"/><path d="M0.385 1.45a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.485 1.45a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.585 1.45a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.425 1.59a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.525 1.59a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0ZM0.625 1.59a.045 .045 0 1 0 -.09 0a.045 .045 0 1 0 .09 0Z" fill="#232a23" stroke="#9ba38e" stroke-width="0.014"/><path d="M-2.22 -0.75h1.105v0.795h-1.105Z" fill="#7b8468" stroke="#44503a" stroke-width="0.03"/><path d="M-2.118 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-2.118 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.882 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.882 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.646 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.646 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.409 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.409 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.173 -0.705a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.173 0a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-1.81 -0.53a0.07 0.07 0 1 0 -0.14 0a0.07 0.07 0 1 0 0.14 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.015"/><path d="M-1.81 -0.175a0.07 0.07 0 1 0 -0.14 0a0.07 0.07 0 1 0 0.14 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.015"/><path d="M-1.42 -0.302v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.395 -0.312v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-2.22 0.075h1.105v0.825h-1.105Z" fill="#7b8468" stroke="#44503a" stroke-width="0.03"/><path d="M-2.118 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-2.118 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.882 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.882 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.646 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.646 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.409 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.409 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.173 0.12a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM-1.173 0.855a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M-1.81 0.295a0.07 0.07 0 1 0 -0.14 0a0.07 0.07 0 1 0 0.14 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.015"/><path d="M-1.81 0.68a0.07 0.07 0 1 0 -0.14 0a0.07 0.07 0 1 0 0.14 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.015"/><path d="M-1.42 0.538v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-1.395 0.528v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-2.205 1.19a0.085 0.085 0 1 0 -0.17 0a0.085 0.085 0 1 0 0.17 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.018"/><path d="M-2.35 1.19H-2.23M-2.29 1.13V1.25" fill="none" stroke="#9ba38e" stroke-width="0.016"/><path d="M-2.21 -1.03a0.08 0.08 0 1 0 -0.16 0a0.08 0.08 0 1 0 0.16 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.018"/><path d="M-2.25 -1.03a0.04 0.04 0 1 0 -0.08 0a0.04 0.04 0 1 0 0.08 0Z" fill="#69745a" stroke="#9ba38e" stroke-width="0.012"/><path d="M-2.59 0.08h0.23v0.18h-0.23Z" fill="#69745a" stroke="#384633" stroke-width="0.018"/><path d="M-2.445 0.17a0.055 0.055 0 1 0 -0.11 0a0.055 0.055 0 1 0 0.11 0Z" fill="#7b8468" stroke="#384633" stroke-width="0.012"/><path d="M-0.04 -0.406a0.42 0.42 0 1 0 -0.84 0a0.42 0.42 0 1 0 0.84 0Z" fill="#384633" stroke="#44503a" stroke-width="0.03"/><path d="M-0.11 -0.406a0.35 0.35 0 1 0 -0.7 0a0.35 0.35 0 1 0 0.7 0Z" fill="#828b70" stroke="#a0a98a" stroke-width="0.025"/><path d="M-.76 -.43H-.16M-.46 -.70V-.11" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M-0.52 -0.3v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-0.495 -0.31v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-0.005 0.534a0.52 0.52 0 1 0 -1.04 0a0.52 0.52 0 1 0 1.04 0Z" fill="#384633" stroke="#9ba38e" stroke-width="0.025"/><path d="M-0.065 0.534a0.46 0.46 0 1 0 -0.92 0a0.46 0.46 0 1 0 0.92 0Z" fill="#69745a" stroke="#44503a" stroke-width="0.02"/><path d="M-0.175 0.534a0.35 0.35 0 1 0 -0.7 0a0.35 0.35 0 1 0 0.7 0Z" fill="#7b8468" stroke="#44503a" stroke-width="0.025"/><path d="M-0.245 0.534a0.28 0.28 0 1 0 -0.56 0a0.28 0.28 0 1 0 0.56 0Z" fill="none" stroke="#a0a98a" stroke-width="0.02"/><path d="M-0.585 0.61v-.1q.06 -.06 .12 0v.1" fill="none" stroke="#384633" stroke-width="0.035"/><path d="M-0.56 0.6v-.1h.07v.1" fill="none" stroke="#a0a98a" stroke-width="0.018"/><path d="M-0.154 0.617L-0.098 0.64L-0.148 0.761L-0.203 0.738ZM-0.321 0.856L-0.298 0.911L-0.419 0.961L-0.442 0.905ZM-0.608 0.905L-0.631 0.961L-0.752 0.911L-0.729 0.856ZM-0.847 0.738L-0.902 0.761L-0.952 0.64L-0.896 0.617ZM-0.896 0.451L-0.952 0.428L-0.902 0.307L-0.847 0.33ZM-0.729 0.212L-0.752 0.157L-0.631 0.107L-0.608 0.163ZM-0.442 0.163L-0.419 0.107L-0.298 0.157L-0.321 0.212ZM-0.203 0.33L-0.148 0.307L-0.098 0.428L-0.154 0.451Z" fill="#243b3d" stroke="#384633" stroke-width="0.012"/><path d="M-0.12 0.4h0.48v0.16h-0.48Z" fill="#2a3430" stroke="#384633" stroke-width="0.015"/><path d="M.36 .48H1.38" fill="none" stroke="#2a3430" stroke-width="0.05"/><path d="M-0.08 0.58h0.28v0.16h-0.28Z" fill="#566048" stroke="#384633" stroke-width="0.015"/><path d="M-0.34 -1.05h0.36v0.13h-0.36Z" fill="#2a3430" stroke="#384633" stroke-width="0.015"/><path d="M.02 -.985H.46" fill="none" stroke="#2a3430" stroke-width="0.04"/><path d="M-0.28 -1.17h0.24v0.12h-0.24Z" fill="#566048" stroke="#384633" stroke-width="0.015"/><path d="M0.31 0.44h0.49v0.72h-0.49Z" fill="#7b8468" stroke="#384633" stroke-width="0.035"/><path d="M0.37 0.5h0.33v0.6h-0.33Z" fill="#828b70" stroke="#44503a" stroke-width="0.02"/><path d="M.62 .50V1.10M.37 .80H.70" fill="none" stroke="#44503a" stroke-width="0.016"/><path d="M0.68 0.62a0.02 0.02 0 1 0 -0.04 0a0.02 0.02 0 1 0 0.04 0ZM0.68 0.98a0.02 0.02 0 1 0 -0.04 0a0.02 0.02 0 1 0 0.04 0Z" fill="#9ba38e"/><path d="M0.72 0.56h0.12v0.48h-0.12Z" fill="#243b3d" stroke="#384633" stroke-width="0.022"/><path d="M.45 .50V1.10" fill="none" stroke="#a0a98a" stroke-width="0.016"/><path d="M0.694 -0.673a0.27 0.27 0 1 0 -0.54 0a0.27 0.27 0 1 0 0.54 0Z" fill="#384633" stroke="#44503a" stroke-width="0.03"/><path d="M0.634 -0.673a0.21 0.21 0 1 0 -0.42 0a0.21 0.21 0 1 0 0.42 0Z" fill="#7b8468" stroke="#9ba38e" stroke-width="0.02"/><path d="M1.78 -0.31h0.55v0.62h-0.55Z" fill="#69745a" stroke="#384633" stroke-width="0.03"/><path d="M1.83 -0.26h0.27v0.52h-0.27Z" fill="#7b8468" stroke="#44503a" stroke-width="0.02"/><path d="M1.902 0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM1.902 -0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM1.962 0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM1.962 -0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM2.022 0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM2.022 -0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM2.082 0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0ZM2.082 -0.285a0.022 0.022 0 1 0 -0.044 0a0.022 0.022 0 1 0 0.044 0Z" fill="#9ba38e"/><path d="M1.8 0.215h0.06v0.05h-0.06Z" fill="#9ba38e" stroke="#384633" stroke-width="0.012"/><path d="M1.8 -0.145h0.06v0.05h-0.06Z" fill="#9ba38e" stroke="#384633" stroke-width="0.012"/><path d="M2.13 -0.29h0.2v0.58h-0.2Z" fill="#828b70" stroke="#44503a" stroke-width="0.02"/><path d="M2.13 -.17H2.25Q2.33 -.17 2.33 0Q2.33 .17 2.25 .17H2.13Z" fill="#69745a" stroke="#384633" stroke-width="0.018"/><path d="M2.3 0.235h0.06v0.07h-0.06Z" fill="#384633"/><path d="M2.33 .27H2.70" fill="none" stroke="#2a3430" stroke-width="0.04"/><path d="M2.30 -.117H3.03L3.12 -.165H3.85L3.94 -.105H5.30V-.122H5.37V-.092H5.717V.092H5.37V.122H5.30V.105H3.94L3.85 .165H3.12L3.03 .117H2.30Z" fill="#778367" stroke="#384633" stroke-width="0.025"/><path d="M2.36 -.05H3.08M3.16 -.085H3.82M3.98 -.045H5.68" fill="none" stroke="#a8b091" stroke-width="0.035"/><path d="M2.72 -.125V.125M2.77 -.125V.125M2.82 -.125V.125" fill="none" stroke="#384633" stroke-width="0.02"/><path d="M3.12 -.16V.16M3.85 -.16V.16M4.45 -.10V.10M4.95 -.10V.10" fill="none" stroke="#44503a" stroke-width="0.022"/><path d="M5.43 -0.06h0.13v0.12h-0.13Z" fill="#7b8468" stroke="#384633" stroke-width="0.015"/><path d="M5.7 -0.07h0.017v0.14h-0.017Z" fill="#232a23"/><g class="citv" transform="rotate(0 0.424 -0.673)"><path d="M.30 -.82H.56Q.64 -.82 .64 -.74V-.60Q.64 -.53 .56 -.53H.30Z" fill="#69745a" stroke="#384633" stroke-width="0.022"/><path d="M.36 -.80V-.55" fill="none" stroke="#44503a" stroke-width="0.016"/><path d="M0.6 -0.78h0.08v0.21h-0.08Z" fill="#243b3d" stroke="#384633" stroke-width="0.018"/></g></g></g></svg></div>
-<div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
-<div class="combat-summary" id="combatSummary">M829A2 · HP 1,450 / 1,450 · 생존</div>
-<section class="engagement-panel" aria-label="경계와 교전 상태">
-<div class="engagement-line"><b>경계</b><output id="lookStatus">자동 경계</output></div>
-<div class="engagement-line"><b>교전</b><output id="designationStatus">없음</output></div>
-<div class="engagement-line"><b>사격</b><output id="fireState">표적 미확보</output></div>
-<output class="flight-state" id="readinessState">장전탄 1 · 저장 41</output>
-<output class="flight-state" id="flightState"></output>
-<div class="engagement-actions"><button id="fireMode" aria-pressed="true">자동</button><button id="cancelDesignation">교전 취소</button><button id="fire" disabled aria-label="선택 표적 단발 발사" title="조준 완료 후 선택 표적에 단발 발사 · G">단발 · G</button></div>
+</main>
+<aside class="sidebar" aria-label="명령 및 선택 차량 정보">
+<section class="command-panel" aria-label="전술 명령">
+<div class="section-label"><span>COMMAND</span><button class="reset compact" id="reset">초기화 ↺</button></div>
+<div class="command-group map-command-group"><b>지도</b><div class="map-tools"><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대">＋</button><button id="zoomOut" aria-label="지도 축소">－</button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기">맞춤</button><button class="active" id="contours" aria-pressed="true" title="등고선 표시">등고선</button></div></div>
+<div class="command-group"><b>기동</b><div class="command-row"><button class="command active" id="move" aria-pressed="true">이동</button><button class="command" id="reverse" aria-pressed="false">후진</button><button class="command" id="stop">정지</button></div></div>
+<div class="command-group"><b>관측</b><div class="command-row"><button class="command sight" id="sight" aria-pressed="false">시야 · 홀드</button><button class="command" id="guardMenu" aria-expanded="false" aria-controls="guardPopup">경계</button></div>
+<section class="guard-popup" id="guardPopup" aria-label="경계 명령" aria-hidden="true"><div class="guard-popup-title"><strong>경계 명령</strong><button id="guardClose" aria-label="경계 메뉴 닫기">×</button></div><label>장비 <select id="lookChannel"><option value="commander">전차장</option><option value="gunner">포수</option></select></label><div class="guard-actions"><button id="lookDirection" aria-pressed="false">방향 지정</button><button id="lookResume">자동 복귀</button></div><label class="guard-duration">유지 <select id="lookDuration"><option value="0" selected>해제까지</option><option value="5">5초</option><option value="10">10초</option><option value="30">30초</option></select></label></section></div>
+<div class="command-group"><b>사격</b><div class="command-row"><button id="fireMode" aria-pressed="true">자동</button><button id="cancelDesignation">지정 취소</button><button id="fire" disabled>단발 · G</button></div></div>
+<div class="command-group ammo-command"><label for="ammoSelect"><b>다음 탄종</b></label><select id="ammoSelect"><option value="auto">자동</option><option value="M829A2">M829A2</option><option value="M829A1">M829A1</option><option value="M830">M830</option></select></div>
 </section>
-<div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">차체 방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
-<details class="vehicle-specs"><summary id="profileTitle">M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>게임식 예측 발사·비행·탄착·피해 지원.<br>단일 시험탄 장전과 일시 대응 상태 적용 · 영구 모듈 피해는 후속.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
+<section class="selected-scroll" aria-label="선택 차량 정보">
+<div class="unit-picker"><label for="unitSelect">아군 선택</label><select id="unitSelect"></select></div>
+<div class="selected-heading"><div class="eyebrow">SELECTED VEHICLE</div><h2 id="unitName">ALPHA 11</h2><p id="unitType">M1A2 Abrams · 120mm M256</p></div>
+<div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
+<div class="combat-summary" id="combatSummary">HP 1,450 / 1,450 · 생존</div>
+<section class="engagement-panel" aria-label="교전 상태"><div class="engagement-line"><b>경계</b><output id="lookStatus">자동 경계</output></div><div class="engagement-line"><b>교전</b><output id="designationStatus">없음</output></div><div class="engagement-line"><b>사격</b><output id="fireState">표적 미확보</output></div><output class="flight-state" id="readinessState"></output><output class="flight-state" id="flightState"></output></section>
+<section class="ammo-panel"><div class="section-label"><span>AMMUNITION</span><span id="ammoTotal">42발</span></div><div id="ammoLoaded"></div><div id="ammoTask"></div><table><thead><tr><th>구획</th><th>M829A2</th><th>M829A1</th><th>M830</th></tr></thead><tbody id="ammoInventory"></tbody></table></section>
+<section class="status-panel"><div class="section-label"><span>차량 · 승무원 상태</span></div><div id="faultStatus"></div><div id="crewStatus"></div></section>
+<div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
-<div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
-<div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·장전·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p><span id="mapDimensions">4×4km</span> · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · RELOAD · HIT REACTIONS · ENGAGEMENT AI / WIP18</div>
-</aside></div>
+<div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div></div></div>
+<details class="map-info"><summary>전장 정보 · 출처</summary><p><span id="mapDimensions">4×4km</span> · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details>
+</section></aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra" id="mapFooterSize">4000 × 4000 m</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
 <div class="orientation-block" id="orientationBlock" role="dialog" aria-modal="true" aria-hidden="true"><div><span aria-hidden="true">↻</span><strong>가로로 돌려주세요</strong><p>전술 지도와 차량 패널은 가로 화면에서 작동합니다.</p></div></div>
@@ -1092,6 +990,12 @@ const VEHICLE_PROFILES=(()=>{
   Object.assign(M1A2_1998,{id:'M1A2_1998',name:'M1A2 Abrams (1998)',variant:'M1A2 (1998) 시험 구성'});
   Object.assign(M1A2_1998.weapons.mainGun,{ammunitionId:'M829A2',ammunitionName:'M829A2'});
   M1A2_1998.fireControl.muzzleVelocity=1680;
+  // WIP19 game-trial ammunition layout. It belongs only to the 1998 trial
+  // profile and does not alter the baseline M1A2 or the archived 1989 presets.
+  M1A2_1998.ammunition={enabled:true,supported:['M829A2','M829A1','M830'],autoPriority:['M829A2','M829A1','M830'],sourcePriority:['ready','semiReady','reserve'],
+    initial:{loaded:'M829A2',preference:'auto',sections:{ready:{M829A2:7,M829A1:4,M830:6},semiReady:{M829A2:8,M829A1:6,M830:4},reserve:{M829A2:2,M829A1:2,M830:2}}},
+    sections:{ready:{capacity:17,prepareSeconds:0},semiReady:{capacity:18,prepareSeconds:3},reserve:{capacity:6,prepareSeconds:10}},
+    replenish:{idleSeconds:10,stationarySpeedMps:.10,targets:{M829A2:7,M829A1:4,M830:6},seconds:{semiReady:4,reserve:8},sourcePriority:['semiReady','reserve']}};
   M1A2_1998.combat={maxHp:1450,armor:{
     hullFront:{ke:390,ce:720},hullSide:{ke:120,ce:280},hullRear:{ke:40,ce:40},
     turretFront:{ke:720,ce:1150},turretSide:{ke:340,ce:630},turretRear:{ke:55,ce:55},upper:{ke:40,ce:40}
@@ -1120,6 +1024,14 @@ const VEHICLE_PROFILES=(()=>{
         turretFront:{driver:.05,commander:.20,gunner:.50,loader:.25},turretSide:{driver:.05,commander:.30,gunner:.30,loader:.35},turretRear:{driver:.05,commander:.20,gunner:.25,loader:.50},upper:{driver:.25,commander:.25,gunner:.25,loader:.25}}}}},
     faults:{mobility:{factor:.65,durationSeconds:[6,10]},turretDrive:{factor:.60,durationSeconds:[6,10]}},
     crewEffects:{driver:{light:{drivePower:.85,hullTurn:.90},serious:{drivePower:.65,hullTurn:.75}},commander:{light:{commanderTurn:.85},serious:{commanderTurn:.65}},gunner:{light:{aimRate:.85,sigma:1.10},serious:{aimRate:.65,sigma:1.30}},loader:{light:{reloadEfficiency:.85},serious:{reloadEfficiency:.65}}}};
+  const a2Reaction=M1A2_1998.hitReactions.policies['tank-ke/M829A2'];
+  M1A2_1998.hitReactions.policies['tank-ke/M829A1']=clone(a2Reaction);
+  M1A2_1998.hitReactions.policies['tank-ke/M829A1'].ammoId='M829A1';
+  M1A2_1998.hitReactions.policies['tank-heat/M830']=clone(a2Reaction);
+  M1A2_1998.hitReactions.policies['tank-heat/M830'].ammoId='M830';
+  M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.ricochet=zero();
+  M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nonPenetration=zero();
+  M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nearNonPenetration=zero();
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
   function createRegistry(entries){
     const profiles=Object.create(null);
@@ -1156,6 +1068,17 @@ const VEHICLE_PROFILES=(()=>{
         if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
         if(typeof p.weapons.mainGun.ammunitionId!=='string'||!p.weapons.mainGun.ammunitionId)throw Error('탄약 ID 누락: '+id);
         for(const zone of ['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'])for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
+      }
+      if(p.ammunition){
+        const a=p.ammunition,ids=a.supported,sections=['ready','semiReady','reserve'];
+        if(a.enabled!==true||!Array.isArray(ids)||!ids.length||ids.length!==new Set(ids).size||!ids.every(v=>typeof v==='string'&&v))throw Error('탄약 운용 설정 오류: '+id);
+        if(!Array.isArray(a.autoPriority)||a.autoPriority.length!==ids.length||new Set(a.autoPriority).size!==ids.length||!a.autoPriority.every(v=>ids.includes(v)))throw Error('탄약 자동 우선순위 오류: '+id);
+        if(!Array.isArray(a.sourcePriority)||a.sourcePriority.length!==sections.length||!sections.every(v=>a.sourcePriority.includes(v)))throw Error('탄약 구획 우선순위 오류: '+id);
+        if(!ids.includes(a.initial?.loaded)||!['auto',...ids].includes(a.initial?.preference))throw Error('초기 장전탄/선택 오류: '+id);
+        let total=1;
+        for(const section of sections){const rule=a.sections?.[section],stock=a.initial?.sections?.[section];if(!rule||!Number.isInteger(rule.capacity)||rule.capacity<0||!Number.isFinite(rule.prepareSeconds)||rule.prepareSeconds<0||!stock||Object.keys(stock).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(stock,ammoId)&&Number.isInteger(stock[ammoId])&&stock[ammoId]>=0))throw Error('탄약 구획 설정 오류: '+id+'.'+section);const count=ids.reduce((sum,ammoId)=>sum+stock[ammoId],0);if(count!==rule.capacity)throw Error('탄약 구획 용량 불일치: '+id+'.'+section);total+=count;}
+        if(total!==p.weapons.mainGun.ammunitionCapacity)throw Error('탄약 총량 불일치: '+id);
+        const rep=a.replenish;if(!rep||!Number.isFinite(rep.idleSeconds)||rep.idleSeconds<0||!Number.isFinite(rep.stationarySpeedMps)||rep.stationarySpeedMps<0||!Array.isArray(rep.sourcePriority)||!rep.sourcePriority.every(v=>['semiReady','reserve'].includes(v))||Object.keys(rep.targets||{}).length!==ids.length||!ids.every(ammoId=>Number.isInteger(rep.targets[ammoId])&&rep.targets[ammoId]>=0)||ids.reduce((sum,ammoId)=>sum+rep.targets[ammoId],0)>a.sections.ready.capacity||!['semiReady','reserve'].every(section=>Number.isFinite(rep.seconds?.[section])&&rep.seconds[section]>0))throw Error('탄약 보충 설정 오류: '+id);
       }
       if(p.hitReactions){
         const h=p.hitReactions;
@@ -1461,7 +1384,7 @@ const TacticalAI=(()=>{
         const s=state(u);if(!s?.enabled)continue;
         s.currentTime=now;
         if(u.combat?.status==='destroyed'){destroy(u);continue;}
-        const p=profileOf(u),movement=p.fireControl.movement,ammo=(u.fireControl?.ammo??0)>0,halt=shouldHalt(s,p);
+        const p=profileOf(u),movement=p.fireControl.movement,ammo=u.fireControl?.engageableAmmo??(u.fireControl?.ammo??0)>0,halt=shouldHalt(s,p);
         if(Math.abs(u.drive?.velocity??u.speed??0)<=movement.stationarySpeedMps+1e-9)s.haltElapsed+=dt;else s.haltElapsed=0;
         if(s.autoTargetId&&u.observation?.contacts?.[s.autoTargetId]?.wreckConfirmed){dropAutomatic(u,s,now,'confirmed-wreck');s.lastContactKey=null;s.lostAt=null;setSuppressed(u,s,false,suppressAuto);if(halt&&(s.mission.status==='paused'||['observe','braking','engaging'].includes(s.behavior)))finishEngagement(u,s,now,'confirmed-wreck-resume');}
         const applied=targetStatus(u),appliedCurrent=manualEngagement(u,p,applied)||(active(applied)&&applied.source==='ai'&&s.autoTargetId===applied.target&&u.observation?.contacts?.[applied.target]?.current);
@@ -1506,7 +1429,7 @@ const TacticalAI=(()=>{
       const previous=state(u);if(previous?.autoSuppressed||u.fireControl?.autoSuppressed)suppressAuto(u,false);
       if(previous?.autoTargetId)clearTarget(u,now,'mission-reassigned',previous.autoTargetId);
       assign(u,spec,now,config.decisionPeriod);const s=state(u);Object.defineProperties(s,{currentTime:{value:now,writable:true,enumerable:false},onDisable:{value:onDisable,writable:true,enumerable:false}});
-      const p=profileOf(u),hasTarget=manualEngagement(u,p,targetStatus(u))||automaticCandidates(u,s,p,now,groundHeight,config).length>0;if((u.fireControl?.ammo??0)>0&&hasTarget&&shouldHalt(s,p))setSuppressed(u,s,true,suppressAuto);return inspect(u);
+      const p=profileOf(u),hasTarget=manualEngagement(u,p,targetStatus(u))||automaticCandidates(u,s,p,now,groundHeight,config).length>0;if((u.fireControl?.engageableAmmo??(u.fireControl?.ammo??0)>0)&&hasTarget&&shouldHalt(s,p))setSuppressed(u,s,true,suppressAuto);return inspect(u);
     }
     function manualChanged(u,now){const s=state(u);if(!s?.enabled)return false;s.nextThinkAt=Math.min(s.nextThinkAt,now);s.challengerId=null;s.challengerCount=0;return true;}
     function fireBlocked(u,target,reason,now){
@@ -1893,6 +1816,24 @@ const TacticalCombatState=(()=>{
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'}
+    },
+    M829A1:{
+      id:'M829A1',name:'M829A1',kind:'KE',baseDamage:380,muzzleVelocity:1575,
+      hitReactionPolicyId:'tank-ke/M829A1',
+      penetration:{rangesM:[10,100,500,1000,1500,2000],anglesDeg:[0,30,60],values:[
+        [600,505,345],[595,503.643216080402,344.09547738693465],[590,497.61306532663315,340.0753768844221],
+        [580,490.0753768844221,335.0502512562814],[570,482.53768844221105,330.0251256281407],[560,475,325]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
+      damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'},
+      nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
+    },
+    M830:{
+      id:'M830',name:'M830 HEAT-MP',kind:'CE',baseDamage:435,muzzleVelocity:1140,
+      hitReactionPolicyId:'tank-heat/M830',
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[480,415,240],[480,415,240]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      ricochet:{anglesDeg:[65,72,77],chances:[0,.5,1],comparison:'roll<chance'},
+      damageMultiplier:{points:[[0,1],[1,1]],outsidePolicy:'clamp'},
+      nearNonPenetration:false,armoredBlastRadiusM:0
     }
   });
   const ammunitionRegistry=Object.freeze({
@@ -1915,8 +1856,18 @@ const TacticalCombatState=(()=>{
   }
   function validateProfileRegistry(registry){
     if(!registry||typeof registry.list!=='function')throw Error('차량 프로파일 레지스트리 누락');
-    for(const profile of registry.list())validateHitReactionBindings(profile);
+    for(const profile of registry.list()){validateHitReactionBindings(profile);validateAmmunitionBindings(profile);}
     return registry;
+  }
+  function validateAmmunitionBindings(p){
+    if(!p?.ammunition)return'legacy';
+    if(p.ammunition.enabled!==true)throw Error('탄약 운용 활성 상태 오류: '+p.id);
+    for(const ammoId of p.ammunition.supported||[]){
+      if(!ammunitionRegistry.has(ammoId))throw Error('탄약 운용 레지스트리 연결 오류: '+p.id+'.'+ammoId);
+      if(p.hitReactions?.enabled===true){const policyId=ammunitionRegistry.get(ammoId).hitReactionPolicyId,policy=p.hitReactions.policies?.[policyId];if(policy?.ammoId!==ammoId)throw Error('탄약 효과 정책 연결 오류: '+p.id+'.'+ammoId);}
+    }
+    if(!p.ammunition.supported.includes(p.ammunition.initial?.loaded))throw Error('초기 장전탄 연결 오류: '+p.id);
+    return'active';
   }
   function finitePositive(v,label){if(!Number.isFinite(v)||v<=0)throw Error(label+' 값 오류');return v;}
   function validateProfile(p){
@@ -1925,7 +1876,8 @@ const TacticalCombatState=(()=>{
     if(!p.weapons?.mainGun?.ammunitionId)throw Error('주포 탄약 ID 누락');
     ammunitionRegistry.get(p.weapons.mainGun.ammunitionId);
     validateHitReactionBindings(p);
-    for(const zone of ZONES){const a=p.combat.armor?.[zone];if(!a||!Number.isFinite(a.ke)||a.ke<0)throw Error('장갑 값 오류: '+zone);}
+    validateAmmunitionBindings(p);
+    for(const zone of ZONES){const a=p.combat.armor?.[zone];if(!a||!['ke','ce'].every(kind=>Number.isFinite(a[kind])&&a[kind]>=0))throw Error('장갑 값 오류: '+zone);}
     return p;
   }
   function initUnit(u,p){
@@ -2016,8 +1968,8 @@ const TacticalCombatState=(()=>{
     for(let i=1;i<points.length;i++)if(residualRatio<=points[i][0]){const[a,x]=points[i-1],[b,y]=points[i];return x+(y-x)*(residualRatio-a)/(b-a);}
     return points.at(-1)[1];
   }
-  function nearDamageAt(profile,deficit){
-    const rule=profile.fireControl.readiness.nearNonPenetration,points=rule.damagePoints;
+  function nearDamageAt(profileOrRule,deficit){
+    const rule=profileOrRule?.damagePoints?profileOrRule:profileOrRule.fireControl.readiness.nearNonPenetration,points=rule.damagePoints;
     if(!(deficit>0&&deficit<rule.maxDeficit))return 0;
     for(let i=1;i<points.length;i++)if(deficit<=points[i][0]){const[a,x]=points[i-1],[b,y]=points[i];return x+(y-x)*(deficit-a)/(b-a);}
     return 0;
@@ -2041,12 +1993,12 @@ const TacticalCombatState=(()=>{
     validateProfile(profile);
     if(!ZONES.includes(zone))throw Error('지원하지 않는 피격 구역: '+zone);
     if(!Number.isFinite(ricochetRoll)||ricochetRoll<0||ricochetRoll>=1)throw Error('도탄 난수 값 오류');
-    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone].ke;
+    const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),protection=profile.combat.armor[zone][ammo.kind.toLowerCase()];
     if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,protectionDeficit:Math.max(0,protection-pen.value),nearNonPenetration:false,nearDamageChance:0,nearDamageRoll:null,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
-    const penetrated=pen.value>0&&pen.value>=protection,protectionDeficit=Math.max(0,protection-pen.value),nearRule=profile.fireControl.readiness.nearNonPenetration,nearNonPenetration=!penetrated&&pen.value>0&&protectionDeficit>0&&protectionDeficit<nearRule.maxDeficit;
+    const penetrated=pen.value>0&&pen.value>=protection,protectionDeficit=Math.max(0,protection-pen.value),nearRule=ammo.nearNonPenetration===false?null:ammo.nearNonPenetration||profile.fireControl.readiness.nearNonPenetration,nearNonPenetration=!!nearRule&&!penetrated&&pen.value>0&&protectionDeficit>0&&protectionDeficit<nearRule.maxDeficit;
     if(nearNonPenetration&&(!Number.isFinite(nearDamageRoll)||nearDamageRoll<0||nearDamageRoll>=1))throw Error('근접 비관통 난수 값 오류');
     const residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0;
-    const damage=penetrated?ammo.baseDamage*multiplier:nearNonPenetration&&nearDamageRoll<nearRule.chance?nearDamageAt(profile,protectionDeficit):0;
+    const damage=penetrated?ammo.baseDamage*multiplier:nearNonPenetration&&nearDamageRoll<nearRule.chance?nearDamageAt(nearRule,protectionDeficit):0;
     if(!Number.isFinite(damage)||damage<0)throw Error('피해 계산 오류');
     return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,protection,protectionDeficit,nearNonPenetration,nearDamageChance:nearNonPenetration?nearRule.chance:0,nearDamageRoll:nearNonPenetration?nearDamageRoll:null,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
   }
@@ -2092,7 +2044,7 @@ const TacticalCombatState=(()=>{
   const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,protectionDeficit:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
   const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:typeof require==='function'?require('./vehicle-profiles.js'):null;
   if(loadedProfiles?.registry)validateProfileRegistry(loadedProfiles.registry);
-  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES,ALLOWED_CREW_ROLES});
+  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES,ALLOWED_CREW_ROLES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;
 
@@ -2104,6 +2056,7 @@ if(typeof module!=='undefined')module.exports=TacticalCombatState;
  * a claim about measured real weapon performance. */
 const TacticalFireControl=(()=>{
   const G=typeof TacticalVehicleGeometry!=='undefined'?TacticalVehicleGeometry:require('./vehicle-geometry.js');
+  const Combat=typeof TacticalCombatState!=='undefined'?TacticalCombatState:require('./combat-state.js');
   const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
   const turretZones=new Set(['turretFront','turretSide','turretRear']),faultKinds=['fireControl','commander','gunner'];
   const GRAVITY=9.81,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
@@ -2111,12 +2064,26 @@ const TacticalFireControl=(()=>{
   const visualSeed=(shot,phase,seed)=>Math.floor(random(shot.id+':visual:'+phase,seed^0x6d2b79f5)*4294967296)>>>0;
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
+  const managed=p=>p.ammunition?.enabled===true;
+  const cloneCounts=value=>Object.fromEntries(Object.entries(value).map(([id,count])=>[id,count]));
+  function initAmmunition(s,p){
+    if(!managed(p))return null;
+    if(!s.ammunition){const a=p.ammunition;s.ammunition={preference:a.initial.preference,loadedAmmoId:a.initial.loaded,sections:Object.fromEntries(Object.entries(a.initial.sections).map(([section,counts])=>[section,cloneCounts(counts)])),task:null,lastShotAt:-Infinity,lastHitAt:-Infinity};}
+    return s.ammunition;
+  }
+  function taskRound(task){return task&&task.reserved?1:0;}
+  function ammunitionTotal(s,ammoId=null){const a=s.ammunition;if(!a)return s.ammo;let total=ammoId?(a.loadedAmmoId===ammoId?1:0):(a.loadedAmmoId?1:0);for(const counts of Object.values(a.sections))for(const[id,count]of Object.entries(counts))if(!ammoId||id===ammoId)total+=count;if(a.task&&(!ammoId||a.task.ammoId===ammoId))total+=taskRound(a.task);return total;}
+  function sectionTotal(a,section){return Object.values(a.sections[section]).reduce((sum,count)=>sum+count,0);}
+  function loadChoice(p,s){const a=s.ammunition,ids=a.preference==='auto'?p.ammunition.autoPriority:[a.preference];for(const ammoId of ids)for(const source of p.ammunition.sourcePriority)if(a.sections[source][ammoId]>0)return{ammoId,source};return null;}
+  function validLoadTask(p,s){const task=s.ammunition?.task;return!!task&&task.purpose==='load'&&task.reserved===true&&p.ammunition.supported.includes(task.ammoId)&&p.ammunition.sourcePriority.includes(task.source)&&['prepare','reload'].includes(task.stage);}
+  function engageableAmmo(p,s){return managed(p)?!!s.ammunition.loadedAmmoId||validLoadTask(p,s)||!!loadChoice(p,s):s.ammo>0;}
+  function syncAmmo(p,s){if(!managed(p))return s.ammo;s.loaded=!!s.ammunition.loadedAmmoId;s.loadedAmmoId=s.ammunition.loadedAmmoId;s.ammo=ammunitionTotal(s);s.engageableAmmo=engageableAmmo(p,s);return s.ammo;}
   function init(u,p,mode='auto'){
     if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
       shotCount:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeResult:null,lineProbeRequest:null,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null,
       loaded:true,reloadProgress:1,reloadStartedAt:null,reloadCompletedAt:0,readyIdleSeconds:0,burstShots:0,fatigueSeconds:0,shockSeconds:0,faultUntil:{fireControl:0,commander:0,gunner:0},lastReaction:null};
     const s=u.fireControl;s.fireMode??=mode;s.lineProbeTarget??=null;s.lineProbePose??=null;s.lineProbeBlocked??=false;s.lineProbeResult??=null;s.lineProbeRequest??=null;s.lineProbeCandidateRevision??=null;s.lineProbeQueries??=0;s.stationaryElapsed??=0;s.autoSuppressed??=false;s.lastRejection??=null;
-    s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;return s;
+    s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;initAmmunition(s,p);syncAmmo(p,s);return s;
   }
   const readiness=p=>p.fireControl.readiness;
   function reloadSeconds(p,s,u=null){const r=readiness(p),efficiency=u?.hitReactionModifiers?.loaderEfficiency??1;return Math.min(r.reloadMaxSeconds,clamp(r.reloadSeconds+s.fatigueSeconds+s.shockSeconds,r.reloadSeconds,r.reloadMaxSeconds)/Math.max(Number.MIN_VALUE,efficiency));}
@@ -2129,17 +2096,56 @@ const TacticalFireControl=(()=>{
   function faultChance(p,damage){const f=readiness(p).temporaryFault;return clamp(f.baseChance+f.damageScaleChance*clamp((Number(damage)||0)/f.damageReference,0,1),f.baseChance,f.baseChance+f.damageScaleChance);}
   function faultDuration(p,roll){const [lo,hi]=readiness(p).temporaryFault.durationSeconds;return lo+(hi-lo)*clamp(roll,0,1);}
   function faultKind(p,roll){let cumulative=0;for(const kind of faultKinds){cumulative+=readiness(p).temporaryFault.kinds[kind];if(roll<cumulative)return kind;}return faultKinds.at(-1);}
+  function cancelAmmoTask(p,s,purpose=null){const a=s.ammunition,task=a?.task;if(!task||purpose&&task.purpose!==purpose)return false;if(task.reserved)a.sections[task.source][task.ammoId]++;a.task=null;s.reloadProgress=a.loadedAmmoId?1:0;s.reloadStartedAt=null;syncAmmo(p,s);return true;}
+  function beginLoad(p,s,now){const a=s.ammunition,choice=loadChoice(p,s);if(!choice)return null;a.sections[choice.source][choice.ammoId]--;const prep=p.ammunition.sections[choice.source].prepareSeconds;a.task={purpose:'load',ammoId:choice.ammoId,source:choice.source,reserved:true,stage:prep>0?'prepare':'reload',progress:0,startedAt:now,paused:false};s.reloadStartedAt=now;s.reloadProgress=0;syncAmmo(p,s);return a.task;}
+  function currentThreat(u){return Object.values(u.observation?.contacts||{}).some(c=>c?.enemyConfirmed&&!c.wreckConfirmed&&Object.values(c.sources||{}).some(source=>source?.current));}
+  function replenishChoice(p,s){
+    const a=s.ammunition,rule=p.ammunition.replenish;if(sectionTotal(a,'ready')>=p.ammunition.sections.ready.capacity)return null;
+    const ids=a.preference==='auto'?p.ammunition.autoPriority:[a.preference,...p.ammunition.autoPriority.filter(id=>id!==a.preference)];
+    for(const ammoId of ids){if(a.sections.ready[ammoId]>=rule.targets[ammoId])continue;for(const source of rule.sourcePriority)if(a.sections[source][ammoId]>0)return{ammoId,source};}return null;
+  }
+  function canReplenish(u,p,s,now){const a=s.ammunition,rule=p.ammunition.replenish;return!!a.loadedAmmoId&&Math.abs(u.drive?.velocity??u.speed??0)<=rule.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=rule.idleSeconds-1e-9&&!currentThreat(u)&&!!replenishChoice(p,s);}
+  function beginReplenish(p,s,now){const a=s.ammunition,choice=replenishChoice(p,s);if(!choice)return null;a.sections[choice.source][choice.ammoId]--;a.task={purpose:'replenish',ammoId:choice.ammoId,source:choice.source,reserved:true,stage:'replenish',progress:0,startedAt:now,paused:false};syncAmmo(p,s);return a.task;}
+  function advanceManagedReadiness(u,p,s,dt,now){
+    const a=s.ammunition,r=readiness(p),efficiency=Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1);
+    s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
+    if(u.combat?.status==='destroyed'){cancelAmmoTask(p,s);syncAmmo(p,s);return;}
+    if(!a.loadedAmmoId){
+      if(a.task?.purpose==='replenish')cancelAmmoTask(p,s,'replenish');
+      const task=a.task||beginLoad(p,s,now);s.readyIdleSeconds=0;
+      if(!task){s.reloadProgress=0;s.reloadStartedAt=null;syncAmmo(p,s);return;}
+      if(task.stage==='prepare'){
+        const duration=p.ammunition.sections[task.source].prepareSeconds/efficiency;task.progress=clamp(task.progress+dt/Math.max(Number.MIN_VALUE,duration),0,1);
+        if(task.progress>=1-1e-12){task.stage='reload';task.progress=0;}
+      }
+      if(task.stage==='reload'){
+        task.progress=clamp(task.progress+dt/reloadSeconds(p,s,u),0,1);s.reloadProgress=task.progress;
+        if(task.progress>=1-1e-12){a.loadedAmmoId=task.ammoId;task.reserved=false;a.task=null;s.loaded=true;s.reloadProgress=1;s.reloadCompletedAt=now;s.reloadStartedAt=null;}
+      }
+      syncAmmo(p,s);return;
+    }
+    s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;
+    if(a.task?.purpose==='replenish'){
+      const allowed=Math.abs(u.drive?.velocity??u.speed??0)<=p.ammunition.replenish.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=p.ammunition.replenish.idleSeconds-1e-9&&!currentThreat(u);
+      a.task.paused=!allowed;
+      if(allowed){const duration=p.ammunition.replenish.seconds[a.task.source]/efficiency;a.task.progress=clamp(a.task.progress+dt/duration,0,1);if(a.task.progress>=1-1e-12){a.sections.ready[a.task.ammoId]++;a.task.reserved=false;a.task=null;}}
+    }else if(!a.task&&canReplenish(u,p,s,now))beginReplenish(p,s,now);
+    syncAmmo(p,s);
+  }
   function advanceReadiness(u,p,s,dt,now){
+    if(managed(p))return advanceManagedReadiness(u,p,s,dt,now);
     const r=readiness(p);s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
     if(!s.loaded&&s.ammo>0){s.readyIdleSeconds=0;s.reloadStartedAt??=now-dt;s.reloadProgress=clamp(s.reloadProgress+dt/reloadSeconds(p,s,u),0,1);if(s.reloadProgress>=1-1e-12){s.loaded=true;s.reloadProgress=1;s.reloadCompletedAt=now;s.reloadStartedAt=null;}}
     else if(s.loaded){s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}
     else{s.reloadProgress=0;s.reloadStartedAt=null;s.readyIdleSeconds=0;}
   }
-  function consumeLoaded(p,s,now){
-    if(!s.loaded||s.ammo<=0)return false;const r=readiness(p);s.loaded=false;s.reloadProgress=0;s.reloadStartedAt=s.ammo>1?now:null;s.reloadCompletedAt=null;s.readyIdleSeconds=0;s.burstShots++;
+  function consumeLoaded(u,p,s,now){
+    if(!s.loaded||s.ammo<=0)return false;const r=readiness(p);if(managed(p)){const a=s.ammunition;if(!a.loadedAmmoId)return false;a.loadedAmmoId=null;a.lastShotAt=now;}s.loaded=false;s.reloadProgress=0;s.reloadStartedAt=s.ammo>1?now:null;s.reloadCompletedAt=null;s.readyIdleSeconds=0;s.burstShots++;
     if(s.burstShots>=r.fatigue.startsAtShot)s.fatigueSeconds=Math.min(r.fatigue.maxSeconds,s.fatigueSeconds+r.fatigue.perShotSeconds);return true;
   }
   function motionReady(u,p,s=init(u,p)){const m=p.fireControl.movement;return m.fireOnMove||Math.abs(u.drive?.velocity??u.speed??0)<=m.stationarySpeedMps+1e-9&&s.stationaryElapsed+1e-9>=m.stationaryHoldSeconds;}
+  function currentAmmoId(p,s){return managed(p)?s.ammunition.loadedAmmoId||s.ammunition.task?.ammoId||null:p.weapons.mainGun.ammunitionId??null;}
+  function fireSettings(p,s,ammoId=currentAmmoId(p,s)){const ammo=ammoId&&Combat.ammunitionRegistry.has(ammoId)?Combat.ammunitionRegistry.get(ammoId):null;return ammo?{...p.fireControl,muzzleVelocity:ammo.muzzleVelocity}:p.fireControl;}
   // Fictional RTS error budget. Target manoeuvre is represented only by the
   // difference between predicted and actual pose at impact, never twice here.
   function normalCdf(x){
@@ -2277,6 +2283,7 @@ const TacticalFireControl=(()=>{
     const reactionRoll=(shot,kind)=>random(shot.shooterId+':'+shot.number+':reaction:'+kind,seed^0x243f6a88);
     function react(target,record,now,forced=null){
       if(!target||!record?.applied||!record.hit)return null;const p=profileOf(target),s=init(target,p),r=readiness(p),classification=record.penetrated?'penetration':record.nearNonPenetration?'near':'normal';
+      if(managed(p))s.ammunition.lastHitAt=now;
       s.shockSeconds=Math.min(r.shock.maxSeconds,s.shockSeconds+r.shock[classification+'Seconds']);
       let fault=null;
       if(!record.destroyed&&target.combat?.status!=='destroyed'&&turretZones.has(record.zone)){
@@ -2300,9 +2307,9 @@ const TacticalFireControl=(()=>{
         const publicResult={type:'impact',id:shot.id,time:now,impactAt:shot.impactAt,team:shot.team,shooterId:shot.shooterId,targetKey:shot.targetKey,
           result:observed?(result.hit?'hit':'miss'):'unobserved',zone:observed?result.zone:null,side:observed?side:null,
           finalHitChance:observed?evaluation.finalHitChance:null,hitChanceAtFire:shot.hitChanceAtFire,bias:observed?clone(evaluation.bias):null,
-          impact:publicImpact,ammoRemaining:shot.ammoRemaining,combat:observed&&combat?clone(combat):null};
+          impact:publicImpact,ammoId:shot.ammoId,ammoRemaining:shot.ammoRemaining,combat:observed&&combat?clone(combat):null};
         emit(publicResult);shot.shooter.fireControl.lastShot=clone(publicResult);
-        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,hitChanceAtFire:shot.hitChanceAtFire,aimPenaltyAtFire:clone(shot.aimPenaltyAtFire),sigmaAtFire:clone(shot.sigma),bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),combat:combat?clone(combat):null,reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
+        if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,ammoId:shot.ammoId,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,hitChanceAtFire:shot.hitChanceAtFire,aimPenaltyAtFire:clone(shot.aimPenaltyAtFire),sigmaAtFire:clone(shot.sigma),bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),combat:combat?clone(combat):null,reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
       }
     }
     function inspect(u,now){
@@ -2319,7 +2326,7 @@ const TacticalFireControl=(()=>{
       if(error>f.alignmentTolerance)return{reason:'aligning',d,c};
       if(faultActive(s,'fireControl',now))return{reason:'fcs-fault',d,c};
       if(s.ammo<=0)return{reason:'out-of-ammo',d,c};
-      if(!s.loaded)return{reason:'reloading',d,c};
+      if(!s.loaded)return{reason:managed(p)&&!validLoadTask(p,s)&&s.ammunition.preference!=='auto'&&!loadChoice(p,s)?'selected-ammo-unavailable':'reloading',d,c};
       return{reason:null,d,c};
     }
     function step(units,dt,now){
@@ -2345,7 +2352,7 @@ const TacticalFireControl=(()=>{
         if(!check.reason||check.reason==='reloading'){
           s.layTime+=dt*aimPenalty.aimRateMultiplier;s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt*aimPenalty.aimRateMultiplier);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
           s.status=check.reason==='reloading'?'reloading':s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=check.reason;
-          const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,f,s.targetVelocity,s.layTime,aimPenalty.errorSigmaMultiplier));
+          const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,fireSettings(p,s),s.targetVelocity,s.layTime,aimPenalty.errorSigmaMultiplier));
         }
         else if(check.reason==='fcs-fault'){s.status='blocked';s.reason=check.reason;clearPreview(s);}
         else{s.status=check.reason==='aligning'?'aligning':'blocked';if(check.reason==='no-target')s.status='no-target';s.reason=check.reason;resetAim(s);clearPreview(s);}
@@ -2401,22 +2408,22 @@ const TacticalFireControl=(()=>{
         s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=false;s.lineProbeResult='clear';s.lineProbeCandidateRevision=candidateRevision;
         const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
         if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
-        const firePenalty=observationPenalty(p,s,now,u),chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime,firePenalty.errorSigmaMultiplier),number=s.shotCount+1;
+        const ammoId=currentAmmoId(p,s),shotSettings=fireSettings(p,s,ammoId),firePenalty=observationPenalty(p,s,now,u),chance=estimate(u,pose,sight,shotSettings,s.targetVelocity,s.layTime,firePenalty.errorSigmaMultiplier),number=s.shotCount+1;
         if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
         // The last mutable readiness check must succeed before creating a
         // flight, effect or public event. Rejected fire never spends a round
         // and cannot leave a display-only shot behind.
-        if(!consumeLoaded(p,s,now)){s.lastRejection='reloading';continue;}
+        if(managed(p)&&!ammoId||!consumeLoaded(u,p,s,now)){s.lastRejection='reloading';continue;}if(managed(p))syncAmmo(p,s);else s.ammo--;
         const origin=G.muzzleWorld(u,p.model),tof=chance.breakdown.tof,predicted={x:pose.x+s.targetVelocity.x*tof,y:pose.y+s.targetVelocity.y*tof},beta=Math.atan2(predicted.y-origin.y,predicted.x-origin.x),id=u.id+'-shot-'+number,impactAt=now+tof;
-        const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,ammoId:p.weapons.mainGun.ammunitionId??null,shooter:u,
-          origin,fireEye:sight.fireEye,profileAtFire:clone(p),fireControl:clone(f),pose:clone(pose),fireExposure:clone(sight),
-          beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),aimPenaltyAtFire:clone(firePenalty),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1};
+        const shot={id,number,time:now,impactAt,team:u.team,shooterId:u.id,targetKey:s.targetKey,targetId:d.target,ammoId,shooter:u,
+          origin,fireEye:sight.fireEye,profileAtFire:clone(p),fireControl:clone(shotSettings),ammunitionAtFire:ammoId&&Combat.ammunitionRegistry.has(ammoId)?clone(Combat.ammunitionRegistry.get(ammoId)):null,pose:clone(pose),fireExposure:clone(sight),
+          beta,rangeAtFire:chance.breakdown.range,predicted,aim:clone(chance.breakdown.aim),sigma:clone(chance.breakdown.sigma),aimPenaltyAtFire:clone(firePenalty),hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo};
         flights.push(shot);
         const flightEffect=emitEffect({kind:'fire',time:now,expiresAt:impactAt+.35,origin:{x:origin.x,y:origin.y},heading:beta,distanceM:chance.breakdown.range,duration:tof,visualSeed:visualSeed(shot,'fire',seed)});
         shot.flightEffectId=flightEffect.id;
         emit({type:'fired',id,time:now,team:u.team,shooterId:u.id,targetKey:s.targetKey,source:request.source,origin:{...origin},muzzleHeading:beta,
-          tof,impactAt,hitChanceAtFire:chance.hitChance,ammoRemaining:s.ammo-1});
-        s.shotCount=number;s.ammo--;resetAim(s);clearPreview(s);s.status=s.ammo>0?'reloading':'blocked';s.reason=s.ammo>0?'reloading':'out-of-ammo';
+          tof,impactAt,hitChanceAtFire:chance.hitChance,ammoId,ammoRemaining:s.ammo});
+        s.shotCount=number;if(managed(p))syncAmmo(p,s);resetAim(s);clearPreview(s);s.status=(s.engageableAmmo??s.ammo>0)?'reloading':'blocked';s.reason=(s.engageableAmmo??s.ammo>0)?'reloading':s.ammo>0?'selected-ammo-unavailable':'out-of-ammo';
       }
     }
     function request(u,key,now){
@@ -2433,13 +2440,17 @@ const TacticalFireControl=(()=>{
       if(mode==='hold'&&s.pending?.source==='auto')s.pending=null;
       return true;
     }
+    function setAmmoPreference(u,preference){const p=profileOf(u),s=init(u,p);if(!managed(p)||!['auto',...p.ammunition.supported].includes(preference))return false;s.ammunition.preference=preference;syncAmmo(p,s);return true;}
     function probe(u,key){const s=init(u,profileOf(u));if(!key)return false;s.lineProbeRequest=key;return true;}
     function view(u,key=null){
       const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
+      const inspection=inspect(u,currentTime);
       const aimPenalty=observationPenalty(p,s,currentTime,u);
-      return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
-        canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
-        loading:{loaded:s.loaded,progress:s.reloadProgress,estimatedSeconds:s.loaded?0:s.ammo>0?(1-s.reloadProgress)*reloadSeconds(p,s,u):null,currentWorkSeconds:reloadSeconds(p,s,u),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots,fatigueSeconds:s.fatigueSeconds,shockSeconds:s.shockSeconds},
+      const ammoState=managed(p)?s.ammunition:null,task=ammoState?.task,taskDuration=task?(task.stage==='prepare'?p.ammunition.sections[task.source].prepareSeconds/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):task.stage==='replenish'?p.ammunition.replenish.seconds[task.source]/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):reloadSeconds(p,s,u)):null;
+      const ammunition=ammoState?{managed:true,loadedAmmoId:ammoState.loadedAmmoId,preference:ammoState.preference,supported:[...p.ammunition.supported],total:ammunitionTotal(s),totals:Object.fromEntries(p.ammunition.supported.map(id=>[id,ammunitionTotal(s,id)])),sections:Object.fromEntries(Object.entries(ammoState.sections).map(([section,counts])=>[section,{capacity:p.ammunition.sections[section].capacity,total:sectionTotal(ammoState,section),counts:{...counts}}])),task:task?{purpose:task.purpose,ammoId:task.ammoId,source:task.source,stage:task.stage,progress:task.progress,paused:!!task.paused,remaining:task.paused?null:Math.max(0,(1-task.progress)*(taskDuration||0))}:null,engageable:engageableAmmo(p,s)}:null;
+      return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':inspection.reason||s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
+        canFire:same&&!inspection.reason&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
+        loading:{loaded:s.loaded,ammoId:currentAmmoId(p,s),progress:task?.purpose==='load'?task.progress:s.reloadProgress,stage:task?.purpose==='load'?task.stage:s.loaded?'loaded':'idle',estimatedSeconds:s.loaded?0:task?.purpose==='load'&&!task.paused?Math.max(0,(1-task.progress)*(taskDuration||0)):s.ammo>0&&!managed(p)?(1-s.reloadProgress)*reloadSeconds(p,s,u):null,currentWorkSeconds:reloadSeconds(p,s,u),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots,fatigueSeconds:s.fatigueSeconds,shockSeconds:s.shockSeconds},ammunition,
         aimPenalty,
         faults:Object.fromEntries(faultKinds.map(kind=>[kind,{active:faultActive(s,kind,currentTime),remaining:Math.max(0,s.faultUntil[kind]-currentTime)}])),
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
@@ -2448,7 +2459,7 @@ const TacticalFireControl=(()=>{
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;s.lineProbeRequest=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
-    return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,probe,setMode,view,cancel,suppressAuto,react,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
+    return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,probe,setMode,setAmmoPreference,view,cancel,suppressAuto,react,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
   return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
 })();
@@ -2902,6 +2913,7 @@ const TacticalCore = (() => {
   }
   const fireStatus=(s,u,key=null)=>fireFor(s).view(u,key);
   const fireMode=(s,u,mode)=>aliveCommand(u)&&fireFor(s).setMode(u,mode);
+  const ammoPreference=(s,u,preference)=>aliveCommand(u)&&fireFor(s).setAmmoPreference(u,preference);
   const requestFire=(s,u,key)=>{
     if(!aliveCommand(u))return{ok:false,reason:'destroyed'};
     return fireFor(s).request(u,key,s.time);
@@ -3077,7 +3089,7 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,ammoPreference,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -3915,14 +3927,14 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   const selectedUnit=()=>sim.units.find(u=>u.id===selected&&u.team==='blue'&&alive(u));
   const crewNames={driver:'운전수',commander:'전차장',gunner:'포수',loader:'장전수'},severityNames={normal:'정상',light:'경상',serious:'중상'};
   const reactionText=(v,compact=false)=>{const r=C.combatView(v)?.reactions;if(!r)return'';const faults=[r.faults.mobility.active?'기동 '+r.faults.mobility.remaining.toFixed(1)+'초':'',r.faults.turretDrive.active?'포탑 '+r.faults.turretDrive.remaining.toFixed(1)+'초':''].filter(Boolean),crew=Object.entries(r.crew).map(([role,status])=>(compact?crewNames[role][0]:crewNames[role])+' '+severityNames[status]);return(faults.length?'일시 이상 '+faults.join('/')+' · ':'')+'승무원 '+crew.join(' / ');};
-  const ui=TacticalUICache,updateRoster=ui.createListUpdater(v=>v.state+' · '+Math.round(v.speed*3.6)+' km/h · '+reactionText(v,true),'.unit-sub');
+  const ui=TacticalUICache;
   const lookView=channel=>{const u=selectedUnit();return u?C.observationView(sim,u,channel||$('lookChannel').value||'commander'):{mode:'idle',turret:0,gaze:0,direction:null,remaining:null,point:null};};
   let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA,TERRAIN_DATA);
   const effectRenderer=TacticalEffects.create(),reducedMotionMedia=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
   let effectsEnabled=true,effectQuality=1,reducedMotionOverride=null;
   let visibility=null,visibilityPath=null;
-  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','map-spec','vehicle-profiles','mobility','tactical-ai','vehicle-geometry','observation','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
+  const visibilityClient=new TacticalVisibilityClient(C,TacticalVisibility,()=>['battlefield-data','map-spec','vehicle-profiles','mobility','tactical-ai','vehicle-geometry','observation','combat-state','fire-control','sim-core','visibility-code'].map(id=>$(id).textContent).join('\n'));
   const sightDescription='지형 가능 영역(1.5m 표적) · 실제 탐지와 다름 · 주변 200m / 전차장 2500m / 포수 2000m';
   let sightRevision=0;
   function fitCamera(){
@@ -4007,7 +4019,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{const u=selectedUnit();if(u&&targetId&&C.designate(sim,u,targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
-  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',reloading:'장전 중','fcs-fault':'사통 대응 중','gunner-fault':'포수 관측 대응 중','out-of-ammo':'시험탄 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실','must-stop':'정차·안정화 대기','movement-policy':'교전 정차 대기'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',reloading:'장전 중','selected-ammo-unavailable':'선택 탄종 없음','fcs-fault':'사통 대응 중','gunner-fault':'포수 관측 대응 중','out-of-ammo':'탄약 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실','must-stop':'정차·안정화 대기','movement-policy':'교전 정차 대기'};
   function fireSelected(){
     if(portraitBlocked)return;
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
@@ -4018,6 +4030,8 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   $('fire').onclick=fireSelected;
   $('cancelDesignation').onclick=()=>{const u=selectedUnit();if(u)C.cancelDesignation(sim,u);updateUI();};
   $('fireMode').onclick=()=>{const u=selectedUnit();if(!u)return;const next=C.fireStatus(sim,u).mode==='auto'?'hold':'auto';C.fireMode(sim,u,next);toast(next==='auto'?'자동 사격 허용':'자동 사격 보류 · 수동 단발 가능');updateUI();};
+  $('ammoSelect').onchange=()=>{const u=selectedUnit();if(u&&C.ammoPreference(sim,u,$('ammoSelect').value))toast($('ammoSelect').value==='auto'?'다음 탄종 자동 선택':'다음 탄종 '+$('ammoSelect').value);updateUI();};
+  for(const type of ['pointerdown','click'])document.querySelector('.sidebar').addEventListener(type,e=>e.stopPropagation());
   function select(id){
     if(portraitBlocked)return false;
     const candidate=sim.units.find(u=>u.id===id&&u.team==='blue'&&alive(u));if(!candidate)return false;
@@ -4025,6 +4039,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     setGuardPopup(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     selected=id;
+    $('unitSelect').value=id;
     targetId=null;
     visibilityDirty=true;
     updateUI();
@@ -4422,39 +4437,48 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   function updateUI(){
     let u=selectedUnit();
-    if(!u){
-      const next=sim.units.find(v=>v.team==='blue'&&alive(v));selected=next?.id??null;targetId=null;u=next||null;
+    if(!u&&selected){
+      selected=null;targetId=null;
       visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;releaseSight();
     }
     const friendlies=sim.units.filter(v=>v.team==='blue'),living=friendlies.filter(alive);
-    updateRoster($('roster').children,friendlies,selected);ui.setText($('rosterCount'),String(living.length).padStart(2,'0'));
-    for(const row of $('roster').children){const unit=friendlies.find(v=>v.id===row.dataset.id),gone=!alive(unit);row.hidden=gone;row.disabled=gone;}
+    for(const option of $('unitSelect').children){const unit=friendlies.find(v=>v.id===option.value);option.disabled=!alive(unit);option.textContent=unit?unit.name+' · '+unit.state+' · '+Math.round(unit.speed*3.6)+' km/h':option.textContent;}
+    $('unitSelect').value=u?.id??'';
     if(!u){
-      for(const id of ['move','reverse','stop','sight','fire','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode'])$(id).disabled=true;
-      ui.setText($('unitName'),'선택 가능한 차량 없음');ui.setText($('unitType'),'아군 차량 전멸');ui.setText($('velocity'),'0');ui.setText($('motionState'),'격파');
-      ui.setText($('combatSummary'),'생존 아군 없음');ui.setText($('fireState'),'자동 사격 중지');ui.setText($('readinessState'),'');ui.setText($('flightState'),'');ui.setText($('lookStatus'),'관측 불가');ui.setText($('designationStatus'),'없음');
+      for(const id of ['move','reverse','stop','sight','fire','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode','ammoSelect'])$(id).disabled=true;
+      ui.setText($('unitName'),'선택 차량 없음');ui.setText($('unitType'),living.length?'위 선택 메뉴에서 아군을 선택':'아군 차량 전멸');ui.setText($('velocity'),'0');ui.setText($('motionState'),'—');
+      ui.setText($('combatSummary'),living.length?'명령 대기':'생존 아군 없음');ui.setText($('fireState'),'');ui.setText($('readinessState'),'');ui.setText($('flightState'),'');ui.setText($('lookStatus'),'');ui.setText($('designationStatus'),'');ui.setText($('ammoTotal'),'—');ui.setText($('ammoLoaded'),'');ui.setText($('ammoTask'),'');ui.setHTML($('ammoInventory'),'');ui.setText($('faultStatus'),'');ui.setText($('crewStatus'),'');
       ui.setText($('elevation'),'—');ui.setText($('slope'),'—');ui.setText($('heading'),'—');ui.setText($('surface'),'—');ui.setHTML($('routeInfo'),'<strong>아군 전멸</strong> · 지도 이동·확대·초기화는 계속 사용할 수 있음');
       $('targetPanel').classList.toggle('visible',false);return;
     }
     const combat=C.combatView(u),destroyed=combat?.status==='destroyed';
     const firing=C.fireStatus(sim,u,targetId),fireText=firing.status==='ready'?'조준 완료':firing.status==='aiming'?'조준 '+Math.round(firing.aimProgress*100)+'%':fireReasons[firing.reason]||'표적 미확보';
-    ui.setText($('fireState'),(firing.mode==='auto'?'자동':'보류')+' · '+fireText+' · 시험탄 '+firing.ammo);
+    ui.setText($('fireState'),(firing.mode==='auto'?'자동':'보류')+' · '+fireText+' · 총 '+firing.ammo+'발');
     const load=firing.loading,fcsFault=firing.faults.fireControl,observationFaults=[firing.faults.commander,firing.faults.gunner].filter(v=>v.active),observationRemaining=observationFaults.length?Math.max(...observationFaults.map(v=>v.remaining)):0;
     const faultText=[fcsFault.active?'사통 이상 '+fcsFault.remaining.toFixed(1)+'초':'',observationFaults.length?'관측장비 불안정 · 조준 저하 '+observationRemaining.toFixed(1)+'초':''].filter(Boolean).join(' / ');
-    const loadText=load.loaded?'장전탄 '+load.chamber+' · 저장 '+load.stored:load.estimatedSeconds===null?'장전할 탄 없음':'장전 '+Math.round(load.progress*100)+'% · 예상 '+load.estimatedSeconds.toFixed(1)+'초';
+    const loadText=load.loaded?'장전 '+(load.ammoId||'1발'):firing.reason==='selected-ammo-unavailable'?'선택 탄종 없음':load.estimatedSeconds===null?'장전할 탄 없음':(load.stage==='prepare'?'탄 준비 ':'장전 ')+Math.round(load.progress*100)+'% · 예상 '+Math.max(.1,load.estimatedSeconds).toFixed(1)+'초';
     const reactions=combat?.reactions,reactionStatus=reactions?reactionText(u):'';
-    ui.setText($('readinessState'),loadText+(load.fatigueSeconds>.005?' · 피로 +'+load.fatigueSeconds.toFixed(2)+'초':'')+(load.shockSeconds>.005?' · 동요 +'+load.shockSeconds.toFixed(2)+'초':'')+(faultText?' · WIP15 대응 '+faultText:'')+(reactionStatus?' · WIP18 '+reactionStatus:''));
+    ui.setText($('readinessState'),loadText+(load.fatigueSeconds>.005?' · 피로 +'+load.fatigueSeconds.toFixed(2)+'초':'')+(load.shockSeconds>.005?' · 동요 +'+load.shockSeconds.toFixed(2)+'초':'')+(faultText?' · '+faultText:'')+(reactionStatus?' · '+reactionStatus:''));
     ui.setText($('fireMode'),firing.mode==='auto'?'자동':'보류');$('fireMode').setAttribute('aria-pressed',String(firing.mode==='auto'));$('fireMode').classList.toggle('active',firing.mode==='auto');
     const activeFlight=firing.inFlight[0];ui.setText($('flightState'),activeFlight?'비행 중'+(firing.inFlight.length>1?' '+firing.inFlight.length+'발':'')+' · 착탄까지 '+activeFlight.remaining.toFixed(1)+'초':firing.lastShot?.result==='unobserved'?'최근 단발: 결과 미확인':'');
     $('fire').disabled=paused||destroyed||!targetId||!firing.canFire;
     $('fire').setAttribute('aria-disabled',String($('fire').disabled));
     const guardLabel=channel=>{const view=lookView(channel),bearing=view.direction===null?null:((Math.round(view.direction*180/Math.PI)+90)%360+360)%360;return view.mode==='fixed'?bearing+'° '+(view.remaining===null?'· 해제까지':'· '+Math.ceil(view.remaining)+'초'):'자동';};
-    ui.setText($('unitName'),u.name);updateVehicleSpecs(u);
+    const vehicle=C.profileOf(u);ui.setText($('unitName'),u.name);ui.setText($('unitType'),vehicle.name+' · '+vehicle.weapons.mainGun.calibreMm+'mm '+vehicle.weapons.mainGun.name);
     ui.setText($('velocity'),Math.round(u.speed*3.6));
     ui.setText($('motionState'),u.state);
-    ui.setText($('combatSummary'),combat?combat.ammoId+' · HP '+Math.round(combat.hp).toLocaleString()+' / '+Math.round(combat.maxHp).toLocaleString()+' · '+(destroyed?'격파':'생존'):'피해 모델 비활성');
+    ui.setText($('combatSummary'),combat?'HP '+Math.round(combat.hp).toLocaleString()+' / '+Math.round(combat.maxHp).toLocaleString()+' · '+(destroyed?'격파':'생존'):'피해 모델 비활성');
     $('combatSummary').classList.toggle('destroyed',destroyed);
-    for(const id of ['move','reverse','stop','sight','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode'])$(id).disabled=destroyed;
+    for(const id of ['move','reverse','stop','sight','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode','ammoSelect'])$(id).disabled=destroyed;
+    const ammunition=firing.ammunition,sectionNames={ready:'즉응',semiReady:'준즉응',reserve:'예비'},taskNames={prepare:'탄 준비',reload:'장전',replenish:'즉응탄 보충'};
+    if(ammunition){
+      $('ammoSelect').value=ammunition.preference;ui.setText($('ammoTotal'),ammunition.total+'발');ui.setText($('ammoLoaded'),'장전탄 '+(ammunition.loadedAmmoId||'없음')+' · 다음 '+(ammunition.preference==='auto'?'자동':ammunition.preference));
+      const task=ammunition.task,taskTime=task&&!task.paused?' · '+Math.max(1,Math.ceil(task.remaining||0))+'초':task?' · 대기':'';
+      ui.setText($('ammoTask'),task?(taskNames[task.stage]||taskNames[task.purpose])+' · '+task.ammoId+' / '+sectionNames[task.source]+taskTime:'작업 없음');
+      ui.setHTML($('ammoInventory'),Object.entries(ammunition.sections).map(([section,value])=>'<tr><th>'+sectionNames[section]+' '+value.total+'/'+value.capacity+'</th>'+ammunition.supported.map(id=>'<td>'+value.counts[id]+'</td>').join('')+'</tr>').join(''));
+    }else{ui.setText($('ammoTotal'),firing.ammo+'발');ui.setText($('ammoLoaded'),load.loaded?'장전탄 1':'장전탄 없음');ui.setText($('ammoTask'),load.loaded?'작업 없음':'장전 중');ui.setHTML($('ammoInventory'),'');}
+    const reaction=combat?.reactions,faultLines=[fcsFault.active?'사통 이상 '+Math.max(1,Math.ceil(fcsFault.remaining))+'초':'',reaction?.faults.mobility.active?'기동계 이상 '+Math.max(1,Math.ceil(reaction.faults.mobility.remaining))+'초':'',reaction?.faults.turretDrive.active?'포탑 구동 이상 '+Math.max(1,Math.ceil(reaction.faults.turretDrive.remaining))+'초':'',observationFaults.length?'관측장비 불안정 '+Math.max(1,Math.ceil(observationRemaining))+'초':''].filter(Boolean);
+    ui.setText($('faultStatus'),faultLines.length?faultLines.join(' · '):'활성 일시 이상 없음');ui.setText($('crewStatus'),reaction?Object.entries(reaction.crew).map(([role,status])=>crewNames[role]+' '+severityNames[status]).join(' · '):'승무원 상태 비활성');
     ui.setText($('elevation'),C.heightAt(u.x,u.y).toFixed(1)+' m');
     ui.setText($('slope'),(Math.atan(C.slopeAt(u.x,u.y))*180/Math.PI).toFixed(1)+'°');
     ui.setText($('heading'),((Math.round(u.heading*180/Math.PI)+90)%360+360)%360+'°');
@@ -4493,26 +4517,15 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
       }
     }else targetId=null;
   }
-  function updateVehicleSpecs(u){
-    const vehicle=C.profileOf(u),model=vehicle.model,motion=vehicle.mobility,s=vehicle.sensors,degrees=r=>Math.round(r*180/Math.PI);
-    ui.setText($('unitType'),vehicle.name+' · '+vehicle.weapons.mainGun.calibreMm+'mm '+vehicle.weapons.mainGun.name);
-    ui.setText($('profileTitle'),vehicle.id+' 제원 · 적용값');
-    ui.setHTML($('vehicleSpecs'),[['전장 · 포 전방',model.overallLength.toFixed(2)+' m'],['차체 길이 · 폭',model.hullLength.toFixed(2)+' × '+model.width.toFixed(2)+' m'],['포탑 지붕 높이',model.roofHeight.toFixed(2)+' m'],['중량 · 출력',(vehicle.massKg/1000).toFixed(1)+' t · '+vehicle.engineHp+' hp'],['도로 · 야지',(motion.roadSpeed*3.6).toFixed(1)+' / '+(motion.crossCountrySpeed*3.6).toFixed(1)+' km/h'],['후진 상한',(motion.reverseSpeed*3.6).toFixed(1)+' km/h'],['가속 기준',motion.accelerationReferenceSeconds+' 초'],['자동변속',motion.powertrain.forwardRatios.length+'단 전진 · '+motion.powertrain.reverseRatios.length+'단 후진'],['방향 전환',motion.powertrain.directionSettleSeconds.toFixed(2)+' 초 정차 확인'],['기동간 사격',vehicle.fireControl.movement.fireOnMove?'가능 · 이동 오차 적용':'불가 · '+vehicle.fireControl.movement.stationaryHoldSeconds.toFixed(2)+'초 정차'],['기본 장전',vehicle.fireControl.readiness.reloadSeconds.toFixed(2)+'초 · 작업 상한 '+vehicle.fireControl.readiness.reloadMaxSeconds+'초'],['게임 HP',vehicle.combat?.maxHp?.toLocaleString()??'비활성'],['주포 탄약',vehicle.weapons.mainGun.ammunitionName??'시험탄'],['관측 기준 높이',s.eyeHeight.toFixed(2)+' m · 근사'],['관측 채널','주변 '+s.ambient.range+' / 전차장 '+s.commander.range+' / 포수 '+s.gunner.range+' m'],['시야각 · 선회','전차장 '+degrees(s.commander.fov)+'° · '+degrees(s.commander.rate)+'°/s / 포수 '+degrees(s.gunner.fov)+'° · '+degrees(motion.turretRate)+'°/s'],['시험 사격 거리',vehicle.fireControl.maxRange.toLocaleString()+' m · 게임 설정']].map(([name,value])=>'<div><dt>'+name+'</dt><dd>'+value+'</dd></div>').join(''));
-  }
-  for(const u of sim.units.filter(u=>u.team==='blue')){
-    const b=document.createElement('button');
-    b.className='unit-card';
-    b.dataset.id=u.id;
-    b.innerHTML='<span class="unit-symbol"><span></span></span><span><span class="unit-title">'+u.name+'</span><div class="unit-sub">대기 · 0 km/h</div></span><span class="unit-status"></span>';
-    b.onclick=()=>{
-      select(u.id);
-      camera.x=u.x;
-      camera.y=u.y;
-      camera.zoom=Math.max(camera.zoom,3);
-      clampCamera()
-    }
-    ;
-    $('roster').appendChild(b)
+  for(const u of sim.units.filter(u=>u.team==='blue')){const option=document.createElement('option');option.value=u.id;option.textContent=u.name;$('unitSelect').appendChild(option);}
+  $('unitSelect').value=selected;$('unitSelect').onchange=()=>{if(select($('unitSelect').value)){const u=selectedUnit();camera.x=u.x;camera.y=u.y;camera.zoom=Math.max(camera.zoom,3);clampCamera();}};
+  function activeUnitStatus(u){
+    const state=u.fireControl||{},seconds=until=>Math.max(1,Math.ceil(until-sim.time)),lines=[];
+    if((state.faultUntil?.fireControl||0)>sim.time)lines.push('사통 이상 '+seconds(state.faultUntil.fireControl)+'초');
+    const reactions=C.combatView(u)?.reactions,drive=[];if(reactions?.faults.mobility.active)drive.push('기동계 '+Math.max(1,Math.ceil(reactions.faults.mobility.remaining))+'초');if(reactions?.faults.turretDrive.active)drive.push('포탑 '+Math.max(1,Math.ceil(reactions.faults.turretDrive.remaining))+'초');if(drive.length)lines.push(drive.join(' · '));
+    const observationUntil=Math.max(state.faultUntil?.commander||0,state.faultUntil?.gunner||0);if(observationUntil>sim.time)lines.push('관측 불안정 '+seconds(observationUntil)+'초');
+    const task=state.ammunition?.task;if(task?.stage==='prepare')lines.push('탄 준비 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.sections[task.source].prepareSeconds/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');else if(task?.purpose==='replenish')lines.push(task.paused?'즉응탄 보충 대기':'즉응탄 보충 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.replenish.seconds[task.source]/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');
+    return lines.slice(0,2);
   }
   function drawTank(u){
     const p=toScreen(u.x,u.y),isSelected=u.id===selected,enemy=u.team==='red',z=camera.zoom,destroyed=u.destroyed||u.wreck||u.combat?.status==='destroyed';
@@ -4546,6 +4559,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
       const bw=Math.max(44,Math.min(84,tw+10)),ratio=C.clamp(health.hp/health.maxHp,0,1),barY=labelY+18;
       ctx.fillStyle='#0b1512df';ctx.fillRect(-bw/2-1,barY-1,bw+2,6);ctx.fillStyle=ratio>.55?'#8fc879':ratio>.25?'#d6b96c':'#d77862';ctx.fillRect(-bw/2,barY,bw*ratio,4);ctx.strokeStyle='#b8c5ad88';ctx.lineWidth=1;ctx.strokeRect(-bw/2-.5,barY-.5,bw+1,5);
     }
+    if(!enemy&&!destroyed){const lines=activeUnitStatus(u);if(lines.length){const right=p.x+ring+142<camera.w,x=right?ring+8:-ring-8;ctx.textAlign=right?'left':'right';ctx.font='600 9px ui-monospace,monospace';for(let i=0;i<lines.length;i++){const y=-5+i*13,w=ctx.measureText(lines[i]).width;ctx.fillStyle='#101b18e8';ctx.fillRect(right?x-3:x-w-3,y-9,w+6,12);ctx.fillStyle='#f0c987';ctx.fillText(lines[i],x,y);}}}
     ctx.restore();
   }
   function drawShots(){
@@ -4707,11 +4721,11 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     const publicMission=d=>{const {target,...rest}=d;return rest;};
     const designation=publicMission(o.designation),tracking=publicMission(o.tracking);
     const order=ch=>{const {cooldowns,focus,...rest}=o[ch];return {...rest,focus:focus?o.contacts[focus]?.key??null:null};};
-    return {...u,combat:C.combatView(u),observation:{commander:order('commander'),gunner:order('gunner'),designation,tracking,sensing:C.ownObservation(sim,u,targetId),lastQuery:o.lastQuery}};
+    return {...u,combat:C.combatView(u),activeStatus:activeUnitStatus(u),observation:{commander:order('commander'),gunner:order('gunner'),designation,tracking,sensing:C.ownObservation(sim,u,targetId),lastQuery:o.lastQuery}};
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP18',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP19',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
@@ -4721,7 +4735,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
       }
       ,reverse,sim.units)
     }
-    ,select,visibilityState:()=>({client:visibilityClient.status(),origin:visOrigin&&{...visOrigin},loops:visibility?.loops?.length??0}),fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen,rendererStats:()=>terrainRenderer.stats(),effectRendererStats:()=>effectRenderer.stats(),effectOptions:(enabled=effectsEnabled,quality=effectQuality,reduced=reducedMotionOverride)=>{effectsEnabled=!!enabled;effectQuality=C.clamp(Number(quality)||1,.25,1);reducedMotionOverride=reduced===null?null:!!reduced;return{enabled:effectsEnabled,quality:effectQuality,reduced:reducedMotionOverride};},mapView:(x,y,zoom)=>{if([x,y,zoom].every(Number.isFinite)){camera.x=x;camera.y=y;camera.zoom=C.clamp(zoom,.1,32);clampCamera();}return{...camera};}
+    ,select,visibilityState:()=>({client:visibilityClient.status(),origin:visOrigin&&{...visOrigin},loops:visibility?.loops?.length??0}),fire:()=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};if(paused||!targetId||!selectedUnit())return{ok:false,reason:'paused-or-no-selection'};return C.requestFire(sim,selectedUnit(),targetId);},fireMode:mode=>!portraitBlocked&&selectedUnit()?C.fireMode(sim,selectedUnit(),mode):false,ammoPreference:preference=>!portraitBlocked&&selectedUnit()?C.ammoPreference(sim,selectedUnit(),preference):false,own:(key)=>selectedUnit()?C.ownObservation(sim,selectedUnit(),key):null,contact:(key)=>C.contacts(sim).find(c=>c.key===key),worldToScreen:toScreen,rendererStats:()=>terrainRenderer.stats(),effectRendererStats:()=>effectRenderer.stats(),effectOptions:(enabled=effectsEnabled,quality=effectQuality,reduced=reducedMotionOverride)=>{effectsEnabled=!!enabled;effectQuality=C.clamp(Number(quality)||1,.25,1);reducedMotionOverride=reduced===null?null:!!reduced;return{enabled:effectsEnabled,quality:effectQuality,reduced:reducedMotionOverride};},mapView:(x,y,zoom)=>{if([x,y,zoom].every(Number.isFinite)){camera.x=x;camera.y=y;camera.zoom=C.clamp(zoom,.1,32);clampCamera();}return{...camera};}
   }
   ;
 }

@@ -28,7 +28,7 @@ test('W16-C03 direct player designation immediately owns the real handoff and ca
 
 test('W16-C04 reloading and observation faults preserve engagement while zero total ammunition releases a halt mission',()=>{
   const f=fixture('halt');run(f.s,10);let ai=C.aiStatus(f.s,f.ai),target=ai.autoTargetId,key=ai.autoTargetKey;assert(ai.mission.status==='paused'&&target);f.ai.fireControl.loaded=false;f.ai.fireControl.reloadProgress=.2;f.ai.fireControl.faultUntil.commander=f.s.time+7;run(f.s,3);ai=C.aiStatus(f.s,f.ai);assert.equal(ai.autoTargetId,target);assert.equal(ai.mission.status,'paused');assert(C.ownObservation(f.s,f.ai,key).acquired);assert(C.fireStatus(f.s,f.ai).aimPenalty.active);
-  f.ai.fireControl.ammo=0;f.ai.fireControl.loaded=false;run(f.s,1);ai=C.aiStatus(f.s,f.ai);assert.equal(ai.autoTargetId,null);assert.equal(ai.mission.status,'active');assert.equal(ai.counters.resumes,1);assert(!f.ai.fireControl.autoSuppressed);
+  const ammunition=f.ai.fireControl.ammunition;ammunition.loadedAmmoId=null;ammunition.task=null;for(const counts of Object.values(ammunition.sections))for(const ammoId of Object.keys(counts))counts[ammoId]=0;f.ai.fireControl.ammo=0;f.ai.fireControl.loaded=false;run(f.s,1);ai=C.aiStatus(f.s,f.ai);assert.equal(ai.autoTargetId,null);assert.equal(ai.mission.status,'active');assert.equal(ai.counters.resumes,1);assert(!f.ai.fireControl.autoSuppressed);
 });
 
 test('W16-C05 hidden enemy state changes do not affect selection and AI state stays out of public JSON snapshots',()=>{
