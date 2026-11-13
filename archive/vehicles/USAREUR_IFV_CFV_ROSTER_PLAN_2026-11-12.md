@@ -64,13 +64,40 @@
 - **BGM-71D TOW 2:** 1983년 배치, 최대 3,750m. 미 육군 자료상 **기본 M2/M3도 발사는 가능**하지만 연막·먼지 조건 등에서 TOW 2 개량 발사기보다 유도 성능상 불리할 수 있다.
 - **BGM-71E TOW 2A:** 1987년 배치, 최대 3,750m. ERA 대응용으로 검토 가능. 1989년 서독 주둔 각 부대의 실제 재고와 보급량은 별도 확인 필요.
 - **M2A1:** TOW 2 체계(발사기·유도장치) 개량이 핵심 차이. M2A2 역시 세부 형식·부대별 탄약 지급량은 추가 검증 필요.
-- **현 시점 결정 유보:** M2 기본형에 B까지만 배치할지, C I-TOW까지 보유하게 할지, D/E를 어떤 조건·수량으로 허용할지 및 M2A1·M2A2의 **기본 지급탄·프리셋·확률·관통력은 아직 미정**.
+- **2026-11-13 사용자 방향:** 기본 M2도 **TOW 2(D형 등) 사용을 물리적으로 금지하지 않고 발사 가능**한 게임 호환성으로 취급한다. 기존 기본형은 상대적으로 저렴한 단차로 설계할 수 있다. **발사 가능 여부와 실제 탄약 지급·보급은 별개**이며, 어떤 탄종을 기본으로 얼마나 주고 구형 유도체계의 제약을 얼마나 반영할지는 미정이다. B/C/D/E의 기본 지급탄·프리셋·확률·관통력은 아직 별도 확정되지 않았다.
 - M791/M919의 25mm 탄약 데이터 및 **기관포 치명타 없음·강한 과관통 감쇄 원칙**은 [기관포 설계 기록](../combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md)을 따른다.
 
 **참고 원천**
 - [U.S. Army Redstone Arsenal — TOW missile history](https://history.redstone.army.mil/miss-tow.html)
 - [U.S. Army *Infantry*, March–April 1990, pp. 37–38](https://www.benning.army.mil/infantry/magazine/issues/1990/MAR-APR/pdfs/MAR-APR1990.pdf) (형식별 도입 시기 및 기본 M2/M3 발사기와 TOW 2 간 성능 차이)
 - [U.S. Army historical summary — M2A1 modernization](https://history.army.mil/portals/143/Images/Publications/catalog/30-22.pdf)
+
+## 2-C. M2A1 Block I와 기본형 차이 — 역사 확인 및 게임 반영 후보 (2026-11-13)
+
+> **자료 확인:** M2A1은 1986년부터 인도된 개량형. TOW 2 유도체계만이 아니라 NBC 및 화재 억제, 구동계·내부 설비 개선을 포함한다. **아래 역사 사실을 게임 수치로 자동 확정한 것은 아니다.**
+
+| 구분 | 초기 M2 | M2A1 | 게임 데이터 취급 |
+|---|---|---|---|
+| TOW 운용 | 기본형 유도장치. **TOW 2도 발사 가능** | **개량 TOW 2 유도장치** | 호환 허용, 유도 추적/연막 대응 성능 차이는 후속 설계 |
+| NBC 방호 | 초기형 | 승무원용 중앙식 여과 보호장치 | NBC 환경 영향이 구현될 때 차이 고려 |
+| 화재 억제 | 초기형 설비 | 자동 화재 억제·연료 계통 개선 | 화재/일시 상태 이상 규칙 연계 가능, 실제 확률 미정 |
+| 구동계 | 초기 종감속기 | 종감속기 개선 | 신뢰성·기동 유지 특성 후보, 최고속도 자동 상향 금지 |
+| 내부 설비 | 초기 수납·좌석 | 수납·승무원 편의 및 안전 설비 개선 | 편의 개선을 임의 HP·장갑 증가로 환산하지 않음 |
+| 보병 탑승 | 미군 1992년 교범 기준 6명 | 동 교범 기준 최대 7명 | 별도 승차 인원 프로필 후보 |
+| 주포/동력 | M242 25mm, 약 500hp | 기본적으로 동일 | 주포 관통력·기본 피해·엔진 출력 동일 기준 |
+| 장갑 | 초기형 구조 | 대규모 기본장갑 증강 아님 | **기본 M2의 7구역 값 자동 확정 상속은 아직 미승인**. 새 근거가 없으면 동일값 검토 가능 |
+
+- **구분 주의:** 본격적인 추가장갑·엔진 600hp 등은 M2A2 개량에 해당. M2A1 자체에 A2의 장갑·동력을 소급하지 않는다.
+- **역사적 형식 전환은 단계적:** 승무원 NBC 중앙여과기 1986년, TOW 2 유도체계는 1987년 신규 생산분 및 기존 차량 개수에 이어서 도입되었다는 개발사 연구 기록이 있다. 일부 문헌의 'M2A1 1985'는 생산·개량 시작 시기를, 1986은 부대 인도 개시 시기를 지칭하는 맥락 차이가 있다.
+- **게임 권장 구분 (미확정):** 기본 M2는 가격이 상대적으로 저렴하고 기존 M2A1과 **미사일 발사는 모두 가능**. M2A1은 유도·생존 보조·수송 편의 차이 위주, 기본 장갑·25mm 화력·HP는 차이를 강제로 만들지 않는다. 가격·정확한 보정 수치는 별도 결정.
+- **승차 인원 출처 주의:** M2/M2A1에 대해 교범마다 운용 편제·좌석 표현이 다를 수 있으므로, 게임 실제 탑승 규모를 7명으로 확정하기 전 선택한 연식·차량 구성 확인.
+
+### 참고 자료
+- [U.S. Army training publication — Light Armored Vehicle Identification](https://www.globalsecurity.org/military/library/policy/army/accp/in0535/ch2.htm)
+- [U.S. Army TM 55-2350-252-14, 1992, §1-8](https://www.military-references.com/wp-content/uploads/books/ifv/usa/m2_bradley/M2_Bradley_Transport_Guidance_TM-55-2350-252-14_1992.pdf)
+- [U.S. Congressional Research Service Bradley background](https://www.everycrsreport.com/reports/R44229.html)
+- [U.S. Army PEO GCS 2024 MDEX Bradley evolution briefing, p.50](https://mdex-ndia.com/wp-content/uploads/2024/05/MDEX-2024-PEO-GCS-and-ACC-DTA-Briefing.pdf)
+- [R. P. Hunnicutt, Bradley: A History of American Fighting and Support Vehicles](https://djvu.online/file/c1Xd6rdK6TFta)
 
 ## 3. 다음 스펙 작성 시 확인할 항목 — [작업용 체크리스트, 제안]
 
