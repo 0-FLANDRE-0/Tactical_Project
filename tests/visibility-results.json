@@ -1,5 +1,5 @@
 {
-  "version": "0.4-WIP18",
+  "version": "0.4-WIP19",
   "passed": 12,
   "failed": 0,
   "measurements": [
@@ -11,7 +11,7 @@
       "matched": 1420,
       "total": 1424,
       "agreement": 0.9971910112359551,
-      "computeMs": 434.12182400000006,
+      "computeMs": 502.959198,
       "rayCount": 1974,
       "loops": 134
     },
@@ -23,7 +23,7 @@
       "matched": 1604,
       "total": 1615,
       "agreement": 0.993188854489164,
-      "computeMs": 453.5983060000001,
+      "computeMs": 575.5459410000001,
       "rayCount": 1920,
       "loops": 24
     },
@@ -35,7 +35,7 @@
       "matched": 1498,
       "total": 1511,
       "agreement": 0.9913964262078094,
-      "computeMs": 324.8004169999999,
+      "computeMs": 317.81603399999995,
       "rayCount": 1980,
       "loops": 103
     },

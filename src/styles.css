@@ -390,59 +390,6 @@ header{
   color:var(--accent);
   font-size:11px
 }
-.roster{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-  margin-bottom:22px
-}
-.unit-card{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  text-align:left;
-  width:100%;
-  background:#1d2a24;
-  border:1px solid #3a493a;
-  border-radius:5px;
-  padding:10px;
-  min-height:59px
-}
-.unit-card.active{
-  background:#2c3b2a;
-  border-color:#a6bf73
-}
-.unit-symbol{
-  width:35px;
-  height:27px;
-  border:1px solid var(--blue);
-  display:grid;
-  place-items:center;
-  color:var(--blue);
-  flex-shrink:0
-}
-.unit-symbol span{
-  width:23px;
-  height:12px;
-  border:1px solid currentColor;
-  border-radius:50%
-}
-.unit-title{
-  font-size:12px;
-  font-weight:700
-}
-.unit-sub{
-  font-size:10px;
-  color:#a2b29b;
-  margin-top:2px
-}
-.unit-status{
-  width:5px;
-  height:5px;
-  background:var(--accent);
-  border-radius:50%;
-  margin-left:auto
-}
 .selected-heading{
   border-top:1px solid var(--line);
   padding-top:17px
@@ -457,20 +404,6 @@ header{
   margin:0;
   color:#a3b49a;
   font-size:11px
-}
-.tank-profile{
-  height:101px;
-  position:relative;
-  display:grid;
-  place-items:center;
-  color:#9baa83
-}
-.tank-profile svg{
-  width:173px;
-  height:73px;
-  fill:#32442e;
-  stroke:#a6b786;
-  stroke-width:1.1
 }
 .telemetry-main{
   display:flex;
@@ -625,12 +558,6 @@ footer{
 #coords{
   color:#b4c3a2
 }
-.focus-mode .workspace{
-  grid-template-columns:minmax(0,1fr)
-}
-.focus-mode .sidebar{
-  display:none
-}
 .focus-mode .subtitle{
   display:none
 }
@@ -670,36 +597,11 @@ footer{
   .section-label{
     margin-bottom:7px
   }
-  .roster{
-    gap:5px;
-    margin-bottom:12px
-  }
-  .unit-card{
-    padding:6px 8px;
-    min-height:44px
-  }
-  .unit-title{
-    font-size:11px
-  }
-  .unit-sub{
-    font-size:9px
-  }
-  .unit-symbol{
-    width:29px;
-    height:22px
-  }
-  .unit-symbol span{
-    width:19px;
-    height:10px
-  }
   .selected-heading{
     padding-top:10px
   }
   .selected-heading h2{
     font-size:17px
-  }
-  .tank-profile{
-    display:none
   }
   .telemetry-main{
     margin-top:12px;
@@ -866,10 +768,6 @@ footer{
 
 .loading{position:absolute;inset:0;display:grid;place-items:center;background:#18271f;color:#d6e6b4;font-size:15px;z-index:20}.map-info{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;color:#9eaf94;font-size:10px}.map-info summary{cursor:pointer;color:#c4d3b6;padding:6px 0}.map-info a,.attribution{color:#a8ba97;text-decoration:none}.map-info a:hover,.attribution:hover{text-decoration:underline}.map-info p{line-height:1.8}.attribution{font:9px system-ui,sans-serif;white-space:nowrap}@media(max-width:850px){.attribution{font-size:8px}}@media(orientation:portrait){.attribution{font-size:7px}footer{gap:7px}}
 
-.vehicle-specs{margin:0 0 16px;border:1px solid #50604b66;border-radius:4px;padding:10px 12px;font-size:10px;color:#b9c4ab}.vehicle-specs summary{cursor:pointer;color:#cbd6b8}.vehicle-specs dl{margin:10px 0}.vehicle-specs dl>div{display:flex;justify-content:space-between;gap:8px;margin:7px 0}.vehicle-specs dt{color:#9eab94}.vehicle-specs dd{margin:0;text-align:right;font-family:ui-monospace,monospace}.vehicle-specs p{font-size:9px;line-height:1.6;color:#a0ae94}.vehicle-specs a{color:#aabf98}
-
-.tank-profile svg{width:200px;height:83px;fill:initial;stroke:none;stroke-width:0}
-
 /* Look controls are in the map so they remain reachable in portrait/focus mode. */
 .look-panel{position:absolute;left:16px;top:108px;z-index:4;max-width:calc(100% - 76px);padding:9px 10px;border:1px solid #7eacb57a;border-radius:7px;background:#142b2bed;color:#d6e9e7;font-size:10px;box-shadow:0 3px 14px #0003}
 .look-title{display:flex;align-items:center;gap:10px;font-weight:600}.look-title output{color:#b7d9d7;font-size:10px;font-weight:400}.look-controls{display:flex;align-items:center;gap:6px;margin-top:7px}.look-controls button,.look-controls select{min-height:36px;border:1px solid #63858c;border-radius:4px;background:#253f43;color:#e0f0ee;padding:5px 7px;font:inherit}.look-controls button.active{background:#49777c;border-color:#b1e6e8}.look-controls button:focus-visible,.look-controls select:focus-visible{outline:2px solid #c9f8ff;outline-offset:2px}.look-duration{display:flex;align-items:center;gap:4px}.look-panel p{margin:6px 0 0;color:#a9bfc1;font-size:9px}.look-picking canvas{cursor:crosshair}.sight-on .look-panel{top:145px}
@@ -895,9 +793,21 @@ footer{
 .guard-popup.open{display:block}.guard-popup-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.guard-popup-title button{width:30px;height:30px;padding:0;font-size:18px}.guard-popup label{display:flex;align-items:center;justify-content:space-between;gap:8px}.guard-popup button,.guard-popup select,.engagement-panel button{min-height:34px;border:1px solid #66817a;border-radius:4px;background:#223b34;color:#e0eee7;padding:5px 8px;font:inherit}.guard-popup button:hover,.engagement-panel button:hover{background:#315044}.guard-popup button:focus-visible,.guard-popup select:focus-visible,.engagement-panel button:focus-visible{outline:2px solid #c9f8df;outline-offset:2px}.guard-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.guard-options{margin-top:7px;color:#abbdb5}.guard-options summary{cursor:pointer;padding:3px 0}.guard-options label{margin-top:5px}.look-picking canvas{cursor:crosshair}
 .engagement-panel{margin:-2px 0 12px;padding:8px 9px;border:1px solid #4b6155;border-radius:5px;background:#162720;color:#c9d6c4;font-size:10px}.engagement-line{display:grid;grid-template-columns:38px minmax(0,1fr);gap:6px;margin:3px 0}.engagement-line b{color:#8fa597;font-weight:500}.engagement-line output{min-width:0;overflow-wrap:anywhere}.flight-state{display:block;color:#d9ceaa;line-height:1.5}.engagement-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:7px}.engagement-panel button:disabled{opacity:.4}.engagement-panel #fire:not(:disabled){border-color:#bd9b5d;color:#ffdfa0}.engagement-panel #fireMode.active{border-color:#82a76f;background:#314b38;color:#e5f2d5}
 .orientation-block{display:none;position:fixed;inset:0;z-index:1000;place-items:center;padding:24px;background:#101d19f7;color:#e9f1dd;text-align:center;touch-action:none}.orientation-block>div{max-width:330px;padding:24px;border:1px solid #718469;border-radius:10px;background:#182922}.orientation-block span{display:block;font-size:44px;line-height:1;margin-bottom:12px}.orientation-block strong{display:block;font-size:20px}.orientation-block p{margin:9px 0 0;color:#b7c5ae;font-size:12px;line-height:1.6}
-@media(max-height:560px) and (orientation:landscape){.guard-popup{left:auto;right:11px;bottom:72px;transform:none;width:268px;padding:8px}.engagement-panel{padding:6px 7px;margin-bottom:8px}.engagement-line{margin:2px 0}.engagement-actions{margin-top:5px}.engagement-panel button{min-height:30px;padding:3px 4px}.vehicle-specs{margin-bottom:10px}}
+@media(max-height:560px) and (orientation:landscape){.engagement-panel{padding:6px 7px;margin-bottom:8px}.engagement-line{margin:2px 0}.engagement-panel button{min-height:30px;padding:3px 4px}}
 @media(orientation:portrait){.orientation-block{display:grid}}
 
 /* WIP11D fixed-scale terrain interpretation controls and legend */
 .map-tools button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7}.map-tools #terrainMode{height:46px;grid-template-rows:20px 10px;gap:1px;color:#324638}.map-tools #terrainMode span{font:700 8px ui-monospace,monospace;line-height:9px}.map-tools #terrainMode.active{color:#e8edd9;background:#405847;border-color:#70866e}.terrain-legend{position:absolute;left:21px;bottom:122px;z-index:3;display:flex;align-items:center;gap:11px;padding:5px 8px;border:1px solid #53645566;border-radius:3px;background:#d8ddc5e8;color:#263a31;font-size:9px;pointer-events:none}.terrain-legend[hidden]{display:none}.terrain-legend span{display:flex;align-items:center;gap:5px;white-space:nowrap}.terrain-legend small{color:#53635a;font-size:8px;white-space:nowrap}.terrain-legend i{display:inline-block}.height-key i{width:44px;height:7px;border:1px solid #5b685c66;background:linear-gradient(90deg,#4b6565,#697e52,#979752,#bea461,#dcc48b)}.ridge-key{width:24px;border-top:2px solid #a2704f}.valley-key{width:24px;border-top:2px dashed #647f8c}.sight-on .terrain-legend{opacity:.28}.terrain-emphasis .map-legend{background:#d9dec5e8}.map-legend [hidden]{display:none}
 @media(max-height:560px) and (orientation:landscape){.terrain-legend{left:13px;bottom:105px;gap:7px;padding:4px 6px}.terrain-legend small{display:none}.map-tools #terrainMode{height:42px}}
+
+/* WIP19 right-side command deck and selected-unit information */
+.workspace{grid-template-columns:minmax(0,1fr) 306px}
+.sidebar{position:relative;padding:0;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr);background:#14201d}
+.command-panel{padding:10px 11px 8px;border-bottom:1px solid #445249;background:#111c19;box-shadow:0 4px 14px #07100d55;z-index:4}
+.command-panel .section-label{margin-bottom:7px}.reset.compact{min-height:27px;padding:3px 8px;margin:0;border:1px solid #56665a;border-radius:4px;background:#1e2d27;font-size:9px}
+.command-group{display:grid;grid-template-columns:47px minmax(0,1fr);align-items:center;gap:6px;margin:5px 0}.command-group>b,.ammo-command label b{font-size:9px;color:#94a696;font-weight:600}.command-row,.map-tools{position:static;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;min-width:0}.command-panel button,.command-panel select,.unit-picker select{min-width:0;min-height:31px;border:1px solid #52685d;border-radius:4px;background:#21342d;color:#e1eadc;padding:4px 5px;font:10px system-ui,sans-serif}.command-panel button.active,.command-panel button[aria-pressed="true"]{border-color:#8cac71;background:#334d3a;color:#edf5d9}.command-panel button:focus-visible,.command-panel select:focus-visible,.unit-picker select:focus-visible{outline:2px solid #a8e4d2;outline-offset:1px}.map-tools button{position:static;width:auto;height:31px;display:flex;align-items:center;justify-content:center;gap:2px;box-shadow:none}.map-tools button svg{width:15px;height:15px}.map-tools #terrainMode{height:31px;display:flex;grid-template-rows:none;color:#dfe9da}.map-tools #terrainMode span{font:9px system-ui,sans-serif}.ammo-command select{width:100%}
+.guard-popup{position:absolute;left:9px;right:9px;top:38px;bottom:auto;transform:none;width:auto;z-index:20;padding:9px;background:#142725fa}.guard-duration{margin-top:7px}.guard-popup label{font-size:10px}.guard-popup select{min-height:29px}.guard-popup button{min-height:29px}
+.selected-scroll{min-height:0;overflow:auto;padding:10px 13px 18px;scrollbar-width:thin;scrollbar-color:#526047 transparent}.unit-picker{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;margin-bottom:9px}.unit-picker label{font:9px ui-monospace,monospace;color:#93a594}.unit-picker select{width:100%;background:#1e3029}.selected-heading{padding-top:10px}.selected-heading h2{font-size:18px}.telemetry-main{margin:10px 0 8px}.speed{font-size:30px}.combat-summary{margin-bottom:8px}.engagement-panel{margin:0 0 9px}.engagement-actions{display:none}
+.ammo-panel,.status-panel{margin:0 0 9px;padding:8px;border:1px solid #455a4f;border-radius:5px;background:#172720;font-size:10px}.ammo-panel .section-label,.status-panel .section-label{margin-bottom:5px}.ammo-panel #ammoLoaded{color:#e3e9cf}.ammo-panel #ammoTask{color:#d9c88e;margin:3px 0 6px}.ammo-panel table{width:100%;border-collapse:collapse;font:9px ui-monospace,monospace}.ammo-panel th,.ammo-panel td{padding:3px 2px;border-top:1px solid #405047;text-align:right}.ammo-panel th:first-child{text-align:left;color:#9fb09e}.status-panel #faultStatus{color:#e1c28b;margin-bottom:4px}.status-panel #crewStatus{color:#bbcbb8;line-height:1.55}.metrics{padding:9px 0;gap:8px;margin-bottom:9px}.route-panel{min-height:30px}.target-panel{margin-bottom:8px}.map-info{margin-top:8px}.focus-mode .workspace{grid-template-columns:minmax(0,1fr) 306px}.focus-mode .sidebar{display:grid}
+@media(max-width:900px){.workspace,.focus-mode .workspace{grid-template-columns:minmax(0,1fr) 278px}.sidebar{font-size:11px}.command-panel{padding:7px 8px 5px}.command-group{grid-template-columns:40px minmax(0,1fr);gap:4px;margin:3px 0}.command-panel button,.command-panel select{min-height:28px;padding:3px;font-size:9px}.map-tools button,.map-tools #terrainMode{height:28px}.selected-scroll{padding:8px 10px 14px}}
+@media(max-height:560px) and (orientation:landscape){.workspace,.focus-mode .workspace{grid-template-columns:minmax(0,1fr) 286px}.command-panel{padding:5px 7px 4px}.command-panel .section-label{margin-bottom:3px}.command-group{display:inline-grid;vertical-align:top;width:calc(50% - 3px);grid-template-columns:35px minmax(0,1fr);margin:2px 0;gap:3px}.command-group:first-of-type{width:100%;grid-template-columns:35px minmax(0,1fr)}.command-panel button,.command-panel select,.map-tools button,.map-tools #terrainMode{min-height:25px;height:25px;font-size:8px}.selected-scroll{padding:6px 9px 10px}.unit-picker{margin-bottom:5px}.selected-heading{padding-top:5px}.selected-heading h2{font-size:15px}.telemetry-main{margin:5px 0}.speed{font-size:24px}.combat-summary,.engagement-panel,.ammo-panel,.status-panel{margin-bottom:6px;padding:5px 6px}.metrics{padding:6px 0;margin-bottom:6px}.guard-popup{top:30px}}

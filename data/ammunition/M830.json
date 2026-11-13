@@ -1,0 +1,71 @@
+{
+  "ammunition": {
+    "id": "M830",
+    "name": "M830 HEAT-MP",
+    "kind": "CE",
+    "baseDamage": 435,
+    "muzzleVelocity": 1140,
+    "hitReactionPolicyId": "tank-heat/M830",
+    "penetration": {
+      "rangesM": [
+        10,
+        2000
+      ],
+      "anglesDeg": [
+        0,
+        30,
+        60
+      ],
+      "values": [
+        [
+          480,
+          415,
+          240
+        ],
+        [
+          480,
+          415,
+          240
+        ]
+      ],
+      "parallelLimitDeg": 90,
+      "outsidePolicy": "clamp"
+    },
+    "ricochet": {
+      "anglesDeg": [
+        65,
+        72,
+        77
+      ],
+      "chances": [
+        0,
+        0.5,
+        1
+      ],
+      "comparison": "roll<chance"
+    },
+    "damageMultiplier": {
+      "points": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "outsidePolicy": "clamp"
+    },
+    "nearNonPenetration": false,
+    "armoredBlastRadiusM": 0
+  },
+  "status": "active WIP19 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP19 instructions",
+  "limits": [
+    "CE protection only, no range falloff in the trial table",
+    "Fixed penetration multiplier 1; nonpenetration, ricochet and armored blast damage are zero",
+    "Victim-specific hit-reaction rates live only on an explicitly bound vehicle profile",
+    "No additional velocity damage multiplier"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "version": "0.4-WIP19",
+  "browser": "156.0.8078.79",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "scope": "Actual Chromium standalone frame callback: fixed 0.05 simulation step, Canvas draw and scheduled DOM update. Headless desktop only; not physical mobile.",
+  "trials": [
+    {
+      "label": "WIP18 baseline default app",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 4,
+      "medianMs": 1,
+      "p95Ms": 3.100000001490116,
+      "maxMs": 5.699999999254942
+    },
+    {
+      "label": "WIP19 default app",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 4,
+      "medianMs": 0.9000000022351742,
+      "p95Ms": 5.199999999254942,
+      "maxMs": 9.600000001490116
+    },
+    {
+      "label": "WIP19 50 friendly active work/status",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 50,
+      "medianMs": 2.300000000745058,
+      "p95Ms": 3.899999998509884,
+      "maxMs": 5.200000002980232
+    },
+    {
+      "label": "WIP19 100 friendly active work/status",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 100,
+      "medianMs": 4.800000000745058,
+      "p95Ms": 6.899999998509884,
+      "maxMs": 7.5
+    }
+  ]
+}

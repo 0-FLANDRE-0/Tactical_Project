@@ -74,14 +74,11 @@
       "outsidePolicy": "clamp"
     }
   },
-  "status": "active WIP18 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP11A, WIP12, WIP15 and WIP18 instructions",
+  "status": "active WIP19 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP19 instructions",
   "limits": [
-    "Range endpoints clamp; 60–90° penetration interpolates to zero",
-    "Ricochet uses an independent deterministic roll at 78/80/81° anchors",
-    "Ordinary non-penetration and ricochet damage 0; WIP15 adds a separate seeded 30% near-nonpenetration damage rule below 15 protection deficit",
-    "tank-ke/M829A2 is only a policy identifier; victim-specific WIP18 rates live solely on M1A2_1998",
-    "Ricochet continuation is visual only",
+    "Existing WIP12/WIP15 penetration, ricochet, damage and near-nonpenetration rules remain unchanged",
+    "Victim-specific hit-reaction rates live only on an explicitly bound vehicle profile",
     "No additional velocity damage multiplier"
   ]
 }

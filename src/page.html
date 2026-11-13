@@ -4,62 +4,50 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — {{MAP_TITLE}} v0.4 WIP18</title>
+<title>TACTICAL — {{MAP_TITLE}} v0.4 WIP19</title>
 <style>
 {{STYLES}}
 </style>
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">{{MAP_SUBTITLE}}</div><div class="header-spacer"></div><span class="version">v0.4 / WIP18</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">{{MAP_SUBTITLE}}</div><div class="header-spacer"></div><span class="version">v0.4 / WIP19</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
 <div id="loading" class="loading">전장 불러오는 중…</div>
 <div class="map-heading"><div class="eyebrow" id="mapEyebrow">{{MAP_EYEBROW}}</div><h1 id="mapHeading">{{MAP_HEADING}}</h1><div class="small">실제 지형 · 농경지 · 마을 · 숲</div></div>
 
-<div class="map-tools"><div class="north">N</div><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button><button id="zoomOut" aria-label="지도 축소"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/></svg></button></div>
 <div class="visibility-key"><b>선택 전차의 관측 범위</b><div class="keys"><span><i class="dot" style="background:#8bedd0"></i> 보이는 곳</span><span><i class="dot" style="background:#d89579"></i> 가려진 곳</span></div><div class="note" id="sightNote">지형 가능 영역 · 실제 탐지와 다름<br>주변 200m · 전차장 2500m · 포수 2000m</div></div>
-<section class="guard-popup" id="guardPopup" aria-label="경계 명령" aria-hidden="true">
-<div class="guard-popup-title"><strong>경계 명령</strong><button id="guardClose" aria-label="경계 메뉴 닫기">×</button></div>
-<label>장비 <select id="lookChannel" aria-label="제어할 관측 장비"><option value="commander">전차장</option><option value="gunner">포수</option></select></label>
-<div class="guard-actions"><button id="lookDirection" aria-pressed="false" title="지도에서 경계할 지점 지정 · L">방향 지정</button><button id="lookResume">자동 경계 복귀</button></div>
-<details class="guard-options"><summary>추가 옵션</summary><label>유지 시간 <select id="lookDuration" aria-label="지점 경계 유지 시간"><option value="0" selected>해제까지</option><option value="5">5초</option><option value="10">10초</option><option value="30">30초</option></select></label></details>
-</section>
 <div class="pause-tag">일시정지</div>
 <div class="terrain-legend" id="terrainLegend" hidden><span class="height-key"><i></i>낮음 → 높음</span><span><i class="ridge-key"></i>능선</span><span><i class="valley-key"></i>골짜기</span><small>골짜기 ≠ 물길</small></div>
 <div class="map-legend"><span class="legend-item"><i class="dot" style="background:#247e99"></i>아군</span><span class="legend-item"><i class="dot" style="background:#b9683d"></i>관측 표적</span><span class="legend-item"><i class="dot" style="background:#3b6242"></i>숲</span><span class="legend-item" id="contourLegend">등고선 10m · 주요 50m</span></div>
 <div class="scale"><div class="scale-line" id="scaleLine"></div><span id="scaleText">200m</span></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<nav class="dock" aria-label="전차 명령">
-<button class="command active" id="move" aria-pressed="true" title="지면 탭으로 이동"><svg viewBox="0 0 24 24"><path d="M12 20V4m-6 6 6-6 6 6"/></svg><span>이동</span></button>
-<button class="command" id="reverse" aria-pressed="false" title="후진 이동 · R"><svg viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></svg><span>후진</span></button>
-<button class="command" id="stop" title="정지 · X"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><span>정지</span></button><div class="dock-sep"></div>
-<button class="command sight" id="sight" aria-pressed="false" aria-label="누르는 동안 선택 전차 시야 표시" title="누르는 동안 시야 표시 · V"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>시야 · 홀드</span></button>
-<button class="command" id="guardMenu" aria-expanded="false" aria-controls="guardPopup" title="전차장·포수 경계 명령 · L"><svg viewBox="0 0 24 24"><path d="M4 18 12 4l8 14M7 14h10M12 4v16"/></svg><span>경계</span></button>
-<button class="command active" id="contours" aria-pressed="true" title="등고선 표시"><svg viewBox="0 0 24 24"><path d="m2 18 5-6 4 3 5-10 6 13M3 21h18M8 9l3-5 3 2"/></svg><span>등고선</span></button>
-</nav></main>
-<aside class="sidebar">
-<div class="section-label"><span>기동 분대</span><span class="count" id="rosterCount">02</span></div><div class="roster" id="roster"></div>
-<div class="selected-heading"><div class="eyebrow" style="color:#9db48e">SELECTED VEHICLE</div><h2 id="unitName">ALPHA 11</h2><p id="unitType">M1A2 Abrams · 120mm M256</p></div>
-<div class="tank-profile" aria-hidden="true">{{M1A2_THUMBNAIL}}</div>
-<div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
-<div class="combat-summary" id="combatSummary">M829A2 · HP 1,450 / 1,450 · 생존</div>
-<section class="engagement-panel" aria-label="경계와 교전 상태">
-<div class="engagement-line"><b>경계</b><output id="lookStatus">자동 경계</output></div>
-<div class="engagement-line"><b>교전</b><output id="designationStatus">없음</output></div>
-<div class="engagement-line"><b>사격</b><output id="fireState">표적 미확보</output></div>
-<output class="flight-state" id="readinessState">장전탄 1 · 저장 41</output>
-<output class="flight-state" id="flightState"></output>
-<div class="engagement-actions"><button id="fireMode" aria-pressed="true">자동</button><button id="cancelDesignation">교전 취소</button><button id="fire" disabled aria-label="선택 표적 단발 발사" title="조준 완료 후 선택 표적에 단발 발사 · G">단발 · G</button></div>
+</main>
+<aside class="sidebar" aria-label="명령 및 선택 차량 정보">
+<section class="command-panel" aria-label="전술 명령">
+<div class="section-label"><span>COMMAND</span><button class="reset compact" id="reset">초기화 ↺</button></div>
+<div class="command-group"><b>지도</b><div class="map-tools"><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대">＋</button><button id="zoomOut" aria-label="지도 축소">－</button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기">맞춤</button><button class="active" id="contours" aria-pressed="true" title="등고선 표시">등고선</button></div></div>
+<div class="command-group"><b>기동</b><div class="command-row"><button class="command active" id="move" aria-pressed="true">이동</button><button class="command" id="reverse" aria-pressed="false">후진</button><button class="command" id="stop">정지</button></div></div>
+<div class="command-group"><b>관측</b><div class="command-row"><button class="command sight" id="sight" aria-pressed="false">시야 · 홀드</button><button class="command" id="guardMenu" aria-expanded="false" aria-controls="guardPopup">경계</button></div>
+<section class="guard-popup" id="guardPopup" aria-label="경계 명령" aria-hidden="true"><div class="guard-popup-title"><strong>경계 명령</strong><button id="guardClose" aria-label="경계 메뉴 닫기">×</button></div><label>장비 <select id="lookChannel"><option value="commander">전차장</option><option value="gunner">포수</option></select></label><div class="guard-actions"><button id="lookDirection" aria-pressed="false">방향 지정</button><button id="lookResume">자동 복귀</button></div><label class="guard-duration">유지 <select id="lookDuration"><option value="0" selected>해제까지</option><option value="5">5초</option><option value="10">10초</option><option value="30">30초</option></select></label></section></div>
+<div class="command-group"><b>사격</b><div class="command-row"><button id="fireMode" aria-pressed="true">자동</button><button id="cancelDesignation">지정 취소</button><button id="fire" disabled>단발 · G</button></div></div>
+<div class="command-group ammo-command"><label for="ammoSelect"><b>다음 탄종</b></label><select id="ammoSelect"><option value="auto">자동</option><option value="M829A2">M829A2</option><option value="M829A1">M829A1</option><option value="M830">M830</option></select></div>
 </section>
-<div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">차체 방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
-<details class="vehicle-specs"><summary id="profileTitle">M1A2 제원 · 적용값</summary><dl id="vehicleSpecs"></dl><p>관측 높이는 CITV 위치의 근사값.<br>채널 거리·화각·선회는 게임 설정.<br>4000m는 지형 마스크 계산 상한.<br>게임식 예측 발사·비행·탄착·피해 지원.<br>단일 시험탄 장전과 일시 대응 상태 적용 · 영구 모듈 피해는 후속.</p><a href="https://international.gdls.com/english/products/ABRAMS/M1A2.pdf" target="_blank" rel="noopener">GDLS M1A2 공개 제원 ↗</a></details>
+<section class="selected-scroll" aria-label="선택 차량 정보">
+<div class="unit-picker"><label for="unitSelect">아군 선택</label><select id="unitSelect"></select></div>
+<div class="selected-heading"><div class="eyebrow">SELECTED VEHICLE</div><h2 id="unitName">ALPHA 11</h2><p id="unitType">M1A2 Abrams · 120mm M256</p></div>
+<div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
+<div class="combat-summary" id="combatSummary">HP 1,450 / 1,450 · 생존</div>
+<section class="engagement-panel" aria-label="교전 상태"><div class="engagement-line"><b>경계</b><output id="lookStatus">자동 경계</output></div><div class="engagement-line"><b>교전</b><output id="designationStatus">없음</output></div><div class="engagement-line"><b>사격</b><output id="fireState">표적 미확보</output></div><output class="flight-state" id="readinessState"></output><output class="flight-state" id="flightState"></output></section>
+<section class="ammo-panel"><div class="section-label"><span>AMMUNITION</span><span id="ammoTotal">42발</span></div><div id="ammoLoaded"></div><div id="ammoTask"></div><table><thead><tr><th>구획</th><th>M829A2</th><th>M829A1</th><th>M830</th></tr></thead><tbody id="ammoInventory"></tbody></table></section>
+<section class="status-panel"><div class="section-label"><span>차량 · 승무원 상태</span></div><div id="faultStatus"></div><div id="crewStatus"></div></section>
+<div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
-<div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div><div style="color:#9aa58b;font-size:9px;margin-top:7px">관측 가능한 표본 비율 · 명중 확률 아님</div></div></div>
-<div class="help"><b>전차 탭</b> 선택 · <b>지면 탭</b> 이동<br><b>드래그</b> 지도 이동 · <b>핀치 / 휠</b> 확대<br><b>시야 버튼 홀드</b> 관측·차폐 확인<br>자동 사격은 확보·조준·장전·발사선을 확인해 단발 반복.<br>보류 중에도 수동 발사/G와 관측·인계는 유지.<br>확인한 잔해는 영구 표시되며 선택할 수 없음.</div>
-<button class="reset" id="reset">시험장 초기화 ↺</button><details class="map-info"><summary>전장 정보 · 출처</summary><p><span id="mapDimensions">{{MAP_DIMENSIONS}}</span> · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details><div class="sidebar-bottom">POWERTRAIN · OBSERVATION · RELOAD · HIT REACTIONS · ENGAGEMENT AI / WIP18</div>
-</aside></div>
+<div class="target-panel" id="targetPanel"><div class="target-title" id="targetTitle">관측 표적</div><p id="targetDetails"></p><p id="targetOwnStatus"></p><p id="fireDetails"></p><p id="shotDetails"></p><button id="designateTarget">포수 직접 지정</button><div id="targetExposure"><div class="exposure-row"><span>차체</span><div class="bar"><i id="hullBar"></i></div><output id="hullValue">0%</output></div><div class="exposure-row"><span>포탑</span><div class="bar"><i id="turretBar"></i></div><output id="turretValue">0%</output></div></div></div>
+<details class="map-info"><summary>전장 정보 · 출처</summary><p><span id="mapDimensions">{{MAP_DIMENSIONS}}</span> · 실제 지면 고도 기반<br>원본 DGM1 → 게임용 2m 고도<br>실제 배치에서 건물 375개 선별<br>수목 위치·건물 높이는 일부 추정</p><a href="https://hvbg.hessen.de/landesvermessung/geotopographie/3d-daten/digitale-gelaendemodelle" target="_blank" rel="noopener">고도: HVBG DGM1</a><br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></details>
+</section></aside></div>
 <footer><span><i class="live-dot"></i><span id="simState">기동 시험</span></span><span id="clock">T+ 00:00</span><span class="footer-extra" id="mapFooterSize">{{MAP_FOOTER_SIZE}}</span><span class="footer-spacer"></span><a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a><span id="coords">X 550 · Y 2750</span><span class="footer-extra">N ↑</span></footer>
 </div>
 <div class="orientation-block" id="orientationBlock" role="dialog" aria-modal="true" aria-hidden="true"><div><span aria-hidden="true">↻</span><strong>가로로 돌려주세요</strong><p>전술 지도와 차량 패널은 가로 화면에서 작동합니다.</p></div></div>

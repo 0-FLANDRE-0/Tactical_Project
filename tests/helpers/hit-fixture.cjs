@@ -6,8 +6,8 @@ function exposure(hull=Array(6).fill(true),turret=Array(3).fill(true)){
  return{hull:hull.filter(Boolean).length/6,turret:turret.filter(Boolean).length/3,samples};
 }
 const pose=(x=1000,y=0,heading=Math.PI,turret=heading)=>({x,y,heading,turret,model:structuredClone(P.model)});
-function fixture(seed=7){
- const profile=structuredClone(P),c={identified:true,enemyConfirmed:true,pose:pose(),sources:{gunner:{current:true,lastSeen:0}},gunnerExposure:exposure()},u={id:'A',team:'blue',x:0,y:0,heading:0,turret:0,speed:0,observation:{designation:{status:'acquired',target:'PRIVATE',key:'contact-1',source:'manual'},tracking:{status:'idle'},contacts:{PRIVATE:c}}};
+function fixture(seed=7,sourceProfile=P){
+ const profile=structuredClone(sourceProfile),c={identified:true,enemyConfirmed:true,pose:{...pose(),model:structuredClone(profile.model)},sources:{gunner:{current:true,lastSeen:0}},gunnerExposure:exposure()},u={id:'A',team:'blue',x:0,y:0,heading:0,turret:0,speed:0,observation:{designation:{status:'acquired',target:'PRIVATE',key:'contact-1',source:'manual'},tracking:{status:'idle'},contacts:{PRIVATE:c}}};
  let blocked=false,calls=0,time=0,fresh=null,observed=true,cover=false,gone=false;const rolls=[];
  const runtime=F.create({seed,profileOf:()=>profile,debug:true,onDecisionRoll:kind=>rolls.push(kind),isObserved:()=>observed,
   impactEnvironment:{heightAt:()=>0,buildingAt:()=>null,world:{w:5000,h:5000}},
