@@ -1,0 +1,59 @@
+{
+  "version": "0.4-WIP18",
+  "date": "2026-11-13",
+  "branch": "feat/wip18-hit-reactions",
+  "baselineMain": "cb3f68f",
+  "scope": "M1A2_1998-only temporary mobility/turret-drive faults and driver/commander/gunner/loader light/serious injuries after existing impact damage",
+  "checks": [
+    {"name": "non-browser and browser Node test runner", "status": "passed", "passed": 324, "failed": 0, "command": "node --test --test-concurrency=2 tests/*.test.cjs"},
+    {"name": "WIP18 policy/roles/susceptibility/state/physical integration core regression", "status": "passed", "passed": 12, "failed": 0, "evidence": "tests/wip18-hit-reactions.test.cjs"},
+    {"name": "actual Chromium WIP18 impact/commander-rate/UI/privacy/mobile regression", "status": "passed", "passed": 5, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP18-browser.json"},
+    {"name": "actual Chromium full default application regression", "status": "passed", "passed": 31, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP18-full-browser.json"},
+    {"name": "actual Chromium WIP17 variable-map and embedded Worker regression", "status": "passed", "passed": 3, "failed": 0},
+    {"name": "actual Chromium WIP16 engagement regression", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "actual Chromium WIP15 reload/reaction regression", "status": "passed", "passed": 4, "failed": 0},
+    {"name": "actual Chromium WIP12 effects regression", "status": "passed", "passed": 18, "failed": 0},
+    {"name": "terrain readability Python unittest", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "source quality with system GDAL Python", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "DEM coverage, mask, zero elevation and CRS regression", "status": "passed", "passed": 4, "failed": 0},
+    {"name": "standalone optimized LOS comparison without ambient globals", "status": "passed", "command": "node scripts/benchmark_los_shared_compare.cjs --worker optimized /tmp/wip18-los.json"},
+    {"name": "standalone default map regression", "status": "passed", "passed": 16, "failed": 0},
+    {"name": "fake-DOM input regression", "status": "passed", "passed": 42, "failed": 0, "kind": "fake DOM, not a browser"},
+    {"name": "standalone visibility regression", "status": "passed", "passed": 12, "failed": 0},
+    {"name": "standalone vehicle and embedded Worker regression", "status": "passed", "passed": 9, "failed": 0},
+    {"name": "JavaScript and Python syntax checks", "status": "passed"},
+    {"name": "repeat build/package byte identity, ZIP CRC and extracted HTML comparison", "status": "passed"},
+    {"name": "physical mobile device memory/thermal test", "status": "not-run", "reason": "no physical mobile device attached; actual Chromium desktop and mobile-view regressions passed"}
+  ],
+  "determinism": {
+    "actualImpactSeed": 2,
+    "impactTime": 28.55,
+    "shotsBeforeOutcome": 5,
+    "category": "crewSerious",
+    "target": "driver",
+    "fixedTickSeconds": 0.05,
+    "notes": "Unforced browser fire/flight/impact path. UI state injection is separately marked in WIP18-browser.json. Existing hit/zone/ricochet/WIP15 streams are unchanged."
+  },
+  "performance": {
+    "environment": {"cpu": "AMD EPYC 9V74 80-Core Processor", "node": "v24.22.1", "browser": "Chromium 156.0.8078.79"},
+    "evidence": "tests/releases/WIP18-performance.json",
+    "state50ActivePerTickMedianMs": 0.00534422,
+    "state50ActivePerTickP95Ms": 0.00872532,
+    "state100ActivePerTickMedianMs": 0.010969565,
+    "state100ActivePerTickP95Ms": 0.014737835,
+    "activeReactionStateBytes50": 12350,
+    "activeReactionStateBytes100": 24700,
+    "notes": "State-only 50/100 vehicle measurements are separate from the actual default five-vehicle whole-tick trials. No rendering is included."
+  },
+  "artifacts": {
+    "html": {"path": "Tactical_v0.4_WIP18.html", "bytes": 8494990, "sha256": "16cb3e589427cdba7b7862c0dfa00d08d660c4adaa0eee9730d8ac208b8bb138", "matchesDist": true, "repeatBuildByteIdentical": true},
+    "zip": {"path": "Tactical_v0.4_WIP18.zip", "bytes": 1678122, "sha256": "e1b3a7c36e61df652cb753f1cb6cac451682d161fde6a39c69ad169c795eb93e", "entry": "Tactical_v0.4_WIP18.html", "entryBytes": 8494990, "compressedBytes": 1677976, "crc32": "f6715191", "repeatPackageByteIdentical": true, "extractedMatchesDist": true}
+  },
+  "notImplemented": [
+    "permanent module damage or repair",
+    "crew death, healing, substitution or replacement loading",
+    "fire, ammunition-rack explosion or special instant kill",
+    "new vehicles, autocannon, missile or additional ammunition policies",
+    "physical mobile-device performance guarantee"
+  ]
+}

@@ -6,7 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP18 일시 기능 이상·승무원 경중상 | [작업 지시서](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 지시 등록 · 구현·검증 대기 · 현재 M1A2_1998 전용, 다른 차종 자동 상속 금지 · 수치는 시험 제안 |
+| WIP18 일시 기능 이상·승무원 경중상 | [완료 안내](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 최종 6c5e4f3 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
 | WIP17 가변 맵 크기 지원 기반 | [완료 안내](TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) | 최종 624d80d 독립 재검증 통과 · main 통합 · 실제 8×8 지도 제작은 후속 |
 | WIP16 적 AI 교전 판단·표적 선택·행동 안정화 | [완료 안내](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) · [능선 캐시 보완](TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md) · [halt 재확인 보완](TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) | 최종 47f9e07 독립 재검증 통과 · main 통합 |
 | WIP15 가변 장전·피격 동요·장비 일시 이상 | [기본 완료 안내](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) · [수정 완료 안내](TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md) · [보존 지시서](../../archive/instructions/README.md) | 관측 유지·조준 저하 최종 5a0b516 재검증 통과 · main 통합 |
@@ -29,6 +29,8 @@ WIP15는 main `c83024a`에서 만든 기존 브랜치에 최신 main `eb485b7`�
 WIP16은 최신 main `bb479ad`에서 새 브랜치로 구현했다. AI가 자체 현재 관측·식별·사거리 안 접촉만 점수화하고 observation의 `ai` 출처 인계와 실제 포수/사격 표적을 공유한다. 수동 지정 우선, 최소 유지·연속 우위, 차폐 재선택 제한, 이동 유지/정차/상실 뒤 동일 임무 복귀와 탄약·일시 이상 상태를 분리했다. `adda7bf` 검토 뒤에는 지속 차폐가 종료 시계를 초기화하던 문제와 사거리 밖 수동 소유권을 자동 교전으로 오인하던 문제를 수정했다. `311ec5b` 추가 검토 뒤에는 발사선 방향 이동과 지면 고도를 차폐 캐시에 포함하고 기존 fire-control 검사로 능선 통과 뒤 자동 교전을 복구했다. `2d68725` 추가 검토 뒤에는 `halt`의 이동 중 발사선 재확인을 무발사 검사로 분리하고, 통과 뒤 제동·정차 유지 시간을 거친 첫 발을 보장했다. [구현 문서](../ENGAGEMENT_DECISIONS_WIP16.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP16.md)을 참고한다. 최종 `47f9e07`을 독립 재검증한 뒤 main에 통합했으며 [병합 검토](../reviews/WIP16_MERGE_REVIEW_2026-11-12.md)에 결과를 기록했다.
 
 WIP17은 main `c13765e`에서 `feat/wip17-variable-map-foundation` 브랜치로 구현하고, DEM 검증·독립 LOS 로더를 보완한 최종 `624d80d`를 독립 재검증해 2026-11-13 main에 통합했다. 기본 4×4 라스도르프는 유지하고 공통 지도 규격, 독립 폭/높이 인덱스, 파생 캐시 서명, 설정/CLI 기반 생성·빌드를 연결했다. 실제 해상도의 합성 8×8/직사각형을 Node·단일 HTML·내장 Worker·Chromium에서 검증했지만 실제 8×8 실측 지도는 만들지 않았다. [구현 문서](../VARIABLE_MAP_FOUNDATION_WIP17.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP17.md), [병합 검토](../reviews/WIP17_MERGE_REVIEW_2026-11-13.md)를 참고한다.
+
+WIP18은 지시서가 등록된 main에서 `feat/wip18-hit-reactions` 브랜치로 구현하고 최신 main `cb3f68f`의 설계 기록을 반영했다. 전차장 자동 탐색·차량별 승무원 구성·범주별 감수성·효과 정책 연결을 보완한 최종 `6c5e4f3`를 독립 재검증해 2026-11-13 main에 통합했다. `tank-ke/M829A2`와 7개 피격 구역의 시험 데이터는 `M1A2_1998` 전용이며 다른 차종에 자동 상속하지 않는다. 일시 구동/포탑 이상과 경상/중상을 실제 동작에 연결하고 WIP15 반응·중첩 제어·정보 경계를 유지했다. [구현 문서](../HIT_REACTIONS_AND_CREW_INJURIES_WIP18.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP18.md), [병합 검토](../reviews/WIP18_MERGE_REVIEW_2026-11-13.md)를 참고한다.
 
 ## 관리 방법
 

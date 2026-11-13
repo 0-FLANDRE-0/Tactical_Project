@@ -8,7 +8,9 @@
   let gesture=null,dragged=false,clickStart=null;
   const alive=u=>u&&u.combat?.status!=='destroyed';
   const selectedUnit=()=>sim.units.find(u=>u.id===selected&&u.team==='blue'&&alive(u));
-  const ui=TacticalUICache,updateRoster=ui.createListUpdater(v=>v.state+' · '+Math.round(v.speed*3.6)+' km/h','.unit-sub');
+  const crewNames={driver:'운전수',commander:'전차장',gunner:'포수',loader:'장전수'},severityNames={normal:'정상',light:'경상',serious:'중상'};
+  const reactionText=(v,compact=false)=>{const r=C.combatView(v)?.reactions;if(!r)return'';const faults=[r.faults.mobility.active?'기동 '+r.faults.mobility.remaining.toFixed(1)+'초':'',r.faults.turretDrive.active?'포탑 '+r.faults.turretDrive.remaining.toFixed(1)+'초':''].filter(Boolean),crew=Object.entries(r.crew).map(([role,status])=>(compact?crewNames[role][0]:crewNames[role])+' '+severityNames[status]);return(faults.length?'일시 이상 '+faults.join('/')+' · ':'')+'승무원 '+crew.join(' / ');};
+  const ui=TacticalUICache,updateRoster=ui.createListUpdater(v=>v.state+' · '+Math.round(v.speed*3.6)+' km/h · '+reactionText(v,true),'.unit-sub');
   const lookView=channel=>{const u=selectedUnit();return u?C.observationView(sim,u,channel||$('lookChannel').value||'commander'):{mode:'idle',turret:0,gaze:0,direction:null,remaining:null,point:null};};
   let lookPicking=false;
   const terrainRenderer=new TacticalRenderer(C,CONTOUR_DATA,TERRAIN_DATA);
@@ -535,7 +537,8 @@
     const load=firing.loading,fcsFault=firing.faults.fireControl,observationFaults=[firing.faults.commander,firing.faults.gunner].filter(v=>v.active),observationRemaining=observationFaults.length?Math.max(...observationFaults.map(v=>v.remaining)):0;
     const faultText=[fcsFault.active?'사통 이상 '+fcsFault.remaining.toFixed(1)+'초':'',observationFaults.length?'관측장비 불안정 · 조준 저하 '+observationRemaining.toFixed(1)+'초':''].filter(Boolean).join(' / ');
     const loadText=load.loaded?'장전탄 '+load.chamber+' · 저장 '+load.stored:load.estimatedSeconds===null?'장전할 탄 없음':'장전 '+Math.round(load.progress*100)+'% · 예상 '+load.estimatedSeconds.toFixed(1)+'초';
-    ui.setText($('readinessState'),loadText+(load.fatigueSeconds>.005?' · 피로 +'+load.fatigueSeconds.toFixed(2)+'초':'')+(load.shockSeconds>.005?' · 동요 +'+load.shockSeconds.toFixed(2)+'초':'')+(faultText?' · 대응 '+faultText:''));
+    const reactions=combat?.reactions,reactionStatus=reactions?reactionText(u):'';
+    ui.setText($('readinessState'),loadText+(load.fatigueSeconds>.005?' · 피로 +'+load.fatigueSeconds.toFixed(2)+'초':'')+(load.shockSeconds>.005?' · 동요 +'+load.shockSeconds.toFixed(2)+'초':'')+(faultText?' · WIP15 대응 '+faultText:'')+(reactionStatus?' · WIP18 '+reactionStatus:''));
     ui.setText($('fireMode'),firing.mode==='auto'?'자동':'보류');$('fireMode').setAttribute('aria-pressed',String(firing.mode==='auto'));$('fireMode').classList.toggle('active',firing.mode==='auto');
     const activeFlight=firing.inFlight[0];ui.setText($('flightState'),activeFlight?'비행 중'+(firing.inFlight.length>1?' '+firing.inFlight.length+'발':'')+' · 착탄까지 '+activeFlight.remaining.toFixed(1)+'초':firing.lastShot?.result==='unobserved'?'최근 단발: 결과 미확인':'');
     $('fire').disabled=paused||destroyed||!targetId||!firing.canFire;
@@ -803,7 +806,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP17',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP18',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

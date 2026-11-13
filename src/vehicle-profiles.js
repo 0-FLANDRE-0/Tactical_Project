@@ -64,6 +64,30 @@ const VEHICLE_PROFILES=(()=>{
     hullFront:{ke:390,ce:720},hullSide:{ke:120,ce:280},hullRear:{ke:40,ce:40},
     turretFront:{ke:720,ce:1150},turretSide:{ke:340,ce:630},turretRear:{ke:55,ce:55},upper:{ke:40,ce:40}
   }};
+  // WIP18 game-trial values. This block is deliberately attached only to the
+  // 1998 trial profile; the M1A2 baseline and future vehicles stay disabled
+  // until they receive their own explicit susceptibility and policy data.
+  const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
+  const allowedCrewRoles=['driver','commander','gunner','loader'];
+  const reactionCategories=['temporaryFault','crewLight','crewSerious'];
+  const probabilities=(temporaryFault,crewLight,crewSerious)=>({temporaryFault,crewLight,crewSerious});
+  const zero=()=>Object.fromEntries(zones.map(zone=>[zone,probabilities(0,0,0)]));
+  M1A2_1998.hitReactions={enabled:true,victimProfileId:'M1A2_1998',roles:['driver','commander','gunner','loader'],susceptibility:{temporaryFault:1,crewLight:1,crewSerious:1},
+    policies:{'tank-ke/M829A2':{ammoId:'M829A2',rows:{
+      ricochet:zero(),nonPenetration:zero(),
+      nearNonPenetration:Object.fromEntries(zones.map((zone,i)=>[zone,probabilities([.015,.025,.035,.015,.025,.03,.025][i],0,0)])),
+      penetration:Object.fromEntries(zones.map((zone,i)=>[zone,probabilities([.05,.07,.10,.04,.06,.08,.06][i],[.03,.05,.03,.04,.07,.05,.05][i],[.005,.01,.005,.005,.01,.01,.01][i])]))},
+      faultWeights:{
+        hullFront:{mobility:1,turretDrive:0},hullSide:{mobility:1,turretDrive:0},hullRear:{mobility:1,turretDrive:0},
+        turretFront:{mobility:0,turretDrive:1},turretSide:{mobility:0,turretDrive:1},turretRear:{mobility:0,turretDrive:1},upper:{mobility:.5,turretDrive:.5}},
+      crewWeights:{light:{
+        hullFront:{driver:.70,commander:.10,gunner:.10,loader:.10},hullSide:{driver:.40,commander:.20,gunner:.20,loader:.20},hullRear:{driver:.55,commander:.15,gunner:.15,loader:.15},
+        turretFront:{driver:.05,commander:.20,gunner:.50,loader:.25},turretSide:{driver:.05,commander:.30,gunner:.30,loader:.35},turretRear:{driver:.05,commander:.20,gunner:.25,loader:.50},upper:{driver:.25,commander:.25,gunner:.25,loader:.25}},
+        serious:{
+        hullFront:{driver:.70,commander:.10,gunner:.10,loader:.10},hullSide:{driver:.40,commander:.20,gunner:.20,loader:.20},hullRear:{driver:.55,commander:.15,gunner:.15,loader:.15},
+        turretFront:{driver:.05,commander:.20,gunner:.50,loader:.25},turretSide:{driver:.05,commander:.30,gunner:.30,loader:.35},turretRear:{driver:.05,commander:.20,gunner:.25,loader:.50},upper:{driver:.25,commander:.25,gunner:.25,loader:.25}}}}},
+    faults:{mobility:{factor:.65,durationSeconds:[6,10]},turretDrive:{factor:.60,durationSeconds:[6,10]}},
+    crewEffects:{driver:{light:{drivePower:.85,hullTurn:.90},serious:{drivePower:.65,hullTurn:.75}},commander:{light:{commanderTurn:.85},serious:{commanderTurn:.65}},gunner:{light:{aimRate:.85,sigma:1.10},serious:{aimRate:.65,sigma:1.30}},loader:{light:{reloadEfficiency:.85},serious:{reloadEfficiency:.65}}}};
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
   function createRegistry(entries){
     const profiles=Object.create(null);
@@ -100,6 +124,31 @@ const VEHICLE_PROFILES=(()=>{
         if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
         if(typeof p.weapons.mainGun.ammunitionId!=='string'||!p.weapons.mainGun.ammunitionId)throw Error('탄약 ID 누락: '+id);
         for(const zone of ['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'])for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
+      }
+      if(p.hitReactions){
+        const h=p.hitReactions;
+        if(h.enabled===false){if(Object.keys(h).length!==1)throw Error('비활성 피격 반응 설정 오류: '+id);}
+        else{
+        if(h.enabled!==true)throw Error('피격 반응 활성 상태 오류: '+id);
+        const roles=h.roles;
+        if(h.victimProfileId!==id)throw Error('피격 반응 대상 프로파일 오류: '+id);
+        if(!Array.isArray(roles)||!roles.length||roles.length!==new Set(roles).size||roles.length!==p.crew||!roles.every(role=>allowedCrewRoles.includes(role)))throw Error('피격 반응 승무원 역할 오류: '+id);
+        if(!h.susceptibility||Object.keys(h.susceptibility).length!==reactionCategories.length||!reactionCategories.every(k=>Object.hasOwn(h.susceptibility,k)&&Number.isFinite(h.susceptibility[k])&&h.susceptibility[k]>=0))throw Error('피격 반응 감수성 오류: '+id);
+        if(!h.policies||!Object.keys(h.policies).length)throw Error('피격 반응 정책 누락: '+id);
+        for(const[policyId,policy]of Object.entries(h.policies)){
+          if(!/^[-a-z0-9]+\/[A-Za-z0-9_-]+$/.test(policyId)||typeof policy.ammoId!=='string'||!policy.ammoId||policyId.split('/')[1]!==policy.ammoId)throw Error('피격 반응 정책 ID 오류: '+id);
+          for(const classification of ['ricochet','nonPenetration','nearNonPenetration','penetration'])for(const zone of zones){
+            const row=policy.rows?.[classification]?.[zone],final=reactionCategories.map(k=>row?.[k]*h.susceptibility[k]);if(!row||Object.keys(row).length!==reactionCategories.length||!reactionCategories.every(k=>Object.hasOwn(row,k)&&Number.isFinite(row[k])&&row[k]>=0&&row[k]<=1)||final.some(v=>!Number.isFinite(v)||v<0||v>1)||final.reduce((sum,v)=>sum+v,0)>1+1e-12)throw Error('피격 반응 확률표 오류: '+id+'.'+policyId+'.'+classification+'.'+zone);
+          }
+          const validateWeights=(weights,names,label)=>{for(const zone of zones){const row=weights?.[zone];if(!row||Object.keys(row).length!==names.length||!names.every(k=>Object.hasOwn(row,k)&&Number.isFinite(row[k])&&row[k]>=0)||Math.abs(names.reduce((sum,k)=>sum+row[k],0)-1)>1e-9)throw Error('피격 반응 '+label+' 가중치 오류: '+id+'.'+zone);}};
+          validateWeights(policy.faultWeights,['mobility','turretDrive'],'장비');validateWeights(policy.crewWeights?.light,roles,'경상');validateWeights(policy.crewWeights?.serious,roles,'중상');
+        }
+        for(const kind of ['mobility','turretDrive']){const f=h.faults?.[kind];if(!f||!Number.isFinite(f.factor)||f.factor<=0||f.factor>1||!Array.isArray(f.durationSeconds)||f.durationSeconds.length!==2||!f.durationSeconds.every(Number.isFinite)||f.durationSeconds[0]<0||f.durationSeconds[1]<f.durationSeconds[0])throw Error('피격 반응 일시 이상 값 오류: '+id+'.'+kind);}
+        const effectKeys={driver:['drivePower','hullTurn'],commander:['commanderTurn'],gunner:['aimRate','sigma'],loader:['reloadEfficiency']};
+        if(!h.crewEffects||Object.keys(h.crewEffects).length!==roles.length||!roles.every(role=>Object.hasOwn(h.crewEffects,role)))throw Error('피격 반응 승무원 효과 역할 오류: '+id);
+        for(const role of roles)for(const severity of ['light','serious']){const effect=h.crewEffects?.[role]?.[severity],keys=effectKeys[role];if(!effect||Object.keys(effect).length!==keys.length||!keys.every(k=>Object.hasOwn(effect,k)&&Number.isFinite(effect[k])&&effect[k]>0&&(k==='sigma'?effect[k]>=1:effect[k]<=1)))throw Error('피격 반응 승무원 효과 오류: '+id+'.'+role);}
+        for(const role of roles)for(const key of effectKeys[role]){const light=h.crewEffects[role].light[key],serious=h.crewEffects[role].serious[key];if(key==='sigma'?serious<light:serious>light)throw Error('피격 반응 승무원 중상 효과 오류: '+id+'.'+role);}
+        }
       }
       profiles[id]=freeze(p);
     }

@@ -1,0 +1,138 @@
+{
+  "version": "0.4-WIP18",
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>/{impact,ui}",
+  "checks": [
+    "seed 2 end-to-end fire, flight and impact creates one real WIP18 outcome after HP",
+    "commander light and serious injuries scale browser auto-scan and fixed guard slew by 0.85/0.65 once",
+    "friendly UI, expiry, persistent injury, switching, pause and reset use simulation state",
+    "enemy private reaction data stays out of contacts while physical movement and turret remain natural",
+    "mobile landscape runs and portrait blocks input without losing injury state"
+  ],
+  "passed": 5,
+  "failed": 0,
+  "evidence": {
+    "browser": "156.0.8078.79",
+    "standalone": "dist/index.html",
+    "impactForced": false,
+    "uiStateInjection": true,
+    "actualImpact": {
+      "time": 28.60000000000027,
+      "shots": 5,
+      "outcome": {
+        "time": 28.55000000000027,
+        "category": "crewSerious",
+        "target": "driver",
+        "severity": "serious"
+      },
+      "record": {
+        "policyId": "tank-ke/M829A2",
+        "classification": "penetration",
+        "category": "crewSerious",
+        "target": "driver",
+        "severity": "serious",
+        "occurrence": 0.0840445002540946,
+        "targetRoll": 0.6758632154669613,
+        "durationRoll": null,
+        "totalChance": 0.085,
+        "changed": true,
+        "until": null
+      },
+      "hp": 98219.34140575097,
+      "stats": {
+        "applied": 5,
+        "records": 5,
+        "destroyed": 0,
+        "sequenceShooters": 1,
+        "recentIds": 0,
+        "reactionEligible": 5,
+        "reactionOutcomes": 1
+      }
+    },
+    "commanderRates": {
+      "auto": {
+        "normal": 0.02617993877991494,
+        "light": 0.0222529479629277,
+        "serious": 0.017016960206944712
+      },
+      "guard": {
+        "normal": 0.08726646259971649,
+        "light": 0.074176493209759,
+        "serious": 0.05672320068981571
+      }
+    },
+    "ui": {
+      "initial": {
+        "ready": "장전탄 1 · 저장 41 · WIP18 승무원 운전수 정상 / 전차장 정상 / 포수 경상 / 장전수 중상",
+        "roster": "대기 · 0 km/h · 일시 이상 기동 0.8초/포탑 0.8초 · 승무원 운 정상 / 전 정상 / 포 경상 / 장 중상"
+      },
+      "pausedTime": 0.39999999999999997,
+      "reset": [
+        {
+          "faults": {
+            "mobility": {
+              "active": false,
+              "remaining": 0
+            },
+            "turretDrive": {
+              "active": false,
+              "remaining": 0
+            }
+          },
+          "crew": {
+            "driver": "normal",
+            "commander": "normal",
+            "gunner": "normal",
+            "loader": "normal"
+          },
+          "modifiers": {
+            "drivePower": 1,
+            "hullTurn": 1,
+            "turretRate": 1,
+            "commanderRate": 1,
+            "gunnerAimRate": 1,
+            "gunnerSigma": 1,
+            "loaderEfficiency": 1
+          }
+        },
+        {
+          "faults": {
+            "mobility": {
+              "active": false,
+              "remaining": 0
+            },
+            "turretDrive": {
+              "active": false,
+              "remaining": 0
+            }
+          },
+          "crew": {
+            "driver": "normal",
+            "commander": "normal",
+            "gunner": "normal",
+            "loader": "normal"
+          },
+          "modifiers": {
+            "drivePower": 1,
+            "hullTurn": 1,
+            "turretRate": 1,
+            "commanderRate": 1,
+            "gunnerAimRate": 1,
+            "gunnerSigma": 1,
+            "loaderEfficiency": 1
+          }
+        }
+      ]
+    },
+    "privacy": {
+      "moved": 11.236971477135727,
+      "turned": 0.14115550924230869
+    },
+    "mobile": {
+      "landscape": true,
+      "portraitBlocked": true,
+      "injury": "light"
+    }
+  },
+  "scope": "Actual standalone Chromium: unforced seed-2 impact reaction, commander injury scan/guard rates, explicitly separated UI state injection, expiry/persistence/reset, privacy, physical behavior and mobile orientation."
+}

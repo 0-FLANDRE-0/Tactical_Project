@@ -19,18 +19,19 @@ const TacticalFireControl=(()=>{
     s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;return s;
   }
   const readiness=p=>p.fireControl.readiness;
-  function reloadSeconds(p,s){const r=readiness(p);return clamp(r.reloadSeconds+s.fatigueSeconds+s.shockSeconds,r.reloadSeconds,r.reloadMaxSeconds);}
+  function reloadSeconds(p,s,u=null){const r=readiness(p),efficiency=u?.hitReactionModifiers?.loaderEfficiency??1;return Math.min(r.reloadMaxSeconds,clamp(r.reloadSeconds+s.fatigueSeconds+s.shockSeconds,r.reloadSeconds,r.reloadMaxSeconds)/Math.max(Number.MIN_VALUE,efficiency));}
   function faultActive(s,kind,now){return Number.isFinite(s?.faultUntil?.[kind])&&s.faultUntil[kind]>now+1e-9;}
-  function observationPenalty(p,s,now){
+  function observationPenalty(p,s,now,u=null){
     const f=readiness(p).temporaryFault,active=faultActive(s,'commander',now)||faultActive(s,'gunner',now);
-    return{active,aimRateMultiplier:active?f.observationAimRateMultiplier:1,errorSigmaMultiplier:active?f.observationSigmaMultiplier:1};
+    const crewRate=u?.hitReactionModifiers?.gunnerAimRate??1,crewSigma=u?.hitReactionModifiers?.gunnerSigma??1;
+    return{active:active||crewRate<1||crewSigma>1,aimRateMultiplier:Math.min(active?f.observationAimRateMultiplier:1,crewRate),errorSigmaMultiplier:Math.max(active?f.observationSigmaMultiplier:1,crewSigma)};
   }
   function faultChance(p,damage){const f=readiness(p).temporaryFault;return clamp(f.baseChance+f.damageScaleChance*clamp((Number(damage)||0)/f.damageReference,0,1),f.baseChance,f.baseChance+f.damageScaleChance);}
   function faultDuration(p,roll){const [lo,hi]=readiness(p).temporaryFault.durationSeconds;return lo+(hi-lo)*clamp(roll,0,1);}
   function faultKind(p,roll){let cumulative=0;for(const kind of faultKinds){cumulative+=readiness(p).temporaryFault.kinds[kind];if(roll<cumulative)return kind;}return faultKinds.at(-1);}
   function advanceReadiness(u,p,s,dt,now){
     const r=readiness(p);s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
-    if(!s.loaded&&s.ammo>0){s.readyIdleSeconds=0;s.reloadStartedAt??=now-dt;s.reloadProgress=clamp(s.reloadProgress+dt/reloadSeconds(p,s),0,1);if(s.reloadProgress>=1-1e-12){s.loaded=true;s.reloadProgress=1;s.reloadCompletedAt=now;s.reloadStartedAt=null;}}
+    if(!s.loaded&&s.ammo>0){s.readyIdleSeconds=0;s.reloadStartedAt??=now-dt;s.reloadProgress=clamp(s.reloadProgress+dt/reloadSeconds(p,s,u),0,1);if(s.reloadProgress>=1-1e-12){s.loaded=true;s.reloadProgress=1;s.reloadCompletedAt=now;s.reloadStartedAt=null;}}
     else if(s.loaded){s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}
     else{s.reloadProgress=0;s.reloadStartedAt=null;s.readyIdleSeconds=0;}
   }
@@ -240,7 +241,7 @@ const TacticalFireControl=(()=>{
           s.targetMotion=Math.hypot(s.targetVelocity.x,s.targetVelocity.y);
           s.previousSample={x:c.pose.x,y:c.pose.y,time:c.sources.gunner.lastSeen};
         }
-        const aimPenalty=observationPenalty(p,s,now);
+        const aimPenalty=observationPenalty(p,s,now,u);
         if(!check.reason||check.reason==='reloading'){
           s.layTime+=dt*aimPenalty.aimRateMultiplier;s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt*aimPenalty.aimRateMultiplier);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
           s.status=check.reason==='reloading'?'reloading':s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=check.reason;
@@ -300,7 +301,7 @@ const TacticalFireControl=(()=>{
         s.lineProbeTarget=s.targetKey;s.lineProbePose=linePose;s.lineProbeBlocked=false;s.lineProbeResult='clear';s.lineProbeCandidateRevision=candidateRevision;
         const pose=sight.pose,range=Math.hypot(pose.x-u.x,pose.y-u.y);
         if(range>f.maxRange||Math.abs(diff(Math.atan2(pose.y-u.y,pose.x-u.x),u.turret))>f.alignmentTolerance){s.status='aligning';s.reason='fresh-alignment-failed';resetAim(s);clearPreview(s);continue;}
-        const firePenalty=observationPenalty(p,s,now),chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime,firePenalty.errorSigmaMultiplier),number=s.shotCount+1;
+        const firePenalty=observationPenalty(p,s,now,u),chance=estimate(u,pose,sight,f,s.targetVelocity,s.layTime,firePenalty.errorSigmaMultiplier),number=s.shotCount+1;
         if(!(chance.hitChance>0)){s.status='blocked';s.reason='no-presented-target';resetAim(s);clearPreview(s);continue;}
         // The last mutable readiness check must succeed before creating a
         // flight, effect or public event. Rejected fire never spends a round
@@ -335,10 +336,10 @@ const TacticalFireControl=(()=>{
     function probe(u,key){const s=init(u,profileOf(u));if(!key)return false;s.lineProbeRequest=key;return true;}
     function view(u,key=null){
       const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
-      const aimPenalty=observationPenalty(p,s,currentTime);
+      const aimPenalty=observationPenalty(p,s,currentTime,u);
       return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
         canFire:same&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
-        loading:{loaded:s.loaded,progress:s.reloadProgress,estimatedSeconds:s.loaded?0:s.ammo>0?(1-s.reloadProgress)*reloadSeconds(p,s):null,currentWorkSeconds:reloadSeconds(p,s),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots,fatigueSeconds:s.fatigueSeconds,shockSeconds:s.shockSeconds},
+        loading:{loaded:s.loaded,progress:s.reloadProgress,estimatedSeconds:s.loaded?0:s.ammo>0?(1-s.reloadProgress)*reloadSeconds(p,s,u):null,currentWorkSeconds:reloadSeconds(p,s,u),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots,fatigueSeconds:s.fatigueSeconds,shockSeconds:s.shockSeconds},
         aimPenalty,
         faults:Object.fromEntries(faultKinds.map(kind=>[kind,{active:faultActive(s,kind,currentTime),remaining:Math.max(0,s.faultUntil[kind]-currentTime)}])),
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};

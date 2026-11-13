@@ -127,9 +127,13 @@ const TacticalObservation=(()=>{
         if(!point)point=focus(u,ch,now);
         o.scanPhase??=hash(u.id+':'+ch,seed)*TAU;
         const scan=eq.scan,aim=point?Math.atan2(point.y-u.y,point.x-u.x):u.heading+scan.amplitude*Math.sin(now*TAU/scan.period+o.scanPhase);
+        const modifiers=u.hitReactionModifiers||{},reactionRate=ch==='gunner'?(modifiers.turretRate??1):(modifiers.commanderRate??1);
         const maxRate=ch==='gunner'?Math.min(p.mobility.turretRate,eq.rate):eq.rate;
         const hullRate=o.lastHeading===undefined?0:Math.abs(diff(u.heading,o.lastHeading))/dt;
-        const rate=point?maxRate:Math.min(maxRate,scan.rate+hullRate),field=ch==='gunner'?'turret':'commander';
+        // Apply a crew/equipment rate factor once to the actual commanded
+        // angular velocity, not merely to the wider equipment ceiling. This
+        // also slows ordinary automatic scan rates below that ceiling.
+        const rate=(point?maxRate:Math.min(maxRate,scan.rate+hullRate))*reactionRate,field=ch==='gunner'?'turret':'commander';
         u[field]+=clamp(diff(aim,u[field]),-rate*dt,rate*dt);o.lastHeading=u.heading;o.targetBearing=aim;o.activity=o.mode==='guard'?'guard':point?'confirm':'scan';
       }
       if(!sensors.commander.enabled||!sensors.commander.independent)u.commander=u.turret;

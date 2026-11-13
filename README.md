@@ -1,15 +1,14 @@
-# TACTICAL v0.4 WIP17 — 가변 맵 크기 지원 기반
+# TACTICAL v0.4 WIP18 — 피격 반응·승무원 경중상
 
-WIP17은 2m 고도·4m 지표·16m 길찾기 해상도를 유지하면서 지도 폭과 높이를 독립적으로 검증·인덱싱하는 기반이다. 기본 제품 지도는 기존 라스도르프 4×4km 그대로이며, 실제 8×8km 지도는 아직 만들거나 포함하지 않았다. 테스트에서만 실제 해상도의 합성 8×8km/직사각형 지도를 순차 생성해 코어·단일 HTML·내장 Worker·Chromium을 확인한다.
+WIP18은 기존 HP·관통 처리 뒤 살아 있는 `M1A2_1998`에만 무기 정책/피격 구역별 일시 기능 이상 또는 승무원 경상·중상 한 범주를 적용한다. 실제 이동·포탑/전차장 선회·포수 조준/오차·장전을 연결하면서 WIP15 반응과 기존 관측·AI·난수 계약을 유지한다. 보완판은 차량별 승무원 역할과 범주별 감수성을 사용하고, 활성 효과 정책을 탄약 레지스트리에 엄격히 연결하며, 전차장 부상 계수를 자동 수색과 지정 경계의 실제 각속도에 한 번 적용한다. 수치는 실차 취약성이나 의학 자료가 아닌 조정 가능한 게임 시험 제안이다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP17.zip). 압축을 풀면 `Tactical_v0.4_WIP17.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP17.html](Tactical_v0.4_WIP17.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP17 구현](docs/VARIABLE_MAP_FOUNDATION_WIP17.md) · [릴리스·검증](TACTICAL_RELEASE_WIP17.md) · [체크섬](SHA256SUMS_WIP17.txt) · [작업 목차](docs/tasks/README.md).
-- 다음 작업: [WIP18 일시 기능 이상·승무원 경중상 지시서](docs/tasks/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md). **현재 M1A2_1998 전용 설정**으로 무기·탄종·7구역별 확률과 중첩 제어를 구현하며 다른 차종에 자동 상속하지 않는다. **지시 등록·구현 대기** 상태다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP18.zip). 압축을 풀면 `Tactical_v0.4_WIP18.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP18.html](Tactical_v0.4_WIP18.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP18 구현](docs/HIT_REACTIONS_AND_CREW_INJURIES_WIP18.md) · [릴리스·검증](TACTICAL_RELEASE_WIP18.md) · [독립 병합 검토](docs/reviews/WIP18_MERGE_REVIEW_2026-11-13.md) · [체크섬](SHA256SUMS_WIP18.txt) · [작업 목차](docs/tasks/README.md).
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP17.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP17.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP18.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP18.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 전차 목록을 누르면 해당 전차로 확대한다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -92,7 +91,7 @@ WIP17은 2m 고도·4m 지표·16m 길찾기 해상도를 유지하면서 지도
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP17.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP18.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/map-spec.js`, `scripts/map_spec.py` | 할당 전 지도 규격·파생자료 계약 검증 |
 | `data/map-build-rasdorf-4km.json` | 기본 실측 지도 생성 입력·출력 설정 |
 | `tests/fixtures/sim-core-WIP11D.js`, `tests/helpers/los-wip11d-reference.cjs` | 빌드에 포함되지 않는 해시 고정 WIP11D 비교 코어와 로더 |
@@ -137,7 +136,7 @@ WIP17은 2m 고도·4m 지표·16m 길찾기 해상도를 유지하면서 지도
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP17
+python3 scripts/package_release.py WIP18
 node --check src/combat-state.js
 node --check src/mobility.js
 node --check src/tactical-ai.js
@@ -215,7 +214,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 적 경로 이동·기본 AI, 경량 구동·실제 지도, 관측, 자동교전, 가변 장전과 기본 HP 전투·표시 효과를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2 한 종류와 1,450 HP, 장전탄을 포함한 42발을 사용한다. 기본 장전은 5.98초이며 피로·피격 동요를 합친 장전 작업은 14초를 넘지 않는다. 기존 0/30/60° 관통 표, 고각 보간, 도탄과 과관통 피해 곡선은 유지한다. 비도탄 비관통의 방호력 부족이 15 미만일 때만 30% 확률의 근접 HP 피해를 별도로 시험한다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. 포탑 피격의 3~8초 일시 이상은 관측·사통 대응을 나타내며 영구 모듈 손상이나 승무원 부상이 아니다. WIP12 효과는 내부 결과가 확정된 뒤 생성되며 입자 충돌이나 화면 표시가 판정을 바꾸지 않는다. 도탄 후 추가 충돌·피해, 새 탄종, 영구 모듈/승무원 피해·화재·유폭·수리, 탄약 구획별 이전·재보급, 자동장전 차량과 보병은 후속 범위다. 장갑·탄약 표와 HP는 사용자 지정 게임 데이터이며 실장비 성능 검증이 아니다. 전체 검사 결과와 미실행 항목은 WIP17 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP15의 3~8초 사통/관측 대응은 독립적으로 유지되고, WIP18은 `M1A2_1998`에만 6~10초 기동/포탑 구동 이상과 운전수·전차장·포수·장전수의 지속 경상/중상을 추가한다. 한 착탄의 WIP18 결과는 최대 한 범주이며, 같은 능력의 계수는 곱하지 않고 가장 심한 값만 쓴다. WIP12 효과는 판정을 바꾸지 않는다. 도탄 후 추가 피해, 새 탄종/차종, 영구 모듈 손상·승무원 사망/치료/교체·화재·유폭·수리, 탄약 구획 이동/재보급은 후속 범위다. 장갑·탄약·확률·부상 계수는 게임 데이터이며 실장비 성능 검증이 아니다. 전체 결과는 WIP18 릴리스 문서에 있다.
 
 ## 출처
 
