@@ -11,8 +11,8 @@ test('runtime factory selects the active WIP15 profile, defaults auto and reject
 
 test('actual core selects each registered firing profile without sharing state or sensor tuning',()=>{
  const fs=require('fs'),{mapFor}=require('./helpers/observation-core-fixture.cjs'),a=structuredClone(P.M1A2),b=structuredClone(P.M1A2);b.id='TEST_B';b.sensors.gunner.range=650;b.fireControl.testRounds=12;b.fireControl.aimSeconds=3;
- const profiles=P.registry.create([a,b]),source=fs.readFileSync(require.resolve('../src/sim-core.js'),'utf8');
- const C=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(mapFor('flat'),profiles,require('../src/mobility.js'),require('../src/tactical-ai.js'),require('../src/observation.js'),require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
+ const profiles=P.registry.create([a,b]),MapSpec=require('../src/map-spec.js'),source=fs.readFileSync(require.resolve('../src/sim-core.js'),'utf8');
+ const C=new Function('BATTLEFIELD_DATA','TacticalMapSpec','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(mapFor('flat'),MapSpec,profiles,require('../src/mobility.js'),require('../src/tactical-ai.js'),require('../src/observation.js'),require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
  const x=C.makeTank('X','X',500,1000,0,'blue','M1A2'),y=C.makeTank('Y','Y',500,1100,0,'blue','TEST_B');assert.equal(C.profileOf(y).sensors.gunner.range,650);assert.equal(C.profileOf(x).sensors.gunner.range,2000);assert.equal(x.fireControl.ammo,42);assert.equal(y.fireControl.ammo,12);assert.equal(C.profileOf(y).fireControl.aimSeconds,3);y.fireControl.ammo--;assert.equal(x.fireControl.ammo,42);
 });
 

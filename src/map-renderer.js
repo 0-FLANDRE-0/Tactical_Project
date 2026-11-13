@@ -40,7 +40,8 @@ const TacticalTerrainStyle=(()=>{
 class TacticalRenderer {
   constructor(core, contours, terrain=null) {
     this.C=core;
-    if(contours.sourceMapHash!==core.MAP.meta.mapHash)throw Error('등고선과 지형 버전 불일치');
+    const mapSpecApi=typeof TacticalMapSpec!=='undefined'?TacticalMapSpec:require('./map-spec.js');
+    mapSpecApi.validateDerived(core.SPEC,contours,'contour');
     this.cache=document.createElement('canvas');
     this.shade=document.createElement('canvas');
     this.key='';
@@ -58,8 +59,9 @@ class TacticalRenderer {
     this.roads=core.roads.slice().sort((a,b)=>a.width-b.width).map(f=>({...f,...line(f.points)}));
     this.waterways=core.waterways.filter(s=>!s.culvert).map(f=>({...f,...line(f.points)}));
     this.contours=contours.lines.map(f=>({...f,...line(f.points)}));
-    this.terrainValid=!!terrain&&terrain.sourceMapHash===core.MAP.meta.mapHash&&terrain.schemaVersion===1;
-    if(!this.terrainValid)console.error('지형 해석선 데이터 누락 또는 지도 버전 불일치');
+    this.terrainValid=mapSpecApi.validateDerived(core.SPEC,terrain,'terrain readability',{optional:true});
+    if(this.terrainValid&&terrain.schemaVersion!==1)throw Error('unsupported terrain readability schema');
+    if(!this.terrainValid)console.info('지형 해석선 데이터가 없어 기본 지형 표시를 사용함');
     this.terrainVersion=this.terrainValid?terrain.algorithmVersion:'unavailable';
     this.terrainLines=this.terrainValid?terrain.lines.map(f=>({...f,...line(f.points)})):[];
     const tiles=new Map();

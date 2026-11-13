@@ -3,7 +3,7 @@
  * lives inside the offline HTML and decodes its own copy of the frozen map. */
 class TacticalVisibilityClient {
   constructor(C,V,source,platform={Worker:globalThis.Worker,Blob:globalThis.Blob,URL:globalThis.URL}){
-    this.C=C;this.V=V;this.seq=0;this.pending=null;this.worker=null;this.platform=platform;
+    this.C=C;this.V=V;this.seq=0;this.pending=null;this.worker=null;this.platform=platform;this.failed=false;
     if(!platform.Worker)return;
     try{
       const workerCode=source()+`\nself.onmessage=e=>{const {id,observer,options}=e.data;try{self.postMessage({id,result:TacticalVisibility.compute(TacticalCore,observer,options)});}catch(error){self.postMessage({id,error:String(error)});}};self.postMessage({ready:true});`;
@@ -21,7 +21,7 @@ class TacticalVisibilityClient {
   releaseURL(){if(this.url){this.platform.URL.revokeObjectURL(this.url);this.url=null;}}
   cancel(){if(this.pending){this.pending.resolve(null);this.pending=null;}}
   fallback(){
-    this.worker?.terminate();this.worker=null;this.releaseURL();
+    this.failed=true;this.worker?.terminate();this.worker=null;this.releaseURL();
     const p=this.pending;if(!p)return;this.pending=null;
     try{p.resolve(this.V.compute(this.C,p.observer,p.options));}catch(error){p.reject(error);}
   }
@@ -33,5 +33,6 @@ class TacticalVisibilityClient {
       else this.fallback();
     });
   }
+  status(){return{mode:this.worker?'worker':'fallback',failed:this.failed,pending:!!this.pending};}
 }
 if(typeof module!=='undefined')module.exports=TacticalVisibilityClient;

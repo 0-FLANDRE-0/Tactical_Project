@@ -6,12 +6,12 @@
 
 | 데이터 범위 | 최신 정리 문서 | 내용 |
 |---|---|---|
-| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | WIP16 main 통합. **WIP17 가변 맵 크기 기반 지시 등록·구현 대기, 실제 8×8 지도 제작은 후속**. 장기 계획·결정 대기·정보 공개 방향 (최종 갱신 2026-11-12) |
+| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | **WIP17 최종 624d80d 독립 재검증 후 main 통합, 실제 8×8 지도 제작은 후속**. 장기 계획·결정 대기·정보 공개 방향 (최종 갱신 2026-11-13) |
 | **모듈 일시 성능 저하·승무원 부상·탄약고 예외 (2026-11-12)** | [combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md](combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md) | **모듈 영구 손상·파괴 제외 [확정]**. 승무원 경상/중상·탄약고 즉시 격파는 **검토 중**. 기존 모듈 HP·영구 수리 구상보다 새로운 방향 우선 |
 | **기관포 관통 피해 정책·M791/M919 시험값 (2026-11-13)** | [combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md](combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md) | **기관포 치명타 없음·과관통 피해 대폭 감쇄 [확정]**. M791 87HP·M919 78HP/모듈 일시 상태이상 확률 소폭 상향은 잠정 설계. 관통·속도값 별도 기록, 피해 배율 곡선·상태이상 확률 수치 미정, 미구현 |
 | **주독미육군 IFV·CFV 라인업 (2026-11-12)** | [vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md](vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) | IFV/CFV **별도 분류**. **M2·M2A1 동일 7구역 장갑·550 HP**, M2A1 일시 기능이상·화재 위험 소폭 감소 방향(확률 미정). M2A2·CFV 세부 형식은 미정, **미구현** |
 | **보병 설계 논의 백업** | [infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md](infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md) | 병사별 누적 부상·개별 파편 피격, AI/플레이어 역할, 보병 대전차탄 후보값, 재보급·프리셋 변경. **방향·예시·제안·미정 구분 / 코드 미구현** |
-| **작업 지시서 백업** | [instructions/](instructions/) | 완료한 WIP09~WIP16 지시서·기준표와 [WIP17 진행 지시서](../docs/tasks/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) 링크. 완료 전 원본은 docs/tasks에서 관리 |
+| **작업 지시서 백업** | [instructions/](instructions/) | 완료한 WIP09~WIP17 지시서·기준표와 [WIP17 완료 안내](../docs/tasks/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md). 구현 설명·검증 결과·병합 검토는 각 버전 문서에 분리해 보존 |
 | **M1 계열 상면도 뷰어** | [art/M1_Abrams_TopView.html](art/M1_Abrams_TopView.html) | M1A2/M1A1/M1A1 HA 단독 뷰어·삽입용 HTML, 원본 JS, 포탑 링 실측 확인 이미지 |
 | **전차 방호력·차량 HP (본편 32종 + 확장 2종)** | [tanks/README.md](tanks/README.md) | 7구역 KE(CE), ERA/BDD/D-Tech, **§9 차량 최대 HP 34종**, 계열·연식별 구분. **HP 확정 데이터 / 피해량·모듈 HP 미정** |
 | **관통·피해·모듈 HP 설계** | [combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md](combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) | M829A1 기준 피해 380 및 게임 피해 곡선. **M829A2는 A1형 배율 공유·100% 기준 405, WIP15에서 근접 비관통 시험 피해 적용**. M830은 시험 후보, 추가 탄속·영구 모듈 피해 미정 |
@@ -21,7 +21,7 @@
 | **장갑 세부 구획 검토 메모 (미확정)** | [tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md](tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md) | 7구역 내부 상/하부·포방패·좌우 뺨·측면 전후·지붕 분할 후보, LOS·이동 상태·사통/관측 확률 아이디어. **현재 미확정·미구현** |
 | **탄약 및 적재 프리셋** | [ammo/README.md](ammo/README.md) | 탄종별 게임 관통력, 전차별 기본탄, **32종×3=96개** 적재 프리셋, 구획·장전·보급 설계 |
 | **0~10m KE 3각도·5mm 기준표 (29종)** | [ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md](ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md) | 29종 0°/30°/60°의 5mm 근거리 게임값. 3BM32 505/425/275 버프, 3BM42 450/380/250 너프. 나머지 2km 값 유지 |
-| **대형 단일 전장·포병 실체·최적화·보병 분대 AI** | [performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md](performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md) | **전역지도는 임시 보관**, 4×4 유지·8×8/9×12 확장 후보, 포병 실제 유닛, 경로탐색·LOS 현행/제안 구분, **분대 공통 관측·판단 / 병사별 피격·부상**. 성능 검증·코드 구현 전 |
+| **대형 단일 전장·포병 실체·최적화·보병 분대 AI** | [performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md](performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md) | **전역지도는 임시 보관**, 4×4 유지·8×8/9×12 확장 후보, 포병 실제 유닛, 경로탐색·LOS 현행/제안 구분, **분대 공통 관측·판단 / 병사별 피격·부상**. WIP17 가변 크기 기반 main 통합. 실지도·장기 최적화·분대 AI는 후속 |
 | **폐기된 통합 문서 안내** | [TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md](TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md) | 구형 통합 데이터는 최신 기준에서 제외. 과거 내용은 Git 파일 이력에서 확인 |
 
 ## 데이터 유지 원칙

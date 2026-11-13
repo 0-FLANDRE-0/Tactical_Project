@@ -1,5 +1,5 @@
 {
-  "version": "0.4-WIP16",
+  "version": "0.4-WIP17",
   "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
   "passed": 16,
   "failed": 0,
@@ -12,7 +12,7 @@
     {
       "name": "measured 2m cell-centre samples decode without missing heights",
       "status": "PASS",
-      "ms": 2
+      "ms": 4
     },
     {
       "name": "height interpolation is continuous at grid boundaries",
@@ -27,12 +27,12 @@
     {
       "name": "selected building footprints retain real OSM identities",
       "status": "PASS",
-      "ms": 14
+      "ms": 23
     },
     {
       "name": "all initial vehicles have clear footprints",
       "status": "PASS",
-      "ms": 2
+      "ms": 4
     },
     {
       "name": "actual building interior blocks navigation and rejects a destination",
@@ -47,22 +47,22 @@
     {
       "name": "four real-map routes arrive with zero collisions",
       "status": "PASS",
-      "ms": 4749
+      "ms": 5639
     },
     {
       "name": "reverse retains hull facing on a rearward route",
       "status": "PASS",
-      "ms": 58
+      "ms": 74
     },
     {
       "name": "stop cancels path and brakes",
       "status": "PASS",
-      "ms": 99
+      "ms": 119
     },
     {
       "name": "fixed physics results match between render batches",
       "status": "PASS",
-      "ms": 673
+      "ms": 742
     },
     {
       "name": "observation range is enforced",
@@ -72,7 +72,7 @@
     {
       "name": "real relief exposes the turret more than the hull",
       "status": "PASS",
-      "ms": 0
+      "ms": 1
     },
     {
       "name": "actual woodland attenuates observation",

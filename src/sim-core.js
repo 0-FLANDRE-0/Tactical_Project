@@ -4,12 +4,15 @@
  * Navigation and observation caches are derived from that same frozen map. */
 const TacticalCore = (() => {
   if (typeof BATTLEFIELD_DATA === 'undefined') throw Error('전장 데이터가 없음');
+  const mapSpecApi=typeof TacticalMapSpec!=='undefined'?TacticalMapSpec:null;
+  if (!mapSpecApi) throw Error('전장 규격 검증기가 없음');
   const MAP = BATTLEFIELD_DATA, M = MAP.meta;
-  if (M.width !== 4000 || M.height !== 4000 || MAP.heightmap.spacing !== 2) throw Error('전장 규격 오류');
-  const WORLD = {w:M.width,h:M.height,step:2,nav:16};
   const registry=VEHICLE_PROFILES.registry;
   const ACTIVE_PROFILE_ID=registry.has('M1A2_1998')?'M1A2_1998':'M1A2';
   const PROFILE=registry.get(ACTIVE_PROFILE_ID);
+  // Validation is deliberately before every world-sized decode/allocation.
+  const SPEC=mapSpecApi.validate(MAP,{navigationContract:PROFILE.navigation.contract});
+  const WORLD = {w:SPEC.width,h:SPEC.height,step:SPEC.heightmap.spacing,nav:SPEC.navigation.spacing};
   const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
   const profileOf=u=>{const p=registry.get(u?.profileId??ACTIVE_PROFILE_ID);return u?.profileOverride||p;};
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -67,9 +70,9 @@ const TacticalCore = (() => {
     const minY=Math.min(...all.map(p=>p[1])),maxY=Math.max(...all.map(p=>p[1]));
     return {...b,rings,minX,maxX,minY,maxY,roof:heightAt((minX+maxX)/2,(minY+maxY)/2)+b.z};
   });
-  const bucketSize=64,bucketCols=Math.ceil(WORLD.w/bucketSize),buildingBuckets=new Map();
+  const bucketSize=64,bucketCols=Math.ceil(WORLD.w/bucketSize),bucketRows=Math.ceil(WORLD.h/bucketSize),buildingBuckets=new Map();
   for(const b of buildings) {
-    for(let y=Math.floor(b.minY/64);y<=Math.floor(b.maxY/64);y++) for(let x=Math.floor(b.minX/64);x<=Math.floor(b.maxX/64);x++) {
+    for(let y=Math.max(0,Math.floor(b.minY/bucketSize));y<=Math.min(bucketRows-1,Math.floor(b.maxY/bucketSize));y++) for(let x=Math.max(0,Math.floor(b.minX/bucketSize));x<=Math.min(bucketCols-1,Math.floor(b.maxX/bucketSize));x++) {
       const key=y*bucketCols+x;
       if(!buildingBuckets.has(key)) buildingBuckets.set(key,[]);
       buildingBuckets.get(key).push(b);
@@ -95,8 +98,8 @@ const TacticalCore = (() => {
   }
   function buildingAt(x,y,pad=0) {
     const seen=new Set();
-    for(let by=Math.floor((y-pad)/64);by<=Math.floor((y+pad)/64);by++) for(let bx=Math.floor((x-pad)/64);bx<=Math.floor((x+pad)/64);bx++) {
-      if(bx<0||by<0||bx>=bucketCols||by>=bucketCols) continue;
+    for(let by=Math.floor((y-pad)/bucketSize);by<=Math.floor((y+pad)/bucketSize);by++) for(let bx=Math.floor((x-pad)/bucketSize);bx<=Math.floor((x+pad)/bucketSize);bx++) {
+      if(bx<0||by<0||bx>=bucketCols||by>=bucketRows) continue;
       const candidates=buildingBuckets.get(by*bucketCols+bx);
       if(!candidates) continue;
       for(const b of candidates) {
@@ -129,7 +132,7 @@ const TacticalCore = (() => {
     const code=surfaceCode(x,y);
     return ([1,1.12,2.15,1.05,1.35,Infinity,2.8,.58,.58,Infinity][code])*(1+slopeAt(x,y)*3);
   }
-  const nav=WORLD.nav,cols=Math.ceil(WORLD.w/nav),rows=Math.ceil(WORLD.h/nav),navCost=new Float32Array(cols*rows),edges=new Uint8Array(cols*rows);
+  const nav=WORLD.nav,cols=SPEC.navigation.columns,rows=SPEC.navigation.rows,navCost=new Float32Array(SPEC.navigation.cells),edges=new Uint8Array(SPEC.navigation.cells);
   const dirs=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
   const opposite=[1,0,3,2,7,6,5,4];
   const cellPoint=id=>({x:(id%cols+.5)*nav,y:(Math.floor(id/cols)+.5)*nav});
@@ -447,10 +450,10 @@ const TacticalCore = (() => {
   const effectEventStats=s=>fireFor(s).effectStats();
   const fireDebugRecords=s=>s.recordFireEvents?fireFor(s).debugRecords():[];
   const roofGrid=new Float32Array(TH.columns*TH.rows);
-  for(const b of buildings) for(let y=Math.max(0,Math.floor(b.minY/4));y<=Math.min(999,Math.floor(b.maxY/4));y++) for(let x=Math.max(0,Math.floor(b.minX/4));x<=Math.min(999,Math.floor(b.maxX/4));x++) {
-    if(insideBuilding(x*4+2,y*4+2,b))roofGrid[y*1000+x]=Math.max(roofGrid[y*1000+x],b.roof);
+  for(const b of buildings) for(let y=Math.max(0,Math.floor(b.minY/TH.spacing));y<=Math.min(TH.rows-1,Math.floor(b.maxY/TH.spacing));y++) for(let x=Math.max(0,Math.floor(b.minX/TH.spacing));x<=Math.min(TH.columns-1,Math.floor(b.maxX/TH.spacing));x++) {
+    if(insideBuilding((x+.5)*TH.spacing,(y+.5)*TH.spacing,b))roofGrid[y*TH.columns+x]=Math.max(roofGrid[y*TH.columns+x],b.roof);
   }
-  function roofAt(x,y){return roofGrid[clamp(Math.floor(y/4),0,999)*1000+clamp(Math.floor(x/4),0,999)];}
+  function roofAt(x,y){return roofGrid[clamp(Math.floor(y/TH.spacing),0,TH.rows-1)*TH.columns+clamp(Math.floor(x/TH.spacing),0,TH.columns-1)];}
   // LOS needs only a single spatial bucket and no clearance/duplicate set.
   // Keep exact polygon checks, including structures thinner than the roof atlas.
   function sightRoofBlocked(x,y,ray){
@@ -613,6 +616,6 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,fireStatus,fireMode,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

@@ -23,11 +23,10 @@ test('terrain emphasis increases colour and shade separation without changing he
   assert(distance(emphasis)>distance(held));
 });
 
-test('missing or mismatched interpretation data disables only derived lines',()=>{
+test('missing interpretation is optional but mismatched derived data is rejected',()=>{
   global.document={createElement:()=>({})};global.Path2D=class{moveTo(){}lineTo(){}closePath(){}arc(){}ellipse(){}};
-  const core={MAP:{meta:{mapHash:'map'}},fields:[],forests:[],water:[],buildings:[],roads:[],waterways:[],trees:[],hash:()=>0};
-  const contours={sourceMapHash:'map',lines:[]};
-  const previous=console.error;console.error=()=>{};
-  try{const renderer=new TacticalRenderer(core,contours,{schemaVersion:1,sourceMapHash:'wrong',lines:[]});assert.equal(renderer.terrainValid,false);assert.deepEqual(renderer.terrainLines,[]);}
-  finally{console.error=previous;delete global.document;delete global.Path2D;}
+  const mapSpec={version:1,width:64,height:64,heightColumns:32,heightRows:32,heightSpacing:2,surfaceColumns:16,surfaceRows:16,surfaceSpacing:4,navigationColumns:4,navigationRows:4,navigationSpacing:16},core={SPEC:{hash:'map',width:64,height:64,heightmap:{columns:32,rows:32,spacing:2},terrain:{columns:16,rows:16,spacing:4},navigation:{columns:4,rows:4,spacing:16}},fields:[],forests:[],water:[],buildings:[],roads:[],waterways:[],trees:[],hash:()=>0};
+  const contours={sourceMapHash:'map',mapSpec,lines:[]};
+  try{const renderer=new TacticalRenderer(core,contours,null);assert.equal(renderer.terrainValid,false);assert.deepEqual(renderer.terrainLines,[]);assert.throws(()=>new TacticalRenderer(core,contours,{schemaVersion:1,sourceMapHash:'wrong',mapSpec,lines:[]}),/source hash/);}
+  finally{delete global.document;delete global.Path2D;}
 });

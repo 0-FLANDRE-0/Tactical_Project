@@ -89,15 +89,19 @@ class TerrainReadabilityTests(unittest.TestCase):
         self.assertEqual(actual["lineCounts"], {"ridge": 47, "valley": 59})
         self.assertTrue(all(line["crossReliefMetres"] >= .5 for line in actual["lines"]))
 
-    def test_original_map_contours_manifest_and_battlefield_bytes_are_unchanged(self):
+    def test_original_map_manifest_and_battlefield_bytes_are_unchanged_and_contour_geometry_is_stable(self):
         expected = {
             "data/rasdorf_4km.json": "034b6749eccfe23ead935dd6d2db62fa0064e2eeb539a22b479638a9de0a87ce",
-            "data/contours.json": "f69eac65070d30938b37762b7cd1f513b2d0c82f896fc2900cd5740b522696da",
+            # Only the WIP17 dimension signature was added; line geometry below is pinned separately.
+            "data/contours.json": "866d45663cfdf627ec0678ec8ee3c25ec331d2c2ffdfb4d076c40b8258cf54fd",
             "data/map_manifest.json": "614cbc31d6e75654aad6194c7b376d5757db36386b2d8d8b0f4d9ad66abfee6a",
             "src/battlefield-data.js": "7a8891186d216f01effe70d41e146046575ebdd5132ba77562bcd496dd4c3cd7",
         }
         for name, digest in expected.items():
             self.assertEqual(hashlib.sha256((ROOT / name).read_bytes()).hexdigest(), digest, name)
+        contours = json.loads((ROOT / "data/contours.json").read_text())
+        lines_hash = hashlib.sha256(json.dumps(contours["lines"], separators=(",", ":")).encode()).hexdigest()
+        self.assertEqual(lines_hash, "d1682dc3d445c6992a103deb7bdcab6e1a21398b589b355d6eed9cb27c4986b2")
 
 
 if __name__ == "__main__":
