@@ -4,6 +4,7 @@
 
 | 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-13) |
 |---|---|---|---|---|
+| WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [진행 지시서](../../docs/tasks/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | — | 미생성 | 지시서 등록 · 구현/검증 대기 · 완료 후 원본 보존 |
 | WIP18 일시 기능 이상·승무원 경중상 | [원본 지시서](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | — | `feat/wip18-hit-reactions` | 최종 6c5e4f3 독립 재검증 통과 · main 병합 (2026-11-13) · M1A2_1998 전용 시험 설정 |
 | WIP17 가변 맵 크기 지원 기반 | [원본 지시서](TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) | — | `feat/wip17-variable-map-foundation` | 최종 624d80d 독립 재검증 통과 · main 병합 (2026-11-13) · 실제 8×8 지도 제작 제외 |
 | WIP16 적 AI 교전 판단·표적 선택·행동 안정화 | [기본 지시서](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) · [능선 캐시 보완](TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md) · [halt 재확인 보완](TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md) | — | PR #15 | 최종 47f9e07 독립 재검증 통과 · main 병합 |

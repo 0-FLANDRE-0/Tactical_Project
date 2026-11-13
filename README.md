@@ -5,6 +5,7 @@ WIP18은 기존 HP·관통 처리 뒤 살아 있는 `M1A2_1998`에만 무기 정
 - 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP18.zip). 압축을 풀면 `Tactical_v0.4_WIP18.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP18.html](Tactical_v0.4_WIP18.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP18 구현](docs/HIT_REACTIONS_AND_CREW_INJURIES_WIP18.md) · [릴리스·검증](TACTICAL_RELEASE_WIP18.md) · [독립 병합 검토](docs/reviews/WIP18_MERGE_REVIEW_2026-11-13.md) · [체크섬](SHA256SUMS_WIP18.txt) · [작업 목차](docs/tasks/README.md).
+- 다음 작업: [WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널](docs/tasks/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md). **지시서 등록·구현 대기**이며 현재 배포판은 WIP18이다. 지도 조작을 우측 상단으로 옮기고 아래에 선택 유닛 정보를 배치하며, 승무원 피해는 이 정보에만 표시한다.
 
 ## 실행과 조작
 
