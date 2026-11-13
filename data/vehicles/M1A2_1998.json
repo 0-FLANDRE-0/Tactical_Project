@@ -331,6 +331,7 @@
       }
     },
     "hitReactions": {
+      "enabled": true,
       "victimProfileId": "M1A2_1998",
       "roles": [
         "driver",
@@ -338,7 +339,11 @@
         "gunner",
         "loader"
       ],
-      "susceptibility": 1,
+      "susceptibility": {
+        "temporaryFault": 1,
+        "crewLight": 1,
+        "crewSerious": 1
+      },
       "policies": {
         "tank-ke/M829A2": {
           "ammoId": "M829A2",
@@ -941,7 +946,7 @@
     "hitReactions": {
       "status": "fictional game trial",
       "source": "TACTICAL_WIP18_HIT_REACTIONS",
-      "note": "Explicitly scoped to victim profile M1A2_1998 and attack policy tank-ke/M829A2. Zone rates, target weights, 6–10s faults and crew efficiency factors are adjustable game proposals, not measured vehicle vulnerability or human injury data."
+      "note": "Explicitly enabled only for victim profile M1A2_1998 and bound attack policy tank-ke/M829A2. Profile roles, category-specific susceptibility, zone rates, target weights, 6–10s faults and crew efficiency factors are adjustable game proposals, not measured vehicle vulnerability or human injury data."
     }
   },
   "limits": [

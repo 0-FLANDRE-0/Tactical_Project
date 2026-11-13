@@ -21,12 +21,31 @@ const TacticalCombatState=(()=>{
     has:id=>Object.hasOwn(AMMUNITION,id),
     get(id){if(!Object.hasOwn(AMMUNITION,id))throw Error('등록되지 않은 탄약: '+id);return AMMUNITION[id];}
   });
+  function validateHitReactionBindings(p){
+    const config=p?.hitReactions;
+    if(!config)return'not-participant';
+    if(config.enabled===false)return'disabled';
+    if(config.enabled!==true)throw Error('피격 반응 활성 상태 오류: '+(p?.id??'unknown'));
+    const entries=Object.entries(config.policies||{});if(!entries.length)throw Error('피격 반응 효과 정책 누락: '+p.id);
+    for(const[policyId,policy]of entries){
+      if(!policy||typeof policy.ammoId!=='string'||!ammunitionRegistry.has(policy.ammoId))throw Error('피격 반응 효과 정책 탄약 연결 오류: '+p.id+'.'+policyId);
+      const ammo=ammunitionRegistry.get(policy.ammoId);
+      if(ammo.hitReactionPolicyId!==policyId)throw Error('피격 반응 효과 정책 ID 연결 오류: '+p.id+'.'+policyId);
+    }
+    return'active';
+  }
+  function validateProfileRegistry(registry){
+    if(!registry||typeof registry.list!=='function')throw Error('차량 프로파일 레지스트리 누락');
+    for(const profile of registry.list())validateHitReactionBindings(profile);
+    return registry;
+  }
   function finitePositive(v,label){if(!Number.isFinite(v)||v<=0)throw Error(label+' 값 오류');return v;}
   function validateProfile(p){
     if(!p?.combat)throw Error('차량 전투 프로파일 누락');
     finitePositive(p.combat.maxHp,'최대 HP');
     if(!p.weapons?.mainGun?.ammunitionId)throw Error('주포 탄약 ID 누락');
     ammunitionRegistry.get(p.weapons.mainGun.ammunitionId);
+    validateHitReactionBindings(p);
     for(const zone of ZONES){const a=p.combat.armor?.[zone];if(!a||!Number.isFinite(a.ke)||a.ke<0)throw Error('장갑 값 오류: '+zone);}
     return p;
   }
@@ -37,25 +56,29 @@ const TacticalCombatState=(()=>{
     initHitReactions(u,p);
     return u.combat;
   }
-  const CREW_ROLES=Object.freeze(['driver','commander','gunner','loader']),SEVERITY=Object.freeze({normal:0,light:1,serious:2});
+  const ALLOWED_CREW_ROLES=Object.freeze(['driver','commander','gunner','loader']),SEVERITY=Object.freeze({normal:0,light:1,serious:2});
   const normalModifiers=()=>({drivePower:1,hullTurn:1,turretRate:1,commanderRate:1,gunnerAimRate:1,gunnerSigma:1,loaderEfficiency:1});
   function initHitReactions(u,p){
     const config=p?.hitReactions;if(!config)return null;
+    if(config.enabled===false)return null;
+    validateHitReactionBindings(p);
     if(config.victimProfileId!==p.id)throw Error('피격 반응 대상 프로파일 오류');
-    if(!u.hitReactions)u.hitReactions={profileId:p.id,faultUntil:{mobility:0,turretDrive:0},crew:Object.fromEntries(CREW_ROLES.map(role=>[role,'normal'])),lastOutcome:null};
+    if(!u.hitReactions)u.hitReactions={profileId:p.id,faultUntil:{mobility:0,turretDrive:0},crew:Object.fromEntries(config.roles.map(role=>[role,'normal'])),lastOutcome:null};
     if(u.hitReactions.profileId!==p.id)throw Error('피격 반응 상태 프로파일 불일치');
     if(!u.hitReactions._processed)Object.defineProperty(u.hitReactions,'_processed',{value:{ids:new Set(),queue:[]},enumerable:false});
     return u.hitReactions;
   }
-  function weighted(weights,roll){let cumulative=0,last=null;for(const[key,value]of Object.entries(weights)){if(value>0)last=key;cumulative+=value;if(roll<cumulative)return key;}return last;}
+  function weighted(weights,roll,order=Object.keys(weights)){let cumulative=0,last=null;for(const key of order){const value=weights[key];if(value>0)last=key;cumulative+=value;if(roll<cumulative)return key;}return last;}
   function reactionClass(result){return result.ricochet?'ricochet':result.penetrated?'penetration':result.nearNonPenetration?'nearNonPenetration':'nonPenetration';}
   function resolveHitReaction(profile,ammoId,result,rolls){
-    const config=profile?.hitReactions,ammo=ammunitionRegistry.get(ammoId);if(!config||config.victimProfileId!==profile.id||!result?.hit)return null;
+    const config=profile?.hitReactions;if(!config||config.enabled===false||!result?.hit)return null;
+    validateHitReactionBindings(profile);
+    const ammo=ammunitionRegistry.get(ammoId);if(config.victimProfileId!==profile.id)return null;
     const policyId=ammo.hitReactionPolicyId,policy=config.policies?.[policyId];if(!policy||policy.ammoId!==ammoId)return null;
     const classification=reactionClass(result),row=policy.rows[classification]?.[result.zone];if(!row)return null;
     for(const value of Object.values(rolls||{}))if(!Number.isFinite(value)||value<0||value>1)throw Error('피격 반응 난수 값 오류');
     const occurrence=rolls?.occurrence??0,targetRoll=rolls?.target??0,durationRoll=rolls?.duration??0,s=config.susceptibility;
-    const limits=[['temporaryFault',row.temporaryFault*s],['crewLight',row.crewLight*s],['crewSerious',row.crewSerious*s]];let cumulative=0,category=null;
+    const limits=[['temporaryFault',row.temporaryFault*s.temporaryFault],['crewLight',row.crewLight*s.crewLight],['crewSerious',row.crewSerious*s.crewSerious]];let cumulative=0,category=null;
     for(const[name,chance]of limits){cumulative+=chance;if(occurrence<cumulative){category=name;break;}}
     if(!category)return null;
     const totalChance=limits.reduce((sum,v)=>sum+v[1],0);
@@ -63,14 +86,14 @@ const TacticalCombatState=(()=>{
       const target=weighted(policy.faultWeights[result.zone],targetRoll),fault=config.faults[target],[lo,hi]=fault.durationSeconds,duration=lo+(hi-lo)*durationRoll;
       return{policyId,classification,category,target,duration,occurrence,targetRoll,durationRoll,totalChance};
     }
-    const severity=category==='crewLight'?'light':'serious',target=weighted(policy.crewWeights[severity][result.zone],targetRoll);
+    const severity=category==='crewLight'?'light':'serious',target=weighted(policy.crewWeights[severity][result.zone],targetRoll,config.roles);
     return{policyId,classification,category,target,severity,occurrence,targetRoll,durationRoll:null,totalChance};
   }
   function hitReactionModifiers(u,p,now=0){
-    const state=u?.hitReactions,config=p?.hitReactions,out=normalModifiers();if(!state||!config||u.combat?.status==='destroyed')return out;
+    const state=u?.hitReactions,config=p?.hitReactions,out=normalModifiers();if(!state||!config||config.enabled!==true||u.combat?.status==='destroyed')return out;
     if(state.faultUntil.mobility>now+1e-9)out.drivePower=Math.min(out.drivePower,config.faults.mobility.factor);
     if(state.faultUntil.turretDrive>now+1e-9)out.turretRate=Math.min(out.turretRate,config.faults.turretDrive.factor);
-    for(const role of CREW_ROLES){const severity=state.crew[role];if(severity==='normal')continue;const effect=config.crewEffects[role][severity];
+    for(const role of config.roles){const severity=state.crew[role];if(severity==='normal')continue;const effect=config.crewEffects[role][severity];
       if(role==='driver'){out.drivePower=Math.min(out.drivePower,effect.drivePower);out.hullTurn=Math.min(out.hullTurn,effect.hullTurn);}
       else if(role==='commander')out.commanderRate=Math.min(out.commanderRate,effect.commanderTurn);
       else if(role==='gunner'){out.gunnerAimRate=Math.min(out.gunnerAimRate,effect.aimRate);out.gunnerSigma=Math.max(out.gunnerSigma,effect.sigma);}
@@ -79,13 +102,13 @@ const TacticalCombatState=(()=>{
     return out;
   }
   function applyResolvedHitReaction(u,p,outcome,now=0){
-    if(!outcome)return null;const state=initHitReactions(u,p);let changed=false,until=null;
-    if(outcome.category==='temporaryFault'){until=Math.max(state.faultUntil[outcome.target],now+outcome.duration);changed=until!==state.faultUntil[outcome.target];state.faultUntil[outcome.target]=until;}
-    else if(SEVERITY[outcome.severity]>SEVERITY[state.crew[outcome.target]]){state.crew[outcome.target]=outcome.severity;changed=true;}
+    if(!outcome)return null;const state=initHitReactions(u,p),config=p.hitReactions;if(!state)throw Error('비활성 피격 반응 적용 오류');let changed=false,until=null;
+    if(outcome.category==='temporaryFault'){if(!Object.hasOwn(config.faults,outcome.target))throw Error('피격 반응 장비 대상 오류');until=Math.max(state.faultUntil[outcome.target],now+outcome.duration);changed=until!==state.faultUntil[outcome.target];state.faultUntil[outcome.target]=until;}
+    else{if(!config.roles.includes(outcome.target)||!Object.hasOwn(SEVERITY,outcome.severity))throw Error('피격 반응 승무원 대상 오류');if(SEVERITY[outcome.severity]>SEVERITY[state.crew[outcome.target]]){state.crew[outcome.target]=outcome.severity;changed=true;}}
     state.lastOutcome={time:now,category:outcome.category,target:outcome.target,severity:outcome.severity??null};return{...outcome,changed,until};
   }
   function hitReactionView(u,p,now=0){
-    const state=u?.hitReactions;if(!state||!p?.hitReactions)return null;
+    const state=u?.hitReactions;if(!state||p?.hitReactions?.enabled!==true)return null;
     return{faults:Object.fromEntries(['mobility','turretDrive'].map(kind=>[kind,{active:u.combat?.status!=='destroyed'&&state.faultUntil[kind]>now+1e-9,remaining:u.combat?.status==='destroyed'?0:Math.max(0,state.faultUntil[kind]-now)}])),crew:{...state.crew},modifiers:hitReactionModifiers(u,p,now)};
   }
   function interval(nodes,value){
@@ -158,7 +181,7 @@ const TacticalCombatState=(()=>{
     const sequences=new Map(),recent=new Set(),recentQueue=[],records=[];let destroyedCount=0,appliedCount=0,reactionEligible=0,reactionOutcomes=0;
     function random(text,salt){let n=(2166136261^seed^salt)>>>0;for(const c of text)n=Math.imul(n^c.charCodeAt(0),16777619);n^=n>>>16;n=Math.imul(n,0x7feb352d);return((n^(n>>>15))>>>0)/4294967296;}
     function applyHitReaction(target,profile,result,id,now){
-      if(!profile.hitReactions||!result.hit||target.combat?.status==='destroyed')return null;
+      if(profile.hitReactions?.enabled!==true||!result.hit||target.combat?.status==='destroyed')return null;
       const history=initHitReactions(target,profile)._processed;if(history.ids.has(id))return null;
       history.ids.add(id);history.queue.push(id);if(history.queue.length>idLimit)history.ids.delete(history.queue.shift());reactionEligible++;
       const outcome=resolveHitReaction(profile,result.ammoId||target.combat.ammoId,result,{occurrence:random(id+':wip18:occurrence',0xa54ff53a),target:random(id+':wip18:target',0x510e527f),duration:random(id+':wip18:duration',0x9b05688c)});
@@ -188,6 +211,8 @@ const TacticalCombatState=(()=>{
     return Object.freeze({apply,records:()=>clone(records),stats:()=>({applied:appliedCount,records:records.length,destroyed:destroyedCount,sequenceShooters:sequences.size,recentIds:recent.size,reactionEligible,reactionOutcomes})});
   }
   const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.protection,protectionDeficit:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
-  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,hitReactionModifiers,hitReactionView,validateProfile,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES,CREW_ROLES});
+  const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:typeof require==='function'?require('./vehicle-profiles.js'):null;
+  if(loadedProfiles?.registry)validateProfileRegistry(loadedProfiles.registry);
+  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES,ALLOWED_CREW_ROLES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;

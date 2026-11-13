@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 6,
+  "schemaVersion": 7,
   "activeProfileId": "M1A2_1998",
   "ids": [
     "M1A2",
@@ -11,5 +11,5 @@
   "ammunitionIds": [
     "M829A2"
   ],
-  "note": "M1A2 remains the shared public baseline with WIP18 disabled; M1A2_1998 explicitly owns the active WIP18 victim reaction policy."
+  "note": "M1A2 is a non-participant with no WIP18 field; M1A2_1998 explicitly enables its own roles, category susceptibility and registry-bound victim reaction policy."
 }

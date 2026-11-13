@@ -4,11 +4,12 @@
   "url": "http://127.0.0.1:<ephemeral>/{impact,ui}",
   "checks": [
     "seed 2 end-to-end fire, flight and impact creates one real WIP18 outcome after HP",
+    "commander light and serious injuries scale browser auto-scan and fixed guard slew by 0.85/0.65 once",
     "friendly UI, expiry, persistent injury, switching, pause and reset use simulation state",
     "enemy private reaction data stays out of contacts while physical movement and turret remain natural",
     "mobile landscape runs and portrait blocks input without losing injury state"
   ],
-  "passed": 4,
+  "passed": 5,
   "failed": 0,
   "evidence": {
     "browser": "156.0.8078.79",
@@ -46,6 +47,18 @@
         "recentIds": 0,
         "reactionEligible": 5,
         "reactionOutcomes": 1
+      }
+    },
+    "commanderRates": {
+      "auto": {
+        "normal": 0.02617993877991494,
+        "light": 0.0222529479629277,
+        "serious": 0.017016960206944712
+      },
+      "guard": {
+        "normal": 0.08726646259971649,
+        "light": 0.074176493209759,
+        "serious": 0.05672320068981571
       }
     },
     "ui": {
@@ -121,5 +134,5 @@
       "injury": "light"
     }
   },
-  "scope": "Actual standalone Chromium: unforced seed-79 impact reaction plus explicitly separated UI state injection, expiry/persistence/reset, privacy, physical behavior and mobile orientation."
+  "scope": "Actual standalone Chromium: unforced seed-2 impact reaction, commander injury scan/guard rates, explicitly separated UI state injection, expiry/persistence/reset, privacy, physical behavior and mobile orientation."
 }

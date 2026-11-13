@@ -14,10 +14,10 @@
       "vehicles": 50,
       "ticks": 200,
       "rounds": 40,
-      "medianMs": 0.20143000000007305,
-      "p95Ms": 0.3515939999999773,
-      "perTickMedianMs": 0.0010071500000003652,
-      "perTickP95Ms": 0.0017579699999998866,
+      "medianMs": 0.19162600000004204,
+      "p95Ms": 0.393476999999848,
+      "perTickMedianMs": 0.0009581300000002102,
+      "perTickP95Ms": 0.00196738499999924,
       "reactionStateBytes": 0
     },
     {
@@ -25,10 +25,10 @@
       "vehicles": 50,
       "ticks": 200,
       "rounds": 40,
-      "medianMs": 0.1816710000000512,
-      "p95Ms": 0.8155659999999898,
-      "perTickMedianMs": 0.000908355000000256,
-      "perTickP95Ms": 0.004077829999999949,
+      "medianMs": 0.38126899999997477,
+      "p95Ms": 0.6551569999999174,
+      "perTickMedianMs": 0.0019063449999998738,
+      "perTickP95Ms": 0.003275784999999587,
       "reactionStateBytes": 0
     },
     {
@@ -36,10 +36,10 @@
       "vehicles": 50,
       "ticks": 200,
       "rounds": 40,
-      "medianMs": 1.0498760000000402,
-      "p95Ms": 3.1902990000000955,
-      "perTickMedianMs": 0.005249380000000201,
-      "perTickP95Ms": 0.01595149500000048,
+      "medianMs": 1.0688440000001265,
+      "p95Ms": 1.7450639999999566,
+      "perTickMedianMs": 0.0053442200000006325,
+      "perTickP95Ms": 0.008725319999999783,
       "reactionStateBytes": 12350
     },
     {
@@ -47,10 +47,10 @@
       "vehicles": 100,
       "ticks": 200,
       "rounds": 40,
-      "medianMs": 0.18184100000007675,
-      "p95Ms": 0.6617969999999787,
-      "perTickMedianMs": 0.0009092050000003838,
-      "perTickP95Ms": 0.0033089849999998933,
+      "medianMs": 0.1784660000000713,
+      "p95Ms": 0.48850900000002184,
+      "perTickMedianMs": 0.0008923300000003565,
+      "perTickP95Ms": 0.0024425450000001092,
       "reactionStateBytes": 0
     },
     {
@@ -58,10 +58,10 @@
       "vehicles": 100,
       "ticks": 200,
       "rounds": 40,
-      "medianMs": 0.35026300000004085,
-      "p95Ms": 0.5949969999999212,
-      "perTickMedianMs": 0.0017513150000002043,
-      "perTickP95Ms": 0.0029749849999996057,
+      "medianMs": 0.3963610000000699,
+      "p95Ms": 0.5692589999998745,
+      "perTickMedianMs": 0.0019818050000003497,
+      "perTickP95Ms": 0.0028462949999993725,
       "reactionStateBytes": 0
     },
     {
@@ -69,10 +69,10 @@
       "vehicles": 100,
       "ticks": 200,
       "rounds": 40,
-      "medianMs": 2.0581700000000183,
-      "p95Ms": 2.761760000000095,
-      "perTickMedianMs": 0.010290850000000091,
-      "perTickP95Ms": 0.013808800000000475,
+      "medianMs": 2.193913000000066,
+      "p95Ms": 2.9475669999999354,
+      "perTickMedianMs": 0.01096956500000033,
+      "perTickP95Ms": 0.014737834999999677,
       "reactionStateBytes": 24700
     }
   ],
@@ -83,9 +83,9 @@
       "vehicles": 5,
       "warmupSeconds": 2,
       "simulationSeconds": 20,
-      "medianTickMs": 0.34871000000009644,
-      "p95TickMs": 1.0206830000000764,
-      "maxTickMs": 3.886897000000033
+      "medianTickMs": 0.4520650000000046,
+      "p95TickMs": 1.4670990000000188,
+      "maxTickMs": 3.840409999999963
     },
     {
       "label": "WIP18-active-default-app",
@@ -93,9 +93,9 @@
       "vehicles": 5,
       "warmupSeconds": 2,
       "simulationSeconds": 20,
-      "medianTickMs": 0.39333699999997407,
-      "p95TickMs": 1.2375659999999016,
-      "maxTickMs": 6.474306999999953
+      "medianTickMs": 0.4000459999999748,
+      "p95TickMs": 1.8854129999999714,
+      "maxTickMs": 17.915118000000007
     },
     {
       "label": "latest-main-baseline",
@@ -103,9 +103,9 @@
       "vehicles": 5,
       "warmupSeconds": 2,
       "simulationSeconds": 20,
-      "medianTickMs": 0.30912100000000464,
-      "p95TickMs": 1.184978000000001,
-      "maxTickMs": 3.320752999999968
+      "medianTickMs": 0.2976539999999659,
+      "p95TickMs": 0.6562390000000278,
+      "maxTickMs": 2.781780000000026
     },
     {
       "label": "WIP18-active-default-app",
@@ -113,9 +113,9 @@
       "vehicles": 5,
       "warmupSeconds": 2,
       "simulationSeconds": 20,
-      "medianTickMs": 0.2772140000001855,
-      "p95TickMs": 0.6393040000000383,
-      "maxTickMs": 2.9714930000000095
+      "medianTickMs": 0.2917449999999917,
+      "p95TickMs": 0.7390430000000379,
+      "maxTickMs": 2.5855780000001687
     },
     {
       "label": "latest-main-baseline",
@@ -123,9 +123,9 @@
       "vehicles": 5,
       "warmupSeconds": 2,
       "simulationSeconds": 20,
-      "medianTickMs": 0.26672800000005736,
-      "p95TickMs": 0.6316420000000562,
-      "maxTickMs": 1.3019919999999274
+      "medianTickMs": 0.27271700000005694,
+      "p95TickMs": 0.6272559999999885,
+      "maxTickMs": 1.2749619999999595
     },
     {
       "label": "WIP18-active-default-app",
@@ -133,9 +133,9 @@
       "vehicles": 5,
       "warmupSeconds": 2,
       "simulationSeconds": 20,
-      "medianTickMs": 0.29666199999996934,
-      "p95TickMs": 0.7093280000001414,
-      "maxTickMs": 2.3093840000001364
+      "medianTickMs": 0.2684399999998277,
+      "p95TickMs": 0.5931149999998979,
+      "maxTickMs": 1.9150670000001355
     }
   ]
 }
