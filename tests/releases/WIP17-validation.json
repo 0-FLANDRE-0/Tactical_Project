@@ -11,10 +11,12 @@
     "navigation": {"spacingMetres": 16, "partialCells": "rejected"}
   },
   "checks": [
-    {"name": "non-browser Node test runner", "status": "passed", "passed": 305, "failed": 0},
+    {"name": "non-browser Node test runner", "status": "passed", "passed": 306, "failed": 0},
     {"name": "map specification, rectangle and actual-resolution synthetic 8x8 movement/observation/fire/effects", "status": "passed", "passed": 5, "failed": 0, "evidence": "tests/map-spec.test.cjs"},
     {"name": "terrain readability Python unittest", "status": "passed", "passed": 7, "failed": 0},
     {"name": "source quality with system Python GDAL/OGR", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "DEM source coverage, mask, zero elevation and CRS regression", "status": "passed", "passed": 4, "failed": 0, "evidence": "tests/battlefield_dem_validation_test.py"},
+    {"name": "standalone optimized LOS comparison worker without ambient globals", "status": "passed", "passed": 1, "failed": 0, "command": "node scripts/benchmark_los_shared_compare.cjs --worker optimized /tmp/los.json"},
     {"name": "terrain derived-data reproducibility and interpretation validation", "status": "passed"},
     {"name": "standalone real 4x4 map regression", "status": "passed", "passed": 16, "failed": 0},
     {"name": "fake-DOM input regression", "status": "passed", "passed": 42, "failed": 0, "kind": "fake DOM, not a browser"},

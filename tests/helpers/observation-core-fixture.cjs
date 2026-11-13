@@ -1,6 +1,6 @@
 // Real core + real nine-sample LOS on explicitly synthetic terrain. No navigation
 // queries are performed; baked navigation buffers are retained only for loading.
-const fs=require('fs'),path=require('path'),O=require('../../src/observation.js'),profiles=require('../../src/vehicle-profiles.js');
+const fs=require('fs'),path=require('path'),MapSpec=require('../../src/map-spec.js'),O=require('../../src/observation.js'),profiles=require('../../src/vehicle-profiles.js');
 const original=require('../load.cjs')(),source=fs.readFileSync(path.resolve(__dirname,'../../src/sim-core.js'),'utf8'),cache=new Map();
 function heightsForRidge(){
  const row=[];let previous=0;for(let x=0;x<2000;x++){const metres=x*2+1,z=Math.round(Math.max(0,40-Math.abs(metres-1000)*.4)*10),d=z-previous;previous=z;let n=(d<<1)^(d>>31);do{const b=n&127;n>>>=7;row.push(b|(n?128:0));}while(n);}
@@ -19,7 +19,7 @@ function mapFor(kind='flat'){
 }
 function core(kind='flat'){
  if(cache.has(kind))return cache.get(kind);const map=mapFor(kind);
- const C=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,profiles,require('../../src/mobility.js'),require('../../src/tactical-ai.js'),O,require('../../src/combat-state.js'),require('../../src/fire-control.js'),require('../../src/vehicle-geometry.js'),{exports:{}});cache.set(kind,C);return C;
+ const C=new Function('BATTLEFIELD_DATA','TacticalMapSpec','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,MapSpec,profiles,require('../../src/mobility.js'),require('../../src/tactical-ai.js'),O,require('../../src/combat-state.js'),require('../../src/fire-control.js'),require('../../src/vehicle-geometry.js'),{exports:{}});cache.set(kind,C);return C;
 }
 function fixture(kind='flat',{target={x:1500,y:1300},observer={x:500,y:1000},seed=17}={}){
  const C=core(kind),u=C.makeTank('A','OBSERVER',observer.x,observer.y,0,'blue',undefined,'hold'),t=C.makeTank('T','MOVING TARGET',target.x,target.y,Math.PI,'red',undefined,'hold');

@@ -23,8 +23,8 @@ const flatMap=structuredClone(C.MAP);
 flatMap.heightmap.data=Buffer.alloc(4000000).toString('base64');
 flatMap.terrain.data=Buffer.alloc(1000000,7).toString('base64');
 flatMap.features={roads:[],forests:[],fields:[],water:[],waterways:[],trees:[],labels:[],buildings:[]};delete flatMap.navigation;
-const holder={exports:{}},profiles=require('../src/vehicle-profiles.js');
-const flat=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',fs.readFileSync(path.join(__dirname,'../src/sim-core.js'),'utf8')+'\nreturn module.exports;')(flatMap,profiles,require('../src/mobility.js'),require('../src/tactical-ai.js'),require('../src/observation.js'),require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),holder);
+const holder={exports:{}},MapSpec=require('../src/map-spec.js'),profiles=require('../src/vehicle-profiles.js');
+const flat=new Function('BATTLEFIELD_DATA','TacticalMapSpec','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',fs.readFileSync(path.join(__dirname,'../src/sim-core.js'),'utf8')+'\nreturn module.exports;')(flatMap,MapSpec,profiles,require('../src/mobility.js'),require('../src/tactical-ai.js'),require('../src/observation.js'),require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),holder);
 test('actual integrator reaches 20 mph in 7.2 seconds on level road',()=>{
  const u=flat.makeTank('TEST','TEST',500,1000,0,'blue',undefined,'hold'),s={time:0,units:[u]};assert(flat.issueMove(u,{x:3500,y:1000},false,s.units).ok);
  for(let i=0;i<144;i++)flat.step(s,.05);close(u.speed,20*.44704,.02);

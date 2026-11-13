@@ -4,9 +4,9 @@ const fs=require('fs'),path=require('path'),os=require('os'),crypto=require('cry
 const {run,median}=require('./observation-benchmark-fixture.cjs'),root=path.resolve(__dirname,'..'),reference=require('../tests/helpers/los-wip11d-reference.cjs');
 const sourceHash=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 function loadCurrent(map){
- const source=fs.readFileSync(path.join(root,'src/sim-core.js'),'utf8'),profiles=require('../src/vehicle-profiles.js'),O=require('../src/observation.js');
- return new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(
-  map,profiles,require('../src/mobility.js'),require('../src/tactical-ai.js'),O,require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
+ const source=fs.readFileSync(path.join(root,'src/sim-core.js'),'utf8'),MapSpec=require('../src/map-spec.js'),profiles=require('../src/vehicle-profiles.js'),O=require('../src/observation.js');
+ return new Function('BATTLEFIELD_DATA','TacticalMapSpec','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(
+  map,MapSpec,profiles,require('../src/mobility.js'),require('../src/tactical-ai.js'),O,require('../src/combat-state.js'),require('../src/fire-control.js'),require('../src/vehicle-geometry.js'),{exports:{}});
 }
 if(process.argv[2]==='--worker'){
  const variant=process.argv[3],out=process.argv[4],map=JSON.parse(fs.readFileSync(path.join(root,'data/rasdorf_4km.json'),'utf8'));

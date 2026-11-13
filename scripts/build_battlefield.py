@@ -12,8 +12,12 @@ if any(type(v) is not int for v in [E0,N0,E1,N1]) or WIDTH<=0 or HEIGHT<=0 or WI
 height_columns,height_rows=WIDTH//2,HEIGHT//2;surface_columns,surface_rows=WIDTH//4,HEIGHT//4
 output=ROOT/(args.output or config['output']);script_output=ROOT/(args.script_output or config['scriptOutput']);manifest_output=ROOT/(args.manifest_output or config['manifestOutput']);overview_output=ROOT/(args.overview_output or config['overviewOutput'])
 for target in (output,script_output,manifest_output,overview_output):target.parent.mkdir(parents=True,exist_ok=True)
-srs=osr.SpatialReference();srs.ImportFromEPSG(4326);srs.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
-utm=osr.SpatialReference();utm.ImportFromEPSG(config['epsg'])
+srs=osr.SpatialReference()
+if srs.ImportFromEPSG(4326)!=0:raise RuntimeError('failed to initialize WGS84 source CRS')
+srs.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+utm=osr.SpatialReference()
+if utm.ImportFromEPSG(config['epsg'])!=0 or not utm.IsProjected():raise ValueError('configured output CRS must be a supported projected EPSG CRS')
+utm.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
 tx=osr.CoordinateTransformation(srs,utm)
 clip=ogr.CreateGeometryFromWkt(f'POLYGON(({E0} {N0},{E1} {N0},{E1} {N1},{E0} {N1},{E0} {N0}))')
 source=json.loads((ROOT/config['osm']).read_text())
@@ -136,9 +140,33 @@ for e in source['elements']:
    elif kind=='water':features['water'].append(f)
    else:features['fields'].append(f)
    geographic.append((kind,p,0))
-# Reproject/resample source DGM1 to a shared 2 m grid of cell-centre heights.
-d=gdal.Open(str(ROOT/config['dem']));res=gdal.Warp('',d,format='MEM',outputBounds=[E0,N0,E1,N1],width=height_columns,height=height_rows,resampleAlg='bilinear')
-source_height=res.ReadAsArray().astype(np.float32)
+# Validate source coverage and the GDAL validity mask before any interpolation.
+# A legitimate 0 m elevation is data unless the band metadata/mask marks it
+# invalid. Conversely, uncovered Warp pixels must never become an accepted 0 m.
+d=gdal.Open(str(ROOT/config['dem']))
+if d is None or d.RasterCount<1:raise RuntimeError('DEM source cannot be opened or has no raster band')
+source_srs=d.GetSpatialRef()
+if source_srs is None or not source_srs.ExportToWkt():raise RuntimeError('DEM source CRS is missing')
+source_srs=source_srs.Clone();source_srs.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+if not source_srs.IsProjected() or not source_srs.IsSame(utm):raise RuntimeError(f'DEM source CRS does not match configured EPSG:{config["epsg"]}')
+gt=d.GetGeoTransform(can_return_null=True)
+if gt is None or gt[1]<=0 or gt[5]>=0 or abs(gt[2])>1e-12 or abs(gt[4])>1e-12:raise RuntimeError('DEM source must use a north-up, non-rotated projected grid')
+source_min_x,source_max_x=gt[0],gt[0]+d.RasterXSize*gt[1]
+source_max_y,source_min_y=gt[3],gt[3]+d.RasterYSize*gt[5]
+tolerance=max(abs(gt[1]),abs(gt[5]))*1e-7
+if E0<source_min_x-tolerance or E1>source_max_x+tolerance or N0<source_min_y-tolerance or N1>source_max_y+tolerance:
+ raise RuntimeError('DEM source does not cover the requested bounds')
+x0=max(0,int(math.floor((E0-source_min_x)/gt[1])));x1=min(d.RasterXSize,int(math.ceil((E1-source_min_x)/gt[1])))
+y0=max(0,int(math.floor((source_max_y-N1)/-gt[5])));y1=min(d.RasterYSize,int(math.ceil((source_max_y-N0)/-gt[5])))
+band=d.GetRasterBand(1);valid=band.GetMaskBand().ReadAsArray(x0,y0,x1-x0,y1-y0)
+if valid is None or valid.shape!=(y1-y0,x1-x0) or np.any(valid==0):raise RuntimeError('DEM source contains NoData inside the requested bounds')
+target_wkt=utm.ExportToWkt()
+res=gdal.Warp('',d,format='MEM',srcSRS=target_wkt,dstSRS=target_wkt,outputBounds=[E0,N0,E1,N1],outputBoundsSRS=target_wkt,width=height_columns,height=height_rows,resampleAlg='bilinear',outputType=gdal.GDT_Float32,dstNodata=float('nan'))
+if res is None:raise RuntimeError('DEM resampling failed')
+res_srs=res.GetSpatialRef();res_gt=res.GetGeoTransform(can_return_null=True)
+if res_srs is None or not res_srs.IsSame(utm) or res_gt is None or any(abs(a-b)>1e-7 for a,b in zip(res_gt,(E0,2,0,N1,0,-2))):raise RuntimeError('DEM output CRS or grid does not match the requested map')
+output_band=res.GetRasterBand(1);output_mask=output_band.GetMaskBand().ReadAsArray();source_height=output_band.ReadAsArray().astype(np.float32)
+if output_mask is None or np.any(output_mask==0) or source_height.shape!=(height_rows,height_columns) or np.any(~np.isfinite(source_height)):raise RuntimeError('DEM resampling produced NoData inside the requested bounds')
 # Light, bounded gameplay smoothing: keep real ridges/valleys and metre scale.
 # Separable five-tap binomial filter (sigma approximately 2 m), change <= 0.5 m.
 weights=[1/16,4/16,6/16,4/16,1/16]
@@ -147,7 +175,7 @@ horizontal=sum(w*padded[:,i:i+height_columns] for i,w in enumerate(weights))
 padded=np.pad(horizontal,((2,2),(0,0)),mode='edge')
 smoothed=sum(w*padded[i:i+height_rows,:] for i,w in enumerate(weights))
 height=(source_height+np.clip(smoothed-source_height,-.5,.5)).astype(np.float32)
-if np.any(~np.isfinite(height)) or np.any(height<-100):raise RuntimeError('DEM has NoData in selected crop')
+if np.any(~np.isfinite(height)):raise RuntimeError('DEM smoothing produced invalid heights')
 # Flat row delta coding at 0.1 m. Decode is synchronous and needs no browser APIs.
 quant=np.rint(height*10).astype(np.int32);delta=np.diff(quant,axis=1,prepend=np.zeros((height_rows,1),dtype=np.int32));zig=((delta<<1)^(delta>>31)).ravel();encoded=bytearray()
 for v in zig:
@@ -177,7 +205,7 @@ packed=json.dumps(payload,separators=(',',':'),ensure_ascii=False);payload['meta
 output.write_text(packed);script_output.write_text('const BATTLEFIELD_DATA = '+packed+';\n')
 raw_paths=[ROOT/config['dem'],ROOT/config['osm']];manifest_output.write_text(json.dumps({'meta':meta,'raw_files':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in raw_paths},'encodedHeightBytes':len(encoded),'surfaceCounts':{k:int((atlas==v).sum()) for k,v in codes.items()}},indent=2,ensure_ascii=False))
 # A precise, disposable overview for choosing starting positions and QA.
-z=height[::2,::2];dy,dx=np.gradient(z,4);shade=np.clip(-dx*.45-dy*.7,-.3,.3);norm=(z-float(z.min()))/(float(z.max())-float(z.min()));rgb=np.zeros((surface_rows,surface_columns,3),dtype=np.uint8)
+z=height[::2,::2];dy,dx=np.gradient(z,4);shade=np.clip(-dx*.45-dy*.7,-.3,.3);height_span=float(z.max())-float(z.min());norm=(z-float(z.min()))/height_span if height_span>0 else np.zeros_like(z);rgb=np.zeros((surface_rows,surface_columns,3),dtype=np.uint8)
 base=np.array([151,162,117]);rgb[:]=np.clip(base+shade[:,:,None]*100+norm[:,:,None]*12,0,255)
 rgb[atlas==1]=np.clip(rgb[atlas==1]+[12,5,-8],0,255);rgb[atlas==2]=[74,109,66];rgb[np.isin(atlas,[5,6])]=[100,151,156];rgb[np.isin(atlas,[7,8])]=[218,210,180];rgb[atlas==9]=[102,95,82]
 im=Image.fromarray(rgb);draw=ImageDraw.Draw(im)

@@ -1,7 +1,7 @@
 const fs=require('fs'),path=require('path'),{performance}=require('node:perf_hooks');
-const map=require('../tests/load.cjs')().MAP,profiles=require('../src/vehicle-profiles.js'),Mobility=require('../src/mobility.js'),AI=require('../src/tactical-ai.js'),Observation=require('../src/observation.js'),Combat=require('../src/combat-state.js'),Fire=require('../src/fire-control.js'),Geometry=require('../src/vehicle-geometry.js');
+const map=require('../tests/load.cjs')().MAP,MapSpec=require('../src/map-spec.js'),profiles=require('../src/vehicle-profiles.js'),Mobility=require('../src/mobility.js'),AI=require('../src/tactical-ai.js'),Observation=require('../src/observation.js'),Combat=require('../src/combat-state.js'),Fire=require('../src/fire-control.js'),Geometry=require('../src/vehicle-geometry.js');
 const source=fs.readFileSync(path.join(__dirname,'../src/sim-core.js'),'utf8');
-const Core=new Function('BATTLEFIELD_DATA','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,profiles,Mobility,AI,Observation,Combat,Fire,Geometry,{exports:{}});
+const Core=new Function('BATTLEFIELD_DATA','TacticalMapSpec','VEHICLE_PROFILES','TacticalMobility','TacticalAI','TacticalObservation','TacticalCombatState','TacticalFireControl','TacticalVehicleGeometry','module',source+'\nreturn module.exports;')(map,MapSpec,profiles,Mobility,AI,Observation,Combat,Fire,Geometry,{exports:{}});
 const percentile=(v,p)=>v[Math.min(v.length-1,Math.floor(v.length*p))];
 function trial(seed){
   const s=Core.createScenario(seed,{recordAIEvents:true}),start=new Map(s.units.map(u=>[u.id,{x:u.x,y:u.y}]));for(let i=0;i<40;i++)Core.step(s,.05);

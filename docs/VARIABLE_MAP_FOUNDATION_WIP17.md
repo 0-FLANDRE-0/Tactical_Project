@@ -30,6 +30,10 @@ python3 build.py
 
 새 실측 지도를 준비한 뒤에는 `data/map-build-rasdorf-4km.json`과 같은 설정에 원본 경계·DEM·OSM·출력을 지정한다. 각 파생 도구는 `--input`, `--output`, `--script-output`을 받고, `build.py`는 `--map`, `--contours`, `--terrain`, `--output`으로 한 묶음을 선택한다. 서로 다른 지도의 파생물을 섞으면 출력 파일을 만들기 전에 거부한다.
 
+2026-11-13 추가 수정에서 DEM 생성기는 평활화 전에 원본 CRS, north-up 비회전 격자, 요청 범위 전체 커버리지와 GDAL 유효 데이터 마스크를 검사한다. 원본과 출력은 설정한 투영 EPSG가 정확히 일치해야 한다. NoData 값의 크기로 판정하지 않으므로 NoData 메타데이터가 없는 정상 0m 고도는 허용하고, 반대로 `NoData=0`으로 표시된 영역과 Warp가 만든 미포함 영역은 실패한다. 재표본 결과의 CRS·2m 격자·마스크·유한값도 다시 확인한 뒤에만 평활화를 진행한다.
+
+현재 `sim-core.js`를 직접 조립하는 LOS·기동·관측·프로파일 테스트와 벤치마크는 모두 `TacticalMapSpec`을 명시적으로 로드해 인자로 전달한다. 비교용 WIP11D 동결 코어는 기존 로더를 유지한다. 따라서 `benchmark_los_shared_compare.cjs --worker optimized`는 다른 테스트가 만든 전역 변수가 없는 새 Node 프로세스에서도 실행된다.
+
 ```sh
 python3 build.py --map /path/map.json --contours /path/contours.json \
   --terrain /path/terrain.json --output /path/index.html
