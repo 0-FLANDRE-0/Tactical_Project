@@ -6,7 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP18 일시 기능 이상·승무원 경중상 | [작업 지시서](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 지시 등록 · 구현·검증 대기 · 수치/부상 유지 정책은 초기 시험 제안 |
+| WIP18 일시 기능 이상·승무원 경중상 | [작업 지시서](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 지시 등록 · 구현·검증 대기 · 현재 M1A2_1998 전용, 다른 차종 자동 상속 금지 · 수치는 시험 제안 |
 | WIP17 가변 맵 크기 지원 기반 | [완료 안내](TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) | 최종 624d80d 독립 재검증 통과 · main 통합 · 실제 8×8 지도 제작은 후속 |
 | WIP16 적 AI 교전 판단·표적 선택·행동 안정화 | [완료 안내](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) · [능선 캐시 보완](TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md) · [halt 재확인 보완](TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) | 최종 47f9e07 독립 재검증 통과 · main 통합 |
 | WIP15 가변 장전·피격 동요·장비 일시 이상 | [기본 완료 안내](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) · [수정 완료 안내](TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md) · [보존 지시서](../../archive/instructions/README.md) | 관측 유지·조준 저하 최종 5a0b516 재검증 통과 · main 통합 |
