@@ -5,6 +5,7 @@ WIP17은 2m 고도·4m 지표·16m 길찾기 해상도를 유지하면서 지도
 - 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP17.zip). 압축을 풀면 `Tactical_v0.4_WIP17.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP17.html](Tactical_v0.4_WIP17.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP17 구현](docs/VARIABLE_MAP_FOUNDATION_WIP17.md) · [릴리스·검증](TACTICAL_RELEASE_WIP17.md) · [체크섬](SHA256SUMS_WIP17.txt) · [작업 목차](docs/tasks/README.md).
+- 다음 작업: [WIP18 일시 기능 이상·승무원 경중상 지시서](docs/tasks/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md). 무기·탄종·7구역별 확률과 기존 효과의 중첩 제어를 포함하며, **지시 등록·구현 대기** 상태다.
 
 ## 실행과 조작
 
