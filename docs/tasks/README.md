@@ -6,6 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
+| WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [작업 지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | 지시서 등록 · 구현/검증 대기 · ERA 방호만 적용, 소모/손상 없음 |
 | WIP20 M1A2(1998) 전용 탄약고 사고 | [완료 안내](TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) | 최종 3633952 독립 재검증 통과 · main 통합 · 확률/시간은 시험 제안 |
 | WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [완료 안내](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | 최종 5bf1bb5 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
 | WIP18 일시 기능 이상·승무원 경중상 | [완료 안내](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 최종 6c5e4f3 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
