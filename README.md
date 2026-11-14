@@ -13,6 +13,8 @@ WIP21은 수정된 T-80U 상부 도안과 `T80U_1989` 피격 전용 프로파일
 
 [단독 미리보기 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/T80U_TopView.zip)은 기존대로 보존한다. 수정 2판 도안의 차체·포탑·전차장 큐폴라/관측경·NSVT 회전과 원본 대조를 확인할 수 있다. 게임 어댑터는 이 도안을 다시 그리지 않고 라디안 월드 절대각을 원본의 도 단위 부모 상대각으로 변환한다. [모델·자료·검증 설명](docs/T80U_ART_STUDY.md).
 
+독립 재검증 결과와 게임 내 도안 캡처는 [WIP21 병합 검토](docs/reviews/WIP21_MERGE_REVIEW_2026-11-15.md)에 기록했다.
+
 ## 실행과 조작
 
 [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip21-t80u-model-armor/Tactical_v0.4_WIP21.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP21.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.

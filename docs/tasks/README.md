@@ -6,7 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [작업 지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) · [원본 보관](../../archive/instructions/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | `feat/wip21-t80u-model-armor` 구현·작성자 검증 완료 · PR 검토 대기 · ERA 방호만 적용, 소모/손상 없음 |
+| WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [완료 안내](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) · [원본 보관](../../archive/instructions/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | 최종 730f336 독립 재검증 및 캡처 검증 보완 · main 통합 · ERA 소모/손상 없음 |
 | WIP20 M1A2(1998) 전용 탄약고 사고 | [완료 안내](TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) | 최종 3633952 독립 재검증 통과 · main 통합 · 확률/시간은 시험 제안 |
 | WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [완료 안내](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | 최종 5bf1bb5 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
 | WIP18 일시 기능 이상·승무원 경중상 | [완료 안내](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 최종 6c5e4f3 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
@@ -49,3 +49,5 @@ WIP19는 마지막 예약탄 장전 중 AI 임무 복귀, 확인 잔해의 보�
 - 변경된 요구사항은 지시서에 반영한다. 실제로 실행하지 않은 검사를 통과로 적지 않는다.
 - 작업 완료 후에는 최종 지시서를 [archive/instructions](../../archive/instructions/README.md)에 보관하고 이 목차의 상태와 링크를 갱신한다. 완료 전에는 같은 지시서의 여러 사본을 따로 편집하지 않는다.
 - 아카이브의 과거 지시서·제안은 현재 작업을 자동으로 추가하는 명령으로 취급하지 않는다.
+
+WIP21 구현 `730f336`을 2026-11-15 독립 재검증하고, 실제 표적이 화면에 보이도록 브라우저 캡처 검사를 보완해 main으로 통합했다. [독립 병합 검토](../reviews/WIP21_MERGE_REVIEW_2026-11-15.md)에 추가 방호 행렬·기존 전투 비교·실제 게임 도안 픽셀 대조와 배포물 검증을 기록했다.

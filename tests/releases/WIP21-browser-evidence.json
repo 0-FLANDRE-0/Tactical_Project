@@ -1,4 +1,10 @@
 {
+  "desktopFocus": {
+    "key": "접촉-1bc6cbb",
+    "x": 780,
+    "y": 2470,
+    "zoom": 32
+  },
   "desktop": {
     "unknown": {
       "artId": "T80U",
@@ -39,6 +45,12 @@
   "viewports": [
     {
       "name": "mobile-dpr1",
+      "focus": {
+        "key": "접촉-1bc6cbb",
+        "x": 780,
+        "y": 2470,
+        "zoom": 16
+      },
       "dpr": 1,
       "canvas": [
         558,
@@ -67,6 +79,12 @@
     },
     {
       "name": "mobile-dpr2",
+      "focus": {
+        "key": "접촉-1bc6cbb",
+        "x": 780,
+        "y": 2470,
+        "zoom": 16
+      },
       "dpr": 2,
       "canvas": [
         1116,
@@ -95,6 +113,7 @@
     },
     {
       "name": "portrait",
+      "focus": null,
       "dpr": 2,
       "canvas": [
         291,
