@@ -69,8 +69,8 @@
       630
     ],
     "commanderAndMgArtOffsetPx": [
-      -8,
-      19
+      0,
+      0
     ],
     "muzzlePx": [
       50,
@@ -85,6 +85,111 @@
     "No exposed track strips under intact fenders in top view.",
     "No M1A2 CITV transplanted. No 1985/1989 game-profile appearance differences inferred.",
     "No crew-person figure; commander means the cupola and observation equipment.",
-    "No vehicle profile, combat, AI, LOS, ammunition, movement physics or damage integration."
-  ]
+    "No vehicle profile, combat, AI, LOS, ammunition, movement physics or damage integration.",
+    "The narrow glacis strip hidden by the gun in the source is completed by continuing adjacent ERA covers; its seam arrangement is inferred."
+  ],
+  "correctionReview": {
+    "date": "2026-11-14",
+    "supersedes": "54f5e3b",
+    "reason": "Initial visual verification missed thin barrel, invented repeated glacis panels, wrong turret ERA and engine deck. Rotation tests did not establish reference fidelity.",
+    "referenceGunSections": [
+      {
+        "x": 100,
+        "top": 734,
+        "bottom": 752,
+        "modelTop": 734,
+        "modelBottom": 752,
+        "referenceWidth": 18,
+        "modelWidth": 18
+      },
+      {
+        "x": 180,
+        "top": 733,
+        "bottom": 753,
+        "modelTop": 734,
+        "modelBottom": 754,
+        "referenceWidth": 20,
+        "modelWidth": 20
+      },
+      {
+        "x": 220,
+        "top": 734,
+        "bottom": 754,
+        "modelTop": 734,
+        "modelBottom": 754,
+        "referenceWidth": 20,
+        "modelWidth": 20
+      },
+      {
+        "x": 250,
+        "top": 729,
+        "bottom": 756,
+        "modelTop": 730,
+        "modelBottom": 757,
+        "referenceWidth": 27,
+        "modelWidth": 27
+      },
+      {
+        "x": 280,
+        "top": 730,
+        "bottom": 757,
+        "modelTop": 730,
+        "modelBottom": 757,
+        "referenceWidth": 27,
+        "modelWidth": 27
+      },
+      {
+        "x": 300,
+        "top": 730,
+        "bottom": 757,
+        "modelTop": 730,
+        "modelBottom": 758,
+        "referenceWidth": 27,
+        "modelWidth": 28
+      },
+      {
+        "x": 355,
+        "top": 734,
+        "bottom": 754,
+        "modelTop": 735,
+        "modelBottom": 755,
+        "referenceWidth": 20,
+        "modelWidth": 20
+      },
+      {
+        "x": 375,
+        "top": 734,
+        "bottom": 754,
+        "modelTop": 735,
+        "modelBottom": 755,
+        "referenceWidth": 20,
+        "modelWidth": 20
+      },
+      {
+        "x": 500,
+        "top": 733,
+        "bottom": 756,
+        "modelTop": 734,
+        "modelBottom": 756,
+        "referenceWidth": 23,
+        "modelWidth": 22
+      },
+      {
+        "x": 610,
+        "top": 731,
+        "bottom": 758,
+        "modelTop": 731,
+        "modelBottom": 758,
+        "referenceWidth": 27,
+        "modelWidth": 27
+      }
+    ],
+    "originalWidthsPx": {
+      "100": 12,
+      "180": 13,
+      "500": 16
+    },
+    "configuration": "Source sheet lacks an NSVT; comparison omits both weapon and extra mount. Lab offers an optional mounted NSVT.",
+    "evidence": "docs/T80U_ART_CORRECTION.md"
+  }
 }

@@ -31,6 +31,6 @@ test('combined parent rotations preserve barrel and local mount radii through wr
 });
 test('art module normalizes invalid input and never interpolates caller text into SVG',()=>{
  const p=A.normalize({heading:Infinity,turret:NaN,commander:721,mg:-541,lod:99,palette:'" onload="alert(1)'});
- assert.deepEqual(p,{heading:0,turret:0,commander:1,mg:179,lod:3,palette:'olive',axes:false});
+ assert.deepEqual(p,{heading:0,turret:0,commander:1,mg:179,lod:3,palette:'olive',axes:false,mgMounted:true});
  const svg=A.toSVG(p);assert.ok(!/NaN|Infinity|onload|undefined/.test(svg));assert.match(svg,/data-part="commander"/);
 });

@@ -9,7 +9,7 @@ WIP20은 `M1A2_1998`에만 관통 피격 뒤 실제 저장·예약 탄을 참조
 
 ## T-80U 외형 모델 미리보기
 
-[단독 미리보기 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/T80U_TopView.zip)을 내려받아 압축을 풀고 `T80U_TopView.html`을 연다. 차체·포탑·전차장 큐폴라/관측경·NSVT 회전, 도면 겹치기, SVG·PNG 저장을 확인할 수 있다. 이번 작업은 독립 외형 모델이며 전투 차량 등록은 후속 범위다. [모델·자료·검증 설명](docs/T80U_ART_STUDY.md).
+[단독 미리보기 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/T80U_TopView.zip)을 내려받아 압축을 풀고 `T80U_TopView.html`을 연다. 수정 2판: 주포·차체 전면/포탑 반응장갑을 다시 추적했다. 차체·포탑·전차장 큐폴라/관측경·NSVT 회전, 도면 겹치기, SVG·PNG 저장을 확인할 수 있다. 함께 들어 있는 `T80U_ReferenceCheck.html`로 부위별 원본 대조를 볼 수 있다. 이번 작업은 독립 외형 모델이며 전투 차량 등록은 후속 범위다. [모델·자료·검증 설명](docs/T80U_ART_STUDY.md).
 
 ## 실행과 조작
 
