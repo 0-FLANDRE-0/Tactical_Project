@@ -6,6 +6,7 @@
     "baseDamage": 405,
     "muzzleVelocity": 1680,
     "hitReactionPolicyId": "tank-ke/M829A2",
+    "ammoIncidentPolicyId": "tank-ammo-incident/M829A2",
     "penetration": {
       "rangesM": [
         10,
@@ -74,11 +75,11 @@
       "outsidePolicy": "clamp"
     }
   },
-  "status": "active WIP19 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP19 instructions",
+  "status": "active WIP20 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20 instructions",
   "limits": [
     "Existing WIP12/WIP15 penetration, ricochet, damage and near-nonpenetration rules remain unchanged",
-    "Victim-specific hit-reaction rates live only on an explicitly bound vehicle profile",
+    "Victim-specific hit-reaction and ammunition-incident rates live only on an explicitly bound vehicle profile",
     "No additional velocity damage multiplier"
   ]
 }

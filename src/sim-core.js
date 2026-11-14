@@ -383,7 +383,7 @@ const TacticalCore = (() => {
   const observationStats=s=>({...observationFor(s).stats});
   const combatRuntimes=new WeakMap();
   function combatFor(s){
-    if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,seed:s.seed??7,onDestroyed:(target)=>{
+    if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,seed:s.seed??7,ammoInventory:target=>fireFor(s).ammoIncidentSnapshot(target),onAmmoIncident:(target,incident,now,snapshot)=>fireFor(s).applyAmmoIncident(target,incident,now,snapshot),onDestroyed:(target)=>{
       target.speed=0;if(target.drive)TacticalMobility.reset(target.drive);target.path=[];target.goal=null;target.reverse=false;target.state='격파';
       TacticalAI.destroy(target);
       TacticalObservation.cancel(target,s.time,'destroyed');fireFor(s).cancel(target);
@@ -392,7 +392,7 @@ const TacticalCore = (() => {
   }
   const combatView=u=>{
     if(!u?.combat)return null;let lastDamage=null;
-    if(u.combat.lastDamage){const{id,targetId,...safe}=u.combat.lastDamage;lastDamage=JSON.parse(JSON.stringify(safe));}
+    if(u.combat.lastDamage)lastDamage=TacticalCombatState.publicRecord(u.combat.lastDamage);
     return{maxHp:u.combat.maxHp,hp:u.combat.hp,status:u.combat.status,ammoId:u.combat.ammoId,destroyedAt:u.combat.destroyedAt,lastDamage,reactions:TacticalCombatState.hitReactionView(u,profileOf(u),u.hitReactionTime??0)};
   };
   const combatEvents=s=>s.recordFireEvents?combatFor(s).records():[];
@@ -409,6 +409,7 @@ const TacticalCore = (() => {
         const target=s.units.find(v=>v.id===event.targetId),p=target?profileOf(target):null;
         const record=p?.combat?combatFor(s).apply(event,target,s.time):{applied:false,reason:target?'unsupported-profile':'target-unavailable',damage:0,destroyed:false};
         if(target&&record.applied)fireFor(s).react(target,record,s.time);
+        if(record.ammoIncident?.confirmed)fireFor(s).emitCombatEffect({impactId:record.id,time:s.time,position:event.impact,outcome:record.ammoIncident.outcome});
         if(record.destroyed&&event.observed&&event.observation){
           const c=event.observation,w={key:c.key,x:event.pose.x,y:event.pose.y,heading:event.pose.heading,turret:event.pose.turret,commander:event.pose.commander??event.pose.turret,model:{...c.model,turretPivot:c.model?.turretPivot?.slice(),muzzleLocal:c.model?.muzzleLocal?.slice()},team:target.team,identified:true,current:false,memory:false,wreck:true,destroyed:true,observedAt:s.time,age:0,label:'격파 잔해',name:c.name??target.name,type:c.type??p.name};
           wreckMap(s,event.team).set(c.key,w);

@@ -1,0 +1,62 @@
+{
+  "version": "0.4-WIP20",
+  "browser": "156.0.8078.79",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "scope": "Actual Chromium standalone frame callback: 0.05 simulation, Canvas draw and scheduled DOM update; headless desktop, not physical mobile.",
+  "trials": [
+    {
+      "label": "WIP19 baseline default app",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 4,
+      "medianMs": 0.900000000372529,
+      "p95Ms": 3.5,
+      "maxMs": 5.599999999627471
+    },
+    {
+      "label": "WIP20 default app",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 4,
+      "medianMs": 0.900000000372529,
+      "p95Ms": 3.5,
+      "maxMs": 6.900000000372529
+    },
+    {
+      "label": "WIP20 50 inactive incident status",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 50,
+      "medianMs": 1.900000000372529,
+      "p95Ms": 2.799999998882413,
+      "maxMs": 6.800000000745058
+    },
+    {
+      "label": "WIP20 50 active incident status",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 50,
+      "medianMs": 2.199999999254942,
+      "p95Ms": 3.900000000372529,
+      "maxMs": 5.100000001490116
+    },
+    {
+      "label": "WIP20 100 inactive incident status",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 100,
+      "medianMs": 4,
+      "p95Ms": 6.100000001490116,
+      "maxMs": 7.400000000372529
+    },
+    {
+      "label": "WIP20 100 active incident status",
+      "frames": 100,
+      "viewport": "1440x900",
+      "vehicles": 100,
+      "medianMs": 4.099999999627471,
+      "p95Ms": 5.699999999254942,
+      "maxMs": 21.699999999254942
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "version": "0.4-WIP20",
+  "date": "2026-11-14",
+  "branch": "feat/wip20-ammunition-incidents",
+  "baselineMain": "ab9309a39097b332af09491883a199724fa911b4",
+  "scope": "M1A2_1998-only penetration-triggered ammunition loss, isolated-fire safety lockout and fatal ammunition incident integrated with WIP19 inventory",
+  "checks": [
+    {"name": "non-browser Node regression suite", "status": "passed", "passed": 347, "failed": 0, "command": "node --test $(rg --files tests | rg '\\.test\\.cjs$' | rg -v 'browser' | sort)"},
+    {"name": "WIP20 configuration/math/inventory/safety/AI/privacy core regression", "status": "passed", "passed": 11, "failed": 0, "evidence": "tests/wip20-ammunition-incidents.test.cjs"},
+    {"name": "actual Chromium WIP20 seeded incident, fixed effect, UI, pause/resume and reset", "status": "passed", "passed": 3, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP20-browser.json"},
+    {"name": "actual Chromium full default application regression", "status": "passed", "passed": 31, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP20-full-browser.json"},
+    {"name": "actual Chromium WIP17 synthetic 8x8/asymmetric map and embedded Worker regression", "status": "passed", "passed": 3, "failed": 0},
+    {"name": "terrain readability Python unittest", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "DEM coverage, mask, zero elevation and CRS regression with system GDAL Python", "status": "passed", "passed": 4, "failed": 0, "command": "/usr/bin/python3 -m unittest tests.battlefield_dem_validation_test"},
+    {"name": "source quality with system GDAL Python", "status": "passed", "passed": 7, "failed": 0, "command": "/usr/bin/python3 tests/source_quality.py"},
+    {"name": "initial GDAL checks through runtime python", "status": "failed-environment", "failed": 2, "reason": "runtime python3 has no osgeo module; the repository-designated /usr/bin/python3 environment reran and passed both checks"},
+    {"name": "standalone optimized LOS comparison without ambient globals", "status": "passed", "command": "node scripts/benchmark_los_shared_compare.cjs --worker optimized /tmp/wip20-los.json"},
+    {"name": "standalone default map regression", "status": "passed", "passed": 16, "failed": 0},
+    {"name": "fake-DOM input regression", "status": "passed", "passed": 42, "failed": 0, "kind": "fake DOM, not a browser"},
+    {"name": "standalone visibility regression", "status": "passed", "passed": 12, "failed": 0},
+    {"name": "standalone vehicle and embedded Worker regression", "status": "passed", "passed": 9, "failed": 0},
+    {"name": "JavaScript and Python syntax checks", "status": "passed"},
+    {"name": "repeat export/build/package byte identity, ZIP CRC and extracted HTML comparison", "status": "passed"},
+    {"name": "physical mobile device memory/thermal test", "status": "not-run", "reason": "no physical mobile device attached; actual Chromium desktop and mobile-view regressions passed"}
+  ],
+  "determinism": {
+    "fixedTickSeconds": 0.05,
+    "randomKey": "seed + impactId + victimId + wip20 stage",
+    "actualBrowserIncident": {"seed": 134, "impactId": "T01-shot-1", "zone": "hullFront", "section": "reserve", "outcome": "isolatedFire", "lostRounds": 6},
+    "notes": "The real browser shot/flight/impact path produced the release-profile incident without forced outcome rolls. Public/UI reads do not consume incident RNG; an existing ammunition task and aim progress freeze/continue according to the safety contract."
+  },
+  "performance": {
+    "environment": {"cpu": "AMD EPYC 9V74 80-Core Processor", "node": "v24.22.1", "browser": "Chromium 156.0.8078.79"},
+    "evidence": ["tests/releases/WIP20-performance.json", "tests/releases/WIP20-browser-performance.json"],
+    "active100UpdateMedianMs": 0.072218,
+    "active100UpdateP95Ms": 0.209583,
+    "active100ViewStatusMedianMs": 0.461798,
+    "active100ViewStatusP95Ms": 0.956937,
+    "incidentEffects100MedianMs": 0.169533,
+    "incidentEffects100P95Ms": 0.476631,
+    "effectParticleLimit": 384,
+    "effects100DroppedCore": 0,
+    "effects100DroppedAux": 266,
+    "browserBaselineDefaultMedianMs": 0.9,
+    "browserBaselineDefaultP95Ms": 3.5,
+    "browserWip20DefaultMedianMs": 0.9,
+    "browserWip20DefaultP95Ms": 3.5,
+    "browserActive50MedianMs": 2.2,
+    "browserActive50P95Ms": 3.9,
+    "browserActive100MedianMs": 4.1,
+    "browserActive100P95Ms": 5.7,
+    "notes": "State-only, effect-ingest and actual Chromium frame-callback measurements are separate. The browser measurement includes simulation, Canvas and scheduled DOM work and is not a physical-mobile FPS guarantee."
+  },
+  "artifacts": {
+    "html": {"path": "Tactical_v0.4_WIP20.html", "bytes": 8502428, "sha256": "abafaf88bc639a96b68ff42cbbbf7be153e57318058126b7ce3b2b8fd8b62129", "matchesDist": true, "repeatBuildByteIdentical": true},
+    "zip": {"path": "Tactical_v0.4_WIP20.zip", "bytes": 1679841, "sha256": "9d5f9061d9915f6c4f6cc74e16d3cf5619b59def677ae91aad8f273aba605e0e", "entry": "Tactical_v0.4_WIP20.html", "entryBytes": 8502428, "compressedBytes": 1679695, "crc32": "1c69ff42", "repeatPackageByteIdentical": true, "extractedMatchesDist": true}
+  },
+  "notImplemented": [
+    "normal engine or fuel fire, continuous fire damage, permanent module damage or repair",
+    "chain ammunition explosions, area damage or additional vehicle collisions",
+    "external resupply, pre-battle loadout editing or manual unload",
+    "crew death, healing, substitution or replacement loading",
+    "autoloading vehicles, autocannon, missiles, infantry, new vehicles or weapons",
+    "physical mobile-device performance guarantee"
+  ]
+}

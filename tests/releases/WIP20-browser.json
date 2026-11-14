@@ -1,0 +1,170 @@
+{
+  "version": "0.4-WIP20",
+  "browser": "156.0.8078.79",
+  "url": "http://127.0.0.1:<ephemeral>",
+  "checks": [
+    "seed 134 real impact creates the release-profile isolated fire and fixed public effect",
+    "pause freezes safety time; movement and automatic fire resume without a phantom shot",
+    "reset restores 42 rounds and clears incident history in the actual standalone app"
+  ],
+  "passed": 3,
+  "failed": 0,
+  "evidence": {
+    "browser": "156.0.8078.79",
+    "standalone": "dist/index.html",
+    "seed": 134,
+    "incident": {
+      "time": 3.2999999999999963,
+      "event": {
+        "id": "fx-2",
+        "kind": "ammo-incident",
+        "time": 3.049999999999997,
+        "expiresAt": 5.849999999999997,
+        "position": {
+          "x": 1000,
+          "y": 1000.0291627321187,
+          "z": 353.1421266078951
+        },
+        "effectClass": "isolated-fire",
+        "visualSeed": 3750650336
+      },
+      "record": {
+        "id": "T01-shot-1",
+        "zone": "hullFront",
+        "outcome": "isolatedFire",
+        "section": "reserve"
+      },
+      "effectText": "{\"id\":\"fx-2\",\"kind\":\"ammo-incident\",\"time\":3.049999999999997,\"expiresAt\":5.849999999999997,\"position\":{\"x\":1000,\"y\":1000.0291627321187,\"z\":353.1421266078951},\"effectClass\":\"isolated-fire\",\"visualSeed\":3750650336}",
+      "renderer": {
+        "ready": true,
+        "error": false,
+        "particles": 15,
+        "coreParticles": 3,
+        "auxParticles": 12,
+        "byKind": {
+          "smoke": 9,
+          "muzzle": 1,
+          "spark": 5
+        },
+        "particleLimit": 384,
+        "seen": 3,
+        "seenLimit": 1024,
+        "pendingFlightLinks": 0,
+        "maxParticles": 17,
+        "dropped": 0,
+        "droppedCore": 0,
+        "droppedAux": 0,
+        "linkedFlights": 1,
+        "unlinkedImpacts": 0,
+        "lastFlightErrorM": 0
+      },
+      "panel": "활성 사고 · 탄약고 화재 대응 8초 · 예비 M829A2 2 / M829A1 2 / M830 2",
+      "task": "즉응탄 보충 · M829A2 / 준즉응 · 탄약고 화재 대응으로 일시정지 8초",
+      "status": [
+        "탄약고 화재 대응 8초"
+      ],
+      "canvas": [
+        1134,
+        812
+      ]
+    },
+    "resume": {
+      "before": {
+        "time": 3.099999999999997,
+        "remaining": 7.95,
+        "shots": 0,
+        "ammo": 36,
+        "position": [
+          1000,
+          1000
+        ],
+        "effect": {
+          "x": 1000,
+          "y": 1000.0291627321187,
+          "z": 353.1421266078951
+        }
+      },
+      "paused": {
+        "time": 3.099999999999997,
+        "remaining": 7.95,
+        "shots": 0,
+        "ammo": 36
+      },
+      "movingEffect": {
+        "position": {
+          "x": 1000,
+          "y": 1000.0291627321187,
+          "z": 353.1421266078951
+        },
+        "moved": 0.012074080453572927
+      },
+      "after": {
+        "time": 13.100000000000051,
+        "active": false,
+        "shots": 1,
+        "ammo": 35,
+        "moved": 50.26267544279163
+      }
+    },
+    "reset": {
+      "managed": true,
+      "loadedAmmoId": "M829A2",
+      "preference": "auto",
+      "supported": [
+        "M829A2",
+        "M829A1",
+        "M830"
+      ],
+      "total": 42,
+      "totals": {
+        "M829A2": 18,
+        "M829A1": 12,
+        "M830": 12
+      },
+      "sections": {
+        "ready": {
+          "capacity": 17,
+          "total": 17,
+          "counts": {
+            "M829A2": 7,
+            "M829A1": 4,
+            "M830": 6
+          }
+        },
+        "semiReady": {
+          "capacity": 18,
+          "total": 18,
+          "counts": {
+            "M829A2": 8,
+            "M829A1": 6,
+            "M830": 4
+          }
+        },
+        "reserve": {
+          "capacity": 6,
+          "total": 6,
+          "counts": {
+            "M829A2": 2,
+            "M829A1": 2,
+            "M830": 2
+          }
+        }
+      },
+      "task": null,
+      "engageable": true,
+      "incident": {
+        "active": false,
+        "safetyUntil": 0,
+        "remaining": 0,
+        "last": null,
+        "history": [],
+        "lostTotals": {
+          "M829A2": 0,
+          "M829A1": 0,
+          "M830": 0
+        }
+      }
+    }
+  },
+  "scope": "Actual standalone Chromium: real seed-134 penetration incident, fixed public effect/privacy, selected and overhead UI, task/safety pause with aim retained, simulation pause, movement/fire resume and reset."
+}

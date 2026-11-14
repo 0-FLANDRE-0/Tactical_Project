@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 8,
+  "schemaVersion": 9,
   "activeProfileId": "M1A2_1998",
   "ids": [
     "M1A2",
@@ -13,5 +13,5 @@
     "M829A1",
     "M830"
   ],
-  "note": "M1A2 remains a legacy non-participant. M1A2_1998 alone enables WIP19 compartment inventory, three supported rounds and registry-bound reaction policies."
+  "note": "M1A2 remains a legacy non-participant. M1A2_1998 alone enables WIP20 compartment incidents on the WIP19 inventory and three explicitly bound attack-ammunition policies."
 }

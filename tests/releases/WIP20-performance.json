@@ -1,0 +1,228 @@
+{
+  "version": "0.4-WIP20",
+  "node": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "baselineRoot": "/workspace/Tactical_Project_WIP19",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "scope": "50/100 fixed-step baseline/inactive/active incident state and detached view/status, bounded effect ingestion, and actual default-map core tick; Canvas is measured separately.",
+  "state": [
+    {
+      "mode": "WIP19-baseline",
+      "vehicles": 50,
+      "samples": 100,
+      "update": {
+        "medianMs": 0.0811109999999644,
+        "p95Ms": 0.19947799999999916,
+        "maxMs": 0.28899100000001
+      },
+      "viewAndStatus": {
+        "medianMs": 0.1972949999999969,
+        "p95Ms": 0.5805259999999635,
+        "maxMs": 1.7314630000000193
+      },
+      "stateBytes": 11700,
+      "statusCharactersProcessed": 0
+    },
+    {
+      "mode": "inactive",
+      "vehicles": 50,
+      "samples": 100,
+      "update": {
+        "medianMs": 0.0973950000000059,
+        "p95Ms": 0.33288699999997107,
+        "maxMs": 0.6555879999999661
+      },
+      "viewAndStatus": {
+        "medianMs": 0.26317299999999477,
+        "p95Ms": 0.5669960000000174,
+        "maxMs": 1.9629280000000335
+      },
+      "stateBytes": 16700,
+      "statusCharactersProcessed": 0
+    },
+    {
+      "mode": "active",
+      "vehicles": 50,
+      "samples": 100,
+      "update": {
+        "medianMs": 0.0424239999999827,
+        "p95Ms": 0.10292300000003252,
+        "maxMs": 0.4415089999999964
+      },
+      "viewAndStatus": {
+        "medianMs": 0.23619200000001683,
+        "p95Ms": 0.5705310000000168,
+        "maxMs": 0.9399220000000241
+      },
+      "stateBytes": 23690,
+      "statusCharactersProcessed": 65000
+    },
+    {
+      "mode": "WIP19-baseline",
+      "vehicles": 100,
+      "samples": 100,
+      "update": {
+        "medianMs": 0.08228300000001809,
+        "p95Ms": 0.6325840000000653,
+        "maxMs": 6.299544999999966
+      },
+      "viewAndStatus": {
+        "medianMs": 0.3801469999999654,
+        "p95Ms": 0.715718000000038,
+        "maxMs": 1.2265089999999645
+      },
+      "stateBytes": 23400,
+      "statusCharactersProcessed": 0
+    },
+    {
+      "mode": "inactive",
+      "vehicles": 100,
+      "samples": 100,
+      "update": {
+        "medianMs": 0.17713400000002366,
+        "p95Ms": 0.5087680000000319,
+        "maxMs": 1.1805309999999736
+      },
+      "viewAndStatus": {
+        "medianMs": 0.5201960000000554,
+        "p95Ms": 1.2399599999999964,
+        "maxMs": 3.4776769999999715
+      },
+      "stateBytes": 33400,
+      "statusCharactersProcessed": 0
+    },
+    {
+      "mode": "active",
+      "vehicles": 100,
+      "samples": 100,
+      "update": {
+        "medianMs": 0.07221799999990708,
+        "p95Ms": 0.20958300000006602,
+        "maxMs": 0.8709389999999075
+      },
+      "viewAndStatus": {
+        "medianMs": 0.46179800000004434,
+        "p95Ms": 0.956937000000039,
+        "maxMs": 1.4734879999999748
+      },
+      "stateBytes": 47390,
+      "statusCharactersProcessed": 130000
+    }
+  ],
+  "effects": [
+    {
+      "events": 50,
+      "samples": 100,
+      "ingest": {
+        "medianMs": 0.07675399999993715,
+        "p95Ms": 0.5849729999999909,
+        "maxMs": 2.453769999999963
+      },
+      "stats": {
+        "ready": false,
+        "error": false,
+        "particles": 325,
+        "coreParticles": 85,
+        "auxParticles": 240,
+        "byKind": {
+          "spark": 150,
+          "smoke": 150,
+          "muzzle": 25
+        },
+        "particleLimit": 384,
+        "seen": 50,
+        "seenLimit": 1024,
+        "pendingFlightLinks": 0,
+        "maxParticles": 325,
+        "dropped": 0,
+        "droppedCore": 0,
+        "droppedAux": 0,
+        "linkedFlights": 0,
+        "unlinkedImpacts": 0,
+        "lastFlightErrorM": null
+      }
+    },
+    {
+      "events": 100,
+      "samples": 100,
+      "ingest": {
+        "medianMs": 0.16953300000000127,
+        "p95Ms": 0.4766309999999976,
+        "maxMs": 0.9133919999999307
+      },
+      "stats": {
+        "ready": false,
+        "error": false,
+        "particles": 384,
+        "coreParticles": 170,
+        "auxParticles": 214,
+        "byKind": {
+          "spark": 200,
+          "muzzle": 50,
+          "smoke": 134
+        },
+        "particleLimit": 384,
+        "seen": 100,
+        "seenLimit": 1024,
+        "pendingFlightLinks": 0,
+        "maxParticles": 384,
+        "dropped": 266,
+        "droppedCore": 0,
+        "droppedAux": 266,
+        "linkedFlights": 0,
+        "unlinkedImpacts": 0,
+        "lastFlightErrorM": null
+      }
+    }
+  ],
+  "map": [
+    {
+      "label": "WIP19-main-baseline",
+      "seed": 7,
+      "vehicles": 5,
+      "medianMs": 0.6148169999999027,
+      "p95Ms": 3.2382100000000946,
+      "maxMs": 7.229407999999921
+    },
+    {
+      "label": "WIP20",
+      "seed": 7,
+      "vehicles": 5,
+      "medianMs": 0.6099799999999505,
+      "p95Ms": 1.8257629999998244,
+      "maxMs": 6.971438000000035
+    },
+    {
+      "label": "WIP19-main-baseline",
+      "seed": 17,
+      "vehicles": 5,
+      "medianMs": 0.4154989999999543,
+      "p95Ms": 0.7762569999999869,
+      "maxMs": 1.757141000000047
+    },
+    {
+      "label": "WIP20",
+      "seed": 17,
+      "vehicles": 5,
+      "medianMs": 0.30232100000011997,
+      "p95Ms": 0.7404140000001007,
+      "maxMs": 1.900961000000052
+    },
+    {
+      "label": "WIP19-main-baseline",
+      "seed": 27,
+      "vehicles": 5,
+      "medianMs": 0.2643749999999727,
+      "p95Ms": 0.5697299999999359,
+      "maxMs": 1.7019980000000032
+    },
+    {
+      "label": "WIP20",
+      "seed": 27,
+      "vehicles": 5,
+      "medianMs": 0.2557310000001962,
+      "p95Ms": 0.6084579999999278,
+      "maxMs": 1.2432949999999892
+    }
+  ]
+}
