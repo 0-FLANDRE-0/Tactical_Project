@@ -1,16 +1,15 @@
-# TACTICAL v0.4 WIP19 — 탄약 운용·우측 명령 패널
+# TACTICAL v0.4 WIP20 — M1A2(1998) 탄약고 사고
 
-WIP19는 `M1A2_1998`에만 M829A2·M829A1·M830의 실제 장전탄, 탄종/구획별 재고, 준비·장전과 자동 즉응탄 보충을 연결한다. 발사된 탄은 장전되어 있던 탄종의 탄속·관통·피해·피격 반응 정책을 끝까지 보존한다. 지도 위 도구는 우측 상단 명령 영역으로 옮겼고 선택 유닛 정보는 독립 스크롤 영역에 둔다. 아군 유닛 위에는 활성 고장·탄 준비/보충만 최대 두 줄로 표시하며 승무원 부상은 우측 선택 정보에서만 공개한다. 혼합량·시간·탄약 수치는 실차 인증값이 아닌 조정 가능한 게임 시험값이다.
+WIP20은 `M1A2_1998`에만 관통 피격 뒤 실제 저장·예약 탄을 참조하는 탄약고 사고를 연결한다. 결과는 탄약 일부 소실, 8초 격리 화재 대응, 치명 사고이며 기존 장전탄·구획 재고·준비/장전/보충과 원자적으로 이어진다. 모든 확률·구획 매핑·시간은 조정 가능한 게임 시험값이고 실차 취약성·적재 위치·방출판 성능을 뜻하지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP19.zip). 압축을 풀면 `Tactical_v0.4_WIP19.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP19.html](Tactical_v0.4_WIP19.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP19 구현](docs/AMMUNITION_AND_COMMAND_PANEL_WIP19.md) · [릴리스·검증](TACTICAL_RELEASE_WIP19.md) · [독립 병합 검토](docs/reviews/WIP19_MERGE_REVIEW_2026-11-14.md) · [체크섬](SHA256SUMS_WIP19.txt) · [작업 목차](docs/tasks/README.md).
-- 원본 지시서는 [archive/instructions](archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md)에 보존했다. 화재·유폭, 외부 재보급, 강제 탈탄, 자동장전 차량, 대인 폭발과 새 차종/무기는 후속 범위다.
-- 다음 작업: [WIP20 M1A2(1998) 전용 탄약고 사고](docs/tasks/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md). **지시서 등록·구현 대기**다. 탄약 소실·격리 화재/일시 사격 중단·치명 사고를 기존 재고/예약 작업과 연결하며 확률·시간은 초기 게임 시험 제안이다. 현재 배포판은 WIP19다.
+- 검토 브랜치 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip20-ammunition-incidents/Tactical_v0.4_WIP20.zip). 압축을 풀면 `Tactical_v0.4_WIP20.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP20.html](Tactical_v0.4_WIP20.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP20 구현](docs/AMMUNITION_INCIDENTS_WIP20.md) · [릴리스·검증](TACTICAL_RELEASE_WIP20.md) · [체크섬](SHA256SUMS_WIP20.txt) · [작업 목차](docs/tasks/README.md).
+- 원본 지시서는 [archive/instructions](archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md)에 보존했다. 일반 엔진 화재, 지속 화염 피해, 연쇄 유폭·주변 피해, 외부 재보급, 강제 탈탄, 자동장전 차량과 새 차종/무기는 후속 범위다.
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP19.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP19.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip20-ammunition-incidents/Tactical_v0.4_WIP20.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP20.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 선택 차량 메뉴로도 생존 아군을 명시적으로 고를 수 있다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -99,7 +98,7 @@ WIP19는 `M1A2_1998`에만 M829A2·M829A1·M830의 실제 장전탄, 탄종/구�
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP19.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP20.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/map-spec.js`, `scripts/map_spec.py` | 할당 전 지도 규격·파생자료 계약 검증 |
 | `data/map-build-rasdorf-4km.json` | 기본 실측 지도 생성 입력·출력 설정 |
 | `tests/fixtures/sim-core-WIP11D.js`, `tests/helpers/los-wip11d-reference.cjs` | 빌드에 포함되지 않는 해시 고정 WIP11D 비교 코어와 로더 |
@@ -144,7 +143,7 @@ WIP19는 `M1A2_1998`에만 M829A2·M829A1·M830의 실제 장전탄, 탄종/구�
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP19
+python3 scripts/package_release.py WIP20
 node --check src/combat-state.js
 node --check src/mobility.js
 node --check src/tactical-ai.js
@@ -153,6 +152,7 @@ node --check src/app.js
 node --check src/effects.js
 node --check src/look-animation.js
 node --test --test-concurrency=2 tests/*.test.cjs
+node --test tests/wip20-ammunition-incidents.test.cjs
 python3 -m unittest tests/terrain_readability_test.py
 node tests/map.test.cjs
 node tests/input.test.cjs
@@ -170,6 +170,7 @@ node tests/wip12-effects-browser.test.cjs
 node tests/wip15-browser.test.cjs
 node tests/wip16-browser.test.cjs
 node tests/wip17-browser.test.cjs
+node tests/wip20-browser.test.cjs
 node --expose-gc scripts/benchmark_wip17_maps.cjs
 WIP13_BASELINE_HTML=/path/to/baseline/dist/index.html node scripts/benchmark_mobility_browser.cjs
 node scripts/benchmark_observation.cjs
@@ -181,6 +182,8 @@ node scripts/benchmark_los_compare.cjs
 WIP11E_TRIALS=5 node scripts/benchmark_los_shared_compare.cjs
 node scripts/benchmark_los_scenes.cjs
 node scripts/benchmark_los_browser.cjs
+BASELINE_ROOT=/path/to/WIP19 node scripts/benchmark_wip20.cjs
+node scripts/benchmark_wip20_browser.cjs
 ```
 
 능선·골짜기 파생 데이터를 재생성할 때는 `/usr/bin/python3 scripts/build_terrain_readability.py`를 실행한다. NumPy 2.2.4와 SciPy 1.15.3이 필요하며, 결과 확인은 `--check`와 `python3 scripts/validate_terrain_readability.py`로 수행한다. 원본 지도·등고선·길찾기 데이터는 재생성하거나 수정하지 않는다.
@@ -220,9 +223,9 @@ node tests/vehicle.test.cjs
 
 ## 현재 범위
 
-이번 버전은 적 경로 이동·기본 AI, 경량 구동·실제 지도, 관측, 자동교전, 가변 장전과 기본 HP 전투·표시 효과를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2/A1/M830 혼합 42발과 1,450 HP를 사용한다. 실제 장전탄 한 발과 세 저장 구획을 분리하며 준비·장전·자동 즉응탄 보충 작업은 차량별 한 개만 진행한다. 기본 장전은 5.98초이고 피로·피격 동요를 합친 장전 작업은 14초를 넘지 않는다.
+이번 버전은 적 경로 이동·기본 AI, 경량 구동·실제 지도, 관측, 자동교전, 가변 장전과 기본 HP 전투·표시 효과를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2/A1/M830 혼합 42발과 1,450 HP를 사용한다. 실제 장전탄 한 발과 세 저장 구획을 분리하며 준비·장전·자동 즉응탄 보충 작업은 차량별 한 개만 진행한다. 관통 뒤 탄약고 사고는 현재 재고와 예약탄만 손실시키며, 격리 화재 대응 중에는 이동·관측·지정·조준을 유지하고 발사와 탄약 작업만 8초 동안 멈춘다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP15의 사통/관측 대응과 WIP18의 일시 기능 이상·승무원 부상은 유지된다. WIP19의 발사 사건은 실제 장전탄 ID와 설정을 저장해 선택 변경이나 피격 차량의 장전탄과 섞이지 않는다. WIP12 효과는 판정을 바꾸지 않는다. 도탄 후 추가 피해, 영구 모듈 손상·승무원 사망/치료/교체·화재·유폭·수리, 외부 재보급·강제 탈탄·대인 폭발·새 차종/무기는 후속 범위다. 장갑·탄약·확률·부상 계수는 게임 데이터이며 실장비 성능 검증이 아니다. 전체 결과는 WIP19 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP15의 사통/관측 대응과 WIP18의 일시 기능 이상·승무원 부상은 유지된다. WIP19의 발사 사건은 실제 장전탄 ID와 설정을 저장해 선택 변경이나 피격 차량의 장전탄과 섞이지 않는다. WIP20의 사고 난수는 기존 명중·도탄·반응 난수와 분리되며 렌더·UI 조회가 판정을 바꾸지 않는다. 도탄 후 추가 피해, 영구 모듈 손상·승무원 사망/치료/교체·일반 화재/지속 피해·연쇄 폭발·수리, 외부 재보급·강제 탈탄·대인 폭발·새 차종/무기는 후속 범위다. 장갑·탄약·확률·부상·사고 계수는 게임 데이터이며 실장비 성능 검증이 아니다. 전체 결과는 WIP20 릴리스 문서에 있다.
 
 ## 출처
 

@@ -66,6 +66,26 @@ const VEHICLE_PROFILES=(()=>{
     initial:{loaded:'M829A2',preference:'auto',sections:{ready:{M829A2:7,M829A1:4,M830:6},semiReady:{M829A2:8,M829A1:6,M830:4},reserve:{M829A2:2,M829A1:2,M830:2}}},
     sections:{ready:{capacity:17,prepareSeconds:0},semiReady:{capacity:18,prepareSeconds:3},reserve:{capacity:6,prepareSeconds:10}},
     replenish:{idleSeconds:10,stationarySpeedMps:.10,targets:{M829A2:7,M829A1:4,M830:6},seconds:{semiReady:4,reserve:8},sourcePriority:['semiReady','reserve']}};
+  // WIP20 game-trial ammunition incident table. These probabilities and
+  // compartment mappings are fictional tuning and belong only to M1A2_1998.
+  M1A2_1998.ammoIncidents={enabled:true,victimProfileId:'M1A2_1998',partialLossFraction:.25,safetySeconds:8,
+    policies:{
+      'tank-ammo-incident/M829A2':{ammoId:'M829A2',baseChance:.30},
+      'tank-ammo-incident/M829A1':{ammoId:'M829A1',baseChance:.30},
+      'tank-ammo-incident/M830':{ammoId:'M830',baseChance:.40}},
+    storedAmmoResponse:{M829A2:1,M829A1:1,M830:1},
+    compartments:{
+      ready:{capacity:17,transferFactor:.50,outcomes:{ammoLoss:.70,isolatedFire:.28,fatal:.02}},
+      semiReady:{capacity:18,transferFactor:.65,outcomes:{ammoLoss:.65,isolatedFire:.32,fatal:.03}},
+      reserve:{capacity:6,transferFactor:.80,outcomes:{ammoLoss:.60,isolatedFire:.35,fatal:.05}}},
+    rows:{
+      hullFront:{ready:0,semiReady:.10,reserve:.15,none:.75},
+      hullSide:{ready:.05,semiReady:.15,reserve:.30,none:.50},
+      hullRear:{ready:0,semiReady:.10,reserve:.20,none:.70},
+      turretFront:{ready:.10,semiReady:.10,reserve:0,none:.80},
+      turretSide:{ready:.30,semiReady:.20,reserve:0,none:.50},
+      turretRear:{ready:.40,semiReady:.25,reserve:0,none:.35},
+      upper:{ready:.15,semiReady:.15,reserve:.10,none:.60}}};
   M1A2_1998.combat={maxHp:1450,armor:{
     hullFront:{ke:390,ce:720},hullSide:{ke:120,ce:280},hullRear:{ke:40,ce:40},
     turretFront:{ke:720,ce:1150},turretSide:{ke:340,ce:630},turretRear:{ke:55,ce:55},upper:{ke:40,ce:40}
@@ -149,6 +169,22 @@ const VEHICLE_PROFILES=(()=>{
         for(const section of sections){const rule=a.sections?.[section],stock=a.initial?.sections?.[section];if(!rule||!Number.isInteger(rule.capacity)||rule.capacity<0||!Number.isFinite(rule.prepareSeconds)||rule.prepareSeconds<0||!stock||Object.keys(stock).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(stock,ammoId)&&Number.isInteger(stock[ammoId])&&stock[ammoId]>=0))throw Error('탄약 구획 설정 오류: '+id+'.'+section);const count=ids.reduce((sum,ammoId)=>sum+stock[ammoId],0);if(count!==rule.capacity)throw Error('탄약 구획 용량 불일치: '+id+'.'+section);total+=count;}
         if(total!==p.weapons.mainGun.ammunitionCapacity)throw Error('탄약 총량 불일치: '+id);
         const rep=a.replenish;if(!rep||!Number.isFinite(rep.idleSeconds)||rep.idleSeconds<0||!Number.isFinite(rep.stationarySpeedMps)||rep.stationarySpeedMps<0||!Array.isArray(rep.sourcePriority)||!rep.sourcePriority.every(v=>['semiReady','reserve'].includes(v))||Object.keys(rep.targets||{}).length!==ids.length||!ids.every(ammoId=>Number.isInteger(rep.targets[ammoId])&&rep.targets[ammoId]>=0)||ids.reduce((sum,ammoId)=>sum+rep.targets[ammoId],0)>a.sections.ready.capacity||!['semiReady','reserve'].every(section=>Number.isFinite(rep.seconds?.[section])&&rep.seconds[section]>0))throw Error('탄약 보충 설정 오류: '+id);
+      }
+      if(p.ammoIncidents){
+        const a=p.ammoIncidents;
+        if(a.enabled===false){if(Object.keys(a).length!==1)throw Error('비활성 탄약고 사고 설정 오류: '+id);}
+        else{
+          const ammo=p.ammunition,sections=['ready','semiReady','reserve'],outcomes=['ammoLoss','isolatedFire','fatal'];
+          if(a.enabled!==true||a.victimProfileId!==id||!ammo?.enabled)throw Error('탄약고 사고 활성 연결 오류: '+id);
+          if(!Number.isFinite(a.partialLossFraction)||a.partialLossFraction<=0||a.partialLossFraction>1||!Number.isFinite(a.safetySeconds)||a.safetySeconds<=0)throw Error('탄약고 사고 시간/손실 값 오류: '+id);
+          const ids=ammo.supported,policies=Object.entries(a.policies||{});
+          if(policies.length!==ids.length||!ids.every(ammoId=>policies.some(([policyId,policy])=>policyId==='tank-ammo-incident/'+ammoId&&policy?.ammoId===ammoId&&Number.isFinite(policy.baseChance)&&policy.baseChance>=0&&policy.baseChance<=1)))throw Error('탄약고 사고 탄약 정책 오류: '+id);
+          if(Object.keys(a.storedAmmoResponse||{}).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(a.storedAmmoResponse,ammoId)&&Number.isFinite(a.storedAmmoResponse[ammoId])&&a.storedAmmoResponse[ammoId]>=0))throw Error('탄약고 사고 저장탄 반응값 오류: '+id);
+          if(Object.keys(a.compartments||{}).length!==sections.length)throw Error('탄약고 사고 구획 설정 오류: '+id);
+          for(const section of sections){const rule=a.compartments[section],values=outcomes.map(name=>rule?.outcomes?.[name]);if(!rule||rule.capacity!==ammo.sections[section].capacity||!Number.isFinite(rule.transferFactor)||rule.transferFactor<0||rule.transferFactor>1||Object.keys(rule.outcomes||{}).length!==outcomes.length||values.some(v=>!Number.isFinite(v)||v<0||v>1)||Math.abs(values.reduce((sum,v)=>sum+v,0)-1)>1e-9)throw Error('탄약고 사고 구획 설정 오류: '+id+'.'+section);}
+          if(Object.keys(a.rows||{}).length!==zones.length)throw Error('탄약고 사고 피격 구역표 오류: '+id);
+          for(const zone of zones){const row=a.rows[zone],names=[...sections,'none'],values=names.map(name=>row?.[name]);if(!row||Object.keys(row).length!==names.length||values.some(v=>!Number.isFinite(v)||v<0||v>1)||Math.abs(values.reduce((sum,v)=>sum+v,0)-1)>1e-9)throw Error('탄약고 사고 피격 구역표 오류: '+id+'.'+zone);}
+        }
       }
       if(p.hitReactions){
         const h=p.hitReactions;

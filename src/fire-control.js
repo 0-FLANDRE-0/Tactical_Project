@@ -16,12 +16,24 @@ const TacticalFireControl=(()=>{
   const cloneCounts=value=>Object.fromEntries(Object.entries(value).map(([id,count])=>[id,count]));
   function initAmmunition(s,p){
     if(!managed(p))return null;
-    if(!s.ammunition){const a=p.ammunition;s.ammunition={preference:a.initial.preference,loadedAmmoId:a.initial.loaded,sections:Object.fromEntries(Object.entries(a.initial.sections).map(([section,counts])=>[section,cloneCounts(counts)])),task:null,lastShotAt:-Infinity,lastHitAt:-Infinity};}
+    if(!s.ammunition){const a=p.ammunition;s.ammunition={preference:a.initial.preference,loadedAmmoId:a.initial.loaded,sections:Object.fromEntries(Object.entries(a.initial.sections).map(([section,counts])=>[section,cloneCounts(counts)])),task:null,lastShotAt:-Infinity,lastHitAt:-Infinity,incident:{safetyUntil:0,last:null,history:[],lostTotals:Object.fromEntries(a.supported.map(id=>[id,0]))}};}
+    const incident=s.ammunition.incident??={safetyUntil:0,last:null,history:[],lostTotals:Object.fromEntries(p.ammunition.supported.map(id=>[id,0]))};
+    incident.safetyUntil??=0;incident.last??=null;incident.history??=[];incident.lostTotals??=Object.fromEntries(p.ammunition.supported.map(id=>[id,0]));for(const id of p.ammunition.supported)incident.lostTotals[id]??=0;
     return s.ammunition;
   }
   function taskRound(task){return task&&task.reserved?1:0;}
   function ammunitionTotal(s,ammoId=null){const a=s.ammunition;if(!a)return s.ammo;let total=ammoId?(a.loadedAmmoId===ammoId?1:0):(a.loadedAmmoId?1:0);for(const counts of Object.values(a.sections))for(const[id,count]of Object.entries(counts))if(!ammoId||id===ammoId)total+=count;if(a.task&&(!ammoId||a.task.ammoId===ammoId))total+=taskRound(a.task);return total;}
   function sectionTotal(a,section){return Object.values(a.sections[section]).reduce((sum,count)=>sum+count,0);}
+  function incidentSnapshot(p,s){
+    if(!managed(p))return null;const a=s.ammunition,sections=Object.fromEntries(Object.entries(a.sections).map(([section,counts])=>[section,{counts:cloneCounts(counts)}]));
+    const task=a.task;if(task?.reserved&&sections[task.source])sections[task.source].counts[task.ammoId]++;
+    return{loadedAmmoId:a.loadedAmmoId,sections,task:task?.reserved?{purpose:task.purpose,ammoId:task.ammoId,source:task.source,stage:task.stage,progress:task.progress,reserved:true}:null,total:ammunitionTotal(s)};
+  }
+  function proportionalLoss(counts,loss,order){
+    const total=order.reduce((sum,id)=>sum+(counts[id]||0),0),take=Math.min(total,Math.max(0,Math.trunc(loss)));if(!total||!take)return Object.fromEntries(order.map(id=>[id,0]));
+    const rows=order.map((id,index)=>{const exact=(counts[id]||0)*take/total,floor=Math.floor(exact);return{id,index,exact,floor,fraction:exact-floor};}),allocated=rows.reduce((sum,row)=>sum+row.floor,0);
+    rows.sort((a,b)=>b.fraction-a.fraction||a.index-b.index);for(let i=0;i<take-allocated;i++)rows[i].floor++;rows.sort((a,b)=>a.index-b.index);return Object.fromEntries(rows.map(row=>[row.id,row.floor]));
+  }
   function loadChoice(p,s){const a=s.ammunition,ids=a.preference==='auto'?p.ammunition.autoPriority:[a.preference];for(const ammoId of ids)for(const source of p.ammunition.sourcePriority)if(a.sections[source][ammoId]>0)return{ammoId,source};return null;}
   function validLoadTask(p,s){const task=s.ammunition?.task;return!!task&&task.purpose==='load'&&task.reserved===true&&p.ammunition.supported.includes(task.ammoId)&&p.ammunition.sourcePriority.includes(task.source)&&['prepare','reload'].includes(task.stage);}
   function engageableAmmo(p,s){return managed(p)?!!s.ammunition.loadedAmmoId||validLoadTask(p,s)||!!loadChoice(p,s):s.ammo>0;}
@@ -58,6 +70,8 @@ const TacticalFireControl=(()=>{
     const a=s.ammunition,r=readiness(p),efficiency=Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1);
     s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
     if(u.combat?.status==='destroyed'){cancelAmmoTask(p,s);syncAmmo(p,s);return;}
+    if(a.incident.safetyUntil>now+1e-9){if(a.task){a.task.paused=true;a.task.pauseReason='ammo-safety';}if(a.loadedAmmoId){s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}syncAmmo(p,s);return;}
+    if(a.task?.pauseReason==='ammo-safety'){a.task.paused=false;delete a.task.pauseReason;}
     if(!a.loadedAmmoId){
       if(a.task?.purpose==='replenish')cancelAmmoTask(p,s,'replenish');
       const task=a.task||beginLoad(p,s,now);s.readyIdleSeconds=0;
@@ -255,7 +269,7 @@ const TacticalFireControl=(()=>{
         const publicResult={type:'impact',id:shot.id,time:now,impactAt:shot.impactAt,team:shot.team,shooterId:shot.shooterId,targetKey:shot.targetKey,
           result:observed?(result.hit?'hit':'miss'):'unobserved',zone:observed?result.zone:null,side:observed?side:null,
           finalHitChance:observed?evaluation.finalHitChance:null,hitChanceAtFire:shot.hitChanceAtFire,bias:observed?clone(evaluation.bias):null,
-          impact:publicImpact,ammoId:shot.ammoId,ammoRemaining:shot.ammoRemaining,combat:observed&&combat?clone(combat):null};
+          impact:publicImpact,ammoId:shot.ammoId,ammoRemaining:shot.ammoRemaining,combat:observed&&combat?Combat.publicRecord(combat):null};
         emit(publicResult);shot.shooter.fireControl.lastShot=clone(publicResult);
         if(debug){records.push({id:shot.id,time:now,impactAt:shot.impactAt,shooterId:shot.shooterId,targetKey:shot.targetKey,ammoId:shot.ammoId,result:result.hit?'hit':'miss',zone:result.zone,side,finalHitChance:evaluation.finalHitChance,hitChanceAtFire:shot.hitChanceAtFire,aimPenaltyAtFire:clone(shot.aimPenaltyAtFire),sigmaAtFire:clone(shot.sigma),bias:clone(evaluation.bias),impact:clone(impact),point:clone(point),combat:combat?clone(combat):null,reason:sight?.gone?'target-gone':!evaluation.rects.length?'occluded':null,origin:{...shot.origin},predicted:{...shot.predicted}});if(records.length>200)records.shift();}
       }
@@ -273,6 +287,7 @@ const TacticalFireControl=(()=>{
       const error=Math.abs(diff(Math.atan2(c.pose.y-u.y,c.pose.x-u.x),u.turret));
       if(error>f.alignmentTolerance)return{reason:'aligning',d,c};
       if(faultActive(s,'fireControl',now))return{reason:'fcs-fault',d,c};
+      if(managed(p)&&s.ammunition.incident.safetyUntil>now+1e-9)return{reason:'ammo-safety',d,c};
       if(s.ammo<=0)return{reason:'out-of-ammo',d,c};
       if(!s.loaded)return{reason:managed(p)&&!validLoadTask(p,s)&&s.ammunition.preference!=='auto'&&!loadChoice(p,s)?'selected-ammo-unavailable':'reloading',d,c};
       return{reason:null,d,c};
@@ -297,9 +312,9 @@ const TacticalFireControl=(()=>{
           s.previousSample={x:c.pose.x,y:c.pose.y,time:c.sources.gunner.lastSeen};
         }
         const aimPenalty=observationPenalty(p,s,now,u);
-        if(!check.reason||check.reason==='reloading'){
+        if(!check.reason||check.reason==='reloading'||check.reason==='ammo-safety'){
           s.layTime+=dt*aimPenalty.aimRateMultiplier;s.aimElapsed=Math.min(f.aimSeconds,s.aimElapsed+dt*aimPenalty.aimRateMultiplier);s.aimProgress=clamp(s.aimElapsed/f.aimSeconds,0,1);
-          s.status=check.reason==='reloading'?'reloading':s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=check.reason;
+          s.status=check.reason==='reloading'?'reloading':check.reason==='ammo-safety'?'blocked':s.aimProgress>=1-1e-9?'ready':'aiming';s.reason=check.reason;
           const ex=c.gunnerExposure||{samples:[]};preview(s,estimate(u,c.pose,ex,fireSettings(p,s),s.targetVelocity,s.layTime,aimPenalty.errorSigmaMultiplier));
         }
         else if(check.reason==='fcs-fault'){s.status='blocked';s.reason=check.reason;clearPreview(s);}
@@ -389,13 +404,35 @@ const TacticalFireControl=(()=>{
       return true;
     }
     function setAmmoPreference(u,preference){const p=profileOf(u),s=init(u,p);if(!managed(p)||!['auto',...p.ammunition.supported].includes(preference))return false;s.ammunition.preference=preference;syncAmmo(p,s);return true;}
+    function ammoIncidentSnapshot(u){const p=profileOf(u),s=init(u,p);return incidentSnapshot(p,s);}
+    function applyAmmoIncident(u,resolved,now,snapshot=null){
+      const p=profileOf(u),s=init(u,p),config=p.ammoIncidents,a=s.ammunition;if(!managed(p)||config?.enabled!==true||!resolved?.confirmed)return null;
+      const before=snapshot||incidentSnapshot(p,s),ids=p.ammunition.supported,section=resolved.section,outcome=resolved.outcome,lost=Object.fromEntries(ids.map(id=>[id,0]));
+      if(outcome!=='fatal'&&ids.reduce((sum,id)=>sum+(before.sections?.[section]?.counts?.[id]||0),0)<=0)return null;
+      if(outcome==='fatal'){
+        for(const id of ids){lost[id]=ammunitionTotal(s,id);for(const counts of Object.values(a.sections))counts[id]=0;}
+        a.loadedAmmoId=null;if(a.task)a.task.reserved=false;a.task=null;s.loaded=false;s.reloadProgress=0;s.reloadStartedAt=null;
+      }else{
+        const owned=before.sections[section].counts,total=ids.reduce((sum,id)=>sum+owned[id],0),amount=outcome==='isolatedFire'?total:Math.max(1,Math.ceil(total*config.partialLossFraction)),allocation=outcome==='isolatedFire'?cloneCounts(owned):proportionalLoss(owned,amount,ids);
+        for(const id of ids){let remaining=allocation[id]||0,take=Math.min(remaining,a.sections[section][id]);a.sections[section][id]-=take;remaining-=take;lost[id]+=take;if(remaining&&a.task?.reserved&&a.task.source===section&&a.task.ammoId===id){lost[id]++;remaining--;a.task.reserved=false;a.task=null;s.reloadProgress=a.loadedAmmoId?1:0;s.reloadStartedAt=null;}if(remaining)throw Error('탄약고 사고 손실 소유권 오류');}
+        if(outcome==='isolatedFire')a.incident.safetyUntil=Math.max(a.incident.safetyUntil,now+config.safetySeconds);
+      }
+      const lostCount=ids.reduce((sum,id)=>sum+lost[id],0),entry={id:resolved.impactId??'incident-'+now,time:now,section,outcome,lostCount,lost:{...lost},safetyUntil:a.incident.safetyUntil};
+      for(const id of ids)a.incident.lostTotals[id]+=lost[id];a.incident.last=entry;a.incident.history.push(entry);if(a.incident.history.length>8)a.incident.history.shift();syncAmmo(p,s);
+      return{section,outcome,lostCount,lost:{...lost},safetyUntil:a.incident.safetyUntil,totalBefore:before.total,totalAfter:s.ammo};
+    }
+    function emitCombatEffect({impactId,time,position,outcome}){
+      if(!position||!['ammoLoss','isolatedFire','fatal'].includes(outcome))return null;
+      return emitEffect({kind:'ammo-incident',time,expiresAt:time+(outcome==='fatal'?3.4:outcome==='isolatedFire'?2.8:1.2),position:{x:position.x,y:position.y,z:position.z},effectClass:outcome==='fatal'?'fatal':outcome==='isolatedFire'?'isolated-fire':'partial',visualSeed:Math.floor(random((impactId||'impact')+':visual:ammo-incident',seed^0x1b873593)*4294967296)>>>0});
+    }
     function probe(u,key){const s=init(u,profileOf(u));if(!key)return false;s.lineProbeRequest=key;return true;}
     function view(u,key=null){
       const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
       const inspection=inspect(u,currentTime);
       const aimPenalty=observationPenalty(p,s,currentTime,u);
       const ammoState=managed(p)?s.ammunition:null,task=ammoState?.task,taskDuration=task?(task.stage==='prepare'?p.ammunition.sections[task.source].prepareSeconds/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):task.stage==='replenish'?p.ammunition.replenish.seconds[task.source]/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):reloadSeconds(p,s,u)):null;
-      const ammunition=ammoState?{managed:true,loadedAmmoId:ammoState.loadedAmmoId,preference:ammoState.preference,supported:[...p.ammunition.supported],total:ammunitionTotal(s),totals:Object.fromEntries(p.ammunition.supported.map(id=>[id,ammunitionTotal(s,id)])),sections:Object.fromEntries(Object.entries(ammoState.sections).map(([section,counts])=>[section,{capacity:p.ammunition.sections[section].capacity,total:sectionTotal(ammoState,section),counts:{...counts}}])),task:task?{purpose:task.purpose,ammoId:task.ammoId,source:task.source,stage:task.stage,progress:task.progress,paused:!!task.paused,remaining:task.paused?null:Math.max(0,(1-task.progress)*(taskDuration||0))}:null,engageable:engageableAmmo(p,s)}:null;
+      const incident=ammoState?.incident,incidentView=incident?{active:incident.safetyUntil>currentTime+1e-9,safetyUntil:incident.safetyUntil,remaining:Math.max(0,incident.safetyUntil-currentTime),last:incident.last?clone(incident.last):null,history:clone(incident.history),lostTotals:{...incident.lostTotals}}:null;
+      const ammunition=ammoState?{managed:true,loadedAmmoId:ammoState.loadedAmmoId,preference:ammoState.preference,supported:[...p.ammunition.supported],total:ammunitionTotal(s),totals:Object.fromEntries(p.ammunition.supported.map(id=>[id,ammunitionTotal(s,id)])),sections:Object.fromEntries(Object.entries(ammoState.sections).map(([section,counts])=>[section,{capacity:p.ammunition.sections[section].capacity,total:sectionTotal(ammoState,section),counts:{...counts}}])),task:task?{purpose:task.purpose,ammoId:task.ammoId,source:task.source,stage:task.stage,progress:task.progress,paused:!!task.paused,pauseReason:task.pauseReason??null,remaining:task.paused?null:Math.max(0,(1-task.progress)*(taskDuration||0))}:null,engageable:engageableAmmo(p,s),incident:incidentView}:null;
       return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':inspection.reason||s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
         canFire:same&&!inspection.reason&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
         loading:{loaded:s.loaded,ammoId:currentAmmoId(p,s),progress:task?.purpose==='load'?task.progress:s.reloadProgress,stage:task?.purpose==='load'?task.stage:s.loaded?'loaded':'idle',estimatedSeconds:s.loaded?0:task?.purpose==='load'&&!task.paused?Math.max(0,(1-task.progress)*(taskDuration||0)):s.ammo>0&&!managed(p)?(1-s.reloadProgress)*reloadSeconds(p,s,u):null,currentWorkSeconds:reloadSeconds(p,s,u),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots,fatigueSeconds:s.fatigueSeconds,shockSeconds:s.shockSeconds},ammunition,
@@ -407,8 +444,8 @@ const TacticalFireControl=(()=>{
     function cancel(u){const s=init(u,profileOf(u));s.pending=null;s.lineProbeRequest=null;resetAim(s);s.status='blocked';s.reason='cancelled';clearPreview(s);}
     const publicEvents=(team,since=-Infinity)=>events.filter(e=>e.team===team&&e.time>=since).map(e=>JSON.parse(JSON.stringify(e)));
     const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
-    return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,probe,setMode,setAmmoPreference,view,cancel,suppressAuto,react,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
+    return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,probe,setMode,setAmmoPreference,view,cancel,suppressAuto,react,ammoIncidentSnapshot,applyAmmoIncident,emitCombatEffect,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,proportionalLoss,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;

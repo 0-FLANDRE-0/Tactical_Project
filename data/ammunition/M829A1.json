@@ -6,6 +6,7 @@
     "baseDamage": 380,
     "muzzleVelocity": 1575,
     "hitReactionPolicyId": "tank-ke/M829A1",
+    "ammoIncidentPolicyId": "tank-ammo-incident/M829A1",
     "penetration": {
       "rangesM": [
         10,
@@ -120,12 +121,12 @@
       ]
     }
   },
-  "status": "active WIP19 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP19 instructions",
+  "status": "active WIP20 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20 instructions",
   "limits": [
     "Separate 10/100/500/1000/1500/2000m table and unrounded runtime interpolation",
     "A1 copies the A2-shaped damage curve and owns its near-nonpenetration rule",
-    "Victim-specific hit-reaction rates live only on an explicitly bound vehicle profile",
+    "Victim-specific hit-reaction and ammunition-incident rates live only on an explicitly bound vehicle profile",
     "No additional velocity damage multiplier"
   ]
 }

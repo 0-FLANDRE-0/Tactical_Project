@@ -40,6 +40,10 @@ const TacticalEffects=(()=>{
         if(ricochet)push({kind:'tracer',x:event.position.x,y:event.position.y,start:event.time,duration:.34,size:23,angle:event.outgoingHeading,distance:85+random()*45,aux:false,ricochet:true});
         const count=ricochet?5:penetration?3:7;
         for(let i=0;i<count;i++)push({kind:i%2?'spark':'smoke',x:event.position.x+jitter()*2,y:event.position.y+jitter()*2,start:event.time+random()*.08,duration:.45+random()*.75,size:10+random()*18,angle:random()*Math.PI*2,driftX:jitter()*7,driftY:jitter()*7,aux:true});
+      }else if(event.kind==='ammo-incident'){
+        const fatal=event.effectClass==='fatal',fire=event.effectClass==='isolated-fire',core=fatal?3:fire?2:1,aux=fatal?10:fire?6:2;
+        for(let i=0;i<core;i++)push({kind:i===0&&fire?'muzzle':'spark',x:event.position.x+jitter()*(fatal?3:1.2),y:event.position.y+jitter()*(fatal?3:1.2),start:event.time+i*.035,duration:fatal?.58:fire?.72:.25,size:fatal?42-i*5:fire?30-i*3:18,angle:random()*Math.PI*2,aux:false});
+        for(let i=0;i<aux;i++)push({kind:i%3===0?'spark':'smoke',x:event.position.x+jitter()*(fatal?4:2),y:event.position.y+jitter()*(fatal?4:2),start:event.time+random()*(fatal?.18:.10),duration:(fatal?1.15:.75)+random()*(fatal?1.1:.7),size:(fatal?18:12)+random()*(fatal?28:18),angle:random()*Math.PI*2,driftX:jitter()*(fatal?9:4),driftY:jitter()*(fatal?9:4),aux:true});
       }
     }
     function sync(events,now=null){

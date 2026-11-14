@@ -6,6 +6,7 @@
     "baseDamage": 435,
     "muzzleVelocity": 1140,
     "hitReactionPolicyId": "tank-heat/M830",
+    "ammoIncidentPolicyId": "tank-ammo-incident/M830",
     "penetration": {
       "rangesM": [
         10,
@@ -60,12 +61,12 @@
     "nearNonPenetration": false,
     "armoredBlastRadiusM": 0
   },
-  "status": "active WIP19 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP19 instructions",
+  "status": "active WIP20 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20 instructions",
   "limits": [
     "CE protection only, no range falloff in the trial table",
     "Fixed penetration multiplier 1; nonpenetration, ricochet and armored blast damage are zero",
-    "Victim-specific hit-reaction rates live only on an explicitly bound vehicle profile",
+    "Victim-specific hit-reaction and ammunition-incident rates live only on an explicitly bound vehicle profile",
     "No additional velocity damage multiplier"
   ]
 }

@@ -367,6 +367,104 @@
         ]
       }
     },
+    "ammoIncidents": {
+      "enabled": true,
+      "victimProfileId": "M1A2_1998",
+      "partialLossFraction": 0.25,
+      "safetySeconds": 8,
+      "policies": {
+        "tank-ammo-incident/M829A2": {
+          "ammoId": "M829A2",
+          "baseChance": 0.3
+        },
+        "tank-ammo-incident/M829A1": {
+          "ammoId": "M829A1",
+          "baseChance": 0.3
+        },
+        "tank-ammo-incident/M830": {
+          "ammoId": "M830",
+          "baseChance": 0.4
+        }
+      },
+      "storedAmmoResponse": {
+        "M829A2": 1,
+        "M829A1": 1,
+        "M830": 1
+      },
+      "compartments": {
+        "ready": {
+          "capacity": 17,
+          "transferFactor": 0.5,
+          "outcomes": {
+            "ammoLoss": 0.7,
+            "isolatedFire": 0.28,
+            "fatal": 0.02
+          }
+        },
+        "semiReady": {
+          "capacity": 18,
+          "transferFactor": 0.65,
+          "outcomes": {
+            "ammoLoss": 0.65,
+            "isolatedFire": 0.32,
+            "fatal": 0.03
+          }
+        },
+        "reserve": {
+          "capacity": 6,
+          "transferFactor": 0.8,
+          "outcomes": {
+            "ammoLoss": 0.6,
+            "isolatedFire": 0.35,
+            "fatal": 0.05
+          }
+        }
+      },
+      "rows": {
+        "hullFront": {
+          "ready": 0,
+          "semiReady": 0.1,
+          "reserve": 0.15,
+          "none": 0.75
+        },
+        "hullSide": {
+          "ready": 0.05,
+          "semiReady": 0.15,
+          "reserve": 0.3,
+          "none": 0.5
+        },
+        "hullRear": {
+          "ready": 0,
+          "semiReady": 0.1,
+          "reserve": 0.2,
+          "none": 0.7
+        },
+        "turretFront": {
+          "ready": 0.1,
+          "semiReady": 0.1,
+          "reserve": 0,
+          "none": 0.8
+        },
+        "turretSide": {
+          "ready": 0.3,
+          "semiReady": 0.2,
+          "reserve": 0,
+          "none": 0.5
+        },
+        "turretRear": {
+          "ready": 0.4,
+          "semiReady": 0.25,
+          "reserve": 0,
+          "none": 0.35
+        },
+        "upper": {
+          "ready": 0.15,
+          "semiReady": 0.15,
+          "reserve": 0.1,
+          "none": 0.6
+        }
+      }
+    },
     "combat": {
       "maxHp": 1450,
       "armor": {
@@ -1291,7 +1389,7 @@
       }
     }
   },
-  "baseline": "Active WIP19 ammunition-management and symmetric combat fixture: M1A2 (1998) / M829A2, M829A1, M830",
+  "baseline": "Active WIP20 ammunition-incident and symmetric combat fixture: M1A2 (1998) / M829A2, M829A1, M830",
   "reviewed": "2026-11-14",
   "sources": [
     {
@@ -1399,6 +1497,12 @@
       "title": "TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md",
       "path": "../../archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md",
       "scope": "M1A2_1998-only three-ammunition inventory, preparation, reload, ready-rack replenishment and command-panel game trial; not a real loading drill or stowage certification"
+    },
+    {
+      "id": "TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS",
+      "title": "TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md",
+      "path": "../../archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md",
+      "scope": "M1A2_1998-only compartment hit mapping, stored-ammunition loss, isolated-fire safety lockout and fatal incident game trial; not real vulnerability, stowage or blow-off-panel certification"
     }
   ],
   "fieldEvidence": {
@@ -1577,6 +1681,11 @@
       "status": "fictional game trial",
       "source": "TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL",
       "note": "42 rounds are split into loaded 1, ready 17, semi-ready 18 and reserve 6 with M829A2/A1/M830 counts. Preparation and replenishment seconds are adjustable game values and apply only to M1A2_1998."
+    },
+    "ammoIncidents": {
+      "status": "fictional game trial",
+      "source": "TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS",
+      "note": "Seven hit-zone compartment rows, 0.30/0.30/0.40 attacker bases, fill/transfer factors, 25% proportional loss, 8s isolated-fire lockout and fatal result are adjustable game values enabled only for victim profile M1A2_1998."
     }
   },
   "limits": [
@@ -1586,7 +1695,7 @@
     "Observation channels use fictional RTS timing and seeded thresholds, terrain/building/forest geometry; no weather, night or real thermal-sensor performance model",
     "No SEP armour values or specific ammunition performance are inferred; firing uses fictional game probabilities",
     "WIP12 penetration, damage and ricochet are abstract game tables; ricochet continuation is display-only and has no further collision or damage",
-    "WIP18 reactions are M1A2_1998-only trial rules; no permanent module damage, crew death/healing/replacement, fire, ammunition-rack explosion or vehicle-to-vehicle inheritance",
-    "WIP19 has no fire/cookoff, external resupply, forced unload, autoloader, loadout editor, infantry blast damage or other vehicle ammunition inheritance"
+    "WIP18 reactions are M1A2_1998-only trial rules; no permanent module damage, crew death/healing/replacement or vehicle-to-vehicle inheritance",
+    "WIP20 isolated fire is an eight-second firing/work lockout without damage-over-time; no normal engine fire, chain explosion, area damage, external resupply, forced unload, autoloader, loadout editor or other-vehicle inheritance"
   ]
 }

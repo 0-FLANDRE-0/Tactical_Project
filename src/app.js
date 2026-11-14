@@ -1,6 +1,7 @@
 (() => {
   const C=TacticalCore,$=id=>document.getElementById(id),canvas=$('map'),ctx=canvas.getContext('2d'),wrap=$('mapWrap');
   let sim=C.createScenario(),selected='A11',targetId=null,paused=false,timeScale=1,reverseMode=false,showContours=true,terrainMode=false,sightHeld=false,sightPointer=null,sightKey=false,last=performance.now(),accumulator=0,uiTime=0,toastUntil=0,visibilityDirty=true,visLast=-1,visOrigin=null,frameCount=0,guardPopupOpen=false,portraitBlocked=false,portraitPausedBefore=false;
+  const incidentToastIds=new Map();
   const camera={
     x:C.WORLD.w/2,y:C.WORLD.h/2,zoom:.5,w:1,h:1,dpr:1
   }
@@ -102,7 +103,7 @@
   $('lookChannel').onchange=()=>{setLookPicking(false);updateUI();};
   $('designateTarget').onclick=()=>{const u=selectedUnit();if(u&&targetId&&C.designate(sim,u,targetId)){toast('포수에게 지정 전달 · 자체 관측으로 확보 대기');updateUI();}};
   const zoneNames={hullFront:'차체 전',hullSide:'차체 측',hullRear:'차체 후',turretFront:'포탑 전',turretSide:'포탑 측',turretRear:'포탑 후',upper:'상부'};
-  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',reloading:'장전 중','selected-ammo-unavailable':'선택 탄종 없음','fcs-fault':'사통 대응 중','gunner-fault':'포수 관측 대응 중','out-of-ammo':'탄약 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실','must-stop':'정차·안정화 대기','movement-policy':'교전 정차 대기'};
+  const fireReasons={'no-target':'표적 미확보','not-acquired':'포수 확보 대기',unidentified:'식별 대기','own-sight-lost':'포수 관측 상실',range:'사격 거리 밖',aligning:'포탑 정렬 중',reloading:'장전 중','selected-ammo-unavailable':'선택 탄종 없음','ammo-safety':'탄약고 화재 대응','fcs-fault':'사통 대응 중','gunner-fault':'포수 관측 대응 중','out-of-ammo':'탄약 소진',disabled:'사격 장비 없음',destroyed:'격파 차량','target-unavailable':'표적 무효','no-presented-target':'보이는 표적 없음','not-ready':'조준 미완료',pending:'발사 처리 대기',cancelled:'지정 취소','fresh-sight-failed':'발사 시 시야 상실','fire-line-blocked':'발사선 차폐','fresh-alignment-failed':'발사 시 정렬 상실','must-stop':'정차·안정화 대기','movement-policy':'교전 정차 대기'};
   function fireSelected(){
     if(portraitBlocked)return;
     if(paused||document.hidden){toast('재생 중에 발사할 수 있음');return;}
@@ -408,6 +409,7 @@
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
     sim=C.createScenario();
     effectRenderer.reset();
+    incidentToastIds.clear();
     selected='A11';
     targetId=null;
     trails.length=0;
@@ -530,7 +532,7 @@
     if(!u){
       for(const id of ['move','reverse','stop','sight','fire','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode','ammoSelect'])$(id).disabled=true;
       ui.setText($('unitName'),'선택 차량 없음');ui.setText($('unitType'),living.length?'위 선택 메뉴에서 아군을 선택':'아군 차량 전멸');ui.setText($('velocity'),'0');ui.setText($('motionState'),'—');
-      ui.setText($('combatSummary'),living.length?'명령 대기':'생존 아군 없음');ui.setText($('fireState'),'');ui.setText($('readinessState'),'');ui.setText($('flightState'),'');ui.setText($('lookStatus'),'');ui.setText($('designationStatus'),'');ui.setText($('ammoTotal'),'—');ui.setText($('ammoLoaded'),'');ui.setText($('ammoTask'),'');ui.setHTML($('ammoInventory'),'');ui.setText($('faultStatus'),'');ui.setText($('crewStatus'),'');
+      ui.setText($('combatSummary'),living.length?'명령 대기':'생존 아군 없음');ui.setText($('fireState'),'');ui.setText($('readinessState'),'');ui.setText($('flightState'),'');ui.setText($('lookStatus'),'');ui.setText($('designationStatus'),'');ui.setText($('ammoTotal'),'—');ui.setText($('ammoLoaded'),'');ui.setText($('ammoTask'),'');ui.setText($('ammoIncident'),'');ui.setHTML($('ammoInventory'),'');ui.setText($('faultStatus'),'');ui.setText($('crewStatus'),'');
       ui.setText($('elevation'),'—');ui.setText($('slope'),'—');ui.setText($('heading'),'—');ui.setText($('surface'),'—');ui.setHTML($('routeInfo'),'<strong>아군 전멸</strong> · 지도 이동·확대·초기화는 계속 사용할 수 있음');
       $('targetPanel').classList.toggle('visible',false);return;
     }
@@ -539,7 +541,7 @@
     ui.setText($('fireState'),(firing.mode==='auto'?'자동':'보류')+' · '+fireText+' · 총 '+firing.ammo+'발');
     const load=firing.loading,fcsFault=firing.faults.fireControl,observationFaults=[firing.faults.commander,firing.faults.gunner].filter(v=>v.active),observationRemaining=observationFaults.length?Math.max(...observationFaults.map(v=>v.remaining)):0;
     const faultText=[fcsFault.active?'사통 이상 '+fcsFault.remaining.toFixed(1)+'초':'',observationFaults.length?'관측장비 불안정 · 조준 저하 '+observationRemaining.toFixed(1)+'초':''].filter(Boolean).join(' / ');
-    const loadText=load.loaded?'장전 '+(load.ammoId||'1발'):firing.reason==='selected-ammo-unavailable'?'선택 탄종 없음':load.estimatedSeconds===null?'장전할 탄 없음':(load.stage==='prepare'?'탄 준비 ':'장전 ')+Math.round(load.progress*100)+'% · 예상 '+Math.max(.1,load.estimatedSeconds).toFixed(1)+'초';
+    const loadText=firing.reason==='ammo-safety'?'탄약고 화재 대응 '+firing.ammunition.incident.remaining.toFixed(1)+'초':load.loaded?'장전 '+(load.ammoId||'1발'):firing.reason==='selected-ammo-unavailable'?'선택 탄종 없음':load.estimatedSeconds===null?'장전할 탄 없음':(load.stage==='prepare'?'탄 준비 ':'장전 ')+Math.round(load.progress*100)+'% · 예상 '+Math.max(.1,load.estimatedSeconds).toFixed(1)+'초';
     const reactions=combat?.reactions,reactionStatus=reactions?reactionText(u):'';
     ui.setText($('readinessState'),loadText+(load.fatigueSeconds>.005?' · 피로 +'+load.fatigueSeconds.toFixed(2)+'초':'')+(load.shockSeconds>.005?' · 동요 +'+load.shockSeconds.toFixed(2)+'초':'')+(faultText?' · '+faultText:'')+(reactionStatus?' · '+reactionStatus:''));
     ui.setText($('fireMode'),firing.mode==='auto'?'자동':'보류');$('fireMode').setAttribute('aria-pressed',String(firing.mode==='auto'));$('fireMode').classList.toggle('active',firing.mode==='auto');
@@ -557,9 +559,12 @@
     if(ammunition){
       $('ammoSelect').value=ammunition.preference;ui.setText($('ammoTotal'),ammunition.total+'발');ui.setText($('ammoLoaded'),'장전탄 '+(ammunition.loadedAmmoId||'없음')+' · 다음 '+(ammunition.preference==='auto'?'자동':ammunition.preference));
       const task=ammunition.task,taskTime=task&&!task.paused?' · '+Math.max(1,Math.ceil(task.remaining||0))+'초':task?' · 대기':'';
-      ui.setText($('ammoTask'),task?(taskNames[task.stage]||taskNames[task.purpose])+' · '+task.ammoId+' / '+sectionNames[task.source]+taskTime:'작업 없음');
+      ui.setText($('ammoTask'),task?(taskNames[task.stage]||taskNames[task.purpose])+' · '+task.ammoId+' / '+sectionNames[task.source]+(task.pauseReason==='ammo-safety'?' · 탄약고 화재 대응으로 일시정지 '+Math.max(1,Math.ceil(ammunition.incident.remaining))+'초':taskTime):'작업 없음');
+      const incident=ammunition.incident,lastIncident=incident.last,lostText=lastIncident?Object.entries(lastIncident.lost).filter(([,count])=>count).map(([id,count])=>id+' '+count).join(' / '):'',outcomeNames={ammoLoss:'탄약 일부 소실',isolatedFire:'격리 화재',fatal:'치명 사고'};
+      ui.setText($('ammoIncident'),incident.active?'활성 사고 · 탄약고 화재 대응 '+Math.max(1,Math.ceil(incident.remaining))+'초'+(lastIncident?' · '+sectionNames[lastIncident.section]+' '+lostText:''):lastIncident?'최근 '+outcomeNames[lastIncident.outcome]+' · '+sectionNames[lastIncident.section]+' · '+lostText+' · T+'+lastIncident.time.toFixed(1)+'초':'최근 탄약고 사고 없음');
+      if(lastIncident&&incidentToastIds.get(u.id)!==lastIncident.id){incidentToastIds.set(u.id,lastIncident.id);if(lastIncident.outcome==='ammoLoss')toast('탄약 일부 소실 · '+sectionNames[lastIncident.section]+' · '+lastIncident.lostCount+'발');}
       ui.setHTML($('ammoInventory'),Object.entries(ammunition.sections).map(([section,value])=>'<tr><th>'+sectionNames[section]+' '+value.total+'/'+value.capacity+'</th>'+ammunition.supported.map(id=>'<td>'+value.counts[id]+'</td>').join('')+'</tr>').join(''));
-    }else{ui.setText($('ammoTotal'),firing.ammo+'발');ui.setText($('ammoLoaded'),load.loaded?'장전탄 1':'장전탄 없음');ui.setText($('ammoTask'),load.loaded?'작업 없음':'장전 중');ui.setHTML($('ammoInventory'),'');}
+    }else{ui.setText($('ammoTotal'),firing.ammo+'발');ui.setText($('ammoLoaded'),load.loaded?'장전탄 1':'장전탄 없음');ui.setText($('ammoTask'),load.loaded?'작업 없음':'장전 중');ui.setText($('ammoIncident'),'');ui.setHTML($('ammoInventory'),'');}
     const reaction=combat?.reactions,faultLines=[fcsFault.active?'사통 이상 '+Math.max(1,Math.ceil(fcsFault.remaining))+'초':'',reaction?.faults.mobility.active?'기동계 이상 '+Math.max(1,Math.ceil(reaction.faults.mobility.remaining))+'초':'',reaction?.faults.turretDrive.active?'포탑 구동 이상 '+Math.max(1,Math.ceil(reaction.faults.turretDrive.remaining))+'초':'',observationFaults.length?'관측장비 불안정 '+Math.max(1,Math.ceil(observationRemaining))+'초':''].filter(Boolean);
     ui.setText($('faultStatus'),faultLines.length?faultLines.join(' · '):'활성 일시 이상 없음');ui.setText($('crewStatus'),reaction?Object.entries(reaction.crew).map(([role,status])=>crewNames[role]+' '+severityNames[status]).join(' · '):'승무원 상태 비활성');
     ui.setText($('elevation'),C.heightAt(u.x,u.y).toFixed(1)+' m');
@@ -604,10 +609,11 @@
   $('unitSelect').value=selected;$('unitSelect').onchange=()=>{if(select($('unitSelect').value)){const u=selectedUnit();camera.x=u.x;camera.y=u.y;camera.zoom=Math.max(camera.zoom,3);clampCamera();}};
   function activeUnitStatus(u){
     const state=u.fireControl||{},seconds=until=>Math.max(1,Math.ceil(until-sim.time)),lines=[];
+    if((state.ammunition?.incident?.safetyUntil||0)>sim.time)lines.push('탄약고 화재 대응 '+seconds(state.ammunition.incident.safetyUntil)+'초');
     if((state.faultUntil?.fireControl||0)>sim.time)lines.push('사통 이상 '+seconds(state.faultUntil.fireControl)+'초');
     const reactions=C.combatView(u)?.reactions,drive=[];if(reactions?.faults.mobility.active)drive.push('기동계 '+Math.max(1,Math.ceil(reactions.faults.mobility.remaining))+'초');if(reactions?.faults.turretDrive.active)drive.push('포탑 '+Math.max(1,Math.ceil(reactions.faults.turretDrive.remaining))+'초');if(drive.length)lines.push(drive.join(' · '));
     const observationUntil=Math.max(state.faultUntil?.commander||0,state.faultUntil?.gunner||0);if(observationUntil>sim.time)lines.push('관측 불안정 '+seconds(observationUntil)+'초');
-    const task=state.ammunition?.task;if(task?.stage==='prepare')lines.push('탄 준비 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.sections[task.source].prepareSeconds/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');else if(task?.purpose==='replenish')lines.push(task.paused?'즉응탄 보충 대기':'즉응탄 보충 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.replenish.seconds[task.source]/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');
+    const task=state.ammunition?.task;if((state.ammunition?.incident?.safetyUntil||0)<=sim.time){if(task?.stage==='prepare')lines.push('탄 준비 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.sections[task.source].prepareSeconds/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');else if(task?.purpose==='replenish')lines.push(task.paused?'즉응탄 보충 대기':'즉응탄 보충 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.replenish.seconds[task.source]/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');}
     return lines.slice(0,2);
   }
   function drawTank(u){
@@ -808,7 +814,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP19',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP20',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
