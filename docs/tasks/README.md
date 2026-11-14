@@ -6,7 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [작업 지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | 지시서 등록 · 구현/검증 대기 · ERA 방호만 적용, 소모/손상 없음 |
+| WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [작업 지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) · [원본 보관](../../archive/instructions/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | `feat/wip21-t80u-model-armor` 구현·작성자 검증 완료 · PR 검토 대기 · ERA 방호만 적용, 소모/손상 없음 |
 | WIP20 M1A2(1998) 전용 탄약고 사고 | [완료 안내](TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) | 최종 3633952 독립 재검증 통과 · main 통합 · 확률/시간은 시험 제안 |
 | WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [완료 안내](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | 최종 5bf1bb5 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
 | WIP18 일시 기능 이상·승무원 경중상 | [완료 안내](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 최종 6c5e4f3 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
@@ -38,6 +38,8 @@ WIP18은 지시서가 등록된 main에서 `feat/wip18-hit-reactions` 브랜치�
 WIP19는 WIP18이 통합된 main `62a7658`에서 `feat/wip19-ammunition-command-panel` 브랜치로 구현했다. `M1A2_1998`에만 M829A2/A1/M830 혼합 42발, 장전탄·세 저장 구획, 준비/장전·즉응탄 보충과 탄종별 실제 발사/착탄을 연결했다. 지도 도구와 명령은 우측 상단, 선택 유닛 정보는 아래 독립 스크롤 영역으로 옮기고 큰 명단·정적 도안/제원은 제거했다. 아군 활성 고장/작업만 지도에 최대 두 줄 표시하며 승무원 상태와 적 내부 정보 공개 경계를 유지한다. [구현 문서](../AMMUNITION_AND_COMMAND_PANEL_WIP19.md)와 [릴리스·검증](../../TACTICAL_RELEASE_WIP19.md)을 참고한다.
 
 WIP20은 최신 main `ab9309a`에서 `feat/wip20-ammunition-incidents` 브랜치로 구현했다. `M1A2_1998`에만 7개 피격 구역의 가상 구획 분포, 공격탄/저장탄/적재율/보호 계수와 탄약 일부 소실·8초 격리 화재 대응·치명 사고를 연결했다. 실제 저장/예약/약실 소유권, WIP18 반응 뒤 사고 처리, WIP15 최종 반응, AI 임무 유지, 고정 월드 효과와 공개 정보 경계를 검증했다. 최종 `3633952`를 독립 재검증해 2026-11-14 main에 통합했다. [병합 검토](../reviews/WIP20_MERGE_REVIEW_2026-11-14.md)에 전체 검사·추가 경계 재현과 한계를 기록했다. [구현 문서](../AMMUNITION_INCIDENTS_WIP20.md)와 [릴리스·검증](../../TACTICAL_RELEASE_WIP20.md)을 참고한다.
+
+WIP21은 최신 main `be32d23`에서 `feat/wip21-t80u-model-armor` 브랜치로 구현했다. 수정 T-80U 벡터를 게임 좌표에 연결하고 피격 전용 `T80U_1989`, 7구역 기본 장갑과 고정 Kontakt-5 확률 피복, 선택 가능한 방호시험을 추가했다. T-80U의 이동·관측 장비·AI·발사·자동장전·승무원/장비/탄약고 반응과 ERA 소모/폭발은 만들지 않았다. [구현 문서](../T80U_MODEL_AND_ARMOR_WIP21.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP21.md), [검증 JSON](../../tests/releases/WIP21-validation.json)을 참고한다. main 병합은 별도 검토 뒤 진행한다.
 
 ## 관리 방법
 

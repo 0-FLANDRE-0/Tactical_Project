@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — {{MAP_TITLE}} v0.4 WIP20</title>
+<title>TACTICAL — {{MAP_TITLE}} v0.4 WIP21</title>
 <style>
 {{STYLES}}
 </style>
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">{{MAP_SUBTITLE}}</div><div class="header-spacer"></div><span class="version">v0.4 / WIP20</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">{{MAP_SUBTITLE}}</div><div class="header-spacer"></div><span class="version">v0.4 / WIP21</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -28,6 +28,7 @@
 <aside class="sidebar" aria-label="명령 및 선택 차량 정보">
 <section class="command-panel" aria-label="전술 명령">
 <div class="section-label"><span>COMMAND</span><button class="reset compact" id="reset">초기화 ↺</button></div>
+<div class="command-group scenario-command"><label for="scenarioSelect"><b>시나리오</b></label><select id="scenarioSelect"><option value="default">기본 전투</option><option value="t80u-armor">T-80U 방호시험</option></select></div>
 <div class="command-group map-command-group"><b>지도</b><div class="map-tools"><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대">＋</button><button id="zoomOut" aria-label="지도 축소">－</button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기">맞춤</button><button class="active" id="contours" aria-pressed="true" title="등고선 표시">등고선</button></div></div>
 <div class="command-group"><b>기동</b><div class="command-row"><button class="command active" id="move" aria-pressed="true">이동</button><button class="command" id="reverse" aria-pressed="false">후진</button><button class="command" id="stop">정지</button></div></div>
 <div class="command-group"><b>관측</b><div class="command-row"><button class="command sight" id="sight" aria-pressed="false">시야 · 홀드</button><button class="command" id="guardMenu" aria-expanded="false" aria-controls="guardPopup">경계</button></div>
@@ -98,6 +99,12 @@
 </script>
 <script id="m1a2-art">
 {{M1A2_ART}}
+</script>
+<script id="t80u-topview">
+{{T80U_TOPVIEW}}
+</script>
+<script id="t80u-art">
+{{T80U_ART}}
 </script>
 <script id="ui-cache">
 {{UI_CACHE}}

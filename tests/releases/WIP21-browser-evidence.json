@@ -1,0 +1,239 @@
+{
+  "desktop": {
+    "unknown": {
+      "artId": "T80U",
+      "identified": false
+    },
+    "identified": {
+      "type": "T-80U",
+      "artId": "T80U",
+      "muzzleError": 1.1043454891797605e-13
+    },
+    "commands": {
+      "move": {
+        "ok": false,
+        "reason": "이 차량은 고정 표적임",
+        "points": []
+      },
+      "stop": false,
+      "mission": null,
+      "fire": {
+        "ok": false,
+        "reason": "disabled"
+      },
+      "designate": false,
+      "collision": false
+    },
+    "reset": {
+      "scenario": "t80u-armor",
+      "time": 0.1
+    },
+    "defaultProfiles": [
+      "M1A2_1998",
+      "M1A2_1998",
+      "M1A2_1998",
+      "M1A2_1998",
+      "M1A2_1998"
+    ]
+  },
+  "viewports": [
+    {
+      "name": "mobile-dpr1",
+      "dpr": 1,
+      "canvas": [
+        558,
+        322
+      ],
+      "css": [
+        558,
+        322
+      ],
+      "overflow": 0,
+      "select": {
+        "left": 604,
+        "right": 698.5,
+        "top": 85,
+        "bottom": 110
+      },
+      "side": {
+        "left": 558,
+        "right": 844,
+        "top": 44,
+        "bottom": 366
+      },
+      "portrait": false,
+      "scenario": "t80u-armor",
+      "contacts": 2
+    },
+    {
+      "name": "mobile-dpr2",
+      "dpr": 2,
+      "canvas": [
+        1116,
+        644
+      ],
+      "css": [
+        558,
+        322
+      ],
+      "overflow": 0,
+      "select": {
+        "left": 604,
+        "right": 698.5,
+        "top": 85,
+        "bottom": 110
+      },
+      "side": {
+        "left": 558,
+        "right": 844,
+        "top": 44,
+        "bottom": 366
+      },
+      "portrait": false,
+      "scenario": "t80u-armor",
+      "contacts": 2
+    },
+    {
+      "name": "portrait",
+      "dpr": 2,
+      "canvas": [
+        291,
+        1534
+      ],
+      "css": [
+        145.625,
+        767
+      ],
+      "overflow": 0,
+      "select": {
+        "left": 198.625,
+        "right": 415.625,
+        "top": 92.5,
+        "bottom": 120.5
+      },
+      "side": {
+        "left": 145.625,
+        "right": 423.625,
+        "top": 49,
+        "bottom": 816
+      },
+      "portrait": true,
+      "scenario": "t80u-armor",
+      "contacts": 2
+    }
+  ],
+  "threeAmmo": {
+    "fired": [
+      "M829A2",
+      "M829A1",
+      "M830"
+    ],
+    "impacts": [
+      {
+        "ammoId": "M829A2",
+        "result": "hit",
+        "zone": "hullSide",
+        "combat": {
+          "reason": "penetrated",
+          "hit": true,
+          "zone": "hullSide",
+          "side": "right",
+          "ricochet": false,
+          "ricochetChance": 0,
+          "ricochetRoll": 0.9680732463020831,
+          "penetrated": true,
+          "incidenceDeg": 39.32586356559165,
+          "penetration": 508.4890043165125,
+          "protection": null,
+          "protectionDeficit": null,
+          "nearNonPenetration": false,
+          "residualRatio": 0.7738397506656457,
+          "multiplier": 0.5249369985391426,
+          "baseDamage": 405,
+          "damage": 212.59948440835274,
+          "hpBefore": 1400,
+          "hpAfter": 1187.4005155916473,
+          "maxHp": 1400,
+          "destroyed": false
+        }
+      },
+      {
+        "ammoId": "M829A1",
+        "result": "hit",
+        "zone": "hullSide",
+        "combat": {
+          "reason": "penetrated",
+          "hit": true,
+          "zone": "hullSide",
+          "side": "right",
+          "ricochet": false,
+          "ricochetChance": 0,
+          "ricochetRoll": 0.7298072164412588,
+          "penetrated": true,
+          "incidenceDeg": 39.32586356559165,
+          "penetration": 450.577299388219,
+          "protection": null,
+          "protectionDeficit": null,
+          "nearNonPenetration": false,
+          "residualRatio": 0.7447718734251731,
+          "multiplier": 0.5859796017867381,
+          "baseDamage": 380,
+          "damage": 222.6722486789605,
+          "hpBefore": 1187.4005155916473,
+          "hpAfter": 964.7282669126868,
+          "maxHp": 1400,
+          "destroyed": false
+        }
+      },
+      {
+        "ammoId": "M830",
+        "result": "hit",
+        "zone": "hullSide",
+        "combat": {
+          "reason": "non-penetration",
+          "hit": true,
+          "zone": "hullSide",
+          "side": "right",
+          "ricochet": false,
+          "ricochetChance": 0,
+          "ricochetRoll": 0.44591644615866244,
+          "penetrated": false,
+          "incidenceDeg": 39.32586356559165,
+          "penetration": 360.59912920071537,
+          "protection": null,
+          "protectionDeficit": null,
+          "nearNonPenetration": false,
+          "residualRatio": 0,
+          "multiplier": 0,
+          "baseDamage": 435,
+          "damage": 0,
+          "hpBefore": 964.7282669126868,
+          "hpAfter": 964.7282669126868,
+          "maxHp": 1400,
+          "destroyed": false
+        }
+      }
+    ],
+    "hpByTarget": {
+      "U01": 1400,
+      "U02": 1400,
+      "U03": 964.7282669126868
+    }
+  },
+  "destruction": {
+    "target": {
+      "id": "U03",
+      "hp": 0,
+      "status": "destroyed"
+    },
+    "wrecks": [
+      {
+        "key": "접촉-1bc6cbb",
+        "type": "T-80U",
+        "artId": "T80U",
+        "x": 780,
+        "y": 2470
+      }
+    ]
+  }
+}

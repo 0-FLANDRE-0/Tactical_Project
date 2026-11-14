@@ -1,0 +1,39 @@
+{
+  "root": "/workspace/Tactical_Project_WIP21",
+  "core": {
+    "scenario": "t80u-armor",
+    "steps": 800,
+    "medianMs": 0.08409500000004755,
+    "p95Ms": 0.8868919999999889,
+    "observation": {
+      "queries": 450,
+      "candidates": 1247,
+      "samples": 1247,
+      "rayQueries": 2106,
+      "rayCacheHits": 9117
+    }
+  },
+  "impact": {
+    "rounds": 20000,
+    "plain": {
+      "medianUs": 2.318027000000029,
+      "p95Us": 4.6145230000000765
+    },
+    "era": {
+      "medianUs": 1.5088200000000143,
+      "p95Us": 2.1237780000000157
+    }
+  },
+  "browser": {
+    "scenario": "t80u-armor",
+    "frames": 180,
+    "medianIntervalMs": 16.699999999999818,
+    "p95IntervalMs": 16.700000000000273,
+    "pausedRenderLosStable": true,
+    "canvas": {
+      "width": 1134,
+      "height": 812,
+      "dpr": 1
+    }
+  }
+}

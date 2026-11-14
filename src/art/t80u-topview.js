@@ -278,8 +278,8 @@ const T80UTopView = (() => {
   function toSVG(p={}){return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6.6 -6.6 13.2 13.2" width="1200" height="1200" role="img" aria-label="T-80U exterior top view"><title>T-80U exterior art study</title>${svgBody(p)}</svg>`;}
   const pathCache=new Map();
   function draw(ctx,pose={},options={}){
-    const p=normalize(pose),c=palettes[p.palette],scale=Math.max(.01,finite(options.pixelsPerMetre,50));
-    const paint=k=>{ctx.save();for(const x of layers[k]){if(x.lod>p.lod||(!p.mgMounted&&(x.feature==='mg'||x.feature==='mg-mount')))continue;let d=pathCache.get(x);if(!d){d=new Path2D(x.d);pathCache.set(x,d);}if(x.fill){ctx.fillStyle=c[x.fill];ctx.fill(d);}if(x.stroke){ctx.strokeStyle=c[x.stroke];ctx.lineWidth=x.w;ctx.stroke(d);}}ctx.restore();};
+    const p=normalize(pose),c=palettes[p.palette],scale=Math.max(.01,finite(options.pixelsPerMetre,50)),silhouette=!!options.silhouette;
+    const paint=k=>{ctx.save();for(const x of layers[k]){if(!silhouette&&x.lod>p.lod||(!p.mgMounted&&(x.feature==='mg'||x.feature==='mg-mount'))||silhouette&&!x.fill)continue;let d=pathCache.get(x);if(!d){d=new Path2D(x.d);pathCache.set(x,d);}if(x.fill){ctx.fillStyle=silhouette?'#000000':c[x.fill];ctx.fill(d);}if(x.stroke&&!silhouette){ctx.strokeStyle=c[x.stroke];ctx.lineWidth=x.w;ctx.stroke(d);}}ctx.restore();};
     const spin=(a,q)=>{ctx.translate(...q);ctx.rotate(a*Math.PI/180);ctx.translate(-q[0],-q[1]);};
     ctx.save();ctx.translate(finite(options.x),finite(options.y));ctx.scale(scale,scale);ctx.rotate(p.heading*Math.PI/180);ctx.transform(-S,0,0,-S,H[0]*S,H[1]*S);ctx.lineJoin='round';ctx.lineCap='round';
     paint('hull');spin(p.turret,T);paint('turret');spin(p.commander,C);paint('commander');spin(p.mg,G);paint('mg');ctx.restore();

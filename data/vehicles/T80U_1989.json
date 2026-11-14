@@ -1,0 +1,155 @@
+{
+  "profile": {
+    "id": "T80U_1989",
+    "name": "T-80U",
+    "variant": "T-80U (1989 장갑 시험 표적)",
+    "crew": 3,
+    "crewRoles": [
+      "commander",
+      "gunner",
+      "driver"
+    ],
+    "artId": "T80U",
+    "capabilities": {
+      "target": true,
+      "mobility": false,
+      "observation": false,
+      "fire": false,
+      "ai": false
+    },
+    "model": {
+      "hullLength": 7.012,
+      "width": 3.6102974828375283,
+      "overallLength": 9.579322654462242,
+      "roofHeight": 2.2,
+      "groundClearance": 0.45,
+      "barrelTip": 6.073322654462242,
+      "turretLength": 3.65,
+      "turretWidth": 3.47,
+      "turretOrigin": 0,
+      "turretPivot": [
+        -0.02406864988558352,
+        0
+      ],
+      "turretRingDiameter": 2.05,
+      "muzzleLocal": [
+        6.073322654462242,
+        0
+      ]
+    },
+    "target": {
+      "presented": {
+        "hullBottom": 0.45,
+        "hullTop": 1.55,
+        "turretTop": 2.2
+      }
+    },
+    "exposure": {
+      "hullAlong": [
+        -2.45,
+        0,
+        2.45
+      ],
+      "hullHeights": [
+        0.75,
+        1.35
+      ],
+      "turretAlong": [
+        -0.85,
+        0,
+        0.85
+      ],
+      "turretHeight": 2.05
+    },
+    "navigation": {
+      "clearanceMargin": 0.25,
+      "radius": 4.2
+    },
+    "combat": {
+      "maxHp": 1400,
+      "armor": {
+        "hullFront": {
+          "ke": 500,
+          "ce": 690
+        },
+        "hullSide": {
+          "ke": 115,
+          "ce": 120
+        },
+        "hullRear": {
+          "ke": 40,
+          "ce": 40
+        },
+        "turretFront": {
+          "ke": 575,
+          "ce": 740
+        },
+        "turretSide": {
+          "ke": 305,
+          "ce": 390
+        },
+        "turretRear": {
+          "ke": 70,
+          "ce": 70
+        },
+        "upper": {
+          "ke": 45,
+          "ce": 45
+        }
+      },
+      "era": {
+        "comparison": "roll<coverage",
+        "consumable": false,
+        "zones": {
+          "hullFront": {
+            "coverage": 0.9,
+            "ke": 215,
+            "ce": 560
+          },
+          "hullSide": {
+            "coverage": 0.5,
+            "ke": 215,
+            "ce": 560
+          },
+          "hullRear": {
+            "coverage": 0,
+            "ke": 0,
+            "ce": 0
+          },
+          "turretFront": {
+            "coverage": 0.95,
+            "ke": 215,
+            "ce": 560
+          },
+          "turretSide": {
+            "coverage": 0.45,
+            "ke": 215,
+            "ce": 560
+          },
+          "turretRear": {
+            "coverage": 0,
+            "ke": 0,
+            "ce": 0
+          },
+          "upper": {
+            "coverage": 0.45,
+            "ke": 215,
+            "ce": 560
+          }
+        }
+      }
+    }
+  },
+  "scope": "WIP21 target-only armour trial; no 125 mm weapon, autoloader, mobility, sensors, AI, crew damage, faults or ammunition incidents.",
+  "sources": [
+    "docs/tasks/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md",
+    "docs/T80U_ART_STUDY.md",
+    "docs/T80U_ART_CORRECTION.md",
+    "data/vehicles/references/t80u/proportion_review.json"
+  ],
+  "limits": [
+    "Armour and HP are abstract 1989 game values, not measured plate thickness",
+    "Presented heights, exposure samples, turret plan dimensions and collision clearance are adjustable target-trial approximations",
+    "Kontakt-5 is a fixed non-consumable one-roll coverage modifier with no explosion or block damage"
+  ]
+}
