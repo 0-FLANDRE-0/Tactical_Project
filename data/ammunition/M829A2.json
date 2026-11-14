@@ -73,10 +73,32 @@
         ]
       ],
       "outsidePolicy": "clamp"
+    },
+    "nearNonPenetration": {
+      "maxDeficit": 15,
+      "chance": 0.3,
+      "damagePoints": [
+        [
+          0,
+          120
+        ],
+        [
+          5,
+          80
+        ],
+        [
+          10,
+          35
+        ],
+        [
+          15,
+          0
+        ]
+      ]
     }
   },
-  "status": "active WIP20 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20 instructions",
+  "status": "active WIP21 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20 plus the WIP21 attacker-owned A2 near-nonpenetration separation",
   "limits": [
     "Existing WIP12/WIP15 penetration, ricochet, damage and near-nonpenetration rules remain unchanged",
     "Victim-specific hit-reaction and ammunition-incident rates live only on an explicitly bound vehicle profile",

@@ -1,6 +1,6 @@
 (() => {
   const C=TacticalCore,$=id=>document.getElementById(id),canvas=$('map'),ctx=canvas.getContext('2d'),wrap=$('mapWrap');
-  let sim=C.createScenario(),selected='A11',targetId=null,paused=false,timeScale=1,reverseMode=false,showContours=true,terrainMode=false,sightHeld=false,sightPointer=null,sightKey=false,last=performance.now(),accumulator=0,uiTime=0,toastUntil=0,visibilityDirty=true,visLast=-1,visOrigin=null,frameCount=0,guardPopupOpen=false,portraitBlocked=false,portraitPausedBefore=false;
+  let scenarioId='default',sim=C.createScenario(7,{scenarioId}),selected='A11',targetId=null,paused=false,timeScale=1,reverseMode=false,showContours=true,terrainMode=false,sightHeld=false,sightPointer=null,sightKey=false,last=performance.now(),accumulator=0,uiTime=0,toastUntil=0,visibilityDirty=true,visLast=-1,visOrigin=null,frameCount=0,guardPopupOpen=false,portraitBlocked=false,portraitPausedBefore=false;
   const incidentToastIds=new Map();
   const camera={
     x:C.WORLD.w/2,y:C.WORLD.h/2,zoom:.5,w:1,h:1,dpr:1
@@ -403,27 +403,33 @@
     setTimeout(()=>resize(),80)
   }
   );
-  $('reset').onclick=()=>{
+  function resetScenario(nextScenario=scenarioId,message='시험장을 초기 상태로 되돌렸음'){
+    scenarioId=nextScenario;
     setLookPicking(false);
     setGuardPopup(false);
     visibilityClient.cancel();sightRevision++;visibility=null;visibilityPath=null;visOrigin=null;
-    sim=C.createScenario();
+    sim=C.createScenario(7,{scenarioId});
     effectRenderer.reset();
     incidentToastIds.clear();
-    selected='A11';
+    selected=sim.units.find(u=>u.team==='blue'&&alive(u))?.id??'';
     targetId=null;
     trails.length=0;
+    accumulator=0;
     setPaused(false);
     setReverse(false);
     releaseSight();
     timeScale=1;
     $('speed').textContent='1×';
+    $('scenarioSelect').value=scenarioId;
+    populateUnitSelect();
     visibilityDirty=true;
     fitCamera();
     updateUI();
-    toast('시험장을 초기 상태로 되돌렸음')
+    toast(message)
   }
-  ;
+  $('reset').onclick=()=>resetScenario();
+  $('scenarioSelect').value=scenarioId;
+  $('scenarioSelect').onchange=()=>resetScenario($('scenarioSelect').value,$('scenarioSelect').value==='t80u-armor'?'T-80U 방호시험 시나리오':'기본 전투 시나리오');
   window.addEventListener('keydown',e=>{
     if(portraitBlocked){e.preventDefault();return;}
     if(e.code==='Escape'){if(lookPicking)setLookPicking(false);else setGuardPopup(false);return;}
@@ -605,8 +611,8 @@
       }
     }else targetId=null;
   }
-  for(const u of sim.units.filter(u=>u.team==='blue')){const option=document.createElement('option');option.value=u.id;option.textContent=u.name;$('unitSelect').appendChild(option);}
-  $('unitSelect').value=selected;$('unitSelect').onchange=()=>{if(select($('unitSelect').value)){const u=selectedUnit();camera.x=u.x;camera.y=u.y;camera.zoom=Math.max(camera.zoom,3);clampCamera();}};
+  function populateUnitSelect(){const picker=$('unitSelect');picker.innerHTML='';for(const u of sim.units.filter(u=>u.team==='blue'&&alive(u))){const option=document.createElement('option');option.value=u.id;option.textContent=u.name;picker.appendChild(option);}picker.value=selected;}
+  populateUnitSelect();$('unitSelect').onchange=()=>{if(select($('unitSelect').value)){const u=selectedUnit();camera.x=u.x;camera.y=u.y;camera.zoom=Math.max(camera.zoom,3);clampCamera();}};
   function activeUnitStatus(u){
     const state=u.fireControl||{},seconds=until=>Math.max(1,Math.ceil(until-sim.time)),lines=[];
     if((state.ammunition?.incident?.safetyUntil||0)>sim.time)lines.push('탄약고 화재 대응 '+seconds(state.ammunition.incident.safetyUntil)+'초');
@@ -630,9 +636,9 @@
       ctx.fillStyle='#e0edb5';ctx.beginPath();ctx.moveTo(0,-ring-3);ctx.lineTo(-4,-ring-9);ctx.lineTo(4,-ring-9);ctx.fill();
     }
     if(u.key&&u.key===targetId){ctx.strokeStyle='#ffd19b';ctx.lineWidth=1.5;ctx.strokeRect(-ring,-ring,ring*2,ring*2);}
-    const artId=enemy?'M1A2':C.profileOf(u).artId;
+    const artId=u.artId||(u.profileId?C.profileOf(u).artId:'M1A2');
     if(destroyed)ctx.globalAlpha=Math.min(ctx.globalAlpha,.58);
-    ({M1A2:M1A2Art})[artId].draw(ctx,u,z,model,{silhouette:unknown||destroyed});
+    const art=artId==='T80U'&&typeof T80UArt!=='undefined'?T80UArt:M1A2Art;art.draw(ctx,u,z,model,{silhouette:unknown||destroyed});
     if(destroyed){ctx.globalAlpha=1;ctx.strokeStyle='#e09572';ctx.lineWidth=2;const d=Math.max(8,ring*.55);ctx.beginPath();ctx.moveTo(-d,-d);ctx.lineTo(d,d);ctx.moveTo(d,-d);ctx.lineTo(-d,d);ctx.stroke();}
     if(!enemy&&isSelected){
       ctx.save();ctx.rotate(u.commander);ctx.strokeStyle='#93e9f0';ctx.fillStyle='#93e9f0';ctx.lineWidth=2;
@@ -814,8 +820,8 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP20',core:C,snapshot:()=>JSON.parse(JSON.stringify({
-      time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
+    version:'0.4-WIP21',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+      scenarioId,time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
       setReverse(reverse);

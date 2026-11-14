@@ -4,6 +4,13 @@
     "name": "M1A2 Abrams",
     "variant": "M1A2 기본형",
     "crew": 4,
+    "capabilities": {
+      "target": true,
+      "mobility": true,
+      "observation": true,
+      "fire": true,
+      "ai": true
+    },
     "artId": "M1A2",
     "massKg": 63085.62681960001,
     "engineHp": 1500,

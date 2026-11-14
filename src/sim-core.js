@@ -14,7 +14,10 @@ const TacticalCore = (() => {
   const SPEC=mapSpecApi.validate(MAP,{navigationContract:PROFILE.navigation.contract});
   const WORLD = {w:SPEC.width,h:SPEC.height,step:SPEC.heightmap.spacing,nav:SPEC.navigation.spacing};
   const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
-  const profileOf=u=>{const p=registry.get(u?.profileId??ACTIVE_PROFILE_ID);return u?.profileOverride||p;};
+  const profileOf=u=>{const id=u?.profileId??ACTIVE_PROFILE_ID,p=u?._profile?.id===id?u._profile:registry.get(id);return u?.profileOverride||p;};
+  const can=(u,capability)=>!!(u?.profileOverride?.capabilities||u?._profile?.capabilities||profileOf(u).capabilities)?.[capability];
+  const collisionRadius=u=>u?.profileOverride?.navigation?.radius??u?._collisionRadius??profileOf(u).navigation.radius;
+  const targetPresentation=p=>p.fireControl?.presented||p.target?.presented;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const mix=(a,b,t)=>a+(b-a)*t;
   const angleDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
@@ -114,12 +117,12 @@ const TacticalCore = (() => {
   }
   const solidAt=buildingAt;
   function passable(x,y,units=[],ignore=null,heading=null) {
-    const r=VEHICLE.radius;
+    const r=ignore?collisionRadius(ignore):VEHICLE.radius;
     if(x<r+2||y<r+2||x>WORLD.w-r-2||y>WORLD.h-r-2) return false;
     if(slopeAt(x,y)>VEHICLE.maxSlope || buildingAt(x,y,r)) return false;
     if(heading!==null){const grade=gradeAt(x,y,heading);if(!gradePassable(grade.along,grade.side))return false;}
     for(const [dx,dy] of [[0,0],[r,0],[-r,0],[0,r],[0,-r]]) if(waterAt(x+dx,y+dy)) return false;
-    for(const u of units) if(u!==ignore&&Math.hypot(u.x-x,u.y-y)<r*2.1) return false;
+    for(const u of units) if(u!==ignore&&Math.hypot(u.x-x,u.y-y)<(r+collisionRadius(u))*1.05) return false;
     return true;
   }
   function segmentClear(a,b,units=[],ignore=null) {
@@ -220,26 +223,37 @@ const TacticalCore = (() => {
   }
   function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID,fireMode='auto') {
     registry.get(profileId);
-    const u={id,name,profileId,x,y,heading,turret:heading,speed:0,drive:TacticalMobility.create(),path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
-    const p=profileOf(u);TacticalObservation.init(u);TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
+    const u={id,name,profileId,x,y,heading,turret:heading,commander:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
+    const p=registry.get(profileId);Object.defineProperties(u,{_profile:{value:p},_collisionRadius:{value:p.navigation.radius}});if(p.capabilities.mobility)u.drive=TacticalMobility.create();if(p.capabilities.observation)TacticalObservation.init(u);if(p.capabilities.fire)TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
   }
-  function legalNear(x,y,units=[]) {
+  function legalNear(x,y,units=[],profileId=ACTIVE_PROFILE_ID) {
+    const probe={profileId};
     for(let r=0;r<150;r+=8) for(let a=0;a<Math.PI*2;a+=Math.PI/8) {
       const p={x:x+Math.cos(a)*r,y:y+Math.sin(a)*r};
-      if(passable(p.x,p.y,units))return p;
+      if(passable(p.x,p.y,units,probe))return p;
     }
     throw Error('배치 가능한 위치가 없음');
   }
   function createScenario(seed=7,options={}) {
+    if(typeof seed==='object'){options=seed;seed=options.seed??7;}
+    const scenarioId=options.scenarioId||'default';
+    if(!['default','t80u-armor'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
     const units=[];
-    for(const [id,name,x,y,h,team] of [
-      ['A11','ALPHA 11',550,2750,-.45,'blue'],['A12','ALPHA 12',780,3060,-.45,'blue'],
-      ['T01','관측 표적 01',1150,2330,2.4,'red'],['T02','관측 표적 02',1800,1650,2.5,'red'],['T03','관측 표적 03',3020,2060,2.8,'red']
-    ]) {const p=legalNear(x,y,units);units.push(makeTank(id,name,p.x,p.y,h,team));}
-    const scenario={time:0,seed,units,recordAIEvents:!!options.recordAIEvents};
+    const layout=scenarioId==='t80u-armor'?[
+      ['A11','ALPHA 11',550,2750,-.10,'blue',ACTIVE_PROFILE_ID,-.10],
+      ['U01','T-80U 전면 표적',950,2680,Math.PI,'red','T80U_1989',2.55],
+      ['U02','T-80U 측면 표적',900,2900,-Math.PI/2,'red','T80U_1989',-.35],
+      ['U03','T-80U 후면 표적',780,2470,0,'red','T80U_1989',.75]
+    ]:[
+      ['A11','ALPHA 11',550,2750,-.45,'blue',ACTIVE_PROFILE_ID,-.45],['A12','ALPHA 12',780,3060,-.45,'blue',ACTIVE_PROFILE_ID,-.45],
+      ['T01','관측 표적 01',1150,2330,2.4,'red',ACTIVE_PROFILE_ID,2.4],['T02','관측 표적 02',1800,1650,2.5,'red',ACTIVE_PROFILE_ID,2.5],['T03','관측 표적 03',3020,2060,2.8,'red',ACTIVE_PROFILE_ID,2.8]
+    ];
+    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId);const u=makeTank(id,name,p.x,p.y,h,team,profileId);u.turret=turret;u.commander=turret;units.push(u);}
+    const scenario={id:scenarioId,time:0,seed,units,recordAIEvents:!!options.recordAIEvents,recordFireEvents:!!options.recordFireEvents};
     // Playable scenarios state the normal automatic policy explicitly too;
     // manual compatibility fixtures opt into hold when constructing a unit.
-    for(const u of units)fireFor(scenario).setMode(u,'auto');
+    for(const u of units)if(can(u,'fire'))fireFor(scenario).setMode(u,'auto');
+    if(scenarioId==='t80u-armor')return scenario;
     const byId=id=>units.find(u=>u.id===id),missionPoint=(x,y)=>legalNear(x,y,units);
     assignMission(scenario,byId('T01'),{id:'T01-patrol',type:'patrol',policy:'maintain',loop:true,waypoints:[missionPoint(1420,2190),missionPoint(1040,2460)]});
     assignMission(scenario,byId('T02'),{id:'T02-stop-engage',type:'patrol',policy:'halt',loop:true,waypoints:[missionPoint(1960,1510),missionPoint(1660,1820)]});
@@ -247,13 +261,14 @@ const TacticalCore = (() => {
     return scenario;
   }
   function applyMove(u,goal,reverse,units) {
+    if(!u||!can(u,'mobility'))return{ok:false,reason:'이 차량은 고정 표적임',points:[]};
     if(u?.combat?.status==='destroyed')return{ok:false,reason:'격파 차량은 이동할 수 없음',points:[]};
     const r=planPath(u,goal,units,u);if(!r.ok)return r;
     u.path=r.points;u.goal={...goal};u.reverse=reverse;u.drive.requestedDirection=reverse?-1:1;return r;
   }
-  function applyStop(u){if(u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.reverse=false;u.drive.requestedDirection=0;u.drive.pendingDirection=0;u.state=u.speed>.15?'감속':'대기';return true;}
-  function issueMove(u,goal,reverse,units){TacticalAI.override(u,'manual-move');return applyMove(u,goal,reverse,units);}
-  function stop(u){TacticalAI.override(u,'manual-stop');return applyStop(u);}
+  function applyStop(u){if(!u||!can(u,'mobility')||u?.combat?.status==='destroyed')return false;u.path=[];u.goal=null;u.reverse=false;u.drive.requestedDirection=0;u.drive.pendingDirection=0;u.state=u.speed>.15?'감속':'대기';return true;}
+  function issueMove(u,goal,reverse,units){if(!u||!can(u,'mobility'))return{ok:false,reason:'이 차량은 고정 표적임',points:[]};TacticalAI.override(u,'manual-move');return applyMove(u,goal,reverse,units);}
+  function stop(u){if(!u||!can(u,'mobility'))return false;TacticalAI.override(u,'manual-stop');return applyStop(u);}
   function routeDistance(u){let d=0,p=u;for(const q of u.path){d+=Math.hypot(q.x-p.x,q.y-p.y);p=q;}return d;}
   function mobilityLimit(type,along,side,reverse=false,p=PROFILE){
     const m=p.mobility,base=type==='road'||type==='bridge'?m.roadSpeed:Math.min(m.crossCountrySpeed,m.surfaceSpeed[type]??Infinity);
@@ -278,6 +293,7 @@ const TacticalCore = (() => {
   }
   function updateHitReactionModifiers(u,now){const p=profileOf(u);u.hitReactionModifiers=TacticalCombatState.hitReactionModifiers(u,p,now);u.hitReactionTime=now;return u.hitReactionModifiers;}
   function stepTank(u,dt,units,now=0) {
+    if(!can(u,'mobility')){u.speed=0;u.path=[];u.goal=null;u.state=u.combat?.status==='destroyed'?'격파':'고정 표적';return;}
     const drive=ensureDrive(u);
     if(u.combat?.status==='destroyed'){TacticalAI.destroy(u);TacticalMobility.reset(drive);u.speed=0;u.path=[];u.goal=null;u.state='격파';return;}
     const pVehicle=profileOf(u),motion=pVehicle.mobility,reaction=updateHitReactionModifiers(u,now);
@@ -325,9 +341,9 @@ const TacticalCore = (() => {
       onEvent:s.recordAIEvents?event=>{s.aiEvents??=[];s.aiEvents.push(event);if(s.aiEvents.length>2000)s.aiEvents.shift();}:null}));
     return aiRuntimes.get(s);
   }
-  const assignMission=(s,u,spec)=>{if(!aliveCommand(u))return null;observationFor(s).controlAutomatic(u,true,s.time);return aiFor(s).assign(u,spec,s.time);};
-  const cancelMission=(s,u,halt=true)=>{const changed=TacticalAI.override(u,'mission-cancelled');if(changed&&halt)applyStop(u);return changed;};
-  const aiStatus=(s,u)=>aiFor(s).inspect(u);
+  const assignMission=(s,u,spec)=>{if(!aliveCommand(u)||!can(u,'ai'))return null;observationFor(s).controlAutomatic(u,true,s.time);return aiFor(s).assign(u,spec,s.time);};
+  const cancelMission=(s,u,halt=true)=>{if(!u||!can(u,'ai'))return false;const changed=TacticalAI.override(u,'mission-cancelled');if(changed&&halt)applyStop(u);return changed;};
+  const aiStatus=(s,u)=>can(u,'ai')?aiFor(s).inspect(u):{status:'disabled',reason:'disabled'};
   const aiStats=s=>aiFor(s).aggregate(s.units);
   const aiEventLog=s=>s.recordAIEvents?JSON.parse(JSON.stringify(s.aiEvents||[])):[];
   function step(s,dt){
@@ -337,14 +353,14 @@ const TacticalCore = (() => {
     // any new fire attempt at the same fixed-step timestamp.
     fireFor(s).resolveImpacts(s.units,s.time);
     // Reactions from a due impact affect observation, AI and fire in this tick.
-    for(const u of s.units)updateHitReactionModifiers(u,s.time);
-    const alive=s.units.filter(u=>u.combat?.status!=='destroyed');
+    for(const u of s.units)if(profileOf(u).hitReactions?.enabled===true)updateHitReactionModifiers(u,s.time);
+    const alive=s.units.filter(u=>u.combat?.status!=='destroyed'),observers=alive.filter(u=>can(u,'observation')),actors=alive.filter(u=>can(u,'ai'));
     // Only living vehicles observe and act; every vehicle remains a sensing
     // candidate so an unseen destruction can later be discovered as a wreck.
-    observationFor(s).advance(alive,dt,s.time,s.units);
-    confirmObservedWrecks(s,alive);
-    aiFor(s).advance(alive,dt,s.time);
-    fireFor(s).step(s.units,dt,s.time);
+    observationFor(s).advance(observers,dt,s.time,s.units);
+    confirmObservedWrecks(s,observers);
+    aiFor(s).advance(actors,dt,s.time);
+    fireFor(s).step(alive.filter(u=>can(u,'fire')),dt,s.time);
   }
   const wreckRuntimes=new WeakMap();
   function wreckMap(s,team){if(!wreckRuntimes.has(s))wreckRuntimes.set(s,new Map());const all=wreckRuntimes.get(s);if(!all.has(team))all.set(team,new Map());return all.get(team);}
@@ -356,7 +372,7 @@ const TacticalCore = (() => {
   }
   function wreckSnapshot(target,c,now){
     const p=profileOf(target),pose=c.pose;
-    return{key:c.key,x:pose.x,y:pose.y,heading:pose.heading,turret:pose.turret,commander:pose.commander??pose.turret,
+    return{key:c.key,x:pose.x,y:pose.y,heading:pose.heading,turret:pose.turret,commander:pose.commander??pose.turret,artId:pose.artId??p.artId,
       model:{...pose.model,turretPivot:pose.model?.turretPivot?.slice(),muzzleLocal:pose.model?.muzzleLocal?.slice()},team:target.team,
       identified:true,current:false,memory:false,wreck:true,destroyed:true,observedAt:now,age:0,label:'격파 잔해',name:c.known?.name??target.name,type:c.known?.type??p.name};
   }
@@ -372,21 +388,21 @@ const TacticalCore = (() => {
     }
   }
   const aliveCommand=u=>u&&u.combat?.status!=='destroyed';
-  const guard=(s,u,ch,point,duration=0)=>aliveCommand(u)&&!!profileOf(u).sensors[ch]?.enabled&&(ch!=='commander'||profileOf(u).sensors.commander.independent)&&TacticalObservation.guard(u,ch,point,duration,s.time);
-  const resumeObservation=(s,u,ch)=>aliveCommand(u)&&TacticalObservation.resume(u,ch,s.time);
+  const guard=(s,u,ch,point,duration=0)=>aliveCommand(u)&&can(u,'observation')&&!!profileOf(u).sensors[ch]?.enabled&&(ch!=='commander'||profileOf(u).sensors.commander.independent)&&TacticalObservation.guard(u,ch,point,duration,s.time);
+  const resumeObservation=(s,u,ch)=>aliveCommand(u)&&can(u,'observation')&&TacticalObservation.resume(u,ch,s.time);
   // Command acceptance depends only on the team's public contact. A hidden
   // destruction must not be disclosed by a different success/failure result.
-  const designate=(s,u,key)=>{const accepted=aliveCommand(u)&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);if(accepted)aiFor(s).manualChanged(u,s.time);return accepted;};
-  const cancelDesignation=(s,u)=>{if(!aliveCommand(u))return false;TacticalObservation.cancel(u,s.time);fireFor(s).cancel(u);aiFor(s).manualChanged(u,s.time);return true;};
-  const observationView=(s,u,ch='commander')=>TacticalObservation.view(u,ch,s.time);
-  const ownObservation=(s,u,key=null)=>observationFor(s).ownStatus(u,key);
+  const designate=(s,u,key)=>{const accepted=aliveCommand(u)&&can(u,'observation')&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);if(accepted)aiFor(s).manualChanged(u,s.time);return accepted;};
+  const cancelDesignation=(s,u)=>{if(!aliveCommand(u)||!can(u,'observation'))return false;TacticalObservation.cancel(u,s.time);if(can(u,'fire'))fireFor(s).cancel(u);if(can(u,'ai'))aiFor(s).manualChanged(u,s.time);return true;};
+  const observationView=(s,u,ch='commander')=>can(u,'observation')?TacticalObservation.view(u,ch,s.time):{mode:'disabled',turret:u?.turret??0,gaze:u?.commander??u?.turret??0,direction:null,remaining:null,point:null};
+  const ownObservation=(s,u,key=null)=>can(u,'observation')?observationFor(s).ownStatus(u,key):{current:false,channels:[],identified:false,gunnerCurrent:false,acquired:false,targetKey:null,status:'disabled',source:null,reason:'disabled',pending:0};
   const observationStats=s=>({...observationFor(s).stats});
   const combatRuntimes=new WeakMap();
   function combatFor(s){
     if(!combatRuntimes.has(s))combatRuntimes.set(s,TacticalCombatState.create({profileOf,seed:s.seed??7,ammoInventory:target=>fireFor(s).ammoIncidentSnapshot(target),onAmmoIncident:(target,incident,now,snapshot)=>fireFor(s).applyAmmoIncident(target,incident,now,snapshot),onDestroyed:(target)=>{
       target.speed=0;if(target.drive)TacticalMobility.reset(target.drive);target.path=[];target.goal=null;target.reverse=false;target.state='격파';
-      TacticalAI.destroy(target);
-      TacticalObservation.cancel(target,s.time,'destroyed');fireFor(s).cancel(target);
+      if(can(target,'ai'))TacticalAI.destroy(target);
+      if(can(target,'observation'))TacticalObservation.cancel(target,s.time,'destroyed');if(can(target,'fire'))fireFor(s).cancel(target);
     }}));
     return combatRuntimes.get(s);
   }
@@ -404,14 +420,14 @@ const TacticalCore = (() => {
       fireRuntimes.set(s,TacticalFireControl.create({profileOf,seed:s.seed??7,debug:!!s.recordFireEvents,
       isObserved:(team,key)=>{if(observedAt!==s.time){observedTeams.clear();observedAt=s.time;}if(!observedTeams.has(team))observedTeams.set(team,new Map(contacts(s,team).filter(v=>v.current).map(v=>[v.key,v])));return observedTeams.get(team).get(key)||false;},
       impactEnvironment:{heightAt,buildingAt,world:WORLD},
-      impactSight:shot=>{const target=s.units.find(v=>v.id===shot.targetId);if(!target)return{visible:false,gone:true};const p=profileOf(target),origin={...shot.origin,profileOverride:shot.profileAtFire};return{...exposure(origin,target,shot.fireEye),presented:{...p.fireControl.presented},pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:p.model.hullLength,width:p.model.width,turretLength:p.model.turretLength,turretWidth:p.model.turretWidth,turretPivot:[...p.model.turretPivot]}}};},
+      impactSight:shot=>{const target=s.units.find(v=>v.id===shot.targetId);if(!target)return{visible:false,gone:true};const p=profileOf(target),origin={...shot.origin,profileOverride:shot.profileAtFire};return{...exposure(origin,target,shot.fireEye),presented:{...targetPresentation(p)},pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:p.model.hullLength,width:p.model.width,turretLength:p.model.turretLength,turretWidth:p.model.turretWidth,turretPivot:[...p.model.turretPivot]}}};},
       onImpactResolved:event=>{
         const target=s.units.find(v=>v.id===event.targetId),p=target?profileOf(target):null;
         const record=p?.combat?combatFor(s).apply(event,target,s.time):{applied:false,reason:target?'unsupported-profile':'target-unavailable',damage:0,destroyed:false};
-        if(target&&record.applied)fireFor(s).react(target,record,s.time);
+        if(target&&record.applied&&can(target,'fire'))fireFor(s).react(target,record,s.time);
         if(record.ammoIncident?.confirmed)fireFor(s).emitCombatEffect({impactId:record.id,time:s.time,position:event.impact,outcome:record.ammoIncident.outcome});
         if(record.destroyed&&event.observed&&event.observation){
-          const c=event.observation,w={key:c.key,x:event.pose.x,y:event.pose.y,heading:event.pose.heading,turret:event.pose.turret,commander:event.pose.commander??event.pose.turret,model:{...c.model,turretPivot:c.model?.turretPivot?.slice(),muzzleLocal:c.model?.muzzleLocal?.slice()},team:target.team,identified:true,current:false,memory:false,wreck:true,destroyed:true,observedAt:s.time,age:0,label:'격파 잔해',name:c.name??target.name,type:c.type??p.name};
+          const c=event.observation,w={key:c.key,x:event.pose.x,y:event.pose.y,heading:event.pose.heading,turret:event.pose.turret,commander:event.pose.commander??event.pose.turret,artId:c.artId??p.artId,model:{...c.model,turretPivot:c.model?.turretPivot?.slice(),muzzleLocal:c.model?.muzzleLocal?.slice()},team:target.team,identified:true,current:false,memory:false,wreck:true,destroyed:true,observedAt:s.time,age:0,label:'격파 잔해',name:c.name??target.name,type:c.type??p.name};
           wreckMap(s,event.team).set(c.key,w);
           for(const observer of s.units.filter(u=>u.team===event.team)){
             const mission=[observer.observation?.designation,observer.observation?.tracking].find(d=>['designated','waiting','acquiring','acquired'].includes(d?.status));
@@ -439,15 +455,15 @@ const TacticalCore = (() => {
         if(weapon?.samples[i].visible){samples[i].visible=true;if(v.part==='hull')hull++;else turret++;}
       }
       const tp=profileOf(target);
-      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,fireEye,presented:{...tp.fireControl.presented},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
+      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,fireEye,presented:{...targetPresentation(tp)},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
     }}));}
     return fireRuntimes.get(s);
   }
-  const fireStatus=(s,u,key=null)=>fireFor(s).view(u,key);
-  const fireMode=(s,u,mode)=>aliveCommand(u)&&fireFor(s).setMode(u,mode);
-  const ammoPreference=(s,u,preference)=>aliveCommand(u)&&fireFor(s).setAmmoPreference(u,preference);
+  const fireStatus=(s,u,key=null)=>can(u,'fire')?fireFor(s).view(u,key):{status:'disabled',reason:'disabled',canFire:false,mode:'hold',ammo:0};
+  const fireMode=(s,u,mode)=>aliveCommand(u)&&can(u,'fire')&&fireFor(s).setMode(u,mode);
+  const ammoPreference=(s,u,preference)=>aliveCommand(u)&&can(u,'fire')&&fireFor(s).setAmmoPreference(u,preference);
   const requestFire=(s,u,key)=>{
-    if(!aliveCommand(u))return{ok:false,reason:'destroyed'};
+    if(!aliveCommand(u))return{ok:false,reason:'destroyed'};if(!can(u,'fire'))return{ok:false,reason:'disabled'};
     return fireFor(s).request(u,key,s.time);
   };
   const fireEvents=(s,team='blue',since=-Infinity)=>fireFor(s).events(team,since);

@@ -6,7 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [작업 지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | 지시서 등록 · 구현/검증 대기 · ERA 방호만 적용, 소모/손상 없음 |
+| WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [완료 안내](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) · [원본 보관](../../archive/instructions/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | 최종 730f336 독립 재검증 및 캡처 검증 보완 · main 통합 · ERA 소모/손상 없음 |
 | WIP20 M1A2(1998) 전용 탄약고 사고 | [완료 안내](TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) | 최종 3633952 독립 재검증 통과 · main 통합 · 확률/시간은 시험 제안 |
 | WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [완료 안내](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | 최종 5bf1bb5 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
 | WIP18 일시 기능 이상·승무원 경중상 | [완료 안내](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | 최종 6c5e4f3 독립 재검증 통과 · main 통합 · M1A2_1998 전용 시험 설정 |
@@ -39,6 +39,8 @@ WIP19는 WIP18이 통합된 main `62a7658`에서 `feat/wip19-ammunition-command-
 
 WIP20은 최신 main `ab9309a`에서 `feat/wip20-ammunition-incidents` 브랜치로 구현했다. `M1A2_1998`에만 7개 피격 구역의 가상 구획 분포, 공격탄/저장탄/적재율/보호 계수와 탄약 일부 소실·8초 격리 화재 대응·치명 사고를 연결했다. 실제 저장/예약/약실 소유권, WIP18 반응 뒤 사고 처리, WIP15 최종 반응, AI 임무 유지, 고정 월드 효과와 공개 정보 경계를 검증했다. 최종 `3633952`를 독립 재검증해 2026-11-14 main에 통합했다. [병합 검토](../reviews/WIP20_MERGE_REVIEW_2026-11-14.md)에 전체 검사·추가 경계 재현과 한계를 기록했다. [구현 문서](../AMMUNITION_INCIDENTS_WIP20.md)와 [릴리스·검증](../../TACTICAL_RELEASE_WIP20.md)을 참고한다.
 
+WIP21은 최신 main `be32d23`에서 `feat/wip21-t80u-model-armor` 브랜치로 구현했다. 수정 T-80U 벡터를 게임 좌표에 연결하고 피격 전용 `T80U_1989`, 7구역 기본 장갑과 고정 Kontakt-5 확률 피복, 선택 가능한 방호시험을 추가했다. T-80U의 이동·관측 장비·AI·발사·자동장전·승무원/장비/탄약고 반응과 ERA 소모/폭발은 만들지 않았다. [구현 문서](../T80U_MODEL_AND_ARMOR_WIP21.md), [릴리스·검증](../../TACTICAL_RELEASE_WIP21.md), [검증 JSON](../../tests/releases/WIP21-validation.json)을 참고한다. main 병합은 별도 검토 뒤 진행한다.
+
 ## 관리 방법
 
 WIP19는 마지막 예약탄 장전 중 AI 임무 복귀, 확인 잔해의 보충 차단, 선호 탄종 보충 순서와 모바일 지도 버튼을 보완한 최종 `5bf1bb5`를 독립 재검증해 2026-11-14 main에 통합했다. [병합 검토](../reviews/WIP19_MERGE_REVIEW_2026-11-14.md)에 재현·검증 범위를 기록했다. 혼합량·공급/보충 시간·미정 탄약 정책의 임시값은 계속 조정 가능한 초기 시험 제안이다. 완료 안내와 원본 지시서, 기계 판독 검증 기록을 구분한다.
@@ -47,3 +49,5 @@ WIP19는 마지막 예약탄 장전 중 AI 임무 복귀, 확인 잔해의 보�
 - 변경된 요구사항은 지시서에 반영한다. 실제로 실행하지 않은 검사를 통과로 적지 않는다.
 - 작업 완료 후에는 최종 지시서를 [archive/instructions](../../archive/instructions/README.md)에 보관하고 이 목차의 상태와 링크를 갱신한다. 완료 전에는 같은 지시서의 여러 사본을 따로 편집하지 않는다.
 - 아카이브의 과거 지시서·제안은 현재 작업을 자동으로 추가하는 명령으로 취급하지 않는다.
+
+WIP21 구현 `730f336`을 2026-11-15 독립 재검증하고, 실제 표적이 화면에 보이도록 브라우저 캡처 검사를 보완해 main으로 통합했다. [독립 병합 검토](../reviews/WIP21_MERGE_REVIEW_2026-11-15.md)에 추가 방호 행렬·기존 전투 비교·실제 게임 도안 픽셀 대조와 배포물 검증을 기록했다.

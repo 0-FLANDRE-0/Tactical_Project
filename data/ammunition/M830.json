@@ -61,8 +61,8 @@
     "nearNonPenetration": false,
     "armoredBlastRadiusM": 0
   },
-  "status": "active WIP20 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20 instructions",
+  "status": "active WIP21 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20 plus the WIP21 attacker-owned A2 near-nonpenetration separation",
   "limits": [
     "CE protection only, no range falloff in the trial table",
     "Fixed penetration multiplier 1; nonpenetration, ricochet and armored blast damage are zero",
