@@ -4,6 +4,7 @@
 
 | 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-14) |
 |---|---|---|---|---|
+| WIP20 M1A2(1998) 전용 탄약고 사고 | [진행 지시서](../../docs/tasks/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) | — | 미생성 | 지시서 등록 · 구현/검증 대기 · 완료 후 원본 보존 |
 | WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [원본 지시서](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | — | `feat/wip19-ammunition-command-panel` | 최종 5bf1bb5 독립 재검증 통과 · main 병합 (2026-11-14) · M1A2_1998 전용 시험 설정 |
 | WIP18 일시 기능 이상·승무원 경중상 | [원본 지시서](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | — | `feat/wip18-hit-reactions` | 최종 6c5e4f3 독립 재검증 통과 · main 병합 (2026-11-13) · M1A2_1998 전용 시험 설정 |
 | WIP17 가변 맵 크기 지원 기반 | [원본 지시서](TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) | — | `feat/wip17-variable-map-foundation` | 최종 624d80d 독립 재검증 통과 · main 병합 (2026-11-13) · 실제 8×8 지도 제작 제외 |

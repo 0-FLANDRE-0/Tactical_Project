@@ -6,6 +6,7 @@ WIP19는 `M1A2_1998`에만 M829A2·M829A1·M830의 실제 장전탄, 탄종/구�
 - 현재 실행 파일: [Tactical_v0.4_WIP19.html](Tactical_v0.4_WIP19.html), 같은 바이트의 [dist/index.html](dist/index.html).
 - [WIP19 구현](docs/AMMUNITION_AND_COMMAND_PANEL_WIP19.md) · [릴리스·검증](TACTICAL_RELEASE_WIP19.md) · [독립 병합 검토](docs/reviews/WIP19_MERGE_REVIEW_2026-11-14.md) · [체크섬](SHA256SUMS_WIP19.txt) · [작업 목차](docs/tasks/README.md).
 - 원본 지시서는 [archive/instructions](archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md)에 보존했다. 화재·유폭, 외부 재보급, 강제 탈탄, 자동장전 차량, 대인 폭발과 새 차종/무기는 후속 범위다.
+- 다음 작업: [WIP20 M1A2(1998) 전용 탄약고 사고](docs/tasks/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md). **지시서 등록·구현 대기**다. 탄약 소실·격리 화재/일시 사격 중단·치명 사고를 기존 재고/예약 작업과 연결하며 확률·시간은 초기 게임 시험 제안이다. 현재 배포판은 WIP19다.
 
 ## 실행과 조작
 
