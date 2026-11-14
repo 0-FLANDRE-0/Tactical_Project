@@ -181,8 +181,8 @@ const TacticalObservation=(()=>{
           c.identified=true;c.enemyConfirmed=true;c.identifiedBy=by;c.identifiedAt=now;c.knowledgeSource=by;emit(u,'identified',c,{channel:by,enemyConfirmed:true,current:true});
         }
         if(c.detected){
-          c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,barrelTip:tp.model.barrelTip,turretOrigin:tp.model.turretOrigin,turretPivot:[...tp.model.turretPivot],turretRingDiameter:tp.model.turretRingDiameter,muzzleLocal:[...tp.model.muzzleLocal]}};
-          const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0];c.exposure={hull:best.hull,turret:best.turret};c.gunnerExposure=result.gunner?{hull:result.gunner.hull,turret:result.gunner.turret,samples:result.gunner.samples,presented:{...tp.fireControl.presented}}:{hull:0,turret:0,samples:[]};
+          c.lastSeen=now;c.pose={x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,artId:tp.artId,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,barrelTip:tp.model.barrelTip,turretOrigin:tp.model.turretOrigin,turretPivot:[...tp.model.turretPivot],turretRingDiameter:tp.model.turretRingDiameter,muzzleLocal:[...tp.model.muzzleLocal]}};
+          const best=Object.values(result).sort((a,b)=>b.quality-a.quality)[0],presented=tp.fireControl?.presented||tp.target?.presented;c.exposure={hull:best.hull,turret:best.turret};c.gunnerExposure=result.gunner?{hull:result.gunner.hull,turret:result.gunner.turret,samples:result.gunner.samples,presented:{...presented}}:{hull:0,turret:0,samples:[]};
           if(c.identified&&identify>0){
             c.known={name:target.name,type:tp.name,...(target.combat?{combat:{hp:target.combat.hp,maxHp:target.combat.maxHp,status:target.combat.status}}:{})};c.knowledgeAt=now;
           }

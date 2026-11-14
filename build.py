@@ -20,7 +20,7 @@ payloads={
  'BATTLEFIELD_DATA':'const BATTLEFIELD_DATA = '+json.dumps(map_data,ensure_ascii=False,separators=(',',':'))+';\n',
  'CONTOUR_DATA':'const CONTOUR_DATA = '+json.dumps(contours,ensure_ascii=False,separators=(',',':'))+';\n',
  'TERRAIN_DATA':'const TERRAIN_DATA = '+json.dumps(terrain,ensure_ascii=False,separators=(',',':'))+';\n'}
-for token,name in [('MAP_SPEC','map-spec.js'),('STYLES','styles.css'),('VEHICLE_PROFILES','vehicle-profiles.js'),('MOBILITY','mobility.js'),('TACTICAL_AI','tactical-ai.js'),('VEHICLE_GEOMETRY','vehicle-geometry.js'),('OBSERVATION','observation.js'),('COMBAT_STATE','combat-state.js'),('FIRE_CONTROL','fire-control.js'),('SIM_CORE','sim-core.js'),('MAP_RENDERER','map-renderer.js'),('VISIBILITY_CODE','visibility.js'),('VISIBILITY_CLIENT','visibility-client.js'),('M1A2_ART','m1a2-art.js'),('UI_CACHE','ui-cache.js'),('LOOK_ANIMATION','look-animation.js'),('EFFECTS','effects.js'),('APP_CODE','app.js')]:
+for token,name in [('MAP_SPEC','map-spec.js'),('STYLES','styles.css'),('VEHICLE_PROFILES','vehicle-profiles.js'),('MOBILITY','mobility.js'),('TACTICAL_AI','tactical-ai.js'),('VEHICLE_GEOMETRY','vehicle-geometry.js'),('OBSERVATION','observation.js'),('COMBAT_STATE','combat-state.js'),('FIRE_CONTROL','fire-control.js'),('SIM_CORE','sim-core.js'),('MAP_RENDERER','map-renderer.js'),('VISIBILITY_CODE','visibility.js'),('VISIBILITY_CLIENT','visibility-client.js'),('M1A2_ART','m1a2-art.js'),('T80U_TOPVIEW','art/t80u-topview.js'),('T80U_ART','t80u-art-adapter.js'),('UI_CACHE','ui-cache.js'),('LOOK_ANIMATION','look-animation.js'),('EFFECTS','effects.js'),('APP_CODE','app.js')]:
     marker='{{'+token+'}}'
     if page.count(marker)!=1:
         raise ValueError('Expected exactly one '+marker)

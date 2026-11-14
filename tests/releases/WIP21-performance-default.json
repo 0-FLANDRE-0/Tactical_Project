@@ -1,0 +1,39 @@
+{
+  "root": "/workspace/Tactical_Project_WIP21",
+  "core": {
+    "scenario": "default",
+    "steps": 800,
+    "medianMs": 0.29179499999997915,
+    "p95Ms": 0.9308790000000045,
+    "observation": {
+      "queries": 2250,
+      "candidates": 3682,
+      "samples": 3682,
+      "rayQueries": 27537,
+      "rayCacheHits": 5601
+    }
+  },
+  "impact": {
+    "rounds": 20000,
+    "plain": {
+      "medianUs": 2.7843730000000733,
+      "p95Us": 4.4137530000000424
+    },
+    "era": {
+      "medianUs": 1.5476589999999533,
+      "p95Us": 2.6939180000000533
+    }
+  },
+  "browser": {
+    "scenario": "default",
+    "frames": 180,
+    "medianIntervalMs": 16.699999999999818,
+    "p95IntervalMs": 16.799999999999955,
+    "pausedRenderLosStable": true,
+    "canvas": {
+      "width": 1134,
+      "height": 812,
+      "dpr": 1
+    }
+  }
+}

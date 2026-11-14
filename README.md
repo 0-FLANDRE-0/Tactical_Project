@@ -1,19 +1,21 @@
-# TACTICAL v0.4 WIP20 — M1A2(1998) 탄약고 사고
+# TACTICAL v0.4 WIP21 — T-80U(1989) 모델·장갑 피격시험
 
-WIP20은 `M1A2_1998`에만 관통 피격 뒤 실제 저장·예약 탄을 참조하는 탄약고 사고를 연결한다. 결과는 탄약 일부 소실, 8초 격리 화재 대응, 치명 사고이며 기존 장전탄·구획 재고·준비/장전/보충과 원자적으로 이어진다. 모든 확률·구획 매핑·시간은 조정 가능한 게임 시험값이고 실차 취약성·적재 위치·방출판 성능을 뜻하지 않는다.
+WIP21은 수정된 T-80U 상부 도안과 `T80U_1989` 피격 전용 프로파일을 게임에 연결한다. 기본 전투는 그대로 두고 배포 HTML에서 `T-80U 방호시험`을 선택해 M1A2(1998)의 M829A2/M829A1/M830으로 고정 표적의 기본 장갑과 Kontakt-5 확률 피복을 시험할 수 있다. 장갑·ERA 수치는 게임 시험값이며 실차 장갑판 두께나 보장 성능을 뜻하지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP20.zip). 압축을 풀면 `Tactical_v0.4_WIP20.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP20.html](Tactical_v0.4_WIP20.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP20 구현](docs/AMMUNITION_INCIDENTS_WIP20.md) · [릴리스·검증](TACTICAL_RELEASE_WIP20.md) · [독립 병합 검토](docs/reviews/WIP20_MERGE_REVIEW_2026-11-14.md) · [체크섬](SHA256SUMS_WIP20.txt) · [작업 목차](docs/tasks/README.md).
-- 원본 지시서는 [archive/instructions](archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md)에 보존했다. 일반 엔진 화재, 지속 화염 피해, 연쇄 유폭·주변 피해, 외부 재보급, 강제 탈탄, 자동장전 차량과 새 차종/무기는 후속 범위다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip21-t80u-model-armor/Tactical_v0.4_WIP21.zip). 압축을 풀면 `Tactical_v0.4_WIP21.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP21.html](Tactical_v0.4_WIP21.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP21 구현](docs/T80U_MODEL_AND_ARMOR_WIP21.md) · [릴리스·검증](TACTICAL_RELEASE_WIP21.md) · [체크섬](SHA256SUMS_WIP21.txt) · [작업 목차](docs/tasks/README.md).
+- 원본 지시서는 [archive/instructions](archive/instructions/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md)에 보존했다. T-80U의 기동·관측·주포·자동장전·승무원/장비/탄약고 피해와 ERA 소모·폭발은 이번 범위가 아니다.
 
-## T-80U 외형 모델 미리보기
+## T-80U(1989) 방호시험과 외형
 
-[단독 미리보기 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/T80U_TopView.zip)을 내려받아 압축을 풀고 `T80U_TopView.html`을 연다. 수정 2판: 주포·차체 전면/포탑 반응장갑을 다시 추적했다. 차체·포탑·전차장 큐폴라/관측경·NSVT 회전, 도면 겹치기, SVG·PNG 저장을 확인할 수 있다. 함께 들어 있는 `T80U_ReferenceCheck.html`로 부위별 원본 대조를 볼 수 있다. 이번 작업은 독립 외형 모델이며 전투 차량 등록은 후속 범위다. [모델·자료·검증 설명](docs/T80U_ART_STUDY.md).
+우측 명령 영역의 시나리오 선택에서 `T-80U 방호시험`을 고른다. 아군 M1A2(1998) 한 대와 전면·측면·후면 자세의 고정 T-80U 표적 세 대가 배치된다. T-80U는 관측·표적 지정·피격·HP 감소·격파·잔해·충돌에 참여하지만 이동·관측 장비·AI·발사는 만들지 않는다. 미식별 때는 실제 외곽 실루엣만, 식별 뒤에는 수정 도안을 표시하며 기억과 잔해도 마지막 관측 자세와 차종 도안을 유지한다.
+
+[단독 미리보기 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/T80U_TopView.zip)은 기존대로 보존한다. 수정 2판 도안의 차체·포탑·전차장 큐폴라/관측경·NSVT 회전과 원본 대조를 확인할 수 있다. 게임 어댑터는 이 도안을 다시 그리지 않고 라디안 월드 절대각을 원본의 도 단위 부모 상대각으로 변환한다. [모델·자료·검증 설명](docs/T80U_ART_STUDY.md).
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP20.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP20.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip21-t80u-model-armor/Tactical_v0.4_WIP21.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP21.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 선택 차량 메뉴로도 생존 아군을 명시적으로 고를 수 있다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -30,6 +32,7 @@ WIP20은 `M1A2_1998`에만 관통 피격 뒤 실제 저장·예약 탄을 참조
 - 확인된 잔해는 전투 종료까지 팀별로 계속 표시되고 통행을 막지만, 지도·명단·직접 API에서 선택하거나 표적으로 지정할 수 없다. 미관측 격파는 나중에 실제 관측·식별하기 전까지 공개되지 않는다.
 - Space: 일시정지. R: 후진 모드. X: 정지. F: 전체화면. Home: 전체 지도.
 - 전체화면 요청이 거절되거나 지원되지 않으면 지도 집중 모드로 전환한다.
+- 시나리오: `기본 전투` 또는 `T-80U 방호시험`을 선택한다. 전환과 초기화는 선택·접촉·Worker 응답·비행체·효과·HP를 새 시나리오로 함께 초기화한다.
 
 ## 실제 자료와 게임 편집
 
@@ -102,7 +105,7 @@ WIP20은 `M1A2_1998`에만 관통 피격 뒤 실제 저장·예약 탄을 참조
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP20.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP21.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/map-spec.js`, `scripts/map_spec.py` | 할당 전 지도 규격·파생자료 계약 검증 |
 | `data/map-build-rasdorf-4km.json` | 기본 실측 지도 생성 입력·출력 설정 |
 | `tests/fixtures/sim-core-WIP11D.js`, `tests/helpers/los-wip11d-reference.cjs` | 빌드에 포함되지 않는 해시 고정 WIP11D 비교 코어와 로더 |
@@ -112,7 +115,8 @@ WIP20은 `M1A2_1998`에만 관통 피격 뒤 실제 저장·예약 탄을 참조
 | `src/mobility.js` | 방향 interlock·자동변속·질량/출력 구동·제동·속도별 조향의 순수 고정 틱 모듈 |
 | `src/tactical-ai.js` | 비공개 이동·순찰 임무, 자체 관측 표적 점수·유지/전환, 교전 이동 정책, 저주기 결정·경로 요청 예산 |
 | `src/observation.js` | 차량별 관측·명령·접촉·식별 지식·인계와 팀 공개 사본 |
-| `src/vehicle-profiles.js` | 불변 차량 ID 레지스트리·M1A2 치수/기동/관측/게임 사격 프로파일 |
+| `src/vehicle-profiles.js` | 능력별 검증 차량 레지스트리·M1A2 운용 프로파일·T-80U 피격 전용 프로파일 |
+| `src/art/t80u-topview.js`, `src/t80u-art-adapter.js` | 수정 T-80U 벡터 도안과 게임 좌표/상대각 어댑터 |
 | `src/vehicle-geometry.js` | 차체 고정 링·포탑 로컬 점·실제 포구의 공통 2D 변환 |
 | `src/fire-control.js` | 자체 확보·조준·예측 발사·탄종/구획별 준비·장전·보충·착탄 시점 확률·지형/건물 탄착 |
 | `src/combat-state.js` | M829A2/A1/M830 독립 게임 표·KE/CE·고각 보간·도탄/관통/피해·착탄 ID별 HP/격파 상태 전이 |
@@ -147,7 +151,7 @@ WIP20은 `M1A2_1998`에만 관통 피격 뒤 실제 저장·예약 탄을 참조
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP20
+python3 scripts/package_release.py WIP21
 node --check src/combat-state.js
 node --check src/mobility.js
 node --check src/tactical-ai.js
@@ -229,7 +233,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 적 경로 이동·기본 AI, 경량 구동·실제 지도, 관측, 자동교전, 가변 장전과 기본 HP 전투·표시 효과를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2/A1/M830 혼합 42발과 1,450 HP를 사용한다. 실제 장전탄 한 발과 세 저장 구획을 분리하며 준비·장전·자동 즉응탄 보충 작업은 차량별 한 개만 진행한다. 관통 뒤 탄약고 사고는 현재 재고와 예약탄만 손실시키며, 격리 화재 대응 중에는 이동·관측·지정·조준을 유지하고 발사와 탄약 작업만 8초 동안 멈춘다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP15의 사통/관측 대응과 WIP18의 일시 기능 이상·승무원 부상은 유지된다. WIP19의 발사 사건은 실제 장전탄 ID와 설정을 저장해 선택 변경이나 피격 차량의 장전탄과 섞이지 않는다. WIP20의 사고 난수는 기존 명중·도탄·반응 난수와 분리되며 렌더·UI 조회가 판정을 바꾸지 않는다. 도탄 후 추가 피해, 영구 모듈 손상·승무원 사망/치료/교체·일반 화재/지속 피해·연쇄 폭발·수리, 외부 재보급·강제 탈탄·대인 폭발·새 차종/무기는 후속 범위다. 장갑·탄약·확률·부상·사고 계수는 게임 데이터이며 실장비 성능 검증이 아니다. 전체 결과는 WIP20 릴리스 문서에 있다.
+명중과 조건부 부위 선택은 추상 게임 모델이다. WIP15의 사통/관측 대응과 WIP18의 일시 기능 이상·승무원 부상은 기존 M1A2에 유지된다. WIP19의 발사 사건은 실제 장전탄 ID와 설정을 저장해 선택 변경이나 피격 차량의 상태와 섞이지 않는다. WIP20 탄약고 사고도 M1A2(1998) 전용이다. WIP21의 ERA 난수는 착탄 ID·seed·피격 차량에 고정되며 렌더·UI 조회가 판정을 바꾸지 않고, 피복·최종 방호력은 공개 접촉/효과에 노출하지 않는다. T-80U의 영구 모듈 손상·승무원 피해·일반 화재/지속 피해·ERA 소모/폭발·자동장전·기동·125mm 무장은 후속 범위다. 장갑·탄약·확률·부상·사고 계수는 게임 데이터이며 실장비 성능 검증이 아니다. 전체 결과는 WIP21 릴리스 문서에 있다.
 
 ## 출처
 

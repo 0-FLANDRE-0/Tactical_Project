@@ -1,0 +1,68 @@
+{
+  "version": "0.4-WIP21",
+  "date": "2026-11-14",
+  "branch": "feat/wip21-t80u-model-armor",
+  "baselineMain": "be32d23ad4b95bc34aca95c793b0e3bbe7b81717",
+  "scope": "corrected T-80U art, target-only T80U_1989 profile, deterministic fixed Kontakt-5 coverage and selectable armour-test scenario",
+  "checks": [
+    {"name": "non-browser Node regression suite", "status": "passed", "passed": 360, "failed": 0, "command": "node --test $(rg --files tests | rg '\\.test\\.cjs$' | rg -v 'browser' | sort)"},
+    {"name": "WIP21 profile, armour, ERA, art, capability, privacy and wreck core regression", "status": "passed", "passed": 8, "failed": 0, "evidence": "tests/wip21-t80u.test.cjs"},
+    {"name": "actual Chromium regressions across default application and WIP12-WIP21", "status": "passed", "passed": 77, "failed": 0, "browser": "156.0.8078.79"},
+    {"name": "actual Chromium WIP21 scenario, three ammunition impacts, target-only boundaries, art and reset isolation", "status": "passed", "passed": 1, "failed": 0, "browser": "156.0.8078.79", "evidence": "tests/releases/WIP21-browser-evidence.json"},
+    {"name": "actual Chromium desktop and mobile viewport/DPR/orientation coverage", "status": "passed", "viewports": ["1440x900 DPR1", "844x390 DPR1", "844x390 DPR2", "390x844 DPR2"]},
+    {"name": "terrain readability Python unittest", "status": "passed", "passed": 7, "failed": 0},
+    {"name": "DEM coverage, mask, zero elevation and CRS regression with system GDAL Python", "status": "passed", "passed": 4, "failed": 0, "command": "/usr/bin/python3 -m unittest tests.battlefield_dem_validation_test"},
+    {"name": "source quality with system GDAL Python", "status": "passed", "passed": 7, "failed": 0, "command": "/usr/bin/python3 tests/source_quality.py"},
+    {"name": "standalone optimized LOS comparison without ambient globals", "status": "passed", "bytes": 3570321, "command": "node scripts/benchmark_los_shared_compare.cjs --worker optimized /tmp/wip21-los.json"},
+    {"name": "standalone default map regression", "status": "passed", "passed": 16, "failed": 0},
+    {"name": "fake-DOM input regression", "status": "passed", "passed": 42, "failed": 0, "kind": "fake DOM, not a browser"},
+    {"name": "standalone visibility regression", "status": "passed", "passed": 12, "failed": 0},
+    {"name": "standalone vehicle and embedded Worker regression", "status": "passed", "passed": 9, "failed": 0},
+    {"name": "JavaScript and Python syntax checks", "status": "passed"},
+    {"name": "repeat export/build/package byte identity, ZIP CRC and extracted HTML comparison", "status": "passed"},
+    {"name": "physical mobile device memory/thermal test", "status": "not-run", "reason": "no physical mobile device attached; actual Chromium desktop and mobile-view regressions passed"}
+  ],
+  "determinism": {
+    "fixedTickSeconds": 0.05,
+    "eraRandomKey": "seed + impactId + victimId + :wip21:era",
+    "coverageComparison": "eraRoll < coverage",
+    "notes": "ERA is checked once after non-ricochet hit resolution and frozen in the private impact result. Misses, ricochets and zero coverage do not request an ERA roll; public records omit coverage, roll and effective protection. Existing non-ERA random keys remain unchanged."
+  },
+  "browserEvidence": {
+    "firedAmmo": ["M829A2", "M829A1", "M830"],
+    "impactedAmmo": ["M829A2", "M829A1", "M830"],
+    "damagedTarget": "U03",
+    "hpBefore": 1400,
+    "hpAfterThreeAmmo": 964.7282669126868,
+    "hpAfterFollowup": 0,
+    "destroyedTarget": "U03",
+    "confirmedT80UWrecks": 1,
+    "publicProtection": null,
+    "muzzleWorldErrorM": 1.1043454891797605e-13,
+    "targetCommandsRejectedWithoutResources": true,
+    "resetAndScenarioSwitchIsolated": true
+  },
+  "performance": {
+    "environment": {"cpu": "AMD EPYC 9V74 80-Core Processor", "node": "v24.22.1", "browser": "Chromium 156.0.8078.79"},
+    "fixture": {"seed": 7, "warmupSteps": 100, "measuredSteps": 800, "tickSeconds": 0.05, "impactEvaluations": 20000, "browserFrames": 180, "viewport": "1440x900 DPR1"},
+    "evidence": ["tests/releases/WIP21-performance-baseline.json", "tests/releases/WIP21-performance-default.json", "tests/releases/WIP21-performance-armor.json"],
+    "baselineDefault": {"medianMs": 0.30396300000006704, "p95Ms": 0.9476229999999077, "observationQueries": 2250, "rayQueries": 27537},
+    "wip21Default": {"medianMs": 0.29179499999997915, "p95Ms": 0.9308790000000045, "observationQueries": 2250, "rayQueries": 27537},
+    "wip21ArmorScenario": {"medianMs": 0.08409500000004755, "p95Ms": 0.8868919999999889, "observationQueries": 450, "rayQueries": 2106},
+    "browserMedianIntervalMs": 16.699999999999818,
+    "browserP95IntervalMs": 16.799999999999955,
+    "pausedRenderLosStable": true,
+    "notes": "Core-step, impact-evaluation and requestAnimationFrame intervals are separate short headless measurements. They are not a physical-mobile FPS guarantee."
+  },
+  "artifacts": {
+    "html": {"path": "Tactical_v0.4_WIP21.html", "bytes": 8537604, "sha256": "f3c6ac7bb4fe1cae516d1784f86cdfdd9308463f2b16046b89c1c2b60afa005b", "matchesDist": true, "repeatBuildByteIdentical": true},
+    "zip": {"path": "Tactical_v0.4_WIP21.zip", "bytes": 1692841, "sha256": "234ac77ac92e80857e85ce7f69d25d7dc4d3ce43887d72874a9b87b65aefc733", "entry": "Tactical_v0.4_WIP21.html", "entryBytes": 8537604, "compressedBytes": 1692695, "crc32": "7f213c80", "repeatPackageByteIdentical": true, "extractedMatchesDist": true}
+  },
+  "notImplemented": [
+    "T-80U mobility, observation equipment, tactical AI, 125mm weapon or autoloader",
+    "T-80U crew, equipment or ammunition-compartment reactions",
+    "ERA block consumption, damage, explosion, fragments or additional ricochet",
+    "physical ERA block geometry collision or a new top-attack weapon",
+    "physical mobile-device sustained performance guarantee"
+  ]
+}

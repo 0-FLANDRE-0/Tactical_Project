@@ -6,6 +6,7 @@ const VEHICLE_PROFILES=(()=>{
   const mph=v=>v*.44704,inch=v=>v*.0254;
   const M1A2={
     id:'M1A2',name:'M1A2 Abrams',variant:'M1A2 기본형',crew:4,
+    capabilities:{target:true,mobility:true,observation:true,fire:true,ai:true},
     artId:'M1A2',massKg:69.54*907.18474,engineHp:1500,
     model:{hullLength:inch(312),width:inch(144),overallLength:inch(387),roofHeight:inch(93.5),groundClearance:inch(19),barrelTip:inch(387)-inch(312)/2,turretLength:4.75,turretWidth:3.28,turretOrigin:.15,turretPivot:[.66,0],turretRingDiameter:2.159,muzzleLocal:[5.717,0]},
     mobility:{roadSpeed:mph(42),crossCountrySpeed:mph(30),reverseSpeed:mph(25),accelerationReferenceSpeed:mph(20),accelerationReferenceSeconds:7.2,brakeDeceleration:3,maxLongitudinalGrade:.60,maxSideGrade:.40,pivotRate:Math.PI/6,turretRate:40*Math.PI/180,
@@ -122,6 +123,29 @@ const VEHICLE_PROFILES=(()=>{
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.ricochet=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nonPenetration=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nearNonPenetration=zero();
+  // WIP21 fixed armour-test target. Visual dimensions and pivots are derived
+  // from the corrected T80UTopView source with one uniform scale (7.012/874).
+  // It intentionally owns no mobility, sensors, weapon, ammunition, AI, crew
+  // reaction or temporary-fault configuration.
+  const T80U_SCALE=7.012/874;
+  const T80U_1989={
+    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 장갑 시험 표적)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
+    capabilities:{target:true,mobility:false,observation:false,fire:false,ai:false},
+    model:{hullLength:7.012,width:450*T80U_SCALE,overallLength:(807-50)*T80U_SCALE+7.012/2,roofHeight:2.20,groundClearance:.45,
+      barrelTip:(807-50)*T80U_SCALE,turretLength:3.65,turretWidth:3.47,turretOrigin:0,
+      turretPivot:[(807-810)*T80U_SCALE,0],turretRingDiameter:2.05,muzzleLocal:[(807-50)*T80U_SCALE,0]},
+    target:{presented:{hullBottom:.45,hullTop:1.55,turretTop:2.20}},
+    exposure:{hullAlong:[-2.45,0,2.45],hullHeights:[.75,1.35],turretAlong:[-.85,0,.85],turretHeight:2.05},
+    navigation:{clearanceMargin:.25},
+    combat:{maxHp:1400,armor:{
+      hullFront:{ke:500,ce:690},hullSide:{ke:115,ce:120},hullRear:{ke:40,ce:40},
+      turretFront:{ke:575,ce:740},turretSide:{ke:305,ce:390},turretRear:{ke:70,ce:70},upper:{ke:45,ce:45}},
+      era:{comparison:'roll<coverage',consumable:false,zones:{
+        hullFront:{coverage:.90,ke:215,ce:560},hullSide:{coverage:.50,ke:215,ce:560},hullRear:{coverage:0,ke:0,ce:0},
+        turretFront:{coverage:.95,ke:215,ce:560},turretSide:{coverage:.45,ke:215,ce:560},turretRear:{coverage:0,ke:0,ce:0},
+        upper:{coverage:.45,ke:215,ce:560}}}}
+  };
+  T80U_1989.navigation.radius=Math.ceil((Math.hypot(T80U_1989.model.hullLength/2,T80U_1989.model.width/2)+T80U_1989.navigation.clearanceMargin)*100)/100;
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
   function createRegistry(entries){
     const profiles=Object.create(null);
@@ -129,16 +153,40 @@ const VEHICLE_PROFILES=(()=>{
       const p=clone(input),id=p?.id;
       if(typeof id!=='string'||!/^[A-Z][A-Z0-9_]*$/.test(id))throw Error('잘못된 차량 프로파일 ID');
       if(Object.hasOwn(profiles,id))throw Error('중복 차량 프로파일: '+id);
-      if(p.artId!=='M1A2')throw Error('지원하지 않는 차량 도안: '+p.artId);
-      for(const section of ['model','mobility','sensors','navigation','exposure','fireControl','weapons'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
+      if(!Number.isInteger(p.crew)||p.crew<=0)throw Error('승무원 수 오류: '+id);
+      if(p.crewRoles!==undefined&&(!Array.isArray(p.crewRoles)||p.crewRoles.length!==p.crew||new Set(p.crewRoles).size!==p.crew||!p.crewRoles.every(role=>['driver','commander','gunner','loader'].includes(role))))throw Error('승무원 역할 오류: '+id);
+      if(!['M1A2','T80U'].includes(p.artId))throw Error('지원하지 않는 차량 도안: '+p.artId);
+      const caps=p.capabilities;
+      if(!caps||!['target','mobility','observation','fire','ai'].every(k=>typeof caps[k]==='boolean')||caps.target!==true)throw Error('차량 기능 선언 오류: '+id);
+      for(const section of ['model','navigation','exposure'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
+      const operational=caps.mobility||caps.observation||caps.fire||caps.ai;
+      if(!operational){
+        if(caps.mobility||caps.observation||caps.fire||caps.ai)throw Error('고정 표적 기능 오류: '+id);
+        if(p.mobility||p.sensors||p.fireControl||p.weapons||p.ammunition)throw Error('고정 표적 운용 데이터 금지: '+id);
+        if(p.crewRoles?.includes('loader'))throw Error('고정 표적 장전수 상태 금지: '+id);
+        const band=p.target?.presented;
+        if(!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('고정 표적 제시 높이 오류: '+id);
+      }else{
+        if(![caps.mobility,caps.observation,caps.fire,caps.ai].every(Boolean))throw Error('운용 차량 기능 조합 오류: '+id);
+        for(const section of ['mobility','sensors','fireControl','weapons'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
+      }
+      if(!Number.isFinite(p.navigation.radius)||p.navigation.radius<=0)throw Error('차량 충돌 반경 오류: '+id);
+      for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
+      if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
+      if(!operational){
+        if(!p.combat)throw Error('고정 표적 전투 데이터 누락: '+id);
+        if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
+        for(const zone of zones)for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
+        const era=p.combat.era;if(!era||era.comparison!=='roll<coverage'||era.consumable!==false||Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류: '+id);
+        for(const zone of zones){const row=era.zones[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+id+'.'+zone);}
+        profiles[id]=freeze(p);continue;
+      }
       const pt=p.mobility.powertrain;
       if(!pt||!['forwardRatios','reverseRatios','forwardUpshiftMps','forwardDownshiftMps','reverseUpshiftMps','reverseDownshiftMps'].every(k=>Array.isArray(pt[k])))throw Error('구동 프로파일 누락: '+id);
       if(pt.forwardRatios.length!==4||pt.reverseRatios.length!==2||pt.forwardUpshiftMps.length!==3||pt.forwardDownshiftMps.length!==3||pt.reverseUpshiftMps.length!==1||pt.reverseDownshiftMps.length!==1)throw Error('변속 표 길이 오류: '+id);
       if(![...pt.forwardRatios,...pt.reverseRatios,...pt.forwardUpshiftMps,...pt.forwardDownshiftMps,...pt.reverseUpshiftMps,...pt.reverseDownshiftMps].every(v=>Number.isFinite(v)&&v>0))throw Error('변속 표 값 오류: '+id);
       if(!pt.forwardUpshiftMps.every((v,i)=>v>pt.forwardDownshiftMps[i])||!pt.reverseUpshiftMps.every((v,i)=>v>pt.reverseDownshiftMps[i]))throw Error('변속 히스테리시스 오류: '+id);
       for(const k of ['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','holdSpeed','zeroSpeedEpsilon','targetSpeedTolerance','launchAcceleration','launchPowerExponent','gearForceExponent','powerFloorSpeed','rollingDeceleration','shiftDriveFraction','lateralAcceleration','pivotMaxSpeed','arrivalRadius','arrivalSpeed'])if(!Number.isFinite(pt[k])||pt[k]<0||(['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','launchAcceleration','powerFloorSpeed','lateralAcceleration','arrivalRadius','arrivalSpeed'].includes(k)&&pt[k]===0))throw Error('구동 값 오류: '+id+'.'+k);
-      for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
-      if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
       const f=p.fireControl;
       for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights','maneuverAccel','maneuverReferenceSpeed','flightSeconds','effectSeconds'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
       if(Object.hasOwn(f,'shotIntervalSeconds'))throw Error('폐기된 사격 필드: '+id+'.shotIntervalSeconds');
@@ -220,6 +268,6 @@ const VEHICLE_PROFILES=(()=>{
     Object.defineProperty(profiles,'registry',{value:registry,enumerable:false});
     return Object.freeze(profiles);
   }
-  return createRegistry([M1A2,M1A2_1998]);
+  return createRegistry([M1A2,M1A2_1998,T80U_1989]);
 })();
 if(typeof module!=='undefined')module.exports=VEHICLE_PROFILES;

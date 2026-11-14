@@ -1,17 +1,19 @@
 {
-  "schemaVersion": 9,
+  "schemaVersion": 10,
   "activeProfileId": "M1A2_1998",
   "ids": [
     "M1A2",
-    "M1A2_1998"
+    "M1A2_1998",
+    "T80U_1989"
   ],
   "artIds": [
-    "M1A2"
+    "M1A2",
+    "T80U"
   ],
   "ammunitionIds": [
     "M829A2",
     "M829A1",
     "M830"
   ],
-  "note": "M1A2 remains a legacy non-participant. M1A2_1998 alone enables WIP20 compartment incidents on the WIP19 inventory and three explicitly bound attack-ammunition policies."
+  "note": "M1A2/M1A2_1998 remain operational. T80U_1989 is a WIP21 fixed target-only profile with corrected T80U art and non-consumable deterministic ERA coverage; it owns no weapon, ammunition, mobility, sensor or AI data."
 }
