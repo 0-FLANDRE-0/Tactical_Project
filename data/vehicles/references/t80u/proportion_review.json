@@ -1,0 +1,90 @@
+{
+  "reference": {
+    "page": "https://btvt.info/1inservice/t-80u.htm",
+    "image": "https://btvt.info/1inservice/t-80u.files/sb1_1988b.jpg",
+    "caption": "Объект 219СБ1",
+    "file": "plan.jpg",
+    "pixelSize": [
+      2000,
+      1003
+    ],
+    "sha256": "740549600ef2f601a553c51a5fc56cd20702808d1c52cafbbbc328c687086879",
+    "provenance": "BTVT reproduction. Primary author/edition and scan accuracy not established."
+  },
+  "photo": {
+    "page": "https://andrei-bt.livejournal.com/1376413.html",
+    "image": "https://pbs.twimg.com/media/D-ZHolZWkAIr7XG.jpg:large",
+    "file": "roof-photo.jpg",
+    "credit": "Andrey Kryuchenko watermark; repost credits a_andreich",
+    "postDate": "2019-07-02",
+    "sha256": "3896e087b68f2ad77274c889481d6185c5a287692f47477cc458b39b807d9cc5",
+    "use": "Perspective roof-equipment cross-check, not orthographic scale; vehicle year not established."
+  },
+  "alignment": {
+    "sourceTopViewCropPx": [
+      35,
+      505,
+      1280,
+      977
+    ],
+    "lengthDimensionMm": 7012,
+    "sideViewDimensionEndpointsX": [
+      370,
+      1244
+    ],
+    "metresPerPixel": 0.008022883295194507,
+    "rotationToForwardPositiveXDegrees": 180,
+    "hullOriginPx": [
+      807,
+      741
+    ],
+    "uniformScale": true,
+    "topViewWidthEndpointsY": [
+      516,
+      966
+    ],
+    "derivedWidthM": 3.6102974828375283,
+    "frontViewOuterWidthMm": 3628,
+    "widthCheckDeltaM": -0.017702517162471842
+  },
+  "frames": {
+    "units": "source pixels before common uniform scale; public worldPoint returns metres",
+    "angles": "clockwise degrees; relative to parent",
+    "hierarchy": [
+      "heading / hull",
+      "turret",
+      "commander cupola / TKN-4S",
+      "NSVT mount yaw"
+    ],
+    "turretPivotPx": [
+      810,
+      741
+    ],
+    "commanderPivotPx": [
+      846,
+      671
+    ],
+    "mgPivotPx": [
+      806,
+      630
+    ],
+    "commanderAndMgArtOffsetPx": [
+      -8,
+      19
+    ],
+    "muzzlePx": [
+      50,
+      741
+    ],
+    "pivotEvidence": "Inferred centres from the plan and training cutaway; not measured race positions."
+  },
+  "limitations": [
+    "Original vector interpretation, not certified engineering geometry.",
+    "Hidden central deck completed approximately to permit turret rotation.",
+    "Cupola/MG rotation and speed are visual controls; physical linkages, limits, collision, traverse rates and gun elevation are not simulated.",
+    "No exposed track strips under intact fenders in top view.",
+    "No M1A2 CITV transplanted. No 1985/1989 game-profile appearance differences inferred.",
+    "No crew-person figure; commander means the cupola and observation equipment.",
+    "No vehicle profile, combat, AI, LOS, ammunition, movement physics or damage integration."
+  ]
+}

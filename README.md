@@ -7,6 +7,10 @@ WIP20은 `M1A2_1998`에만 관통 피격 뒤 실제 저장·예약 탄을 참조
 - [WIP20 구현](docs/AMMUNITION_INCIDENTS_WIP20.md) · [릴리스·검증](TACTICAL_RELEASE_WIP20.md) · [독립 병합 검토](docs/reviews/WIP20_MERGE_REVIEW_2026-11-14.md) · [체크섬](SHA256SUMS_WIP20.txt) · [작업 목차](docs/tasks/README.md).
 - 원본 지시서는 [archive/instructions](archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md)에 보존했다. 일반 엔진 화재, 지속 화염 피해, 연쇄 유폭·주변 피해, 외부 재보급, 강제 탈탄, 자동장전 차량과 새 차종/무기는 후속 범위다.
 
+## T-80U 외형 모델 미리보기
+
+[단독 미리보기 ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/T80U_TopView.zip)을 내려받아 압축을 풀고 `T80U_TopView.html`을 연다. 차체·포탑·전차장 큐폴라/관측경·NSVT 회전, 도면 겹치기, SVG·PNG 저장을 확인할 수 있다. 이번 작업은 독립 외형 모델이며 전투 차량 등록은 후속 범위다. [모델·자료·검증 설명](docs/T80U_ART_STUDY.md).
+
 ## 실행과 조작
 
 [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP20.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP20.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
