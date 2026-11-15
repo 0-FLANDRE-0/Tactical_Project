@@ -5,11 +5,12 @@ const targetProfile=Profiles.T80U_1989;
 const near=(a,b,e=1e-9)=>assert(Math.abs(a-b)<=e,`${a} != ${b}`);
 const impact=(id='A',change={})=>({id,hit:true,zone:'hullFront',side:null,origin:{x:2000,y:0},pose:{x:0,y:0,heading:0,turret:0},rangeM:2000,ammoId:'M829A2',ricochetRoll:.999999,nearDamageRoll:.999999,...change});
 
-test('WIP21 target-only registry entry has no fabricated operating capability',()=>{
+test('WIP21 armour data remains isolated after the WIP22 observation extension',()=>{
  assert.equal(targetProfile.artId,'T80U');assert.equal(targetProfile.combat.maxHp,1400);
  assert.equal(targetProfile.crew,3);assert.deepEqual(targetProfile.crewRoles,['commander','gunner','driver']);assert(!targetProfile.crewRoles.includes('loader'));
- assert.deepEqual(targetProfile.capabilities,{target:true,mobility:false,observation:false,fire:false,ai:false});
- for(const field of ['mobility','sensors','fireControl','weapons','ammunition','ammoIncidents','hitReactions'])assert.equal(targetProfile[field],undefined,field);
+ assert.deepEqual(targetProfile.capabilities,{target:true,mobility:false,observation:true,fire:false,ai:false});
+ assert.equal(targetProfile.sensors.name,'PNK-4S / TKN-4S + 1G46');
+ for(const field of ['mobility','fireControl','weapons','ammunition','ammoIncidents','hitReactions'])assert.equal(targetProfile[field],undefined,field);
  assert.deepEqual(Profiles.registry.ids(),['M1A2','M1A2_1998','T80U_1989']);
  const documented=JSON.parse(fs.readFileSync(require.resolve('../data/vehicles/T80U_1989.json'),'utf8')).profile;
  assert.equal(documented.model.hullLength,targetProfile.model.hullLength);assert.deepEqual(documented.combat.armor,targetProfile.combat.armor);
@@ -17,8 +18,8 @@ test('WIP21 target-only registry entry has no fabricated operating capability',(
 
 test('WIP21 target validation stays strict without weakening full vehicles or inheriting K5',()=>{
  assert.equal(Profiles.M1A2.combat,undefined);assert.equal(Profiles.M1A2_1998.combat.era,undefined);
- const clone=()=>structuredClone(targetProfile);for(const mutate of [p=>p.combat.era.zones.upper.coverage=1.01,p=>p.combat.era.zones.upper.coverage=-.01,p=>p.combat.armor.hullFront.ke=NaN,p=>delete p.target.presented,p=>p.artId='M1A2_UNKNOWN',p=>p.capabilities.fire=true,p=>p.crewRoles[2]='loader']){const p=clone();p.id='T80U_TEST';mutate(p);assert.throws(()=>Profiles.registry.create([p]));}
- const operational=structuredClone(Profiles.M1A2);delete operational.fireControl;operational.id='M1_TEST';assert.throws(()=>Profiles.registry.create([operational]),/필드 누락/);
+ const clone=()=>structuredClone(targetProfile);for(const mutate of [p=>p.combat.era.zones.upper.coverage=1.01,p=>p.combat.era.zones.upper.coverage=-.01,p=>p.combat.armor.hullFront.ke=NaN,p=>delete p.target.presented,p=>p.artId='M1A2_UNKNOWN',p=>p.capabilities.fire=true,p=>p.crewRoles[2]='loader',p=>p.sensors.commander.rate=Infinity,p=>p.sensors.gunner.fov=0,p=>p.sensors.tuning.commanderHandoffSeconds=-1]){const p=clone();p.id='T80U_TEST';mutate(p);assert.throws(()=>Profiles.registry.create([p]));}
+ const operational=structuredClone(Profiles.M1A2);delete operational.fireControl;operational.id='M1_TEST';assert.throws(()=>Profiles.registry.create([operational]),/(필드 누락|발사 기능 선언)/);
 });
 
 test('WIP21 corrected art adapter converts absolute radians to relative degrees and keeps source landmarks',()=>{

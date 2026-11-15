@@ -15,7 +15,10 @@ const TacticalCore = (() => {
   const WORLD = {w:SPEC.width,h:SPEC.height,step:SPEC.heightmap.spacing,nav:SPEC.navigation.spacing};
   const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
   const profileOf=u=>{const id=u?.profileId??ACTIVE_PROFILE_ID,p=u?._profile?.id===id?u._profile:registry.get(id);return u?.profileOverride||p;};
-  const can=(u,capability)=>!!(u?.profileOverride?.capabilities||u?._profile?.capabilities||profileOf(u).capabilities)?.[capability];
+  const can=(u,capability)=>{
+    const declared=!!(u?.profileOverride?.capabilities||u?._profile?.capabilities||profileOf(u).capabilities)?.[capability];
+    return declared&&u?._capabilityMask?.[capability]!==false;
+  };
   const collisionRadius=u=>u?.profileOverride?.navigation?.radius??u?._collisionRadius??profileOf(u).navigation.radius;
   const targetPresentation=p=>p.fireControl?.presented||p.target?.presented;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -221,10 +224,15 @@ const TacticalCore = (() => {
     }
     return {ok:true,points:points.slice(1),visits,cost:dist[g]};
   }
-  function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID,fireMode='auto') {
-    registry.get(profileId);
+  function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID,fireMode='auto',options={}) {
+    if(fireMode&&typeof fireMode==='object'){options=fireMode;fireMode='auto';}
+    const p=registry.get(profileId),mask=options.capabilityMask||{};
+    for(const [capability,value] of Object.entries(mask)){
+      if(!['mobility','observation','fire','ai'].includes(capability)||typeof value!=='boolean')throw Error('잘못된 차량 기능 마스크: '+capability);
+      if(value&&!p.capabilities[capability])throw Error('프로파일에서 비활성인 기능은 켤 수 없음: '+capability);
+    }
     const u={id,name,profileId,x,y,heading,turret:heading,commander:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
-    const p=registry.get(profileId);Object.defineProperties(u,{_profile:{value:p},_collisionRadius:{value:p.navigation.radius}});if(p.capabilities.mobility)u.drive=TacticalMobility.create();if(p.capabilities.observation)TacticalObservation.init(u);if(p.capabilities.fire)TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
+    Object.defineProperties(u,{_profile:{value:p},_collisionRadius:{value:p.navigation.radius},_capabilityMask:{value:Object.freeze({...mask})}});if(can(u,'mobility'))u.drive=TacticalMobility.create();if(can(u,'observation'))TacticalObservation.init(u);if(can(u,'fire'))TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
   }
   function legalNear(x,y,units=[],profileId=ACTIVE_PROFILE_ID) {
     const probe={profileId};
@@ -237,23 +245,33 @@ const TacticalCore = (() => {
   function createScenario(seed=7,options={}) {
     if(typeof seed==='object'){options=seed;seed=options.seed??7;}
     const scenarioId=options.scenarioId||'default';
-    if(!['default','t80u-armor'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
+    if(!['default','t80u-armor','t80u-observation'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
     const units=[];
     const layout=scenarioId==='t80u-armor'?[
       ['A11','ALPHA 11',550,2750,-.10,'blue',ACTIVE_PROFILE_ID,-.10],
       ['U01','T-80U 전면 표적',950,2680,Math.PI,'red','T80U_1989',2.55],
       ['U02','T-80U 측면 표적',900,2900,-Math.PI/2,'red','T80U_1989',-.35],
       ['U03','T-80U 후면 표적',780,2470,0,'red','T80U_1989',.75]
+    ]:scenarioId==='t80u-observation'?[
+      ['A11','ALPHA 11',550,2750,0,'blue',ACTIVE_PROFILE_ID,0],
+      // The M1 starts behind the T-80U's initial commander and gunner FOV.
+      ['U01','T-80U 관측 차량',950,2750,0,'red','T80U_1989',0]
     ]:[
       ['A11','ALPHA 11',550,2750,-.45,'blue',ACTIVE_PROFILE_ID,-.45],['A12','ALPHA 12',780,3060,-.45,'blue',ACTIVE_PROFILE_ID,-.45],
       ['T01','관측 표적 01',1150,2330,2.4,'red',ACTIVE_PROFILE_ID,2.4],['T02','관측 표적 02',1800,1650,2.5,'red',ACTIVE_PROFILE_ID,2.5],['T03','관측 표적 03',3020,2060,2.8,'red',ACTIVE_PROFILE_ID,2.8]
     ];
-    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId);const u=makeTank(id,name,p.x,p.y,h,team,profileId);u.turret=turret;u.commander=turret;units.push(u);}
-    const scenario={id:scenarioId,time:0,seed,units,recordAIEvents:!!options.recordAIEvents,recordFireEvents:!!options.recordFireEvents};
+    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId),capabilityMask=scenarioId==='t80u-armor'&&profileId==='T80U_1989'?{observation:false}:{};const u=makeTank(id,name,p.x,p.y,h,team,profileId,'auto',{capabilityMask});u.turret=turret;u.commander=turret;units.push(u);}
+    const scenario={id:scenarioId,time:0,seed,units,recordAIEvents:!!options.recordAIEvents,recordFireEvents:!!options.recordFireEvents,recordObservationEvents:!!options.recordObservationEvents};
     // Playable scenarios state the normal automatic policy explicitly too;
     // manual compatibility fixtures opt into hold when constructing a unit.
     for(const u of units)if(can(u,'fire'))fireFor(scenario).setMode(u,'auto');
     if(scenarioId==='t80u-armor')return scenario;
+    if(scenarioId==='t80u-observation'){
+      // Observation trial starts safe; the ordinary fire-mode control can
+      // still switch the playable M1 back to automatic fire.
+      fireFor(scenario).setMode(units.find(u=>u.team==='blue'),'hold');
+      return scenario;
+    }
     const byId=id=>units.find(u=>u.id===id),missionPoint=(x,y)=>legalNear(x,y,units);
     assignMission(scenario,byId('T01'),{id:'T01-patrol',type:'patrol',policy:'maintain',loop:true,waypoints:[missionPoint(1420,2190),missionPoint(1040,2460)]});
     assignMission(scenario,byId('T02'),{id:'T02-stop-engage',type:'patrol',policy:'halt',loop:true,waypoints:[missionPoint(1960,1510),missionPoint(1660,1820)]});
@@ -392,7 +410,7 @@ const TacticalCore = (() => {
   const resumeObservation=(s,u,ch)=>aliveCommand(u)&&can(u,'observation')&&TacticalObservation.resume(u,ch,s.time);
   // Command acceptance depends only on the team's public contact. A hidden
   // destruction must not be disclosed by a different success/failure result.
-  const designate=(s,u,key)=>{const accepted=aliveCommand(u)&&can(u,'observation')&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);if(accepted)aiFor(s).manualChanged(u,s.time);return accepted;};
+  const designate=(s,u,key)=>{const accepted=aliveCommand(u)&&can(u,'observation')&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);if(accepted&&can(u,'ai'))aiFor(s).manualChanged(u,s.time);return accepted;};
   const cancelDesignation=(s,u)=>{if(!aliveCommand(u)||!can(u,'observation'))return false;TacticalObservation.cancel(u,s.time);if(can(u,'fire'))fireFor(s).cancel(u);if(can(u,'ai'))aiFor(s).manualChanged(u,s.time);return true;};
   const observationView=(s,u,ch='commander')=>can(u,'observation')?TacticalObservation.view(u,ch,s.time):{mode:'disabled',turret:u?.turret??0,gaze:u?.commander??u?.turret??0,direction:null,remaining:null,point:null};
   const ownObservation=(s,u,key=null)=>can(u,'observation')?observationFor(s).ownStatus(u,key):{current:false,channels:[],identified:false,gunnerCurrent:false,acquired:false,targetKey:null,status:'disabled',source:null,reason:'disabled',pending:0};
@@ -420,7 +438,7 @@ const TacticalCore = (() => {
       fireRuntimes.set(s,TacticalFireControl.create({profileOf,seed:s.seed??7,debug:!!s.recordFireEvents,
       isObserved:(team,key)=>{if(observedAt!==s.time){observedTeams.clear();observedAt=s.time;}if(!observedTeams.has(team))observedTeams.set(team,new Map(contacts(s,team).filter(v=>v.current).map(v=>[v.key,v])));return observedTeams.get(team).get(key)||false;},
       impactEnvironment:{heightAt,buildingAt,world:WORLD},
-      impactSight:shot=>{const target=s.units.find(v=>v.id===shot.targetId);if(!target)return{visible:false,gone:true};const p=profileOf(target),origin={...shot.origin,profileOverride:shot.profileAtFire};return{...exposure(origin,target,shot.fireEye),presented:{...targetPresentation(p)},pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:p.model.hullLength,width:p.model.width,turretLength:p.model.turretLength,turretWidth:p.model.turretWidth,turretPivot:[...p.model.turretPivot]}}};},
+      impactSight:shot=>{const target=s.units.find(v=>v.id===shot.targetId);if(!target)return{visible:false,gone:true};const p=profileOf(target),origin={...shot.origin,profileOverride:shot.profileAtFire};return{...exposure(origin,target,shot.fireEye),presented:{...targetPresentation(p)},pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:p.model.hullLength,width:p.model.width,turretLength:p.model.turretLength,turretWidth:p.model.turretWidth,turretPivot:[...p.model.turretPivot]}}};},
       onImpactResolved:event=>{
         const target=s.units.find(v=>v.id===event.targetId),p=target?profileOf(target):null;
         const record=p?.combat?combatFor(s).apply(event,target,s.time):{applied:false,reason:target?'unsupported-profile':'target-unavailable',damage:0,destroyed:false};
@@ -431,7 +449,7 @@ const TacticalCore = (() => {
           wreckMap(s,event.team).set(c.key,w);
           for(const observer of s.units.filter(u=>u.team===event.team)){
             const mission=[observer.observation?.designation,observer.observation?.tracking].find(d=>['designated','waiting','acquiring','acquired'].includes(d?.status));
-            if(mission?.target===target.id){TacticalObservation.cancel(observer,s.time,'target-destroyed');fireFor(s).cancel(observer);}
+            if(mission?.target===target.id){TacticalObservation.cancel(observer,s.time,'target-destroyed');if(can(observer,'fire'))fireFor(s).cancel(observer);}
           }
         }
         return TacticalCombatState.publicRecord(record);
@@ -455,7 +473,7 @@ const TacticalCore = (() => {
         if(weapon?.samples[i].visible){samples[i].visible=true;if(v.part==='hull')hull++;else turret++;}
       }
       const tp=profileOf(target);
-      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,fireEye,presented:{...targetPresentation(tp)},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
+      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,fireEye,presented:{...targetPresentation(tp)},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
     }}));}
     return fireRuntimes.get(s);
   }
@@ -637,6 +655,6 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,ammoPreference,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,can,fireStatus,fireMode,ammoPreference,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;

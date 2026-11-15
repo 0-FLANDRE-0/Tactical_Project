@@ -1,0 +1,233 @@
+{
+  "version": "0.4-WIP22",
+  "date": "2026-11-15",
+  "branch": "feat/wip22-t80u-observation-traverse",
+  "base": "04b937d99ede7e840b53559ee5a249551bc407de",
+  "scope": {
+    "implemented": [
+      "T80U_1989 stationary observation-only profile",
+      "24 deg/s turret and 40 deg/s commander cupola physical traverse",
+      "seeded commander/gunner search and terrain/building/forest observation",
+      "0.50s continuous commander handoff eligibility",
+      "0.40s gunner own acquisition",
+      "profile-permitted runtime capability narrowing",
+      "t80u-observation selectable standalone scenario",
+      "last-observed-pose tracking and public information boundary"
+    ],
+    "excluded": [
+      "T-80U 125mm/coax/NSVT fire and ammunition",
+      "autoloader",
+      "T-80U mobility, patrol and engagement TacticalAI",
+      "T-80U crew/module/ammunition incident damage",
+      "Kontakt-5 consumption or explosion",
+      "night, thermal, weather, magnification and gun elevation"
+    ]
+  },
+  "adoptedValues": {
+    "secondarySourceNotIndependentlyVerified": {
+      "turretMaxDegPerSecond": 24,
+      "commanderCupolaMaxDegPerSecond": 40
+    },
+    "gameTrial": {
+      "ambient": {
+        "rangeM": 200,
+        "fovDeg": 360,
+        "identification": false
+      },
+      "commander": {
+        "rangeM": 2000,
+        "fovDeg": 90,
+        "eyeHeightM": 2.5,
+        "scanAmplitudeDeg": 180,
+        "scanPeriodSeconds": 90,
+        "scanRateDegPerSecond": 12
+      },
+      "gunner": {
+        "rangeM": 2000,
+        "fovDeg": 30,
+        "eyeHeightM": 2.15,
+        "scanAmplitudeDeg": 30,
+        "scanPeriodSeconds": 24,
+        "scanRateDegPerSecond": 8
+      },
+      "commanderHandoffSeconds": 0.5,
+      "gunnerAcquisitionSeconds": 0.4
+    }
+  },
+  "seed7FlowSeconds": {
+    "commanderDetected": 40.45,
+    "commanderIdentified": 46.95,
+    "designationReceived": 47.5,
+    "gunnerAcquired": 53.9
+  },
+  "commands": [
+    {
+      "command": "node --check src/vehicle-profiles.js && node --check src/observation.js && node --check src/sim-core.js && node --check src/app.js && node --check scripts/benchmark_wip22_observation.cjs && node --check scripts/benchmark_wip22_browser.cjs",
+      "status": "passed",
+      "passed": 6,
+      "failed": 0
+    },
+    {
+      "command": "node --test --test-concurrency=2 tests/*.test.cjs",
+      "status": "passed",
+      "passed": 379,
+      "failed": 0,
+      "durationMs": 93880.101278,
+      "includesActualChromium": true,
+      "note": "independent rerun after commander wreck-pose fix"
+    },
+    {
+      "command": "node --test tests/wip22-t80u-observation.test.cjs",
+      "status": "passed",
+      "passed": 9,
+      "failed": 0,
+      "note": "independent rerun including observed lethal-impact pose regression"
+    },
+    {
+      "command": "node tests/wip22-browser.test.cjs",
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "browser": "Chromium 156.0.8078.79",
+      "note": "also included in full Node run"
+    },
+    {
+      "command": "python3 -m unittest -v tests/terrain_readability_test.py",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "command": "node scripts/benchmark_los_shared_compare.cjs --worker optimized /tmp/wip22-los.json",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/benchmark_wip22_observation.cjs",
+      "status": "passed",
+      "report": "tests/releases/WIP22-observation-performance.json"
+    },
+    {
+      "command": "node scripts/benchmark_wip22_browser.cjs",
+      "status": "passed",
+      "report": "tests/releases/WIP22-browser-performance.json"
+    },
+    {
+      "command": "node scripts/export_vehicle_profile.cjs && python3 build.py && python3 scripts/package_release.py WIP22 (twice)",
+      "status": "passed",
+      "byteReproducible": true,
+      "zipExtractMatchesDist": true
+    },
+    {
+      "command": "python3 -m unittest tests/battlefield_dem_validation_test.py",
+      "status": "not-run",
+      "reason": "ModuleNotFoundError: osgeo"
+    },
+    {
+      "command": "python3 tests/source_quality.py",
+      "status": "not-run",
+      "reason": "ModuleNotFoundError: osgeo"
+    },
+    {
+      "command": "/usr/bin/python3 -m unittest tests.battlefield_dem_validation_test",
+      "status": "passed",
+      "passed": 4,
+      "failed": 0,
+      "note": "independent review with system GDAL Python"
+    },
+    {
+      "command": "/usr/bin/python3 tests/source_quality.py",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0,
+      "note": "independent review with system GDAL Python"
+    }
+  ],
+  "performance": {
+    "coreReport": "tests/releases/WIP22-observation-performance.json",
+    "browserReport": "tests/releases/WIP22-browser-performance.json",
+    "baselineDefaultStateAndQueryRayMatch": true,
+    "baselineArmorStateAndQueryRayMatch": true,
+    "syntheticObservers": {
+      "search50MedianP95Ms": [
+        0.3635,
+        0.7146
+      ],
+      "search100MedianP95Ms": [
+        0.6707,
+        1.223
+      ],
+      "tracking50MedianP95Ms": [
+        0.3146,
+        1.2168
+      ],
+      "tracking100MedianP95Ms": [
+        0.6126,
+        2.0316
+      ]
+    }
+  },
+  "browserEvidence": {
+    "report": "tests/releases/WIP22-browser-evidence.json",
+    "screenshots": [
+      "tests/releases/WIP22-t80u-search-desktop.png",
+      "tests/releases/WIP22-t80u-acquired-desktop.png",
+      "tests/releases/WIP22-t80u-mobile-dpr1.png",
+      "tests/releases/WIP22-t80u-mobile-dpr2.png",
+      "tests/releases/WIP22-t80u-portrait.png"
+    ],
+    "viewports": [
+      "1440x900 DPR1",
+      "844x390 DPR1",
+      "844x390 DPR2",
+      "390x844 DPR2"
+    ],
+    "physicalMobileTested": false
+  },
+  "artifacts": {
+    "html": {
+      "path": "Tactical_v0.4_WIP22.html",
+      "bytes": 8543144,
+      "sha256": "0144dc7c1e053b87fc628b06202a16c27e5592b722e89309132122f91ea6b62f"
+    },
+    "dist": {
+      "path": "dist/index.html",
+      "bytes": 8543144,
+      "sha256": "0144dc7c1e053b87fc628b06202a16c27e5592b722e89309132122f91ea6b62f"
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP22.zip",
+      "bytes": 1694704,
+      "compressedHtmlBytes": 1694558,
+      "crc32": "a664360a",
+      "sha256": "24cb087b4005f7dc5f7361fe994a08396c12001d78b6a6ac3e6e91951a4ff5b3",
+      "entries": [
+        "Tactical_v0.4_WIP22.html"
+      ]
+    },
+    "checksums": "SHA256SUMS_WIP22.txt"
+  },
+  "limitations": [
+    "24/40 deg/s values are adopted secondary-source ceilings, not an original-manual or physical-vehicle verification",
+    "all other T-80U optical and procedure values are game-trial tuning",
+    "headless browser CPU measurements are not physical-device FPS or thermal evidence",
+    "Author default Python lacked osgeo; independent review passed GDAL source tests with /usr/bin/python3."
+  ],
+  "authorVerification": {
+    "head": "2363c92ab1ac1ae2e16e9947f4732be26f672bc4",
+    "fullSuitePassed": 378,
+    "wip22CorePassed": 8,
+    "defaultPythonGDAL": "not-run: osgeo unavailable to the author interpreter"
+  },
+  "independentReview": {
+    "report": "docs/reviews/WIP22_MERGE_REVIEW_2026-11-15.md",
+    "defectFixed": "preserve independently rotated commander heading in observed lethal-impact wreck pose",
+    "additionalRegression": "tests/wip22-t80u-observation.test.cjs",
+    "fullSuite": 379,
+    "pythonPassed": 18,
+    "baselineScenariosComparedSeconds": 90,
+    "hiddenPosePairedChecks": 1800,
+    "handoffInterruptedDelaySeconds": 0.5,
+    "reproducibleArtifacts": true
+  }
+}

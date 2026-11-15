@@ -1,0 +1,233 @@
+{
+  "version": "0.4-WIP22",
+  "date": "2026-11-15",
+  "browser": "156.0.8078.79",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "viewport": "1440x900 DPR1",
+  "baselinePath": "/workspace/Tactical_Project_WIP21/dist/index.html",
+  "scope": "Actual standalone Chromium app frame: one 0.05s simulation step, Canvas render and scheduled DOM work. 5s warmup + 15s/300 measured frames, three fresh trials. Headless server hardware; CPU frame time, not physical-device FPS.",
+  "summary": {
+    "baselineDefault": {
+      "medianMs": 0.8,
+      "p95Ms": 1.6,
+      "maxMs": 5.9,
+      "queries": [
+        750,
+        750,
+        750
+      ],
+      "rays": [
+        11259,
+        11259,
+        11259
+      ]
+    },
+    "currentDefault": {
+      "medianMs": 0.8,
+      "p95Ms": 1.8,
+      "maxMs": 4.7,
+      "queries": [
+        750,
+        750,
+        750
+      ],
+      "rays": [
+        11259,
+        11259,
+        11259
+      ]
+    },
+    "baselineArmor": {
+      "medianMs": 0.6,
+      "p95Ms": 1.1,
+      "maxMs": 4.2,
+      "queries": [
+        150,
+        150,
+        150
+      ],
+      "rays": [
+        747,
+        747,
+        747
+      ]
+    },
+    "currentArmor": {
+      "medianMs": 0.5,
+      "p95Ms": 1,
+      "maxMs": 3.5,
+      "queries": [
+        150,
+        150,
+        150
+      ],
+      "rays": [
+        747,
+        747,
+        747
+      ]
+    },
+    "currentObservation": {
+      "medianMs": 0.4,
+      "p95Ms": 0.8,
+      "maxMs": 2.3,
+      "queries": [
+        300,
+        300,
+        300
+      ],
+      "rays": [
+        548,
+        548,
+        548
+      ]
+    }
+  },
+  "runs": {
+    "baselineDefault": [
+      {
+        "medianMs": 0.9000000059604645,
+        "p95Ms": 1.8999999985098839,
+        "maxMs": 5.9000000059604645,
+        "queries": 750,
+        "rays": 11259,
+        "frames": 300,
+        "scenario": "default"
+      },
+      {
+        "medianMs": 0.7999999970197678,
+        "p95Ms": 1.6000000014901161,
+        "maxMs": 4.5,
+        "queries": 750,
+        "rays": 11259,
+        "frames": 300,
+        "scenario": "default"
+      },
+      {
+        "medianMs": 0.8000000044703484,
+        "p95Ms": 1.6000000014901161,
+        "maxMs": 3.399999998509884,
+        "queries": 750,
+        "rays": 11259,
+        "frames": 300,
+        "scenario": "default"
+      }
+    ],
+    "currentDefault": [
+      {
+        "medianMs": 0.8000000044703484,
+        "p95Ms": 1.6000000014901161,
+        "maxMs": 2.600000001490116,
+        "queries": 750,
+        "rays": 11259,
+        "frames": 300,
+        "scenario": "default"
+      },
+      {
+        "medianMs": 0.8999999985098839,
+        "p95Ms": 2,
+        "maxMs": 4.700000002980232,
+        "queries": 750,
+        "rays": 11259,
+        "frames": 300,
+        "scenario": "default"
+      },
+      {
+        "medianMs": 0.8000000044703484,
+        "p95Ms": 1.8000000044703484,
+        "maxMs": 2.7000000029802322,
+        "queries": 750,
+        "rays": 11259,
+        "frames": 300,
+        "scenario": "default"
+      }
+    ],
+    "baselineArmor": [
+      {
+        "medianMs": 0.6000000014901161,
+        "p95Ms": 1.1000000014901161,
+        "maxMs": 3.9000000059604645,
+        "queries": 150,
+        "rays": 747,
+        "frames": 300,
+        "scenario": "t80u-armor"
+      },
+      {
+        "medianMs": 0.6000000014901161,
+        "p95Ms": 1.3999999985098839,
+        "maxMs": 4.199999995529652,
+        "queries": 150,
+        "rays": 747,
+        "frames": 300,
+        "scenario": "t80u-armor"
+      },
+      {
+        "medianMs": 0.5,
+        "p95Ms": 1,
+        "maxMs": 2.7000000029802322,
+        "queries": 150,
+        "rays": 747,
+        "frames": 300,
+        "scenario": "t80u-armor"
+      }
+    ],
+    "currentArmor": [
+      {
+        "medianMs": 0.5,
+        "p95Ms": 1,
+        "maxMs": 3.5,
+        "queries": 150,
+        "rays": 747,
+        "frames": 300,
+        "scenario": "t80u-armor"
+      },
+      {
+        "medianMs": 0.5,
+        "p95Ms": 0.9000000059604645,
+        "maxMs": 3,
+        "queries": 150,
+        "rays": 747,
+        "frames": 300,
+        "scenario": "t80u-armor"
+      },
+      {
+        "medianMs": 0.5,
+        "p95Ms": 1.0999999940395355,
+        "maxMs": 3.2000000029802322,
+        "queries": 150,
+        "rays": 747,
+        "frames": 300,
+        "scenario": "t80u-armor"
+      }
+    ],
+    "currentObservation": [
+      {
+        "medianMs": 0.3999999985098839,
+        "p95Ms": 0.7999999970197678,
+        "maxMs": 2.100000001490116,
+        "queries": 300,
+        "rays": 548,
+        "frames": 300,
+        "scenario": "t80u-observation"
+      },
+      {
+        "medianMs": 0.3999999985098839,
+        "p95Ms": 0.8000000044703484,
+        "maxMs": 1.6999999955296516,
+        "queries": 300,
+        "rays": 548,
+        "frames": 300,
+        "scenario": "t80u-observation"
+      },
+      {
+        "medianMs": 0.5,
+        "p95Ms": 1.1000000014901161,
+        "maxMs": 2.2999999970197678,
+        "queries": 300,
+        "rays": 548,
+        "frames": 300,
+        "scenario": "t80u-observation"
+      }
+    ]
+  }
+}

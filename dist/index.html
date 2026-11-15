@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP21</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP22</title>
 <style>
 :root{
   color-scheme:dark;
@@ -825,7 +825,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">라스도르프 서부 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP21</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">라스도르프 서부 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP22</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -842,7 +842,7 @@ footer{
 <aside class="sidebar" aria-label="명령 및 선택 차량 정보">
 <section class="command-panel" aria-label="전술 명령">
 <div class="section-label"><span>COMMAND</span><button class="reset compact" id="reset">초기화 ↺</button></div>
-<div class="command-group scenario-command"><label for="scenarioSelect"><b>시나리오</b></label><select id="scenarioSelect"><option value="default">기본 전투</option><option value="t80u-armor">T-80U 방호시험</option></select></div>
+<div class="command-group scenario-command"><label for="scenarioSelect"><b>시나리오</b></label><select id="scenarioSelect"><option value="default">기본 전투</option><option value="t80u-armor">T-80U 방호시험</option><option value="t80u-observation">T-80U 관측시험</option></select></div>
 <div class="command-group map-command-group"><b>지도</b><div class="map-tools"><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대">＋</button><button id="zoomOut" aria-label="지도 축소">－</button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기">맞춤</button><button class="active" id="contours" aria-pressed="true" title="등고선 표시">등고선</button></div></div>
 <div class="command-group"><b>기동</b><div class="command-row"><button class="command active" id="move" aria-pressed="true">이동</button><button class="command" id="reverse" aria-pressed="false">후진</button><button class="command" id="stop">정지</button></div></div>
 <div class="command-group"><b>관측</b><div class="command-row"><button class="command sight" id="sight" aria-pressed="false">시야 · 홀드</button><button class="command" id="guardMenu" aria-expanded="false" aria-controls="guardPopup">경계</button></div>
@@ -1055,18 +1055,30 @@ const VEHICLE_PROFILES=(()=>{
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.ricochet=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nonPenetration=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nearNonPenetration=zero();
-  // WIP21 fixed armour-test target. Visual dimensions and pivots are derived
+  // WIP21 fixed armour-test target, extended in WIP22 with an observation-only
+  // operating profile. Scenario capability masks keep the original armour
+  // targets inert. Visual dimensions and pivots are derived
   // from the corrected T80UTopView source with one uniform scale (7.012/874).
-  // It intentionally owns no mobility, sensors, weapon, ammunition, AI, crew
-  // reaction or temporary-fault configuration.
+  // It intentionally owns no mobility, weapon, ammunition, AI, crew reaction
+  // or temporary-fault configuration.
   const T80U_SCALE=7.012/874;
   const T80U_1989={
-    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 장갑 시험 표적)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
-    capabilities:{target:true,mobility:false,observation:false,fire:false,ai:false},
+    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 관측·장갑 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
+    capabilities:{target:true,mobility:false,observation:true,fire:false,ai:false},
     model:{hullLength:7.012,width:450*T80U_SCALE,overallLength:(807-50)*T80U_SCALE+7.012/2,roofHeight:2.20,groundClearance:.45,
       barrelTip:(807-50)*T80U_SCALE,turretLength:3.65,turretWidth:3.47,turretOrigin:0,
       turretPivot:[(807-810)*T80U_SCALE,0],turretRingDiameter:2.05,muzzleLocal:[(807-50)*T80U_SCALE,0]},
     target:{presented:{hullBottom:.45,hullTop:1.55,turretTop:2.20}},
+    // 24/40 deg/s are adopted secondary-source ceilings. Ranges, FOVs,
+    // scan laws and procedure times are explicit WIP22 game-trial values.
+    sensors:{name:'PNK-4S / TKN-4S + 1G46',eyeHeight:2.50,observationLimit:2000,targetReferenceHeight:1.5,
+      hunterKiller:false,commanderDesignation:true,
+      ambient:{enabled:true,range:200,fov:Math.PI*2,eyeHeight:2.50},
+      commander:{enabled:true,independent:true,range:2000,fov:Math.PI/2,rate:40*Math.PI/180,eyeHeight:2.50,scan:{amplitude:Math.PI,period:90,rate:12*Math.PI/180}},
+      gunner:{enabled:true,range:2000,fov:Math.PI/6,rate:24*Math.PI/180,eyeHeight:2.15,scan:{amplitude:Math.PI/6,period:24,rate:8*Math.PI/180}},
+      tuning:{queryPeriod:.1,geometryMaxAge:.5,detectThreshold:[.35,1.1],identifyThreshold:[1.4,3],
+        evidenceHalfLife:8,memorySeconds:30,knowledgeSeconds:120,lossGrace:1.2,
+        focusSeconds:2,focusLimit:8,revisitSeconds:12,designationSeconds:18,designationStale:6,acquireSeconds:.4,commanderHandoffSeconds:.5}},
     exposure:{hullAlong:[-2.45,0,2.45],hullHeights:[.75,1.35],turretAlong:[-.85,0,.85],turretHeight:2.05},
     navigation:{clearanceMargin:.25},
     combat:{maxHp:1400,armor:{
@@ -1091,26 +1103,35 @@ const VEHICLE_PROFILES=(()=>{
       const caps=p.capabilities;
       if(!caps||!['target','mobility','observation','fire','ai'].every(k=>typeof caps[k]==='boolean')||caps.target!==true)throw Error('차량 기능 선언 오류: '+id);
       for(const section of ['model','navigation','exposure'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
-      const operational=caps.mobility||caps.observation||caps.fire||caps.ai;
-      if(!operational){
-        if(caps.mobility||caps.observation||caps.fire||caps.ai)throw Error('고정 표적 기능 오류: '+id);
-        if(p.mobility||p.sensors||p.fireControl||p.weapons||p.ammunition)throw Error('고정 표적 운용 데이터 금지: '+id);
-        if(p.crewRoles?.includes('loader'))throw Error('고정 표적 장전수 상태 금지: '+id);
-        const band=p.target?.presented;
-        if(!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('고정 표적 제시 높이 오류: '+id);
-      }else{
-        if(![caps.mobility,caps.observation,caps.fire,caps.ai].every(Boolean))throw Error('운용 차량 기능 조합 오류: '+id);
-        for(const section of ['mobility','sensors','fireControl','weapons'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
-      }
+      const fullOperational=caps.mobility||caps.fire||caps.ai;
+      if(fullOperational&&![caps.mobility,caps.observation,caps.fire,caps.ai].every(Boolean))throw Error('운용 차량 기능 조합 오류: '+id);
+      if(caps.ai&&(!caps.mobility||!caps.observation||!caps.fire))throw Error('AI 기능 조합 오류: '+id);
+      if(caps.fire&&!caps.observation)throw Error('발사 관측 기능 오류: '+id);
+      if(caps.mobility!==!!p.mobility)throw Error('기동 기능 선언 오류: '+id);
+      if(caps.observation!==!!p.sensors)throw Error('관측 기능 선언 오류: '+id);
+      if(caps.fire!==!!(p.fireControl&&p.weapons)||(!caps.fire&&(p.fireControl||p.weapons||p.ammunition)))throw Error('발사 기능 선언 오류: '+id);
+      if(!caps.fire&&p.crewRoles?.includes('loader'))throw Error('비발사 차량 장전수 상태 금지: '+id);
+      const targetBand=p.target?.presented||p.fireControl?.presented;
+      if(!targetBand||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(targetBand[k]))||!(targetBand.hullBottom<targetBand.hullTop&&targetBand.hullTop<targetBand.turretTop))throw Error('표적 제시 높이 오류: '+id);
       if(!Number.isFinite(p.navigation.radius)||p.navigation.radius<=0)throw Error('차량 충돌 반경 오류: '+id);
       for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
       if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
-      if(!operational){
-        if(!p.combat)throw Error('고정 표적 전투 데이터 누락: '+id);
+      if(p.combat){
         if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
         for(const zone of zones)for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
-        const era=p.combat.era;if(!era||era.comparison!=='roll<coverage'||era.consumable!==false||Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류: '+id);
-        for(const zone of zones){const row=era.zones[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+id+'.'+zone);}
+        const era=p.combat.era;if(era){if(era.comparison!=='roll<coverage'||era.consumable!==false||Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류: '+id);for(const zone of zones){const row=era.zones[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+id+'.'+zone);}}
+      }
+      if(caps.observation){
+        const s=p.sensors;
+        if(typeof s.hunterKiller!=='boolean'||(s.commanderDesignation!==undefined&&typeof s.commanderDesignation!=='boolean')||![s.eyeHeight,s.observationLimit,s.targetReferenceHeight].every(v=>Number.isFinite(v)&&v>0))throw Error('관측 장비 값 오류: '+id);
+        const validateChannel=(ch,needsTraverse)=>{const e=s[ch];if(!e||typeof e.enabled!=='boolean'||!Number.isFinite(e.range)||e.range<=0||!Number.isFinite(e.fov)||e.fov<=0||e.fov>Math.PI*2)throw Error('관측 채널 값 오류: '+id+'.'+ch);if(!Number.isFinite(e.eyeHeight)||e.eyeHeight<=0)throw Error('관측 높이 값 오류: '+id+'.'+ch);if(needsTraverse&&(!Number.isFinite(e.rate)||e.rate<=0||!e.scan||!Number.isFinite(e.scan.amplitude)||e.scan.amplitude<0||e.scan.amplitude>Math.PI||!Number.isFinite(e.scan.period)||e.scan.period<=0||!Number.isFinite(e.scan.rate)||e.scan.rate<=0||e.scan.rate>e.rate))throw Error('관측 선회/탐색 값 오류: '+id+'.'+ch);};
+        validateChannel('ambient',false);validateChannel('commander',true);validateChannel('gunner',true);
+        if(typeof s.commander.independent!=='boolean'||s.observationLimit<Math.max(s.ambient.range,s.commander.range,s.gunner.range))throw Error('관측 범위 오류: '+id);
+        const t=s.tuning,positive=['queryPeriod','geometryMaxAge','evidenceHalfLife','memorySeconds','knowledgeSeconds','lossGrace','focusSeconds','focusLimit','revisitSeconds','designationSeconds','designationStale','acquireSeconds'];
+        if(!t||!positive.every(k=>Number.isFinite(t[k])&&t[k]>0)||!['detectThreshold','identifyThreshold'].every(k=>Array.isArray(t[k])&&t[k].length===2&&t[k].every(v=>Number.isFinite(v)&&v>=0)&&t[k][1]>=t[k][0])||(t.commanderHandoffSeconds!==undefined&&(!Number.isFinite(t.commanderHandoffSeconds)||t.commanderHandoffSeconds<0)))throw Error('관측 절차 값 오류: '+id);
+      }
+      if(!fullOperational){
+        if(!p.combat)throw Error('고정 표적 전투 데이터 누락: '+id);
         profiles[id]=freeze(p);continue;
       }
       const pt=p.mobility.powertrain;
@@ -1687,7 +1708,9 @@ const TacticalObservation=(()=>{
         o.scanPhase??=hash(u.id+':'+ch,seed)*TAU;
         const scan=eq.scan,aim=point?Math.atan2(point.y-u.y,point.x-u.x):u.heading+scan.amplitude*Math.sin(now*TAU/scan.period+o.scanPhase);
         const modifiers=u.hitReactionModifiers||{},reactionRate=ch==='gunner'?(modifiers.turretRate??1):(modifiers.commanderRate??1);
-        const maxRate=ch==='gunner'?Math.min(p.mobility.turretRate,eq.rate):eq.rate;
+        // Observation-only vehicles own traverse ceilings in their sensor
+        // profile. Full vehicles retain the legacy mobility ceiling too.
+        const maxRate=ch==='gunner'?Math.min(p.mobility?.turretRate??eq.rate,eq.rate):eq.rate;
         const hullRate=o.lastHeading===undefined?0:Math.abs(diff(u.heading,o.lastHeading))/dt;
         // Apply a crew/equipment rate factor once to the actual commanded
         // angular velocity, not merely to the wider equipment ceiling. This
@@ -1800,13 +1823,23 @@ const TacticalObservation=(()=>{
         return;
       }
       // Refresh pending candidates only from this commander's actual samples.
+      const commanderDesignation=sensors.commanderDesignation??sensors.hunterKiller;
+      const handoffDelay=t.commanderHandoffSeconds??0;
       const beforePending=s.pending.length;
-      s.pending=s.pending.filter(v=>now-v.observedAt<=t.memorySeconds&&v.target!==d?.target&&!s.contacts[v.target]?.wreckConfirmed);
+      s.pending=s.pending.filter(v=>{
+        const c=s.contacts[v.target];
+        if(now-v.observedAt>t.memorySeconds||v.target===d?.target||c?.wreckConfirmed)return false;
+        // A configured human handoff delay is continuous own commander
+        // eligibility, not contact memory. Legacy zero-delay M1 queues retain
+        // their original memory behavior exactly.
+        return !handoffDelay||!!(c?.current&&c.identified&&c.enemyConfirmed&&c.sources.commander.current);
+      });
       if(s.pending.length!==beforePending)s.candidateRevision++;
       let pendingOrderChanged=false;
-      if(sensors.hunterKiller&&sensors.commander.enabled){
+      if(commanderDesignation&&sensors.commander.enabled){
         for(const[id,c]of Object.entries(s.contacts))if(c.current&&c.identified&&c.enemyConfirmed&&c.commanderIdentifiedAt!==undefined&&!c.wreckConfirmed&&c.sources.commander.current&&id!==d?.target){
-          const entry={target:id,key:c.key,pose:copyPose(c.pose),observedAt:c.lastSeen,discoveredAt:c.commanderDiscoveredAt??c.sources.commander.firstSeen??c.lastSeen,identifiedAt:c.commanderIdentifiedAt},index=s.pending.findIndex(v=>v.target===id);
+          const index=s.pending.findIndex(v=>v.target===id),old=index>=0?s.pending[index]:null;
+          const entry={target:id,key:c.key,pose:copyPose(c.pose),observedAt:c.lastSeen,discoveredAt:c.commanderDiscoveredAt??c.sources.commander.firstSeen??c.lastSeen,identifiedAt:c.commanderIdentifiedAt,eligibleSince:old?.eligibleSince??now};
           if(index>=0)s.pending[index]=entry;
           else if((s.commander.cooldowns[id]??0)<=now){
             s.pending.push(entry);s.candidateRevision++;pendingOrderChanged=true;emit(u,'candidate-queued',c,{channel:'commander',discoveredAt:entry.discoveredAt,identifiedAt:entry.identifiedAt});
@@ -1816,8 +1849,8 @@ const TacticalObservation=(()=>{
         if(pendingOrderChanged)s.pending.sort((a,b)=>a.discoveredAt-b.discoveredAt||(a.key<b.key?-1:a.key>b.key?1:0));
       }
       if(d||!sensors.gunner.enabled||now<s.autoAssignAfter)return;
-      if(sensors.hunterKiller&&sensors.commander.enabled){
-        const next=s.pending.find(v=>now-v.observedAt<=t.designationStale&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
+      if(commanderDesignation&&sensors.commander.enabled){
+        const next=s.pending.find(v=>now-v.observedAt<=t.designationStale&&now-(v.eligibleSince??now)>=handoffDelay&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
         if(next){designate(u,next.target,'commander');return;}
       }
       // Own gunner identification/recognition is a separate route, not a fake
@@ -2663,7 +2696,10 @@ const TacticalCore = (() => {
   const WORLD = {w:SPEC.width,h:SPEC.height,step:SPEC.heightmap.spacing,nav:SPEC.navigation.spacing};
   const VEHICLE = Object.freeze({radius:PROFILE.navigation.radius,maxSlope:PROFILE.mobility.maxLongitudinalGrade,eye:PROFILE.sensors.eyeHeight,range:PROFILE.sensors.observationLimit,model:PROFILE.model});
   const profileOf=u=>{const id=u?.profileId??ACTIVE_PROFILE_ID,p=u?._profile?.id===id?u._profile:registry.get(id);return u?.profileOverride||p;};
-  const can=(u,capability)=>!!(u?.profileOverride?.capabilities||u?._profile?.capabilities||profileOf(u).capabilities)?.[capability];
+  const can=(u,capability)=>{
+    const declared=!!(u?.profileOverride?.capabilities||u?._profile?.capabilities||profileOf(u).capabilities)?.[capability];
+    return declared&&u?._capabilityMask?.[capability]!==false;
+  };
   const collisionRadius=u=>u?.profileOverride?.navigation?.radius??u?._collisionRadius??profileOf(u).navigation.radius;
   const targetPresentation=p=>p.fireControl?.presented||p.target?.presented;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -2869,10 +2905,15 @@ const TacticalCore = (() => {
     }
     return {ok:true,points:points.slice(1),visits,cost:dist[g]};
   }
-  function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID,fireMode='auto') {
-    registry.get(profileId);
+  function makeTank(id,name,x,y,heading,team='blue',profileId=ACTIVE_PROFILE_ID,fireMode='auto',options={}) {
+    if(fireMode&&typeof fireMode==='object'){options=fireMode;fireMode='auto';}
+    const p=registry.get(profileId),mask=options.capabilityMask||{};
+    for(const [capability,value] of Object.entries(mask)){
+      if(!['mobility','observation','fire','ai'].includes(capability)||typeof value!=='boolean')throw Error('잘못된 차량 기능 마스크: '+capability);
+      if(value&&!p.capabilities[capability])throw Error('프로파일에서 비활성인 기능은 켤 수 없음: '+capability);
+    }
     const u={id,name,profileId,x,y,heading,turret:heading,commander:heading,speed:0,path:[],goal:null,reverse:false,team,state:'대기',distanceTravelled:0,replanTimer:0,trackTimer:0};
-    const p=registry.get(profileId);Object.defineProperties(u,{_profile:{value:p},_collisionRadius:{value:p.navigation.radius}});if(p.capabilities.mobility)u.drive=TacticalMobility.create();if(p.capabilities.observation)TacticalObservation.init(u);if(p.capabilities.fire)TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
+    Object.defineProperties(u,{_profile:{value:p},_collisionRadius:{value:p.navigation.radius},_capabilityMask:{value:Object.freeze({...mask})}});if(can(u,'mobility'))u.drive=TacticalMobility.create();if(can(u,'observation'))TacticalObservation.init(u);if(can(u,'fire'))TacticalFireControl.init(u,p,fireMode);if(p.combat)TacticalCombatState.initUnit(u,p);return u;
   }
   function legalNear(x,y,units=[],profileId=ACTIVE_PROFILE_ID) {
     const probe={profileId};
@@ -2885,23 +2926,33 @@ const TacticalCore = (() => {
   function createScenario(seed=7,options={}) {
     if(typeof seed==='object'){options=seed;seed=options.seed??7;}
     const scenarioId=options.scenarioId||'default';
-    if(!['default','t80u-armor'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
+    if(!['default','t80u-armor','t80u-observation'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
     const units=[];
     const layout=scenarioId==='t80u-armor'?[
       ['A11','ALPHA 11',550,2750,-.10,'blue',ACTIVE_PROFILE_ID,-.10],
       ['U01','T-80U 전면 표적',950,2680,Math.PI,'red','T80U_1989',2.55],
       ['U02','T-80U 측면 표적',900,2900,-Math.PI/2,'red','T80U_1989',-.35],
       ['U03','T-80U 후면 표적',780,2470,0,'red','T80U_1989',.75]
+    ]:scenarioId==='t80u-observation'?[
+      ['A11','ALPHA 11',550,2750,0,'blue',ACTIVE_PROFILE_ID,0],
+      // The M1 starts behind the T-80U's initial commander and gunner FOV.
+      ['U01','T-80U 관측 차량',950,2750,0,'red','T80U_1989',0]
     ]:[
       ['A11','ALPHA 11',550,2750,-.45,'blue',ACTIVE_PROFILE_ID,-.45],['A12','ALPHA 12',780,3060,-.45,'blue',ACTIVE_PROFILE_ID,-.45],
       ['T01','관측 표적 01',1150,2330,2.4,'red',ACTIVE_PROFILE_ID,2.4],['T02','관측 표적 02',1800,1650,2.5,'red',ACTIVE_PROFILE_ID,2.5],['T03','관측 표적 03',3020,2060,2.8,'red',ACTIVE_PROFILE_ID,2.8]
     ];
-    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId);const u=makeTank(id,name,p.x,p.y,h,team,profileId);u.turret=turret;u.commander=turret;units.push(u);}
-    const scenario={id:scenarioId,time:0,seed,units,recordAIEvents:!!options.recordAIEvents,recordFireEvents:!!options.recordFireEvents};
+    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId),capabilityMask=scenarioId==='t80u-armor'&&profileId==='T80U_1989'?{observation:false}:{};const u=makeTank(id,name,p.x,p.y,h,team,profileId,'auto',{capabilityMask});u.turret=turret;u.commander=turret;units.push(u);}
+    const scenario={id:scenarioId,time:0,seed,units,recordAIEvents:!!options.recordAIEvents,recordFireEvents:!!options.recordFireEvents,recordObservationEvents:!!options.recordObservationEvents};
     // Playable scenarios state the normal automatic policy explicitly too;
     // manual compatibility fixtures opt into hold when constructing a unit.
     for(const u of units)if(can(u,'fire'))fireFor(scenario).setMode(u,'auto');
     if(scenarioId==='t80u-armor')return scenario;
+    if(scenarioId==='t80u-observation'){
+      // Observation trial starts safe; the ordinary fire-mode control can
+      // still switch the playable M1 back to automatic fire.
+      fireFor(scenario).setMode(units.find(u=>u.team==='blue'),'hold');
+      return scenario;
+    }
     const byId=id=>units.find(u=>u.id===id),missionPoint=(x,y)=>legalNear(x,y,units);
     assignMission(scenario,byId('T01'),{id:'T01-patrol',type:'patrol',policy:'maintain',loop:true,waypoints:[missionPoint(1420,2190),missionPoint(1040,2460)]});
     assignMission(scenario,byId('T02'),{id:'T02-stop-engage',type:'patrol',policy:'halt',loop:true,waypoints:[missionPoint(1960,1510),missionPoint(1660,1820)]});
@@ -3040,7 +3091,7 @@ const TacticalCore = (() => {
   const resumeObservation=(s,u,ch)=>aliveCommand(u)&&can(u,'observation')&&TacticalObservation.resume(u,ch,s.time);
   // Command acceptance depends only on the team's public contact. A hidden
   // destruction must not be disclosed by a different success/failure result.
-  const designate=(s,u,key)=>{const accepted=aliveCommand(u)&&can(u,'observation')&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);if(accepted)aiFor(s).manualChanged(u,s.time);return accepted;};
+  const designate=(s,u,key)=>{const accepted=aliveCommand(u)&&can(u,'observation')&&!wreckMap(s,u.team).has(key)&&observationFor(s).direct(u,key);if(accepted&&can(u,'ai'))aiFor(s).manualChanged(u,s.time);return accepted;};
   const cancelDesignation=(s,u)=>{if(!aliveCommand(u)||!can(u,'observation'))return false;TacticalObservation.cancel(u,s.time);if(can(u,'fire'))fireFor(s).cancel(u);if(can(u,'ai'))aiFor(s).manualChanged(u,s.time);return true;};
   const observationView=(s,u,ch='commander')=>can(u,'observation')?TacticalObservation.view(u,ch,s.time):{mode:'disabled',turret:u?.turret??0,gaze:u?.commander??u?.turret??0,direction:null,remaining:null,point:null};
   const ownObservation=(s,u,key=null)=>can(u,'observation')?observationFor(s).ownStatus(u,key):{current:false,channels:[],identified:false,gunnerCurrent:false,acquired:false,targetKey:null,status:'disabled',source:null,reason:'disabled',pending:0};
@@ -3068,7 +3119,7 @@ const TacticalCore = (() => {
       fireRuntimes.set(s,TacticalFireControl.create({profileOf,seed:s.seed??7,debug:!!s.recordFireEvents,
       isObserved:(team,key)=>{if(observedAt!==s.time){observedTeams.clear();observedAt=s.time;}if(!observedTeams.has(team))observedTeams.set(team,new Map(contacts(s,team).filter(v=>v.current).map(v=>[v.key,v])));return observedTeams.get(team).get(key)||false;},
       impactEnvironment:{heightAt,buildingAt,world:WORLD},
-      impactSight:shot=>{const target=s.units.find(v=>v.id===shot.targetId);if(!target)return{visible:false,gone:true};const p=profileOf(target),origin={...shot.origin,profileOverride:shot.profileAtFire};return{...exposure(origin,target,shot.fireEye),presented:{...targetPresentation(p)},pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:p.model.hullLength,width:p.model.width,turretLength:p.model.turretLength,turretWidth:p.model.turretWidth,turretPivot:[...p.model.turretPivot]}}};},
+      impactSight:shot=>{const target=s.units.find(v=>v.id===shot.targetId);if(!target)return{visible:false,gone:true};const p=profileOf(target),origin={...shot.origin,profileOverride:shot.profileAtFire};return{...exposure(origin,target,shot.fireEye),presented:{...targetPresentation(p)},pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:p.model.hullLength,width:p.model.width,turretLength:p.model.turretLength,turretWidth:p.model.turretWidth,turretPivot:[...p.model.turretPivot]}}};},
       onImpactResolved:event=>{
         const target=s.units.find(v=>v.id===event.targetId),p=target?profileOf(target):null;
         const record=p?.combat?combatFor(s).apply(event,target,s.time):{applied:false,reason:target?'unsupported-profile':'target-unavailable',damage:0,destroyed:false};
@@ -3079,7 +3130,7 @@ const TacticalCore = (() => {
           wreckMap(s,event.team).set(c.key,w);
           for(const observer of s.units.filter(u=>u.team===event.team)){
             const mission=[observer.observation?.designation,observer.observation?.tracking].find(d=>['designated','waiting','acquiring','acquired'].includes(d?.status));
-            if(mission?.target===target.id){TacticalObservation.cancel(observer,s.time,'target-destroyed');fireFor(s).cancel(observer);}
+            if(mission?.target===target.id){TacticalObservation.cancel(observer,s.time,'target-destroyed');if(can(observer,'fire'))fireFor(s).cancel(observer);}
           }
         }
         return TacticalCombatState.publicRecord(record);
@@ -3103,7 +3154,7 @@ const TacticalCore = (() => {
         if(weapon?.samples[i].visible){samples[i].visible=true;if(v.part==='hull')hull++;else turret++;}
       }
       const tp=profileOf(target);
-      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,fireEye,presented:{...targetPresentation(tp)},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
+      return{visible:hull+turret>0,hull:hull/6,turret:turret/3,samples,fireEye,presented:{...targetPresentation(tp)},reason:gunnerVisible?'fire-line-blocked':'fresh-sight-failed',pose:{x:target.x,y:target.y,heading:target.heading,turret:target.turret,commander:target.commander??target.turret,model:{hullLength:tp.model.hullLength,width:tp.model.width,turretLength:tp.model.turretLength,turretWidth:tp.model.turretWidth,turretPivot:[...tp.model.turretPivot]}}};
     }}));}
     return fireRuntimes.get(s);
   }
@@ -3285,7 +3336,7 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,fireStatus,fireMode,ammoPreference,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,can,fireStatus,fireMode,ammoPreference,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -4861,7 +4912,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   $('reset').onclick=()=>resetScenario();
   $('scenarioSelect').value=scenarioId;
-  $('scenarioSelect').onchange=()=>resetScenario($('scenarioSelect').value,$('scenarioSelect').value==='t80u-armor'?'T-80U 방호시험 시나리오':'기본 전투 시나리오');
+  $('scenarioSelect').onchange=()=>{const next=$('scenarioSelect').value;resetScenario(next,next==='t80u-armor'?'T-80U 방호시험 시나리오':next==='t80u-observation'?'T-80U 관측시험 시나리오':'기본 전투 시나리오');};
   window.addEventListener('keydown',e=>{
     if(portraitBlocked){e.preventDefault();return;}
     if(e.code==='Escape'){if(lookPicking)setLookPicking(false);else setGuardPopup(false);return;}
@@ -5252,7 +5303,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP21',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP22',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       scenarioId,time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};
