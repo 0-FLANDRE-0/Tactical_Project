@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 10,
+  "schemaVersion": 11,
   "activeProfileId": "M1A2_1998",
   "ids": [
     "M1A2",
@@ -15,5 +15,5 @@
     "M829A1",
     "M830"
   ],
-  "note": "M1A2/M1A2_1998 remain operational. T80U_1989 is a WIP21 fixed target-only profile with corrected T80U art and non-consumable deterministic ERA coverage; it owns no weapon, ammunition, mobility, sensor or AI data."
+  "note": "M1A2/M1A2_1998 remain operational. T80U_1989 is a WIP22 stationary observation-capable profile with WIP21 armour/K5 data; scenarios may only disable declared capabilities. It owns no weapon, ammunition, mobility, fire/engagement AI, crew-damage or fault data."
 }

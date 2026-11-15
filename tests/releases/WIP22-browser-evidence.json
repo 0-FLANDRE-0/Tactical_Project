@@ -1,0 +1,621 @@
+{
+  "focus": {
+    "x": 950,
+    "y": 2750,
+    "key": "접촉-uw35ih"
+  },
+  "desktop": {
+    "initial": {
+      "scenario": "t80u-observation",
+      "time": 0.1,
+      "version": "0.4-WIP22",
+      "t80": {
+        "x": 950,
+        "y": 2750,
+        "heading": 0,
+        "turret": -0.013962634015954637,
+        "commander": 0.020943951023931956,
+        "observation": true,
+        "ai": {
+          "status": "disabled",
+          "reason": "disabled"
+        },
+        "fireStatus": {
+          "status": "disabled",
+          "reason": "disabled",
+          "canFire": false,
+          "mode": "hold",
+          "ammo": 0
+        }
+      },
+      "m1Fire": "hold",
+      "snapshot": {
+        "scenarioId": "t80u-observation",
+        "time": 0.1,
+        "selected": "A11",
+        "targetId": null,
+        "paused": false,
+        "timeScale": 1,
+        "sightHeld": false,
+        "reverseMode": false,
+        "showContours": true,
+        "terrainMode": false,
+        "camera": {
+          "x": 2000,
+          "y": 2000,
+          "zoom": 0.19082,
+          "w": 1134,
+          "h": 812,
+          "dpr": 1
+        },
+        "units": [
+          {
+            "id": "A11",
+            "name": "ALPHA 11",
+            "profileId": "M1A2_1998",
+            "x": 550,
+            "y": 2750,
+            "heading": 0,
+            "turret": 0.013962634015954637,
+            "commander": -0.02617993877991494,
+            "speed": 0,
+            "path": [],
+            "goal": null,
+            "reverse": false,
+            "team": "blue",
+            "state": "대기",
+            "distanceTravelled": 0,
+            "replanTimer": 0,
+            "trackTimer": 0.1,
+            "drive": {
+              "velocity": 0,
+              "requestedDirection": 0,
+              "selectedDirection": 0,
+              "pendingDirection": 0,
+              "mode": "hold",
+              "gear": 0,
+              "fromGear": 0,
+              "shiftRemaining": 0,
+              "shiftCooldown": 0,
+              "gearHold": 0.1,
+              "directionWait": 0,
+              "shiftCount": 0,
+              "lastAcceleration": 0,
+              "driveForceN": 0
+            },
+            "observation": {
+              "commander": {
+                "mode": "auto",
+                "point": null,
+                "interest": null,
+                "interestUntil": 0,
+                "expiresAt": null,
+                "focusSince": 0,
+                "scanPhase": 4.670665572220123,
+                "lastHeading": 0,
+                "targetBearing": -0.7853564417758901,
+                "activity": "scan",
+                "focus": null
+              },
+              "gunner": {
+                "mode": "auto",
+                "point": null,
+                "interest": null,
+                "interestUntil": 0,
+                "expiresAt": null,
+                "focusSince": 0,
+                "scanPhase": 2.020604302691151,
+                "lastHeading": 0,
+                "targetBearing": 0.2294779433245523,
+                "activity": "scan",
+                "focus": null
+              },
+              "designation": {
+                "status": "idle"
+              },
+              "tracking": {
+                "status": "idle"
+              },
+              "sensing": {
+                "current": false,
+                "channels": [],
+                "identified": false,
+                "gunnerCurrent": false,
+                "acquired": false,
+                "targetKey": null,
+                "status": "idle",
+                "source": null,
+                "reason": null,
+                "pending": 0
+              },
+              "lastQuery": 0.1
+            },
+            "fireControl": {
+              "status": "no-target",
+              "reason": "no-target",
+              "targetKey": null,
+              "aimProgress": 0,
+              "aimElapsed": 0,
+              "layTime": 0,
+              "ammo": 42,
+              "shotCount": 0,
+              "pending": null,
+              "lastShot": null,
+              "hitChance": null,
+              "zoneProbabilities": null,
+              "previousSample": null,
+              "targetMotion": 0,
+              "targetVelocity": {
+                "x": 0,
+                "y": 0
+              },
+              "breakdown": null,
+              "fireMode": "hold",
+              "lineProbeTarget": null,
+              "lineProbePose": null,
+              "lineProbeBlocked": false,
+              "lineProbeResult": null,
+              "lineProbeRequest": null,
+              "lineProbeCandidateRevision": null,
+              "lineProbeQueries": 0,
+              "stationaryElapsed": 0.1,
+              "autoSuppressed": false,
+              "lastRejection": null,
+              "loaded": true,
+              "reloadProgress": 1,
+              "reloadStartedAt": null,
+              "reloadCompletedAt": 0,
+              "readyIdleSeconds": 0.1,
+              "burstShots": 0,
+              "fatigueSeconds": 0,
+              "shockSeconds": 0,
+              "faultUntil": {
+                "fireControl": 0,
+                "commander": 0,
+                "gunner": 0
+              },
+              "lastReaction": null,
+              "ammunition": {
+                "preference": "auto",
+                "loadedAmmoId": "M829A2",
+                "sections": {
+                  "ready": {
+                    "M829A2": 7,
+                    "M829A1": 4,
+                    "M830": 6
+                  },
+                  "semiReady": {
+                    "M829A2": 8,
+                    "M829A1": 6,
+                    "M830": 4
+                  },
+                  "reserve": {
+                    "M829A2": 2,
+                    "M829A1": 2,
+                    "M830": 2
+                  }
+                },
+                "task": null,
+                "lastShotAt": null,
+                "lastHitAt": null,
+                "incident": {
+                  "safetyUntil": 0,
+                  "last": null,
+                  "history": [],
+                  "lostTotals": {
+                    "M829A2": 0,
+                    "M829A1": 0,
+                    "M830": 0
+                  }
+                }
+              },
+              "loadedAmmoId": "M829A2",
+              "engageableAmmo": true
+            },
+            "combat": {
+              "maxHp": 1450,
+              "hp": 1450,
+              "status": "alive",
+              "ammoId": "M829A2",
+              "destroyedAt": null,
+              "lastDamage": null,
+              "reactions": {
+                "faults": {
+                  "mobility": {
+                    "active": false,
+                    "remaining": 0
+                  },
+                  "turretDrive": {
+                    "active": false,
+                    "remaining": 0
+                  }
+                },
+                "crew": {
+                  "driver": "normal",
+                  "commander": "normal",
+                  "gunner": "normal",
+                  "loader": "normal"
+                },
+                "modifiers": {
+                  "drivePower": 1,
+                  "hullTurn": 1,
+                  "turretRate": 1,
+                  "commanderRate": 1,
+                  "gunnerAimRate": 1,
+                  "gunnerSigma": 1,
+                  "loaderEfficiency": 1
+                }
+              }
+            },
+            "hitReactions": {
+              "profileId": "M1A2_1998",
+              "faultUntil": {
+                "mobility": 0,
+                "turretDrive": 0
+              },
+              "crew": {
+                "driver": "normal",
+                "commander": "normal",
+                "gunner": "normal",
+                "loader": "normal"
+              },
+              "lastOutcome": null
+            },
+            "hitReactionModifiers": {
+              "drivePower": 1,
+              "hullTurn": 1,
+              "turretRate": 1,
+              "commanderRate": 1,
+              "gunnerAimRate": 1,
+              "gunnerSigma": 1,
+              "loaderEfficiency": 1
+            },
+            "hitReactionTime": 0.1,
+            "activeStatus": []
+          }
+        ],
+        "contacts": [],
+        "frameCount": 2,
+        "lookPicking": false,
+        "guardPopupOpen": false,
+        "portraitBlocked": false,
+        "look": {
+          "mode": "idle",
+          "turret": 0.013962634015954637,
+          "gaze": -0.02617993877991494,
+          "direction": null,
+          "remaining": null,
+          "point": null
+        },
+        "firing": {
+          "status": "no-target",
+          "reason": "no-target",
+          "targetKey": null,
+          "aimProgress": 0,
+          "layTime": 0,
+          "targetVelocity": {
+            "x": 0,
+            "y": 0
+          },
+          "ammo": 42,
+          "mode": "hold",
+          "pending": false,
+          "pendingSource": null,
+          "canFire": false,
+          "motionReady": true,
+          "stationaryElapsed": 0.1,
+          "autoSuppressed": false,
+          "hitChance": null,
+          "zoneProbabilities": null,
+          "loading": {
+            "loaded": true,
+            "ammoId": "M829A2",
+            "progress": 1,
+            "stage": "loaded",
+            "estimatedSeconds": 0,
+            "currentWorkSeconds": 5.98,
+            "chamber": 1,
+            "stored": 41,
+            "burstShots": 0,
+            "fatigueSeconds": 0,
+            "shockSeconds": 0
+          },
+          "ammunition": {
+            "managed": true,
+            "loadedAmmoId": "M829A2",
+            "preference": "auto",
+            "supported": [
+              "M829A2",
+              "M829A1",
+              "M830"
+            ],
+            "total": 42,
+            "totals": {
+              "M829A2": 18,
+              "M829A1": 12,
+              "M830": 12
+            },
+            "sections": {
+              "ready": {
+                "capacity": 17,
+                "total": 17,
+                "counts": {
+                  "M829A2": 7,
+                  "M829A1": 4,
+                  "M830": 6
+                }
+              },
+              "semiReady": {
+                "capacity": 18,
+                "total": 18,
+                "counts": {
+                  "M829A2": 8,
+                  "M829A1": 6,
+                  "M830": 4
+                }
+              },
+              "reserve": {
+                "capacity": 6,
+                "total": 6,
+                "counts": {
+                  "M829A2": 2,
+                  "M829A1": 2,
+                  "M830": 2
+                }
+              }
+            },
+            "task": null,
+            "engageable": true,
+            "incident": {
+              "active": false,
+              "safetyUntil": 0,
+              "remaining": 0,
+              "last": null,
+              "history": [],
+              "lostTotals": {
+                "M829A2": 0,
+                "M829A1": 0,
+                "M830": 0
+              }
+            }
+          },
+          "aimPenalty": {
+            "active": false,
+            "aimRateMultiplier": 1,
+            "errorSigmaMultiplier": 1
+          },
+          "faults": {
+            "fireControl": {
+              "active": false,
+              "remaining": 0
+            },
+            "commander": {
+              "active": false,
+              "remaining": 0
+            },
+            "gunner": {
+              "active": false,
+              "remaining": 0
+            }
+          },
+          "inFlight": [],
+          "breakdown": null,
+          "shotCount": 0,
+          "lastShot": null
+        },
+        "shots": [],
+        "effects": [],
+        "effectStats": {
+          "ready": true,
+          "error": false,
+          "particles": 0,
+          "coreParticles": 0,
+          "auxParticles": 0,
+          "byKind": {},
+          "particleLimit": 384,
+          "seen": 0,
+          "seenLimit": 1024,
+          "pendingFlightLinks": 0,
+          "maxParticles": 0,
+          "dropped": 0,
+          "droppedCore": 0,
+          "droppedAux": 0,
+          "linkedFlights": 0,
+          "unlinkedImpacts": 0,
+          "lastFlightErrorM": null
+        }
+      }
+    },
+    "flow": {
+      "detected": 40.44999999999984,
+      "identified": 46.94999999999947,
+      "designated": 47.49999999999944,
+      "acquired": 53.899999999999075
+    },
+    "paused": {
+      "time": 60.19999999999872,
+      "turret": -3.141592653589794,
+      "commander": -2.08788145834137,
+      "events": 18
+    },
+    "memory": {
+      "key": "접촉-uw35ih",
+      "x": 950,
+      "y": 2750,
+      "turret": -3.141592653589794,
+      "commander": -2.08788145834137
+    },
+    "hidden": {
+      "world": {
+        "x": 3900,
+        "y": 3900,
+        "turret": -2.8109137650133142,
+        "commander": -1.8841323710529543
+      },
+      "contact": {
+        "key": "접촉-uw35ih",
+        "x": 950,
+        "y": 2750,
+        "heading": 0,
+        "turret": -3.141592653589794,
+        "commander": -2.08788145834137,
+        "artId": "T80U",
+        "model": {
+          "hullLength": 7.012,
+          "width": 3.6102974828375283,
+          "turretLength": 3.65,
+          "turretWidth": 3.47,
+          "barrelTip": 6.073322654462242,
+          "turretOrigin": 0,
+          "turretPivot": [
+            -0.02406864988558352,
+            0
+          ],
+          "turretRingDiameter": 2.05,
+          "muzzleLocal": [
+            6.073322654462242,
+            0
+          ]
+        },
+        "team": "red",
+        "identified": true,
+        "current": false,
+        "memory": true,
+        "observedAt": 60.19999999999872,
+        "age": 1.1999999999999318,
+        "label": "T-80U 관측 차량",
+        "name": "T-80U 관측 차량",
+        "type": "T-80U",
+        "combat": {
+          "hp": 1400,
+          "maxHp": 1400,
+          "status": "alive"
+        }
+      }
+    },
+    "reset": {
+      "scenario": "t80u-observation",
+      "time": 0,
+      "contacts": 0,
+      "events": 0,
+      "angles": [
+        0,
+        0,
+        0
+      ],
+      "states": [
+        true,
+        null,
+        null
+      ]
+    },
+    "armor": [
+      {
+        "angles": [
+          3.141592653589793,
+          2.55,
+          2.55
+        ]
+      },
+      {
+        "angles": [
+          -1.5707963267948966,
+          -0.35,
+          -0.35
+        ]
+      },
+      {
+        "angles": [
+          0,
+          0.75,
+          0.75
+        ]
+      }
+    ]
+  },
+  "viewports": [
+    {
+      "name": "mobile-dpr1",
+      "target": {
+        "x": 950,
+        "y": 2750,
+        "key": "접촉-uw35ih"
+      },
+      "dpr": 1,
+      "canvas": [
+        558,
+        322
+      ],
+      "css": [
+        558,
+        322
+      ],
+      "overflow": 0,
+      "select": {
+        "left": 604,
+        "right": 698.5
+      },
+      "side": {
+        "left": 558,
+        "right": 844
+      },
+      "portrait": false,
+      "scenario": "t80u-observation",
+      "enemyInternals": false
+    },
+    {
+      "name": "mobile-dpr2",
+      "target": {
+        "x": 950,
+        "y": 2750,
+        "key": "접촉-uw35ih"
+      },
+      "dpr": 2,
+      "canvas": [
+        1116,
+        644
+      ],
+      "css": [
+        558,
+        322
+      ],
+      "overflow": 0,
+      "select": {
+        "left": 604,
+        "right": 698.5
+      },
+      "side": {
+        "left": 558,
+        "right": 844
+      },
+      "portrait": false,
+      "scenario": "t80u-observation",
+      "enemyInternals": false
+    },
+    {
+      "name": "portrait",
+      "target": null,
+      "dpr": 2,
+      "canvas": [
+        291,
+        1534
+      ],
+      "css": [
+        145.625,
+        767
+      ],
+      "overflow": 0,
+      "select": {
+        "left": 198.625,
+        "right": 415.625
+      },
+      "side": {
+        "left": 145.625,
+        "right": 423.625
+      },
+      "portrait": true,
+      "scenario": "t80u-observation",
+      "enemyInternals": false
+    }
+  ]
+}

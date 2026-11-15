@@ -429,7 +429,7 @@
   }
   $('reset').onclick=()=>resetScenario();
   $('scenarioSelect').value=scenarioId;
-  $('scenarioSelect').onchange=()=>resetScenario($('scenarioSelect').value,$('scenarioSelect').value==='t80u-armor'?'T-80U 방호시험 시나리오':'기본 전투 시나리오');
+  $('scenarioSelect').onchange=()=>{const next=$('scenarioSelect').value;resetScenario(next,next==='t80u-armor'?'T-80U 방호시험 시나리오':next==='t80u-observation'?'T-80U 관측시험 시나리오':'기본 전투 시나리오');};
   window.addEventListener('keydown',e=>{
     if(portraitBlocked){e.preventDefault();return;}
     if(e.code==='Escape'){if(lookPicking)setLookPicking(false);else setGuardPopup(false);return;}
@@ -820,7 +820,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP21',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP22',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       scenarioId,time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

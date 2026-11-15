@@ -128,7 +128,9 @@ const TacticalObservation=(()=>{
         o.scanPhase??=hash(u.id+':'+ch,seed)*TAU;
         const scan=eq.scan,aim=point?Math.atan2(point.y-u.y,point.x-u.x):u.heading+scan.amplitude*Math.sin(now*TAU/scan.period+o.scanPhase);
         const modifiers=u.hitReactionModifiers||{},reactionRate=ch==='gunner'?(modifiers.turretRate??1):(modifiers.commanderRate??1);
-        const maxRate=ch==='gunner'?Math.min(p.mobility.turretRate,eq.rate):eq.rate;
+        // Observation-only vehicles own traverse ceilings in their sensor
+        // profile. Full vehicles retain the legacy mobility ceiling too.
+        const maxRate=ch==='gunner'?Math.min(p.mobility?.turretRate??eq.rate,eq.rate):eq.rate;
         const hullRate=o.lastHeading===undefined?0:Math.abs(diff(u.heading,o.lastHeading))/dt;
         // Apply a crew/equipment rate factor once to the actual commanded
         // angular velocity, not merely to the wider equipment ceiling. This
@@ -241,13 +243,23 @@ const TacticalObservation=(()=>{
         return;
       }
       // Refresh pending candidates only from this commander's actual samples.
+      const commanderDesignation=sensors.commanderDesignation??sensors.hunterKiller;
+      const handoffDelay=t.commanderHandoffSeconds??0;
       const beforePending=s.pending.length;
-      s.pending=s.pending.filter(v=>now-v.observedAt<=t.memorySeconds&&v.target!==d?.target&&!s.contacts[v.target]?.wreckConfirmed);
+      s.pending=s.pending.filter(v=>{
+        const c=s.contacts[v.target];
+        if(now-v.observedAt>t.memorySeconds||v.target===d?.target||c?.wreckConfirmed)return false;
+        // A configured human handoff delay is continuous own commander
+        // eligibility, not contact memory. Legacy zero-delay M1 queues retain
+        // their original memory behavior exactly.
+        return !handoffDelay||!!(c?.current&&c.identified&&c.enemyConfirmed&&c.sources.commander.current);
+      });
       if(s.pending.length!==beforePending)s.candidateRevision++;
       let pendingOrderChanged=false;
-      if(sensors.hunterKiller&&sensors.commander.enabled){
+      if(commanderDesignation&&sensors.commander.enabled){
         for(const[id,c]of Object.entries(s.contacts))if(c.current&&c.identified&&c.enemyConfirmed&&c.commanderIdentifiedAt!==undefined&&!c.wreckConfirmed&&c.sources.commander.current&&id!==d?.target){
-          const entry={target:id,key:c.key,pose:copyPose(c.pose),observedAt:c.lastSeen,discoveredAt:c.commanderDiscoveredAt??c.sources.commander.firstSeen??c.lastSeen,identifiedAt:c.commanderIdentifiedAt},index=s.pending.findIndex(v=>v.target===id);
+          const index=s.pending.findIndex(v=>v.target===id),old=index>=0?s.pending[index]:null;
+          const entry={target:id,key:c.key,pose:copyPose(c.pose),observedAt:c.lastSeen,discoveredAt:c.commanderDiscoveredAt??c.sources.commander.firstSeen??c.lastSeen,identifiedAt:c.commanderIdentifiedAt,eligibleSince:old?.eligibleSince??now};
           if(index>=0)s.pending[index]=entry;
           else if((s.commander.cooldowns[id]??0)<=now){
             s.pending.push(entry);s.candidateRevision++;pendingOrderChanged=true;emit(u,'candidate-queued',c,{channel:'commander',discoveredAt:entry.discoveredAt,identifiedAt:entry.identifiedAt});
@@ -257,8 +269,8 @@ const TacticalObservation=(()=>{
         if(pendingOrderChanged)s.pending.sort((a,b)=>a.discoveredAt-b.discoveredAt||(a.key<b.key?-1:a.key>b.key?1:0));
       }
       if(d||!sensors.gunner.enabled||now<s.autoAssignAfter)return;
-      if(sensors.hunterKiller&&sensors.commander.enabled){
-        const next=s.pending.find(v=>now-v.observedAt<=t.designationStale&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
+      if(commanderDesignation&&sensors.commander.enabled){
+        const next=s.pending.find(v=>now-v.observedAt<=t.designationStale&&now-(v.eligibleSince??now)>=handoffDelay&&!s.contacts[v.target]?.wreckConfirmed&&(s.gunner.cooldowns[v.target]??0)<=now);
         if(next){designate(u,next.target,'commander');return;}
       }
       // Own gunner identification/recognition is a separate route, not a fake

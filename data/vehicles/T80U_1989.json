@@ -2,7 +2,7 @@
   "profile": {
     "id": "T80U_1989",
     "name": "T-80U",
-    "variant": "T-80U (1989 장갑 시험 표적)",
+    "variant": "T-80U (1989 관측·장갑 시험 구성)",
     "crew": 3,
     "crewRoles": [
       "commander",
@@ -13,7 +13,7 @@
     "capabilities": {
       "target": true,
       "mobility": false,
-      "observation": false,
+      "observation": true,
       "fire": false,
       "ai": false
     },
@@ -42,6 +42,68 @@
         "hullBottom": 0.45,
         "hullTop": 1.55,
         "turretTop": 2.2
+      }
+    },
+    "sensors": {
+      "name": "PNK-4S / TKN-4S + 1G46",
+      "eyeHeight": 2.5,
+      "observationLimit": 2000,
+      "targetReferenceHeight": 1.5,
+      "hunterKiller": false,
+      "commanderDesignation": true,
+      "ambient": {
+        "enabled": true,
+        "range": 200,
+        "fov": 6.283185307179586,
+        "eyeHeight": 2.5
+      },
+      "commander": {
+        "enabled": true,
+        "independent": true,
+        "range": 2000,
+        "fov": 1.5707963267948966,
+        "rate": 0.6981317007977318,
+        "eyeHeight": 2.5,
+        "scan": {
+          "amplitude": 3.141592653589793,
+          "period": 90,
+          "rate": 0.20943951023931953
+        }
+      },
+      "gunner": {
+        "enabled": true,
+        "range": 2000,
+        "fov": 0.5235987755982988,
+        "rate": 0.41887902047863906,
+        "eyeHeight": 2.15,
+        "scan": {
+          "amplitude": 0.5235987755982988,
+          "period": 24,
+          "rate": 0.13962634015954636
+        }
+      },
+      "tuning": {
+        "queryPeriod": 0.1,
+        "geometryMaxAge": 0.5,
+        "detectThreshold": [
+          0.35,
+          1.1
+        ],
+        "identifyThreshold": [
+          1.4,
+          3
+        ],
+        "evidenceHalfLife": 8,
+        "memorySeconds": 30,
+        "knowledgeSeconds": 120,
+        "lossGrace": 1.2,
+        "focusSeconds": 2,
+        "focusLimit": 8,
+        "revisitSeconds": 12,
+        "designationSeconds": 18,
+        "designationStale": 6,
+        "acquireSeconds": 0.4,
+        "commanderHandoffSeconds": 0.5
       }
     },
     "exposure": {
@@ -140,16 +202,19 @@
       }
     }
   },
-  "scope": "WIP21 target-only armour trial; no 125 mm weapon, autoloader, mobility, sensors, AI, crew damage, faults or ammunition incidents.",
+  "scope": "WIP22 observation-only stationary T-80U plus WIP21 armour target data; no 125 mm weapon, autoloader, mobility, fire/engagement AI, crew damage, faults or ammunition incidents.",
   "sources": [
+    "docs/tasks/TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md",
+    "data/vehicles/references/t80u/observation_reference_notes.md",
     "docs/tasks/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md",
     "docs/T80U_ART_STUDY.md",
     "docs/T80U_ART_CORRECTION.md",
     "data/vehicles/references/t80u/proportion_review.json"
   ],
   "limits": [
+    "24 deg/s turret and 40 deg/s cupola ceilings are adopted from the cited secondary source, not independently verified against an original manual or physical vehicle",
+    "Ranges, FOVs, optical heights, scan laws and handoff/acquisition times are adjustable daytime game-trial values, not measured sensor performance",
     "Armour and HP are abstract 1989 game values, not measured plate thickness",
-    "Presented heights, exposure samples, turret plan dimensions and collision clearance are adjustable target-trial approximations",
     "Kontakt-5 is a fixed non-consumable one-roll coverage modifier with no explosion or block damage"
   ]
 }

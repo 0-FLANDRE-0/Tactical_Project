@@ -123,18 +123,30 @@ const VEHICLE_PROFILES=(()=>{
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.ricochet=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nonPenetration=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nearNonPenetration=zero();
-  // WIP21 fixed armour-test target. Visual dimensions and pivots are derived
+  // WIP21 fixed armour-test target, extended in WIP22 with an observation-only
+  // operating profile. Scenario capability masks keep the original armour
+  // targets inert. Visual dimensions and pivots are derived
   // from the corrected T80UTopView source with one uniform scale (7.012/874).
-  // It intentionally owns no mobility, sensors, weapon, ammunition, AI, crew
-  // reaction or temporary-fault configuration.
+  // It intentionally owns no mobility, weapon, ammunition, AI, crew reaction
+  // or temporary-fault configuration.
   const T80U_SCALE=7.012/874;
   const T80U_1989={
-    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 장갑 시험 표적)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
-    capabilities:{target:true,mobility:false,observation:false,fire:false,ai:false},
+    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 관측·장갑 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
+    capabilities:{target:true,mobility:false,observation:true,fire:false,ai:false},
     model:{hullLength:7.012,width:450*T80U_SCALE,overallLength:(807-50)*T80U_SCALE+7.012/2,roofHeight:2.20,groundClearance:.45,
       barrelTip:(807-50)*T80U_SCALE,turretLength:3.65,turretWidth:3.47,turretOrigin:0,
       turretPivot:[(807-810)*T80U_SCALE,0],turretRingDiameter:2.05,muzzleLocal:[(807-50)*T80U_SCALE,0]},
     target:{presented:{hullBottom:.45,hullTop:1.55,turretTop:2.20}},
+    // 24/40 deg/s are adopted secondary-source ceilings. Ranges, FOVs,
+    // scan laws and procedure times are explicit WIP22 game-trial values.
+    sensors:{name:'PNK-4S / TKN-4S + 1G46',eyeHeight:2.50,observationLimit:2000,targetReferenceHeight:1.5,
+      hunterKiller:false,commanderDesignation:true,
+      ambient:{enabled:true,range:200,fov:Math.PI*2,eyeHeight:2.50},
+      commander:{enabled:true,independent:true,range:2000,fov:Math.PI/2,rate:40*Math.PI/180,eyeHeight:2.50,scan:{amplitude:Math.PI,period:90,rate:12*Math.PI/180}},
+      gunner:{enabled:true,range:2000,fov:Math.PI/6,rate:24*Math.PI/180,eyeHeight:2.15,scan:{amplitude:Math.PI/6,period:24,rate:8*Math.PI/180}},
+      tuning:{queryPeriod:.1,geometryMaxAge:.5,detectThreshold:[.35,1.1],identifyThreshold:[1.4,3],
+        evidenceHalfLife:8,memorySeconds:30,knowledgeSeconds:120,lossGrace:1.2,
+        focusSeconds:2,focusLimit:8,revisitSeconds:12,designationSeconds:18,designationStale:6,acquireSeconds:.4,commanderHandoffSeconds:.5}},
     exposure:{hullAlong:[-2.45,0,2.45],hullHeights:[.75,1.35],turretAlong:[-.85,0,.85],turretHeight:2.05},
     navigation:{clearanceMargin:.25},
     combat:{maxHp:1400,armor:{
@@ -159,26 +171,35 @@ const VEHICLE_PROFILES=(()=>{
       const caps=p.capabilities;
       if(!caps||!['target','mobility','observation','fire','ai'].every(k=>typeof caps[k]==='boolean')||caps.target!==true)throw Error('차량 기능 선언 오류: '+id);
       for(const section of ['model','navigation','exposure'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
-      const operational=caps.mobility||caps.observation||caps.fire||caps.ai;
-      if(!operational){
-        if(caps.mobility||caps.observation||caps.fire||caps.ai)throw Error('고정 표적 기능 오류: '+id);
-        if(p.mobility||p.sensors||p.fireControl||p.weapons||p.ammunition)throw Error('고정 표적 운용 데이터 금지: '+id);
-        if(p.crewRoles?.includes('loader'))throw Error('고정 표적 장전수 상태 금지: '+id);
-        const band=p.target?.presented;
-        if(!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('고정 표적 제시 높이 오류: '+id);
-      }else{
-        if(![caps.mobility,caps.observation,caps.fire,caps.ai].every(Boolean))throw Error('운용 차량 기능 조합 오류: '+id);
-        for(const section of ['mobility','sensors','fireControl','weapons'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
-      }
+      const fullOperational=caps.mobility||caps.fire||caps.ai;
+      if(fullOperational&&![caps.mobility,caps.observation,caps.fire,caps.ai].every(Boolean))throw Error('운용 차량 기능 조합 오류: '+id);
+      if(caps.ai&&(!caps.mobility||!caps.observation||!caps.fire))throw Error('AI 기능 조합 오류: '+id);
+      if(caps.fire&&!caps.observation)throw Error('발사 관측 기능 오류: '+id);
+      if(caps.mobility!==!!p.mobility)throw Error('기동 기능 선언 오류: '+id);
+      if(caps.observation!==!!p.sensors)throw Error('관측 기능 선언 오류: '+id);
+      if(caps.fire!==!!(p.fireControl&&p.weapons)||(!caps.fire&&(p.fireControl||p.weapons||p.ammunition)))throw Error('발사 기능 선언 오류: '+id);
+      if(!caps.fire&&p.crewRoles?.includes('loader'))throw Error('비발사 차량 장전수 상태 금지: '+id);
+      const targetBand=p.target?.presented||p.fireControl?.presented;
+      if(!targetBand||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(targetBand[k]))||!(targetBand.hullBottom<targetBand.hullTop&&targetBand.hullTop<targetBand.turretTop))throw Error('표적 제시 높이 오류: '+id);
       if(!Number.isFinite(p.navigation.radius)||p.navigation.radius<=0)throw Error('차량 충돌 반경 오류: '+id);
       for(const field of ['turretPivot','muzzleLocal'])if(!Array.isArray(p.model[field])||p.model[field].length!==2||!p.model[field].every(Number.isFinite))throw Error('차량 좌표 값 오류: '+id+'.'+field);
       if(!Number.isFinite(p.model.turretOrigin)||!Number.isFinite(p.model.turretRingDiameter)||!(p.model.turretRingDiameter>0))throw Error('포탑 기준 값 오류: '+id);
-      if(!operational){
-        if(!p.combat)throw Error('고정 표적 전투 데이터 누락: '+id);
+      if(p.combat){
         if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
         for(const zone of zones)for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
-        const era=p.combat.era;if(!era||era.comparison!=='roll<coverage'||era.consumable!==false||Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류: '+id);
-        for(const zone of zones){const row=era.zones[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+id+'.'+zone);}
+        const era=p.combat.era;if(era){if(era.comparison!=='roll<coverage'||era.consumable!==false||Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류: '+id);for(const zone of zones){const row=era.zones[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+id+'.'+zone);}}
+      }
+      if(caps.observation){
+        const s=p.sensors;
+        if(typeof s.hunterKiller!=='boolean'||(s.commanderDesignation!==undefined&&typeof s.commanderDesignation!=='boolean')||![s.eyeHeight,s.observationLimit,s.targetReferenceHeight].every(v=>Number.isFinite(v)&&v>0))throw Error('관측 장비 값 오류: '+id);
+        const validateChannel=(ch,needsTraverse)=>{const e=s[ch];if(!e||typeof e.enabled!=='boolean'||!Number.isFinite(e.range)||e.range<=0||!Number.isFinite(e.fov)||e.fov<=0||e.fov>Math.PI*2)throw Error('관측 채널 값 오류: '+id+'.'+ch);if(!Number.isFinite(e.eyeHeight)||e.eyeHeight<=0)throw Error('관측 높이 값 오류: '+id+'.'+ch);if(needsTraverse&&(!Number.isFinite(e.rate)||e.rate<=0||!e.scan||!Number.isFinite(e.scan.amplitude)||e.scan.amplitude<0||e.scan.amplitude>Math.PI||!Number.isFinite(e.scan.period)||e.scan.period<=0||!Number.isFinite(e.scan.rate)||e.scan.rate<=0||e.scan.rate>e.rate))throw Error('관측 선회/탐색 값 오류: '+id+'.'+ch);};
+        validateChannel('ambient',false);validateChannel('commander',true);validateChannel('gunner',true);
+        if(typeof s.commander.independent!=='boolean'||s.observationLimit<Math.max(s.ambient.range,s.commander.range,s.gunner.range))throw Error('관측 범위 오류: '+id);
+        const t=s.tuning,positive=['queryPeriod','geometryMaxAge','evidenceHalfLife','memorySeconds','knowledgeSeconds','lossGrace','focusSeconds','focusLimit','revisitSeconds','designationSeconds','designationStale','acquireSeconds'];
+        if(!t||!positive.every(k=>Number.isFinite(t[k])&&t[k]>0)||!['detectThreshold','identifyThreshold'].every(k=>Array.isArray(t[k])&&t[k].length===2&&t[k].every(v=>Number.isFinite(v)&&v>=0)&&t[k][1]>=t[k][0])||(t.commanderHandoffSeconds!==undefined&&(!Number.isFinite(t.commanderHandoffSeconds)||t.commanderHandoffSeconds<0)))throw Error('관측 절차 값 오류: '+id);
+      }
+      if(!fullOperational){
+        if(!p.combat)throw Error('고정 표적 전투 데이터 누락: '+id);
         profiles[id]=freeze(p);continue;
       }
       const pt=p.mobility.powertrain;

@@ -2,8 +2,9 @@
 
 작업 AI에게 전달한 지시서와 기준표 스크립트의 원본 사본 및 목차. WIP11 지시서는 `docs/`의 원본 사본을 가리킨다. 구현 결과는 각 PR 브랜치의 `docs/` 구현 문서와 `tests/releases/WIP*-validation.json`을 본다.
 
-| 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-14) |
+| 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-15) |
 |---|---|---|---|---|
+| WIP22 T-80U(1989) 자체 관측·인계·선회 | [원본 지시서](TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md) | — | `feat/wip22-t80u-observation-traverse` | 구현·검증 완료 · PR 검토/병합 대기 · 125mm 무장/기동 제외 |
 | WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [원본 지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | — | `feat/wip21-t80u-model-armor` | 작성자 구현·검증 완료 · PR 검토 대기 · ERA 방호만 적용, 소모/손상 없음 |
 | WIP20 M1A2(1998) 전용 탄약고 사고 | [원본 지시서](TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) | — | `feat/wip20-ammunition-incidents` | 최종 3633952 독립 재검증 통과 · main 병합 (2026-11-14) · M1A2_1998 전용 시험 설정 |
 | WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [원본 지시서](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | — | `feat/wip19-ammunition-command-panel` | 최종 5bf1bb5 독립 재검증 통과 · main 병합 (2026-11-14) · M1A2_1998 전용 시험 설정 |

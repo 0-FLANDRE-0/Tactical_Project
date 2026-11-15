@@ -1,0 +1,470 @@
+{
+  "version": "0.4-WIP22",
+  "date": "2026-11-15",
+  "node": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "mapHash": "ee48cd21b10d0911c5a401d6ba5388e9e28cb31773aedde134f8869af8954801",
+  "baselinePath": "/workspace/Tactical_Project_WIP21/dist/index.html",
+  "scope": {
+    "playable": "CPU time per 0.05s fixed step; actual 4km Rasdorf map; hold fire; 5-unit default or 4-unit WIP21 armour scenario; 5s warmup + 30s measured; three fresh seeded trials; no rendering.",
+    "synthetic": "Current core only; actual map; one disabled stationary M1 target plus 50/100 observation-only T-80U in the stated dense rectangle; distributed 10Hz observation; 20s measured after 10s search or 30s tracking warmup; three trials; no rendering."
+  },
+  "summary": {
+    "baselineDefault": {
+      "medianMs": 0.3593,
+      "p95Ms": 0.631,
+      "maxMs": 10.6361,
+      "queries": [
+        1750,
+        1750,
+        1750
+      ],
+      "rays": [
+        23595,
+        23645,
+        25179
+      ],
+      "stateHashes": [
+        "7465f6766d8321b130d362b1d064cc585792f733459434808edf560b429981a0",
+        "fc64b90380450d812c875ad9aa26c65aa421b423b52cb3754a1b14ae6f651bf8",
+        "ee28d00e73cf691a727c881c5204d6f5fa54c3b2abe629c875f97a9e567f9282"
+      ],
+      "acquired": []
+    },
+    "currentDefault": {
+      "medianMs": 0.3618,
+      "p95Ms": 0.615,
+      "maxMs": 2.7059,
+      "queries": [
+        1750,
+        1750,
+        1750
+      ],
+      "rays": [
+        23595,
+        23645,
+        25179
+      ],
+      "stateHashes": [
+        "7465f6766d8321b130d362b1d064cc585792f733459434808edf560b429981a0",
+        "fc64b90380450d812c875ad9aa26c65aa421b423b52cb3754a1b14ae6f651bf8",
+        "ee28d00e73cf691a727c881c5204d6f5fa54c3b2abe629c875f97a9e567f9282"
+      ],
+      "acquired": []
+    },
+    "baselineArmor": {
+      "medianMs": 0.0286,
+      "p95Ms": 0.0731,
+      "maxMs": 0.6171,
+      "queries": [
+        350,
+        350,
+        350
+      ],
+      "rays": [
+        1305,
+        1296,
+        1314
+      ],
+      "stateHashes": [
+        "d487cc2ede954dd5aad4c7facbabcf8c14a92a7b4f3bbd85597420be06a00b2c",
+        "71295d1659952ca8d7cfa5924843ab039f101d70ed74259f2172d41da08f4c4b",
+        "8d1df69efe9b53c491b50063a7d846234732fae25dd20027b51ac420d7aab4d0"
+      ],
+      "acquired": []
+    },
+    "currentArmor": {
+      "medianMs": 0.0252,
+      "p95Ms": 0.094,
+      "maxMs": 0.6619,
+      "queries": [
+        350,
+        350,
+        350
+      ],
+      "rays": [
+        1305,
+        1296,
+        1314
+      ],
+      "stateHashes": [
+        "d487cc2ede954dd5aad4c7facbabcf8c14a92a7b4f3bbd85597420be06a00b2c",
+        "71295d1659952ca8d7cfa5924843ab039f101d70ed74259f2172d41da08f4c4b",
+        "8d1df69efe9b53c491b50063a7d846234732fae25dd20027b51ac420d7aab4d0"
+      ],
+      "acquired": []
+    },
+    "search50": {
+      "medianMs": 0.3635,
+      "p95Ms": 0.7146,
+      "maxMs": 3.7064,
+      "queries": [
+        10000,
+        10000,
+        10000
+      ],
+      "rays": [
+        17739,
+        18072,
+        17721
+      ],
+      "stateHashes": [],
+      "acquired": [
+        32,
+        32,
+        32
+      ]
+    },
+    "search100": {
+      "medianMs": 0.6707,
+      "p95Ms": 1.223,
+      "maxMs": 17.8411,
+      "queries": [
+        20000,
+        20000,
+        20000
+      ],
+      "rays": [
+        31401,
+        32004,
+        31662
+      ],
+      "stateHashes": [],
+      "acquired": [
+        48,
+        48,
+        48
+      ]
+    },
+    "tracking50": {
+      "medianMs": 0.3146,
+      "p95Ms": 1.2168,
+      "maxMs": 4.0999,
+      "queries": [
+        10000,
+        10000,
+        10000
+      ],
+      "rays": [
+        30600,
+        30600,
+        30600
+      ],
+      "stateHashes": [],
+      "acquired": [
+        32,
+        32,
+        32
+      ]
+    },
+    "tracking100": {
+      "medianMs": 0.6126,
+      "p95Ms": 2.0316,
+      "maxMs": 4.5975,
+      "queries": [
+        20000,
+        20000,
+        20000
+      ],
+      "rays": [
+        61200,
+        61200,
+        61200
+      ],
+      "stateHashes": [],
+      "acquired": [
+        48,
+        48,
+        48
+      ]
+    }
+  },
+  "runs": {
+    "baseline": {
+      "default": [
+        {
+          "medianMs": 0.3593,
+          "p95Ms": 1.0427,
+          "maxMs": 10.6361,
+          "queries": 1750,
+          "rays": 23595,
+          "stateHash": "7465f6766d8321b130d362b1d064cc585792f733459434808edf560b429981a0"
+        },
+        {
+          "medianMs": 0.3398,
+          "p95Ms": 0.6285,
+          "maxMs": 2.6094,
+          "queries": 1750,
+          "rays": 23645,
+          "stateHash": "fc64b90380450d812c875ad9aa26c65aa421b423b52cb3754a1b14ae6f651bf8"
+        },
+        {
+          "medianMs": 0.3759,
+          "p95Ms": 0.631,
+          "maxMs": 2.1265,
+          "queries": 1750,
+          "rays": 25179,
+          "stateHash": "ee28d00e73cf691a727c881c5204d6f5fa54c3b2abe629c875f97a9e567f9282"
+        }
+      ],
+      "armor": [
+        {
+          "medianMs": 0.0399,
+          "p95Ms": 0.0926,
+          "maxMs": 0.5141,
+          "queries": 350,
+          "rays": 1305,
+          "stateHash": "d487cc2ede954dd5aad4c7facbabcf8c14a92a7b4f3bbd85597420be06a00b2c"
+        },
+        {
+          "medianMs": 0.0286,
+          "p95Ms": 0.0731,
+          "maxMs": 0.2101,
+          "queries": 350,
+          "rays": 1296,
+          "stateHash": "71295d1659952ca8d7cfa5924843ab039f101d70ed74259f2172d41da08f4c4b"
+        },
+        {
+          "medianMs": 0.0243,
+          "p95Ms": 0.0663,
+          "maxMs": 0.6171,
+          "queries": 350,
+          "rays": 1314,
+          "stateHash": "8d1df69efe9b53c491b50063a7d846234732fae25dd20027b51ac420d7aab4d0"
+        }
+      ]
+    },
+    "current": {
+      "default": [
+        {
+          "medianMs": 0.3618,
+          "p95Ms": 0.8998,
+          "maxMs": 2.6106,
+          "queries": 1750,
+          "rays": 23595,
+          "stateHash": "7465f6766d8321b130d362b1d064cc585792f733459434808edf560b429981a0"
+        },
+        {
+          "medianMs": 0.3214,
+          "p95Ms": 0.5956,
+          "maxMs": 2.7059,
+          "queries": 1750,
+          "rays": 23645,
+          "stateHash": "fc64b90380450d812c875ad9aa26c65aa421b423b52cb3754a1b14ae6f651bf8"
+        },
+        {
+          "medianMs": 0.3759,
+          "p95Ms": 0.615,
+          "maxMs": 2.138,
+          "queries": 1750,
+          "rays": 25179,
+          "stateHash": "ee28d00e73cf691a727c881c5204d6f5fa54c3b2abe629c875f97a9e567f9282"
+        }
+      ],
+      "armor": [
+        {
+          "medianMs": 0.0336,
+          "p95Ms": 0.1002,
+          "maxMs": 0.6619,
+          "queries": 350,
+          "rays": 1305,
+          "stateHash": "d487cc2ede954dd5aad4c7facbabcf8c14a92a7b4f3bbd85597420be06a00b2c"
+        },
+        {
+          "medianMs": 0.0252,
+          "p95Ms": 0.0667,
+          "maxMs": 0.2615,
+          "queries": 350,
+          "rays": 1296,
+          "stateHash": "71295d1659952ca8d7cfa5924843ab039f101d70ed74259f2172d41da08f4c4b"
+        },
+        {
+          "medianMs": 0.0251,
+          "p95Ms": 0.094,
+          "maxMs": 0.4743,
+          "queries": 350,
+          "rays": 1314,
+          "stateHash": "8d1df69efe9b53c491b50063a7d846234732fae25dd20027b51ac420d7aab4d0"
+        }
+      ]
+    },
+    "synthetic": {
+      "search50": [
+        {
+          "medianMs": 0.5328,
+          "p95Ms": 1.1117,
+          "maxMs": 3.7064,
+          "observers": 50,
+          "candidates": 1,
+          "density": "50 observers in 60x30m",
+          "warmupSeconds": 10,
+          "measuredSeconds": 20,
+          "queryDelta": 10000,
+          "rayDelta": 17739,
+          "acquired": 32,
+          "currentContacts": 33
+        },
+        {
+          "medianMs": 0.3513,
+          "p95Ms": 0.6889,
+          "maxMs": 1.5286,
+          "observers": 50,
+          "candidates": 1,
+          "density": "50 observers in 60x30m",
+          "warmupSeconds": 10,
+          "measuredSeconds": 20,
+          "queryDelta": 10000,
+          "rayDelta": 18072,
+          "acquired": 32,
+          "currentContacts": 34
+        },
+        {
+          "medianMs": 0.3635,
+          "p95Ms": 0.7146,
+          "maxMs": 1.5744,
+          "observers": 50,
+          "candidates": 1,
+          "density": "50 observers in 60x30m",
+          "warmupSeconds": 10,
+          "measuredSeconds": 20,
+          "queryDelta": 10000,
+          "rayDelta": 17721,
+          "acquired": 32,
+          "currentContacts": 33
+        }
+      ],
+      "search100": [
+        {
+          "medianMs": 0.6576,
+          "p95Ms": 1.162,
+          "maxMs": 1.7889,
+          "observers": 100,
+          "candidates": 1,
+          "density": "100 observers in 60x60m",
+          "warmupSeconds": 10,
+          "measuredSeconds": 20,
+          "queryDelta": 20000,
+          "rayDelta": 31401,
+          "acquired": 48,
+          "currentContacts": 49
+        },
+        {
+          "medianMs": 0.6945,
+          "p95Ms": 1.223,
+          "maxMs": 3.0429,
+          "observers": 100,
+          "candidates": 1,
+          "density": "100 observers in 60x60m",
+          "warmupSeconds": 10,
+          "measuredSeconds": 20,
+          "queryDelta": 20000,
+          "rayDelta": 32004,
+          "acquired": 48,
+          "currentContacts": 50
+        },
+        {
+          "medianMs": 0.6707,
+          "p95Ms": 1.272,
+          "maxMs": 17.8411,
+          "observers": 100,
+          "candidates": 1,
+          "density": "100 observers in 60x60m",
+          "warmupSeconds": 10,
+          "measuredSeconds": 20,
+          "queryDelta": 20000,
+          "rayDelta": 31662,
+          "acquired": 48,
+          "currentContacts": 49
+        }
+      ],
+      "tracking50": [
+        {
+          "medianMs": 0.3159,
+          "p95Ms": 1.2074,
+          "maxMs": 1.8347,
+          "observers": 50,
+          "candidates": 1,
+          "density": "50 observers in 60x30m",
+          "warmupSeconds": 30,
+          "measuredSeconds": 20,
+          "queryDelta": 10000,
+          "rayDelta": 30600,
+          "acquired": 32,
+          "currentContacts": 36
+        },
+        {
+          "medianMs": 0.3126,
+          "p95Ms": 1.2168,
+          "maxMs": 1.8067,
+          "observers": 50,
+          "candidates": 1,
+          "density": "50 observers in 60x30m",
+          "warmupSeconds": 30,
+          "measuredSeconds": 20,
+          "queryDelta": 10000,
+          "rayDelta": 30600,
+          "acquired": 32,
+          "currentContacts": 36
+        },
+        {
+          "medianMs": 0.3146,
+          "p95Ms": 1.3507,
+          "maxMs": 4.0999,
+          "observers": 50,
+          "candidates": 1,
+          "density": "50 observers in 60x30m",
+          "warmupSeconds": 30,
+          "measuredSeconds": 20,
+          "queryDelta": 10000,
+          "rayDelta": 30600,
+          "acquired": 32,
+          "currentContacts": 36
+        }
+      ],
+      "tracking100": [
+        {
+          "medianMs": 0.6126,
+          "p95Ms": 2.0313,
+          "maxMs": 4.5975,
+          "observers": 100,
+          "candidates": 1,
+          "density": "100 observers in 60x60m",
+          "warmupSeconds": 30,
+          "measuredSeconds": 20,
+          "queryDelta": 20000,
+          "rayDelta": 61200,
+          "acquired": 48,
+          "currentContacts": 55
+        },
+        {
+          "medianMs": 0.6288,
+          "p95Ms": 2.1467,
+          "maxMs": 2.6731,
+          "observers": 100,
+          "candidates": 1,
+          "density": "100 observers in 60x60m",
+          "warmupSeconds": 30,
+          "measuredSeconds": 20,
+          "queryDelta": 20000,
+          "rayDelta": 61200,
+          "acquired": 48,
+          "currentContacts": 55
+        },
+        {
+          "medianMs": 0.6115,
+          "p95Ms": 2.0316,
+          "maxMs": 2.5847,
+          "observers": 100,
+          "candidates": 1,
+          "density": "100 observers in 60x60m",
+          "warmupSeconds": 30,
+          "measuredSeconds": 20,
+          "queryDelta": 20000,
+          "rayDelta": 61200,
+          "acquired": 48,
+          "currentContacts": 55
+        }
+      ]
+    }
+  }
+}
