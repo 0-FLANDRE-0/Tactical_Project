@@ -15,7 +15,7 @@
 | 읽을 자료 | 용도 |
 |---|---|
 | [관측·선회 자료 노트](../../data/vehicles/references/t80u/observation_reference_notes.md) | 실제 확인한 BTVT/Tankograd의 장비·속도 설명과 초기 게임값 구분 |
-| [WIP21 구현](../T80U_MODEL_AND_ARMOR_WIP21.md), [독립 검토](../reviews/WIP21_MERGE_REVIEW_2026-11-15.md) | 정지 표적/발사 비활성·장갑·실제 도안 연결과 보존 대상 |
+| [WIP21 구현](../../docs/T80U_MODEL_AND_ARMOR_WIP21.md), [독립 검토](../../docs/reviews/WIP21_MERGE_REVIEW_2026-11-15.md) | 정지 표적/발사 비활성·장갑·실제 도안 연결과 보존 대상 |
 | [모델 프레임](../../data/vehicles/references/t80u/proportion_review.json), `src/art/t80u-topview.js`, `src/t80u-art-adapter.js` | 수정 형상과 차체·포탑·큐폴라 회전축/각도 단위 |
 | `src/vehicle-profiles.js`, `src/observation.js`, `src/sim-core.js` | 프로파일/능력, 관측·탐색·인계·포수 확보, 고정 틱과 공개 사본 |
 | `src/tactical-ai.js`, `src/fire-control.js`, `src/app.js`, `src/visibility-client.js` | 비활성 기능의 호출 차단, 기존 전투·표시·명령·Worker 초기화 유지 |

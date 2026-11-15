@@ -41,3 +41,5 @@ seed 7의 라스도르프 실제 지형 시나리오에서 M1A2는 T-80U 초기 
 - `tests/releases/WIP22-browser-performance.json`: 실제 Chromium 1440×900 DPR1의 시뮬레이션+캔버스+DOM 프레임 CPU를 기준/현재 기본·방호시험과 새 관측시험으로 분리한다. 헤드리스 서버 하드웨어의 CPU 시간이며 실기기 FPS·발열 증거가 아니다.
 
 실제 명령·수치·통과/미실행 내역과 배포물 체크섬은 [WIP22 릴리스 문서](../TACTICAL_RELEASE_WIP22.md)와 `tests/releases/WIP22-validation.json`에 있다.
+
+2026-11-15 독립 검토에서 관측 격파 자세에 전차장 방위를 추가해 잔해의 큐폴라가 마지막 방향을 보존하도록 수정했다. 실제 사격 회귀를 포함한 9개 코어 검사와 전체 379개 묶음을 재실행했다. [독립 검토 기록](reviews/WIP22_MERGE_REVIEW_2026-11-15.md).

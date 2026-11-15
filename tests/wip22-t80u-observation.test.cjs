@@ -87,3 +87,20 @@ test('WIP22 fixed-step results are deterministic across render batching and quer
  const state=s=>({units:s.units.map(u=>({x:u.x,y:u.y,heading:u.heading,turret:u.turret,commander:u.commander,observation:u.observation})),contacts:core.contacts(s),stats:core.observationStats(s)});
  assert.deepEqual(state(a),state(b));
 });
+
+
+test('WIP22 a real observed lethal impact freezes the commander independently from the turret',()=>{
+ const core=C(),s=core.createScenario(7,{scenarioId:'t80u-observation',recordFireEvents:true}),target=s.units.find(u=>u.team==='red'),blue=s.units.find(u=>u.team==='blue');
+ // Natural search and handoff. Only HP is lowered to keep the lethal fixture short.
+ for(let i=0;i<1200;i++)core.step(s,.05);
+ const contact=core.contacts(s).find(c=>c.current&&c.identified);assert(contact);assert(core.designate(s,blue,contact.key));target.combat.hp=1;
+ let shots=0;for(let i=0;i<4000&&target.combat.status!=='destroyed';i++){
+   if(core.fireStatus(s,blue,contact.key).canFire){assert(core.requestFire(s,blue,contact.key).ok);shots++;}
+   core.step(s,.05);
+ }
+ assert(shots>0);assert.equal(target.combat.status,'destroyed');assert(delta(target.commander,target.turret)>Math.PI/2,'fixture must distinguish the two headings');
+ const wreck=core.contacts(s).find(c=>c.wreck&&c.key===contact.key);assert(wreck);assert(delta(wreck.commander,target.commander)<1e-9);assert(delta(wreck.turret,target.turret)<1e-9);
+ const fixed=[wreck.commander,wreck.turret];for(let i=0;i<100;i++)core.step(s,.05);
+ const after=core.contacts(s).find(c=>c.key===contact.key);assert.deepEqual([after.commander,after.turret],fixed);
+ assert.equal(target.drive,undefined);assert.equal(target.fireControl,undefined);
+});

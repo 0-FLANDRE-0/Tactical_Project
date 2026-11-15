@@ -20,8 +20,8 @@
 | 명령/묶음 | 결과 |
 |---|---|
 | `node --check` 변경 JS 6개 | 6/6 통과 |
-| `node --test --test-concurrency=2 tests/*.test.cjs` | **378/378 통과**, 실제 Chromium 스크립 포함 |
-| `node --test tests/wip22-t80u-observation.test.cjs` | WIP22 코어 8/8 통과 (전체 묶음에 포함) |
+| `node --test --test-concurrency=2 tests/*.test.cjs` | **379/379 통과**, 실제 Chromium 스크립 포함 |
+| `node --test tests/wip22-t80u-observation.test.cjs` | WIP22 코어 9/9 통과 (전체 묶음에 포함) |
 | `node tests/wip22-browser.test.cjs` | WIP22 실제 Chromium 1/1 통과 (전체 묶음에 포함) |
 | `python3 -m unittest -v tests/terrain_readability_test.py` | 7/7 통과 |
 | `node scripts/benchmark_wip22_observation.cjs` | 완료, Node CPU/query/ray/상태 해시 기록 |
@@ -58,11 +58,11 @@ AMD EPYC 9V74, Node v24.22.1의 0.05초 고정 스텝 CPU이다. 각 값은 새 
 
 | 파일 | 바이트 | SHA-256 |
 |---|---:|---|
-| `Tactical_v0.4_WIP22.html` | 8,543,060 | `ba7831693f107d50aef83e87afba7298d466c997abfc09dc3b57453d8c438366` |
-| `dist/index.html` | 8,543,060 | `ba7831693f107d50aef83e87afba7298d466c997abfc09dc3b57453d8c438366` |
-| `Tactical_v0.4_WIP22.zip` | 1,694,685 | `536b6b35781dc5da382872f5dbcd63c1a7adc8820871907bed6c959cc41674ab` |
+| `Tactical_v0.4_WIP22.html` | 8,543,144 | `0144dc7c1e053b87fc628b06202a16c27e5592b722e89309132122f91ea6b62f` |
+| `dist/index.html` | 8,543,144 | `0144dc7c1e053b87fc628b06202a16c27e5592b722e89309132122f91ea6b62f` |
+| `Tactical_v0.4_WIP22.zip` | 1,694,704 | `24cb087b4005f7dc5f7361fe994a08396c12001d78b6a6ac3e6e91951a4ff5b3` |
 
-ZIP은 `Tactical_v0.4_WIP22.html` 한 파일만 포함한다. 압축 데이터는 1,694,539바이트, CRC-32는 `b680a4af`이며 압축 해제 바이트는 `dist/index.html`과 같다. 체크섬은 `SHA256SUMS_WIP22.txt`에 있다.
+ZIP은 `Tactical_v0.4_WIP22.html` 한 파일만 포함한다. 압축 데이터는 1,694,558바이트, CRC-32는 `a664360a`이며 압축 해제 바이트는 `dist/index.html`과 같다. 체크섬은 `SHA256SUMS_WIP22.txt`에 있다.
 
 검토용 직접 ZIP 다운로드 URL은 브랜치 push 후 다음과 같다.
 
@@ -71,3 +71,9 @@ ZIP은 `Tactical_v0.4_WIP22.html` 한 파일만 포함한다. 압축 데이터�
 ## 남은 범위
 
 T-80U의 125mm 주포/기관총, 탄약·자동장전, 기동/순찰/교전 AI, 승무원·모듈·탄약고 피해, ERA 손상·소모·폭발, 야간·열상·날씨·배율·포신 고저각은 구현하지 않았다. T-80U 장갑·HP·ERA와 관측 절차 수치는 게임 시험 데이터이며 실차 성능 보증이 아니다.
+
+## 독립 검토 보완 (2026-11-15)
+
+제출본 2363c92의 기본 검사는 통과했지만 추가 실제 사격 검사에서 격파 순간 큐폴라 방위가 포탑 방향으로 바뀌는 오류를 발견했다. 발사선/착탄 자세에 전차장 방위를 포함하도록 수정하고 회귀 검사를 추가했다. 수정 후 전체 379건과 WIP22 코어 9건을 다시 통과했으며 위 배포물 표는 수정본 값이다. 탐색 전 캡처도 실제 현재 식별 T-80U를 확대하도록 보완했다.
+
+작성자의 기본 Python에서는 GDAL 검사를 실행하지 못했으나 독립 검토 환경의 `/usr/bin/python3`에서는 DEM 4건·원본 자료 품질 7건을 통과했다. 지형 판독성 7건을 합쳐 Python 18건이다. [독립 병합 검토](docs/reviews/WIP22_MERGE_REVIEW_2026-11-15.md)에 90초 기존 장면 비교, 숨은 위치 대조, 인계 대기 재시작과 수정 후 재현 빌드 결과를 기록했다.
