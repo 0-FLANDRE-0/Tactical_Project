@@ -3,7 +3,7 @@
   "created_date": "2026-11-19",
   "repository": "0-FLANDRE-0/Tactical_Project",
   "status": "five_stage_library_canonical_index_complete",
-  "tree_before_manifest_creation": "a081b58870476082ffdef7d4c10dcf3c2b97683f",
+  "tree_before_manifest_creation": "680b7b2c78a789fee57489cb656dc3032762b3e5",
   "manifest_excludes_itself": true,
   "baseline": {
     "branch": "archive-library-baseline-2026-11-19",
@@ -60,8 +60,8 @@
     },
     {
       "path": "archive/library/ammunition/cannon/US_120.md",
-      "git_blob_sha": "8cfce8525a714ac618348422749bc5a88d435a24",
-      "size_bytes": 9161,
+      "git_blob_sha": "541713add7622066b4ba7f321d8e2ad407bbd326",
+      "size_bytes": 11516,
       "domain": "ammunition"
     },
     {
@@ -114,14 +114,14 @@
     },
     {
       "path": "archive/library/ammunition/modern/APFSDS_120MM.md",
-      "git_blob_sha": "abdb9ac110293fffb62ed5df8db886bbe244e15a",
-      "size_bytes": 7959,
+      "git_blob_sha": "c2d7092710318795ea65dc11b90b355878095aee",
+      "size_bytes": 8690,
       "domain": "ammunition"
     },
     {
       "path": "archive/library/ammunition/README.md",
-      "git_blob_sha": "6b6793e17deee1a9785547c0811a332cb01327c3",
-      "size_bytes": 2440,
+      "git_blob_sha": "e715e651da5c38dbff114fd8e11a4fcd1c4e4bc0",
+      "size_bytes": 2564,
       "domain": "ammunition"
     },
     {
@@ -132,8 +132,8 @@
     },
     {
       "path": "archive/library/CANONICAL_RULES.md",
-      "git_blob_sha": "bc175075627de095b1cc7ea2c628289d74f47c42",
-      "size_bytes": 6228,
+      "git_blob_sha": "6fa6598b78ee59522df1d16b2a228e49bbaae5b9",
+      "size_bytes": 6239,
       "domain": "CANONICAL_RULES.md"
     },
     {
@@ -276,8 +276,8 @@
     },
     {
       "path": "archive/library/systems/armor/ANTI_ERA.md",
-      "git_blob_sha": "e6ad5752f8eca34cba2ee1781e0669c368fd0d8e",
-      "size_bytes": 5833,
+      "git_blob_sha": "cd051bc501f4acdef3431db046b5b6466577f633",
+      "size_bytes": 6692,
       "domain": "systems"
     },
     {
