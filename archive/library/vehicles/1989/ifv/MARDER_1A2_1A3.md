@@ -77,7 +77,7 @@
 
 ## 5. MILAN 1·MILAN 2 — 새 라이브러리 참조
 
-[MILAN 1/2 관통력·피해·호환 기록](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/ammunition/missiles/MILAN_1_2.md)은 미사일 문서로 이관. 차량 장갑·HP·Rh 202 제원은 본 문서 유지.
+[MILAN 1/2 관통력·피해·호환 기록](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/library/ammunition/missiles/MILAN_1_2.md)은 미사일 문서로 이관. 차량 장갑·HP·Rh 202 제원은 본 문서 유지.
 
 ## 6. 다른 IFV와의 게임상 비교·후속 미정
 
