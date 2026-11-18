@@ -1,6 +1,6 @@
 # Leopard 2A8 — 현대 전차
 
-> **3단계 원문 기반 이관본; 기존 정본 대체 전.** [원본 전차 아카이브](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md)에서 내용 이관. 차량 HP 1,450, 7구역 기본/모듈러 증가장갑, 5부위 독립 HP, Trophy HV 좌우 독립. 적재량과 상세 APS 판정 미정. 게임 코드·기존 1989년 프리셋에는 변경 없음.
+> **2026-11-19 5단계 정본 전환 완료 — 현대 전차 Leopard 2A8 게임 설계값.** [원본 전차 아카이브](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md)에서 내용 이관. 차량 HP 1,450, 7구역 기본/모듈러 증가장갑, 5부위 독립 HP, Trophy HV 좌우 독립. 적재량과 상세 APS 판정 미정. 게임 코드·기존 1989년 프리셋에는 변경 없음.
 
 ## 10. 현대 전차 별도 확장 — Leopard 2A8 (2026-11-19 사용자 지정)
 
