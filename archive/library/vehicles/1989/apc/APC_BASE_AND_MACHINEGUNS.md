@@ -6,7 +6,7 @@
 
 > **상태:** 사용자 대화에서 결정한 M113A2/A3·BTR-70/80 **장갑, HP, 기관총 공통 기본탄**을 백업한다. 아직 정하지 않은 사항은 **메모만** 남기고 임의로 수치화하지 않는다.
 > **구분:** 아래 '확정'은 **게임 설계 합의**를 뜻하며 실제 1989년 실측 방호력·공식 편제·게임 코드 구현 완료가 아니다.
-> **관련:** [1989년 4개 주요 군사집단 세계관 보유량 초안](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md), [BMP](SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md), [마르더](BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md), [브래들리](USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md).
+> **관련:** [1989년 4개 주요 군사집단 세계관 보유량 초안](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md), [BMP](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md), [마르더](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md), [브래들리](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md).
 
 ## 1. APC 4종 확정 기본 방호력·체력
 
@@ -79,7 +79,7 @@
 
 ## 3. APC·정찰 장비 설계 진행 상태 — [2026-11-14 갱신]
 
-> **최신 설계표:** [추가 APC 수치 및 M113G 미정](APC_ADDITIONAL_BTR60_M113G_FUCHS_BTR50_MTLB_2026-11-14.md) · [정찰장갑차 BRDM/Luchs/M3/BRM](RECON_BRDM2_LUCHS_M3_BRM1K_2026-11-14.md). 이 절의 과거 "설계 후보" 표시보다 최신 **사용자 채택/보류 상태**가 우선한다.
+> **최신 설계표:** [추가 APC 수치 및 M113G 미정](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/APC_ADDITIONAL_BTR60_M113G_FUCHS_BTR50_MTLB_2026-11-14.md) · [정찰장갑차 BRDM/Luchs/M3/BRM](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/RECON_BRDM2_LUCHS_M3_BRM1K_2026-11-14.md). 이 절의 과거 "설계 후보" 표시보다 최신 **사용자 채택/보류 상태**가 우선한다.
 
 | 진영·운용 | 차량 | 현재 상태 |
 |---|---|---|
