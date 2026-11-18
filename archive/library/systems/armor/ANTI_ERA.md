@@ -2,7 +2,7 @@
 
 > **4단계 시스템 이관본 · 확정값/미정 구분 보존.** 원본 파일은 그대로 두며, 5단계 전체 검증 전까지 원본이 정식 정본. 아래는 **TACTICAL용 게임 방호 모델**이지 실차 공식 제원·구현 완료 보고가 아님.
 
-**원본:** [현대 날탄 Anti-ERA](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md) · [TOW 2A](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md) · [TOW 미사일 라이브러리](../../ammunition/missiles/TOW_FAMILY.md). 아래 표에서 `DM53~DM73/M829A2`는 **ERA 추가 KE**, `TOW 2A`는 **ERA 추가 CE**에 대한 효과. **기본 장갑 자체의 방호력과 ERA 피복률 소모량은 이 특성으로 낮추지 않는다.** 탄별 ERA 종류별 감쇄 **숫자·성공률 미정**.
+**원본:** [현대 날탄 Anti-ERA](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md) · [TOW 2A](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md) · [TOW 미사일 라이브러리](../../ammunition/missiles/TOW_FAMILY.md). 아래 표에서 `DM53~DM73/M829A2/A3/A4`는 **ERA 추가 KE**, `TOW 2A`는 **ERA 추가 CE**에 대한 효과. **기본 장갑 자체의 방호력과 ERA 피복률 소모량은 이 특성으로 낮추지 않는다.** 탄별 ERA 종류별 감쇄 **숫자·성공률 미정**.
 
 ### 현대 APFSDS Anti-ERA 대응 등급 — 2026-11-19 사용자 추가 지정
 
@@ -16,13 +16,16 @@
 | **DM63A1** | **Kontakt-5급 및 Relikt(렐릭트)급** | Relikt처럼 향상된 ERA에도 **일정 수준의 추가 KE 방호력 무력화** | 감쇄율 미정 |
 | **DM73** | **DM63A1보다 한 체급 높은 ERA 대응 단계** | 고성능 ERA에 대해 DM63A1보다 **강한 추가 KE 방호력 무력화** | ERA별 감쇄율·단계 경계 미정 |
 | **M829A2** | 초기형 중(重)ERA, **Kontakt-5급** | ERA의 추가 KE 방호력 일부 무력화/효과 감쇄 | 감쇄율 미정 |
+| **M829A3** | **M829A2보다 높은 Anti-ERA 성능** | A2보다 낮은 탄속 및 다소 낮은 순수 KE에도 **ERA의 추가 KE 방호력 감쇄 효과 개선** | 감쇄율·Relikt급 대응 정도 미정 |
+| **M829A4** | **M829A3보다 크게 강화된 Anti-ERA 성능** | 높은 관통력과 별개로 **ERA의 추가 KE 방호력 무력화 효과 대폭 향상** | 감쇄율·구체적인 ERA 대응 한계 미정 |
 
 - **효과 대상:** Anti-ERA는 피복 지점에서 계산하는 `기본장갑 KE + ERA 추가 KE 방호력` 중 **ERA가 제공하는 추가 KE 방호력**을 줄이는 방향이다. **기본장갑 KE까지 자동으로 낮추지 않는다.** 비피복 지점에는 적용할 ERA 추가 방호력이 없다.
 - **ERA 피복률 손실과 별도:** 기존 [전차 기준표 §1-A](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md)의 Kontakt-1/5 **탄종별 피복률 소모량**(APFSDS/APDS 피복 지점 K1 −12%p, K5 −24%p)은 그대로 유지한다. **Anti-ERA 무력화는 이번 한 발의 유효 ERA 방호량에 대한 별도 판정 효과**이며, 피복률을 임의로 추가 소모시키거나 ERA를 무조건 파괴한다는 뜻이 아니다.
 - **관통력·HP 피해와 별도:** 탄약 표에 적힌 2,000m 0°/30°/60° KE를 임의로 올리는 특성이 아니라, **피격 부위의 추가 ERA KE 방호를 상대적으로 약화**시키는 설계 방향이다. 관통 후 기본 차량 HP 피해 및 공통 120mm APFSDS 과관통 곡선은 변경하지 않는다.
-- **ERA 단계·Relikt:** '초기형 중ERA/Kontakt-5급', 'Relikt급', 'DM73이 한 체급 이상 대응'은 **사용자 지정 게임 분류 방향**이며 현실 장비의 검증된 정량 성능을 뜻하지 않는다. **Relikt의 게임 내 개별 KE/CE, 피복률, 소모 규칙, 실제 배치 대상은 미정**이다.
+- **ERA 단계·Relikt:** '초기형 중ERA/Kontakt-5급', 'Relikt급', 'DM73이 한 체급 이상 대응'은 **사용자 지정 게임 분류 방향**이며 현실 장비의 검증된 정량 성능을 뜻하지 않는다. **M829A3/A4의 정확한 Relikt급 대응 등급은 아직 사용자 미지정**이고, ‘A3 향상·A4 대폭 향상’만 확정됐다. **Relikt의 게임 내 개별 KE/CE, 피복률, 소모 규칙, 실제 배치 대상은 미정**이다.
 - **향후 결정할 변수:** 탄약 × ERA 형식별 **추가 KE 감쇄율**, DM63A1의 Relikt 대응 정도, DM73의 단계별 차이, 단계별 효과 적용 조건 및 판정 순서. **아직 수치가 없으므로 Anti-ERA가 모든 ERA를 완전 무시한다고 처리하지 않는다.**
-- **구현/시대 범위:** 아카이브 설계 메모만 추가. M829A2 및 현대 독일 탄약은 **1989년 본편 기본 편성에 자동 추가하지 않으며**, **게임 코드도 변경하지 않는다.**
+- **구현/시대 범위:** 아카이브 설계 메모만 추가. **M829A2/A3/A4 및 현대 독일 탄약**은 **1989년 본편 기본 편성에 자동 추가하지 않으며**, **게임 코드도 변경하지 않는다.**
+- **신규 M829A3/A4 제원 정본:** [미국 120mm 탄약](../../ammunition/cannon/US_120.md)에서 각각 **2km 595/500/345·1,555m/s·404 HP**, **635/545/380·1,650m/s·433 HP**로 관리한다. 순수 KE 관통력과 ERA 추가 KE 방호 감쇄는 서로 별도 속성이다.
 
 ---
 
