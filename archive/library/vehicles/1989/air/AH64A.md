@@ -6,7 +6,7 @@
 
 > **문서 지위:** 2026-11-14 사용자 대화에서 **승인/채택한 게임용 수치**와 역사적 참고·아직 미정인 항목을 구분해 보존. 실물 장갑 시험·정식 탄약 관통 시험 결과가 아니며, **런타임 유닛/전투 엔진 구현 및 테스트 완료 아님**.
 > **범위:** 1989년 AH-64A 초기형. 이후 AH-64D Longbow 등 후기형 기능을 이 기체에 소급하지 않는다.
-> **관련:** [항공 투입·간략 외부 작전지도·방공레이더 LOS·IFV 대공사거리](AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md), [차량 관통/피해 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md), [탄약고·승무원/모듈 방향](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md).
+> **관련:** [항공 투입·간략 외부 작전지도·방공레이더 LOS·IFV 대공사거리](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md), [차량 관통/피해 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md), [탄약고·승무원/모듈 방향](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md).
 
 ## 1. AH-64A 기체 HP·장갑 — [사용자 확정]
 
@@ -68,7 +68,7 @@ Hellfire AGM-114A 관통력·기본 피해 및 치명타는 미사일 이관본 
 - 형식: 미국 육군 **AH-64A Apache**, 조종사 1명 + 부조종사/사수 1명.
 - 엔진: T700 계열 2기. M230 30mm 기관포, AGM-114A 초기 헬파이어, 70mm 무유도 로켓 사용.
 - 관측 장비: **TADS/PNVS**, 당대의 적외선 관측·야간 비행 능력. **AH-64D Longbow의 밀리미터파 레이더는 1989년 AH-64A에 없음**.
-- 항공기 투입·외부 단순 작전지도·장거리 방공 레이더 LOS에 관한 논의는 [별도 항공 시스템 설계](AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md)를 따른다.
+- 항공기 투입·외부 단순 작전지도·장거리 방공 레이더 LOS에 관한 논의는 [별도 항공 시스템 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md)를 따른다.
 
 ## 6. 아직 미정·코드 적용 경계
 
