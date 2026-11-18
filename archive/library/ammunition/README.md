@@ -7,7 +7,7 @@
 | 국적·구경 | 이관 문서 |
 |---|---|
 | 미국 105mm | [US 105mm](cannon/US_105.md) |
-| 미국 120mm | [US 120mm, M829A2 후기형 정보 포함](cannon/US_120.md) |
+| 미국 120mm | [US 120mm — M829~M829A4 (A3/A4 2026-11-19 확정)](cannon/US_120.md) |
 | 서독 105mm | [West Germany 105mm](cannon/WEST_GERMANY_105.md) |
 | 서독 120mm (1989) | [West Germany 120mm](cannon/WEST_GERMANY_120_1989.md) |
 | 소련 125mm | [Soviet 125mm](cannon/SOVIET_125.md) |
@@ -16,8 +16,8 @@
 
 ## 후속 시대 / 현대 APFSDS
 
-- [DM53 / DM53A1 / DM63 / DM63A1 / DM73 · M829A2 Anti-ERA](modern/APFSDS_120MM.md)
-- **Anti-ERA:** 탄약이 ERA의 추가 KE 방호력을 일부 감쇄하는 능력; ERA 피복률 소모와 별개. DM53~DM63은 Kontakt-5급, DM63A1은 Relikt급에도 부분 대응, DM73은 한 단계 더 높은 대응. **숫자 감쇄율 미정**.
+- [DM53 / DM53A1 / DM63 / DM63A1 / DM73 · M829A2/A3/A4 Anti-ERA](modern/APFSDS_120MM.md)
+- **Anti-ERA:** 탄약이 ERA의 추가 KE 방호력을 일부 감쇄하는 능력; ERA 피복률 소모와 별개. DM53~DM63은 Kontakt-5급, DM63A1은 Relikt급에도 부분 대응, DM73은 한 단계 더 높은 대응. **M829A3는 A2보다 향상, M829A4는 A3보다 크게 향상**. **숫자 감쇄율과 A3/A4의 ERA별 정확한 대응 범위 미정**.
 - [근거리 0~10m KE 29종 3각도 이관본](references/NEAR_ZERO_10M_KE.md) — 원본 29종의 게임용 10m/2km 표와 추정·검토 메모 보존.
 
 ## 미사일
