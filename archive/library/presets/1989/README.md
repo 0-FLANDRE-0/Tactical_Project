@@ -1,8 +1,8 @@
 # 1989 본편 전차 32종 × 3 = 96개 탄약 프리셋
 
-> **3단계 이관·원본 비교 통과.** 원본 공유 템플릿 **18개 × 3 = 54개 행**을 **차량 32종 × 3 = 96개 행**으로 확장. 모든 구획 발수 합계를 검산했고 **원본 32개 차량 최대 HP 목록과 차명 집합을 대조**했다. 프리셋 수치 변경·게임 코드 수정 없음. [전차 원본](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md) · [탄약 원본 §11](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)
+> **2026-11-19 5단계 정본 전환 완료 — 원본 비교 통과.** 원본 공유 템플릿 **18개 × 3 = 54개 행**을 **차량 32종 × 3 = 96개 행**으로 확장. 모든 구획 발수 합계를 검산했고 **원본 32개 차량 최대 HP 목록과 차명 집합을 대조**했다. 프리셋 수치 변경·게임 코드 수정 없음. [전차 원본](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md) · [탄약 원본 §11](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)
 
-- **정형 데이터:** [`TANK_LOADOUTS_96.json`](TANK_LOADOUTS_96.json). **현행 정본은 최종 전환 전까지 원본 `archive/ammo/README.md`**.
+- **정형 데이터:** [`TANK_LOADOUTS_96.json`](TANK_LOADOUTS_96.json). **현행 정본은 이 JSON과 본 문서**, 기존 `archive/ammo/README.md`는 레거시 출처 기록.
 - **수량 표기:** 소련/NVA = AP/HEAT/HE/ATGM, NATO = AP/HEAT/HEP. 준즉응탄이 없는 곳은 —로 표시. 표의 개별 차량은 원본에서 같은 편성 템플릿을 공유하던 형식을 풀어 쓴 것임.
 
 | 진영 | 차량 형식 | 프리셋 | 즉응탄 | 준즉응탄 | 예비탄 | 총탄 |
