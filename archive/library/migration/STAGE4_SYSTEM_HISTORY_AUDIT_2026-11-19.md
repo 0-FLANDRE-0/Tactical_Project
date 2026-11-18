@@ -7,10 +7,10 @@
 
 | 구분 | 파일 수 | 주요 내용 |
 |---|---:|---|
-| `systems/` | **17개** | ERA·BDD/D-Tech·2A8 모듈러 증가장갑·Anti-ERA·Trophy, APFSDS 과관통·도탄·HEP/HE-FRAG·기관포·모듈·잔해, 장전/보급, 항공/LOS/지도 |
+| `systems/` | **18개** | ERA·BDD/D-Tech·2A8 모듈러 증가장갑·Anti-ERA·Trophy, APFSDS 과관통·도탄·HEP/HE-FRAG·기관포·모듈·잔해, 장전/보급, 항공/LOS/지도 |
 | `units/` | **2개** | 보병 설계 원본의 채택 방향·시범값·미정 구분과 색인 |
 | `world/` | **2개** | 1989년 6월 20일 대체역사 세계관 원안 및 색인 |
-| `history/` | **6개** | WIP 구현 지시서 이력색인, 옛 진행 메모, 미정 장갑 세부면 아이디어, 폐기 통합문서 안내, WIP 비-Markdown 자산 목록 |
+| `history/` | **5개** | WIP 구현 지시서 이력색인, 옛 진행 메모, 미정 장갑 세부면 아이디어, 폐기 통합문서 안내, WIP 비-Markdown 자산 목록 |
 | `indexes/` | **1개** | 1989년 공격헬기 4기종 현황의 요약 이관본 |
 | **합계** | **28개** | 전체 파일의 SHA·출처 문서·크기는 [manifest](STAGE4_SYSTEM_HISTORY_MANIFEST_2026-11-19.json) 참고 |
 
