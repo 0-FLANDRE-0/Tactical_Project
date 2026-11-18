@@ -1,60 +1,37 @@
-# TACTICAL 장비·전투 데이터 라이브러리 (전환 준비 중)
+# TACTICAL — 정식 장비·탄약·전투 시스템 라이브러리
 
-> **2026-11-19 상태:** 단계적 개편 **4/5단계 완료**. 현재 폴더는 **이관 작업의 진입점**이며 아직 새로운 정식 수치 데이터베이스가 아니다. **정본 데이터는 기존 [archive 목차](../README.md)의 원본 문서**에 남아 있다.
+> **개편 완료: 2026-11-19 · 5/5단계.** 이곳이 **게임 설계 제원·규칙의 현행 정식 탐색/수정 진입점**이다. 과거 단계 문서의 ‘정본 전환 전/이관본’은 **발행 당시 진행 상태**를 뜻한다. 상세한 충돌·미정/잠정/코드 상태는 [정본 우선순위](CANONICAL_RULES.md)를 따른다.
 
-## 이관 진행
+## 데이터 카탈로그
 
-| 단계 | 작업 | 상태 |
+| 영역 | 바로가기 | 주요 내용 |
 |---|---|---|
-| **1** | 정리 전 원본 브랜치 백업·전체 인벤토리 | **완료** |
-| **2** | 기존 Markdown 46개 본문 감사·정본 책임·불일치/미정 분류 | **완료** |
-| **3** | 차량·탄약·미사일·96개 프리셋 이관 및 검산 | **완료** |
-| **4** | 공통 방호·APS·피해·보급·지도·보병·세계관·이력 분리 | **완료** |
-| **5** | 링크·수치·누락 검증 후 구형 기록 안내/중복 정리 | 예정 |
+| **차량** | [vehicles/](vehicles/README.md) | 1989 전차 32종, 후속 M1A2 2종, 현대 2A8, IFV/APC/정찰·헬기 |
+| **탄약·미사일** | [ammunition/](ammunition/README.md) | 1989 미·독·소·동독 탄약, 현대 날탄, TOW/MILAN/Hellfire 등 |
+| **전투·방호 시스템** | [systems/](systems/README.md) | ERA·Anti-ERA·모듈러 증가장갑·Trophy, 관통/피해곡선/도탄/장전 |
+| **96개 적재 프리셋** | [presets/](presets/README.md) | 1989 32종×3개, 원본 공유 템플릿 54행 검산본 |
+| **보병·개별 유닛** | [units/](units/README.md) | 보병/분대 설계·검토값 |
+| **세계관** | [world/](world/README.md) | 1989년 6월 20일 대체역사 개전·전력 편제 원안 |
+| **역사 자료실** | [history/](history/README.md) | WIP 지시서·구형 제원·폐기 아이디어·초기 시제품 |
+| **보조 색인** | [indexes/ 공격헬기](indexes/AIRCRAFT_1989.md) | 헬기 현황·비교 자료 |
 
-## 1단계 기록
+## 반드시 구분할 사항
 
-- [**백업 기준점·전체 파일 목록·계획**](migration/STAGE1_BASELINE_AND_INVENTORY_2026-11-19.md)
-- [**기계 판독형 원본 63개 파일 목록(JSON)**](migration/BASELINE_FILE_MANIFEST_2026-11-19.json)
-- [**정리 이전 보존 브랜치**](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-library-baseline-2026-11-19)
-- **기준 커밋:** `1593dc2caab7c55af85c4df9acf748d2f2fe0706`
+- **게임용 KE·CE 관통력, 탄약별 기본 차량 피해 HP, 실제 차량 최대 HP, 추가장갑 독립 HP**는 각각 다른 수치.
+- **ERA 피복률 %p 소모**와 **Anti-ERA 방호 효과 감쇄**, **비폭발성 증가장갑 내구도**, **Trophy HV 요격탄·대기시간**은 별도 계층.
+- **1989 본편 / 1990년 이후 / 현대 장비** 시대 분리, 실제 게임 코드와 사용자 설계 확정/잠정 분리.
+- **미정은 절대로 임의 숫자로 채우지 않는다.** [정식 정본 소유권·우선순위](CANONICAL_RULES.md) 참고.
 
-## 2단계 감사 및 정본 책임
+## 이관 검증·기록
 
-- [**2단계 원본문서 감사 보고서·불일치 목록·제안 스키마**](migration/STAGE2_CANONICAL_SOURCE_AUDIT_2026-11-19.md)
-- [**46개 문서 정본 책임도(JSON)**](migration/STAGE2_SOURCE_OWNERSHIP_MAP_2026-11-19.json)
-- **정리 필요:** 탄약 §11의 NATO 10/11 표제 오기, TOW 2B의 오래된 절 앵커, 과거 모듈 영구 손상 구상, WIP 지시서와 최신 구현 상태의 시점 차이
-- **경계:** 제안된 새 파일 경로들은 아직 존재하지 않으며, `tanks/README.md`, `ammo/README.md`, `vehicles/` 등의 **기존 문서가 계속 정본**임
+| 단계 | 수행 내용 | 상태 |
+|---|---|---|
+| 1 | [정리 전 원본 63개 파일 백업·해시 인벤토리](migration/STAGE1_BASELINE_AND_INVENTORY_2026-11-19.md) | **완료** |
+| 2 | [기존 Markdown 46개 역할·정본 책임·충돌 감사](migration/STAGE2_CANONICAL_SOURCE_AUDIT_2026-11-19.md) | **완료** |
+| 3 | [차량·탄약·미사일·프리셋 36개 파일 이관](migration/STAGE3_MIGRATION_VERIFICATION_2026-11-19.md) | **완료** |
+| 4 | [방호·전투 시스템, 세계관·이력 28개 파일 분리](migration/STAGE4_SYSTEM_HISTORY_AUDIT_2026-11-19.md) | **완료** |
+| 5 | [최종 원본 대조·링크 복구·정본 전환·레거시 안내](migration/STAGE5_FINAL_VALIDATION_2026-11-19.md) | **완료** |
 
-## 3단계 — 실제 제원 라이브러리 이관 완료
+**원본 보존:** [변경 전 백업 브랜치](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-library-baseline-2026-11-19) · [원본 SHA 목록](migration/BASELINE_FILE_MANIFEST_2026-11-19.json) · [5단계 최종 이관 목록](migration/STAGE5_FINAL_LIBRARY_MANIFEST_2026-11-19.json).
 
-- [**차량 제원 카탈로그**](vehicles/README.md): 1989 전차 32종, 후속 M1A2 2종, 현대 Leopard 2A8, IFV/APC/정찰차/공격헬기
-- [**탄약·미사일 카탈로그**](ammunition/README.md): 국가·구경별 전차포, 현대 날탄 Anti-ERA, TOW·MILAN·Hellfire·소련 미사일 등
-- [**1989년 전차 96개 프리셋 (셀 단위 검산 완료)**](presets/1989/README.md) · [정형 JSON](presets/1989/TANK_LOADOUTS_96.json)
-- [**3단계 이관·검증 보고서**](migration/STAGE3_MIGRATION_VERIFICATION_2026-11-19.md) · [새 파일 36개 전체 SHA manifest](migration/STAGE3_LIBRARY_MANIFEST_2026-11-19.json)
-
-> **정본 전환 전:** 이관 후보 문서 **36개 생성**. 기존 원본 63개 파일은 삭제하지 않았고 데이터/게임 코드 수정 없음. **공통 시스템·보급·역사 기록 분리는 4단계에 완료**, 링크·전체 수치 최종 감사와 구형 원본 정리는 5단계. 지금은 기존 정본과 신규 이관본을 병행한다.
-
-## 4단계 — 공통 시스템·이력 라이브러리 구축
-
-- [**전투·방호·APS·보급·지도 시스템 색인**](systems/README.md): ERA 피복률 소모, 증가장갑 독립 HP, 현대 Anti-ERA, Trophy HV, APFSDS 공통 피해곡선, HEP/HE-FRAG, 기관포·모듈·잔해·장전·항공/LOS
-- [**보병 및 개별 유닛**](units/README.md) · [**1989 대체역사 세계관 원안**](world/README.md)
-- [**WIP/구형 통합본/장갑 미채택 아이디어 이력 자료실**](history/README.md) · [헬기 4종 색인](indexes/AIRCRAFT_1989.md)
-- [**4단계 검증 보고서**](migration/STAGE4_SYSTEM_HISTORY_AUDIT_2026-11-19.md) · [**신규 28개 파일 Git SHA/원본 계보**](migration/STAGE4_SYSTEM_HISTORY_MANIFEST_2026-11-19.json)
-
-> **4단계 완료 범위:** 신규 28개 시스템·자료실 파일 생성, 3단계 36개 이관 파일 SHA 불변, 원본 63개 삭제 없음, 신규 내부 파일 링크 **237개 대상 파일 존재 검사 통과**. 아직 GitHub 제목 앵커·모든 외부 URL·모든 수치의 전역 재검산은 5단계에서 실행. 기존 정본·게임 코드는 유지.
-
-## 현행 이관 라이브러리 분류 (5단계 최종 검증 전)
-
-| 라이브러리 범주 | 현재 이관한 데이터 |
-|---|---|
-| `vehicles/` | 1989 본편·후속 시대·현대 전차, IFV/CFV/APC/정찰차, 헬기 |
-| `ammunition/` | 국가·구경·시대별 포탄, 미사일, Anti-ERA 속성 |
-| `systems/` | 장갑 7구역·ERA/증가장갑·APS·관통/피해·장전·명중 규칙 |
-| `presets/` | 전차 32종×3=96개 적재 프리셋 검산본. 후속 시대 별도 편성은 미정 |
-| `history/` | 과거 WIP 지시서 색인·WIP 자산 원본 링크·폐기/이전 상태 보존 |
-| `units/` | 보병 설계 방향·시험 데이터·미정 구분 |
-| `world/` | 1989년 대체역사 보유량·편제 원안 |
-| `indexes/` | 공격헬기 4기종 요약·탐색 색인 |
-
-**원칙:** 수치는 정본 하나, 다른 문서는 링크로 연결. 기존 확정 게임 수치와 미정 항목, 코드 구현 상태를 각각 분리. 원본의 손실 없는 대조 전에는 중복 문서·미디어를 삭제하지 않음. 정리 작업은 아카이브에만 적용하고 게임 코드/밸런스 값은 사용자 지정 없이 변경하지 않는다.
+> **기존 원본문서와 시제품은 삭제하지 않았다.** 현재 사용자는 이 새 카탈로그를 사용하면 되고, 원본의 과거 수치/당시 구현 메모는 비교·증빙에만 이용한다. **게임 코드 및 원래 1989년 프리셋은 이번 정리로 변경되지 않았다.**
