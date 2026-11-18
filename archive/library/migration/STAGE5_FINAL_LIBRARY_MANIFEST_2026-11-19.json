@@ -1,0 +1,506 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-11-19",
+  "repository": "0-FLANDRE-0/Tactical_Project",
+  "status": "five_stage_library_canonical_index_complete",
+  "tree_before_manifest_creation": "973b2529f029e993b37a33db355a22e98c32651c",
+  "manifest_excludes_itself": true,
+  "baseline": {
+    "branch": "archive-library-baseline-2026-11-19",
+    "commit": "1593dc2caab7c55af85c4df9acf748d2f2fe0706",
+    "original_file_count": 63,
+    "original_files_deleted": 0,
+    "original_files_content_revised_for_index_or_reference": [
+      "archive/ammo/README.md",
+      "archive/README.md",
+      "archive/tanks/README.md",
+      "archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md"
+    ]
+  },
+  "verification": {
+    "stage3_migrated_initial": 36,
+    "stage4_migrated_initial": 28,
+    "final_tank_profiles_original_table_rows_checked": 161,
+    "final_cannon_original_table_rows_checked": 177,
+    "armor_aps_antiera_curve_rows_checked": 60,
+    "loadout_vehicles": 32,
+    "loadout_templates": 18,
+    "loadout_source_rows": 54,
+    "loadout_expanded_rows": 96,
+    "loadout_sum_mismatch": 0,
+    "loadout_cell_mismatch": 0,
+    "prior_migration_md_file_links_scanned": 589,
+    "broken_source_relative_file_links_fixed": 24
+  },
+  "library_files_recorded": 78,
+  "files": [
+    {
+      "path": "archive/library/ammunition/cannon/DEFAULT_TANK_AMMO.md",
+      "git_blob_sha": "fa74d19e34fdc61aba22c5bb29b1805f099fa6cc",
+      "size_bytes": 5060,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/cannon/NVA.md",
+      "git_blob_sha": "b4177b88364d54efd7b32a9c267d1a562ef468ba",
+      "size_bytes": 12351,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/cannon/SOVIET_125.md",
+      "git_blob_sha": "cff25b7898ef51fcc081f255357a10e12b98ff33",
+      "size_bytes": 20792,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/cannon/US_105.md",
+      "git_blob_sha": "ad5ed3a3772841ffaf317046c4481b4009317cae",
+      "size_bytes": 10577,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/cannon/US_120.md",
+      "git_blob_sha": "8cfce8525a714ac618348422749bc5a88d435a24",
+      "size_bytes": 9161,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/cannon/WEST_GERMANY_105.md",
+      "git_blob_sha": "8ab37051442ca3c73e34e792dec8f98f4a0aec17",
+      "size_bytes": 7373,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/cannon/WEST_GERMANY_120_1989.md",
+      "git_blob_sha": "3cee3481aed191dbbf18e5b28f808fb05b43d80a",
+      "size_bytes": 10484,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/missiles/AGM_114A_HELLFIRE.md",
+      "git_blob_sha": "aa3db6f64e3e01a883c1a24c17250574b9d6c0f3",
+      "size_bytes": 3843,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/missiles/BMP_ATGM.md",
+      "git_blob_sha": "b3bff16e6ff3128fec86daecbc8c9a34d2d90dae",
+      "size_bytes": 2062,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/missiles/MI24_ATGM.md",
+      "git_blob_sha": "70ce7835af7be38d1d55884a6c02650ca0f46e17",
+      "size_bytes": 4232,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/missiles/MILAN_1_2.md",
+      "git_blob_sha": "bd9bbb2dcb0b06b12c998d05d02b02ef7df3b693",
+      "size_bytes": 1617,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/missiles/SOVIET_125_GUN_LAUNCHED.md",
+      "git_blob_sha": "f915cd41dcb589719178afa52c36a501bb6313b5",
+      "size_bytes": 5238,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/missiles/TOW_FAMILY.md",
+      "git_blob_sha": "6fbf46817f8d0039eec12bd4d4111ad746d8307a",
+      "size_bytes": 11024,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/modern/APFSDS_120MM.md",
+      "git_blob_sha": "abdb9ac110293fffb62ed5df8db886bbe244e15a",
+      "size_bytes": 7959,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/README.md",
+      "git_blob_sha": "b84a4c8b115fbf4501934651345232e0eb07a8ad",
+      "size_bytes": 2392,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/ammunition/references/NEAR_ZERO_10M_KE.md",
+      "git_blob_sha": "1ab42e9369de29330f27fad1f0ff90d41a9be955",
+      "size_bytes": 9260,
+      "domain": "ammunition"
+    },
+    {
+      "path": "archive/library/CANONICAL_RULES.md",
+      "git_blob_sha": "bc175075627de095b1cc7ea2c628289d74f47c42",
+      "size_bytes": 6228,
+      "domain": "CANONICAL_RULES.md"
+    },
+    {
+      "path": "archive/library/history/implementation/README.md",
+      "git_blob_sha": "81f3dbcbcae82882c19924330523270bff091415",
+      "size_bytes": 7802,
+      "domain": "history"
+    },
+    {
+      "path": "archive/library/history/legacy/OLD_ANTITANK_PRESETS.md",
+      "git_blob_sha": "414dd7b33c29ef837da989352a369b9252ad1fb8",
+      "size_bytes": 3585,
+      "domain": "history"
+    },
+    {
+      "path": "archive/library/history/legacy/README.md",
+      "git_blob_sha": "6ab1d58efe92201d3532572db31e9903c66bfae2",
+      "size_bytes": 1656,
+      "domain": "history"
+    },
+    {
+      "path": "archive/library/history/progress/NEXT_STEPS_2026_11_07.md",
+      "git_blob_sha": "5c309686d34dac740f95c7e2c89e0be3a8111abd",
+      "size_bytes": 46702,
+      "domain": "history"
+    },
+    {
+      "path": "archive/library/history/proposals/ARMOR_SUBZONES.md",
+      "git_blob_sha": "1e5c7ccc00bfe93ab363c3bd1bc956331e213880",
+      "size_bytes": 11495,
+      "domain": "history"
+    },
+    {
+      "path": "archive/library/history/README.md",
+      "git_blob_sha": "a1cf7e6ac27edfc50ee8cb6970f999b2c0edb690",
+      "size_bytes": 4550,
+      "domain": "history"
+    },
+    {
+      "path": "archive/library/indexes/AIRCRAFT_1989.md",
+      "git_blob_sha": "0722d6e3bdc86816481a8acd3d94fec6c3f1badb",
+      "size_bytes": 6253,
+      "domain": "indexes"
+    },
+    {
+      "path": "archive/library/migration/BASELINE_FILE_MANIFEST_2026-11-19.json",
+      "git_blob_sha": "8f40926a10042a225b20815d490e06cc6b013224",
+      "size_bytes": 11801,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/migration/STAGE1_BASELINE_AND_INVENTORY_2026-11-19.md",
+      "git_blob_sha": "b7e72e3d19a240bf1c01bcee5834bf8079a00d8d",
+      "size_bytes": 17568,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/migration/STAGE2_CANONICAL_SOURCE_AUDIT_2026-11-19.md",
+      "git_blob_sha": "ac5d827b8d37a378c4f3c9b6f9c7f9ac9f0af6c2",
+      "size_bytes": 17427,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/migration/STAGE2_SOURCE_OWNERSHIP_MAP_2026-11-19.json",
+      "git_blob_sha": "80f7c461a008c289a881db3fd0d3ce9e37641c03",
+      "size_bytes": 23450,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/migration/STAGE3_LIBRARY_MANIFEST_2026-11-19.json",
+      "git_blob_sha": "6ce0a5fc1b54d32476682d30dc0383e0dcafaa72",
+      "size_bytes": 9465,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/migration/STAGE3_MIGRATION_VERIFICATION_2026-11-19.md",
+      "git_blob_sha": "8e0c36f2a4cedfe2bfdb984723fde4c597725288",
+      "size_bytes": 9272,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/migration/STAGE4_SYSTEM_HISTORY_AUDIT_2026-11-19.md",
+      "git_blob_sha": "b564a932a851c7c1b357abb010b859cb946991e1",
+      "size_bytes": 8025,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/migration/STAGE4_SYSTEM_HISTORY_MANIFEST_2026-11-19.json",
+      "git_blob_sha": "0dd0cb7422f7ba30aaf2ab10145b6c6c0f4fd49c",
+      "size_bytes": 8076,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/migration/STAGE5_FINAL_VALIDATION_2026-11-19.md",
+      "git_blob_sha": "f7affa6450fbc46c99b64eb5eec021dce1a2881d",
+      "size_bytes": 8625,
+      "domain": "migration"
+    },
+    {
+      "path": "archive/library/presets/1989/README.md",
+      "git_blob_sha": "74219252762d4164e043cda5ce08088eded8823e",
+      "size_bytes": 7943,
+      "domain": "presets"
+    },
+    {
+      "path": "archive/library/presets/1989/SOURCE_TEMPLATES_54.md",
+      "git_blob_sha": "5ad024ecc6af055cd416a03089b1876dbe3c3452",
+      "size_bytes": 8142,
+      "domain": "presets"
+    },
+    {
+      "path": "archive/library/presets/1989/TANK_LOADOUTS_96.json",
+      "git_blob_sha": "c185f2947b29720f18f2aabd14482cf30fa0a4e0",
+      "size_bytes": 33806,
+      "domain": "presets"
+    },
+    {
+      "path": "archive/library/presets/README.md",
+      "git_blob_sha": "8634c9ee28442813c00e03936b0b5da8a74d6e22",
+      "size_bytes": 997,
+      "domain": "presets"
+    },
+    {
+      "path": "archive/library/README.md",
+      "git_blob_sha": "d701069e43cd1d4928c14872290cb56a2f880f43",
+      "size_bytes": 3449,
+      "domain": "README.md"
+    },
+    {
+      "path": "archive/library/systems/air/AIR_ENTRY_RADAR_AA.md",
+      "git_blob_sha": "44d66a0027aa70b884bdbcdf3b6a0626d65ea7f8",
+      "size_bytes": 11214,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/aps/TROPHY_HV.md",
+      "git_blob_sha": "4650ecdbabaf9582bce258d5f557e4ecff112b21",
+      "size_bytes": 2986,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/armor/ANTI_ERA.md",
+      "git_blob_sha": "e6ad5752f8eca34cba2ee1781e0669c368fd0d8e",
+      "size_bytes": 5833,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/armor/LEOPARD_2A8_MODULAR_ARMOR.md",
+      "git_blob_sha": "a01b9c2a1a76bd84448231e726fe9f81ab29aa1c",
+      "size_bytes": 5025,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/armor/NON_EXPLOSIVE_ADDON_ARMOR.md",
+      "git_blob_sha": "64bf36fcf4a0f2a9e89f080bf3a15fa9778ecfc5",
+      "size_bytes": 7776,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/armor/README.md",
+      "git_blob_sha": "28335ff80aa099970812608ad6177dfbf7d41c65",
+      "size_bytes": 734,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/armor/SEVEN_ZONE_AND_KONTAKT_ERA.md",
+      "git_blob_sha": "37544e5b53744bac5c21aa67c9c5ab03f3fc0030",
+      "size_bytes": 7223,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/ANGLE_RICOCHET_FUZE.md",
+      "git_blob_sha": "1b71017d5c7fc87de62a3ddaa5005e1ad612cf67",
+      "size_bytes": 16537,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/APFSDS_DAMAGE_CURVES.md",
+      "git_blob_sha": "00288dac0dd73136887b2ce00f8494fcedeb6626",
+      "size_bytes": 6389,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/ARMOR_HIT_FUTURE_NOTES.md",
+      "git_blob_sha": "d212af083265ab8a2b03f0f50e5a0a87d430bc22",
+      "size_bytes": 3116,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/AUTOCANNON_DAMAGE.md",
+      "git_blob_sha": "74d6de4053f17ebae632f340c84b177f93dca04c",
+      "size_bytes": 7558,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/HEP_HEFRAG_APERS.md",
+      "git_blob_sha": "f0861cf0c554c5da859d0eff2b623f437b0dad01",
+      "size_bytes": 10140,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/MODULE_CREW_AMMO_INCIDENTS.md",
+      "git_blob_sha": "60981b6aef9813eb8e80920320c67140bec2b611",
+      "size_bytes": 7388,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/README.md",
+      "git_blob_sha": "eb7407bd33ab31b20c9076e9bac18f9979a29f6b",
+      "size_bytes": 1189,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/TWO_STAGE_HIT.md",
+      "git_blob_sha": "1682d7a79acdde6b89ca13605e7c4da731808133",
+      "size_bytes": 15570,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/combat/WRECK_VISIBILITY.md",
+      "git_blob_sha": "3704b84001e4725a660d710d57b04fcced64a63e",
+      "size_bytes": 4784,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/logistics/RELOAD_AMMO_SUPPLY.md",
+      "git_blob_sha": "6bfc48ab3ef3723911f0e31d8b2021c61def2e1e",
+      "size_bytes": 8425,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/maps/LARGE_MAP_LOS_AND_AI.md",
+      "git_blob_sha": "37556c5a2a4d7f884db217517659f87b4d30a563",
+      "size_bytes": 17150,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/README.md",
+      "git_blob_sha": "09614614b0539df2206552e81a2c3c43bd2ed5c0",
+      "size_bytes": 1643,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/units/infantry/DESIGN.md",
+      "git_blob_sha": "bb107f673de1fe7fdcf01dac7aed30cdf7a997bb",
+      "size_bytes": 8995,
+      "domain": "units"
+    },
+    {
+      "path": "archive/library/units/README.md",
+      "git_blob_sha": "326a13a9135183498c6fed60168869581da85515",
+      "size_bytes": 424,
+      "domain": "units"
+    },
+    {
+      "path": "archive/library/vehicles/1989/air/AH64A.md",
+      "git_blob_sha": "ead1d2cbe0e77644465d42a5d687c2721b6e62bf",
+      "size_bytes": 6628,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/1989/air/MI24_D_V_P.md",
+      "git_blob_sha": "e2cee9765829f16ce56a5f8cad12f06bb8e996b4",
+      "size_bytes": 10623,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/1989/apc/APC_ADDITIONAL.md",
+      "git_blob_sha": "f90d4dc76207d7a292ba6b2c2f3db5db8b538412",
+      "size_bytes": 6559,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/1989/apc/APC_BASE_AND_MACHINEGUNS.md",
+      "git_blob_sha": "e81ed17478dfcf1544b3f233b97cff6c2f2aad6c",
+      "size_bytes": 9814,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/1989/ifv/BMP_1_1P_2.md",
+      "git_blob_sha": "adca61c8f79bf25fa728a0c2b027cef005d15753",
+      "size_bytes": 9187,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/1989/ifv/BRADLEY.md",
+      "git_blob_sha": "5dfb905fd7e452c801bc11509c9d2016fd2d5bcb",
+      "size_bytes": 18420,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/1989/ifv/MARDER_1A2_1A3.md",
+      "git_blob_sha": "98eb3e624ea8402d7afd329a704f5d2e3342733f",
+      "size_bytes": 9281,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/1989/recon/RECON_VEHICLES.md",
+      "git_blob_sha": "e89026d734e2f59ab81e48c631e41649e88c1419",
+      "size_bytes": 6091,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/README.md",
+      "git_blob_sha": "75a11f7708fddd7db5af9b64e2e3198eb01d36f2",
+      "size_bytes": 2181,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/NVA.md",
+      "git_blob_sha": "aaeec9c24aaebb960c1bd81a3fe4219733dde024",
+      "size_bytes": 7273,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/README.md",
+      "git_blob_sha": "9dbd8995c2e6b8614fe4733eb5386518a87bfeeb",
+      "size_bytes": 4876,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/SOVIET.md",
+      "git_blob_sha": "941ed614bc7c6265174a40ce48bc88a62437be78",
+      "size_bytes": 13644,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/UPPER_ARMOR.md",
+      "git_blob_sha": "fed3b66b0a0bd8528e7564485991d6e3fe6a41a9",
+      "size_bytes": 5863,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/US.md",
+      "git_blob_sha": "639bf1c2bc8a5f6046b79a20bcf39a591f79bdf9",
+      "size_bytes": 2150,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/WEST_GERMANY.md",
+      "git_blob_sha": "038562f4697c30988ef40b02bde2055637518412",
+      "size_bytes": 6737,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/modern/LEOPARD_2A8.md",
+      "git_blob_sha": "9cb17007616a0eab467484049e8ffa0b0fa18998",
+      "size_bytes": 8220,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/post-1989/M1A2_1992_1998.md",
+      "git_blob_sha": "aedaa1950d90fd19881e4316fa7cf6a868990b22",
+      "size_bytes": 3499,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/world/1989/WW3_FORCE_INVENTORY_DRAFT.md",
+      "git_blob_sha": "fbc7a25ddd030f3e09ce1f600958852e38bcfdc5",
+      "size_bytes": 18649,
+      "domain": "world"
+    },
+    {
+      "path": "archive/library/world/README.md",
+      "git_blob_sha": "31cd1328bcf907f38d9b249929c7252d226ec2f9",
+      "size_bytes": 424,
+      "domain": "world"
+    }
+  ]
+}
