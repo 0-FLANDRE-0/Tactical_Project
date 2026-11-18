@@ -3,7 +3,7 @@
   "created_date": "2026-11-19",
   "repository": "0-FLANDRE-0/Tactical_Project",
   "status": "five_stage_library_canonical_index_complete",
-  "tree_before_manifest_creation": "973b2529f029e993b37a33db355a22e98c32651c",
+  "tree_before_manifest_creation": "a081b58870476082ffdef7d4c10dcf3c2b97683f",
   "manifest_excludes_itself": true,
   "baseline": {
     "branch": "archive-library-baseline-2026-11-19",
@@ -108,8 +108,8 @@
     },
     {
       "path": "archive/library/ammunition/missiles/TOW_FAMILY.md",
-      "git_blob_sha": "6fbf46817f8d0039eec12bd4d4111ad746d8307a",
-      "size_bytes": 11024,
+      "git_blob_sha": "c5b38a6eeccf387b2ad6e7f92f7a0927102c80d1",
+      "size_bytes": 11064,
       "domain": "ammunition"
     },
     {
@@ -120,8 +120,8 @@
     },
     {
       "path": "archive/library/ammunition/README.md",
-      "git_blob_sha": "b84a4c8b115fbf4501934651345232e0eb07a8ad",
-      "size_bytes": 2392,
+      "git_blob_sha": "6b6793e17deee1a9785547c0811a332cb01327c3",
+      "size_bytes": 2440,
       "domain": "ammunition"
     },
     {
@@ -234,8 +234,8 @@
     },
     {
       "path": "archive/library/presets/1989/README.md",
-      "git_blob_sha": "74219252762d4164e043cda5ce08088eded8823e",
-      "size_bytes": 7943,
+      "git_blob_sha": "ebd02ab1501bd65c6863fb85931b8805071e760c",
+      "size_bytes": 7998,
       "domain": "presets"
     },
     {
@@ -294,8 +294,8 @@
     },
     {
       "path": "archive/library/systems/armor/README.md",
-      "git_blob_sha": "28335ff80aa099970812608ad6177dfbf7d41c65",
-      "size_bytes": 734,
+      "git_blob_sha": "eaec2f797b4ac754bac5529abcbdda0d1ef17c2e",
+      "size_bytes": 813,
       "domain": "systems"
     },
     {
@@ -372,8 +372,8 @@
     },
     {
       "path": "archive/library/systems/README.md",
-      "git_blob_sha": "09614614b0539df2206552e81a2c3c43bd2ed5c0",
-      "size_bytes": 1643,
+      "git_blob_sha": "de9b421ba74c5249850eb5a9ab015ed847d036c1",
+      "size_bytes": 1806,
       "domain": "systems"
     },
     {
@@ -438,8 +438,8 @@
     },
     {
       "path": "archive/library/vehicles/README.md",
-      "git_blob_sha": "75a11f7708fddd7db5af9b64e2e3198eb01d36f2",
-      "size_bytes": 2181,
+      "git_blob_sha": "55ec2afdccb4dbe70c583372169b0e2fdbab260f",
+      "size_bytes": 2190,
       "domain": "vehicles"
     },
     {
@@ -450,8 +450,8 @@
     },
     {
       "path": "archive/library/vehicles/tanks/1989/README.md",
-      "git_blob_sha": "9dbd8995c2e6b8614fe4733eb5386518a87bfeeb",
-      "size_bytes": 4876,
+      "git_blob_sha": "c25f2871cb2749f1c660081cd7d28f0f5dd3b3ad",
+      "size_bytes": 4906,
       "domain": "vehicles"
     },
     {
@@ -480,8 +480,8 @@
     },
     {
       "path": "archive/library/vehicles/tanks/modern/LEOPARD_2A8.md",
-      "git_blob_sha": "9cb17007616a0eab467484049e8ffa0b0fa18998",
-      "size_bytes": 8220,
+      "git_blob_sha": "d8624195e569bfed423aa3799ec1b654f5a1ad29",
+      "size_bytes": 8249,
       "domain": "vehicles"
     },
     {
