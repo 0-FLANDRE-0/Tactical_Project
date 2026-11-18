@@ -5,7 +5,7 @@
 # TACTICAL 1989 — APC 추가 차량 설계: BTR-60PB, M113G, TPz 1 Fuchs, BTR-50PK, MT-LB
 
 > 기록: 2026-11-14 | **게임 설계 아카이브**. 이 문서의 게임 수치는 역사적 실측 장갑/공식 보유량이 아니며 실제 유닛 코드에 적용하지 않았다.
-> **기준 연결:** [기존 APC 4종 및 기관총 기본탄](APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md) · [1989년 4개 군사집단 보유량 원안](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md)
+> **기준 연결:** [기존 APC 4종 및 기관총 기본탄](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md) · [1989년 4개 군사집단 보유량 원안](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md)
 > **확정 상태 구분:** 사용자 승인 ＝ 채택. 사용자에게 제시만 하고 별도 확정하지 않은 수치는 **제안/미정**으로 구별한다.
 
 ## 1. BTR-60PB — 기본형·BTR-70 공통 무장 재활용
@@ -83,7 +83,7 @@
 
 ## 5. 1989년 범위·잔여 미결정 메모
 
-- **기존 APC 4종** M113A2/A3(400/450HP), BTR-70/80(350/400HP)은 [기존 기준표](APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md)에 그대로 보존. 이 문서가 그 수치를 바꾸지 않는다.
+- **기존 APC 4종** M113A2/A3(400/450HP), BTR-70/80(350/400HP)은 [기존 기준표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md)에 그대로 보존. 이 문서가 그 수치를 바꾸지 않는다.
 - **BTR-80A 30mm 2A72형**은 1989년 기본 전력에서 제외, 후대 확장 후보로 유지.
 - **공통 미정:** 기관총의 장갑·비장갑 표적별 사거리, 이동 중 명중, 연사 산포, 승하차 및 탑승 보병 보호, 기관총 사수 노출, 연료/화재/정비, 차량 기동 속도, 보급·가격, 장비 프리셋.
 - **세계관 수량과 모델 수를 혼동하지 않음:** 원안 보유량(기타 BTR, M113G 계열, 기타 차륜형)은 세부 파생차·부대별 가용 차량 수로 아직 분할하지 않았다.
