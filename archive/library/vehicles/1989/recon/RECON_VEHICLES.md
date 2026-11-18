@@ -5,7 +5,7 @@
 # TACTICAL 1989 — 정찰장갑차: BRDM-2, SpPz 2 Luchs, M3 Bradley, BRM-1K
 
 > 기록: 2026-11-14 | **사용자 승인 게임 설계값**과 기존 차량 데이터의 재활용 방향을 정리. 실측 장갑 수치·검증된 1989년 각국 배치량이나 코드 구현 완료를 뜻하지 않는다.
-> 관련: [APC·기관총 기본탄](APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md) · [M2 브래들리 계열](USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) · [BMP](SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md) · [마르더/Rh 202](BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md) · [세계관 보유량](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md).
+> 관련: [APC·기관총 기본탄](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md) · [M2 브래들리 계열](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) · [BMP](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md) · [마르더/Rh 202](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md) · [세계관 보유량](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md).
 
 ## 1. 정찰장갑차 신규 제원 3종 — [사용자 제안 채택]
 
