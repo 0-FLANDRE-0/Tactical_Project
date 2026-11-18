@@ -114,5 +114,5 @@
 - 10m 30°·60°는 **2km 각도 비율에 의한 게임 추정값**이며 WT의 각도별 10m 관통 실측치로 주장하지 않는다.
 - 워썬더 구판 참고: [미국 M68](https://old-wiki.warthunder.com/M68_%28105_mm%29/Ammunition), [M68A1](https://old-wiki.warthunder.com/M68A1_%28105_mm%29/Ammunition), [M256](https://old-wiki.warthunder.com/M256_%28120_mm%29/Ammunition), [독일 GT-3](https://old-wiki.warthunder.com/GT-3_%28105_mm%29/Ammunition), [Rh120 L/44](https://old-wiki.warthunder.com/Rh120_L/44_%28120_mm%29/Ammunition), [소련 2A46](https://old-wiki.warthunder.com/2A46_%28125_mm%29/Ammunition), [100mm D-10T](https://old-wiki.warthunder.com/D-10T_%28100_mm%29/Ammunition).
 
-**관리 원칙:** [탄약 본표](README.md)의 최신 2km 3BM32·3BM42 값과 이 문서의 10m 3각도값을 기준으로 하며, 기존 1mm 단위 영거리 추정치는 기록 이력으로만 취급한다.
+**관리 원칙:** [탄약 본표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)의 최신 2km 3BM32·3BM42 값과 이 문서의 10m 3각도값을 기준으로 하며, 기존 1mm 단위 영거리 추정치는 기록 이력으로만 취급한다.
 
