@@ -8,6 +8,7 @@
 - [2026-11-07 진행 기록·당시 미정](progress/NEXT_STEPS_2026_11_07.md) — 현재 진행도로 사용하지 않음
 - [미채택 내부 장갑면 세분화 아이디어](proposals/ARMOR_SUBZONES.md) — 기본 7구역 확정값과 구별
 - [구형 통합 전차·탄약 문서 폐기 안내](legacy/README.md)
+- [최종 96개 프리셋 이전의 구형 대기갑 단일 편성](legacy/OLD_ANTITANK_PRESETS.md)
 - [방호·관통·피해 최신 시스템 이관본](../systems/README.md)
 
 ## 원본 WIP 실행 스냅샷·도면·참조 스크립트 17개
