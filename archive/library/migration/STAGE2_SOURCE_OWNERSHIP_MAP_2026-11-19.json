@@ -1,0 +1,425 @@
+{
+  "schema_version": 1,
+  "stage": 2,
+  "created_date": "2026-11-19",
+  "repo": "0-FLANDRE-0/Tactical_Project",
+  "baseline_commit": "1593dc2caab7c55af85c4df9acf748d2f2fe0706",
+  "note": "이 표는 46개 기준 Markdown 전체를 열어 내용과 지위를 확인한 작업용 책임도이다. proposed_destination은 생성된 파일 경로가 아니며 3~4단계에서 조정 가능. 숫자와 코드 구현을 변경하지 않는다.",
+  "document_count": 46,
+  "documents": [
+    {
+      "source_path": "archive/air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md",
+      "baseline_blob_sha": "8766b7b8520b6040662d15049f1ad2d3c6e87a6f",
+      "source_type": "current_mixed_spec",
+      "proposed_canonical_domain": "vehicle_and_ammunition",
+      "proposed_destination": "archive/library/vehicles/1989/air/ah-64a.md + ammunition/missiles/agm-114a.md",
+      "audit_note": "기체·M230/M789·Hellfire·Hydra·치명타를 각각 독립 항목으로 분할",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md",
+      "baseline_blob_sha": "7fe0c5ed3fd98b466c841f270be24346065b4f32",
+      "source_type": "current_system",
+      "proposed_canonical_domain": "systems",
+      "proposed_destination": "archive/library/systems/air/entry-radar-air-defense.md",
+      "audit_note": "항공 투입·레이더 LOS·IFV 대공교전 거리의 상태별 구분",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/air/HELICOPTER_ROSTER_OVERVIEW_2026-11-15.md",
+      "baseline_blob_sha": "9d1058ae48afb4ee85e7525db38926e19fb85d05",
+      "source_type": "summary_index",
+      "proposed_canonical_domain": "index",
+      "proposed_destination": "archive/library/indexes/aircraft-1989.md",
+      "audit_note": "헬기 상세 문서 우선; 비교표는 참조만",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/air/MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md",
+      "baseline_blob_sha": "8e17f7f8beff39193e56dada337a4aa50a54ca09",
+      "source_type": "current_mixed_spec",
+      "proposed_canonical_domain": "vehicle_and_ammunition",
+      "proposed_destination": "archive/library/vehicles/1989/air/mi-24-series.md + ammunition/missiles/soviet-air-atgm.md",
+      "audit_note": "Mi-24 3형과 6종 미사일, 임시 제안 로켓 4종 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md",
+      "baseline_blob_sha": "095aea25e2aecc99084c1273118863cfd0c9d9b1",
+      "source_type": "current_reference",
+      "proposed_canonical_domain": "ammunition",
+      "proposed_destination": "archive/library/ammunition/references/near-zero-ke-29.md",
+      "audit_note": "2km 기준과 10m 데이터 함께 보존; 추정치 출처 플래그 유지",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/ammo/README.md",
+      "baseline_blob_sha": "caeea18bbb55d47e1107e10fc0cbcf8f40293510",
+      "source_type": "current_mixed_master",
+      "proposed_canonical_domain": "ammunition_and_presets",
+      "proposed_destination": "archive/library/ammunition/ + presets/1989/ + systems/ballistics.md",
+      "audit_note": "탄약·현대 날탄·Anti-ERA·TOW 2A/2B·96프리셋·장전/보급 분리; NATO 10종 소제목 오류",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md",
+      "baseline_blob_sha": "f64cdf4fd6959c6f8b63ca8c03b1d905ab70fd41",
+      "source_type": "mixed_system_and_proposal",
+      "proposed_canonical_domain": "systems",
+      "proposed_destination": "archive/library/systems/combat/angles-ricochet-fuzes.md",
+      "audit_note": "도탄·각도 설계와 특정 WIP 구현 범위 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md",
+      "baseline_blob_sha": "b365db02d75555dc2e2acf633ccb7e71e9655a96",
+      "source_type": "current_system",
+      "proposed_canonical_domain": "systems",
+      "proposed_destination": "archive/library/systems/combat/autocannon-damage.md",
+      "audit_note": "기관포 치명타 미도입 확정 vs M791/M919 잠정 계수 구분",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md",
+      "baseline_blob_sha": "14fa45f3fb8f155a95258484a679c9ad80fc09e6",
+      "source_type": "mixed_system_and_history",
+      "proposed_canonical_domain": "systems",
+      "proposed_destination": "archive/library/systems/combat/penetration-damage.md + history/superseded-modules.md",
+      "audit_note": "옛 모듈 영구파괴 구상은 후속 폐기 방향보다 우선하지 않음",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md",
+      "baseline_blob_sha": "4643ac50ff2167f58702503fec5a99e14014ef48",
+      "source_type": "current_policy_with_history",
+      "proposed_canonical_domain": "systems",
+      "proposed_destination": "archive/library/systems/combat/modules-crew-ammo-incidents.md",
+      "audit_note": "영구 모듈 파괴 미도입 우선; WIP18/20 이후 구현 범위 별도",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md",
+      "baseline_blob_sha": "f08f94d7020b6395778a0829df0eb7d845096de7",
+      "source_type": "mixed_system_and_history",
+      "proposed_canonical_domain": "systems",
+      "proposed_destination": "archive/library/systems/combat/hit-resolution.md",
+      "audit_note": "WIP10 방향과 후속 WIP12 구현/제안 혼재",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md",
+      "baseline_blob_sha": "4b410e9abd6a617de9d26fc9b14cfb0ee4281e89",
+      "source_type": "current_policy",
+      "proposed_canonical_domain": "systems",
+      "proposed_destination": "archive/library/systems/combat/wreck-visibility.md",
+      "audit_note": "잔해 유지·미관측 격파·선택 불가 결정",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md",
+      "baseline_blob_sha": "0fc2fb130169cc24c96435708762d050cdc5763f",
+      "source_type": "mixed_policy_and_proposal",
+      "proposed_canonical_domain": "units_and_systems",
+      "proposed_destination": "archive/library/units/infantry/design.md",
+      "audit_note": "개별 병사 피해·분대 AI 방향과 임시 탄약값 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/README.md",
+      "baseline_blob_sha": "e94d83950720fb74d421847de2c7fa210c3ea5a2",
+      "source_type": "history_index",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/index.md",
+      "audit_note": "WIP별 당시 기록과 최종 main 구현 상태 혼동 금지",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md",
+      "baseline_blob_sha": "0c8c717bec3a03ab79997312b52156187e59e348",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md",
+      "baseline_blob_sha": "514c93494c4fa727e4ed3f10492e654f4266eb8a",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP11D_TERRAIN_READABILITY.md",
+      "baseline_blob_sha": "c6099ef596700670dccabd9f03a1b680e895b6ac",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP11D_TERRAIN_READABILITY.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP11E_LOS_OPTIMIZATION.md",
+      "baseline_blob_sha": "d9f9de07aa40415511ed08bca76204633a2a751a",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP11E_LOS_OPTIMIZATION.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md",
+      "baseline_blob_sha": "75f5b3fc62df259704fae919557a6d355350665c",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md",
+      "baseline_blob_sha": "b6fa7d2fd872f5958f2809c87da2fdcef56c2f34",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md",
+      "baseline_blob_sha": "732d7534a489bf69335dc2bf79554952a288fb5c",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md",
+      "baseline_blob_sha": "ca064e109c43a8dc5cae9a04243a328a8672d454",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md",
+      "baseline_blob_sha": "1a5c96a6bb2c2b35f74ec53a2b890370aa628aa8",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md",
+      "baseline_blob_sha": "682a67e3a940efe87ae4b0d6a6094b1b5e9ce76c",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md",
+      "baseline_blob_sha": "9a152024147368534e91197c259cdd5b0908add5",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md",
+      "baseline_blob_sha": "975a06eb374002abe41a940ba9808694646fd78c",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md",
+      "baseline_blob_sha": "4a64ffc86e6819a2f303fee7fae429c14e8a6e2d",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md",
+      "baseline_blob_sha": "e9d9218ca5830a45ca9cf1160f9caef2a6d6ccb8",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md",
+      "baseline_blob_sha": "ba1211cabec5670ecd38c475e937d2fbee69fb4b",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md",
+      "baseline_blob_sha": "c6fd9ad3903e9772f4535164f645f5f258e3405a",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md",
+      "baseline_blob_sha": "f762e01c71c704063e93b33c4fbbe6e115efb939",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md",
+      "baseline_blob_sha": "7073a30882cf368284133e19b79b4d6a0180e584",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/instructions/TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md",
+      "baseline_blob_sha": "1ba1b24ac9d10074e40a8e00ce12f3d6d8dd634e",
+      "source_type": "historical_work_order",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/implementation/TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md",
+      "audit_note": "원본 지시서·수정 요청의 스냅샷; 최종 구현 상태는 현재 소스/검증 자료와 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/NEXT_STEPS_2026-11-07.md",
+      "baseline_blob_sha": "5e3d82fe34d27efe8ee0947be653fef9e76aa283",
+      "source_type": "historical_progress",
+      "proposed_canonical_domain": "implementation",
+      "proposed_destination": "archive/library/history/progress/2026-11-next-steps.md",
+      "audit_note": "기록 당시 WIP 상태 메모; 현재 구현 상태의 독립 증빙 아님",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md",
+      "baseline_blob_sha": "2eac163a145db40bd1dea2fe68e4d08c4b657ddc",
+      "source_type": "mixed_system_and_proposal",
+      "proposed_canonical_domain": "systems",
+      "proposed_destination": "archive/library/systems/maps-and-performance.md",
+      "audit_note": "4×4 현행, 8×8 기틀, 9×12 후보 구분; 당시 WIP 관측 상태 보정",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/README.md",
+      "baseline_blob_sha": "ac443d60d62b2702ad8a167f497e66eaf35593df",
+      "source_type": "index",
+      "proposed_canonical_domain": "index",
+      "proposed_destination": "archive/library/README.md",
+      "audit_note": "기존 아카이브 목차; 기존 정본 링크는 이관 완료 전까지 유지",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md",
+      "baseline_blob_sha": "ef8710751c10640e18871ef2fc88b45fe6101770",
+      "source_type": "retired_redirect",
+      "proposed_canonical_domain": "history",
+      "proposed_destination": "archive/library/history/legacy/1989-armor-ammo-redirect.md",
+      "audit_note": "수치 정본 아님; 구형 통합본 폐기 안내만 보존",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md",
+      "baseline_blob_sha": "86280628ea2097a612dc02521da027880ebcccd8",
+      "source_type": "proposal",
+      "proposed_canonical_domain": "history_or_systems",
+      "proposed_destination": "archive/library/history/proposals/armor-subzones.md",
+      "audit_note": "7구역 내부 세분화는 미확정 아이디어",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/tanks/README.md",
+      "baseline_blob_sha": "cbad97448b1f23733021ad8a22535331451d6e8f",
+      "source_type": "current_mixed_master",
+      "proposed_canonical_domain": "vehicles_and_armor_systems",
+      "proposed_destination": "archive/library/vehicles/tanks/1989/ + vehicles/tanks/post-1989/ + systems/armor.md",
+      "audit_note": "1989 32종·후속 M1A2 2종·현대 2A8·ERA/모듈러 증가장갑/Trophy 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/vehicles/APC_ADDITIONAL_BTR60_M113G_FUCHS_BTR50_MTLB_2026-11-14.md",
+      "baseline_blob_sha": "8a4fdcd3abfb1ad10635891c98d8e3937ec68871",
+      "source_type": "mixed_spec_and_proposal",
+      "proposed_canonical_domain": "vehicles",
+      "proposed_destination": "archive/library/vehicles/1989/apc/additional.md",
+      "audit_note": "Fuchs/BTR-50/MT-LB 채택값과 M113G 후보 구분",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/vehicles/APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md",
+      "baseline_blob_sha": "a7fc40ce05ce4c9f40fd5e888603104187dfb21a",
+      "source_type": "current_mixed_spec",
+      "proposed_canonical_domain": "vehicles_and_ammunition",
+      "proposed_destination": "archive/library/vehicles/1989/apc/core.md + ammunition/small-arms.md",
+      "audit_note": "APC 4종 장갑·HP와 기관총 공통탄 데이터 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/vehicles/BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md",
+      "baseline_blob_sha": "c761d32cb9c908760506eab0fb14d6e5a8aea06e",
+      "source_type": "current_mixed_spec",
+      "proposed_canonical_domain": "vehicles_and_ammunition",
+      "proposed_destination": "archive/library/vehicles/1989/ifv/marder.md + ammunition/missiles/milan.md",
+      "audit_note": "Marder 두 형식·Rh 202 탄약·MILAN 독립 연결",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/vehicles/RECON_BRDM2_LUCHS_M3_BRM1K_2026-11-14.md",
+      "baseline_blob_sha": "40d665648d664d1d4031742bec01c9684c313b44",
+      "source_type": "mixed_spec_and_proposal",
+      "proposed_canonical_domain": "vehicles",
+      "proposed_destination": "archive/library/vehicles/1989/recon.md",
+      "audit_note": "BRDM-2/Luchs/BRM-1K 채택, M3 재활용·정찰 수치 미정",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md",
+      "baseline_blob_sha": "f2d80f0068625c227ea9f1472bc43c47b9a00731",
+      "source_type": "current_mixed_spec",
+      "proposed_canonical_domain": "vehicles_and_ammunition",
+      "proposed_destination": "archive/library/vehicles/1989/ifv/bmp.md + ammunition/missiles/soviet-ground-atgm.md",
+      "audit_note": "BMP 3형·2A28/2A42·ATGM 분리",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md",
+      "baseline_blob_sha": "e6a56b9d69746d123f9d6eff9fa367d1ccf32ebb",
+      "source_type": "current_mixed_spec",
+      "proposed_canonical_domain": "vehicles_and_ammunition",
+      "proposed_destination": "archive/library/vehicles/1989/ifv/bradley.md + ammunition/missiles/tow-family.md",
+      "audit_note": "TOW 원본·TOW2A/2B와 ammo README 중복; TOW2B 절 링크는 이전 앵커",
+      "content_read": true
+    },
+    {
+      "source_path": "archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md",
+      "baseline_blob_sha": "fa900ea49fc38c1cb620596e0ee10623f6a21ae4",
+      "source_type": "worldbuilding_draft",
+      "proposed_canonical_domain": "world",
+      "proposed_destination": "archive/library/world/1989/ww3-1989-force-inventory-draft.md",
+      "audit_note": "대체역사 세계관 원안이며 공식 확정 편제/실제 보유량 아님",
+      "content_read": true
+    }
+  ]
+}
