@@ -18,7 +18,7 @@
 
 - [DM53 / DM53A1 / DM63 / DM63A1 / DM73 · M829A2 Anti-ERA](modern/APFSDS_120MM.md)
 - **Anti-ERA:** 탄약이 ERA의 추가 KE 방호력을 일부 감쇄하는 능력; ERA 피복률 소모와 별개. DM53~DM63은 Kontakt-5급, DM63A1은 Relikt급에도 부분 대응, DM73은 한 단계 더 높은 대응. **숫자 감쇄율 미정**.
-- [원본 근거리 10m 29종 KE 표](../migration/STAGE2_CANONICAL_SOURCE_AUDIT_2026-11-19.md) — 해당 자료는 별도 `archive/ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md`로 보존, 별도 이관 검증 예정.
+- [근거리 0~10m KE 29종 3각도 이관본](references/NEAR_ZERO_10M_KE.md) — 원본 29종의 게임용 10m/2km 표와 추정·검토 메모 보존.
 
 ## 미사일
 
