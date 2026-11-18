@@ -1,0 +1,1954 @@
+{
+  "schema_version": 1,
+  "stage": 3,
+  "status": "migrated_verified_against_source_not_final_canonical",
+  "era": "1989",
+  "source_path": "archive/ammo/README.md",
+  "source_section": "11",
+  "source_git_blob_sha": "caeea18bbb55d47e1107e10fc0cbcf8f40293510",
+  "armor_hp_crosscheck_source": "archive/tanks/README.md",
+  "expected_tanks": 32,
+  "expected_presets_per_tank": 3,
+  "expected_expanded_rows": 96,
+  "source_group_templates": 18,
+  "source_table_rows": 54,
+  "unit": "rounds",
+  "notation": {
+    "soviet": "AP/HEAT/HE/ATGM",
+    "nva": "AP/HEAT/HE/ATGM",
+    "nato": "AP/HEAT/HEP"
+  },
+  "notes": [
+    "준즉응탄이 없는 차종은 semi_ready=null",
+    "원본 18개 공유 템플릿을 형식별 96개 행으로 확장; 각 구획 발수·총합 변경 없음",
+    "설계 확정과 코드 구현 구분; 본편 프리셋 실제 게임 코드는 변경 없음"
+  ],
+  "presets": [
+    {
+      "vehicle": "T-64A (1969)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        12,
+        7,
+        9,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        3,
+        2,
+        4,
+        0
+      ],
+      "total_rounds": 37,
+      "source_template": "T-64A (1969/1975)"
+    },
+    {
+      "vehicle": "T-64A (1975)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        12,
+        7,
+        9,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        3,
+        2,
+        4,
+        0
+      ],
+      "total_rounds": 37,
+      "source_template": "T-64A (1969/1975)"
+    },
+    {
+      "vehicle": "T-64A (1969)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        10,
+        4,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        4,
+        3,
+        2,
+        0
+      ],
+      "total_rounds": 37,
+      "source_template": "T-64A (1969/1975)"
+    },
+    {
+      "vehicle": "T-64A (1975)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        10,
+        4,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        4,
+        3,
+        2,
+        0
+      ],
+      "total_rounds": 37,
+      "source_template": "T-64A (1969/1975)"
+    },
+    {
+      "vehicle": "T-64A (1969)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        8,
+        6,
+        14,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        2,
+        2,
+        5,
+        0
+      ],
+      "total_rounds": 37,
+      "source_template": "T-64A (1969/1975)"
+    },
+    {
+      "vehicle": "T-64A (1975)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        8,
+        6,
+        14,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        2,
+        2,
+        5,
+        0
+      ],
+      "total_rounds": 37,
+      "source_template": "T-64A (1969/1975)"
+    },
+    {
+      "vehicle": "T-64B (1976)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        10,
+        6,
+        10,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        3,
+        2,
+        2,
+        1
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-64B (1984)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        10,
+        6,
+        10,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        3,
+        2,
+        2,
+        1
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-64BV (1985)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        10,
+        6,
+        10,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        3,
+        2,
+        2,
+        1
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-64B (1976)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        6,
+        4,
+        4
+      ],
+      "semi_ready": null,
+      "reserve": [
+        0,
+        4,
+        4,
+        0
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-64B (1984)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        6,
+        4,
+        4
+      ],
+      "semi_ready": null,
+      "reserve": [
+        0,
+        4,
+        4,
+        0
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-64BV (1985)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        6,
+        4,
+        4
+      ],
+      "semi_ready": null,
+      "reserve": [
+        0,
+        4,
+        4,
+        0
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-64B (1976)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        7,
+        5,
+        15,
+        1
+      ],
+      "semi_ready": null,
+      "reserve": [
+        2,
+        2,
+        3,
+        1
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-64B (1984)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        7,
+        5,
+        15,
+        1
+      ],
+      "semi_ready": null,
+      "reserve": [
+        2,
+        2,
+        3,
+        1
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-64BV (1985)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        7,
+        5,
+        15,
+        1
+      ],
+      "semi_ready": null,
+      "reserve": [
+        2,
+        2,
+        3,
+        1
+      ],
+      "total_rounds": 36,
+      "source_template": "T-64B (1976/1984), T-64BV (1985)"
+    },
+    {
+      "vehicle": "T-72A (1979)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        11,
+        5,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        7,
+        9,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72A (1979/1983)"
+    },
+    {
+      "vehicle": "T-72A (1983)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        11,
+        5,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        7,
+        9,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72A (1979/1983)"
+    },
+    {
+      "vehicle": "T-72A (1979)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        6,
+        4,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        8,
+        6,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72A (1979/1983)"
+    },
+    {
+      "vehicle": "T-72A (1983)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        6,
+        4,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        8,
+        6,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72A (1979/1983)"
+    },
+    {
+      "vehicle": "T-72A (1979)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        7,
+        4,
+        11,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        5,
+        5,
+        12,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72A (1979/1983)"
+    },
+    {
+      "vehicle": "T-72A (1983)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        7,
+        4,
+        11,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        5,
+        5,
+        12,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72A (1979/1983)"
+    },
+    {
+      "vehicle": "T-72B (1985)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        10,
+        5,
+        5,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        5,
+        10,
+        1
+      ],
+      "total_rounds": 45,
+      "source_template": "T-72B (1985/1989)"
+    },
+    {
+      "vehicle": "T-72B (1989)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        10,
+        5,
+        5,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        5,
+        10,
+        1
+      ],
+      "total_rounds": 45,
+      "source_template": "T-72B (1985/1989)"
+    },
+    {
+      "vehicle": "T-72B (1985)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        5,
+        2,
+        3
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        8,
+        5,
+        2
+      ],
+      "total_rounds": 45,
+      "source_template": "T-72B (1985/1989)"
+    },
+    {
+      "vehicle": "T-72B (1989)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        5,
+        2,
+        3
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        8,
+        5,
+        2
+      ],
+      "total_rounds": 45,
+      "source_template": "T-72B (1985/1989)"
+    },
+    {
+      "vehicle": "T-72B (1985)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        3,
+        12,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        5,
+        11,
+        1
+      ],
+      "total_rounds": 45,
+      "source_template": "T-72B (1985/1989)"
+    },
+    {
+      "vehicle": "T-72B (1989)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        3,
+        12,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        5,
+        11,
+        1
+      ],
+      "total_rounds": 45,
+      "source_template": "T-72B (1985/1989)"
+    },
+    {
+      "vehicle": "T-80B (1978)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        11,
+        6,
+        9,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        3,
+        2,
+        4,
+        1
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80B (1984)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        11,
+        6,
+        9,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        3,
+        2,
+        4,
+        1
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80BV (1985)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        11,
+        6,
+        9,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        3,
+        2,
+        4,
+        1
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80B (1978)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        7,
+        4,
+        3
+      ],
+      "semi_ready": null,
+      "reserve": [
+        5,
+        3,
+        2,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80B (1984)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        7,
+        4,
+        3
+      ],
+      "semi_ready": null,
+      "reserve": [
+        5,
+        3,
+        2,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80BV (1985)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        7,
+        4,
+        3
+      ],
+      "semi_ready": null,
+      "reserve": [
+        5,
+        3,
+        2,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80B (1978)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        8,
+        5,
+        13,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        2,
+        2,
+        6,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80B (1984)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        8,
+        5,
+        13,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        2,
+        2,
+        6,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80BV (1985)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        8,
+        5,
+        13,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        2,
+        2,
+        6,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-80B (1978/1984), T-80BV (1985)"
+    },
+    {
+      "vehicle": "T-80U (1985)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        13,
+        5,
+        8,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        5,
+        4,
+        7,
+        1
+      ],
+      "total_rounds": 45,
+      "source_template": "T-80U (1985/1989)"
+    },
+    {
+      "vehicle": "T-80U (1989)",
+      "faction": "soviet",
+      "preset": "기본",
+      "ready": [
+        13,
+        5,
+        8,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        5,
+        4,
+        7,
+        1
+      ],
+      "total_rounds": 45,
+      "source_template": "T-80U (1985/1989)"
+    },
+    {
+      "vehicle": "T-80U (1985)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        6,
+        4,
+        4
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        6,
+        4,
+        0
+      ],
+      "total_rounds": 45,
+      "source_template": "T-80U (1985/1989)"
+    },
+    {
+      "vehicle": "T-80U (1989)",
+      "faction": "soviet",
+      "preset": "대기갑",
+      "ready": [
+        14,
+        6,
+        4,
+        4
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        6,
+        4,
+        0
+      ],
+      "total_rounds": 45,
+      "source_template": "T-80U (1985/1989)"
+    },
+    {
+      "vehicle": "T-80U (1985)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        8,
+        5,
+        13,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        4,
+        3,
+        10,
+        0
+      ],
+      "total_rounds": 45,
+      "source_template": "T-80U (1985/1989)"
+    },
+    {
+      "vehicle": "T-80U (1989)",
+      "faction": "soviet",
+      "preset": "화력지원",
+      "ready": [
+        8,
+        5,
+        13,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        4,
+        3,
+        10,
+        0
+      ],
+      "total_rounds": 45,
+      "source_template": "T-80U (1985/1989)"
+    },
+    {
+      "vehicle": "M1",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        11,
+        6,
+        8
+      ],
+      "semi_ready": [
+        8,
+        6,
+        8
+      ],
+      "reserve": [
+        4,
+        3,
+        1
+      ],
+      "total_rounds": 55,
+      "source_template": "M1 / IPM1"
+    },
+    {
+      "vehicle": "IPM1",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        11,
+        6,
+        8
+      ],
+      "semi_ready": [
+        8,
+        6,
+        8
+      ],
+      "reserve": [
+        4,
+        3,
+        1
+      ],
+      "total_rounds": 55,
+      "source_template": "M1 / IPM1"
+    },
+    {
+      "vehicle": "M1",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        15,
+        6,
+        4
+      ],
+      "semi_ready": [
+        8,
+        8,
+        6
+      ],
+      "reserve": [
+        4,
+        4,
+        0
+      ],
+      "total_rounds": 55,
+      "source_template": "M1 / IPM1"
+    },
+    {
+      "vehicle": "IPM1",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        15,
+        6,
+        4
+      ],
+      "semi_ready": [
+        8,
+        8,
+        6
+      ],
+      "reserve": [
+        4,
+        4,
+        0
+      ],
+      "total_rounds": 55,
+      "source_template": "M1 / IPM1"
+    },
+    {
+      "vehicle": "M1",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        7,
+        4,
+        14
+      ],
+      "semi_ready": [
+        6,
+        5,
+        11
+      ],
+      "reserve": [
+        3,
+        2,
+        3
+      ],
+      "total_rounds": 55,
+      "source_template": "M1 / IPM1"
+    },
+    {
+      "vehicle": "IPM1",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        7,
+        4,
+        14
+      ],
+      "semi_ready": [
+        6,
+        5,
+        11
+      ],
+      "reserve": [
+        3,
+        2,
+        3
+      ],
+      "total_rounds": 55,
+      "source_template": "M1 / IPM1"
+    },
+    {
+      "vehicle": "M1A1",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        8,
+        9,
+        0
+      ],
+      "semi_ready": [
+        8,
+        9,
+        0
+      ],
+      "reserve": [
+        3,
+        3,
+        0
+      ],
+      "total_rounds": 40,
+      "source_template": "M1A1 / M1A1 HA"
+    },
+    {
+      "vehicle": "M1A1 HA",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        8,
+        9,
+        0
+      ],
+      "semi_ready": [
+        8,
+        9,
+        0
+      ],
+      "reserve": [
+        3,
+        3,
+        0
+      ],
+      "total_rounds": 40,
+      "source_template": "M1A1 / M1A1 HA"
+    },
+    {
+      "vehicle": "M1A1",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        5,
+        0
+      ],
+      "semi_ready": [
+        10,
+        7,
+        0
+      ],
+      "reserve": [
+        3,
+        3,
+        0
+      ],
+      "total_rounds": 40,
+      "source_template": "M1A1 / M1A1 HA"
+    },
+    {
+      "vehicle": "M1A1 HA",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        5,
+        0
+      ],
+      "semi_ready": [
+        10,
+        7,
+        0
+      ],
+      "reserve": [
+        3,
+        3,
+        0
+      ],
+      "total_rounds": 40,
+      "source_template": "M1A1 / M1A1 HA"
+    },
+    {
+      "vehicle": "M1A1",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        12,
+        0
+      ],
+      "semi_ready": [
+        5,
+        12,
+        0
+      ],
+      "reserve": [
+        2,
+        4,
+        0
+      ],
+      "total_rounds": 40,
+      "source_template": "M1A1 / M1A1 HA"
+    },
+    {
+      "vehicle": "M1A1 HA",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        12,
+        0
+      ],
+      "semi_ready": [
+        5,
+        12,
+        0
+      ],
+      "reserve": [
+        2,
+        4,
+        0
+      ],
+      "total_rounds": 40,
+      "source_template": "M1A1 / M1A1 HA"
+    },
+    {
+      "vehicle": "M60A3 TTS",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        6,
+        4,
+        3
+      ],
+      "semi_ready": [
+        10,
+        6,
+        5
+      ],
+      "reserve": [
+        10,
+        7,
+        12
+      ],
+      "total_rounds": 63,
+      "source_template": "M60A3 TTS"
+    },
+    {
+      "vehicle": "M60A3 TTS",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        8,
+        4,
+        1
+      ],
+      "semi_ready": [
+        12,
+        6,
+        3
+      ],
+      "reserve": [
+        15,
+        7,
+        7
+      ],
+      "total_rounds": 63,
+      "source_template": "M60A3 TTS"
+    },
+    {
+      "vehicle": "M60A3 TTS",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        4,
+        3,
+        6
+      ],
+      "semi_ready": [
+        5,
+        5,
+        11
+      ],
+      "reserve": [
+        7,
+        5,
+        17
+      ],
+      "total_rounds": 63,
+      "source_template": "M60A3 TTS"
+    },
+    {
+      "vehicle": "Leopard 1A5",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        5,
+        4,
+        4
+      ],
+      "semi_ready": null,
+      "reserve": [
+        16,
+        12,
+        14
+      ],
+      "total_rounds": 55,
+      "source_template": "Leopard 1A5"
+    },
+    {
+      "vehicle": "Leopard 1A5",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        6,
+        4,
+        3
+      ],
+      "semi_ready": null,
+      "reserve": [
+        18,
+        14,
+        10
+      ],
+      "total_rounds": 55,
+      "source_template": "Leopard 1A5"
+    },
+    {
+      "vehicle": "Leopard 1A5",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        3,
+        3,
+        7
+      ],
+      "semi_ready": null,
+      "reserve": [
+        10,
+        10,
+        22
+      ],
+      "total_rounds": 55,
+      "source_template": "Leopard 1A5"
+    },
+    {
+      "vehicle": "Leopard 1A1A1",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        5,
+        4,
+        4
+      ],
+      "semi_ready": null,
+      "reserve": [
+        18,
+        13,
+        16
+      ],
+      "total_rounds": 60,
+      "source_template": "Leopard 1A1A1"
+    },
+    {
+      "vehicle": "Leopard 1A1A1",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        6,
+        4,
+        3
+      ],
+      "semi_ready": null,
+      "reserve": [
+        21,
+        16,
+        10
+      ],
+      "total_rounds": 60,
+      "source_template": "Leopard 1A1A1"
+    },
+    {
+      "vehicle": "Leopard 1A1A1",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        3,
+        3,
+        7
+      ],
+      "semi_ready": null,
+      "reserve": [
+        11,
+        11,
+        25
+      ],
+      "total_rounds": 60,
+      "source_template": "Leopard 1A1A1"
+    },
+    {
+      "vehicle": "Leopard 2A3",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        7,
+        8,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        13,
+        14,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "Leopard 2A4 C-Type",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        7,
+        8,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        13,
+        14,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "Leopard 2 KVT (1989)",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        7,
+        8,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        13,
+        14,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "Leopard 2A3",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        9,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        17,
+        10,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "Leopard 2A4 C-Type",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        9,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        17,
+        10,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "Leopard 2 KVT (1989)",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        9,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        17,
+        10,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "Leopard 2A3",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        10,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        19,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "Leopard 2A4 C-Type",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        10,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        19,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "Leopard 2 KVT (1989)",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        10,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        19,
+        0
+      ],
+      "total_rounds": 42,
+      "source_template": "Leopard 2A3 / Leopard 2A4 C-Type / Leopard 2 KVT (1989)"
+    },
+    {
+      "vehicle": "M48A2GA2",
+      "faction": "nato",
+      "preset": "기본",
+      "ready": [
+        8,
+        6,
+        6
+      ],
+      "semi_ready": [
+        2,
+        1,
+        1
+      ],
+      "reserve": [
+        8,
+        6,
+        8
+      ],
+      "total_rounds": 46,
+      "source_template": "M48A2GA2"
+    },
+    {
+      "vehicle": "M48A2GA2",
+      "faction": "nato",
+      "preset": "대기갑",
+      "ready": [
+        11,
+        6,
+        3
+      ],
+      "semi_ready": [
+        2,
+        1,
+        1
+      ],
+      "reserve": [
+        11,
+        6,
+        5
+      ],
+      "total_rounds": 46,
+      "source_template": "M48A2GA2"
+    },
+    {
+      "vehicle": "M48A2GA2",
+      "faction": "nato",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        5,
+        10
+      ],
+      "semi_ready": [
+        1,
+        1,
+        2
+      ],
+      "reserve": [
+        6,
+        4,
+        12
+      ],
+      "total_rounds": 46,
+      "source_template": "M48A2GA2"
+    },
+    {
+      "vehicle": "T-72 Ural (1973)",
+      "faction": "nva",
+      "preset": "기본",
+      "ready": [
+        10,
+        6,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        4,
+        7,
+        0
+      ],
+      "total_rounds": 39,
+      "source_template": "T-72 Ural (1973)"
+    },
+    {
+      "vehicle": "T-72 Ural (1973)",
+      "faction": "nva",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        6,
+        4,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        5,
+        4,
+        0
+      ],
+      "total_rounds": 39,
+      "source_template": "T-72 Ural (1973)"
+    },
+    {
+      "vehicle": "T-72 Ural (1973)",
+      "faction": "nva",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        4,
+        13,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        4,
+        7,
+        0
+      ],
+      "total_rounds": 39,
+      "source_template": "T-72 Ural (1973)"
+    },
+    {
+      "vehicle": "T-72M (1981)",
+      "faction": "nva",
+      "preset": "기본",
+      "ready": [
+        10,
+        6,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        6,
+        9,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-72M (1986)",
+      "faction": "nva",
+      "preset": "기본",
+      "ready": [
+        10,
+        6,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        6,
+        9,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-72M1 (1987)",
+      "faction": "nva",
+      "preset": "기본",
+      "ready": [
+        10,
+        6,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        6,
+        9,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-72M (1981)",
+      "faction": "nva",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        6,
+        4,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        10,
+        6,
+        6,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-72M (1986)",
+      "faction": "nva",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        6,
+        4,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        10,
+        6,
+        6,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-72M1 (1987)",
+      "faction": "nva",
+      "preset": "대기갑",
+      "ready": [
+        12,
+        6,
+        4,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        10,
+        6,
+        6,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-72M (1981)",
+      "faction": "nva",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        4,
+        13,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        5,
+        10,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-72M (1986)",
+      "faction": "nva",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        4,
+        13,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        5,
+        10,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-72M1 (1987)",
+      "faction": "nva",
+      "preset": "화력지원",
+      "ready": [
+        5,
+        4,
+        13,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        5,
+        10,
+        0
+      ],
+      "total_rounds": 44,
+      "source_template": "T-72M (1981/1986), T-72M1 (1987)"
+    },
+    {
+      "vehicle": "T-55A",
+      "faction": "nva",
+      "preset": "기본",
+      "ready": [
+        7,
+        5,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        9,
+        8,
+        8,
+        0
+      ],
+      "total_rounds": 43,
+      "source_template": "T-55A"
+    },
+    {
+      "vehicle": "T-55A",
+      "faction": "nva",
+      "preset": "대기갑",
+      "ready": [
+        9,
+        6,
+        3,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        11,
+        8,
+        6,
+        0
+      ],
+      "total_rounds": 43,
+      "source_template": "T-55A"
+    },
+    {
+      "vehicle": "T-55A",
+      "faction": "nva",
+      "preset": "화력지원",
+      "ready": [
+        4,
+        4,
+        10,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        7,
+        12,
+        0
+      ],
+      "total_rounds": 43,
+      "source_template": "T-55A"
+    },
+    {
+      "vehicle": "T-55AM2",
+      "faction": "nva",
+      "preset": "기본",
+      "ready": [
+        6,
+        6,
+        6,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        7,
+        6,
+        7,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-55AM2"
+    },
+    {
+      "vehicle": "T-55AM2",
+      "faction": "nva",
+      "preset": "대기갑",
+      "ready": [
+        9,
+        6,
+        3,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        7,
+        5,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-55AM2"
+    },
+    {
+      "vehicle": "T-55AM2",
+      "faction": "nva",
+      "preset": "화력지원",
+      "ready": [
+        3,
+        5,
+        10,
+        0
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        6,
+        8,
+        0
+      ],
+      "total_rounds": 38,
+      "source_template": "T-55AM2"
+    },
+    {
+      "vehicle": "T-55AM2B",
+      "faction": "nva",
+      "preset": "기본",
+      "ready": [
+        6,
+        4,
+        6,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        6,
+        5,
+        6,
+        3
+      ],
+      "total_rounds": 38,
+      "source_template": "T-55AM2B"
+    },
+    {
+      "vehicle": "T-55AM2B",
+      "faction": "nva",
+      "preset": "대기갑",
+      "ready": [
+        7,
+        4,
+        3,
+        4
+      ],
+      "semi_ready": null,
+      "reserve": [
+        8,
+        6,
+        4,
+        2
+      ],
+      "total_rounds": 38,
+      "source_template": "T-55AM2B"
+    },
+    {
+      "vehicle": "T-55AM2B",
+      "faction": "nva",
+      "preset": "화력지원",
+      "ready": [
+        3,
+        3,
+        10,
+        2
+      ],
+      "semi_ready": null,
+      "reserve": [
+        5,
+        4,
+        9,
+        2
+      ],
+      "total_rounds": 38,
+      "source_template": "T-55AM2B"
+    }
+  ]
+}
