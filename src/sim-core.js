@@ -245,7 +245,7 @@ const TacticalCore = (() => {
   function createScenario(seed=7,options={}) {
     if(typeof seed==='object'){options=seed;seed=options.seed??7;}
     const scenarioId=options.scenarioId||'default';
-    if(!['default','t80u-armor','t80u-observation'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
+    if(!['default','t80u-armor','t80u-observation','t80u-fire'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
     const units=[];
     const layout=scenarioId==='t80u-armor'?[
       ['A11','ALPHA 11',550,2750,-.10,'blue',ACTIVE_PROFILE_ID,-.10],
@@ -256,11 +256,14 @@ const TacticalCore = (() => {
       ['A11','ALPHA 11',550,2750,0,'blue',ACTIVE_PROFILE_ID,0],
       // The M1 starts behind the T-80U's initial commander and gunner FOV.
       ['U01','T-80U 관측 차량',950,2750,0,'red','T80U_1989',0]
+    ]:scenarioId==='t80u-fire'?[
+      ['A11','ALPHA 11',550,2750,0,'blue',ACTIVE_PROFILE_ID,0],
+      ['U01','T-80U 정지 교전 차량',950,2750,Math.PI,'red','T80U_1989',Math.PI]
     ]:[
       ['A11','ALPHA 11',550,2750,-.45,'blue',ACTIVE_PROFILE_ID,-.45],['A12','ALPHA 12',780,3060,-.45,'blue',ACTIVE_PROFILE_ID,-.45],
       ['T01','관측 표적 01',1150,2330,2.4,'red',ACTIVE_PROFILE_ID,2.4],['T02','관측 표적 02',1800,1650,2.5,'red',ACTIVE_PROFILE_ID,2.5],['T03','관측 표적 03',3020,2060,2.8,'red',ACTIVE_PROFILE_ID,2.8]
     ];
-    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId),capabilityMask=scenarioId==='t80u-armor'&&profileId==='T80U_1989'?{observation:false}:{};const u=makeTank(id,name,p.x,p.y,h,team,profileId,'auto',{capabilityMask});u.turret=turret;u.commander=turret;units.push(u);}
+    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId),capabilityMask=profileId==='T80U_1989'&&scenarioId==='t80u-armor'?{observation:false,fire:false}:profileId==='T80U_1989'&&scenarioId==='t80u-observation'?{fire:false}:{};const u=makeTank(id,name,p.x,p.y,h,team,profileId,'auto',{capabilityMask});u.turret=turret;u.commander=turret;units.push(u);}
     const scenario={id:scenarioId,time:0,seed,units,recordAIEvents:!!options.recordAIEvents,recordFireEvents:!!options.recordFireEvents,recordObservationEvents:!!options.recordObservationEvents};
     // Playable scenarios state the normal automatic policy explicitly too;
     // manual compatibility fixtures opt into hold when constructing a unit.
@@ -305,6 +308,7 @@ const TacticalCore = (() => {
     u.drive=TacticalMobility.create();u.drive.velocity=(u.reverse?-1:1)*(Number(u.speed)||0);u.speed=Math.abs(u.drive.velocity);return u.drive;
   }
   function mobilityView(u){
+    if(!can(u,'mobility'))return{requested:'고정',actual:'고정',requestMatches:true,gear:'고정',velocity:0,mode:'disabled',shiftCount:0};
     const d=ensureDrive(u),requested=d.requestedDirection<0?'후진':d.requestedDirection>0?'전진':'정지',actualDirection=Math.abs(d.velocity)>.015?Math.sign(d.velocity):d.selectedDirection;
     const actual=Math.abs(d.velocity)>.015?(d.velocity<0?'실제 후진':'실제 전진'):TacticalMobility.directionLabel(d);
     return{requested,actual,requestMatches:!d.pendingDirection&&d.requestedDirection===actualDirection,gear:TacticalMobility.gearLabel(d),velocity:d.velocity,mode:d.mode,shiftCount:d.shiftCount};
@@ -378,7 +382,10 @@ const TacticalCore = (() => {
     observationFor(s).advance(observers,dt,s.time,s.units);
     confirmObservedWrecks(s,observers);
     aiFor(s).advance(actors,dt,s.time);
-    fireFor(s).step(alive.filter(u=>can(u,'fire')),dt,s.time);
+    // A destroyed automatic-loader shooter still enters readiness cleanup once
+    // so its reserved round cannot remain a live task. Preserve the established
+    // manual-loader terminal snapshot; inspect() blocks every firing branch.
+    fireFor(s).step(s.units.filter(u=>can(u,'fire')&&(u.combat?.status!=='destroyed'||profileOf(u).fireControl.readiness.loading.type==='automatic')),dt,s.time);
   }
   const wreckRuntimes=new WeakMap();
   function wreckMap(s,team){if(!wreckRuntimes.has(s))wreckRuntimes.set(s,new Map());const all=wreckRuntimes.get(s);if(!all.has(team))all.set(team,new Map());return all.get(team);}
@@ -454,7 +461,7 @@ const TacticalCore = (() => {
         }
         return TacticalCombatState.publicRecord(record);
       },
-      onFireBlocked:(u,target,reason,now)=>{if(aiFor(s).fireBlocked(u,target,reason,now)){observationFor(s).releaseAutomatic(u,now,reason,target);return true;}return observationFor(s).retarget(u,target,reason,now);},
+      onFireBlocked:(u,target,reason,now)=>{if(can(u,'ai')&&aiFor(s).fireBlocked(u,target,reason,now)){observationFor(s).releaseAutomatic(u,now,reason,target);return true;}return observationFor(s).retarget(u,target,reason,now);},
       freshSight:(u,id)=>{
       const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'fresh-sight-failed'};
       // A private destruction may physically stop a shot, but its public reason

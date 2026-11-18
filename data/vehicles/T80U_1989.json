@@ -2,7 +2,7 @@
   "profile": {
     "id": "T80U_1989",
     "name": "T-80U",
-    "variant": "T-80U (1989 관측·장갑 시험 구성)",
+    "variant": "T-80U (1989 정지 교전 시험 구성)",
     "crew": 3,
     "crewRoles": [
       "commander",
@@ -14,7 +14,7 @@
       "target": true,
       "mobility": false,
       "observation": true,
-      "fire": false,
+      "fire": true,
       "ai": false
     },
     "model": {
@@ -105,6 +105,108 @@
         "acquireSeconds": 0.4,
         "commanderHandoffSeconds": 0.5
       }
+    },
+    "weapons": {
+      "mainGun": {
+        "name": "2A46M-1",
+        "calibreMm": 125,
+        "ammunitionCapacity": 45,
+        "referenceEngagementRange": 2000,
+        "ammunitionId": "3BM42",
+        "ammunitionName": "3BM42 Mango",
+        "enabled": true
+      }
+    },
+    "fireControl": {
+      "enabled": true,
+      "aimSeconds": 1.6,
+      "alignmentTolerance": 0.02617993877991494,
+      "maxRange": 2000,
+      "fireHeight": 2.05,
+      "testRounds": 13,
+      "dispersionMrad": 0.3,
+      "layStartMrad": 1.8,
+      "layMinMrad": 0.12,
+      "layTauSeconds": 0.8,
+      "rangeErrorM": 8,
+      "muzzleVelocity": 1700,
+      "velocityRetention": 0.94,
+      "leadResidual": 0.12,
+      "stabMradPerMps": 0.03,
+      "impact": {
+        "rejectionAttempts": 64,
+        "marchStepM": 2,
+        "maxBeyondM": 3000
+      },
+      "movement": {
+        "fireOnMove": false,
+        "stationarySpeedMps": 0.1,
+        "stationaryHoldSeconds": 0.35
+      },
+      "readiness": {
+        "loading": {
+          "type": "automatic"
+        },
+        "reloadSeconds": 6,
+        "reloadMaxSeconds": 6
+      },
+      "presented": {
+        "hullBottom": 0.45,
+        "hullTop": 1.55,
+        "turretTop": 2.2
+      }
+    },
+    "ammunition": {
+      "enabled": true,
+      "supported": [
+        "3BM42"
+      ],
+      "autoPriority": [
+        "3BM42"
+      ],
+      "sourcePriority": [
+        "ready",
+        "semiReady",
+        "reserve"
+      ],
+      "initial": {
+        "loaded": "3BM42",
+        "preference": "auto",
+        "sections": {
+          "ready": {
+            "3BM42": 12
+          },
+          "semiReady": {
+            "3BM42": 0
+          },
+          "reserve": {
+            "3BM42": 0
+          }
+        }
+      },
+      "sections": {
+        "ready": {
+          "capacity": 27,
+          "prepareSeconds": 0
+        },
+        "semiReady": {
+          "capacity": 0,
+          "prepareSeconds": 0
+        },
+        "reserve": {
+          "capacity": 17,
+          "prepareSeconds": 0
+        }
+      },
+      "replenish": {
+        "enabled": false
+      }
+    },
+    "ammoIncidents": {
+      "enabled": false
+    },
+    "hitReactions": {
+      "enabled": false
     },
     "exposure": {
       "hullAlong": [
@@ -202,8 +304,9 @@
       }
     }
   },
-  "scope": "WIP22 observation-only stationary T-80U plus WIP21 armour target data; no 125 mm weapon, autoloader, mobility, fire/engagement AI, crew damage, faults or ammunition incidents.",
+  "scope": "WIP23 stationary T-80U observation and 2A46M-1/3BM42 firing trial plus WIP21 armour data; no mobility, engagement AI, human-loader fatigue, crew damage, temporary faults or ammunition incidents.",
   "sources": [
+    "docs/tasks/TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER.md",
     "docs/tasks/TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md",
     "data/vehicles/references/t80u/observation_reference_notes.md",
     "docs/tasks/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md",
@@ -214,6 +317,8 @@
   "limits": [
     "24 deg/s turret and 40 deg/s cupola ceilings are adopted from the cited secondary source, not independently verified against an original manual or physical vehicle",
     "Ranges, FOVs, optical heights, scan laws and handoff/acquisition times are adjustable daytime game-trial values, not measured sensor performance",
+    "The 6.00s autoloader, 13-round single-ammunition fixture and aiming/error values are adjustable game-trial settings, not a physical loading simulation",
+    "3BM42 penetration, ricochet and 370 HP damage values are abstract game data",
     "Armour and HP are abstract 1989 game values, not measured plate thickness",
     "Kontakt-5 is a fixed non-consumable one-roll coverage modifier with no explosion or block damage"
   ]

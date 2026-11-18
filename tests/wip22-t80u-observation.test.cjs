@@ -5,15 +5,15 @@ const C=()=>require('./load.cjs')();
 const deg=value=>value*Math.PI/180;
 const delta=(a,b)=>Math.abs(Math.atan2(Math.sin(a-b),Math.cos(a-b)));
 
-test('WIP22 T-80U owns observation/traverse data without fabricated mobility or fire',()=>{
+test('WIP22 T-80U observation/traverse data remains unchanged after WIP23 fire extension',()=>{
  const p=Profiles.T80U_1989;
- assert.deepEqual(p.capabilities,{target:true,mobility:false,observation:true,fire:false,ai:false});
+ assert.deepEqual(p.capabilities,{target:true,mobility:false,observation:true,fire:true,ai:false});
  assert.equal(p.sensors.hunterKiller,false);assert.equal(p.sensors.commanderDesignation,true);
  assert.equal(p.sensors.ambient.range,200);assert.equal(p.sensors.ambient.fov,Math.PI*2);
  assert.equal(p.sensors.commander.range,2000);assert.equal(p.sensors.commander.fov,Math.PI/2);assert.equal(p.sensors.commander.eyeHeight,2.5);assert.equal(p.sensors.commander.rate,deg(40));assert.equal(p.sensors.commander.scan.amplitude,Math.PI);assert.equal(p.sensors.commander.scan.period,90);assert.equal(p.sensors.commander.scan.rate,deg(12));
  assert.equal(p.sensors.gunner.range,2000);assert.equal(p.sensors.gunner.fov,Math.PI/6);assert.equal(p.sensors.gunner.eyeHeight,2.15);assert.equal(p.sensors.gunner.rate,deg(24));assert.equal(p.sensors.gunner.scan.amplitude,Math.PI/6);assert.equal(p.sensors.gunner.scan.period,24);assert.equal(p.sensors.gunner.scan.rate,deg(8));
  assert.equal(p.sensors.tuning.commanderHandoffSeconds,.5);assert.equal(p.sensors.tuning.acquireSeconds,.4);
- for(const field of ['mobility','fireControl','weapons','ammunition','ammoIncidents','hitReactions'])assert.equal(p[field],undefined,field);
+ assert.equal(p.mobility,undefined);assert.equal(p.fireControl.readiness.loading.type,'automatic');assert.equal(p.ammoIncidents.enabled,false);assert.equal(p.hitReactions.enabled,false);
  assert.equal(Profiles.M1A2.sensors.commanderDesignation,undefined);assert.equal(Profiles.M1A2.sensors.hunterKiller,true);assert.equal(Profiles.M1A2.sensors.tuning.commanderHandoffSeconds,undefined);
 });
 
@@ -24,16 +24,16 @@ test('WIP22 registry validates observation-only declarations without weakening f
    p=>p.sensors.commander.rate=0,p=>p.sensors.gunner.rate=Infinity,p=>p.sensors.commander.fov=Math.PI*2+.01,
    p=>p.sensors.gunner.scan.period=0,p=>p.sensors.commander.scan.rate=p.sensors.commander.rate+.01,
    p=>p.sensors.tuning.acquireSeconds=0,p=>p.sensors.tuning.commanderHandoffSeconds=-.01,
-   p=>p.capabilities.observation=false,p=>{p.capabilities.fire=true;}
+   p=>p.capabilities.observation=false,p=>{p.fireControl.maxRange=0;}
  ]){const p=clean();mutate(p);assert.throws(()=>Profiles.registry.create([p]));}
  const full=structuredClone(Profiles.M1A2);full.id='M1_TEST';delete full.mobility;assert.throws(()=>Profiles.registry.create([full]));
 });
 
 test('WIP22 runtime capability mask only narrows declared capabilities',()=>{
- const core=C(),enabled=core.makeTank('U','T80',100,100,0,'red','T80U_1989'),disabled=core.makeTank('D','T80',120,100,0,'red','T80U_1989','auto',{capabilityMask:{observation:false}});
- assert(core.can(enabled,'observation'));assert(enabled.observation);assert(!core.can(enabled,'mobility'));assert.equal(enabled.drive,undefined);assert.equal(enabled.fireControl,undefined);
+ const core=C(),enabled=core.makeTank('U','T80',100,100,0,'red','T80U_1989'),disabled=core.makeTank('D','T80',120,100,0,'red','T80U_1989','auto',{capabilityMask:{observation:false,fire:false}});
+ assert(core.can(enabled,'observation'));assert(enabled.observation);assert(core.can(enabled,'fire'));assert(enabled.fireControl);assert(!core.can(enabled,'mobility'));assert.equal(enabled.drive,undefined);
  assert(!core.can(disabled,'observation'));assert.equal(disabled.observation,undefined);
- assert.throws(()=>core.makeTank('X','bad',0,0,0,'red','T80U_1989','auto',{capabilityMask:{fire:true}}),/비활성/);
+ assert.throws(()=>core.makeTank('X','bad',0,0,0,'red','T80U_1989','auto',{capabilityMask:{mobility:true}}),/비활성/);
  assert.throws(()=>core.makeTank('X','bad',0,0,0,'red','T80U_1989','auto',{capabilityMask:{unknown:false}}),/마스크/);
 });
 

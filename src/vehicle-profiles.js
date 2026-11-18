@@ -42,7 +42,7 @@ const VEHICLE_PROFILES=(()=>{
       movement:{fireOnMove:true,stationarySpeedMps:.10,stationaryHoldSeconds:.35},
       // WIP15 game trial values. They model an abstract loader and temporary
       // crew/equipment response; they are not measured vehicle specifications.
-      readiness:{reloadSeconds:5.98,reloadMaxSeconds:14,
+      readiness:{loading:{type:'manual'},reloadSeconds:5.98,reloadMaxSeconds:14,
         fatigue:{maxSeconds:5,startsAtShot:4,perShotSeconds:.35,recoveryPerSecond:.25,burstResetSeconds:6},
         shock:{maxSeconds:5,recoveryPerSecond:.25,normalSeconds:.25,nearSeconds:1,penetrationSeconds:2.5},
         nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]},
@@ -123,16 +123,19 @@ const VEHICLE_PROFILES=(()=>{
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.ricochet=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nonPenetration=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nearNonPenetration=zero();
-  // WIP21 fixed armour-test target, extended in WIP22 with an observation-only
-  // operating profile. Scenario capability masks keep the original armour
-  // targets inert. Visual dimensions and pivots are derived
+  M1A2_1998.hitReactions.policies['tank-ke/3BM42']=clone(a2Reaction);
+  M1A2_1998.hitReactions.policies['tank-ke/3BM42'].ammoId='3BM42';
+  M1A2_1998.ammoIncidents.policies['tank-ammo-incident/3BM42']={ammoId:'3BM42',baseChance:.30};
+  // WIP21 fixed armour target, extended by WIP22 observation and WIP23
+  // stationary firing. Scenario capability masks keep the older trials inert.
+  // Visual dimensions and pivots are derived
   // from the corrected T80UTopView source with one uniform scale (7.012/874).
-  // It intentionally owns no mobility, weapon, ammunition, AI, crew reaction
-  // or temporary-fault configuration.
+  // It intentionally owns no mobility, AI, human-loader fatigue, crew reaction,
+  // temporary-fault or ammunition-incident configuration.
   const T80U_SCALE=7.012/874;
   const T80U_1989={
-    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 관측·장갑 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
-    capabilities:{target:true,mobility:false,observation:true,fire:false,ai:false},
+    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 정지 교전 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
+    capabilities:{target:true,mobility:false,observation:true,fire:true,ai:false},
     model:{hullLength:7.012,width:450*T80U_SCALE,overallLength:(807-50)*T80U_SCALE+7.012/2,roofHeight:2.20,groundClearance:.45,
       barrelTip:(807-50)*T80U_SCALE,turretLength:3.65,turretWidth:3.47,turretOrigin:0,
       turretPivot:[(807-810)*T80U_SCALE,0],turretRingDiameter:2.05,muzzleLocal:[(807-50)*T80U_SCALE,0]},
@@ -147,6 +150,22 @@ const VEHICLE_PROFILES=(()=>{
       tuning:{queryPeriod:.1,geometryMaxAge:.5,detectThreshold:[.35,1.1],identifyThreshold:[1.4,3],
         evidenceHalfLife:8,memorySeconds:30,knowledgeSeconds:120,lossGrace:1.2,
         focusSeconds:2,focusLimit:8,revisitSeconds:12,designationSeconds:18,designationStale:6,acquireSeconds:.4,commanderHandoffSeconds:.5}},
+    weapons:{mainGun:{name:'2A46M-1',calibreMm:125,ammunitionCapacity:45,referenceEngagementRange:2000,ammunitionId:'3BM42',ammunitionName:'3BM42 Mango',enabled:true}},
+    // WIP23 values are adjustable stationary-fire game tuning, not measured
+    // 1A45/1G46 dispersion or aiming performance.
+    fireControl:{enabled:true,aimSeconds:1.60,alignmentTolerance:1.5*Math.PI/180,
+      maxRange:2000,fireHeight:2.05,testRounds:13,
+      dispersionMrad:.30,layStartMrad:1.80,layMinMrad:.12,layTauSeconds:.80,
+      rangeErrorM:8,muzzleVelocity:1700,velocityRetention:.94,leadResidual:.12,
+      stabMradPerMps:.03,impact:{rejectionAttempts:64,marchStepM:2,maxBeyondM:3000},
+      movement:{fireOnMove:false,stationarySpeedMps:.10,stationaryHoldSeconds:.35},
+      readiness:{loading:{type:'automatic'},reloadSeconds:6,reloadMaxSeconds:6},
+      presented:{hullBottom:.45,hullTop:1.55,turretTop:2.20}},
+    ammunition:{enabled:true,supported:['3BM42'],autoPriority:['3BM42'],sourcePriority:['ready','semiReady','reserve'],
+      initial:{loaded:'3BM42',preference:'auto',sections:{ready:{'3BM42':12},semiReady:{'3BM42':0},reserve:{'3BM42':0}}},
+      sections:{ready:{capacity:27,prepareSeconds:0},semiReady:{capacity:0,prepareSeconds:0},reserve:{capacity:17,prepareSeconds:0}},
+      replenish:{enabled:false}},
+    ammoIncidents:{enabled:false},hitReactions:{enabled:false},
     exposure:{hullAlong:[-2.45,0,2.45],hullHeights:[.75,1.35],turretAlong:[-.85,0,.85],turretHeight:2.05},
     navigation:{clearanceMargin:.25},
     combat:{maxHp:1400,armor:{
@@ -171,8 +190,6 @@ const VEHICLE_PROFILES=(()=>{
       const caps=p.capabilities;
       if(!caps||!['target','mobility','observation','fire','ai'].every(k=>typeof caps[k]==='boolean')||caps.target!==true)throw Error('차량 기능 선언 오류: '+id);
       for(const section of ['model','navigation','exposure'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
-      const fullOperational=caps.mobility||caps.fire||caps.ai;
-      if(fullOperational&&![caps.mobility,caps.observation,caps.fire,caps.ai].every(Boolean))throw Error('운용 차량 기능 조합 오류: '+id);
       if(caps.ai&&(!caps.mobility||!caps.observation||!caps.fire))throw Error('AI 기능 조합 오류: '+id);
       if(caps.fire&&!caps.observation)throw Error('발사 관측 기능 오류: '+id);
       if(caps.mobility!==!!p.mobility)throw Error('기동 기능 선언 오류: '+id);
@@ -198,28 +215,31 @@ const VEHICLE_PROFILES=(()=>{
         const t=s.tuning,positive=['queryPeriod','geometryMaxAge','evidenceHalfLife','memorySeconds','knowledgeSeconds','lossGrace','focusSeconds','focusLimit','revisitSeconds','designationSeconds','designationStale','acquireSeconds'];
         if(!t||!positive.every(k=>Number.isFinite(t[k])&&t[k]>0)||!['detectThreshold','identifyThreshold'].every(k=>Array.isArray(t[k])&&t[k].length===2&&t[k].every(v=>Number.isFinite(v)&&v>=0)&&t[k][1]>=t[k][0])||(t.commanderHandoffSeconds!==undefined&&(!Number.isFinite(t.commanderHandoffSeconds)||t.commanderHandoffSeconds<0)))throw Error('관측 절차 값 오류: '+id);
       }
-      if(!fullOperational){
-        if(!p.combat)throw Error('고정 표적 전투 데이터 누락: '+id);
-        profiles[id]=freeze(p);continue;
-      }
+      if(caps.mobility){
       const pt=p.mobility.powertrain;
       if(!pt||!['forwardRatios','reverseRatios','forwardUpshiftMps','forwardDownshiftMps','reverseUpshiftMps','reverseDownshiftMps'].every(k=>Array.isArray(pt[k])))throw Error('구동 프로파일 누락: '+id);
       if(pt.forwardRatios.length!==4||pt.reverseRatios.length!==2||pt.forwardUpshiftMps.length!==3||pt.forwardDownshiftMps.length!==3||pt.reverseUpshiftMps.length!==1||pt.reverseDownshiftMps.length!==1)throw Error('변속 표 길이 오류: '+id);
       if(![...pt.forwardRatios,...pt.reverseRatios,...pt.forwardUpshiftMps,...pt.forwardDownshiftMps,...pt.reverseUpshiftMps,...pt.reverseDownshiftMps].every(v=>Number.isFinite(v)&&v>0))throw Error('변속 표 값 오류: '+id);
       if(!pt.forwardUpshiftMps.every((v,i)=>v>pt.forwardDownshiftMps[i])||!pt.reverseUpshiftMps.every((v,i)=>v>pt.reverseDownshiftMps[i]))throw Error('변속 히스테리시스 오류: '+id);
       for(const k of ['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','holdSpeed','zeroSpeedEpsilon','targetSpeedTolerance','launchAcceleration','launchPowerExponent','gearForceExponent','powerFloorSpeed','rollingDeceleration','shiftDriveFraction','lateralAcceleration','pivotMaxSpeed','arrivalRadius','arrivalSpeed'])if(!Number.isFinite(pt[k])||pt[k]<0||(['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','launchAcceleration','powerFloorSpeed','lateralAcceleration','arrivalRadius','arrivalSpeed'].includes(k)&&pt[k]===0))throw Error('구동 값 오류: '+id+'.'+k);
+      }
+      if(caps.fire){
       const f=p.fireControl;
       for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights','maneuverAccel','maneuverReferenceSpeed','flightSeconds','effectSeconds'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
       if(Object.hasOwn(f,'shotIntervalSeconds'))throw Error('폐기된 사격 필드: '+id+'.shotIntervalSeconds');
       for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
       for(const field of ['leadResidual','stabMradPerMps'])if(!Number.isFinite(f[field])||f[field]<0)throw Error('사격 오차 값 오류: '+id+'.'+field);
       if(!f.movement||typeof f.movement.fireOnMove!=='boolean'||!Number.isFinite(f.movement.stationarySpeedMps)||f.movement.stationarySpeedMps<0||!Number.isFinite(f.movement.stationaryHoldSeconds)||f.movement.stationaryHoldSeconds<0)throw Error('이동 사격 프로파일 값 오류: '+id+'.movement');
-      const ready=f.readiness,fatigue=ready?.fatigue,shock=ready?.shock,near=ready?.nearNonPenetration,fault=ready?.temporaryFault;
-      if(!ready||!fatigue||!shock||!near||!fault)throw Error('장전/피격 반응 프로파일 누락: '+id);
-      if(![ready.reloadSeconds,ready.reloadMaxSeconds,fatigue.maxSeconds,fatigue.perShotSeconds,fatigue.recoveryPerSecond,fatigue.burstResetSeconds,shock.maxSeconds,shock.recoveryPerSecond,shock.normalSeconds,shock.nearSeconds,shock.penetrationSeconds,near.maxDeficit,near.chance,fault.baseChance,fault.damageScaleChance,fault.damageReference,fault.observationAimRateMultiplier,fault.observationSigmaMultiplier].every(Number.isFinite)||ready.reloadSeconds<=0||ready.reloadMaxSeconds<ready.reloadSeconds||ready.reloadMaxSeconds>14||fatigue.maxSeconds<0||shock.maxSeconds<0||!Number.isInteger(fatigue.startsAtShot)||fatigue.startsAtShot<1||fatigue.perShotSeconds<0||fatigue.recoveryPerSecond<0||fatigue.burstResetSeconds<=0||shock.recoveryPerSecond<0||shock.normalSeconds<0||shock.nearSeconds<shock.normalSeconds||shock.penetrationSeconds<shock.nearSeconds||near.maxDeficit<=0||near.chance<0||near.chance>1||fault.baseChance<0||fault.damageScaleChance<0||fault.baseChance+fault.damageScaleChance>1||fault.damageReference<=0||fault.observationAimRateMultiplier<=0||fault.observationAimRateMultiplier>1||fault.observationSigmaMultiplier<1)throw Error('장전/피격 반응 프로파일 값 오류: '+id);
-      if(!Array.isArray(near.damagePoints)||near.damagePoints.length<2||near.damagePoints[0][0]!==0||near.damagePoints.at(-1)[0]!==near.maxDeficit||near.damagePoints.some((v,i)=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[1]<0||(i&&v[0]<=near.damagePoints[i-1][0])))throw Error('근접 비관통 피해 표 오류: '+id);
-      const faultKindNames=['fireControl','commander','gunner'];
-      if(!Array.isArray(fault.durationSeconds)||fault.durationSeconds.length!==2||!fault.durationSeconds.every(Number.isFinite)||fault.durationSeconds[0]<3||fault.durationSeconds[1]>8||fault.durationSeconds[1]<fault.durationSeconds[0]||!fault.kinds||Object.keys(fault.kinds).length!==faultKindNames.length||!faultKindNames.every(k=>Object.hasOwn(fault.kinds,k))||Math.abs(Object.values(fault.kinds).reduce((a,b)=>a+b,0)-1)>1e-9||Object.values(fault.kinds).some(v=>!Number.isFinite(v)||v<0))throw Error('일시 이상 프로파일 값 오류: '+id);
+      const ready=f.readiness,loadingType=ready?.loading?.type;
+      if(!ready||!['manual','automatic'].includes(loadingType)||![ready.reloadSeconds,ready.reloadMaxSeconds].every(Number.isFinite)||ready.reloadSeconds<=0||ready.reloadMaxSeconds<ready.reloadSeconds)throw Error('장전 방식 프로파일 오류: '+id);
+      if(loadingType==='manual'){
+        const fatigue=ready.fatigue,shock=ready.shock,near=ready.nearNonPenetration,fault=ready.temporaryFault;
+        if(!fatigue||!shock||!near||!fault||ready.reloadMaxSeconds>14)throw Error('수동 장전/피격 반응 프로파일 누락: '+id);
+        if(![fatigue.maxSeconds,fatigue.perShotSeconds,fatigue.recoveryPerSecond,fatigue.burstResetSeconds,shock.maxSeconds,shock.recoveryPerSecond,shock.normalSeconds,shock.nearSeconds,shock.penetrationSeconds,near.maxDeficit,near.chance,fault.baseChance,fault.damageScaleChance,fault.damageReference,fault.observationAimRateMultiplier,fault.observationSigmaMultiplier].every(Number.isFinite)||fatigue.maxSeconds<0||shock.maxSeconds<0||!Number.isInteger(fatigue.startsAtShot)||fatigue.startsAtShot<1||fatigue.perShotSeconds<0||fatigue.recoveryPerSecond<0||fatigue.burstResetSeconds<=0||shock.recoveryPerSecond<0||shock.normalSeconds<0||shock.nearSeconds<shock.normalSeconds||shock.penetrationSeconds<shock.nearSeconds||near.maxDeficit<=0||near.chance<0||near.chance>1||fault.baseChance<0||fault.damageScaleChance<0||fault.baseChance+fault.damageScaleChance>1||fault.damageReference<=0||fault.observationAimRateMultiplier<=0||fault.observationAimRateMultiplier>1||fault.observationSigmaMultiplier<1)throw Error('수동 장전/피격 반응 프로파일 값 오류: '+id);
+        if(!Array.isArray(near.damagePoints)||near.damagePoints.length<2||near.damagePoints[0][0]!==0||near.damagePoints.at(-1)[0]!==near.maxDeficit||near.damagePoints.some((v,i)=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[1]<0||(i&&v[0]<=near.damagePoints[i-1][0])))throw Error('근접 비관통 피해 표 오류: '+id);
+        const faultKindNames=['fireControl','commander','gunner'];
+        if(!Array.isArray(fault.durationSeconds)||fault.durationSeconds.length!==2||!fault.durationSeconds.every(Number.isFinite)||fault.durationSeconds[0]<3||fault.durationSeconds[1]>8||fault.durationSeconds[1]<fault.durationSeconds[0]||!fault.kinds||Object.keys(fault.kinds).length!==faultKindNames.length||!faultKindNames.every(k=>Object.hasOwn(fault.kinds,k))||Math.abs(Object.values(fault.kinds).reduce((a,b)=>a+b,0)-1)>1e-9||Object.values(fault.kinds).some(v=>!Number.isFinite(v)||v<0))throw Error('일시 이상 프로파일 값 오류: '+id);
+      }else if(['fatigue','shock','nearNonPenetration','temporaryFault'].some(field=>Object.hasOwn(ready,field)))throw Error('자동장전 수동 반응 설정 오류: '+id);
       if(!f.impact||!Number.isInteger(f.impact.rejectionAttempts)||!['rejectionAttempts','marchStepM','maxBeyondM'].every(field=>Number.isFinite(f.impact[field])&&f.impact[field]>0))throw Error('탄착 프로파일 값 오류: '+id+'.impact');
       const band=f.presented;
       if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
@@ -234,10 +254,11 @@ const VEHICLE_PROFILES=(()=>{
         if(!Array.isArray(a.autoPriority)||a.autoPriority.length!==ids.length||new Set(a.autoPriority).size!==ids.length||!a.autoPriority.every(v=>ids.includes(v)))throw Error('탄약 자동 우선순위 오류: '+id);
         if(!Array.isArray(a.sourcePriority)||a.sourcePriority.length!==sections.length||!sections.every(v=>a.sourcePriority.includes(v)))throw Error('탄약 구획 우선순위 오류: '+id);
         if(!ids.includes(a.initial?.loaded)||!['auto',...ids].includes(a.initial?.preference))throw Error('초기 장전탄/선택 오류: '+id);
-        let total=1;
-        for(const section of sections){const rule=a.sections?.[section],stock=a.initial?.sections?.[section];if(!rule||!Number.isInteger(rule.capacity)||rule.capacity<0||!Number.isFinite(rule.prepareSeconds)||rule.prepareSeconds<0||!stock||Object.keys(stock).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(stock,ammoId)&&Number.isInteger(stock[ammoId])&&stock[ammoId]>=0))throw Error('탄약 구획 설정 오류: '+id+'.'+section);const count=ids.reduce((sum,ammoId)=>sum+stock[ammoId],0);if(count!==rule.capacity)throw Error('탄약 구획 용량 불일치: '+id+'.'+section);total+=count;}
-        if(total!==p.weapons.mainGun.ammunitionCapacity)throw Error('탄약 총량 불일치: '+id);
-        const rep=a.replenish;if(!rep||!Number.isFinite(rep.idleSeconds)||rep.idleSeconds<0||!Number.isFinite(rep.stationarySpeedMps)||rep.stationarySpeedMps<0||!Array.isArray(rep.sourcePriority)||!rep.sourcePriority.every(v=>['semiReady','reserve'].includes(v))||Object.keys(rep.targets||{}).length!==ids.length||!ids.every(ammoId=>Number.isInteger(rep.targets[ammoId])&&rep.targets[ammoId]>=0)||ids.reduce((sum,ammoId)=>sum+rep.targets[ammoId],0)>a.sections.ready.capacity||!['semiReady','reserve'].every(section=>Number.isFinite(rep.seconds?.[section])&&rep.seconds[section]>0))throw Error('탄약 보충 설정 오류: '+id);
+        let total=1,capacity=1;
+        for(const section of sections){const rule=a.sections?.[section],stock=a.initial?.sections?.[section];if(!rule||!Number.isInteger(rule.capacity)||rule.capacity<0||!Number.isFinite(rule.prepareSeconds)||rule.prepareSeconds<0||!stock||Object.keys(stock).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(stock,ammoId)&&Number.isInteger(stock[ammoId])&&stock[ammoId]>=0))throw Error('탄약 구획 설정 오류: '+id+'.'+section);const count=ids.reduce((sum,ammoId)=>sum+stock[ammoId],0);if(count>rule.capacity)throw Error('초기 탄약 구획 용량 초과: '+id+'.'+section);total+=count;capacity+=rule.capacity;}
+        if(total>p.weapons.mainGun.ammunitionCapacity||capacity!==p.weapons.mainGun.ammunitionCapacity)throw Error('탄약 총량/최대 용량 불일치: '+id);
+        const rep=a.replenish;if(rep?.enabled===false){if(Object.keys(rep).length!==1)throw Error('비활성 탄약 보충 설정 오류: '+id);}else if(!rep||!Number.isFinite(rep.idleSeconds)||rep.idleSeconds<0||!Number.isFinite(rep.stationarySpeedMps)||rep.stationarySpeedMps<0||!Array.isArray(rep.sourcePriority)||!rep.sourcePriority.every(v=>['semiReady','reserve'].includes(v))||Object.keys(rep.targets||{}).length!==ids.length||!ids.every(ammoId=>Number.isInteger(rep.targets[ammoId])&&rep.targets[ammoId]>=0)||ids.reduce((sum,ammoId)=>sum+rep.targets[ammoId],0)>a.sections.ready.capacity||!['semiReady','reserve'].every(section=>Number.isFinite(rep.seconds?.[section])&&rep.seconds[section]>0))throw Error('탄약 보충 설정 오류: '+id);
+      }
       }
       if(p.ammoIncidents){
         const a=p.ammoIncidents;
@@ -247,7 +268,7 @@ const VEHICLE_PROFILES=(()=>{
           if(a.enabled!==true||a.victimProfileId!==id||!ammo?.enabled)throw Error('탄약고 사고 활성 연결 오류: '+id);
           if(!Number.isFinite(a.partialLossFraction)||a.partialLossFraction<=0||a.partialLossFraction>1||!Number.isFinite(a.safetySeconds)||a.safetySeconds<=0)throw Error('탄약고 사고 시간/손실 값 오류: '+id);
           const ids=ammo.supported,policies=Object.entries(a.policies||{});
-          if(policies.length!==ids.length||!ids.every(ammoId=>policies.some(([policyId,policy])=>policyId==='tank-ammo-incident/'+ammoId&&policy?.ammoId===ammoId&&Number.isFinite(policy.baseChance)&&policy.baseChance>=0&&policy.baseChance<=1)))throw Error('탄약고 사고 탄약 정책 오류: '+id);
+          if(!policies.length||policies.some(([policyId,policy])=>policyId!=='tank-ammo-incident/'+policy?.ammoId||typeof policy.ammoId!=='string'||!Number.isFinite(policy.baseChance)||policy.baseChance<0||policy.baseChance>1)||!ids.every(ammoId=>policies.some(([,policy])=>policy.ammoId===ammoId)))throw Error('탄약고 사고 탄약 정책 오류: '+id);
           if(Object.keys(a.storedAmmoResponse||{}).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(a.storedAmmoResponse,ammoId)&&Number.isFinite(a.storedAmmoResponse[ammoId])&&a.storedAmmoResponse[ammoId]>=0))throw Error('탄약고 사고 저장탄 반응값 오류: '+id);
           if(Object.keys(a.compartments||{}).length!==sections.length)throw Error('탄약고 사고 구획 설정 오류: '+id);
           for(const section of sections){const rule=a.compartments[section],values=outcomes.map(name=>rule?.outcomes?.[name]);if(!rule||rule.capacity!==ammo.sections[section].capacity||!Number.isFinite(rule.transferFactor)||rule.transferFactor<0||rule.transferFactor>1||Object.keys(rule.outcomes||{}).length!==outcomes.length||values.some(v=>!Number.isFinite(v)||v<0||v>1)||Math.abs(values.reduce((sum,v)=>sum+v,0)-1)>1e-9)throw Error('탄약고 사고 구획 설정 오류: '+id+'.'+section);}

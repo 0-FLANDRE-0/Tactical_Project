@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 11,
+  "schemaVersion": 12,
   "activeProfileId": "M1A2_1998",
   "ids": [
     "M1A2",
@@ -13,7 +13,8 @@
   "ammunitionIds": [
     "M829A2",
     "M829A1",
-    "M830"
+    "M830",
+    "3BM42"
   ],
-  "note": "M1A2/M1A2_1998 remain operational. T80U_1989 is a WIP22 stationary observation-capable profile with WIP21 armour/K5 data; scenarios may only disable declared capabilities. It owns no weapon, ammunition, mobility, fire/engagement AI, crew-damage or fault data."
+  "note": "M1A2/M1A2_1998 remain operational. T80U_1989 is a WIP23 stationary observation/fire profile with WIP21 armour/K5, 3BM42 and a six-second automatic loader; scenarios may only disable declared capabilities. It owns no mobility, engagement AI, crew-damage, temporary-fault or ammunition-incident system."
 }
