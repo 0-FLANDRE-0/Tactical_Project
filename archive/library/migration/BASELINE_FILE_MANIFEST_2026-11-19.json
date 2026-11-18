@@ -1,0 +1,350 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-11-19",
+  "repository": "0-FLANDRE-0/Tactical_Project",
+  "source_branch": "main",
+  "baseline_commit": "1593dc2caab7c55af85c4df9acf748d2f2fe0706",
+  "snapshot_branch": "archive-library-baseline-2026-11-19",
+  "scope": "archive/",
+  "file_count": 63,
+  "directory_count": 10,
+  "total_file_bytes": 34035181,
+  "by_extension": {
+    "md": 46,
+    "js": 4,
+    "html": 7,
+    "png": 1,
+    "py": 2,
+    "svg": 2,
+    "zip": 1
+  },
+  "directories": [
+    "archive/air",
+    "archive/ammo",
+    "archive/art",
+    "archive/combat",
+    "archive/infantry",
+    "archive/instructions",
+    "archive/performance",
+    "archive/tanks",
+    "archive/vehicles",
+    "archive/world"
+  ],
+  "files": [
+    {
+      "path": "archive/air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md",
+      "git_blob_sha": "8766b7b8520b6040662d15049f1ad2d3c6e87a6f",
+      "size_bytes": 8987
+    },
+    {
+      "path": "archive/air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md",
+      "git_blob_sha": "7fe0c5ed3fd98b466c841f270be24346065b4f32",
+      "size_bytes": 10340
+    },
+    {
+      "path": "archive/air/HELICOPTER_ROSTER_OVERVIEW_2026-11-15.md",
+      "git_blob_sha": "9d1058ae48afb4ee85e7525db38926e19fb85d05",
+      "size_bytes": 5551
+    },
+    {
+      "path": "archive/air/MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md",
+      "git_blob_sha": "8e17f7f8beff39193e56dada337a4aa50a54ca09",
+      "size_bytes": 13343
+    },
+    {
+      "path": "archive/ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md",
+      "git_blob_sha": "095aea25e2aecc99084c1273118863cfd0c9d9b1",
+      "size_bytes": 8631
+    },
+    {
+      "path": "archive/ammo/README.md",
+      "git_blob_sha": "caeea18bbb55d47e1107e10fc0cbcf8f40293510",
+      "size_bytes": 114760
+    },
+    {
+      "path": "archive/art/abrams-topview.js",
+      "git_blob_sha": "a87cfbd3ba67c39c3f86b2be8b39f603a3cb91ae",
+      "size_bytes": 24962
+    },
+    {
+      "path": "archive/art/M1_Abrams_TopView.html",
+      "git_blob_sha": "06a99a015fbb5d2f8e3b8b54a5373e8d78552225",
+      "size_bytes": 53287
+    },
+    {
+      "path": "archive/art/ring_overlay_7916.png",
+      "git_blob_sha": "e7cf858128514cac34201357af2ef4a1ec4e7052",
+      "size_bytes": 546565
+    },
+    {
+      "path": "archive/art/viewer.template.html",
+      "git_blob_sha": "3e99a1aecd18b67522de191bac336e8a353085ec",
+      "size_bytes": 28339
+    },
+    {
+      "path": "archive/combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md",
+      "git_blob_sha": "f64cdf4fd6959c6f8b63ca8c03b1d905ab70fd41",
+      "size_bytes": 15318
+    },
+    {
+      "path": "archive/combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md",
+      "git_blob_sha": "b365db02d75555dc2e2acf633ccb7e71e9655a96",
+      "size_bytes": 6527
+    },
+    {
+      "path": "archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md",
+      "git_blob_sha": "14fa45f3fb8f155a95258484a679c9ad80fc09e6",
+      "size_bytes": 39495
+    },
+    {
+      "path": "archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md",
+      "git_blob_sha": "4643ac50ff2167f58702503fec5a99e14014ef48",
+      "size_bytes": 6109
+    },
+    {
+      "path": "archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md",
+      "git_blob_sha": "f08f94d7020b6395778a0829df0eb7d845096de7",
+      "size_bytes": 14402
+    },
+    {
+      "path": "archive/combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md",
+      "git_blob_sha": "4b410e9abd6a617de9d26fc9b14cfb0ee4281e89",
+      "size_bytes": 4228
+    },
+    {
+      "path": "archive/infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md",
+      "git_blob_sha": "0fc2fb130169cc24c96435708762d050cdc5763f",
+      "size_bytes": 8094
+    },
+    {
+      "path": "archive/instructions/README.md",
+      "git_blob_sha": "e94d83950720fb74d421847de2c7fa210c3ea5a2",
+      "size_bytes": 5029
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md",
+      "git_blob_sha": "0c8c717bec3a03ab79997312b52156187e59e348",
+      "size_bytes": 14762
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md",
+      "git_blob_sha": "514c93494c4fa727e4ed3f10492e654f4266eb8a",
+      "size_bytes": 18523
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP11D_TERRAIN_READABILITY.md",
+      "git_blob_sha": "c6099ef596700670dccabd9f03a1b680e895b6ac",
+      "size_bytes": 25350
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP11E_LOS_OPTIMIZATION.md",
+      "git_blob_sha": "d9f9de07aa40415511ed08bca76204633a2a751a",
+      "size_bytes": 17603
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md",
+      "git_blob_sha": "75f5b3fc62df259704fae919557a6d355350665c",
+      "size_bytes": 20891
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md",
+      "git_blob_sha": "b6fa7d2fd872f5958f2809c87da2fdcef56c2f34",
+      "size_bytes": 18666
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md",
+      "git_blob_sha": "732d7534a489bf69335dc2bf79554952a288fb5c",
+      "size_bytes": 19698
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md",
+      "git_blob_sha": "ca064e109c43a8dc5cae9a04243a328a8672d454",
+      "size_bytes": 5947
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md",
+      "git_blob_sha": "1a5c96a6bb2c2b35f74ec53a2b890370aa628aa8",
+      "size_bytes": 21781
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md",
+      "git_blob_sha": "682a67e3a940efe87ae4b0d6a6094b1b5e9ce76c",
+      "size_bytes": 18253
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md",
+      "git_blob_sha": "9a152024147368534e91197c259cdd5b0908add5",
+      "size_bytes": 850
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md",
+      "git_blob_sha": "975a06eb374002abe41a940ba9808694646fd78c",
+      "size_bytes": 1671
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md",
+      "git_blob_sha": "4a64ffc86e6819a2f303fee7fae429c14e8a6e2d",
+      "size_bytes": 848
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md",
+      "git_blob_sha": "e9d9218ca5830a45ca9cf1160f9caef2a6d6ccb8",
+      "size_bytes": 15007
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md",
+      "git_blob_sha": "ba1211cabec5670ecd38c475e937d2fbee69fb4b",
+      "size_bytes": 22846
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md",
+      "git_blob_sha": "c6fd9ad3903e9772f4535164f645f5f258e3405a",
+      "size_bytes": 24210
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md",
+      "git_blob_sha": "f762e01c71c704063e93b33c4fbbe6e115efb939",
+      "size_bytes": 19473
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md",
+      "git_blob_sha": "7073a30882cf368284133e19b79b4d6a0180e584",
+      "size_bytes": 19432
+    },
+    {
+      "path": "archive/instructions/TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md",
+      "git_blob_sha": "1ba1b24ac9d10074e40a8e00ce12f3d6d8dd634e",
+      "size_bytes": 20471
+    },
+    {
+      "path": "archive/instructions/wip09_hit_reference.py",
+      "git_blob_sha": "aeb3f31cd999cb2a33bebba355ec5c79c610000a",
+      "size_bytes": 3698
+    },
+    {
+      "path": "archive/instructions/wip10_hit_reference.py",
+      "git_blob_sha": "2b098f381f6811e813d00e21764dbd44e7d21c1d",
+      "size_bytes": 4770
+    },
+    {
+      "path": "archive/M1A2_before_proportion_fix.svg",
+      "git_blob_sha": "c74e1c4cb1296e749ff8736c16ba2451afae4f51",
+      "size_bytes": 33256
+    },
+    {
+      "path": "archive/M1A2_WIP04_top_view.svg",
+      "git_blob_sha": "e3b8e11ee2f6be46e134143c0255de33455cfd50",
+      "size_bytes": 31841
+    },
+    {
+      "path": "archive/NEXT_STEPS_2026-11-07.md",
+      "git_blob_sha": "5e3d82fe34d27efe8ee0947be653fef9e76aa283",
+      "size_bytes": 43656
+    },
+    {
+      "path": "archive/performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md",
+      "git_blob_sha": "2eac163a145db40bd1dea2fe68e4d08c4b657ddc",
+      "size_bytes": 16114
+    },
+    {
+      "path": "archive/README.md",
+      "git_blob_sha": "ac443d60d62b2702ad8a167f497e66eaf35593df",
+      "size_bytes": 20689
+    },
+    {
+      "path": "archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md",
+      "git_blob_sha": "ef8710751c10640e18871ef2fc88b45fe6101770",
+      "size_bytes": 958
+    },
+    {
+      "path": "archive/Tactical_v0.4_WIP01_source_and_backup.zip",
+      "git_blob_sha": "34499961ad7f44786921b39905b8873343706699",
+      "size_bytes": 95371
+    },
+    {
+      "path": "archive/Tactical_v0.4_WIP01.html",
+      "git_blob_sha": "fa9a2d6fc75469430b076aca121fc53a8b38c47b",
+      "size_bytes": 62177
+    },
+    {
+      "path": "archive/Tactical_v0.4_WIP02.html",
+      "git_blob_sha": "ab4e702c9250c2940dcb1076fa7c05a7b69b45f8",
+      "size_bytes": 7683831
+    },
+    {
+      "path": "archive/Tactical_v0.4_WIP03.html",
+      "git_blob_sha": "823eac8df97dc4c586991b2cc235e48f9c62ea6a",
+      "size_bytes": 8177268
+    },
+    {
+      "path": "archive/Tactical_v0.4_WIP04.html",
+      "git_blob_sha": "e201fb95775007950f074881c9bfc22dacecc3ff",
+      "size_bytes": 8228163
+    },
+    {
+      "path": "archive/Tactical_v0.4_WIP06.html",
+      "git_blob_sha": "82c85a625e2a487100b38417d8e1ffc9bea21352",
+      "size_bytes": 8232258
+    },
+    {
+      "path": "archive/tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md",
+      "git_blob_sha": "86280628ea2097a612dc02521da027880ebcccd8",
+      "size_bytes": 10554
+    },
+    {
+      "path": "archive/tanks/README.md",
+      "git_blob_sha": "cbad97448b1f23733021ad8a22535331451d6e8f",
+      "size_bytes": 62273
+    },
+    {
+      "path": "archive/vehicles/APC_ADDITIONAL_BTR60_M113G_FUCHS_BTR50_MTLB_2026-11-14.md",
+      "git_blob_sha": "8a4fdcd3abfb1ad10635891c98d8e3937ec68871",
+      "size_bytes": 5817
+    },
+    {
+      "path": "archive/vehicles/APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md",
+      "git_blob_sha": "a7fc40ce05ce4c9f40fd5e888603104187dfb21a",
+      "size_bytes": 8849
+    },
+    {
+      "path": "archive/vehicles/BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md",
+      "git_blob_sha": "c761d32cb9c908760506eab0fb14d6e5a8aea06e",
+      "size_bytes": 9195
+    },
+    {
+      "path": "archive/vehicles/RECON_BRDM2_LUCHS_M3_BRM1K_2026-11-14.md",
+      "git_blob_sha": "40d665648d664d1d4031742bec01c9684c313b44",
+      "size_bytes": 5230
+    },
+    {
+      "path": "archive/vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md",
+      "git_blob_sha": "f2d80f0068625c227ea9f1472bc43c47b9a00731",
+      "size_bytes": 9850
+    },
+    {
+      "path": "archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md",
+      "git_blob_sha": "e6a56b9d69746d123f9d6eff9fa367d1ccf32ebb",
+      "size_bytes": 23666
+    },
+    {
+      "path": "archive/WIP02_terrain_renderer.js",
+      "git_blob_sha": "10520c016679b28bd4cce6ad45e8093ddd0f41a6",
+      "size_bytes": 4832
+    },
+    {
+      "path": "archive/WIP04_initial_m1a2-art.js",
+      "git_blob_sha": "d8613cdde04453ddb88ce8358cca725f604528c8",
+      "size_bytes": 11316
+    },
+    {
+      "path": "archive/WIP04_m1a2-art.js",
+      "git_blob_sha": "2c13d906a3b38761f15ef4e5aeb4c27f7b51066b",
+      "size_bytes": 11415
+    },
+    {
+      "path": "archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md",
+      "git_blob_sha": "fa900ea49fc38c1cb620596e0ee10623f6a21ae4",
+      "size_bytes": 17885
+    }
+  ]
+}
