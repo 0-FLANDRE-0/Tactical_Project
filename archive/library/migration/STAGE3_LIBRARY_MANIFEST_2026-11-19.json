@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-11-19",
+  "migration_stage": 3,
+  "status": "migrated_provisionally_original_sources_remain_authoritative",
+  "baseline_commit": "1593dc2caab7c55af85c4df9acf748d2f2fe0706",
+  "stage3_files": 36,
+  "verification": {
+    "tank_count": 32,
+    "post_1989_m1a2": 2,
+    "modern_2a8": 1,
+    "preset_templates": 18,
+    "preset_source_rows": 54,
+    "preset_expanded_rows": 96,
+    "preset_original_row_diffs": 0,
+    "preset_sum_failures": 0,
+    "main_archive_source_deletions": 0
+  },
+  "files": [
+    {
+      "path": "archive/library/ammunition/cannon/DEFAULT_TANK_AMMO.md",
+      "blob_sha": "fa74d19e34fdc61aba22c5bb29b1805f099fa6cc",
+      "size_bytes": 5060,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/cannon/NVA.md",
+      "blob_sha": "b4177b88364d54efd7b32a9c267d1a562ef468ba",
+      "size_bytes": 12351,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/cannon/SOVIET_125.md",
+      "blob_sha": "cff25b7898ef51fcc081f255357a10e12b98ff33",
+      "size_bytes": 20792,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/cannon/US_105.md",
+      "blob_sha": "ad5ed3a3772841ffaf317046c4481b4009317cae",
+      "size_bytes": 10577,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/cannon/US_120.md",
+      "blob_sha": "6f87bdb608feaca8a74323f755e16542d11206dc",
+      "size_bytes": 9090,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/cannon/WEST_GERMANY_105.md",
+      "blob_sha": "8ab37051442ca3c73e34e792dec8f98f4a0aec17",
+      "size_bytes": 7373,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/cannon/WEST_GERMANY_120_1989.md",
+      "blob_sha": "3cee3481aed191dbbf18e5b28f808fb05b43d80a",
+      "size_bytes": 10484,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/missiles/AGM_114A_HELLFIRE.md",
+      "blob_sha": "aa3db6f64e3e01a883c1a24c17250574b9d6c0f3",
+      "size_bytes": 3843,
+      "source_files": [
+        "archive/air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/missiles/BMP_ATGM.md",
+      "blob_sha": "b3bff16e6ff3128fec86daecbc8c9a34d2d90dae",
+      "size_bytes": 2062,
+      "source_files": [
+        "archive/vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/missiles/MI24_ATGM.md",
+      "blob_sha": "70ce7835af7be38d1d55884a6c02650ca0f46e17",
+      "size_bytes": 4232,
+      "source_files": [
+        "archive/air/MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/missiles/MILAN_1_2.md",
+      "blob_sha": "bd9bbb2dcb0b06b12c998d05d02b02ef7df3b693",
+      "size_bytes": 1617,
+      "source_files": [
+        "archive/vehicles/BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/missiles/SOVIET_125_GUN_LAUNCHED.md",
+      "blob_sha": "f915cd41dcb589719178afa52c36a501bb6313b5",
+      "size_bytes": 5238,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/missiles/TOW_FAMILY.md",
+      "blob_sha": "63c25cd0d931dd5ec02bdfd5d797c27a609adbcc",
+      "size_bytes": 9720,
+      "source_files": [
+        "archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md",
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/modern/APFSDS_120MM.md",
+      "blob_sha": "abdb9ac110293fffb62ed5df8db886bbe244e15a",
+      "size_bytes": 7959,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/README.md",
+      "blob_sha": "b84a4c8b115fbf4501934651345232e0eb07a8ad",
+      "size_bytes": 2392,
+      "source_files": [
+        "archive/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/ammunition/references/NEAR_ZERO_10M_KE.md",
+      "blob_sha": "b7200c5161e5b48f1aef150c5cbc346a10c9a9c6",
+      "size_bytes": 9189,
+      "source_files": [
+        "archive/ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md"
+      ]
+    },
+    {
+      "path": "archive/library/presets/1989/README.md",
+      "blob_sha": "74219252762d4164e043cda5ce08088eded8823e",
+      "size_bytes": 7943,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/presets/1989/TANK_LOADOUTS_96.json",
+      "blob_sha": "c185f2947b29720f18f2aabd14482cf30fa0a4e0",
+      "size_bytes": 33806,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/presets/README.md",
+      "blob_sha": "237415c1dd8e0c83c1cc6ebe6895d28e959783af",
+      "size_bytes": 832,
+      "source_files": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/1989/air/AH64A.md",
+      "blob_sha": "8f88a07ba05ed249f477484a06b9782c7686e157",
+      "size_bytes": 6488,
+      "source_files": [
+        "archive/air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/1989/air/MI24_D_V_P.md",
+      "blob_sha": "c563e64749803039d64888ef07c7761092b804bf",
+      "size_bytes": 10413,
+      "source_files": [
+        "archive/air/MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/1989/apc/APC_ADDITIONAL.md",
+      "blob_sha": "e62bb0420809e34575b5c2a4eca344745ce500d1",
+      "size_bytes": 6409,
+      "source_files": [
+        "archive/vehicles/APC_ADDITIONAL_BTR60_M113G_FUCHS_BTR50_MTLB_2026-11-14.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/1989/apc/APC_BASE_AND_MACHINEGUNS.md",
+      "blob_sha": "80d99beb69f19656b33fc4e022527297e9b7ab2b",
+      "size_bytes": 9439,
+      "source_files": [
+        "archive/vehicles/APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/1989/ifv/BMP_1_1P_2.md",
+      "blob_sha": "adca61c8f79bf25fa728a0c2b027cef005d15753",
+      "size_bytes": 9187,
+      "source_files": [
+        "archive/vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/1989/ifv/BRADLEY.md",
+      "blob_sha": "5dfb905fd7e452c801bc11509c9d2016fd2d5bcb",
+      "size_bytes": 18420,
+      "source_files": [
+        "archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/1989/ifv/MARDER_1A2_1A3.md",
+      "blob_sha": "fcdb8ab475cf668cbdeac9e51b57cef7bd872567",
+      "size_bytes": 9131,
+      "source_files": [
+        "archive/vehicles/BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/1989/recon/RECON_VEHICLES.md",
+      "blob_sha": "4a214717ee5098842465134dbdd00982e5127f41",
+      "size_bytes": 5791,
+      "source_files": [
+        "archive/vehicles/RECON_BRDM2_LUCHS_M3_BRM1K_2026-11-14.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/README.md",
+      "blob_sha": "75a11f7708fddd7db5af9b64e2e3198eb01d36f2",
+      "size_bytes": 2181,
+      "source_files": [
+        "archive/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/NVA.md",
+      "blob_sha": "aaeec9c24aaebb960c1bd81a3fe4219733dde024",
+      "size_bytes": 7273,
+      "source_files": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/README.md",
+      "blob_sha": "36e776d2031b4166a719e710ec78e2d3824a4ca1",
+      "size_bytes": 3059,
+      "source_files": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/SOVIET.md",
+      "blob_sha": "941ed614bc7c6265174a40ce48bc88a62437be78",
+      "size_bytes": 13644,
+      "source_files": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/UPPER_ARMOR.md",
+      "blob_sha": "fed3b66b0a0bd8528e7564485991d6e3fe6a41a9",
+      "size_bytes": 5863,
+      "source_files": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/US.md",
+      "blob_sha": "639bf1c2bc8a5f6046b79a20bcf39a591f79bdf9",
+      "size_bytes": 2150,
+      "source_files": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/tanks/1989/WEST_GERMANY.md",
+      "blob_sha": "038562f4697c30988ef40b02bde2055637518412",
+      "size_bytes": 6737,
+      "source_files": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/tanks/modern/LEOPARD_2A8.md",
+      "blob_sha": "9cb17007616a0eab467484049e8ffa0b0fa18998",
+      "size_bytes": 8220,
+      "source_files": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/vehicles/tanks/post-1989/M1A2_1992_1998.md",
+      "blob_sha": "cdf0ba091e63d594b34f9d1403a0f97f3f36b9b3",
+      "size_bytes": 3427,
+      "source_files": [
+        "archive/tanks/README.md"
+      ]
+    }
+  ]
+}
