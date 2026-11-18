@@ -8,7 +8,7 @@
 
 > **기록 상태:** 합의된 **게임 전투 판정 설계 방향을 아카이브에 저장**. WIP12는 M829A2의 60~90°와 도탄, WIP19 브랜치는 M829A1/M830의 이번 시험용 거리·각도·도탄을 구현했다. **전체 탄약표 연결과 HEAT 신관 실패는 여전히 미구현**이며 WIP19 M830은 비관통/도탄/장갑차 범위 폭발 피해 0의 직접 관통 시험만 사용한다. 도탄각은 **워썬더 구 위키의 게임 수치**를 참고한 TACTICAL 기준으로, 실제 물리 시험치가 아니다.
 >
-> **참조:** [전차 KE(CE) 7구역](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md) · [2km 탄약표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md) · [KE 탄약 29종 영거리 3각도](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md) · [기존 2단계 명중 설계](TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md) · [관통·차량 피해 설계](PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md)
+> **참조:** [전차 KE(CE) 7구역](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md) · [2km 탄약표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md) · [KE 탄약 29종 영거리 3각도](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md) · [기존 2단계 명중 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md) · [관통·차량 피해 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md)
 
 ## 1. 피격면의 상대 입사각: WIP10 박스 확률을 계승
 
