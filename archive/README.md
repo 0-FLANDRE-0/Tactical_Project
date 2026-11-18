@@ -8,7 +8,7 @@
 |---|---|---|
 | **1989년 전차 32종** | [전차 목록 및 7구역 KE(CE)·HP](library/vehicles/tanks/1989/README.md) | 미국 5·서독 6·소련 14·동독 7종, 상부 7번째 구역 |
 | **1992/1998 M1A2, 현대 Leopard 2A8** | [전체 차량 카탈로그](library/vehicles/README.md) | M1A2 후속 2종, 2A8 1,450 HP·모듈러 증가장갑·Trophy HV |
-| **전차포탄·현대 날탄·Anti-ERA** | [탄약 카탈로그](library/ammunition/README.md) | 미·독 105/120mm, 소련 125mm, 현대 DM53~DM73·M829A2 |
+| **전차포탄·현대 날탄·Anti-ERA** | [탄약 카탈로그](library/ammunition/README.md) | 미·독 105/120mm, 소련 125mm, 현대 DM53~DM73·M829A2/A3/A4 |
 | **TOW 2A·2B 및 기타 ATGM** | [TOW 계열](library/ammunition/missiles/TOW_FAMILY.md) · [미사일 목록](library/ammunition/README.md) | 2A 탠덤, 2B 상부 CE 240 / 기본 피해 535 HP |
 | **1989년 96개 적재 프리셋** | [차량별 프리셋](library/presets/1989/README.md) · [JSON](library/presets/1989/TANK_LOADOUTS_96.json) | 본편 32종×기본·대기갑·화력지원 3종 |
 | **ERA·추가장갑·APS** | [장갑 시스템](library/systems/armor/README.md) · [Trophy HV](library/systems/aps/TROPHY_HV.md) | K1/K5 소모, BDD/D-Tech·2A8 장갑 HP, Anti-ERA, 좌우 독립 요격 |
