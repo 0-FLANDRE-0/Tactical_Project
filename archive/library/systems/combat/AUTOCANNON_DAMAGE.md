@@ -74,5 +74,5 @@
 
 **기존 데이터와 충돌 없음:** M829A1/A2 확정 피해·관통력·도탄곡선, 기존 1989년 전차 탄약 프리셋, WIP16 실행 코드는 변경하지 않는다.
 
-관련: [기존 관통·피해 설계](PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) · [모듈·승무원·탄약고 정책](TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md) · [M2 브래들리 라인업](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md).
+관련: [기존 관통·피해 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) · [모듈·승무원·탄약고 정책](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md) · [M2 브래들리 라인업](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md).
 
