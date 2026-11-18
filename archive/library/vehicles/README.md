@@ -1,6 +1,6 @@
-# TACTICAL 차량 제원 라이브러리 — 3단계 이관본
+# TACTICAL 차량 제원 라이브러리 — 정식 카탈로그
 
-> **검증 전 정본 후보.** 기존 `archive/tanks/`, `archive/vehicles/`, `archive/air/` 원본문서를 삭제·교체하지 않음. 새 문서는 사용자 지정 게임 설계와 미정·후보 구분을 그대로 보존함.
+> **2026-11-19 5단계 정본 전환 완료.** 사용자 확정·잠정·미정 구분을 보존한 **현행 차량 스펙 진입점**. 과거 원본과 런타임 코드는 수정 없이 보존하며, [정본 책임 규칙](../CANONICAL_RULES.md)을 적용한다.
 
 ## 1989년 본편 전차
 
@@ -30,4 +30,4 @@
 - [AH-64A Apache](1989/air/AH64A.md) · [AGM-114A Hellfire](../ammunition/missiles/AGM_114A_HELLFIRE.md)
 - [Mi-24D·V·P Hind](1989/air/MI24_D_V_P.md) · [Mi-24 탑재 대전차유도미사일](../ammunition/missiles/MI24_ATGM.md)
 
-**공통 전투 시스템(ERA·관통·피해 공식·Trophy 등) 정규화는 4단계**, 구형 본문/링크 정리는 5단계. 차량 전용 데이터가 포함되지 않은 옛 WIP 지시서는 작업 이력으로 별도 보존한다.
+**공통 전투 시스템 정본**은 [시스템 카탈로그](../systems/README.md), **구형 자료**는 [이력 자료실](../history/README.md)에서 구분한다. 게임 코드 구현 사실은 별도 확인.
