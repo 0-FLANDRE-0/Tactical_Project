@@ -58,7 +58,7 @@
 
 ## 4. 대전차미사일(ATGM) — 새 라이브러리 참조
 
-[말륫카·파곳·콩쿠르스 정본 후보](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/ammunition/missiles/BMP_ATGM.md)에서 탄종별 관통력·피해를 관리. BMP 기종별 발사기 호환과 전투 편성은 원래 설정 그대로 유지.
+[말륫카·파곳·콩쿠르스 정본 후보](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/library/ammunition/missiles/BMP_ATGM.md)에서 탄종별 관통력·피해를 관리. BMP 기종별 발사기 호환과 전투 편성은 원래 설정 그대로 유지.
 
 ## 5. BMP-2 2A42 30mm 탄약 — [사용자 채택]
 
