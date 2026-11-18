@@ -1,63 +1,33 @@
-# TACTICAL — archive 데이터 목차
+# TACTICAL — 아카이브 / 게임 제원 라이브러리
 
-> 업데이트: 2026-11-19 | 전차·탄약 기준 데이터 및 후속 게임 설계 관리
+> **2026-11-19 · 5단계 라이브러리 개편 완료.** 최신 게임 설계·장비·탄약의 **정식 탐색/수정 진입점은 [`archive/library/`](library/README.md)**이다. 과거 큰 README나 WIP 시제품은 근거·수정 이력을 보존하는 **레거시 자료**이며, 현재 실행 코드와 설계 확정은 별도다.
 
-> **라이브러리형 단계적 정리 진행 중:** [진행 현황 및 1단계 백업·인벤토리](library/README.md). **개편이 완료되기 전까지는 아래 기존 아카이브 원본 파일이 정식 수치의 정본**이다.
+## 찾는 자료별 빠른 링크
 
-전차 방호력과 탄약 편성은 **별도 최신 기준 문서**에서 관리한다. 기존 통합 문서의 중복·구형 데이터는 폐기하고, 이전 내역은 Git 기록에서만 확인한다. 최신 수치가 필요한 경우 반드시 아래 두 README를 참조한다.
-
-| 데이터 범위 | 최신 정리 문서 | 내용 |
+| 자료 | 현행 라이브러리 | 핵심 정보 |
 |---|---|---|
-| **아카이브 라이브러리 개편 (4단계 완료, 2026-11-19)** | [library/README.md](library/README.md) · [차량](library/vehicles/README.md) · [탄약·미사일](library/ammunition/README.md) · [프리셋](library/presets/README.md) · [공통 시스템](library/systems/README.md) · [세계관](library/world/README.md) · [이력](library/history/README.md) · [4단계 검증 보고서](library/migration/STAGE4_SYSTEM_HISTORY_AUDIT_2026-11-19.md) | 기준 원본 **63파일 보존**, 2단계 46개 문서 분류, 3단계 **36개** 장비·탄약·프리셋 이관, 4단계 **28개** 시스템·세계관·이력 분리. **96개 프리셋 원본 대조 오류 0**, 신규 4단계 내부 파일 링크 237개 대상 확인. **5단계 최종 정본 전환 이전**에는 기존 원본문서 우선, 실제 게임 코드·기존 프리셋 불변 |
-| **현대 전차 Leopard 2A8 방호력·Trophy HV (2026-11-19)** | [tanks/README.md §10](tanks/README.md#10-현대-전차-별도-확장--leopard-2a8-2026-11-19-사용자-지정) | **차량 1,450 HP, 120mm L55A1**, 7구역 기본·모듈러 증가장갑 방호력, 5개 부위 고정 피복률·독립 장갑 HP, 탄종별 감쇄율 **55/45/83/83%**, 최소 잔존 추가 방호력 **42.5%**. **Trophy HV 좌우 180° 독립/각 3발**, 요격 발사체 속도 **50~1,000m/s**, 반응 **300ms**, 발사기별 차탄 간격 **1.5초**. 현대 별도 설계, 정식 탄약 적재량·요격 세부 확률 미정, 코드 미구현 |
-| **1989-06-20 제3차 세계대전 세계관·4개 집단 보유량·부대 편제 원안 (2026-11-13)** | [world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md](world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md) | **초기 전차 14,440대 + 기타 장갑차 22,190대 = 36,630대**, 서독·주유럽미군·GSFG·NVA 세부 보유량. 항공·포병 추정, 방공 후보, 11th/2nd ACR·미군 사단, **소련 T-72 본토 후속 증원**을 구분해 기록. **다른 채팅 세계관 원안 백업 / 게임 공식 채택·구현 전** |
-| **1989 공격헬기 전체 현황·공통 규칙 (2026-11-15)** | [air/HELICOPTER_ROSTER_OVERVIEW_2026-11-15.md](air/HELICOPTER_ROSTER_OVERVIEW_2026-11-15.md) | **AH-64A·Mi-24D/V/P 4기종** 기체·무장·유도미사일 비교, Hellfire 전용 치명타/모든 탄종 공용 유폭 즉사 설계 분리. Mi-24 S-5/S-8 로켓 4종은 **미승인 임시 제안**, R-60은 미정. 코드 미구현 |
-| **AH-64A Apache 초기형 장갑·무장·피해 (2026-11-14)** | [air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md](air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md) | **기체 300 HP / 20(20) 단일 장갑**. M230 M789 HEDP **50 CE·150 HP**, AGM-114A **1,100 CE·884 HP**, 관통 여유 10% 이상 시 **치명 110%, 구역별 5/10/15/15%**, Hydra M247 **290 CE·288 HP**. 탄약고 유폭 즉사는 모든 탄종 공용의 별도 검토 시스템. 코드 미구현 |
-| **Mi-24D/V/P Hind 장갑·기관총·기관포·미사일·로켓 (2026-11-15)** | [air/MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md](air/MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md) | 기체 공통 **325 HP / 25(25)**. Yak-B **15 HP/발·4,500 RPM·1,470발**, Mi-24P GSh-30-2K **AP-T 85 / APHE 115 / HEF-I 155 HP, 250발**, 팔랑가/슈투름/아타카 6종 관통·피해(아타카 최종 **528 HP**). 1989 아타카 희귀 조기배치는 **대체역사 설정**. S-5/S-8은 미확정 제안 |
-| **항공 투입·외부 간략 작전지도·레이더 LOS·IFV 대공사거리 (2026-11-14)** | [air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md](air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md) | **사용자 확정 대공 경사거리 Rh 202 1,500m / M242 2,000m / 2A42 2,500m**. 항공·지상 투입 지점·방향·ETA, 고도 선택, 간략 외부 작전지도 안에 정밀 전술지도, 맵 안 중·장거리 SAM, 레이더 탐색 캐시/추적·유도 분리. 세부 구현·성능은 미정 |
-| **현재 상태·다음 단계 (진행 관리)** | [NEXT_STEPS_2026-11-07.md](NEXT_STEPS_2026-11-07.md) | **WIP20 최종 3633952 독립 재검증 후 main 통합**. M1A2_1998 전용 탄약 소실·격리 화재/일시 사격 중단·치명 사고. 실제 8×8 지도·승무원 치료/교체·다른 차종 확장은 후속 (최종 갱신 2026-11-14) |
-| **모듈 일시 성능 저하·승무원 부상·탄약고 예외 (2026-11-12)** | [combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md](combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md) | **모듈 영구 손상·파괴 제외 [확정]**. 승무원 경상/중상은 WIP18 main 통합. 탄약고 사고는 WIP20에서 M1A2_1998 전용으로 구현·독립 재검증·main 통합, 확률/시간은 시험 제안 |
-| **기관포 관통 피해 정책·M791/M919 시험값 (2026-11-13)** | [combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md](combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md) | **기관포 치명타 없음·과관통 피해 대폭 감쇄 [확정]**. M791 87HP·M919 78HP/모듈 일시 상태이상 확률 소폭 상향은 잠정 설계. 관통·속도값 별도 기록, 피해 배율 곡선·상태이상 확률 수치 미정, 미구현 |
-| **주독미육군 IFV·CFV 라인업 (2026-11-12)** | [vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md](vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) | IFV/CFV **별도 분류**. **M2·M2A1 550 HP, M2A2 650 HP**. M2A2 일시 기능이상·화재 위험 추가 저감 방향(정량 미정), 기본 장갑 7구역 초안 및 초기 ERA **+5(+335)**(장착 여부 미정). **M792 HEI-T 133 HP로 최신 갱신(기존 155)**. CFV 상세·실제 구현 미완료 |
-| **기본 APC 4종·기관총 기본탄 (2026-11-14)** | [vehicles/APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md](vehicles/APC_M113_BTR_AND_MACHINEGUN_DESIGN_NOTES_2026-11-14.md) | **M113A2/A3 400/450HP, BTR-70/80 350/400HP·7구역 장갑**, 7.62/12.7/14.5mm 단일 기본탄 거리별 관통·피해 **7/15/23HP** 확정. 기관총 명중·사거리·승하차·기관총 사수는 후속 미정. 추가 APC·정찰 문서와 연결 |
-| **추가 APC 5계열·기존 M113G 재활용 (2026-11-14)** | [vehicles/APC_ADDITIONAL_BTR60_M113G_FUCHS_BTR50_MTLB_2026-11-14.md](vehicles/APC_ADDITIONAL_BTR60_M113G_FUCHS_BTR50_MTLB_2026-11-14.md) | **BTR-60PB, TPz 1 Fuchs, BTR-50PK, MT-LB 장갑·HP 게임값 채택**, BTR-60PB HP 325는 기존 추천 유지·미세조정 가능. **서독 M113G 계열 HP 400은 아직 후보**, 개량형별 확정 미완료. 코드 미구현 |
-| **정찰장갑차 BRDM-2·Luchs·BRM-1K·M3/M3A1 (2026-11-14)** | [vehicles/RECON_BRDM2_LUCHS_M3_BRM1K_2026-11-14.md](vehicles/RECON_BRDM2_LUCHS_M3_BRM1K_2026-11-14.md) | **BRDM-2 300HP, Luchs 425HP, BRM-1K 500HP 및 7구역 장갑 채택**, M3/M3A1은 기존 M2/M2A1 장갑·무장·HP 재활용. 정찰·관측 성능 수치와 실제 부대 배속은 추후 미정 |
-| **서독 Marder 1A2·1A3 제원 (2026-11-13)** | [vehicles/BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md](vehicles/BUNDESWEHR_MARDER_1A2_1A3_SPEC_2026-11-13.md) | **1A2 550 HP·1A3 600 HP, 장갑 7구역 확정**. Rh 202 20mm DM43·DM43A1·DM63 및 DM51A2·DM81A1 탄약, 표적별 **1,450/2,500m** 교전거리, **MILAN 1/2** 관통력·피해·기본 지급형, 상대 명중률. **아카이브 설계만 기록·코드 미구현** |
-| **소련 BMP-1·BMP-1P·BMP-2 제원 (2026-11-13)** | [vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md](vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md) | **3형 모두 500 HP, 7구역 장갑 확정**. 2A28 73mm·2A42 30mm 탄약의 관통력·기본 피해, 말륫카/파곳/콩쿠르스 ATGM, 2A42 표적별 **2,000/4,000m** 교전거리·연사 명중률 저하 방향. **3UOF8 HEI 155 HP / 3UOR6 HE-T 133 HP로 최신 갱신**. **아카이브 설계만 기록, 코드 미구현** |
-| **보병 설계 논의 백업** | [infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md](infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md) | 병사별 누적 부상·개별 파편 피격, AI/플레이어 역할, 보병 대전차탄 후보값, 재보급·프리셋 변경. **방향·예시·제안·미정 구분 / 코드 미구현** |
-| **작업 지시서 백업** | [instructions/](instructions/) | 완료한 WIP09~WIP20 원본 지시서·기준표와 [WIP20 완료 안내](../docs/tasks/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md). 구현 설명·검증 결과·병합 검토는 각 버전 문서에서 관리 |
-| **M1 계열 상면도 뷰어** | [art/M1_Abrams_TopView.html](art/M1_Abrams_TopView.html) | M1A2/M1A1/M1A1 HA 단독 뷰어·삽입용 HTML, 원본 JS, 포탑 링 실측 확인 이미지 |
-| **Kontakt-1/5 통합 ERA 소모 및 빈 지점 50% 손실 확정 (2026-11-19)** | [tanks/README.md](tanks/README.md) | **K1/K5 피복 지점:** HEAT·ATGM −25/−32%p, APFSDS·APDS −12/−24%p, HEP·HESH −32/−40%p, HE(HE-FRAG) −40/−52%p. **빈 지점:** HEAT·ATGM −12.5/−16%p, HEP·HESH −16/−20%p, HE −20/−26%p, APFSDS·APDS 0/0%p. **기존 통합 감소량에 직격 소모+주변 탈락·연쇄 반응 포함, 중복 계산 금지**. 7구역 독립·0% 하한, BDD/D-Tech 제외, 코드·프리셋 불변 |
-| **BDD·D-Tech 독립 장갑 HP·감쇄율·비관통 폭발 손상 (2026-11-19)** | [tanks/README.md](tanks/README.md) | **BDD:** 차체 전면 850/포탑 전면 950/포탑 측면 550 HP, 잔존 25%; **D-Tech:** 차체 전면 1,100/측면 600/포탑 전면 1,350/측면 750 HP, 잔존 40%. **감쇄율 BDD/D-Tech:** APFSDS·APDS 30/52%, HEAT·ATGM 35/40%, HEP·HESH 80/85%, HE 85/85%. **실제 폭발하면 비관통이어도 추가장갑 HP 손실**: 피복 지점 `기본 피해×(1−감쇄율)`, 빈 지점 HEAT/ATGM·HEP/HESH·HE는 그 절반; 빈 지점 APFSDS/APDS 0. HEP 556·HE-FRAG 512/612는 장갑 손상 기준으로 관통 실패에도 사용하되 차량 HP 파공 피해와 구별. 피복률 고정, 기타 미관통 폭발·신관·수리 미정, 게임 코드 미변경 |
-| **전차 방호력·차량 HP (본편 32종 + 확장 2종)** | [tanks/README.md](tanks/README.md) | 7구역 KE(CE), ERA/BDD/D-Tech, **§9 차량 최대 HP 34종**, 계열·연식별 구분. **HP 확정 데이터 / 피해량·모듈 HP 미정** |
-| **구경별 APFSDS 치명·과관통 곡선 최종 확정 (2026-11-19)** | [ammo/README.md](ammo/README.md) | **서방 105mm 최고 105%@r12%·하한 15%@r90%**, **서방 120mm 최고 108%@r14.2857%·하한 20%@r93%**, **소련 125mm 최고 107%@r18%·하한 25%@r96%** 확정. 각 구경 초기 상승점/감쇄 65%·35% 기준점도 선형 곡선으로 채택. **105mm APDS는 기존 120mm 곡선 공유 유지**, 기본 HP·KE·속도·96개 프리셋·코드 변경 없음.
-| **105mm APDS의 120mm APFSDS 치명·과관통 곡선 공유 확정 (2026-11-19)** | [ammo/README.md](ammo/README.md) | **미국 M392A2 346 HP / M728 358 HP, 서독 DM13(105mm) 346 HP** 유지. 직접 관통 피해 배율은 서방 120mm APFSDS 기준 **r 0/7.1429/14.2857/71.4286/85.7143/93% → 65/105/108/65/35/20%** 선형 곡선 공유. **105mm APFSDS 최고 105%·하한 15%·세부 곡선까지 2026-11-19 최종 확정**. 비관통·속도 특수 규칙 제외, KE·초속·96개 프리셋 불변, 코드 미반영 |
-| **APFSDS 구경별 치명·과관통 곡선 통합 방향 (2026-11-19)** | [combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md](combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) | **105mm 미국·서독 / 120mm 미국·서독 / 125mm 소련 APFSDS**는 각 구경 내 단일 잔여 관통력 기반 치명/과관통 곡선 사용 방향 확정. **120mm는 M829A1/A2 최고 108%·과관통 선형 곡선을 공통 설계 기준**으로 확장. **후속 사용자 확정으로 105mm 최고 105%·하한 15%, 125mm 최고 107%·하한 25% 및 양쪽 세부 곡선까지 확정**. **105mm APDS는 별도 후속 결정에 따라 120mm 곡선 공유**, HEAT·HEP·HE-FRAG·ATGM은 제외. 기본 HP·관통력·속도·96개 프리셋·코드 불변 |
-| **관통·피해·HEP 스폴 설계** | [combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md](combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) | M829A1 기본 380 및 배율 곡선, M829A2 기본 405·A1 배율 공유. **미국 M393A2·서독 DM512 HEP 직접 파공 556 HP / 비관통 스폴 438 HP 최신 확정**; 스폴 판정곡선과 직접 천공력 미정. M830 435는 시험 구성에서 적용, 모듈 영구 피해는 2026-11-12 정책상 배제 |
-| **잔해 유지·식별·선택 규칙** | [combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md](combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md) | **잔해 영구 유지·선택 불가.** 미관측 격파도 이후 한 번 식별하면 계속 표시. 미확인 격파의 명령 반응 노출 방지. **WIP11B 구현 / WIP11D와 함께 main 통합** |
-| **고각 관통·탄종별 도탄·HEAT 신관 설계** | [combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md](combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md) | **선택된 면의 입사각과 게임용 고각·도탄·HEAT 신관 설계**. WIP12에서 현재 M829A2 시험탄의 고각 보간·도탄을 main에 구현. 다른 탄종 전체 적용·HEAT 신관은 후속 |
-| **전투 판정 2단계·360° 확률 구역 설계 (WIP10~WIP12 일부 구현)** | [combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md](combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md) | 발사·착탄 2단계·박스 투영 구역은 WIP10, M829A2 기본 관통·HP 피해는 WIP11A, 현재 시험탄 고각·도탄은 WIP12 구현. HEAT 신관과 다른 탄종 확장은 후속 |
-| **장갑 세부 구획 검토 메모 (미확정)** | [tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md](tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md) | 7구역 내부 상/하부·포방패·좌우 뺨·측면 전후·지붕 분할 후보, LOS·이동 상태·사통/관측 확률 아이디어. **현재 미확정·미구현** |
-| **탄약 및 적재 프리셋·미국/서독 105mm 피해 확정 (2026-11-15)** | [ammo/README.md](ammo/README.md) | 탄종별 관통력·기본탄·**32종×3=96개** 프리셋. **미국 105mm 10종 기본 피해 확정**: APDS/APFSDS 6종 **346/358/342/338/347/359 HP**, M456A1/A2 **385 HP**, M393A2 HEP **556/438 HP**, M494 APERS **플레셰트당 6 HP**. **서독 105mm 5종 확정**: DM13/DM23/DM33 **346/345/342 HP**, DM12 HEAT **385 HP**, DM512 HEP **직접 천공 556 / 스폴 438 HP**. **105mm APFSDS 피해 배율 후속 확정**, HEP 스폴곡선·APERS 피탄 분포·비관통/속도 보정 미정, 코드 미구현 |
-| **TOW 2A 탠덤 개량·TOW 2B 상부 공격 (2026-11-19)** | [Bradley TOW 원본](vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) · [탄약 §14](ammo/README.md) | **TOW 2A(BGM-71E)** TOW 2(D)와 동일 **CE 880/760/440·538 HP**, 피복 ERA 추가 CE 감쇄/무력화(정량 미정), 기존 1989년 후보 유지. **TOW 2B(BGM-71F)** 1990년 이후 미사일, **상부 전용 CE 240·기본 피해 535 HP**, 일반 6구역 관통 판정 없음. 2B 사거리/상부 기폭/정식 보급·프리셋 미정, 코드 변경 없음 |
-| **현대 APFSDS Anti-ERA 단계 (2026-11-19)** | [ammo/README.md](ammo/README.md) | **DM53·DM53A1·DM63 및 M829A2**는 Kontakt-5급 초기 중ERA 추가 KE 방호력을 일부 감쇄, **DM63A1**은 Relikt급까지 일부 대응, **DM73**은 한 단계 높은 Anti-ERA 대응력. **감쇄율·Relikt 상세 데이터 미정**, 기존 ERA 피복률 소모·탄약 KE·HP 유지, 코드 미구현 |
-| **현대 120mm APFSDS 별도 제원 (2026-11-19)** | [ammo/README.md](ammo/README.md) | **M829A2** 2km **600/505/345**, 10m **630/530/365** 재설정. **DM53·DM53A1·DM63·DM63A1** L44/L55 별도 제원 및 **DM73** L55A1 전용 제원, 기본 차량 HP 피해 기록. DM53A1 명중 안정성은 **수치 미정 메모**. 1989년 96개 프리셋·코드 미변경 |
-| **미국 120mm 5종 기본 피해 현황 (2026-11-15)** | [ammo/README.md](ammo/README.md) | **M829 368 HP [신규 확정], M829A1 380 HP, M829A2 405 HP, M830 직접 관통 435 HP [시험 구성], M830A1 382 HP [신규 확정]**. M829/M830A1 세부 피해 규칙 미정·코드 미반영. M829A2/M830A1은 1989년 본편 미사용 |
-| **서독 120mm 8종 기본 피해 확정 (2026-11-16)** | [ammo/README.md](ammo/README.md) | **DM13 366 / DM23 364 / DM23A1 368 / DM33 365 / DM33A1 372 / DM43 374 HP**(APFSDS). **DM12·DM12A1 HEAT-MP 각각 435 HP**(미국 M830 직접 관통 시험값과 동일). DM12A1 파편 강화 수치·HEAT 신관/폭발 상세 미정, **APFSDS는 서방 120mm 공통 곡선 후속 확정**, 코드 미구현. **DM43 1989년 희귀 조기배치 가상 설정 유지**, 관통력·초속·96개 프리셋 변경 없음 |
-| **소련 125mm 포발사 ATGM 6종 기본 피해 확정 (2026-11-19)** | [ammo/README.md](ammo/README.md) | **9M112 440 / 9M112M 464 / 9M112M2 478 / 9M124 512 / 9M119 482 / 9M119M 485 HP** 직접 관통 기본 피해 사용자 확정. CE·비행속도·유도체계·96개 적재 프리셋 불변. **9M112M2·9M124 채택 미정**, **9M119M 1989년 본편 제외** 유지. 신관/ERA/배율/범위 피해·게임 코드 미구현 |
-| **소련 125mm 3Sh7 APERS 피해 확정 (2026-11-19)** | [ammo/README.md](ammo/README.md) | **3Sh7 유효 플레셰트 1개당 7 HP 확정**(미국 M494는 6 HP 유지). 실제 유효 명중 개수에 따라 누적, 표적별 피탄 분포·거리/엄폐·장갑차량 적용 규칙 미정. **기존 KE 5/0/0, 900m/s 및 96개 프리셋 유지, 코드 미구현** |
-| **소련 125mm HEAT 4종 피해 확정 및 HE-FRAG 판정 방향 (2026-11-18)** | [ammo/README.md](ammo/README.md) | **3BK14M 432 / 3BK18M 438 / 3BK21B 458 / 3BK29 435 HP**(직접 관통 기본 피해) 확정. 기존 CE·포구초속·적재 프리셋 유지. **3OF19·3OF26은 HEP/HESH가 아닌 HE-FRAG**이며 폭발로 장갑이 직접 파열·파공된 경우만 관통 처리; 비관통 후면 HEP 스폴 없음. CE35/40은 게임용 파공 지표, **3OF19·3OF26 직접 파공 피해는 512/612 HP(2026-11-19) 확정**. 대인 효과·범위·신관·코드 적용 미정 |
-| **소련 125mm APFSDS 6종 기본 피해 전부 확정 (2026-11-18)** | [ammo/README.md](ammo/README.md) | **3BM15 345 HP / 3BM22 365 HP / 3BM26 372 HP / 3BM29 376 HP / 3BM32 Vant 382 HP / 3BM42 Mango 370 HP 확정**, 기존 2km/0°·30°·60° 관통력 **3BM15 KE 390/320/150, 3BM22 KE 425/360/195, 3BM26 KE 405/365/200, 3BM29 KE 440/375/255, 3BM32 KE 505/425/275, 3BM42 KE 450/380/250**, 포구초속 **1,785/1,760/1,700/1,760/1,700/1,700m/s 유지**. 별도 피해 배율·코드 구현 미정, 96개 적재 프리셋 불변 |
-| **0~10m KE 3각도·5mm 기준표 (29종)** | [ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md](ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md) | 29종 0°/30°/60°의 5mm 근거리 게임값. 3BM32 505/425/275 버프, 3BM42 450/380/250 너프. 나머지 2km 값 유지 |
-| **대형 단일 전장·포병 실체·최적화·보병 분대 AI** | [performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md](performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md) | **전역지도는 임시 보관**, 4×4 유지·8×8/9×12 확장 후보, 포병 실제 유닛, 경로탐색·LOS 현행/제안 구분, **분대 공통 관측·판단 / 병사별 피격·부상**. WIP17 가변 크기 기반 main 통합. 실지도·장기 최적화·분대 AI는 후속 |
-| **폐기된 통합 문서 안내** | [TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md](TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md) | 구형 통합 데이터는 최신 기준에서 제외. 과거 내용은 Git 파일 이력에서 확인 |
+| **1989년 전차 32종** | [전차 목록 및 7구역 KE(CE)·HP](library/vehicles/tanks/1989/README.md) | 미국 5·서독 6·소련 14·동독 7종, 상부 7번째 구역 |
+| **1992/1998 M1A2, 현대 Leopard 2A8** | [전체 차량 카탈로그](library/vehicles/README.md) | M1A2 후속 2종, 2A8 1,450 HP·모듈러 증가장갑·Trophy HV |
+| **전차포탄·현대 날탄·Anti-ERA** | [탄약 카탈로그](library/ammunition/README.md) | 미·독 105/120mm, 소련 125mm, 현대 DM53~DM73·M829A2 |
+| **TOW 2A·2B 및 기타 ATGM** | [TOW 계열](library/ammunition/missiles/TOW_FAMILY.md) · [미사일 목록](library/ammunition/README.md) | 2A 탠덤, 2B 상부 CE 240 / 기본 피해 535 HP |
+| **1989년 96개 적재 프리셋** | [차량별 프리셋](library/presets/1989/README.md) · [JSON](library/presets/1989/TANK_LOADOUTS_96.json) | 본편 32종×기본·대기갑·화력지원 3종 |
+| **ERA·추가장갑·APS** | [장갑 시스템](library/systems/armor/README.md) · [Trophy HV](library/systems/aps/TROPHY_HV.md) | K1/K5 소모, BDD/D-Tech·2A8 장갑 HP, Anti-ERA, 좌우 독립 요격 |
+| **명중·관통·피해·장전** | [공통 시스템](library/systems/README.md) | APFSDS 과관통 곡선, 도탄, HEP/HE-FRAG, 모듈, 보급 |
+| **IFV·APC·정찰차·헬기** | [차량별 상세](library/vehicles/README.md) | Bradley, BMP, Marder, APC, Mi-24, AH-64A |
+| **보병·전장 시스템** | [보병](library/units/README.md) · [지도/LOS/AI](library/systems/maps/LARGE_MAP_LOS_AND_AI.md) | 미정·시험값을 사용자 확정값과 분리 |
+| **세계관·작업 이력** | [대체역사 원안](library/world/README.md) · [WIP/구형 이력 자료실](library/history/README.md) | 1989년 OOB 원안, WIP09~22 기록, 과거 시제품 보존 |
 
-## 데이터 유지 원칙
+## 정본 관리 기준
 
-- **전차 변경:** 우선 `tanks/README.md` 갱신. 탄약 적재나 수량까지 바뀌면 `ammo/README.md`도 갱신.
-- **탄약 변경:** 우선 `ammo/README.md` 갱신. 탄약 종류와 전차 모델별 호환 규칙을 혼동하지 않도록 유지.
-- **구역 체계:** 차체 전/측/후, 포탑 전/측/후, 통합 상부 = **7구역**. 하부는 아직 미도입.
-- **특수 추가장갑:** Kontakt-1/5는 피복률 소모(HEAT·ATGM·HEP·HE의 빈 지점 50%)이고, BDD/D-Tech는 **고정 피복률·부위별 독립 장갑 HP·탄종별 감쇄율·최소 잔존 추가 방호력**이다. **HEAT·ATGM·HEP/HESH·HE/HE-FRAG의 실제 폭발은 비관통이어도 BDD/D-Tech HP에 감쇄 후 손상**을 준다(피복 지점 100%, 빈 지점 50%; 빈 지점 APFSDS/APDS는 0). **차량 HP 관통/스폴 결과와 장갑 HP 손실을 혼동하거나 중복 적용 금지.** 신관·그 외 미관통 폭발 피해·수리는 별도 미정.
-- **구형 통합 데이터:** 현행 문서에서 폐기. 이전 값·미결정 문구를 현재 설정처럼 재사용하지 않으며, 필요하면 Git 이력에서 확인.
+- [**자료별 단일 책임·최신 사용자 결정·구현 상태 분리 규칙**](library/CANONICAL_RULES.md).
+- 게임 설계 **확정 수치와 미정·잠정·역사 기록**을 구별한다. 새로운 현대/후속 전차·미사일을 1989년 본편에 자동 지급하지 않는다.
+- **게임 코드·실행 빌드·1989년 기존 96개 실제 프리셋 데이터는 이번 문서 개편으로 수정되지 않았다.**
 
-새로 확정되는 자료가 늘어나면 국가별·기종별 세부 파일로 추가 분리할 수 있다.
+## 복구·검증·옛 원본
+
+- [5단계 최종 검증/이관 보고서](library/migration/STAGE5_FINAL_VALIDATION_2026-11-19.md) · [단계별 작업·감사 기록](library/README.md)
+- [정리 이전 보존 브랜치](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-library-baseline-2026-11-19) — 기준 SHA `1593dc2`.
+- **레거시 원본:** [구형 통합 전차 기준표](tanks/README.md) · [구형 통합 탄약 기준표](ammo/README.md) · [Bradley/TOW 옛 통합 문서](vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) · [과거 지시서](instructions/README.md). **전부 보존**, 새 정본으로 들어가는 안내를 제공한다.
+- [원본 63개 파일 SHA 목록](library/migration/BASELINE_FILE_MANIFEST_2026-11-19.json) · [3단계 이관 파일 목록](library/migration/STAGE3_LIBRARY_MANIFEST_2026-11-19.json) · [4단계 이관 파일 목록](library/migration/STAGE4_SYSTEM_HISTORY_MANIFEST_2026-11-19.json).
+
+> **원칙:** 한 데이터의 실제 수정은 [정본 소유권 규칙](library/CANONICAL_RULES.md)에 따라 수행하고, 다른 문서에서는 연결 링크만 갱신한다. 소스 원본·과거 시행착오를 사실 확인 없이 삭제하거나 미정 게임 수치를 임의로 채우지 않는다.
