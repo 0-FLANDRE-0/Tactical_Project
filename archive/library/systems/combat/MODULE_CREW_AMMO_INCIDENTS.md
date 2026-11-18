@@ -52,5 +52,5 @@
 4. 게임 UI 알림·보급/정비와의 연계, 구현 단계·테스트
 5. 기존 완성 전차 제원·장갑·차량 최대 HP의 변경: **이번에 변경 없음**
 
-관련 과거 문서: [관통·피해 설계 이력](PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) · [진행 관리 메모](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/NEXT_STEPS_2026-11-07.md).
+관련 과거 문서: [관통·피해 설계 이력](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) · [진행 관리 메모](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/NEXT_STEPS_2026-11-07.md).
 
