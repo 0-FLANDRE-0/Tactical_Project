@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "stage": 4,
+  "created_date": "2026-11-19",
+  "repo": "0-FLANDRE-0/Tactical_Project",
+  "baseline_commit": "1593dc2caab7c55af85c4df9acf748d2f2fe0706",
+  "stage3_files_unchanged": 36,
+  "stage4_file_count": 28,
+  "status": "migrated_not_final_canonical",
+  "verification": {
+    "internal_file_links_examined": 237,
+    "missing_internal_file_targets": 0,
+    "original_files_deleted": 0,
+    "original_source_files_changed_except_archive_index": 0,
+    "prior_stage_3_file_sha_mismatches": 0
+  },
+  "files": [
+    {
+      "path": "archive/library/history/implementation/README.md",
+      "git_blob_sha": "81f3dbcbcae82882c19924330523270bff091415",
+      "size_bytes": 7802,
+      "source_docs": [
+        "archive/instructions/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/history/legacy/README.md",
+      "git_blob_sha": "ab22059b50b071fd892576a503b16be3afaf1f38",
+      "size_bytes": 1462,
+      "source_docs": [
+        "archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md",
+        "archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md"
+      ]
+    },
+    {
+      "path": "archive/library/history/progress/NEXT_STEPS_2026_11_07.md",
+      "git_blob_sha": "5c309686d34dac740f95c7e2c89e0be3a8111abd",
+      "size_bytes": 46702,
+      "source_docs": [
+        "archive/NEXT_STEPS_2026-11-07.md"
+      ]
+    },
+    {
+      "path": "archive/library/history/proposals/ARMOR_SUBZONES.md",
+      "git_blob_sha": "1e5c7ccc00bfe93ab363c3bd1bc956331e213880",
+      "size_bytes": 11495,
+      "source_docs": [
+        "archive/tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md"
+      ]
+    },
+    {
+      "path": "archive/library/history/README.md",
+      "git_blob_sha": "46174ed71593961b65deb209da9dc382df15f7c9",
+      "size_bytes": 4450,
+      "source_docs": [
+        "archive/instructions/README.md",
+        "archive/NEXT_STEPS_2026-11-07.md"
+      ]
+    },
+    {
+      "path": "archive/library/indexes/AIRCRAFT_1989.md",
+      "git_blob_sha": "0722d6e3bdc86816481a8acd3d94fec6c3f1badb",
+      "size_bytes": 6253,
+      "source_docs": [
+        "archive/air/HELICOPTER_ROSTER_OVERVIEW_2026-11-15.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/air/AIR_ENTRY_RADAR_AA.md",
+      "git_blob_sha": "44d66a0027aa70b884bdbcdf3b6a0626d65ea7f8",
+      "size_bytes": 11214,
+      "source_docs": [
+        "archive/air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/aps/TROPHY_HV.md",
+      "git_blob_sha": "4650ecdbabaf9582bce258d5f557e4ecff112b21",
+      "size_bytes": 2986,
+      "source_docs": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/armor/ANTI_ERA.md",
+      "git_blob_sha": "e6ad5752f8eca34cba2ee1781e0669c368fd0d8e",
+      "size_bytes": 5833,
+      "source_docs": [
+        "archive/ammo/README.md",
+        "archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/armor/LEOPARD_2A8_MODULAR_ARMOR.md",
+      "git_blob_sha": "a01b9c2a1a76bd84448231e726fe9f81ab29aa1c",
+      "size_bytes": 5025,
+      "source_docs": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/armor/NON_EXPLOSIVE_ADDON_ARMOR.md",
+      "git_blob_sha": "64bf36fcf4a0f2a9e89f080bf3a15fa9778ecfc5",
+      "size_bytes": 7776,
+      "source_docs": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/armor/README.md",
+      "git_blob_sha": "28335ff80aa099970812608ad6177dfbf7d41c65",
+      "size_bytes": 734,
+      "source_docs": [
+        "archive/tanks/README.md",
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/armor/SEVEN_ZONE_AND_KONTAKT_ERA.md",
+      "git_blob_sha": "37544e5b53744bac5c21aa67c9c5ab03f3fc0030",
+      "size_bytes": 7223,
+      "source_docs": [
+        "archive/tanks/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/combat/ANGLE_RICOCHET_FUZE.md",
+      "git_blob_sha": "1b71017d5c7fc87de62a3ddaa5005e1ad612cf67",
+      "size_bytes": 16537,
+      "source_docs": [
+        "archive/combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/combat/APFSDS_DAMAGE_CURVES.md",
+      "git_blob_sha": "00288dac0dd73136887b2ce00f8494fcedeb6626",
+      "size_bytes": 6389,
+      "source_docs": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/combat/AUTOCANNON_DAMAGE.md",
+      "git_blob_sha": "74d6de4053f17ebae632f340c84b177f93dca04c",
+      "size_bytes": 7558,
+      "source_docs": [
+        "archive/combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/combat/HEP_HEFRAG_APERS.md",
+      "git_blob_sha": "f0861cf0c554c5da859d0eff2b623f437b0dad01",
+      "size_bytes": 10140,
+      "source_docs": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/combat/MODULE_CREW_AMMO_INCIDENTS.md",
+      "git_blob_sha": "60981b6aef9813eb8e80920320c67140bec2b611",
+      "size_bytes": 7388,
+      "source_docs": [
+        "archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/combat/README.md",
+      "git_blob_sha": "40637f0c3f4215811c28c38d1e3c599cf6808a31",
+      "size_bytes": 984,
+      "source_docs": [
+        "archive/combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md",
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/combat/TWO_STAGE_HIT.md",
+      "git_blob_sha": "1682d7a79acdde6b89ca13605e7c4da731808133",
+      "size_bytes": 15570,
+      "source_docs": [
+        "archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/combat/WRECK_VISIBILITY.md",
+      "git_blob_sha": "3704b84001e4725a660d710d57b04fcced64a63e",
+      "size_bytes": 4784,
+      "source_docs": [
+        "archive/combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/logistics/RELOAD_AMMO_SUPPLY.md",
+      "git_blob_sha": "6bfc48ab3ef3723911f0e31d8b2021c61def2e1e",
+      "size_bytes": 8425,
+      "source_docs": [
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/maps/LARGE_MAP_LOS_AND_AI.md",
+      "git_blob_sha": "37556c5a2a4d7f884db217517659f87b4d30a563",
+      "size_bytes": 17150,
+      "source_docs": [
+        "archive/performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md"
+      ]
+    },
+    {
+      "path": "archive/library/systems/README.md",
+      "git_blob_sha": "09614614b0539df2206552e81a2c3c43bd2ed5c0",
+      "size_bytes": 1643,
+      "source_docs": [
+        "archive/tanks/README.md",
+        "archive/ammo/README.md"
+      ]
+    },
+    {
+      "path": "archive/library/units/infantry/DESIGN.md",
+      "git_blob_sha": "bb107f673de1fe7fdcf01dac7aed30cdf7a997bb",
+      "size_bytes": 8995,
+      "source_docs": [
+        "archive/infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md"
+      ]
+    },
+    {
+      "path": "archive/library/units/README.md",
+      "git_blob_sha": "326a13a9135183498c6fed60168869581da85515",
+      "size_bytes": 424,
+      "source_docs": [
+        "archive/infantry/INFANTRY_DESIGN_NOTES_2026-11-08.md"
+      ]
+    },
+    {
+      "path": "archive/library/world/1989/WW3_FORCE_INVENTORY_DRAFT.md",
+      "git_blob_sha": "fbc7a25ddd030f3e09ce1f600958852e38bcfdc5",
+      "size_bytes": 18649,
+      "source_docs": [
+        "archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md"
+      ]
+    },
+    {
+      "path": "archive/library/world/README.md",
+      "git_blob_sha": "31cd1328bcf907f38d9b249929c7252d226ec2f9",
+      "size_bytes": 424,
+      "source_docs": [
+        "archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md"
+      ]
+    }
+  ]
+}
