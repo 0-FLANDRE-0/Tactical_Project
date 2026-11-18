@@ -5,8 +5,8 @@
 # TACTICAL 1989 — 공격헬기 전체 설계 현황 (2026-11-15)
 
 > **상태:** 이 문서는 현재까지 대화에서 실제 설계한 **AH-64A Apache / Mi-24D·V·P 4기종**을 한데 모은 **색인·핵심 비교표**다. 전 기종 실제 역사 배치 확정 명세나 게임 코드 구현 보고가 아니다. 다른 헬기 기종을 임의 추가하지 않는다.
-> **상세 명세(우선):** [AH-64A](AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md), [Mi-24D/V/P](MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md). 충돌 시 사용자 최신 결정과 각 상세 문서의 해당 탄종값을 우선하며, 이 표는 요약용이다.
-> **공통 항공 시스템:** [전술지도·외부 작전 공역, 증원·진입점·ETA, 방공/레이더 LOS](AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md).
+> **상세 명세(우선):** [AH-64A](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md), [Mi-24D/V/P](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md). 충돌 시 사용자 최신 결정과 각 상세 문서의 해당 탄종값을 우선하며, 이 표는 요약용이다.
+> **공통 항공 시스템:** [전술지도·외부 작전 공역, 증원·진입점·ETA, 방공/레이더 LOS](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md).
 
 ## 1. 기체 확정값
 
