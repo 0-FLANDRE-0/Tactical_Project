@@ -6,7 +6,7 @@
 
 > **기록일:** 2026-11-07 (KST)
 > **상태:** **검토 중인 설계 아이디어 / 미확정.** 이번 대화에서 “대충 이런 식으로 해보면 어떨까”라고 논의한 내용을 보존한다. 확정 규칙·계산식·수치표·구현 지시서가 아니다.
-> **기준 데이터:** [전차 32종의 현행 7구역 방호력](README.md) · [탄약 32종×3=96개 프리셋](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)
+> **기준 데이터:** [전차 32종의 현행 7구역 방호력](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md) · [탄약 32종×3=96개 프리셋](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)
 > **이후 논의 (2026-11-07):** [발사·착탄 2단계 평가 + 360° 피격 구역·사각형 근사 모델](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md)을 최신 검토 메모로 추가했다. 이 문서의 세부면 목록은 **여전히 선택적 후보**다.
 > **범위:** TACTICAL의 RTS식 **물리 상태 + 확률 판정**을 전제로 하며 정밀 3D 장갑 충돌 또는 실제 탄착 좌표 추적을 목표로 하지 않는다.
 
@@ -114,5 +114,5 @@
 6. 구획별 모델의 복잡도와 소련/서방 밸런스 간에 어떤 균형을 택할지?
 7. M1A2 시험 모델로 먼저 시작할지, 기존 7구역만 쓰는 최소 전투 모델을 먼저 구현할지?
 
-**관리 규칙:** 여기 적힌 항목을 '확정 게임 수치'로 취급하지 않는다. 승인 전에는 [전차 최신 기준표](README.md)의 7구역 KE(CE) 값을 덮어쓰지 않고, [탄약 기준표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)의 탄약·프리셋도 변경하지 않는다. 향후 결정이 확정되면 별도 확정 절로 옮기거나 상태를 변경한다.
+**관리 규칙:** 여기 적힌 항목을 '확정 게임 수치'로 취급하지 않는다. 승인 전에는 [전차 최신 기준표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md)의 7구역 KE(CE) 값을 덮어쓰지 않고, [탄약 기준표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)의 탄약·프리셋도 변경하지 않는다. 향후 결정이 확정되면 별도 확정 절로 옮기거나 상태를 변경한다.
 
