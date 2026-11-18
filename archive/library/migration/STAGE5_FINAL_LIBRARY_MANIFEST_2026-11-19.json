@@ -3,7 +3,7 @@
   "created_date": "2026-11-19",
   "repository": "0-FLANDRE-0/Tactical_Project",
   "status": "five_stage_library_canonical_index_complete",
-  "tree_before_manifest_creation": "680b7b2c78a789fee57489cb656dc3032762b3e5",
+  "tree_before_manifest_creation": "aca40ce7b531e2db8f48120f2280c422d334c9da",
   "manifest_excludes_itself": true,
   "baseline": {
     "branch": "archive-library-baseline-2026-11-19",
@@ -114,7 +114,7 @@
     },
     {
       "path": "archive/library/ammunition/modern/APFSDS_120MM.md",
-      "git_blob_sha": "c2d7092710318795ea65dc11b90b355878095aee",
+      "git_blob_sha": "c9f68889d948b84918368a86df8118411f1e99d8",
       "size_bytes": 8690,
       "domain": "ammunition"
     },
