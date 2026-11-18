@@ -7,7 +7,7 @@
 > **상태:** 2026-11-13 사용자 대화에서 채택한 **게임 설계 확정값**을 정리한다. 구체적 실전 배치량·역사적 장갑 실측 수치와 혼동하지 않는다.
 > **범위:** Marder 1A2, Marder 1A3의 7구역 게임용 장갑, 차량 HP, Rh 202 철갑·고폭탄, 교전거리·상대 명중 특성, MILAN 1/2.
 > **구현 경계:** 아카이브 설계 자료. 실제 차량/탄약 데이터 및 런타임 코드 적용·검증은 **미실시**.
-> **관련 자료:** [기관포 피해 정책](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md), [주독미군 브래들리](USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md), [소련 BMP](SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md), [전역 세계관·편제 초안](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md).
+> **관련 자료:** [기관포 피해 정책](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md), [주독미군 브래들리](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md), [소련 BMP](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/SOVIET_BMP_1_1P_2_SPEC_2026-11-13.md), [전역 세계관·편제 초안](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/world/WW3_1989_JUNE20_FORCE_INVENTORY_OOB_DRAFT_2026-11-13.md).
 
 ## 1. 기본 장갑 7구역·차량 HP — [사용자 확정]
 
