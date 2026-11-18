@@ -1,6 +1,6 @@
 # TOW 대전차미사일 계열 — BGM-71A/B/C/D/E/F
 
-> **3단계 단일 미사일 정본 후보(전환 전 병행본).** 사용자 지정 게임값. 기존 [Bradley 미사일 표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md)와 [TOW 2A·2B 추가 기록](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)을 합쳐 **탄약 기준 자료를 이 파일에서 한 번 관리할 예정**. 아직 기존 정본과 게임 코드·1989년 지급탄/프리셋을 대체하지 않음.
+> **2026-11-19 5단계 정본 전환 완료 — TOW 계열 미사일 단일 데이터 정본.** 사용자 지정 게임값. 기존 [Bradley 미사일 표](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md)와 [TOW 2A·2B 추가 기록](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)을 합쳐 **탄약 기준 자료를 이 파일에서 관리**한다. 옛 자료는 레거시 출처이며 **게임 코드·1989년 지급탄/프리셋 자체는 변경하지 않음**.
 >
 > **중요:** TOW 2A는 1989년 후보(CE 880/760/440, 538 HP)이고 탠덤에 의한 추가 ERA CE 방호력 감쇄 수치 **미정**. TOW 2B는 **1990년 이후**의 **상부 CE 240/기본 피해 535 HP**, 비행속도·사거리·상부 기폭 세부값 **미정**. 2B의 상부 전용 CE240은 0°/30°/60° 3각도 값이 아님.
 
