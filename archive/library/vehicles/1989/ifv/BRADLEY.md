@@ -64,7 +64,7 @@
 
 ### TOW 계열 미사일 — 새 라이브러리 참조
 
-미사일별 CE·기본 피해·탠덤·상부 공격·사거리 및 발사기 호환 기록은 [TOW 계열 이관본](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/ammunition/missiles/TOW_FAMILY.md)에서 관리. 기본 M2도 TOW 2 발사가 가능한 기존 게임 호환성 방향은 유지하되 실제 기본 지급·재고·유도 성능은 별도 결정.
+미사일별 CE·기본 피해·탠덤·상부 공격·사거리 및 발사기 호환 기록은 [TOW 계열 이관본](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/library/ammunition/missiles/TOW_FAMILY.md)에서 관리. 기본 M2도 TOW 2 발사가 가능한 기존 게임 호환성 방향은 유지하되 실제 기본 지급·재고·유도 성능은 별도 결정.
 
 ## 2-C. M2A1 Block I와 기본형 차이 — 역사 확인 및 게임 반영 후보 (2026-11-13)
 
