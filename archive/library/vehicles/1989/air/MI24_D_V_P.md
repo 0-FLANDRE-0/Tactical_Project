@@ -6,7 +6,7 @@
 
 > **목적:** 사용자와 2026-11-14~15 대화에서 정한 **소련 Mi-24 계열의 게임용 제원**을 보존한다. [확정] / [채택한 대체역사 방향] / [임시 제안] / [참고·검증 필요] / [미정]을 엄격히 분리한다.
 > **구현 상태:** 설계 아카이브일 뿐, 게임의 Mi-24 유닛·항공 이동·탄도·탄종·탄약고 유폭·치명타 등을 새로 구현한 것은 아니다.
-> **관련 문서:** [헬기 전체 현황](HELICOPTER_ROSTER_OVERVIEW_2026-11-15.md), [AH-64A Apache](AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md), [항공 투입·외부 공역/방공·IFV 대공](AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md), [모듈·승무원·탄약 사고](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md).
+> **관련 문서:** [헬기 전체 현황](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/HELICOPTER_ROSTER_OVERVIEW_2026-11-15.md), [AH-64A Apache](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md), [항공 투입·외부 공역/방공·IFV 대공](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md), [모듈·승무원·탄약 사고](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md).
 
 ## 1. Mi-24D / Mi-24V / Mi-24P 기체 — [사용자 확정]
 
