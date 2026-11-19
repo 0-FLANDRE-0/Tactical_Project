@@ -35,6 +35,11 @@
 - **차별점: 탠덤 효과.** 피복 지점의 **ERA 추가 CE 방호력**을 무력화/효과 감쇄할 수 있는 특성으로 구분한다. **기본장갑 CE는 그대로**, 정확한 ERA 종류별 감쇄율·확률 및 판정 조건은 **미정**. 기존 ERA 피복률 소모 규칙을 임의로 변경하거나 한 번에 모든 ERA를 무시한다고 가정하지 않는다.
 - **정본 연결:** [Bradley IFV/CFV TOW 표 §2-B](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md)의 최신 수치와 동일하게 관리한다.
 
+## TUSK II 전용 탠덤 효과와의 구별
+
+- **M1A2C TUSK II에서 탠덤 효과는 ARAT-2의 추가 CE에만 적용**하고 ARAT-1 추가 CE는 정상 계산한다. ARAT-2를 무조건 완전히 무시한다고 해석하지 않으며 감쇄율은 미정. 이 구성 전용 최신 사용자 규칙은 [ARAT/TUSK 정본](ARAT_TUSK_I_II.md) 참조.
+- 이 층별 규칙이 기존 Kontakt-1/5나 다른 ERA에 대한 탠덤/Anti-ERA 효과를 전부 ARAT-2 전용으로 바꾼다는 뜻은 아니다.
+
 ## 결합 판정 경계
 
 - **피복 지점**에서 ERA 추가 KE/CE 방호력이 있는 경우에만 해당 추가분에 탄종별 감쇄를 적용하는 설계. **미정인 감쇄율을 100% 무시로 대체하지 않음**.
