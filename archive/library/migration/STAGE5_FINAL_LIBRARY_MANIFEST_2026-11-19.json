@@ -3,7 +3,7 @@
   "created_date": "2026-11-19",
   "repository": "0-FLANDRE-0/Tactical_Project",
   "status": "five_stage_library_canonical_index_complete",
-  "tree_before_manifest_creation": "aca40ce7b531e2db8f48120f2280c422d334c9da",
+  "tree_before_manifest_creation": "b08079c7f1be3d242863ed68810219e4f61c45a4",
   "manifest_excludes_itself": true,
   "baseline": {
     "branch": "archive-library-baseline-2026-11-19",
@@ -32,7 +32,7 @@
     "prior_migration_md_file_links_scanned": 589,
     "broken_source_relative_file_links_fixed": 24
   },
-  "library_files_recorded": 78,
+  "library_files_recorded": 80,
   "files": [
     {
       "path": "archive/library/ammunition/cannon/DEFAULT_TANK_AMMO.md",
@@ -132,8 +132,8 @@
     },
     {
       "path": "archive/library/CANONICAL_RULES.md",
-      "git_blob_sha": "6fa6598b78ee59522df1d16b2a228e49bbaae5b9",
-      "size_bytes": 6239,
+      "git_blob_sha": "70249a0dc8e6eb06913b07d52db1effc51cbc661",
+      "size_bytes": 6591,
       "domain": "CANONICAL_RULES.md"
     },
     {
@@ -258,8 +258,8 @@
     },
     {
       "path": "archive/library/README.md",
-      "git_blob_sha": "d701069e43cd1d4928c14872290cb56a2f880f43",
-      "size_bytes": 3449,
+      "git_blob_sha": "b645a6ad2891a8f5de83f20c627e2550b8fcbf2a",
+      "size_bytes": 3472,
       "domain": "README.md"
     },
     {
@@ -276,8 +276,14 @@
     },
     {
       "path": "archive/library/systems/armor/ANTI_ERA.md",
-      "git_blob_sha": "cd051bc501f4acdef3431db046b5b6466577f633",
-      "size_bytes": 6692,
+      "git_blob_sha": "b22f35b44706ad996ab988aacae9b47538703623",
+      "size_bytes": 7193,
+      "domain": "systems"
+    },
+    {
+      "path": "archive/library/systems/armor/ARAT_TUSK_I_II.md",
+      "git_blob_sha": "d5508d4cee8cb5d30d5c6466dd399ebcbbca9735",
+      "size_bytes": 5184,
       "domain": "systems"
     },
     {
@@ -294,8 +300,8 @@
     },
     {
       "path": "archive/library/systems/armor/README.md",
-      "git_blob_sha": "eaec2f797b4ac754bac5529abcbdda0d1ef17c2e",
-      "size_bytes": 813,
+      "git_blob_sha": "2b46de3c2eadf4ccde6d50ef97ab228279274453",
+      "size_bytes": 978,
       "domain": "systems"
     },
     {
@@ -438,8 +444,8 @@
     },
     {
       "path": "archive/library/vehicles/README.md",
-      "git_blob_sha": "55ec2afdccb4dbe70c583372169b0e2fdbab260f",
-      "size_bytes": 2190,
+      "git_blob_sha": "f93174089881d5d100f4e5bc691e7f15005c9da8",
+      "size_bytes": 2301,
       "domain": "vehicles"
     },
     {
@@ -482,6 +488,12 @@
       "path": "archive/library/vehicles/tanks/modern/LEOPARD_2A8.md",
       "git_blob_sha": "d8624195e569bfed423aa3799ec1b654f5a1ad29",
       "size_bytes": 8249,
+      "domain": "vehicles"
+    },
+    {
+      "path": "archive/library/vehicles/tanks/modern/M1A2C.md",
+      "git_blob_sha": "8b165f1dbef66ea618e27d9bee87862a64a0caeb",
+      "size_bytes": 4269,
       "domain": "vehicles"
     },
     {
