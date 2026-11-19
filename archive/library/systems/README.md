@@ -8,6 +8,7 @@
 - [2A8 모듈러 증가장갑(하한 42.5%)](armor/LEOPARD_2A8_MODULAR_ARMOR.md)
 - [Anti-ERA 추가 방호력 감쇄 (숫자 미정)](armor/ANTI_ERA.md)
 - [Trophy HV 좌우 독립 APS](aps/TROPHY_HV.md)
+- [T-14M Afghanit APS — 포탑 전방 ±60°·좌우 5발·225ms·50~1,700m/s·KE 관통력 최대 38% 감쇄](aps/AFGHANIT_T14M.md)
 
 ## 전투·피해
 - [105/120/125mm APFSDS 피해·과관통 곡선과 APDS 예외](combat/APFSDS_DAMAGE_CURVES.md)
