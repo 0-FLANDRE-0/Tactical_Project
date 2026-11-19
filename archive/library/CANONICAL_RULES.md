@@ -11,6 +11,7 @@
 | Leopard 2A8 | [현대 전차](vehicles/tanks/modern/LEOPARD_2A8.md) | 부위별 기본·모듈러 KE/CE·HP·Trophy 장착 제원은 차량 문서 우선 |
 | **M1A2C (SEP v3)** | [현대 전차](vehicles/tanks/modern/M1A2C.md) | 고정 7구역 장갑, TUSK I/II 선택별 장착·방호력은 차량 문서 우선; **ARAT 피복률 소모·탠덤 층별 효과**는 [ARAT 시스템](systems/armor/ARAT_TUSK_I_II.md) 우선 |
 | 전차포·일반 탄약 KE/CE·기본 HP·탄속 | [탄약 카탈로그](ammunition/README.md) | 국가·구경·탄종별 개별 파일 소유 |
+| **현대 러시아 125mm APFSDS 3BM59/60/69/70** | [현대 러시아 125mm 정본](ammunition/modern/APFSDS_125MM.md) | DM73·M829A4와 같은 현대 별도 탄약 영역. KE·기본 HP·포구초속은 해당 파일 소유; 1989년 소련 125mm 문서와 분리 |
 | TOW, MILAN, Hellfire, BMP·Mi-24·소련 125mm 포발사 미사일 | [미사일 카탈로그](ammunition/README.md) | 미사일 자체 성능은 미사일 문서가 우선, 차량은 발사대 호환만 참조 |
 | 1989 32×3 적재 프리셋 | [96개 정형 JSON](presets/1989/TANK_LOADOUTS_96.json) 및 [읽기용 표](presets/1989/README.md) | 원본 54개 공유 템플릿은 [보존본](presets/1989/SOURCE_TEMPLATES_54.md) |
 | 7구역/ERA·추가장갑·Anti-ERA·APS **계산 규칙** | [방호·APS](systems/README.md) | 각종 장갑 **작동 규칙**의 정본. 차량별 장갑 숫자는 해당 차량 항목 우선 |
@@ -25,7 +26,7 @@
 2. **미정은 미정**: Anti-ERA 감쇄율, Relikt 실제 게임 상세, Trophy 상하 요격각/요격확률, TOW 2B 사거리·세부 기폭, TUSK II ARAT-1/2 개별 층 손상 분리·미정 탄종별 탠덤 대응력의 정량 적용, 2A8 정식 적재량, 미구현 장전/보급값을 새로 채우지 않는다.
 3. **서로 다른 효과를 합치지 않음**: ERA 블록 피복률 %p 손실 / NERA 부위별 HP 손실 / Anti-ERA 추가 KE·CE 방호 감쇄 / APS 발사기별 재고·1.5초 대기시간은 독립 시스템이다.
 4. **관통력과 피해 분리**: TOW 2B 상부 전용 **CE 240**과 기본 차량 피해 **535 HP**는 별도. 구경별 APFSDS 피해곡선은 탄약별 기본 HP를 바꾸지 않는다.
-5. **본편과 후속 시대 분리**: 1989의 전차 32종·탄약 프리셋 96개에 현대 DM53~DM73·M829A3/A4, 1990년 이후 TOW 2B, M1A2(1992/1998), M1A2C·TUSK I/II, Leopard 2A8을 자동 포함시키지 않는다.
+5. **본편과 후속 시대 분리**: 1989의 전차 32종·탄약 프리셋 96개에 현대 DM53~DM73·M829A3/A4·3BM59/60/69/70, 1990년 이후 TOW 2B, M1A2(1992/1998), M1A2C·TUSK I/II, Leopard 2A8을 자동 포함시키지 않는다.
 6. **실행 상태 별도**: 프로젝트 WIP 지시서의 당시 구현/보류 문구는 현재 `main`에 해당 구현이 있다는 증명이 아니다. 설계 확정/검토/역사와 **엔진 코드 구현/테스트 검증**을 독립 관리한다.
 
 ## 3. 기존 아카이브·Git 이력과 관계
