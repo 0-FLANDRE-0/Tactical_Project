@@ -14,7 +14,7 @@
 - [M1A2 (1992·1998) 2종](tanks/post-1989/M1A2_1992_1998.md) — 1989년 본편에 포함하지 않음
 - [M1A2C (SEP v3)](tanks/modern/M1A2C.md) — 7구역 고정장갑, TUSK I/II 교체형 ARAT, 최대 HP 미정
 - [Leopard 2A8](tanks/modern/LEOPARD_2A8.md) — 1,450 HP, 모듈러 증가장갑, Trophy HV 좌·우 독립
-- [T-14M 아르마타](tanks/modern/T-14M.md) — **1,500 HP**, 기본장갑 7구역·증가장갑 4구역 KE/CE·피복률·독립 HP(**1,150/700/250/550**)·탄종별 피해 감쇄율·**잔존 38.5%** 확정. **증가장갑 위 ERA**, 판정 **증가장갑 → ERA**. ERA 정량 미정
+- [T-14M 아르마타](tanks/modern/T-14M.md) — **1,500 HP**, 기본장갑 7구역·증가장갑 4구역 KE/CE·피복률·독립 HP(**1,150/700/250/550**)·탄종별 감쇄·**잔존 38.5%**, **Malakhit ERA** 일반형·차체 측면 이중층 KE/CE·피복률 확정. **증가장갑 → ERA 판정**, [명중 계층별 소모 규칙](../systems/armor/T14M_MALAKHIT_ERA.md)
 
 ## 1989 장갑차·정찰
 
