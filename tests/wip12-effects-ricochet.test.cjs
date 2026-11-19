@@ -2,9 +2,9 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const Combat=require('../src/combat-state.js'),Profiles=require('../src/vehicle-profiles.js'),Fire=require('../src/fire-control.js');
 const ammo=Combat.AMMUNITION.M829A2,profile=Profiles.M1A2_1998,rad=d=>d*Math.PI/180,near=(a,b,e=1e-9)=>assert(Math.abs(a-b)<e,`${a} != ${b}`);
 
-test('W12-01 60–90 degree penetration reaches zero linearly without changing the old anchors',()=>{
-  assert.equal(Combat.penetrationAt(ammo,2000,60).value,365);
-  near(Combat.penetrationAt(ammo,2000,75).value,182.5);
+test('W12-01 60–90 degree penetration still interpolates linearly from the active anchor',()=>{
+  assert.equal(Combat.penetrationAt(ammo,2000,60).value,345);
+  near(Combat.penetrationAt(ammo,2000,75).value,172.5);
   assert.equal(Combat.penetrationAt(ammo,2000,90).value,0);
   assert.deepEqual(Combat.penetrationAt(ammo,2000,95),{value:0,rangeClamped:false,angleClamped:true,rangeUsed:2000,angleUsed:90});
 });

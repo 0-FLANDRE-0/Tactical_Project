@@ -1,0 +1,3 @@
+f34aefed345e84e6bb3427ffafb0d6c7af90bb681b42366d49e354ffa038f821  Tactical_v0.4_WIP24.html
+f34aefed345e84e6bb3427ffafb0d6c7af90bb681b42366d49e354ffa038f821  dist/index.html
+5384955bd92c0f5ffbcaade6ced849216e0eb3c562fad732555773fb5bf1e85d  Tactical_v0.4_WIP24.zip

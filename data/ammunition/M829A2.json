@@ -7,6 +7,14 @@
     "muzzleVelocity": 1680,
     "hitReactionPolicyId": "tank-ke/M829A2",
     "ammoIncidentPolicyId": "tank-ammo-incident/M829A2",
+    "eraFamily": "APFSDS",
+    "antiEra": {
+      "Kontakt-5": {
+        "kind": "KE",
+        "reduction": 0.502,
+        "source": "archive/library/systems/armor/ANTI_ERA.md"
+      }
+    },
     "penetration": {
       "rangesM": [
         10,
@@ -19,14 +27,14 @@
       ],
       "values": [
         [
-          675,
-          570,
-          390
+          630,
+          530,
+          365
         ],
         [
-          635,
-          535,
-          365
+          600,
+          505,
+          345
         ]
       ],
       "parallelLimitDeg": 90,
@@ -98,10 +106,11 @@
       ]
     }
   },
-  "status": "active WIP23 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20/WIP23 plus attacker-owned near-nonpenetration policy",
+  "status": "active WIP24 game data",
+  "source": "archive/library/ammunition/cannon/US_120.md",
   "limits": [
-    "Existing WIP12/WIP15 penetration, ricochet, damage and near-nonpenetration rules remain unchanged",
+    "WIP24 10/2000m penetration nodes, linear interpolation and explicit Kontakt-5 KE bonus reduction",
+    "Existing ricochet, damage and near-nonpenetration rules",
     "Victim-specific hit-reaction and ammunition-incident rates live only on an explicitly bound vehicle profile",
     "No additional velocity damage multiplier"
   ]

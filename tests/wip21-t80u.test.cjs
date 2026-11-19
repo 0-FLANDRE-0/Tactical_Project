@@ -33,17 +33,17 @@ test('WIP21 corrected art adapter converts absolute radians to relative degrees 
 test('WIP21 ERA uses one independent strict coverage roll after ricochet and adds protection once',()=>{
  const evaluate=(zone,eraRoll,change={})=>Combat.evaluate({...impact('pure',{zone,eraRoll}),profile:targetProfile,...change});
  let r=evaluate('hullFront',.9);assert.equal(r.eraApplied,false);assert.equal(r.protection,500);assert.equal(r.penetrated,true);
- r=evaluate('hullFront',.899999);assert.equal(r.eraApplied,true);assert.equal(r.protection,715);assert.equal(r.penetrated,false);
- r=evaluate('turretFront',.95);assert.equal(r.protection,575);assert.equal(r.penetrated,true);
- r=evaluate('turretFront',.949999);assert.equal(r.protection,790);assert.equal(r.penetrated,false);
- r=Combat.evaluate({...impact('heat',{zone:'hullSide',side:'right',origin:{x:0,y:2000},rangeM:1000,ammoId:'M830',eraRoll:.5}),profile:targetProfile});assert.equal(r.protection,120);assert(r.penetrated);
- r=Combat.evaluate({...impact('heat2',{zone:'hullSide',side:'right',origin:{x:0,y:2000},rangeM:1000,ammoId:'M830',eraRoll:.499999}),profile:targetProfile});assert.equal(r.protection,680);assert(!r.penetrated);assert.equal(r.damage,0);
+ r=evaluate('hullFront',.899999);assert.equal(r.eraApplied,true);near(r.protection,607.07);assert.equal(r.penetrated,false);
+ r=evaluate('turretFront',.95);assert.equal(r.protection,530);assert.equal(r.penetrated,true);
+ r=evaluate('turretFront',.949999);near(r.protection,637.07);assert.equal(r.penetrated,false);
+ r=Combat.evaluate({...impact('heat',{zone:'hullSide',side:'right',origin:{x:0,y:2000},rangeM:1000,ammoId:'M830',eraRoll:.5}),profile:targetProfile});assert.equal(r.protection,85);assert(r.penetrated);
+ r=Combat.evaluate({...impact('heat2',{zone:'hullSide',side:'right',origin:{x:0,y:2000},rangeM:1000,ammoId:'M830',eraRoll:.499999}),profile:targetProfile});assert.equal(r.protection,645);assert(!r.penetrated);assert.equal(r.damage,0);
  const ricochet=Combat.evaluate({...impact('rico',{zone:'hullFront',origin:{x:0,y:2000},ricochetRoll:0}),profile:targetProfile});assert(ricochet.ricochet);assert.equal(ricochet.eraRoll,null);assert.equal(ricochet.eraEligible,false);
  const rear=Combat.evaluate({...impact('rear',{zone:'hullRear',origin:{x:-2000,y:0}}),profile:targetProfile});assert.equal(rear.eraRoll,null);assert.equal(rear.eraEligible,false);
- const full=structuredClone(targetProfile);full.combat.era.zones.upper.coverage=1;r=Combat.evaluate({...impact('full',{zone:'upper',eraRoll:.999999}),profile:full});assert(r.eraApplied);assert.equal(r.protection,260);
+ const full=structuredClone(targetProfile);full.combat.era.zones.upper.coverage=1;r=Combat.evaluate({...impact('full',{zone:'upper',eraRoll:.999999}),profile:full});assert(r.eraApplied);near(r.protection,152.07);
  const upperBoundary=Combat.evaluate({...impact('upper',{zone:'upper',eraRoll:.45}),profile:targetProfile});assert.equal(upperBoundary.eraApplied,false);assert.equal(upperBoundary.protection,45);
  const a1=Combat.evaluate({...impact('a1',{zone:'turretSide',origin:{x:0,y:2000},side:'right',ammoId:'M829A1',rangeM:1000,eraRoll:.1}),profile:targetProfile});assert.equal(a1.kind,'KE');assert.equal(a1.protection,520);
- const independent=evaluate('turretFront',.99,{pose:{x:0,y:0,heading:0,turret:Math.PI/2},origin:{x:0,y:2000}});near(independent.incidenceDeg,0);assert.equal(independent.protection,575);
+ const independent=evaluate('turretFront',.99,{pose:{x:0,y:0,heading:0,turret:Math.PI/2},origin:{x:0,y:2000}});near(independent.incidenceDeg,0);assert.equal(independent.protection,530);
  const miss=Combat.evaluate({...impact('miss',{hit:false,zone:null,eraRoll:undefined}),profile:targetProfile});assert.equal(miss.reason,'miss');assert.equal(miss.eraRoll,undefined);
 });
 

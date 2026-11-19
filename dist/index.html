@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP23</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP24</title>
 <style>
 :root{
   color-scheme:dark;
@@ -444,6 +444,7 @@ header{
   font:11px ui-monospace,monospace
 }
 .combat-summary.destroyed{color:#f0b08e;border-color:#805343;background:#38271f}
+.era-summary{color:#bbcbb8;font-size:10px;line-height:1.5;margin:0 0 8px}
 .metrics{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -825,7 +826,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">라스도르프 서부 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP23</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">라스도르프 서부 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP24</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -855,6 +856,7 @@ footer{
 <div class="selected-heading"><div class="eyebrow">SELECTED VEHICLE</div><h2 id="unitName">ALPHA 11</h2><p id="unitType">M1A2 Abrams · 120mm M256</p></div>
 <div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
 <div class="combat-summary" id="combatSummary">HP 1,450 / 1,450 · 생존</div>
+<div id="eraSummary" class="era-summary" hidden></div>
 <section class="engagement-panel" aria-label="교전 상태"><div class="engagement-line"><b>경계</b><output id="lookStatus">자동 경계</output></div><div class="engagement-line"><b>교전</b><output id="designationStatus">없음</output></div><div class="engagement-line"><b>사격</b><output id="fireState">표적 미확보</output></div><output class="flight-state" id="readinessState"></output><output class="flight-state" id="flightState"></output></section>
 <section class="ammo-panel"><div class="section-label"><span>AMMUNITION</span><span id="ammoTotal">42발</span></div><div id="ammoLoaded"></div><div id="ammoTask"></div><div id="ammoIncident"></div><table><thead><tr id="ammoHeaders"><th>구획</th><th>M829A2</th><th>M829A1</th><th>M830</th></tr></thead><tbody id="ammoInventory"></tbody></table></section>
 <section class="status-panel"><div class="section-label"><span>차량 · 승무원 상태</span></div><div id="faultStatus"></div><div id="crewStatus"></div></section>
@@ -936,6 +938,33 @@ if(typeof module!=='undefined')module.exports=TacticalMapSpec;
  * modelling choices, not measured or manufacturer-certified specifications. */
 const VEHICLE_PROFILES=(()=>{
   const mph=v=>v*.44704,inch=v=>v*.0254;
+  const zones=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
+  const eraPolicies=freeze({
+    'Kontakt-1':{defaultBonus:{ke:5,ce:380},loss:{
+      HEAT:{covered:.25,gap:.125},APFSDS:{covered:.12,gap:0},
+      HEP:{covered:.32,gap:.16},HE:{covered:.40,gap:.20}}},
+    'Kontakt-5':{defaultBonus:{ke:215,ce:560},loss:{
+      HEAT:{covered:.32,gap:.16},APFSDS:{covered:.24,gap:0},
+      HEP:{covered:.40,gap:.20},HE:{covered:.52,gap:.26}}}
+  });
+  const eraFamilies=Object.freeze({HEAT:'HEAT',ATGM:'HEAT',APFSDS:'APFSDS',APDS:'APFSDS',HEP:'HEP',HESH:'HEP',HE:'HE','HE-FRAG':'HE'});
+  const validCoverage=v=>Number.isFinite(v)&&v>=0&&v<=1;
+  function validateEra(era){
+    if(!Object.hasOwn(eraPolicies,era?.type)||era.comparison!=='roll<coverage'||era.consumable!==true||
+      Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류');
+    for(const zone of zones){
+      const row=Object.hasOwn(era.zones,zone)&&era.zones[zone];
+      if(!row||!validCoverage(row.coverage)||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+zone);
+    }
+  }
+  function coverageAfter(type,family,before,covered){
+    if(!Object.hasOwn(eraPolicies,type)||!Object.hasOwn(eraFamilies,family))throw Error('ERA 소모 정책 오류');
+    if(!validCoverage(before)||typeof covered!=='boolean')throw Error('ERA 피복률 값 오류');
+    const loss=eraPolicies[type].loss[eraFamilies[family]][covered?'covered':'gap'];
+    if(!validCoverage(loss))throw Error('ERA 소모량 값 오류');
+    return Math.max(0,before-loss);
+  }
+  const eraPolicy=Object.freeze({zones,types:eraPolicies,families:eraFamilies,validCoverage,validateEra,coverageAfter});
   const M1A2={
     id:'M1A2',name:'M1A2 Abrams',variant:'M1A2 기본형',crew:4,
     capabilities:{target:true,mobility:true,observation:true,fire:true,ai:true},
@@ -1020,13 +1049,12 @@ const VEHICLE_PROFILES=(()=>{
       turretRear:{ready:.40,semiReady:.25,reserve:0,none:.35},
       upper:{ready:.15,semiReady:.15,reserve:.10,none:.60}}};
   M1A2_1998.combat={maxHp:1450,armor:{
-    hullFront:{ke:390,ce:720},hullSide:{ke:120,ce:280},hullRear:{ke:40,ce:40},
+    hullFront:{ke:390,ce:720},hullSide:{ke:90,ce:130},hullRear:{ke:40,ce:40},
     turretFront:{ke:720,ce:1150},turretSide:{ke:340,ce:630},turretRear:{ke:55,ce:55},upper:{ke:40,ce:40}
   }};
   // WIP18 game-trial values. This block is deliberately attached only to the
   // 1998 trial profile; the M1A2 baseline and future vehicles stay disabled
   // until they receive their own explicit susceptibility and policy data.
-  const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
   const allowedCrewRoles=['driver','commander','gunner','loader'];
   const reactionCategories=['temporaryFault','crewLight','crewSerious'];
   const probabilities=(temporaryFault,crewLight,crewSerious)=>({temporaryFault,crewLight,crewSerious});
@@ -1101,10 +1129,10 @@ const VEHICLE_PROFILES=(()=>{
     exposure:{hullAlong:[-2.45,0,2.45],hullHeights:[.75,1.35],turretAlong:[-.85,0,.85],turretHeight:2.05},
     navigation:{clearanceMargin:.25},
     combat:{maxHp:1400,armor:{
-      hullFront:{ke:500,ce:690},hullSide:{ke:115,ce:120},hullRear:{ke:40,ce:40},
-      turretFront:{ke:575,ce:740},turretSide:{ke:305,ce:390},turretRear:{ke:70,ce:70},upper:{ke:45,ce:45}},
-      era:{comparison:'roll<coverage',consumable:false,zones:{
-        hullFront:{coverage:.90,ke:215,ce:560},hullSide:{coverage:.50,ke:215,ce:560},hullRear:{coverage:0,ke:0,ce:0},
+      hullFront:{ke:500,ce:690},hullSide:{ke:75,ce:85},hullRear:{ke:40,ce:40},
+      turretFront:{ke:530,ce:730},turretSide:{ke:305,ce:390},turretRear:{ke:70,ce:70},upper:{ke:45,ce:45}},
+      era:{type:'Kontakt-5',comparison:'roll<coverage',consumable:true,zones:{
+        hullFront:{coverage:.90,ke:215,ce:560},hullSide:{coverage:.50,ke:110,ce:560},hullRear:{coverage:0,ke:0,ce:0},
         turretFront:{coverage:.95,ke:215,ce:560},turretSide:{coverage:.45,ke:215,ce:560},turretRear:{coverage:0,ke:0,ce:0},
         upper:{coverage:.45,ke:215,ce:560}}}}
   };
@@ -1136,7 +1164,7 @@ const VEHICLE_PROFILES=(()=>{
       if(p.combat){
         if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
         for(const zone of zones)for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
-        const era=p.combat.era;if(era){if(era.comparison!=='roll<coverage'||era.consumable!==false||Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류: '+id);for(const zone of zones){const row=era.zones[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+id+'.'+zone);}}
+        if(p.combat.era)validateEra(p.combat.era);
       }
       if(caps.observation){
         const s=p.sensors;
@@ -1239,7 +1267,7 @@ const VEHICLE_PROFILES=(()=>{
     const registry=Object.freeze({ids:()=>ids,list:()=>ids.map(id=>profiles[id]),has:id=>Object.hasOwn(profiles,id),
       get(id){if(!Object.hasOwn(profiles,id))throw Error('등록되지 않은 차량: '+id);return profiles[id];},create:createRegistry});
     // Preserve the legacy M1A2 lookup for old tools/oracle; runtime uses registry.
-    Object.defineProperty(profiles,'registry',{value:registry,enumerable:false});
+    Object.defineProperties(profiles,{registry:{value:registry},eraPolicy:{value:eraPolicy}});
     return Object.freeze(profiles);
   }
   return createRegistry([M1A2,M1A2_1998,T80U_1989]);
@@ -1944,7 +1972,9 @@ if(typeof module!=='undefined')module.exports=TacticalObservation;
 /* WIP12 abstract game damage. This module consumes already-resolved hit, zone
  * and ricochet rolls; it never draws effects or owns a frame-time RNG. */
 const TacticalCombatState=(()=>{
-  const ZONES=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
+  const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:require('./vehicle-profiles.js');
+  const eraPolicy=loadedProfiles.eraPolicy;
+  const ZONES=eraPolicy.zones;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   const clone=v=>JSON.parse(JSON.stringify(v));
@@ -1958,13 +1988,15 @@ const TacticalCombatState=(()=>{
     M829A2:{
       id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
       hitReactionPolicyId:'tank-ke/M829A2',ammoIncidentPolicyId:'tank-ammo-incident/M829A2',
-      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      eraFamily:'APFSDS',antiEra:{'Kontakt-5':{kind:'KE',reduction:.502,source:'archive/library/systems/armor/ANTI_ERA.md'}},
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[630,530,365],[600,505,345]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
       nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
     },
     M829A1:{
       id:'M829A1',name:'M829A1',kind:'KE',baseDamage:380,muzzleVelocity:1575,
+      eraFamily:'APFSDS',
       hitReactionPolicyId:'tank-ke/M829A1',ammoIncidentPolicyId:'tank-ammo-incident/M829A1',
       penetration:{rangesM:[10,100,500,1000,1500,2000],anglesDeg:[0,30,60],values:[
         [600,505,345],[595,503.643216080402,344.09547738693465],[590,497.61306532663315,340.0753768844221],
@@ -1975,6 +2007,7 @@ const TacticalCombatState=(()=>{
     },
     M830:{
       id:'M830',name:'M830 HEAT-MP',kind:'CE',baseDamage:435,muzzleVelocity:1140,
+      eraFamily:'HEAT',
       hitReactionPolicyId:'tank-heat/M830',ammoIncidentPolicyId:'tank-ammo-incident/M830',
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[480,415,240],[480,415,240]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[65,72,77],chances:[0,.5,1],comparison:'roll<chance'},
@@ -1983,6 +2016,7 @@ const TacticalCombatState=(()=>{
     },
     '3BM42':{
       id:'3BM42',name:'3BM42 Mango',kind:'KE',calibreMm:125,baseDamage:370,muzzleVelocity:1700,
+      eraFamily:'APFSDS',
       hitReactionPolicyId:'tank-ke/3BM42',ammoIncidentPolicyId:'tank-ammo-incident/3BM42',
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[505,425,280],[450,380,250]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
@@ -1995,6 +2029,15 @@ const TacticalCombatState=(()=>{
     has:id=>Object.hasOwn(AMMUNITION,id),
     get(id){if(!Object.hasOwn(AMMUNITION,id))throw Error('등록되지 않은 탄약: '+id);return AMMUNITION[id];}
   });
+  function validateAmmoEraPolicy(ammo){
+    if(!Object.hasOwn(eraPolicy.families,ammo.eraFamily))throw Error('탄약 ERA 계열 오류: '+ammo.id);
+    for(const [type,policy] of Object.entries(ammo.antiEra??{})){
+      if(!Object.hasOwn(eraPolicy.types,type)||!['KE','CE'].includes(policy?.kind)||policy.kind!==ammo.kind||
+        !eraPolicy.validCoverage(policy.reduction)||typeof policy.source!=='string'||!policy.source)
+        throw Error('Anti-ERA 정책 오류: '+ammo.id+'/'+type);
+    }
+  }
+  for(const ammo of Object.values(AMMUNITION))validateAmmoEraPolicy(ammo);
   function validateHitReactionBindings(p){
     const config=p?.hitReactions;
     if(!config)return'not-participant';
@@ -2055,13 +2098,15 @@ const TacticalCombatState=(()=>{
     validateAmmunitionBindings(p);
     validateAmmoIncidentBindings(p);
     for(const zone of ZONES){const a=p.combat.armor?.[zone];if(!a||!['ke','ce'].every(kind=>Number.isFinite(a[kind])&&a[kind]>=0))throw Error('장갑 값 오류: '+zone);}
-    if(p.combat.era){const e=p.combat.era;if(e.comparison!=='roll<coverage'||e.consumable!==false)throw Error('ERA 규칙 오류: '+p.id);for(const zone of ZONES){const row=e.zones?.[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 값 오류: '+p.id+'.'+zone);}}
+    if(p.combat.era)eraPolicy.validateEra(p.combat.era);
     return p;
   }
   function initUnit(u,p){
     validateProfile(p);
-    if(u.combat){initHitReactions(u,p);return u.combat;}
-    u.combat={maxHp:p.combat.maxHp,hp:p.combat.maxHp,status:'alive',ammoId:p.weapons?.mainGun?.ammunitionId??null,destroyedAt:null,lastDamage:null};
+    if(!u.combat)u.combat={maxHp:p.combat.maxHp,hp:p.combat.maxHp,status:'alive',ammoId:p.weapons?.mainGun?.ammunitionId??null,destroyedAt:null,lastDamage:null};
+    if(p.combat.era&&!Object.hasOwn(u.combat,'eraCoverage')){
+      u.combat.eraCoverage=Object.fromEntries(ZONES.map(zone=>[zone,p.combat.era.zones[zone].coverage]));
+    }
     initHitReactions(u,p);
     return u.combat;
   }
@@ -2183,24 +2228,36 @@ const TacticalCombatState=(()=>{
     const incoming=Math.atan2(origin.y-pose.y,origin.x-pose.x);
     return Math.abs(diff(incoming,faceHeading(pose,zone,side)))*180/Math.PI;
   }
-  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId,ricochetRoll,nearDamageRoll,eraRoll}){
+  function evaluateImpact({hit,zone,side,origin,pose,rangeM,profile,ammoId,ricochetRoll,nearDamageRoll,eraRoll,remainingCoverage},drawEraRoll){
     if(typeof hit!=='boolean')throw Error('명중 결과 누락');
     if(!hit)return Object.freeze({hit:false,ricochet:false,penetrated:false,damage:0,reason:'miss'});
     validateProfile(profile);
     if(!ZONES.includes(zone))throw Error('지원하지 않는 피격 구역: '+zone);
     if(!Number.isFinite(ricochetRoll)||ricochetRoll<0||ricochetRoll>=1)throw Error('도탄 난수 값 오류');
-    const ammo=ammunitionRegistry.get(ammoId),kind=ammo.kind.toLowerCase(),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),baseProtection=profile.combat.armor[zone][kind],era=profile.combat.era?.zones?.[zone],eraCoverage=era?.coverage??0;
-    const eraProfile=!!profile.combat.era;
-    if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,baseProtection,protection:baseProtection,protectionDeficit:Math.max(0,baseProtection-pen.value),eraProfile,eraEligible:false,eraCoverage:0,eraRoll:null,eraApplied:false,eraBonus:0,nearNonPenetration:false,nearDamageChance:0,nearDamageRoll:null,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
-    if(eraCoverage>0&&(!Number.isFinite(eraRoll)||eraRoll<0||eraRoll>=1))throw Error('ERA 난수 값 오류');
-    const eraEligible=eraCoverage>0,eraApplied=eraEligible&&eraRoll<eraCoverage,eraBonus=eraApplied?era[kind]:0,protection=baseProtection+eraBonus;
+    const ammo=ammunitionRegistry.get(ammoId),kind=ammo.kind.toLowerCase(),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),baseProtection=profile.combat.armor[zone][kind];
+    const eraType=profile.combat.era?.type??null,era=profile.combat.era?.zones[zone];
+    const coverageBefore=remainingCoverage===undefined?(era?.coverage??0):remainingCoverage;
+    if(!eraPolicy.validCoverage(coverageBefore)||(!era&&coverageBefore!==0)||(era&&coverageBefore>era.coverage))throw Error('ERA 잔여 피복률 값 오류');
+    const eraEligible=!ricochet&&coverageBefore>0;
+    if(eraEligible&&eraRoll===undefined&&drawEraRoll)eraRoll=drawEraRoll();
+    if(eraEligible&&(!Number.isFinite(eraRoll)||eraRoll<0||eraRoll>=1))throw Error('ERA 난수 값 오류');
+    const eraApplied=eraEligible&&eraRoll<coverageBefore;
+    const antiEra=eraApplied&&Object.hasOwn(ammo.antiEra??{},eraType)?ammo.antiEra[eraType]:null;
+    const eraBonusBefore=eraApplied?era[kind]:0,eraBonus=antiEra?eraBonusBefore*(1-antiEra.reduction):eraBonusBefore;
+    const coverageAfter=eraEligible?eraPolicy.coverageAfter(eraType,ammo.eraFamily,coverageBefore,eraApplied):coverageBefore;
+    const eraResult={eraProfile:!!eraType,eraType,eraEligible,eraCoverage:coverageBefore,coverageBefore,coverageAfter,
+      coverageLoss:coverageBefore-coverageAfter,eraRoll:eraEligible?eraRoll:null,eraApplied,eraBonusBefore,eraBonus,
+      antiEraReduction:antiEra?.reduction??null};
+    if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,baseProtection,protection:baseProtection,protectionDeficit:Math.max(0,baseProtection-pen.value),...eraResult,nearNonPenetration:false,nearDamageChance:0,nearDamageRoll:null,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
+    const protection=baseProtection+eraBonus;
     const penetrated=pen.value>0&&pen.value>=protection,protectionDeficit=Math.max(0,protection-pen.value),nearRule=ammo.nearNonPenetration===false?null:ammo.nearNonPenetration||profile.fireControl?.readiness?.nearNonPenetration,nearNonPenetration=!!nearRule&&!penetrated&&pen.value>0&&protectionDeficit>0&&protectionDeficit<nearRule.maxDeficit;
     if(nearNonPenetration&&(!Number.isFinite(nearDamageRoll)||nearDamageRoll<0||nearDamageRoll>=1))throw Error('근접 비관통 난수 값 오류');
     const residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0;
     const damage=penetrated?ammo.baseDamage*multiplier:nearNonPenetration&&nearDamageRoll<nearRule.chance?nearDamageAt(nearRule,protectionDeficit):0;
     if(!Number.isFinite(damage)||damage<0)throw Error('피해 계산 오류');
-    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,baseProtection,protection,protectionDeficit,eraProfile,eraEligible,eraCoverage:eraEligible?eraCoverage:0,eraRoll:eraEligible?eraRoll:null,eraApplied,eraBonus,nearNonPenetration,nearDamageChance:nearNonPenetration?nearRule.chance:0,nearDamageRoll:nearNonPenetration?nearDamageRoll:null,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
+    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,baseProtection,protection,protectionDeficit,...eraResult,nearNonPenetration,nearDamageChance:nearNonPenetration?nearRule.chance:0,nearDamageRoll:nearNonPenetration?nearDamageRoll:null,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
   }
+  const evaluate=event=>evaluateImpact(event);
   function create({profileOf,onDestroyed=null,ammoInventory=null,onAmmoIncident=null,recordLimit=200,idLimit=4096,seed=7}={}){
     if(typeof profileOf!=='function')throw Error('profileOf 필요');
     if(!Number.isInteger(recordLimit)||recordLimit<1)throw Error('전투 기록 제한 오류');
@@ -2239,13 +2296,16 @@ const TacticalCombatState=(()=>{
       if(state.status==='destroyed'){mark(id);return remember({applied:false,reason:'target-destroyed',id,time:now,targetId:target.id,hpBefore:state.hp,hpAfter:state.hp,damage:0,destroyed:false});}
       const ammoId=event.ammoId;
       if(!ammoId)throw Error('공격 탄약 ID 누락');
-      let eraRoll=event.eraRoll;
-      if(event.hit&&eraRoll===undefined){const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(event.origin,event.pose,event.zone,event.side),ricochet=event.ricochetRoll<ricochetChance(ammo,incidence),coverage=profile.combat.era?.zones?.[event.zone]?.coverage??0;if(!ricochet&&coverage>0)eraRoll=random(id+':'+target.id+':wip21:era',0x1f83d9ab);}
-      const result=evaluate({...event,profile,ammoId,eraRoll});if(result.eraEligible)eraEligible++;if(result.eraApplied)eraApplied++;
+      const result=evaluateImpact({...event,profile,ammoId,remainingCoverage:state.eraCoverage?.[event.zone]},()=>random(id+':'+target.id+':wip21:era',0x1f83d9ab));
+      if(result.eraEligible)eraEligible++;if(result.eraApplied)eraApplied++;
       mark(id);
+      if(result.coverageLoss>0)state.eraCoverage[result.zone]=result.coverageAfter;
       const hpBefore=state.hp,computedDamage=result.damage,normalDamage=Math.min(hpBefore,computedDamage),normalHpAfter=clamp(hpBefore-normalDamage,0,state.maxHp);let hpAfter=normalHpAfter,destroyed=normalHpAfter<=0&&state.status!=='destroyed',incidentDamage=0;
       state.hp=normalHpAfter;
       const record={applied:true,id,time:now,targetId:target.id,ammoId,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,ricochet:!!result.ricochet,ricochetChance:result.ricochetChance??0,ricochetRoll:result.ricochetRoll??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,baseProtection:result.baseProtection??null,protection:result.protection??null,protectionDeficit:result.protectionDeficit??null,eraProfile:!!result.eraProfile,eraEligible:!!result.eraEligible,eraCoverage:result.eraCoverage??0,eraRoll:result.eraRoll??null,eraApplied:!!result.eraApplied,eraBonus:result.eraBonus??0,nearNonPenetration:!!result.nearNonPenetration,nearDamageChance:result.nearDamageChance??0,nearDamageRoll:result.nearDamageRoll??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,computedDamage,normalDamage,incidentDamage,damage:normalDamage,hpBefore,normalHpAfter,hpAfter,maxHp:state.maxHp,destroyed};
+      if(result.eraType)Object.assign(record,{eraType:result.eraType,coverageBefore:result.coverageBefore,
+        coverageAfter:result.coverageAfter,coverageLoss:result.coverageLoss,eraBonusBefore:result.eraBonusBefore,
+        antiEraReduction:result.antiEraReduction});
       if(!destroyed){record.hitReaction=applyHitReaction(target,profile,{...result,ammoId:record.ammoId},id,now);record.ammoIncident=applyAmmoIncident(target,profile,{...result,ammoId:record.ammoId},id,now);if(record.ammoIncident?.confirmed&&record.ammoIncident.outcome==='fatal'){incidentDamage=normalHpAfter;hpAfter=0;state.hp=0;destroyed=true;}}
       else{record.hitReaction=null;record.ammoIncident=null;}
       Object.assign(record,{incidentDamage,damage:normalDamage+incidentDamage,hpAfter,destroyed});
@@ -2255,10 +2315,9 @@ const TacticalCombatState=(()=>{
     }
     return Object.freeze({apply,records:()=>clone(records),stats:()=>({applied:appliedCount,records:records.length,destroyed:destroyedCount,sequenceShooters:sequences.size,recentIds:recent.size,reactionEligible,reactionOutcomes,incidentEligible,incidentOutcomes,eraEligible,eraApplied})});
   }
-  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.eraProfile?null:r.protection,protectionDeficit:r.eraProfile?null:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
-  const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:typeof require==='function'?require('./vehicle-profiles.js'):null;
+  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.eraProfile?null:r.protection,protectionDeficit:r.eraProfile?null:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.eraProfile?null:r.residualRatio,multiplier:r.eraProfile?null:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
   if(loadedProfiles?.registry)validateProfileRegistry(loadedProfiles.registry);
-  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,resolveAmmoIncident,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateAmmoIncidentBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,DAMAGE_MULTIPLIERS:deepFreeze(DAMAGE_MULTIPLIERS),ZONES,ALLOWED_CREW_ROLES});
+  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,resolveAmmoIncident,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateAmmoIncidentBindings,validateProfileRegistry,validateAmmoEraPolicy,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,DAMAGE_MULTIPLIERS:deepFreeze(DAMAGE_MULTIPLIERS),ZONES,ALLOWED_CREW_ROLES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;
 
@@ -3158,6 +3217,8 @@ const TacticalCore = (() => {
   };
   const combatEvents=s=>s.recordFireEvents?combatFor(s).records():[];
   const combatStats=s=>combatFor(s).stats();
+  const eraView=(u,team='blue')=>u?.team===team&&u.combat?.eraCoverage?
+    Object.freeze({type:profileOf(u).combat.era.type,coverage:Object.freeze({...u.combat.eraCoverage})}):null;
   const fireRuntimes=new WeakMap();
   function fireFor(s){
     if(!fireRuntimes.has(s)){
@@ -3382,7 +3443,7 @@ const TacticalCore = (() => {
     }
     return {hull:hull/6,turret:turret/3,visible:hull>0||turret>0,forestDepth:hull+turret?depth/(hull+turret):0,samples,rayQueries,rayCacheHits};
   }
-  return {registry,can,fireStatus,fireMode,ammoPreference,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
+  return {registry,can,fireStatus,fireMode,ammoPreference,requestFire,fireEvents,effectEvents,effectEventStats,fireDebugRecords,combatView,combatEvents,combatStats,eraView,aiStatus,aiStats,aiEventLog,losAccelerationInfo,losDiagnostics,ownObservation,contacts,guard,resumeObservation,designate,cancelDesignation,observationView,observationStats,assignMission,cancelMission,PROFILE,profileOf,mobilityLimit,driveAcceleration,mobilityView,gradeAt,gradePassable,bakeNavigation,MAP,SPEC,WORLD,VEHICLE,roads,forests,fields,water,waterways,trees,labels,buildings,clamp,mix,hash,angleDiff,heightAt,forestAt,slopeAt,surfaceAt,surfaceCode,waterAt,bridgeAt,solidAt,buildingAt,insideBuilding,passable,segmentClear,planPath,makeTank,createScenario,issueMove,stop,routeDistance,step,lineOfSight,exposure,legalNear};
 })();
 if(typeof module!=='undefined')module.exports=TacticalCore;
 
@@ -4944,7 +5005,8 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     targetId=null;
     trails.length=0;
     accumulator=0;
-    setPaused(false);
+    portraitPausedBefore=false;
+    setPaused(portraitBlocked);
     setReverse(false);
     releaseSight();
     timeScale=1;
@@ -5064,6 +5126,10 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     const friendlies=sim.units.filter(v=>v.team==='blue'),living=friendlies.filter(alive);
     for(const option of $('unitSelect').children){const unit=friendlies.find(v=>v.id===option.value);option.disabled=!alive(unit);option.textContent=unit?unit.name+' · '+unit.state+' · '+Math.round(unit.speed*3.6)+' km/h':option.textContent;}
     $('unitSelect').value=u?.id??'';
+    const era=C.eraView(u);
+    $('eraSummary').hidden=!era;
+    ui.setText($('eraSummary'),era?era.type+' 잔여 피복 · '+Object.entries(era.coverage)
+      .map(([zone,value])=>zoneNames[zone]+' '+Math.round(value*100)+'%').join(' / '):'');
     if(!u){
       for(const id of ['move','reverse','stop','sight','fire','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode','ammoSelect'])$(id).disabled=true;
       ui.setText($('unitName'),'선택 차량 없음');ui.setText($('unitType'),living.length?'위 선택 메뉴에서 아군을 선택':'아군 차량 전멸');ui.setText($('velocity'),'0');ui.setText($('motionState'),'—');
@@ -5352,7 +5418,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP23',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP24',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       scenarioId,time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

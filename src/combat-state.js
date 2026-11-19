@@ -2,7 +2,9 @@
 /* WIP12 abstract game damage. This module consumes already-resolved hit, zone
  * and ricochet rolls; it never draws effects or owns a frame-time RNG. */
 const TacticalCombatState=(()=>{
-  const ZONES=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
+  const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:require('./vehicle-profiles.js');
+  const eraPolicy=loadedProfiles.eraPolicy;
+  const ZONES=eraPolicy.zones;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   const clone=v=>JSON.parse(JSON.stringify(v));
@@ -16,13 +18,15 @@ const TacticalCombatState=(()=>{
     M829A2:{
       id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
       hitReactionPolicyId:'tank-ke/M829A2',ammoIncidentPolicyId:'tank-ammo-incident/M829A2',
-      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      eraFamily:'APFSDS',antiEra:{'Kontakt-5':{kind:'KE',reduction:.502,source:'archive/library/systems/armor/ANTI_ERA.md'}},
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[630,530,365],[600,505,345]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
       nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
     },
     M829A1:{
       id:'M829A1',name:'M829A1',kind:'KE',baseDamage:380,muzzleVelocity:1575,
+      eraFamily:'APFSDS',
       hitReactionPolicyId:'tank-ke/M829A1',ammoIncidentPolicyId:'tank-ammo-incident/M829A1',
       penetration:{rangesM:[10,100,500,1000,1500,2000],anglesDeg:[0,30,60],values:[
         [600,505,345],[595,503.643216080402,344.09547738693465],[590,497.61306532663315,340.0753768844221],
@@ -33,6 +37,7 @@ const TacticalCombatState=(()=>{
     },
     M830:{
       id:'M830',name:'M830 HEAT-MP',kind:'CE',baseDamage:435,muzzleVelocity:1140,
+      eraFamily:'HEAT',
       hitReactionPolicyId:'tank-heat/M830',ammoIncidentPolicyId:'tank-ammo-incident/M830',
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[480,415,240],[480,415,240]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[65,72,77],chances:[0,.5,1],comparison:'roll<chance'},
@@ -41,6 +46,7 @@ const TacticalCombatState=(()=>{
     },
     '3BM42':{
       id:'3BM42',name:'3BM42 Mango',kind:'KE',calibreMm:125,baseDamage:370,muzzleVelocity:1700,
+      eraFamily:'APFSDS',
       hitReactionPolicyId:'tank-ke/3BM42',ammoIncidentPolicyId:'tank-ammo-incident/3BM42',
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[505,425,280],[450,380,250]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
@@ -53,6 +59,15 @@ const TacticalCombatState=(()=>{
     has:id=>Object.hasOwn(AMMUNITION,id),
     get(id){if(!Object.hasOwn(AMMUNITION,id))throw Error('등록되지 않은 탄약: '+id);return AMMUNITION[id];}
   });
+  function validateAmmoEraPolicy(ammo){
+    if(!Object.hasOwn(eraPolicy.families,ammo.eraFamily))throw Error('탄약 ERA 계열 오류: '+ammo.id);
+    for(const [type,policy] of Object.entries(ammo.antiEra??{})){
+      if(!Object.hasOwn(eraPolicy.types,type)||!['KE','CE'].includes(policy?.kind)||policy.kind!==ammo.kind||
+        !eraPolicy.validCoverage(policy.reduction)||typeof policy.source!=='string'||!policy.source)
+        throw Error('Anti-ERA 정책 오류: '+ammo.id+'/'+type);
+    }
+  }
+  for(const ammo of Object.values(AMMUNITION))validateAmmoEraPolicy(ammo);
   function validateHitReactionBindings(p){
     const config=p?.hitReactions;
     if(!config)return'not-participant';
@@ -113,13 +128,15 @@ const TacticalCombatState=(()=>{
     validateAmmunitionBindings(p);
     validateAmmoIncidentBindings(p);
     for(const zone of ZONES){const a=p.combat.armor?.[zone];if(!a||!['ke','ce'].every(kind=>Number.isFinite(a[kind])&&a[kind]>=0))throw Error('장갑 값 오류: '+zone);}
-    if(p.combat.era){const e=p.combat.era;if(e.comparison!=='roll<coverage'||e.consumable!==false)throw Error('ERA 규칙 오류: '+p.id);for(const zone of ZONES){const row=e.zones?.[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 값 오류: '+p.id+'.'+zone);}}
+    if(p.combat.era)eraPolicy.validateEra(p.combat.era);
     return p;
   }
   function initUnit(u,p){
     validateProfile(p);
-    if(u.combat){initHitReactions(u,p);return u.combat;}
-    u.combat={maxHp:p.combat.maxHp,hp:p.combat.maxHp,status:'alive',ammoId:p.weapons?.mainGun?.ammunitionId??null,destroyedAt:null,lastDamage:null};
+    if(!u.combat)u.combat={maxHp:p.combat.maxHp,hp:p.combat.maxHp,status:'alive',ammoId:p.weapons?.mainGun?.ammunitionId??null,destroyedAt:null,lastDamage:null};
+    if(p.combat.era&&!Object.hasOwn(u.combat,'eraCoverage')){
+      u.combat.eraCoverage=Object.fromEntries(ZONES.map(zone=>[zone,p.combat.era.zones[zone].coverage]));
+    }
     initHitReactions(u,p);
     return u.combat;
   }
@@ -241,24 +258,36 @@ const TacticalCombatState=(()=>{
     const incoming=Math.atan2(origin.y-pose.y,origin.x-pose.x);
     return Math.abs(diff(incoming,faceHeading(pose,zone,side)))*180/Math.PI;
   }
-  function evaluate({hit,zone,side,origin,pose,rangeM,profile,ammoId,ricochetRoll,nearDamageRoll,eraRoll}){
+  function evaluateImpact({hit,zone,side,origin,pose,rangeM,profile,ammoId,ricochetRoll,nearDamageRoll,eraRoll,remainingCoverage},drawEraRoll){
     if(typeof hit!=='boolean')throw Error('명중 결과 누락');
     if(!hit)return Object.freeze({hit:false,ricochet:false,penetrated:false,damage:0,reason:'miss'});
     validateProfile(profile);
     if(!ZONES.includes(zone))throw Error('지원하지 않는 피격 구역: '+zone);
     if(!Number.isFinite(ricochetRoll)||ricochetRoll<0||ricochetRoll>=1)throw Error('도탄 난수 값 오류');
-    const ammo=ammunitionRegistry.get(ammoId),kind=ammo.kind.toLowerCase(),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),baseProtection=profile.combat.armor[zone][kind],era=profile.combat.era?.zones?.[zone],eraCoverage=era?.coverage??0;
-    const eraProfile=!!profile.combat.era;
-    if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,baseProtection,protection:baseProtection,protectionDeficit:Math.max(0,baseProtection-pen.value),eraProfile,eraEligible:false,eraCoverage:0,eraRoll:null,eraApplied:false,eraBonus:0,nearNonPenetration:false,nearDamageChance:0,nearDamageRoll:null,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
-    if(eraCoverage>0&&(!Number.isFinite(eraRoll)||eraRoll<0||eraRoll>=1))throw Error('ERA 난수 값 오류');
-    const eraEligible=eraCoverage>0,eraApplied=eraEligible&&eraRoll<eraCoverage,eraBonus=eraApplied?era[kind]:0,protection=baseProtection+eraBonus;
+    const ammo=ammunitionRegistry.get(ammoId),kind=ammo.kind.toLowerCase(),incidence=incidenceDeg(origin,pose,zone,side),chance=ricochetChance(ammo,incidence),ricochet=ricochetRoll<chance,pen=penetrationAt(ammo,rangeM,incidence),baseProtection=profile.combat.armor[zone][kind];
+    const eraType=profile.combat.era?.type??null,era=profile.combat.era?.zones[zone];
+    const coverageBefore=remainingCoverage===undefined?(era?.coverage??0):remainingCoverage;
+    if(!eraPolicy.validCoverage(coverageBefore)||(!era&&coverageBefore!==0)||(era&&coverageBefore>era.coverage))throw Error('ERA 잔여 피복률 값 오류');
+    const eraEligible=!ricochet&&coverageBefore>0;
+    if(eraEligible&&eraRoll===undefined&&drawEraRoll)eraRoll=drawEraRoll();
+    if(eraEligible&&(!Number.isFinite(eraRoll)||eraRoll<0||eraRoll>=1))throw Error('ERA 난수 값 오류');
+    const eraApplied=eraEligible&&eraRoll<coverageBefore;
+    const antiEra=eraApplied&&Object.hasOwn(ammo.antiEra??{},eraType)?ammo.antiEra[eraType]:null;
+    const eraBonusBefore=eraApplied?era[kind]:0,eraBonus=antiEra?eraBonusBefore*(1-antiEra.reduction):eraBonusBefore;
+    const coverageAfter=eraEligible?eraPolicy.coverageAfter(eraType,ammo.eraFamily,coverageBefore,eraApplied):coverageBefore;
+    const eraResult={eraProfile:!!eraType,eraType,eraEligible,eraCoverage:coverageBefore,coverageBefore,coverageAfter,
+      coverageLoss:coverageBefore-coverageAfter,eraRoll:eraEligible?eraRoll:null,eraApplied,eraBonusBefore,eraBonus,
+      antiEraReduction:antiEra?.reduction??null};
+    if(ricochet)return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:true,ricochetChance:chance,ricochetRoll,penetration:pen.value,baseProtection,protection:baseProtection,protectionDeficit:Math.max(0,baseProtection-pen.value),...eraResult,nearNonPenetration:false,nearDamageChance:0,nearDamageRoll:null,penetrated:false,residualRatio:0,multiplier:0,baseDamage:ammo.baseDamage,damage:0,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:'ricochet'});
+    const protection=baseProtection+eraBonus;
     const penetrated=pen.value>0&&pen.value>=protection,protectionDeficit=Math.max(0,protection-pen.value),nearRule=ammo.nearNonPenetration===false?null:ammo.nearNonPenetration||profile.fireControl?.readiness?.nearNonPenetration,nearNonPenetration=!!nearRule&&!penetrated&&pen.value>0&&protectionDeficit>0&&protectionDeficit<nearRule.maxDeficit;
     if(nearNonPenetration&&(!Number.isFinite(nearDamageRoll)||nearDamageRoll<0||nearDamageRoll>=1))throw Error('근접 비관통 난수 값 오류');
     const residualRatio=penetrated?(pen.value-protection)/pen.value:0,multiplier=penetrated?multiplierAt(ammo,residualRatio):0;
     const damage=penetrated?ammo.baseDamage*multiplier:nearNonPenetration&&nearDamageRoll<nearRule.chance?nearDamageAt(nearRule,protectionDeficit):0;
     if(!Number.isFinite(damage)||damage<0)throw Error('피해 계산 오류');
-    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,baseProtection,protection,protectionDeficit,eraProfile,eraEligible,eraCoverage:eraEligible?eraCoverage:0,eraRoll:eraEligible?eraRoll:null,eraApplied,eraBonus,nearNonPenetration,nearDamageChance:nearNonPenetration?nearRule.chance:0,nearDamageRoll:nearNonPenetration?nearDamageRoll:null,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
+    return Object.freeze({hit:true,zone,side:side??null,kind:ammo.kind,incidenceDeg:incidence,ricochet:false,ricochetChance:chance,ricochetRoll,penetration:pen.value,baseProtection,protection,protectionDeficit,...eraResult,nearNonPenetration,nearDamageChance:nearNonPenetration?nearRule.chance:0,nearDamageRoll:nearNonPenetration?nearDamageRoll:null,penetrated,residualRatio,multiplier,baseDamage:ammo.baseDamage,damage,rangeM,rangeUsed:pen.rangeUsed,angleUsed:pen.angleUsed,rangeClamped:pen.rangeClamped,angleClamped:pen.angleClamped,reason:penetrated?'penetrated':'non-penetration'});
   }
+  const evaluate=event=>evaluateImpact(event);
   function create({profileOf,onDestroyed=null,ammoInventory=null,onAmmoIncident=null,recordLimit=200,idLimit=4096,seed=7}={}){
     if(typeof profileOf!=='function')throw Error('profileOf 필요');
     if(!Number.isInteger(recordLimit)||recordLimit<1)throw Error('전투 기록 제한 오류');
@@ -297,13 +326,16 @@ const TacticalCombatState=(()=>{
       if(state.status==='destroyed'){mark(id);return remember({applied:false,reason:'target-destroyed',id,time:now,targetId:target.id,hpBefore:state.hp,hpAfter:state.hp,damage:0,destroyed:false});}
       const ammoId=event.ammoId;
       if(!ammoId)throw Error('공격 탄약 ID 누락');
-      let eraRoll=event.eraRoll;
-      if(event.hit&&eraRoll===undefined){const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(event.origin,event.pose,event.zone,event.side),ricochet=event.ricochetRoll<ricochetChance(ammo,incidence),coverage=profile.combat.era?.zones?.[event.zone]?.coverage??0;if(!ricochet&&coverage>0)eraRoll=random(id+':'+target.id+':wip21:era',0x1f83d9ab);}
-      const result=evaluate({...event,profile,ammoId,eraRoll});if(result.eraEligible)eraEligible++;if(result.eraApplied)eraApplied++;
+      const result=evaluateImpact({...event,profile,ammoId,remainingCoverage:state.eraCoverage?.[event.zone]},()=>random(id+':'+target.id+':wip21:era',0x1f83d9ab));
+      if(result.eraEligible)eraEligible++;if(result.eraApplied)eraApplied++;
       mark(id);
+      if(result.coverageLoss>0)state.eraCoverage[result.zone]=result.coverageAfter;
       const hpBefore=state.hp,computedDamage=result.damage,normalDamage=Math.min(hpBefore,computedDamage),normalHpAfter=clamp(hpBefore-normalDamage,0,state.maxHp);let hpAfter=normalHpAfter,destroyed=normalHpAfter<=0&&state.status!=='destroyed',incidentDamage=0;
       state.hp=normalHpAfter;
       const record={applied:true,id,time:now,targetId:target.id,ammoId,reason:result.reason,hit:result.hit,zone:result.zone??null,side:result.side??null,ricochet:!!result.ricochet,ricochetChance:result.ricochetChance??0,ricochetRoll:result.ricochetRoll??null,penetrated:result.penetrated,incidenceDeg:result.incidenceDeg??null,penetration:result.penetration??null,baseProtection:result.baseProtection??null,protection:result.protection??null,protectionDeficit:result.protectionDeficit??null,eraProfile:!!result.eraProfile,eraEligible:!!result.eraEligible,eraCoverage:result.eraCoverage??0,eraRoll:result.eraRoll??null,eraApplied:!!result.eraApplied,eraBonus:result.eraBonus??0,nearNonPenetration:!!result.nearNonPenetration,nearDamageChance:result.nearDamageChance??0,nearDamageRoll:result.nearDamageRoll??null,residualRatio:result.residualRatio??0,multiplier:result.multiplier??0,baseDamage:result.baseDamage??null,computedDamage,normalDamage,incidentDamage,damage:normalDamage,hpBefore,normalHpAfter,hpAfter,maxHp:state.maxHp,destroyed};
+      if(result.eraType)Object.assign(record,{eraType:result.eraType,coverageBefore:result.coverageBefore,
+        coverageAfter:result.coverageAfter,coverageLoss:result.coverageLoss,eraBonusBefore:result.eraBonusBefore,
+        antiEraReduction:result.antiEraReduction});
       if(!destroyed){record.hitReaction=applyHitReaction(target,profile,{...result,ammoId:record.ammoId},id,now);record.ammoIncident=applyAmmoIncident(target,profile,{...result,ammoId:record.ammoId},id,now);if(record.ammoIncident?.confirmed&&record.ammoIncident.outcome==='fatal'){incidentDamage=normalHpAfter;hpAfter=0;state.hp=0;destroyed=true;}}
       else{record.hitReaction=null;record.ammoIncident=null;}
       Object.assign(record,{incidentDamage,damage:normalDamage+incidentDamage,hpAfter,destroyed});
@@ -313,9 +345,8 @@ const TacticalCombatState=(()=>{
     }
     return Object.freeze({apply,records:()=>clone(records),stats:()=>({applied:appliedCount,records:records.length,destroyed:destroyedCount,sequenceShooters:sequences.size,recentIds:recent.size,reactionEligible,reactionOutcomes,incidentEligible,incidentOutcomes,eraEligible,eraApplied})});
   }
-  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.eraProfile?null:r.protection,protectionDeficit:r.eraProfile?null:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
-  const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:typeof require==='function'?require('./vehicle-profiles.js'):null;
+  const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.eraProfile?null:r.protection,protectionDeficit:r.eraProfile?null:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.eraProfile?null:r.residualRatio,multiplier:r.eraProfile?null:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
   if(loadedProfiles?.registry)validateProfileRegistry(loadedProfiles.registry);
-  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,resolveAmmoIncident,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateAmmoIncidentBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,DAMAGE_MULTIPLIERS:deepFreeze(DAMAGE_MULTIPLIERS),ZONES,ALLOWED_CREW_ROLES});
+  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,resolveAmmoIncident,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateAmmoIncidentBindings,validateProfileRegistry,validateAmmoEraPolicy,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,DAMAGE_MULTIPLIERS:deepFreeze(DAMAGE_MULTIPLIERS),ZONES,ALLOWED_CREW_ROLES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;

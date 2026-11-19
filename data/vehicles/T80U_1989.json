@@ -237,16 +237,16 @@
           "ce": 690
         },
         "hullSide": {
-          "ke": 115,
-          "ce": 120
+          "ke": 75,
+          "ce": 85
         },
         "hullRear": {
           "ke": 40,
           "ce": 40
         },
         "turretFront": {
-          "ke": 575,
-          "ce": 740
+          "ke": 530,
+          "ce": 730
         },
         "turretSide": {
           "ke": 305,
@@ -262,8 +262,9 @@
         }
       },
       "era": {
+        "type": "Kontakt-5",
         "comparison": "roll<coverage",
-        "consumable": false,
+        "consumable": true,
         "zones": {
           "hullFront": {
             "coverage": 0.9,
@@ -272,7 +273,7 @@
           },
           "hullSide": {
             "coverage": 0.5,
-            "ke": 215,
+            "ke": 110,
             "ce": 560
           },
           "hullRear": {
@@ -304,8 +305,11 @@
       }
     }
   },
-  "scope": "WIP23 stationary T-80U observation and 2A46M-1/3BM42 firing trial plus WIP21 armour data; no mobility, engagement AI, human-loader fatigue, crew damage, temporary faults or ammunition incidents.",
+  "scope": "Stationary T-80U trial with observation, 3BM42 fire and consumable Kontakt-5 armor.",
   "sources": [
+    "archive/library/vehicles/tanks/1989/SOVIET.md",
+    "archive/library/vehicles/tanks/1989/UPPER_ARMOR.md",
+    "archive/library/systems/armor/SEVEN_ZONE_AND_KONTAKT_ERA.md",
     "docs/tasks/TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER.md",
     "docs/tasks/TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md",
     "data/vehicles/references/t80u/observation_reference_notes.md",
@@ -320,6 +324,6 @@
     "The 6.00s autoloader, 13-round single-ammunition fixture and aiming/error values are adjustable game-trial settings, not a physical loading simulation",
     "3BM42 penetration, ricochet and 370 HP damage values are abstract game data",
     "Armour and HP are abstract 1989 game values, not measured plate thickness",
-    "Kontakt-5 is a fixed non-consumable one-roll coverage modifier with no explosion or block damage"
+    "Contact coverage here is the initial profile value. Remaining coverage belongs to one vehicle in the simulation."
   ]
 }

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "source": "archive/library/systems/armor/SEVEN_ZONE_AND_KONTAKT_ERA.md",
+  "lossUnits": "fractional percentage points",
+  "zones": [
+    "hullFront",
+    "hullSide",
+    "hullRear",
+    "turretFront",
+    "turretSide",
+    "turretRear",
+    "upper"
+  ],
+  "families": {
+    "HEAT": "HEAT",
+    "ATGM": "HEAT",
+    "APFSDS": "APFSDS",
+    "APDS": "APFSDS",
+    "HEP": "HEP",
+    "HESH": "HEP",
+    "HE": "HE",
+    "HE-FRAG": "HE"
+  },
+  "types": {
+    "Kontakt-1": {
+      "defaultBonus": {
+        "ke": 5,
+        "ce": 380
+      },
+      "loss": {
+        "HEAT": {
+          "covered": 0.25,
+          "gap": 0.125
+        },
+        "APFSDS": {
+          "covered": 0.12,
+          "gap": 0
+        },
+        "HEP": {
+          "covered": 0.32,
+          "gap": 0.16
+        },
+        "HE": {
+          "covered": 0.4,
+          "gap": 0.2
+        }
+      }
+    },
+    "Kontakt-5": {
+      "defaultBonus": {
+        "ke": 215,
+        "ce": 560
+      },
+      "loss": {
+        "HEAT": {
+          "covered": 0.32,
+          "gap": 0.16
+        },
+        "APFSDS": {
+          "covered": 0.24,
+          "gap": 0
+        },
+        "HEP": {
+          "covered": 0.4,
+          "gap": 0.2
+        },
+        "HE": {
+          "covered": 0.52,
+          "gap": 0.26
+        }
+      }
+    }
+  }
+}

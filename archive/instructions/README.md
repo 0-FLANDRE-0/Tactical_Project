@@ -4,6 +4,7 @@
 
 | 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-18) |
 |---|---|---|---|---|
+| WIP24 장갑 동기화와 Kontakt ERA 소모 | [원본 지시서](TACTICAL_WIP24_ARMOR_SYNC_AND_ERA_DEPLETION.md) | — | `feat/wip24-armor-sync-era-depletion` | 작업 브랜치 구현·검증 완료 · PR 검토 대기 |
 | WIP23 T-80U(1989) 정지 사격·3BM42·6초 자동장전 | [원본 지시서](TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER.md) | — | `feat/wip23-t80u-fire-autoloader` | 구현·실제 코어/Chromium 검증 완료 · PR/병합 대기 · 기동/AI 제외 |
 | WIP22 T-80U(1989) 자체 관측·인계·선회 | [원본 지시서](TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md) | — | `feat/wip22-t80u-observation-traverse` | 구현·검증 완료 · PR 검토/병합 대기 · 125mm 무장/기동 제외 |
 | WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [원본 지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | — | `feat/wip21-t80u-model-armor` | 작성자 구현·검증 완료 · PR 검토 대기 · ERA 방호만 적용, 소모/손상 없음 |

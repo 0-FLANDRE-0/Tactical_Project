@@ -487,8 +487,8 @@
           "ce": 720
         },
         "hullSide": {
-          "ke": 120,
-          "ce": 280
+          "ke": 90,
+          "ce": 130
         },
         "hullRear": {
           "ke": 40,
@@ -1790,6 +1790,11 @@
       "title": "TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md",
       "path": "../../archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md",
       "scope": "M1A2_1998-only compartment hit mapping, stored-ammunition loss, isolated-fire safety lockout and fatal incident game trial; not real vulnerability, stowage or blow-off-panel certification"
+    },
+    {
+      "id": "USER_WIP24_ARMOR",
+      "title": "M1A2 (1992/1998) game armor",
+      "path": "../../archive/library/vehicles/tanks/post-1989/M1A2_1992_1998.md"
     }
   ],
   "fieldEvidence": {
@@ -1940,8 +1945,11 @@
     },
     "combat": {
       "status": "user game data",
-      "source": "USER_WIP11A",
-      "note": "1450 abstract HP and KE/CE zone values; WIP11A uses KE only and no module/crew damage"
+      "sources": [
+        "USER_WIP11A",
+        "USER_WIP24_ARMOR"
+      ],
+      "note": "1450 abstract HP and seven KE/CE armor zones. WIP24 syncs hull-side KE/CE to 90/130."
     },
     "weapons.mainGun.ammunitionId": {
       "status": "user game data",

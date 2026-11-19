@@ -1,17 +1,16 @@
-# TACTICAL v0.4 WIP23 — T-80U(1989) 정지 사격·3BM42·6초 자동장전
+# TACTICAL v0.4 WIP24 — 7구역 장갑과 Kontakt-5 소모
 
-WIP23은 기존 `T80U_1989`의 WIP21 방호와 WIP22 관측을 유지하면서 2A46M-1·3BM42, 공통 조준/비행/피해 경로와 6.00초 자동장전을 연결한다. `T-80U 정지 교전시험`에서 전차장/포수 자체 관측→확보→실제 포탑 정렬→조준→발사선 확인→포구 발사→착탄→자동장전을 고정 0.05초 틱으로 실행한다. T-80U의 차체와 방위는 고정되고 TacticalAI는 생성하지 않는다.
+WIP24는 M1A2(1998)와 T-80U(1989)의 차체 측면 장갑, T-80U 포탑 전면 장갑, M829A2 관통 표를 최신 게임 데이터에 맞췄다. T-80U의 Kontakt-5 잔여 피복률은 차량과 7개 구역별로 관리한다. 피복 지점에서는 M829A2가 해당 구역의 추가 KE 방호를 50.2% 줄이며, 날탄 명중 후 그 구역의 피복률은 24%p 줄어든다. 선택한 아군 T-80U의 잔여 피복은 우측 HP 아래에 표시된다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP23.zip). 압축을 풀면 `Tactical_v0.4_WIP23.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP23.html](Tactical_v0.4_WIP23.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [독립 병합 검토](docs/reviews/WIP23_MERGE_REVIEW_2026-11-19.md) · [WIP23 구현](docs/T80U_FIRE_AND_AUTOLOADER_WIP23.md) · [릴리스·검증](TACTICAL_RELEASE_WIP23.md) · [체크섬](SHA256SUMS_WIP23.txt) · [작업 목차](docs/tasks/README.md).
-- T-80U 기동·순찰/교전 AI, 혼합 45발 프리셋, 장전장치/승무원/모듈/탄약고 피해와 ERA 소모·폭발은 이번 범위가 아니다.
+- [실행 HTML ZIP 다운로드](Tactical_v0.4_WIP24.zip?raw=1)
+- [Tactical_v0.4_WIP24.html](Tactical_v0.4_WIP24.html) · [dist/index.html](dist/index.html)
+- [WIP24 구현](docs/ARMOR_SYNC_AND_ERA_DEPLETION_WIP24.md) · [릴리스·검증](TACTICAL_RELEASE_WIP24.md) · [체크섬](SHA256SUMS_WIP24.txt) · [작업 목차](docs/tasks/README.md)
 
 관측·인계·선회와 격파 자세 보존의 독립 재검증은 [WIP22 병합 검토](docs/reviews/WIP22_MERGE_REVIEW_2026-11-15.md)에 기록했다.
 
 ## T-80U(1989) 정지 교전시험
 
-우측 시나리오 선택에서 `T-80U 정지 교전시험`을 고른다. M1A2(1998)과 T-80U가 정지 상태에서 기존 관측·사격 조건으로 상호 교전한다. T-80U는 장전된 3BM42 1발과 즉응 저장 12발로 시작하며, 실제 발사 뒤 다음 탄을 정확히 6초 동안 자동장전한다. 3BM42의 기본 피해 370 HP와 10m/2km 관통 표, 125mm APFSDS 피해 곡선은 게임 시험값이다. M1A2 정면 비관통은 정상 결과이며 측면 fixture에서 공통 피해 경로의 관통을 별도로 검증했다.
+우측 시나리오 선택에서 `T-80U 정지 교전시험`을 고른다. 양측이 자체 관측으로 표적을 찾아 정지 교전한다. 기본 seed 7에서는 첫 M829A2가 T-80U 포탑 전면 피복에 맞고, 다음 탄이 같은 구역의 빈 지점을 관통한다. T-80U는 장전된 3BM42 1발과 즉응 저장 12발로 시작하며 다음 탄을 6초 동안 자동장전한다.
 
 ## T-80U(1989) 관측시험
 
@@ -27,7 +26,7 @@ WIP23은 기존 `T80U_1989`의 WIP21 방호와 WIP22 관측을 유지하면서 2
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP23.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP23.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+ZIP을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP24.html`을 브라우저에서 연다. 게임 지도와 자료가 포함된 오프라인 실행 파일이다. 모바일을 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다. [실행 HTML ZIP 다운로드](Tactical_v0.4_WIP24.zip?raw=1)
 
 - 전차 탭: 선택. 우측 선택 차량 메뉴로도 생존 아군을 명시적으로 고를 수 있다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -117,7 +116,7 @@ WIP23은 기존 `T80U_1989`의 WIP21 방호와 WIP22 관측을 유지하면서 2
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP23.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP24.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/map-spec.js`, `scripts/map_spec.py` | 할당 전 지도 규격·파생자료 계약 검증 |
 | `data/map-build-rasdorf-4km.json` | 기본 실측 지도 생성 입력·출력 설정 |
 | `tests/fixtures/sim-core-WIP11D.js`, `tests/helpers/los-wip11d-reference.cjs` | 빌드에 포함되지 않는 해시 고정 WIP11D 비교 코어와 로더 |
@@ -163,7 +162,7 @@ WIP23은 기존 `T80U_1989`의 WIP21 방호와 WIP22 관측을 유지하면서 2
 node scripts/export_vehicle_profile.cjs
 python3 scripts/generate_wip10_reference.py
 python3 build.py
-python3 scripts/package_release.py WIP22
+python3 scripts/package_release.py WIP24
 node --check src/combat-state.js
 node --check src/mobility.js
 node --check src/tactical-ai.js
@@ -191,6 +190,8 @@ node tests/wip15-browser.test.cjs
 node tests/wip16-browser.test.cjs
 node tests/wip17-browser.test.cjs
 node tests/wip20-browser.test.cjs
+node tests/wip24-browser.test.cjs
+node scripts/benchmark_wip24.cjs
 node --expose-gc scripts/benchmark_wip17_maps.cjs
 WIP13_BASELINE_HTML=/path/to/baseline/dist/index.html node scripts/benchmark_mobility_browser.cjs
 node scripts/benchmark_observation.cjs
@@ -245,7 +246,7 @@ node tests/vehicle.test.cjs
 
 이번 버전은 적 경로 이동·기본 AI, 경량 구동·실제 지도, 관측, 자동교전, 가변 장전과 기본 HP 전투·표시 효과를 연결한 시험장이다. 양측 M1A2 (1998)는 M829A2/A1/M830 혼합 42발과 1,450 HP를 사용한다. 실제 장전탄 한 발과 세 저장 구획을 분리하며 준비·장전·자동 즉응탄 보충 작업은 차량별 한 개만 진행한다. 관통 뒤 탄약고 사고는 현재 재고와 예약탄만 손실시키며, 격리 화재 대응 중에는 이동·관측·지정·조준을 유지하고 발사와 탄약 작업만 8초 동안 멈춘다.
 
-명중과 조건부 부위 선택은 추상 게임 모델이다. WIP15의 사통/관측 대응과 WIP18의 일시 기능 이상·승무원 부상은 기존 M1A2에 유지된다. WIP19의 발사 사건은 실제 장전탄 ID와 설정을 저장해 선택 변경이나 피격 차량의 상태와 섞이지 않는다. WIP20 탄약고 사고도 M1A2(1998) 전용이다. WIP21의 ERA 난수는 착탄 ID·seed·피격 차량에 고정되며 렌더·UI 조회가 판정을 바꾸지 않고, 피복·최종 방호력은 공개 접촉/효과에 노출하지 않는다. WIP22의 T-80U 관측 거리·시야각·탐색·인계 시간은 주간 게임 시험값이며 실제 광학 성능을 재현한 것이 아니다. T-80U의 영구 모듈 손상·승무원 피해·일반 화재/지속 피해·ERA 소모/폭발·자동장전·기동·125mm 무장은 후속 범위다. 장갑·탄약·확률·부상·사고 계수는 게임 데이터이며 실장비 성능 검증이 아니다. 전체 결과는 WIP22 릴리스 문서에 있다.
+명중과 부위 선택은 추상 게임 모델이다. M1A2(1998)는 일시 장비 이상·승무원 부상·탄약고 사고를, T-80U(1989)는 주간 관측·정지 사격·자동장전·차량별 ERA 피복 소모를 갖는다. 발사 시 탄종을 기록하고 착탄 시 피격 차량의 잔여 피복률을 읽는다. ERA 난수는 착탄 ID·seed·피격 차량에 고정되며 구역별 잔량은 선택한 아군에게만 표시된다. Kontakt-1과 추가 소모 계열은 정책 검사에 포함된다. [WIP24 릴리스·검증](TACTICAL_RELEASE_WIP24.md)
 
 ## 출처
 

@@ -5,6 +5,7 @@
     "kind": "KE",
     "baseDamage": 380,
     "muzzleVelocity": 1575,
+    "eraFamily": "APFSDS",
     "hitReactionPolicyId": "tank-ke/M829A1",
     "ammoIncidentPolicyId": "tank-ammo-incident/M829A1",
     "penetration": {
@@ -122,7 +123,7 @@
       ]
     }
   },
-  "status": "active WIP23 game data",
+  "status": "active WIP24 game data",
   "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20/WIP23 plus attacker-owned near-nonpenetration policy",
   "limits": [
     "Separate 10/100/500/1000/1500/2000m table and unrounded runtime interpolation",

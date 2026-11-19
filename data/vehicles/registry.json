@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 12,
+  "schemaVersion": 13,
   "activeProfileId": "M1A2_1998",
   "ids": [
     "M1A2",
@@ -16,5 +16,10 @@
     "M830",
     "3BM42"
   ],
-  "note": "M1A2/M1A2_1998 remain operational. T80U_1989 is a WIP23 stationary observation/fire profile with WIP21 armour/K5, 3BM42 and a six-second automatic loader; scenarios may only disable declared capabilities. It owns no mobility, engagement AI, crew-damage, temporary-fault or ammunition-incident system."
+  "eraPolicyFile": "era-policies.json",
+  "eraTypes": [
+    "Kontakt-1",
+    "Kontakt-5"
+  ],
+  "note": "T80U_1989 uses consumable Kontakt-5 armor in the WIP24 stationary trials. The registry and vehicle exports hold initial settings."
 }
