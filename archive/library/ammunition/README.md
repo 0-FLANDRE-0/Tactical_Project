@@ -18,7 +18,7 @@
 
 - [DM53 / DM53A1 / DM63 / DM63A1 / DM73 · M829A2/A3/A4 Anti-ERA](modern/APFSDS_120MM.md)
 - [현대 러시아 125mm APFSDS — 3BM59/60 스비네츠 · 3BM69/70 바쿠움](modern/APFSDS_125MM.md) — 2km 0°/30°/60° KE, 기본 차량 HP, 포구초속 확정(3BM60 **1,660m/s**). **1989년 소련탄과 별도 관리**, Anti-ERA·10m KE·차량별 적재 미정.
-- **Anti-ERA:** 탄약이 ERA의 추가 KE 방호력을 일부 감쇄하는 능력; ERA 피복률 소모와 별개. DM53~DM63은 Kontakt-5급, DM63A1은 Relikt급에도 부분 대응, DM73은 한 단계 더 높은 대응. **M829A3는 A2보다 향상, M829A4는 A3보다 크게 향상**. **숫자 감쇄율과 A3/A4의 ERA별 정확한 대응 범위 미정**.
+- **Anti-ERA:** 탄약이 ERA의 추가 KE 방호력을 일부 감쇄하는 능력; ERA 피복률 소모와 별개. DM53~DM63은 Kontakt-5급, DM63A1은 Relikt급에도 부분 대응, DM73은 한 단계 더 높은 대응. **M829A2×Kontakt-5만 정량 확정**됐으며 [시스템 정본](../systems/armor/ANTI_ERA.md)을 따른다. **M829A3는 A2보다 향상, M829A4는 A3보다 크게 향상**. 다른 조합의 감쇄율과 A3/A4의 ERA별 정확한 대응 범위는 미정이다.
 - [근거리 0~10m KE 29종 3각도 이관본](references/NEAR_ZERO_10M_KE.md) — 원본 29종의 게임용 10m/2km 표와 추정·검토 메모 보존.
 
 ## 미사일

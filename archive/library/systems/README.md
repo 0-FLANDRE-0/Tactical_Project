@@ -6,7 +6,7 @@
 - [7구역 / Kontakt ERA 피복률 %p 손실](armor/SEVEN_ZONE_AND_KONTAKT_ERA.md)
 - [BDD·D-Tech 비폭발성 증가장갑 독립 HP](armor/NON_EXPLOSIVE_ADDON_ARMOR.md)
 - [2A8 모듈러 증가장갑(하한 42.5%)](armor/LEOPARD_2A8_MODULAR_ARMOR.md)
-- [Anti-ERA 추가 방호력 감쇄 (숫자 미정)](armor/ANTI_ERA.md)
+- [Anti-ERA 추가 방호력 감쇄 (M829A2×K5 정량 확정, 다른 조합 미정)](armor/ANTI_ERA.md)
 - [Trophy HV 좌우 독립 APS](aps/TROPHY_HV.md)
 - [T-14M Afghanit APS — 포탑 전방 ±60°·좌우 5발·225ms·50~1,700m/s·KE 관통력 최대 38% 감쇄](aps/AFGHANIT_T14M.md)
 
