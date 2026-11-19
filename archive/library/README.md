@@ -6,9 +6,9 @@
 
 | 영역 | 바로가기 | 주요 내용 |
 |---|---|---|
-| **차량** | [vehicles/](vehicles/README.md) | 1989 전차 32종, 후속 M1A2 2종, 현대 2A8, IFV/APC/정찰·헬기 |
+| **차량** | [vehicles/](vehicles/README.md) | 1989 전차 32종, 후속 M1A2 2종, 현대 M1A2C·2A8, IFV/APC/정찰·헬기 |
 | **탄약·미사일** | [ammunition/](ammunition/README.md) | 1989 미·독·소·동독 탄약, 현대 날탄, TOW/MILAN/Hellfire 등 |
-| **전투·방호 시스템** | [systems/](systems/README.md) | ERA·Anti-ERA·모듈러 증가장갑·Trophy, 관통/피해곡선/도탄/장전 |
+| **전투·방호 시스템** | [systems/](systems/README.md) | ERA·Anti-ERA·TUSK I/II ARAT·모듈러 증가장갑·Trophy, 관통/피해곡선/도탄/장전 |
 | **96개 적재 프리셋** | [presets/](presets/README.md) | 1989 32종×3개, 원본 공유 템플릿 54행 검산본 |
 | **보병·개별 유닛** | [units/](units/README.md) | 보병/분대 설계·검토값 |
 | **세계관** | [world/](world/README.md) | 1989년 6월 20일 대체역사 개전·전력 편제 원안 |
