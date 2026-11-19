@@ -3,7 +3,7 @@
   "created_date": "2026-11-19",
   "repository": "0-FLANDRE-0/Tactical_Project",
   "status": "five_stage_library_canonical_index_complete",
-  "tree_before_manifest_creation": "48ac5b17b51802ca329d1ddcc6c63bf8f7155d03",
+  "tree_before_manifest_creation": "d6fbb3464ac590faa3f00aa81f2156988733db8c",
   "manifest_excludes_itself": true,
   "baseline": {
     "branch": "archive-library-baseline-2026-11-19",
@@ -474,13 +474,13 @@
     },
     {
       "path": "archive/library/vehicles/tanks/1989/US.md",
-      "git_blob_sha": "c86cbac6f3f7daa409bcc87b5c9bc5957a2a01b4",
+      "git_blob_sha": "8f341d8f5c5169a3a8dc186333d95596aae71663",
       "size_bytes": 2146,
       "domain": "vehicles"
     },
     {
       "path": "archive/library/vehicles/tanks/1989/WEST_GERMANY.md",
-      "git_blob_sha": "911de41dcf252ac7ff59dccaab199cb50d5ec77b",
+      "git_blob_sha": "b33aaad826e21ed73b111a8fdf0ae97c031ed7c3",
       "size_bytes": 6736,
       "domain": "vehicles"
     },
