@@ -1,0 +1,116 @@
+{
+  "version": "0.4-WIP24",
+  "date": "2026-11-19",
+  "branch": "feat/wip24-armor-sync-era-depletion",
+  "base": "551aa9a09a5661ba65bc142a45aba39aba1663f3",
+  "instructionRevision": "1132251ab29f34ac1b12d1ee387f99a9bb842acd",
+  "implementationCommit": "28b3b358b7c07c155325c6876c433c85e1f2da2b",
+  "canonicalSources": {
+    "revision": "551aa9a09a5661ba65bc142a45aba39aba1663f3",
+    "files": [
+      "archive/library/ammunition/cannon/US_120.md",
+      "archive/library/systems/armor/SEVEN_ZONE_AND_KONTAKT_ERA.md",
+      "archive/library/systems/armor/ANTI_ERA.md",
+      "archive/library/vehicles/tanks/post-1989/M1A2_1992_1998.md",
+      "archive/library/vehicles/tanks/1989/SOVIET.md",
+      "archive/library/vehicles/tanks/1989/UPPER_ARMOR.md"
+    ],
+    "resolvedDuringImplementation": "T80U_1989 turretFront KE/CE 530/730 and covered KE 637.07 against M829A2, from main commits d214d08 and 44b9443."
+  },
+  "tests": [
+    {
+      "command": "node --test --test-concurrency=2 tests/*.test.cjs",
+      "result": "passed",
+      "passed": 396,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 94068.486701,
+      "includesActualChromium": true
+    },
+    {
+      "testFile": "tests/wip24-era-depletion.test.cjs",
+      "result": "passed",
+      "passed": 7,
+      "countedInFullSuite": true
+    },
+    {
+      "testFile": "tests/wip24-browser.test.cjs",
+      "result": "passed",
+      "countedInFullSuite": true,
+      "browser": "Chromium 156.0.8078.79",
+      "viewports": ["1440x900 DPR1", "844x390 DPR1", "844x390 DPR2", "390x844 DPR2"],
+      "evidence": "tests/releases/WIP24-browser-evidence.json"
+    },
+    {
+      "command": "/usr/bin/python3 -m unittest discover -s tests -p '*_test.py' -v",
+      "result": "passed",
+      "passed": 11,
+      "failed": 0
+    },
+    {
+      "command": "/usr/bin/python3 tests/source_quality.py",
+      "result": "passed",
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "command": "node scripts/benchmark_los_shared_compare.cjs --worker optimized /tmp/tactical-wip24-final-los.json",
+      "result": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "WIP24_BASELINE_REF=551aa9a09a5661ba65bc142a45aba39aba1663f3 node scripts/benchmark_wip24.cjs",
+      "result": "passed",
+      "report": "tests/releases/WIP24-performance.json"
+    },
+    {
+      "command": "node scripts/export_vehicle_profile.cjs && python3 build.py && python3 scripts/package_release.py WIP24",
+      "result": "passed",
+      "byteReproducibleAcrossTwoBuilds": true,
+      "includesExports": true
+    },
+    {
+      "command": "sha256sum -c SHA256SUMS_WIP24.txt && unzip -t Tactical_v0.4_WIP24.zip && unzip -p Tactical_v0.4_WIP24.zip | cmp - dist/index.html",
+      "result": "passed"
+    }
+  ],
+  "stationaryDuel": {
+    "map": "Rasdorf 4x4km",
+    "scenario": "t80u-fire",
+    "seed": 7,
+    "blueM1A2Pose": [550, 2750, 0],
+    "redT80UPose": [950, 2750, 3.141592653589793],
+    "firstCoveredImpactSeconds": 6.5,
+    "firstCoveredZone": "turretFront",
+    "firstEffectiveKE": 637.07,
+    "firstCoverageBefore": 0.95,
+    "firstCoverageAfter": 0.71,
+    "firstDamage": 0,
+    "gapImpactSeconds": 12.5,
+    "gapEffectiveKE": 530,
+    "gapDamage": 434.9410318440826,
+    "redDestroyedAtSeconds": 44.6
+  },
+  "artifacts": {
+    "html": {
+      "paths": ["Tactical_v0.4_WIP24.html", "dist/index.html"],
+      "bytes": 8552188,
+      "sha256": "f34aefed345e84e6bb3427ffafb0d6c7af90bb681b42366d49e354ffa038f821"
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP24.zip",
+      "entries": ["Tactical_v0.4_WIP24.html"],
+      "bytes": 1697541,
+      "compressedHTMLBytes": 1697395,
+      "crc32": "5aa06429",
+      "sha256": "5384955bd92c0f5ffbcaade6ced849216e0eb3c562fad732555773fb5bf1e85d"
+    },
+    "checksums": "SHA256SUMS_WIP24.txt"
+  },
+  "notes": [
+    "The archived original instruction matches its main-branch blob byte-for-byte.",
+    "Runtime changes apply to M1A2_1998, T80U_1989 and the listed existing game ammunition. Kontakt-1 and unregistered munition families were exercised in policy tests.",
+    "Only M829A2/Kontakt-5 has an active Anti-ERA reduction entry.",
+    "The isolated impact and headless renderer results measure code execution on the host. Physical-device performance and controls were not measured."
+  ]
+}
