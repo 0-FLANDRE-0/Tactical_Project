@@ -3,7 +3,7 @@
   "created_date": "2026-11-19",
   "repository": "0-FLANDRE-0/Tactical_Project",
   "status": "five_stage_library_canonical_index_complete",
-  "tree_before_manifest_creation": "d6fbb3464ac590faa3f00aa81f2156988733db8c",
+  "tree_before_manifest_creation": "5410971895c1ddd84b81784edac5f2bdfe89f761",
   "manifest_excludes_itself": true,
   "baseline": {
     "branch": "archive-library-baseline-2026-11-19",
@@ -426,14 +426,14 @@
     },
     {
       "path": "archive/library/vehicles/1989/ifv/BRADLEY.md",
-      "git_blob_sha": "5dfb905fd7e452c801bc11509c9d2016fd2d5bcb",
-      "size_bytes": 18420,
+      "git_blob_sha": "8462447deb9742b5aa0f7c38c2cfa6904b54a42e",
+      "size_bytes": 18723,
       "domain": "vehicles"
     },
     {
       "path": "archive/library/vehicles/1989/ifv/MARDER_1A2_1A3.md",
-      "git_blob_sha": "98eb3e624ea8402d7afd329a704f5d2e3342733f",
-      "size_bytes": 9281,
+      "git_blob_sha": "a78b2426597b01b10ee6264a26dbb51b7a420a53",
+      "size_bytes": 9480,
       "domain": "vehicles"
     },
     {
