@@ -10,6 +10,6 @@
 | **T-14M Malakhit + 증가장갑** | [이중 ERA 및 명중 계층별 손실 규칙](T14M_MALAKHIT_ERA.md) | 일반 +275(+630), 차체 측면 이중층(바깥층만 Anti-ERA), **AP ERA 비명중 소모 0**; 증가장갑 있는 기본장갑 피격 **ERA 소모 25%**, 증가장갑 없는 기본장갑 피격 **50%** |
 | Anti-ERA | [탄종별 대응 단계·확정 감쇄율](ANTI_ERA.md) | M829A1 0%; A2 K5 38.5%/Relikt 18.6%; A3 K5 74.8%/Relikt 47.6%; A4 검토 후보 |
 | **다층 ERA 공통** | [Anti-ERA 최외곽 감쇄 규칙](ANTI_ERA.md) | **2겹 이상은 바깥층에만 Anti-ERA 적용**; TUSK II·Relikt·Malakhit에 공통 적용, 내부층 정상 계산 |
-| APS | [Trophy HV](../aps/TROPHY_HV.md) | 좌우 별도 요격탄·대기시간; [Arena-M](../aps/ARENA_M_T90M.md) T-90M(4×3발·140ms·0.25초), [Afghanit](../aps/AFGHANIT_T14M.md) T-14M(170ms·0.3초) |
+| APS | [Trophy HV](../aps/TROPHY_HV.md) | 좌우 별도 요격탄·대기시간; [Arena-M](../aps/ARENA_M_T90M.md) T-90M(4×3발·140ms·0.25초), [Afghanit](../aps/AFGHANIT_T14M.md) T-14M(90ms·0.2초) |
 
 **2026-11-19 사용자 게임 설계값, 실제 장갑 시험치 아님.** [정식 정본 책임 규칙](../../CANONICAL_RULES.md)을 따르며, 실제 코드 적용은 별도 상태다.
