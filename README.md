@@ -2,9 +2,9 @@
 
 WIP23은 기존 `T80U_1989`의 WIP21 방호와 WIP22 관측을 유지하면서 2A46M-1·3BM42, 공통 조준/비행/피해 경로와 6.00초 자동장전을 연결한다. `T-80U 정지 교전시험`에서 전차장/포수 자체 관측→확보→실제 포탑 정렬→조준→발사선 확인→포구 발사→착탄→자동장전을 고정 0.05초 틱으로 실행한다. T-80U의 차체와 방위는 고정되고 TacticalAI는 생성하지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip23-t80u-fire-autoloader/Tactical_v0.4_WIP23.zip). 압축을 풀면 `Tactical_v0.4_WIP23.html` 한 파일이 나온다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP23.zip). 압축을 풀면 `Tactical_v0.4_WIP23.html` 한 파일이 나온다.
 - 현재 실행 파일: [Tactical_v0.4_WIP23.html](Tactical_v0.4_WIP23.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP23 구현](docs/T80U_FIRE_AND_AUTOLOADER_WIP23.md) · [릴리스·검증](TACTICAL_RELEASE_WIP23.md) · [체크섬](SHA256SUMS_WIP23.txt) · [작업 목차](docs/tasks/README.md).
+- [독립 병합 검토](docs/reviews/WIP23_MERGE_REVIEW_2026-11-19.md) · [WIP23 구현](docs/T80U_FIRE_AND_AUTOLOADER_WIP23.md) · [릴리스·검증](TACTICAL_RELEASE_WIP23.md) · [체크섬](SHA256SUMS_WIP23.txt) · [작업 목차](docs/tasks/README.md).
 - T-80U 기동·순찰/교전 AI, 혼합 45발 프리셋, 장전장치/승무원/모듈/탄약고 피해와 ERA 소모·폭발은 이번 범위가 아니다.
 
 관측·인계·선회와 격파 자세 보존의 독립 재검증은 [WIP22 병합 검토](docs/reviews/WIP22_MERGE_REVIEW_2026-11-15.md)에 기록했다.
@@ -27,7 +27,7 @@ WIP23은 기존 `T80U_1989`의 WIP21 방호와 WIP22 관측을 유지하면서 2
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip23-t80u-fire-autoloader/Tactical_v0.4_WIP23.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP23.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/main/Tactical_v0.4_WIP23.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP23.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 선택 차량 메뉴로도 생존 아군을 명시적으로 고를 수 있다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.

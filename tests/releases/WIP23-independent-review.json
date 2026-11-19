@@ -1,0 +1,156 @@
+{
+  "passed": 9,
+  "checked": [
+    "blue/muzzle/renamed-profile",
+    "blue/own-gunner/renamed-profile",
+    "blue/alignment/renamed-profile",
+    "red/muzzle/renamed-profile",
+    "red/own-gunner/renamed-profile",
+    "red/alignment/renamed-profile",
+    "flight frozen across shooter destruction and profile changes; one arrival",
+    "same target shape / distinct profile-owned accuracy at 500,1000,2000m",
+    "actual terrain: swapped teams preserve all 13 T-80U shot times and geometry"
+  ],
+  "accuracy": [
+    {
+      "rangeM": 500,
+      "M1A2_1998": {
+        "hitChance": 0.9999999958822233,
+        "sigma": {
+          "disp": 0.25,
+          "lay": 0.19727683171192212,
+          "rng": 0.008689413265306123,
+          "lead": 0,
+          "own": 0,
+          "multiplier": 1,
+          "x": 0.3184621615361769,
+          "z": 0.3185806871629059
+        }
+      },
+      "T80U_1989": {
+        "hitChance": 0.9999585183662996,
+        "sigma": {
+          "disp": 0.3,
+          "lay": 0.34736327583750937,
+          "rng": 0.013577854671280276,
+          "lead": 0,
+          "own": 0,
+          "multiplier": 1,
+          "x": 0.4589784803240405,
+          "z": 0.4591792716772394
+        }
+      }
+    },
+    {
+      "rangeM": 1000,
+      "M1A2_1998": {
+        "hitChance": 0.99693856313064,
+        "sigma": {
+          "disp": 0.25,
+          "lay": 0.19727683171192212,
+          "rng": 0.008689413265306123,
+          "lead": 0,
+          "own": 0,
+          "multiplier": 1,
+          "x": 0.3184621615361769,
+          "z": 0.3185806871629059
+        }
+      },
+      "T80U_1989": {
+        "hitChance": 0.9602374338097488,
+        "sigma": {
+          "disp": 0.3,
+          "lay": 0.34736327583750937,
+          "rng": 0.013577854671280276,
+          "lead": 0,
+          "own": 0,
+          "multiplier": 1,
+          "x": 0.4589784803240405,
+          "z": 0.4591792716772394
+        }
+      }
+    },
+    {
+      "rangeM": 2000,
+      "M1A2_1998": {
+        "hitChance": 0.8569373111623795,
+        "sigma": {
+          "disp": 0.25,
+          "lay": 0.19727683171192212,
+          "rng": 0.008689413265306123,
+          "lead": 0,
+          "own": 0,
+          "multiplier": 1,
+          "x": 0.3184621615361769,
+          "z": 0.3185806871629059
+        }
+      },
+      "T80U_1989": {
+        "hitChance": 0.6577517890070148,
+        "sigma": {
+          "disp": 0.3,
+          "lay": 0.34736327583750937,
+          "rng": 0.013577854671280276,
+          "lead": 0,
+          "own": 0,
+          "multiplier": 1,
+          "x": 0.4589784803240405,
+          "z": 0.4591792716772394
+        }
+      }
+    }
+  ],
+  "roleSwapShots": 13,
+  "reviewedCommit": "ddde98d5f5ca32608c7796cd3c0876f7d6102bb5",
+  "baselineCommit": "39ee52f2b71ed453c92ed2d1206a879a525c5c0b",
+  "mergeCommit": "ad7faedf01d215d1b7abfa4f3bb5e79ea3986cdc",
+  "pullRequest": 22,
+  "node": {
+    "passed": 388,
+    "failed": 0,
+    "skipped": 0
+  },
+  "python": {
+    "terrain": 7,
+    "dem": 4,
+    "sourceQuality": 7,
+    "failed": 0
+  },
+  "baselineComparisons": {
+    "default": {
+      "seconds": 90,
+      "seed": 7,
+      "exact": true
+    },
+    "t80u-armor": {
+      "seconds": 90,
+      "seed": 7,
+      "exact": true
+    },
+    "t80u-observation": {
+      "seconds": 90,
+      "seed": 7,
+      "exact": true
+    }
+  },
+  "release": {
+    "Tactical_v0.4_WIP23.html": {
+      "bytes": 8548773,
+      "sha256": "13661e496d497e78fe2c2204fc5c2b3c1c2d9ae17f82df1effb915edf0a25878"
+    },
+    "dist/index.html": {
+      "bytes": 8548773,
+      "sha256": "13661e496d497e78fe2c2204fc5c2b3c1c2d9ae17f82df1effb915edf0a25878"
+    },
+    "Tactical_v0.4_WIP23.zip": {
+      "bytes": 1696179,
+      "sha256": "6a30fb534953b410eac5f1ab4de704465ad16192e74b954b0774407d457d297d"
+    }
+  },
+  "notes": [
+    "The nine extra checks are separate from the 388-test repository run.",
+    "Accuracy comparison uses the same fully exposed M1 target geometry, a stationary observer/target, and 1.6 seconds of laying time. These are game model probabilities, not real vehicle accuracy.",
+    "No game code or combat parameters were changed during review.",
+    "Current library side-armor changes, Kontakt depletion, and quantitative Anti-ERA settings are separate follow-up work."
+  ]
+}

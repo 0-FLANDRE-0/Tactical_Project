@@ -1,6 +1,6 @@
 # TACTICAL v0.4 WIP23 릴리스·검증
 
-브랜치 `feat/wip23-t80u-fire-autoloader`, 시작점 `a8ef6eb64c5c802c4deaeac1618a788e0bb1caff`. main 병합과 공개 배포는 수행하지 않는다.
+브랜치 `feat/wip23-t80u-fire-autoloader`, 시작점 `a8ef6eb64c5c802c4deaeac1618a788e0bb1caff`. 최종 `ddde98d`를 독립 재검증해 PR #22를 main `ad7faed`로 통합했다. [독립 병합 검토](docs/reviews/WIP23_MERGE_REVIEW_2026-11-19.md)에 재검증 결과·정면 내구성 원인·최신 라이브러리와 실행 수치의 차이를 기록했다.
 
 ## 구현
 

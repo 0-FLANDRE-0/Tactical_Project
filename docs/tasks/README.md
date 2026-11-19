@@ -6,7 +6,7 @@
 
 | 작업 | 지시서 | 상태 |
 |---|---|---|
-| WIP23 T-80U 정지 사격·3BM42·6초 자동장전 | [완료 안내](TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER_COMPLETE.md) · [원본 보관](../../archive/instructions/TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER.md) | 구현·실제 코어/Chromium 검증 완료 · PR/병합 대기 · 기동/AI 제외 |
+| WIP23 T-80U 정지 사격·3BM42·6초 자동장전 | [완료 안내](TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER_COMPLETE.md) · [원본 보관](../../archive/instructions/TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER.md) · [독립 검토](../reviews/WIP23_MERGE_REVIEW_2026-11-19.md) | 최종 ddde98d 독립 재검증 통과 · PR #22 main 통합 ad7faed · 기동/AI 제외 |
 | WIP22 T-80U 자체 관측·전차장 인계·포탑 선회 | [완료 안내](TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md) · [원본 보관](../../archive/instructions/TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md) | 2363c92 독립 재검증·격파 자세 보완 · main 통합 · 정지 관측·추적, 발사/기동 제외 |
 | WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [완료 안내](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) · [원본 보관](../../archive/instructions/TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | 최종 730f336 독립 재검증 및 캡처 검증 보완 · main 통합 · ERA 소모/손상 없음 |
 | WIP20 M1A2(1998) 전용 탄약고 사고 | [완료 안내](TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) · [원본 지시서](../../archive/instructions/TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) | 최종 3633952 독립 재검증 통과 · main 통합 · 확률/시간은 시험 제안 |
