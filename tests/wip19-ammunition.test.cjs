@@ -4,8 +4,8 @@ const {fixture}=require('./helpers/hit-fixture.cjs');
 const {core:syntheticCore}=require('./helpers/observation-core-fixture.cjs');
 const profile=Profiles.M1A2_1998,near=(a,b,e=1e-9)=>assert(Math.abs(a-b)<=e,`${a} != ${b}`);
 
-test('W19-D01 three ammunition records keep independent KE/CE, velocity, penetration, damage and policy data',()=>{
- assert.deepEqual(Combat.ammunitionRegistry.ids(),['M829A2','M829A1','M830']);
+test('W19-D01 original three ammunition records keep independent KE/CE, velocity, penetration, damage and policy data',()=>{
+ assert.deepEqual(Combat.ammunitionRegistry.ids().slice(0,3),['M829A2','M829A1','M830']);
  const a1=Combat.AMMUNITION.M829A1,heat=Combat.AMMUNITION.M830;
  assert.equal(a1.kind,'KE');assert.equal(a1.muzzleVelocity,1575);assert.equal(a1.baseDamage,380);near(Combat.penetrationAt(a1,1000,30).value,490.0753768844221);near(Combat.penetrationAt(a1,1500,60).value,330.0251256281407);
  assert.equal(heat.kind,'CE');assert.equal(heat.muzzleVelocity,1140);assert.equal(heat.baseDamage,435);near(Combat.penetrationAt(heat,10,30).value,415);near(Combat.penetrationAt(heat,2000,30).value,415);near(Combat.penetrationAt(heat,1000,75).value,120);near(Combat.ricochetChance(heat,72),.5);

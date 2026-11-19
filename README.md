@@ -1,13 +1,17 @@
-# TACTICAL v0.4 WIP22 — T-80U(1989) 자체 관측·인계·선회
+# TACTICAL v0.4 WIP23 — T-80U(1989) 정지 사격·3BM42·6초 자동장전
 
-WIP22는 기존 `T80U_1989`에 정지 상태의 자체 관측을 연결한다. `T-80U 관측시험`에서 전차장 자동 탐색→자체 탐지·식별→0.50초 인계→실제 포탑 선회→포수 자체 관측 0.40초 확보→상실·재탐색을 고정 0.05초 틱으로 실행한다. 기존 기본 전투와 `T-80U 방호시험`은 유지되며, 방호시험의 T-80U 관측은 차량별 마스크로 꺼져 기존 자세가 변하지 않는다.
+WIP23은 기존 `T80U_1989`의 WIP21 방호와 WIP22 관측을 유지하면서 2A46M-1·3BM42, 공통 조준/비행/피해 경로와 6.00초 자동장전을 연결한다. `T-80U 정지 교전시험`에서 전차장/포수 자체 관측→확보→실제 포탑 정렬→조준→발사선 확인→포구 발사→착탄→자동장전을 고정 0.05초 틱으로 실행한다. T-80U의 차체와 방위는 고정되고 TacticalAI는 생성하지 않는다.
 
-- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip22-t80u-observation-traverse/Tactical_v0.4_WIP22.zip). 압축을 풀면 `Tactical_v0.4_WIP22.html` 한 파일이 나온다.
-- 현재 실행 파일: [Tactical_v0.4_WIP22.html](Tactical_v0.4_WIP22.html), 같은 바이트의 [dist/index.html](dist/index.html).
-- [WIP22 구현](docs/T80U_OBSERVATION_AND_TRAVERSE_WIP22.md) · [릴리스·검증](TACTICAL_RELEASE_WIP22.md) · [체크섬](SHA256SUMS_WIP22.txt) · [작업 목차](docs/tasks/README.md).
-- T-80U의 125mm 주포/기관총, 탄약·자동장전, 기동/순찰/교전 AI, 승무원·모듈·탄약고 피해와 ERA 소모·폭발은 이번 범위가 아니다.
+- 권장 다운로드: [실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip23-t80u-fire-autoloader/Tactical_v0.4_WIP23.zip). 압축을 풀면 `Tactical_v0.4_WIP23.html` 한 파일이 나온다.
+- 현재 실행 파일: [Tactical_v0.4_WIP23.html](Tactical_v0.4_WIP23.html), 같은 바이트의 [dist/index.html](dist/index.html).
+- [WIP23 구현](docs/T80U_FIRE_AND_AUTOLOADER_WIP23.md) · [릴리스·검증](TACTICAL_RELEASE_WIP23.md) · [체크섬](SHA256SUMS_WIP23.txt) · [작업 목차](docs/tasks/README.md).
+- T-80U 기동·순찰/교전 AI, 혼합 45발 프리셋, 장전장치/승무원/모듈/탄약고 피해와 ERA 소모·폭발은 이번 범위가 아니다.
 
 관측·인계·선회와 격파 자세 보존의 독립 재검증은 [WIP22 병합 검토](docs/reviews/WIP22_MERGE_REVIEW_2026-11-15.md)에 기록했다.
+
+## T-80U(1989) 정지 교전시험
+
+우측 시나리오 선택에서 `T-80U 정지 교전시험`을 고른다. M1A2(1998)과 T-80U가 정지 상태에서 기존 관측·사격 조건으로 상호 교전한다. T-80U는 장전된 3BM42 1발과 즉응 저장 12발로 시작하며, 실제 발사 뒤 다음 탄을 정확히 6초 동안 자동장전한다. 3BM42의 기본 피해 370 HP와 10m/2km 관통 표, 125mm APFSDS 피해 곡선은 게임 시험값이다. M1A2 정면 비관통은 정상 결과이며 측면 fixture에서 공통 피해 경로의 관통을 별도로 검증했다.
 
 ## T-80U(1989) 관측시험
 
@@ -23,7 +27,7 @@ WIP22는 기존 `T80U_1989`에 정지 상태의 자체 관측을 연결한다. `
 
 ## 실행과 조작
 
-[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip22-t80u-observation-traverse/Tactical_v0.4_WIP22.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP22.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
+[실행 HTML ZIP](https://raw.githubusercontent.com/0-FLANDRE-0/Tactical_Project/refs/heads/feat/wip23-t80u-fire-autoloader/Tactical_v0.4_WIP23.zip)을 내려받아 압축을 푼 뒤 `Tactical_v0.4_WIP23.html`을 브라우저에서 연다. GitHub에서 HTML을 바로 열면 소스가 표시될 수 있다. 고도·지표·도로·건물·수목·벡터 등고선·지형 해석선·길찾기 캐시가 모두 포함된 단일 파일이며, 실행 중 인터넷이나 외부 라이브러리를 요구하지 않는다. 모바일은 가로 화면에서만 게임 입력을 받는다. 세로로 돌리면 자동 일시정지하고, 가로로 돌아올 때 진입 전 재생/일시정지 상태를 복원한다.
 
 - 전차 탭: 선택. 우측 선택 차량 메뉴로도 생존 아군을 명시적으로 고를 수 있다.
 - 지면 탭: 이동 지점 지정. 후진 버튼을 선택한 뒤 지점을 누르면 후진한다.
@@ -40,7 +44,7 @@ WIP22는 기존 `T80U_1989`에 정지 상태의 자체 관측을 연결한다. `
 - 확인된 잔해는 전투 종료까지 팀별로 계속 표시되고 통행을 막지만, 지도·명단·직접 API에서 선택하거나 표적으로 지정할 수 없다. 미관측 격파는 나중에 실제 관측·식별하기 전까지 공개되지 않는다.
 - Space: 일시정지. R: 후진 모드. X: 정지. F: 전체화면. Home: 전체 지도.
 - 전체화면 요청이 거절되거나 지원되지 않으면 지도 집중 모드로 전환한다.
-- 시나리오: `기본 전투`, `T-80U 방호시험`, `T-80U 관측시험`을 선택한다. 전환과 초기화는 선택·접촉·인계·Worker 응답·비행체·효과·HP·센서 선회 위상을 새 시나리오로 함께 초기화한다.
+- 시나리오: `기본 전투`, `T-80U 방호시험`, `T-80U 관측시험`, `T-80U 정지 교전시험`을 선택한다. 전환과 초기화는 선택·접촉·인계·Worker 응답·비행체·효과·HP·탄약·장전·센서 선회 위상을 새 시나리오로 함께 초기화한다.
 
 ## 실제 자료와 게임 편집
 
@@ -113,7 +117,7 @@ WIP22는 기존 `T80U_1989`에 정지 상태의 자체 관측을 연결한다. `
 
 | 경로 | 내용 |
 |---|---|
-| `Tactical_v0.4_WIP22.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
+| `Tactical_v0.4_WIP23.html`, `dist/index.html` | 동일한 현재 버전의 단일 실행 HTML |
 | `src/map-spec.js`, `scripts/map_spec.py` | 할당 전 지도 규격·파생자료 계약 검증 |
 | `data/map-build-rasdorf-4km.json` | 기본 실측 지도 생성 입력·출력 설정 |
 | `tests/fixtures/sim-core-WIP11D.js`, `tests/helpers/los-wip11d-reference.cjs` | 빌드에 포함되지 않는 해시 고정 WIP11D 비교 코어와 로더 |

@@ -221,6 +221,9 @@
         "stationaryHoldSeconds": 0.35
       },
       "readiness": {
+        "loading": {
+          "type": "manual"
+        },
         "reloadSeconds": 5.98,
         "reloadMaxSeconds": 14,
         "fatigue": {
@@ -391,6 +394,10 @@
         "tank-ammo-incident/M830": {
           "ammoId": "M830",
           "baseChance": 0.4
+        },
+        "tank-ammo-incident/3BM42": {
+          "ammoId": "3BM42",
+          "baseChance": 0.3
         }
       },
       "storedAmmoResponse": {
@@ -1176,6 +1183,279 @@
               },
               "upper": {
                 "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "penetration": {
+              "hullFront": {
+                "temporaryFault": 0.05,
+                "crewLight": 0.03,
+                "crewSerious": 0.005
+              },
+              "hullSide": {
+                "temporaryFault": 0.07,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              },
+              "hullRear": {
+                "temporaryFault": 0.1,
+                "crewLight": 0.03,
+                "crewSerious": 0.005
+              },
+              "turretFront": {
+                "temporaryFault": 0.04,
+                "crewLight": 0.04,
+                "crewSerious": 0.005
+              },
+              "turretSide": {
+                "temporaryFault": 0.06,
+                "crewLight": 0.07,
+                "crewSerious": 0.01
+              },
+              "turretRear": {
+                "temporaryFault": 0.08,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              },
+              "upper": {
+                "temporaryFault": 0.06,
+                "crewLight": 0.05,
+                "crewSerious": 0.01
+              }
+            }
+          },
+          "faultWeights": {
+            "hullFront": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "hullSide": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "hullRear": {
+              "mobility": 1,
+              "turretDrive": 0
+            },
+            "turretFront": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "turretSide": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "turretRear": {
+              "mobility": 0,
+              "turretDrive": 1
+            },
+            "upper": {
+              "mobility": 0.5,
+              "turretDrive": 0.5
+            }
+          },
+          "crewWeights": {
+            "light": {
+              "hullFront": {
+                "driver": 0.7,
+                "commander": 0.1,
+                "gunner": 0.1,
+                "loader": 0.1
+              },
+              "hullSide": {
+                "driver": 0.4,
+                "commander": 0.2,
+                "gunner": 0.2,
+                "loader": 0.2
+              },
+              "hullRear": {
+                "driver": 0.55,
+                "commander": 0.15,
+                "gunner": 0.15,
+                "loader": 0.15
+              },
+              "turretFront": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.5,
+                "loader": 0.25
+              },
+              "turretSide": {
+                "driver": 0.05,
+                "commander": 0.3,
+                "gunner": 0.3,
+                "loader": 0.35
+              },
+              "turretRear": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.25,
+                "loader": 0.5
+              },
+              "upper": {
+                "driver": 0.25,
+                "commander": 0.25,
+                "gunner": 0.25,
+                "loader": 0.25
+              }
+            },
+            "serious": {
+              "hullFront": {
+                "driver": 0.7,
+                "commander": 0.1,
+                "gunner": 0.1,
+                "loader": 0.1
+              },
+              "hullSide": {
+                "driver": 0.4,
+                "commander": 0.2,
+                "gunner": 0.2,
+                "loader": 0.2
+              },
+              "hullRear": {
+                "driver": 0.55,
+                "commander": 0.15,
+                "gunner": 0.15,
+                "loader": 0.15
+              },
+              "turretFront": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.5,
+                "loader": 0.25
+              },
+              "turretSide": {
+                "driver": 0.05,
+                "commander": 0.3,
+                "gunner": 0.3,
+                "loader": 0.35
+              },
+              "turretRear": {
+                "driver": 0.05,
+                "commander": 0.2,
+                "gunner": 0.25,
+                "loader": 0.5
+              },
+              "upper": {
+                "driver": 0.25,
+                "commander": 0.25,
+                "gunner": 0.25,
+                "loader": 0.25
+              }
+            }
+          }
+        },
+        "tank-ke/3BM42": {
+          "ammoId": "3BM42",
+          "rows": {
+            "ricochet": {
+              "hullFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "nonPenetration": {
+              "hullFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0,
+                "crewLight": 0,
+                "crewSerious": 0
+              }
+            },
+            "nearNonPenetration": {
+              "hullFront": {
+                "temporaryFault": 0.015,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullSide": {
+                "temporaryFault": 0.025,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "hullRear": {
+                "temporaryFault": 0.035,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretFront": {
+                "temporaryFault": 0.015,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretSide": {
+                "temporaryFault": 0.025,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "turretRear": {
+                "temporaryFault": 0.03,
+                "crewLight": 0,
+                "crewSerious": 0
+              },
+              "upper": {
+                "temporaryFault": 0.025,
                 "crewLight": 0,
                 "crewSerious": 0
               }

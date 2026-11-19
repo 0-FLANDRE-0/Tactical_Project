@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — 라스도르프 4×4km v0.4 WIP22</title>
+<title>TACTICAL — 라스도르프 4×4km v0.4 WIP23</title>
 <style>
 :root{
   color-scheme:dark;
@@ -825,7 +825,7 @@ footer{
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">라스도르프 서부 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP22</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">라스도르프 서부 · 4×4km</div><div class="header-spacer"></div><span class="version">v0.4 / WIP23</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -842,13 +842,13 @@ footer{
 <aside class="sidebar" aria-label="명령 및 선택 차량 정보">
 <section class="command-panel" aria-label="전술 명령">
 <div class="section-label"><span>COMMAND</span><button class="reset compact" id="reset">초기화 ↺</button></div>
-<div class="command-group scenario-command"><label for="scenarioSelect"><b>시나리오</b></label><select id="scenarioSelect"><option value="default">기본 전투</option><option value="t80u-armor">T-80U 방호시험</option><option value="t80u-observation">T-80U 관측시험</option></select></div>
+<div class="command-group scenario-command"><label for="scenarioSelect"><b>시나리오</b></label><select id="scenarioSelect"><option value="default">기본 전투</option><option value="t80u-armor">T-80U 방호시험</option><option value="t80u-observation">T-80U 관측시험</option><option value="t80u-fire">T-80U 정지 교전시험</option></select></div>
 <div class="command-group map-command-group"><b>지도</b><div class="map-tools"><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대">＋</button><button id="zoomOut" aria-label="지도 축소">－</button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기">맞춤</button><button class="active" id="contours" aria-pressed="true" title="등고선 표시">등고선</button></div></div>
 <div class="command-group"><b>기동</b><div class="command-row"><button class="command active" id="move" aria-pressed="true">이동</button><button class="command" id="reverse" aria-pressed="false">후진</button><button class="command" id="stop">정지</button></div></div>
 <div class="command-group"><b>관측</b><div class="command-row"><button class="command sight" id="sight" aria-pressed="false">시야 · 홀드</button><button class="command" id="guardMenu" aria-expanded="false" aria-controls="guardPopup">경계</button></div>
 <section class="guard-popup" id="guardPopup" aria-label="경계 명령" aria-hidden="true"><div class="guard-popup-title"><strong>경계 명령</strong><button id="guardClose" aria-label="경계 메뉴 닫기">×</button></div><label>장비 <select id="lookChannel"><option value="commander">전차장</option><option value="gunner">포수</option></select></label><div class="guard-actions"><button id="lookDirection" aria-pressed="false">방향 지정</button><button id="lookResume">자동 복귀</button></div><label class="guard-duration">유지 <select id="lookDuration"><option value="0" selected>해제까지</option><option value="5">5초</option><option value="10">10초</option><option value="30">30초</option></select></label></section></div>
 <div class="command-group"><b>사격</b><div class="command-row"><button id="fireMode" aria-pressed="true">자동</button><button id="cancelDesignation">지정 취소</button><button id="fire" disabled>단발 · G</button></div></div>
-<div class="command-group ammo-command"><label for="ammoSelect"><b>다음 탄종</b></label><select id="ammoSelect"><option value="auto">자동</option><option value="M829A2">M829A2</option><option value="M829A1">M829A1</option><option value="M830">M830</option></select></div>
+<div class="command-group ammo-command"><label for="ammoSelect"><b>다음 탄종</b></label><select id="ammoSelect"><option value="auto">자동</option><option value="M829A2">M829A2</option><option value="M829A1">M829A1</option><option value="M830">M830</option><option value="3BM42">3BM42</option></select></div>
 </section>
 <section class="selected-scroll" aria-label="선택 차량 정보">
 <div class="unit-picker"><label for="unitSelect">아군 선택</label><select id="unitSelect"></select></div>
@@ -856,7 +856,7 @@ footer{
 <div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
 <div class="combat-summary" id="combatSummary">HP 1,450 / 1,450 · 생존</div>
 <section class="engagement-panel" aria-label="교전 상태"><div class="engagement-line"><b>경계</b><output id="lookStatus">자동 경계</output></div><div class="engagement-line"><b>교전</b><output id="designationStatus">없음</output></div><div class="engagement-line"><b>사격</b><output id="fireState">표적 미확보</output></div><output class="flight-state" id="readinessState"></output><output class="flight-state" id="flightState"></output></section>
-<section class="ammo-panel"><div class="section-label"><span>AMMUNITION</span><span id="ammoTotal">42발</span></div><div id="ammoLoaded"></div><div id="ammoTask"></div><div id="ammoIncident"></div><table><thead><tr><th>구획</th><th>M829A2</th><th>M829A1</th><th>M830</th></tr></thead><tbody id="ammoInventory"></tbody></table></section>
+<section class="ammo-panel"><div class="section-label"><span>AMMUNITION</span><span id="ammoTotal">42발</span></div><div id="ammoLoaded"></div><div id="ammoTask"></div><div id="ammoIncident"></div><table><thead><tr id="ammoHeaders"><th>구획</th><th>M829A2</th><th>M829A1</th><th>M830</th></tr></thead><tbody id="ammoInventory"></tbody></table></section>
 <section class="status-panel"><div class="section-label"><span>차량 · 승무원 상태</span></div><div id="faultStatus"></div><div id="crewStatus"></div></section>
 <div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>
@@ -974,7 +974,7 @@ const VEHICLE_PROFILES=(()=>{
       movement:{fireOnMove:true,stationarySpeedMps:.10,stationaryHoldSeconds:.35},
       // WIP15 game trial values. They model an abstract loader and temporary
       // crew/equipment response; they are not measured vehicle specifications.
-      readiness:{reloadSeconds:5.98,reloadMaxSeconds:14,
+      readiness:{loading:{type:'manual'},reloadSeconds:5.98,reloadMaxSeconds:14,
         fatigue:{maxSeconds:5,startsAtShot:4,perShotSeconds:.35,recoveryPerSecond:.25,burstResetSeconds:6},
         shock:{maxSeconds:5,recoveryPerSecond:.25,normalSeconds:.25,nearSeconds:1,penetrationSeconds:2.5},
         nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]},
@@ -1055,16 +1055,19 @@ const VEHICLE_PROFILES=(()=>{
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.ricochet=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nonPenetration=zero();
   M1A2_1998.hitReactions.policies['tank-heat/M830'].rows.nearNonPenetration=zero();
-  // WIP21 fixed armour-test target, extended in WIP22 with an observation-only
-  // operating profile. Scenario capability masks keep the original armour
-  // targets inert. Visual dimensions and pivots are derived
+  M1A2_1998.hitReactions.policies['tank-ke/3BM42']=clone(a2Reaction);
+  M1A2_1998.hitReactions.policies['tank-ke/3BM42'].ammoId='3BM42';
+  M1A2_1998.ammoIncidents.policies['tank-ammo-incident/3BM42']={ammoId:'3BM42',baseChance:.30};
+  // WIP21 fixed armour target, extended by WIP22 observation and WIP23
+  // stationary firing. Scenario capability masks keep the older trials inert.
+  // Visual dimensions and pivots are derived
   // from the corrected T80UTopView source with one uniform scale (7.012/874).
-  // It intentionally owns no mobility, weapon, ammunition, AI, crew reaction
-  // or temporary-fault configuration.
+  // It intentionally owns no mobility, AI, human-loader fatigue, crew reaction,
+  // temporary-fault or ammunition-incident configuration.
   const T80U_SCALE=7.012/874;
   const T80U_1989={
-    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 관측·장갑 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
-    capabilities:{target:true,mobility:false,observation:true,fire:false,ai:false},
+    id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 정지 교전 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
+    capabilities:{target:true,mobility:false,observation:true,fire:true,ai:false},
     model:{hullLength:7.012,width:450*T80U_SCALE,overallLength:(807-50)*T80U_SCALE+7.012/2,roofHeight:2.20,groundClearance:.45,
       barrelTip:(807-50)*T80U_SCALE,turretLength:3.65,turretWidth:3.47,turretOrigin:0,
       turretPivot:[(807-810)*T80U_SCALE,0],turretRingDiameter:2.05,muzzleLocal:[(807-50)*T80U_SCALE,0]},
@@ -1079,6 +1082,22 @@ const VEHICLE_PROFILES=(()=>{
       tuning:{queryPeriod:.1,geometryMaxAge:.5,detectThreshold:[.35,1.1],identifyThreshold:[1.4,3],
         evidenceHalfLife:8,memorySeconds:30,knowledgeSeconds:120,lossGrace:1.2,
         focusSeconds:2,focusLimit:8,revisitSeconds:12,designationSeconds:18,designationStale:6,acquireSeconds:.4,commanderHandoffSeconds:.5}},
+    weapons:{mainGun:{name:'2A46M-1',calibreMm:125,ammunitionCapacity:45,referenceEngagementRange:2000,ammunitionId:'3BM42',ammunitionName:'3BM42 Mango',enabled:true}},
+    // WIP23 values are adjustable stationary-fire game tuning, not measured
+    // 1A45/1G46 dispersion or aiming performance.
+    fireControl:{enabled:true,aimSeconds:1.60,alignmentTolerance:1.5*Math.PI/180,
+      maxRange:2000,fireHeight:2.05,testRounds:13,
+      dispersionMrad:.30,layStartMrad:1.80,layMinMrad:.12,layTauSeconds:.80,
+      rangeErrorM:8,muzzleVelocity:1700,velocityRetention:.94,leadResidual:.12,
+      stabMradPerMps:.03,impact:{rejectionAttempts:64,marchStepM:2,maxBeyondM:3000},
+      movement:{fireOnMove:false,stationarySpeedMps:.10,stationaryHoldSeconds:.35},
+      readiness:{loading:{type:'automatic'},reloadSeconds:6,reloadMaxSeconds:6},
+      presented:{hullBottom:.45,hullTop:1.55,turretTop:2.20}},
+    ammunition:{enabled:true,supported:['3BM42'],autoPriority:['3BM42'],sourcePriority:['ready','semiReady','reserve'],
+      initial:{loaded:'3BM42',preference:'auto',sections:{ready:{'3BM42':12},semiReady:{'3BM42':0},reserve:{'3BM42':0}}},
+      sections:{ready:{capacity:27,prepareSeconds:0},semiReady:{capacity:0,prepareSeconds:0},reserve:{capacity:17,prepareSeconds:0}},
+      replenish:{enabled:false}},
+    ammoIncidents:{enabled:false},hitReactions:{enabled:false},
     exposure:{hullAlong:[-2.45,0,2.45],hullHeights:[.75,1.35],turretAlong:[-.85,0,.85],turretHeight:2.05},
     navigation:{clearanceMargin:.25},
     combat:{maxHp:1400,armor:{
@@ -1103,8 +1122,6 @@ const VEHICLE_PROFILES=(()=>{
       const caps=p.capabilities;
       if(!caps||!['target','mobility','observation','fire','ai'].every(k=>typeof caps[k]==='boolean')||caps.target!==true)throw Error('차량 기능 선언 오류: '+id);
       for(const section of ['model','navigation','exposure'])if(!p[section])throw Error('차량 프로파일 필드 누락: '+id+'.'+section);
-      const fullOperational=caps.mobility||caps.fire||caps.ai;
-      if(fullOperational&&![caps.mobility,caps.observation,caps.fire,caps.ai].every(Boolean))throw Error('운용 차량 기능 조합 오류: '+id);
       if(caps.ai&&(!caps.mobility||!caps.observation||!caps.fire))throw Error('AI 기능 조합 오류: '+id);
       if(caps.fire&&!caps.observation)throw Error('발사 관측 기능 오류: '+id);
       if(caps.mobility!==!!p.mobility)throw Error('기동 기능 선언 오류: '+id);
@@ -1130,28 +1147,31 @@ const VEHICLE_PROFILES=(()=>{
         const t=s.tuning,positive=['queryPeriod','geometryMaxAge','evidenceHalfLife','memorySeconds','knowledgeSeconds','lossGrace','focusSeconds','focusLimit','revisitSeconds','designationSeconds','designationStale','acquireSeconds'];
         if(!t||!positive.every(k=>Number.isFinite(t[k])&&t[k]>0)||!['detectThreshold','identifyThreshold'].every(k=>Array.isArray(t[k])&&t[k].length===2&&t[k].every(v=>Number.isFinite(v)&&v>=0)&&t[k][1]>=t[k][0])||(t.commanderHandoffSeconds!==undefined&&(!Number.isFinite(t.commanderHandoffSeconds)||t.commanderHandoffSeconds<0)))throw Error('관측 절차 값 오류: '+id);
       }
-      if(!fullOperational){
-        if(!p.combat)throw Error('고정 표적 전투 데이터 누락: '+id);
-        profiles[id]=freeze(p);continue;
-      }
+      if(caps.mobility){
       const pt=p.mobility.powertrain;
       if(!pt||!['forwardRatios','reverseRatios','forwardUpshiftMps','forwardDownshiftMps','reverseUpshiftMps','reverseDownshiftMps'].every(k=>Array.isArray(pt[k])))throw Error('구동 프로파일 누락: '+id);
       if(pt.forwardRatios.length!==4||pt.reverseRatios.length!==2||pt.forwardUpshiftMps.length!==3||pt.forwardDownshiftMps.length!==3||pt.reverseUpshiftMps.length!==1||pt.reverseDownshiftMps.length!==1)throw Error('변속 표 길이 오류: '+id);
       if(![...pt.forwardRatios,...pt.reverseRatios,...pt.forwardUpshiftMps,...pt.forwardDownshiftMps,...pt.reverseUpshiftMps,...pt.reverseDownshiftMps].every(v=>Number.isFinite(v)&&v>0))throw Error('변속 표 값 오류: '+id);
       if(!pt.forwardUpshiftMps.every((v,i)=>v>pt.forwardDownshiftMps[i])||!pt.reverseUpshiftMps.every((v,i)=>v>pt.reverseDownshiftMps[i]))throw Error('변속 히스테리시스 오류: '+id);
       for(const k of ['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','holdSpeed','zeroSpeedEpsilon','targetSpeedTolerance','launchAcceleration','launchPowerExponent','gearForceExponent','powerFloorSpeed','rollingDeceleration','shiftDriveFraction','lateralAcceleration','pivotMaxSpeed','arrivalRadius','arrivalSpeed'])if(!Number.isFinite(pt[k])||pt[k]<0||(['referenceMassKg','referenceEngineHp','efficiency','shiftSeconds','shiftDwellSeconds','minimumGearHoldSeconds','rangeEngageSeconds','directionStopSpeed','directionSettleSeconds','launchAcceleration','powerFloorSpeed','lateralAcceleration','arrivalRadius','arrivalSpeed'].includes(k)&&pt[k]===0))throw Error('구동 값 오류: '+id+'.'+k);
+      }
+      if(caps.fire){
       const f=p.fireControl;
       for(const field of ['accuracyNear','accuracyFar','selfMotionPenalty','targetMotionPenalty','motionReference','zoneWeights','maneuverAccel','maneuverReferenceSpeed','flightSeconds','effectSeconds'])if(Object.hasOwn(f,field))throw Error('폐기된 사격 필드: '+id+'.'+field);
       if(Object.hasOwn(f,'shotIntervalSeconds'))throw Error('폐기된 사격 필드: '+id+'.shotIntervalSeconds');
       for(const field of ['aimSeconds','alignmentTolerance','maxRange','fireHeight','testRounds','dispersionMrad','layStartMrad','layMinMrad','layTauSeconds','rangeErrorM','muzzleVelocity','velocityRetention'])if(!Number.isFinite(f[field])||f[field]<=0)throw Error('사격 프로파일 값 오류: '+id+'.'+field);
       for(const field of ['leadResidual','stabMradPerMps'])if(!Number.isFinite(f[field])||f[field]<0)throw Error('사격 오차 값 오류: '+id+'.'+field);
       if(!f.movement||typeof f.movement.fireOnMove!=='boolean'||!Number.isFinite(f.movement.stationarySpeedMps)||f.movement.stationarySpeedMps<0||!Number.isFinite(f.movement.stationaryHoldSeconds)||f.movement.stationaryHoldSeconds<0)throw Error('이동 사격 프로파일 값 오류: '+id+'.movement');
-      const ready=f.readiness,fatigue=ready?.fatigue,shock=ready?.shock,near=ready?.nearNonPenetration,fault=ready?.temporaryFault;
-      if(!ready||!fatigue||!shock||!near||!fault)throw Error('장전/피격 반응 프로파일 누락: '+id);
-      if(![ready.reloadSeconds,ready.reloadMaxSeconds,fatigue.maxSeconds,fatigue.perShotSeconds,fatigue.recoveryPerSecond,fatigue.burstResetSeconds,shock.maxSeconds,shock.recoveryPerSecond,shock.normalSeconds,shock.nearSeconds,shock.penetrationSeconds,near.maxDeficit,near.chance,fault.baseChance,fault.damageScaleChance,fault.damageReference,fault.observationAimRateMultiplier,fault.observationSigmaMultiplier].every(Number.isFinite)||ready.reloadSeconds<=0||ready.reloadMaxSeconds<ready.reloadSeconds||ready.reloadMaxSeconds>14||fatigue.maxSeconds<0||shock.maxSeconds<0||!Number.isInteger(fatigue.startsAtShot)||fatigue.startsAtShot<1||fatigue.perShotSeconds<0||fatigue.recoveryPerSecond<0||fatigue.burstResetSeconds<=0||shock.recoveryPerSecond<0||shock.normalSeconds<0||shock.nearSeconds<shock.normalSeconds||shock.penetrationSeconds<shock.nearSeconds||near.maxDeficit<=0||near.chance<0||near.chance>1||fault.baseChance<0||fault.damageScaleChance<0||fault.baseChance+fault.damageScaleChance>1||fault.damageReference<=0||fault.observationAimRateMultiplier<=0||fault.observationAimRateMultiplier>1||fault.observationSigmaMultiplier<1)throw Error('장전/피격 반응 프로파일 값 오류: '+id);
-      if(!Array.isArray(near.damagePoints)||near.damagePoints.length<2||near.damagePoints[0][0]!==0||near.damagePoints.at(-1)[0]!==near.maxDeficit||near.damagePoints.some((v,i)=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[1]<0||(i&&v[0]<=near.damagePoints[i-1][0])))throw Error('근접 비관통 피해 표 오류: '+id);
-      const faultKindNames=['fireControl','commander','gunner'];
-      if(!Array.isArray(fault.durationSeconds)||fault.durationSeconds.length!==2||!fault.durationSeconds.every(Number.isFinite)||fault.durationSeconds[0]<3||fault.durationSeconds[1]>8||fault.durationSeconds[1]<fault.durationSeconds[0]||!fault.kinds||Object.keys(fault.kinds).length!==faultKindNames.length||!faultKindNames.every(k=>Object.hasOwn(fault.kinds,k))||Math.abs(Object.values(fault.kinds).reduce((a,b)=>a+b,0)-1)>1e-9||Object.values(fault.kinds).some(v=>!Number.isFinite(v)||v<0))throw Error('일시 이상 프로파일 값 오류: '+id);
+      const ready=f.readiness,loadingType=ready?.loading?.type;
+      if(!ready||!['manual','automatic'].includes(loadingType)||![ready.reloadSeconds,ready.reloadMaxSeconds].every(Number.isFinite)||ready.reloadSeconds<=0||ready.reloadMaxSeconds<ready.reloadSeconds)throw Error('장전 방식 프로파일 오류: '+id);
+      if(loadingType==='manual'){
+        const fatigue=ready.fatigue,shock=ready.shock,near=ready.nearNonPenetration,fault=ready.temporaryFault;
+        if(!fatigue||!shock||!near||!fault||ready.reloadMaxSeconds>14)throw Error('수동 장전/피격 반응 프로파일 누락: '+id);
+        if(![fatigue.maxSeconds,fatigue.perShotSeconds,fatigue.recoveryPerSecond,fatigue.burstResetSeconds,shock.maxSeconds,shock.recoveryPerSecond,shock.normalSeconds,shock.nearSeconds,shock.penetrationSeconds,near.maxDeficit,near.chance,fault.baseChance,fault.damageScaleChance,fault.damageReference,fault.observationAimRateMultiplier,fault.observationSigmaMultiplier].every(Number.isFinite)||fatigue.maxSeconds<0||shock.maxSeconds<0||!Number.isInteger(fatigue.startsAtShot)||fatigue.startsAtShot<1||fatigue.perShotSeconds<0||fatigue.recoveryPerSecond<0||fatigue.burstResetSeconds<=0||shock.recoveryPerSecond<0||shock.normalSeconds<0||shock.nearSeconds<shock.normalSeconds||shock.penetrationSeconds<shock.nearSeconds||near.maxDeficit<=0||near.chance<0||near.chance>1||fault.baseChance<0||fault.damageScaleChance<0||fault.baseChance+fault.damageScaleChance>1||fault.damageReference<=0||fault.observationAimRateMultiplier<=0||fault.observationAimRateMultiplier>1||fault.observationSigmaMultiplier<1)throw Error('수동 장전/피격 반응 프로파일 값 오류: '+id);
+        if(!Array.isArray(near.damagePoints)||near.damagePoints.length<2||near.damagePoints[0][0]!==0||near.damagePoints.at(-1)[0]!==near.maxDeficit||near.damagePoints.some((v,i)=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[1]<0||(i&&v[0]<=near.damagePoints[i-1][0])))throw Error('근접 비관통 피해 표 오류: '+id);
+        const faultKindNames=['fireControl','commander','gunner'];
+        if(!Array.isArray(fault.durationSeconds)||fault.durationSeconds.length!==2||!fault.durationSeconds.every(Number.isFinite)||fault.durationSeconds[0]<3||fault.durationSeconds[1]>8||fault.durationSeconds[1]<fault.durationSeconds[0]||!fault.kinds||Object.keys(fault.kinds).length!==faultKindNames.length||!faultKindNames.every(k=>Object.hasOwn(fault.kinds,k))||Math.abs(Object.values(fault.kinds).reduce((a,b)=>a+b,0)-1)>1e-9||Object.values(fault.kinds).some(v=>!Number.isFinite(v)||v<0))throw Error('일시 이상 프로파일 값 오류: '+id);
+      }else if(['fatigue','shock','nearNonPenetration','temporaryFault'].some(field=>Object.hasOwn(ready,field)))throw Error('자동장전 수동 반응 설정 오류: '+id);
       if(!f.impact||!Number.isInteger(f.impact.rejectionAttempts)||!['rejectionAttempts','marchStepM','maxBeyondM'].every(field=>Number.isFinite(f.impact[field])&&f.impact[field]>0))throw Error('탄착 프로파일 값 오류: '+id+'.impact');
       const band=f.presented;
       if(!Number.isInteger(f.testRounds)||f.layStartMrad<f.layMinMrad||!band||!['hullBottom','hullTop','turretTop'].every(k=>Number.isFinite(band[k]))||!(band.hullBottom<band.hullTop&&band.hullTop<band.turretTop))throw Error('시험탄/조준/제시 높이 오류: '+id);
@@ -1166,10 +1186,11 @@ const VEHICLE_PROFILES=(()=>{
         if(!Array.isArray(a.autoPriority)||a.autoPriority.length!==ids.length||new Set(a.autoPriority).size!==ids.length||!a.autoPriority.every(v=>ids.includes(v)))throw Error('탄약 자동 우선순위 오류: '+id);
         if(!Array.isArray(a.sourcePriority)||a.sourcePriority.length!==sections.length||!sections.every(v=>a.sourcePriority.includes(v)))throw Error('탄약 구획 우선순위 오류: '+id);
         if(!ids.includes(a.initial?.loaded)||!['auto',...ids].includes(a.initial?.preference))throw Error('초기 장전탄/선택 오류: '+id);
-        let total=1;
-        for(const section of sections){const rule=a.sections?.[section],stock=a.initial?.sections?.[section];if(!rule||!Number.isInteger(rule.capacity)||rule.capacity<0||!Number.isFinite(rule.prepareSeconds)||rule.prepareSeconds<0||!stock||Object.keys(stock).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(stock,ammoId)&&Number.isInteger(stock[ammoId])&&stock[ammoId]>=0))throw Error('탄약 구획 설정 오류: '+id+'.'+section);const count=ids.reduce((sum,ammoId)=>sum+stock[ammoId],0);if(count!==rule.capacity)throw Error('탄약 구획 용량 불일치: '+id+'.'+section);total+=count;}
-        if(total!==p.weapons.mainGun.ammunitionCapacity)throw Error('탄약 총량 불일치: '+id);
-        const rep=a.replenish;if(!rep||!Number.isFinite(rep.idleSeconds)||rep.idleSeconds<0||!Number.isFinite(rep.stationarySpeedMps)||rep.stationarySpeedMps<0||!Array.isArray(rep.sourcePriority)||!rep.sourcePriority.every(v=>['semiReady','reserve'].includes(v))||Object.keys(rep.targets||{}).length!==ids.length||!ids.every(ammoId=>Number.isInteger(rep.targets[ammoId])&&rep.targets[ammoId]>=0)||ids.reduce((sum,ammoId)=>sum+rep.targets[ammoId],0)>a.sections.ready.capacity||!['semiReady','reserve'].every(section=>Number.isFinite(rep.seconds?.[section])&&rep.seconds[section]>0))throw Error('탄약 보충 설정 오류: '+id);
+        let total=1,capacity=1;
+        for(const section of sections){const rule=a.sections?.[section],stock=a.initial?.sections?.[section];if(!rule||!Number.isInteger(rule.capacity)||rule.capacity<0||!Number.isFinite(rule.prepareSeconds)||rule.prepareSeconds<0||!stock||Object.keys(stock).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(stock,ammoId)&&Number.isInteger(stock[ammoId])&&stock[ammoId]>=0))throw Error('탄약 구획 설정 오류: '+id+'.'+section);const count=ids.reduce((sum,ammoId)=>sum+stock[ammoId],0);if(count>rule.capacity)throw Error('초기 탄약 구획 용량 초과: '+id+'.'+section);total+=count;capacity+=rule.capacity;}
+        if(total>p.weapons.mainGun.ammunitionCapacity||capacity!==p.weapons.mainGun.ammunitionCapacity)throw Error('탄약 총량/최대 용량 불일치: '+id);
+        const rep=a.replenish;if(rep?.enabled===false){if(Object.keys(rep).length!==1)throw Error('비활성 탄약 보충 설정 오류: '+id);}else if(!rep||!Number.isFinite(rep.idleSeconds)||rep.idleSeconds<0||!Number.isFinite(rep.stationarySpeedMps)||rep.stationarySpeedMps<0||!Array.isArray(rep.sourcePriority)||!rep.sourcePriority.every(v=>['semiReady','reserve'].includes(v))||Object.keys(rep.targets||{}).length!==ids.length||!ids.every(ammoId=>Number.isInteger(rep.targets[ammoId])&&rep.targets[ammoId]>=0)||ids.reduce((sum,ammoId)=>sum+rep.targets[ammoId],0)>a.sections.ready.capacity||!['semiReady','reserve'].every(section=>Number.isFinite(rep.seconds?.[section])&&rep.seconds[section]>0))throw Error('탄약 보충 설정 오류: '+id);
+      }
       }
       if(p.ammoIncidents){
         const a=p.ammoIncidents;
@@ -1179,7 +1200,7 @@ const VEHICLE_PROFILES=(()=>{
           if(a.enabled!==true||a.victimProfileId!==id||!ammo?.enabled)throw Error('탄약고 사고 활성 연결 오류: '+id);
           if(!Number.isFinite(a.partialLossFraction)||a.partialLossFraction<=0||a.partialLossFraction>1||!Number.isFinite(a.safetySeconds)||a.safetySeconds<=0)throw Error('탄약고 사고 시간/손실 값 오류: '+id);
           const ids=ammo.supported,policies=Object.entries(a.policies||{});
-          if(policies.length!==ids.length||!ids.every(ammoId=>policies.some(([policyId,policy])=>policyId==='tank-ammo-incident/'+ammoId&&policy?.ammoId===ammoId&&Number.isFinite(policy.baseChance)&&policy.baseChance>=0&&policy.baseChance<=1)))throw Error('탄약고 사고 탄약 정책 오류: '+id);
+          if(!policies.length||policies.some(([policyId,policy])=>policyId!=='tank-ammo-incident/'+policy?.ammoId||typeof policy.ammoId!=='string'||!Number.isFinite(policy.baseChance)||policy.baseChance<0||policy.baseChance>1)||!ids.every(ammoId=>policies.some(([,policy])=>policy.ammoId===ammoId)))throw Error('탄약고 사고 탄약 정책 오류: '+id);
           if(Object.keys(a.storedAmmoResponse||{}).length!==ids.length||!ids.every(ammoId=>Object.hasOwn(a.storedAmmoResponse,ammoId)&&Number.isFinite(a.storedAmmoResponse[ammoId])&&a.storedAmmoResponse[ammoId]>=0))throw Error('탄약고 사고 저장탄 반응값 오류: '+id);
           if(Object.keys(a.compartments||{}).length!==sections.length)throw Error('탄약고 사고 구획 설정 오류: '+id);
           for(const section of sections){const rule=a.compartments[section],values=outcomes.map(name=>rule?.outcomes?.[name]);if(!rule||rule.capacity!==ammo.sections[section].capacity||!Number.isFinite(rule.transferFactor)||rule.transferFactor<0||rule.transferFactor>1||Object.keys(rule.outcomes||{}).length!==outcomes.length||values.some(v=>!Number.isFinite(v)||v<0||v>1)||Math.abs(values.reduce((sum,v)=>sum+v,0)-1)>1e-9)throw Error('탄약고 사고 구획 설정 오류: '+id+'.'+section);}
@@ -1928,13 +1949,18 @@ const TacticalCombatState=(()=>{
   const diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   const clone=v=>JSON.parse(JSON.stringify(v));
   function deepFreeze(o){for(const v of Object.values(o))if(v&&typeof v==='object'&&!Object.isFrozen(v))deepFreeze(v);return Object.freeze(o);}
+  const DAMAGE_MULTIPLIERS={
+    'apfsds-120mm':{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'},
+    'apfsds-125mm':{points:[[0,.65],[.09,1.04],[.18,1.07],[.77,.65],[.90,.35],[.96,.25]],outsidePolicy:'clamp'},
+    direct:{points:[[0,1],[1,1]],outsidePolicy:'clamp'}
+  };
   const AMMUNITION=deepFreeze({
     M829A2:{
       id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
       hitReactionPolicyId:'tank-ke/M829A2',ammoIncidentPolicyId:'tank-ammo-incident/M829A2',
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
-      damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'},
+      damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
       nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
     },
     M829A1:{
@@ -1944,7 +1970,7 @@ const TacticalCombatState=(()=>{
         [600,505,345],[595,503.643216080402,344.09547738693465],[590,497.61306532663315,340.0753768844221],
         [580,490.0753768844221,335.0502512562814],[570,482.53768844221105,330.0251256281407],[560,475,325]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
-      damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'},
+      damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
       nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
     },
     M830:{
@@ -1952,8 +1978,16 @@ const TacticalCombatState=(()=>{
       hitReactionPolicyId:'tank-heat/M830',ammoIncidentPolicyId:'tank-ammo-incident/M830',
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[480,415,240],[480,415,240]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[65,72,77],chances:[0,.5,1],comparison:'roll<chance'},
-      damageMultiplier:{points:[[0,1],[1,1]],outsidePolicy:'clamp'},
+      damageMultiplierId:'direct',damageMultiplier:DAMAGE_MULTIPLIERS.direct,
       nearNonPenetration:false,armoredBlastRadiusM:0
+    },
+    '3BM42':{
+      id:'3BM42',name:'3BM42 Mango',kind:'KE',calibreMm:125,baseDamage:370,muzzleVelocity:1700,
+      hitReactionPolicyId:'tank-ke/3BM42',ammoIncidentPolicyId:'tank-ammo-incident/3BM42',
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[505,425,280],[450,380,250]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
+      damageMultiplierId:'apfsds-125mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-125mm'],
+      nearNonPenetration:false
     }
   });
   const ammunitionRegistry=Object.freeze({
@@ -1972,6 +2006,7 @@ const TacticalCombatState=(()=>{
       const ammo=ammunitionRegistry.get(policy.ammoId);
       if(ammo.hitReactionPolicyId!==policyId)throw Error('피격 반응 효과 정책 ID 연결 오류: '+p.id+'.'+policyId);
     }
+    for(const ammoId of ammunitionRegistry.ids()){const ammo=ammunitionRegistry.get(ammoId),policy=config.policies?.[ammo.hitReactionPolicyId];if(!policy||policy.ammoId!==ammoId)throw Error('피격 반응 효과 정책 누락: '+p.id+'.'+ammoId);}
     return'active';
   }
   function validateProfileRegistry(registry){
@@ -1996,11 +2031,15 @@ const TacticalCombatState=(()=>{
     if(config.enabled!==true||config.victimProfileId!==p.id)throw Error('탄약고 사고 활성 연결 오류: '+(p?.id??'unknown'));
     if(p.ammunition?.enabled!==true)throw Error('탄약고 사고 재고 연결 오류: '+p.id);
     const supported=p.ammunition.supported||[],entries=Object.entries(config.policies||{});
-    if(entries.length!==supported.length)throw Error('탄약고 사고 정책 수 오류: '+p.id);
+    if(!entries.length)throw Error('탄약고 사고 정책 수 오류: '+p.id);
+    for(const[policyId,policy]of entries){
+      if(!policy||typeof policy.ammoId!=='string'||!ammunitionRegistry.has(policy.ammoId))throw Error('탄약고 사고 탄약 레지스트리 연결 오류: '+p.id+'.'+policyId);
+      if(ammunitionRegistry.get(policy.ammoId).ammoIncidentPolicyId!==policyId)throw Error('탄약고 사고 정책 ID 연결 오류: '+p.id+'.'+policy.ammoId);
+    }
+    for(const ammoId of ammunitionRegistry.ids()){const ammo=ammunitionRegistry.get(ammoId),policy=config.policies?.[ammo.ammoIncidentPolicyId];if(!policy||policy.ammoId!==ammoId)throw Error('탄약고 사고 공격탄 정책 누락: '+p.id+'.'+ammoId);}
     for(const ammoId of supported){
-      if(!ammunitionRegistry.has(ammoId))throw Error('탄약고 사고 탄약 레지스트리 연결 오류: '+p.id+'.'+ammoId);
-      const ammo=ammunitionRegistry.get(ammoId),policyId=ammo.ammoIncidentPolicyId,policy=config.policies?.[policyId];
-      if(!policy||policy.ammoId!==ammoId)throw Error('탄약고 사고 정책 ID 연결 오류: '+p.id+'.'+ammoId);
+      const ammo=ammunitionRegistry.get(ammoId),policy=config.policies?.[ammo.ammoIncidentPolicyId];
+      if(!policy||policy.ammoId!==ammoId)throw Error('탄약고 사고 지원탄 정책 연결 오류: '+p.id+'.'+ammoId);
       if(!Object.hasOwn(config.storedAmmoResponse||{},ammoId))throw Error('탄약고 사고 저장탄 연결 오류: '+p.id+'.'+ammoId);
     }
     for(const section of ['ready','semiReady','reserve'])if(config.compartments?.[section]?.capacity!==p.ammunition.sections?.[section]?.capacity)throw Error('탄약고 사고 구획 용량 연결 오류: '+p.id+'.'+section);
@@ -2198,7 +2237,7 @@ const TacticalCombatState=(()=>{
       if(!target){mark(id);return remember({applied:false,reason:'target-unavailable',id,time:now});}
       const profile=validateProfile(profileOf(target)),state=initUnit(target,profile);
       if(state.status==='destroyed'){mark(id);return remember({applied:false,reason:'target-destroyed',id,time:now,targetId:target.id,hpBefore:state.hp,hpAfter:state.hp,damage:0,destroyed:false});}
-      const legacyAmmo=profile.capabilities?.fire===false?null:profile.weapons?.mainGun?.ammunitionId,ammoId=event.ammoId||legacyAmmo;
+      const ammoId=event.ammoId;
       if(!ammoId)throw Error('공격 탄약 ID 누락');
       let eraRoll=event.eraRoll;
       if(event.hit&&eraRoll===undefined){const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(event.origin,event.pose,event.zone,event.side),ricochet=event.ricochetRoll<ricochetChance(ammo,incidence),coverage=profile.combat.era?.zones?.[event.zone]?.coverage??0;if(!ricochet&&coverage>0)eraRoll=random(id+':'+target.id+':wip21:era',0x1f83d9ab);}
@@ -2219,7 +2258,7 @@ const TacticalCombatState=(()=>{
   const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.eraProfile?null:r.protection,protectionDeficit:r.eraProfile?null:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
   const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:typeof require==='function'?require('./vehicle-profiles.js'):null;
   if(loadedProfiles?.registry)validateProfileRegistry(loadedProfiles.registry);
-  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,resolveAmmoIncident,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateAmmoIncidentBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES,ALLOWED_CREW_ROLES});
+  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,resolveAmmoIncident,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateAmmoIncidentBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,DAMAGE_MULTIPLIERS:deepFreeze(DAMAGE_MULTIPLIERS),ZONES,ALLOWED_CREW_ROLES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;
 
@@ -2240,12 +2279,12 @@ const TacticalFireControl=(()=>{
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   const managed=p=>p.ammunition?.enabled===true;
+  const automaticLoader=p=>p.fireControl?.readiness?.loading?.type==='automatic';
   const cloneCounts=value=>Object.fromEntries(Object.entries(value).map(([id,count])=>[id,count]));
   function initAmmunition(s,p){
     if(!managed(p))return null;
-    if(!s.ammunition){const a=p.ammunition;s.ammunition={preference:a.initial.preference,loadedAmmoId:a.initial.loaded,sections:Object.fromEntries(Object.entries(a.initial.sections).map(([section,counts])=>[section,cloneCounts(counts)])),task:null,lastShotAt:-Infinity,lastHitAt:-Infinity,incident:{safetyUntil:0,last:null,history:[],lostTotals:Object.fromEntries(a.supported.map(id=>[id,0]))}};}
-    const incident=s.ammunition.incident??={safetyUntil:0,last:null,history:[],lostTotals:Object.fromEntries(p.ammunition.supported.map(id=>[id,0]))};
-    incident.safetyUntil??=0;incident.last??=null;incident.history??=[];incident.lostTotals??=Object.fromEntries(p.ammunition.supported.map(id=>[id,0]));for(const id of p.ammunition.supported)incident.lostTotals[id]??=0;
+    if(!s.ammunition){const a=p.ammunition;s.ammunition={preference:a.initial.preference,loadedAmmoId:a.initial.loaded,sections:Object.fromEntries(Object.entries(a.initial.sections).map(([section,counts])=>[section,cloneCounts(counts)])),task:null,lastShotAt:-Infinity,lastHitAt:-Infinity};}
+    if(p.ammoIncidents?.enabled===true){const incident=s.ammunition.incident??={safetyUntil:0,last:null,history:[],lostTotals:Object.fromEntries(p.ammunition.supported.map(id=>[id,0]))};incident.safetyUntil??=0;incident.last??=null;incident.history??=[];incident.lostTotals??=Object.fromEntries(p.ammunition.supported.map(id=>[id,0]));for(const id of p.ammunition.supported)incident.lostTotals[id]??=0;}
     return s.ammunition;
   }
   function taskRound(task){return task&&task.reserved?1:0;}
@@ -2266,21 +2305,21 @@ const TacticalFireControl=(()=>{
   function engageableAmmo(p,s){return managed(p)?!!s.ammunition.loadedAmmoId||validLoadTask(p,s)||!!loadChoice(p,s):s.ammo>0;}
   function syncAmmo(p,s){if(!managed(p))return s.ammo;s.loaded=!!s.ammunition.loadedAmmoId;s.loadedAmmoId=s.ammunition.loadedAmmoId;s.ammo=ammunitionTotal(s);s.engageableAmmo=engageableAmmo(p,s);return s.ammo;}
   function init(u,p,mode='auto'){
-    if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
+    if(!u.fireControl){u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
       shotCount:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeResult:null,lineProbeRequest:null,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null,
-      loaded:true,reloadProgress:1,reloadStartedAt:null,reloadCompletedAt:0,readyIdleSeconds:0,burstShots:0,fatigueSeconds:0,shockSeconds:0,faultUntil:{fireControl:0,commander:0,gunner:0},lastReaction:null};
+      loaded:true,reloadProgress:1,reloadStartedAt:null,reloadCompletedAt:0,readyIdleSeconds:0};if(!automaticLoader(p))Object.assign(u.fireControl,{burstShots:0,fatigueSeconds:0,shockSeconds:0,faultUntil:{fireControl:0,commander:0,gunner:0},lastReaction:null});}
     const s=u.fireControl;s.fireMode??=mode;s.lineProbeTarget??=null;s.lineProbePose??=null;s.lineProbeBlocked??=false;s.lineProbeResult??=null;s.lineProbeRequest??=null;s.lineProbeCandidateRevision??=null;s.lineProbeQueries??=0;s.stationaryElapsed??=0;s.autoSuppressed??=false;s.lastRejection??=null;
-    s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;initAmmunition(s,p);syncAmmo(p,s);return s;
+    s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;if(!automaticLoader(p)){s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;}initAmmunition(s,p);syncAmmo(p,s);return s;
   }
   const readiness=p=>p.fireControl.readiness;
-  function reloadSeconds(p,s,u=null){const r=readiness(p),efficiency=u?.hitReactionModifiers?.loaderEfficiency??1;return Math.min(r.reloadMaxSeconds,clamp(r.reloadSeconds+s.fatigueSeconds+s.shockSeconds,r.reloadSeconds,r.reloadMaxSeconds)/Math.max(Number.MIN_VALUE,efficiency));}
+  function reloadSeconds(p,s,u=null){const r=readiness(p);if(automaticLoader(p))return r.reloadSeconds;const efficiency=u?.hitReactionModifiers?.loaderEfficiency??1;return Math.min(r.reloadMaxSeconds,clamp(r.reloadSeconds+s.fatigueSeconds+s.shockSeconds,r.reloadSeconds,r.reloadMaxSeconds)/Math.max(Number.MIN_VALUE,efficiency));}
   function faultActive(s,kind,now){return Number.isFinite(s?.faultUntil?.[kind])&&s.faultUntil[kind]>now+1e-9;}
   function observationPenalty(p,s,now,u=null){
-    const f=readiness(p).temporaryFault,active=faultActive(s,'commander',now)||faultActive(s,'gunner',now);
+    const f=readiness(p).temporaryFault,active=!!f&&(faultActive(s,'commander',now)||faultActive(s,'gunner',now));
     const crewRate=u?.hitReactionModifiers?.gunnerAimRate??1,crewSigma=u?.hitReactionModifiers?.gunnerSigma??1;
     return{active:active||crewRate<1||crewSigma>1,aimRateMultiplier:Math.min(active?f.observationAimRateMultiplier:1,crewRate),errorSigmaMultiplier:Math.max(active?f.observationSigmaMultiplier:1,crewSigma)};
   }
-  function faultChance(p,damage){const f=readiness(p).temporaryFault;return clamp(f.baseChance+f.damageScaleChance*clamp((Number(damage)||0)/f.damageReference,0,1),f.baseChance,f.baseChance+f.damageScaleChance);}
+  function faultChance(p,damage){const f=readiness(p).temporaryFault;if(!f)return 0;return clamp(f.baseChance+f.damageScaleChance*clamp((Number(damage)||0)/f.damageReference,0,1),f.baseChance,f.baseChance+f.damageScaleChance);}
   function faultDuration(p,roll){const [lo,hi]=readiness(p).temporaryFault.durationSeconds;return lo+(hi-lo)*clamp(roll,0,1);}
   function faultKind(p,roll){let cumulative=0;for(const kind of faultKinds){cumulative+=readiness(p).temporaryFault.kinds[kind];if(roll<cumulative)return kind;}return faultKinds.at(-1);}
   function cancelAmmoTask(p,s,purpose=null){const a=s.ammunition,task=a?.task;if(!task||purpose&&task.purpose!==purpose)return false;if(task.reserved)a.sections[task.source][task.ammoId]++;a.task=null;s.reloadProgress=a.loadedAmmoId?1:0;s.reloadStartedAt=null;syncAmmo(p,s);return true;}
@@ -2291,13 +2330,13 @@ const TacticalFireControl=(()=>{
     const ids=a.preference==='auto'?p.ammunition.autoPriority:[a.preference,...p.ammunition.autoPriority.filter(id=>id!==a.preference)];
     for(const ammoId of ids){if(a.sections.ready[ammoId]>=rule.targets[ammoId])continue;for(const source of rule.sourcePriority)if(a.sections[source][ammoId]>0)return{ammoId,source};}return null;
   }
-  function canReplenish(u,p,s,now){const a=s.ammunition,rule=p.ammunition.replenish;return!!a.loadedAmmoId&&Math.abs(u.drive?.velocity??u.speed??0)<=rule.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=rule.idleSeconds-1e-9&&!currentThreat(u)&&!!replenishChoice(p,s);}
+  function canReplenish(u,p,s,now){const a=s.ammunition,rule=p.ammunition.replenish;if(rule?.enabled===false)return false;return!!a.loadedAmmoId&&Math.abs(u.drive?.velocity??u.speed??0)<=rule.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=rule.idleSeconds-1e-9&&!currentThreat(u)&&!!replenishChoice(p,s);}
   function beginReplenish(p,s,now){const a=s.ammunition,choice=replenishChoice(p,s);if(!choice)return null;a.sections[choice.source][choice.ammoId]--;a.task={purpose:'replenish',ammoId:choice.ammoId,source:choice.source,reserved:true,stage:'replenish',progress:0,startedAt:now,paused:false};syncAmmo(p,s);return a.task;}
   function advanceManagedReadiness(u,p,s,dt,now){
-    const a=s.ammunition,r=readiness(p),efficiency=Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1);
-    s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
+    const a=s.ammunition,r=readiness(p),manual=!automaticLoader(p),efficiency=manual?Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):1;
+    if(manual)s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
     if(u.combat?.status==='destroyed'){cancelAmmoTask(p,s);syncAmmo(p,s);return;}
-    if(a.incident.safetyUntil>now+1e-9){if(a.task){a.task.paused=true;a.task.pauseReason='ammo-safety';}if(a.loadedAmmoId){s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}syncAmmo(p,s);return;}
+    if((a.incident?.safetyUntil??0)>now+1e-9){if(a.task){a.task.paused=true;a.task.pauseReason='ammo-safety';}if(a.loadedAmmoId){s.readyIdleSeconds+=dt;if(manual){s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}}syncAmmo(p,s);return;}
     if(a.task?.pauseReason==='ammo-safety'){a.task.paused=false;delete a.task.pauseReason;}
     if(!a.loadedAmmoId){
       if(a.task?.purpose==='replenish')cancelAmmoTask(p,s,'replenish');
@@ -2313,7 +2352,7 @@ const TacticalFireControl=(()=>{
       }
       syncAmmo(p,s);return;
     }
-    s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;
+    s.readyIdleSeconds+=dt;if(manual){s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}
     if(a.task?.purpose==='replenish'){
       const allowed=Math.abs(u.drive?.velocity??u.speed??0)<=p.ammunition.replenish.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=p.ammunition.replenish.idleSeconds-1e-9&&!currentThreat(u);
       a.task.paused=!allowed;
@@ -2329,8 +2368,8 @@ const TacticalFireControl=(()=>{
     else{s.reloadProgress=0;s.reloadStartedAt=null;s.readyIdleSeconds=0;}
   }
   function consumeLoaded(u,p,s,now){
-    if(!s.loaded||s.ammo<=0)return false;const r=readiness(p);if(managed(p)){const a=s.ammunition;if(!a.loadedAmmoId)return false;a.loadedAmmoId=null;a.lastShotAt=now;}s.loaded=false;s.reloadProgress=0;s.reloadStartedAt=s.ammo>1?now:null;s.reloadCompletedAt=null;s.readyIdleSeconds=0;s.burstShots++;
-    if(s.burstShots>=r.fatigue.startsAtShot)s.fatigueSeconds=Math.min(r.fatigue.maxSeconds,s.fatigueSeconds+r.fatigue.perShotSeconds);return true;
+    if(!s.loaded||s.ammo<=0)return false;const r=readiness(p);if(managed(p)){const a=s.ammunition;if(!a.loadedAmmoId)return false;a.loadedAmmoId=null;a.lastShotAt=now;}s.loaded=false;s.reloadProgress=0;s.reloadStartedAt=s.ammo>1?now:null;s.reloadCompletedAt=null;s.readyIdleSeconds=0;
+    if(!automaticLoader(p)){s.burstShots++;if(s.burstShots>=r.fatigue.startsAtShot)s.fatigueSeconds=Math.min(r.fatigue.maxSeconds,s.fatigueSeconds+r.fatigue.perShotSeconds);}return true;
   }
   function motionReady(u,p,s=init(u,p)){const m=p.fireControl.movement;return m.fireOnMove||Math.abs(u.drive?.velocity??u.speed??0)<=m.stationarySpeedMps+1e-9&&s.stationaryElapsed+1e-9>=m.stationaryHoldSeconds;}
   function currentAmmoId(p,s){return managed(p)?s.ammunition.loadedAmmoId||s.ammunition.task?.ammoId||null:p.weapons.mainGun.ammunitionId??null;}
@@ -2471,7 +2510,7 @@ const TacticalFireControl=(()=>{
     function roll(shot,kind){onDecisionRoll?.(kind,shot.id);return random(shot.shooterId+':'+shot.number+':'+kind,seed);}
     const reactionRoll=(shot,kind)=>random(shot.shooterId+':'+shot.number+':reaction:'+kind,seed^0x243f6a88);
     function react(target,record,now,forced=null){
-      if(!target||!record?.applied||!record.hit)return null;const p=profileOf(target),s=init(target,p),r=readiness(p),classification=record.penetrated?'penetration':record.nearNonPenetration?'near':'normal';
+      if(!target||!record?.applied||!record.hit)return null;const p=profileOf(target),r=readiness(p);if(!r.shock||!r.temporaryFault)return null;const s=init(target,p),classification=record.penetrated?'penetration':record.nearNonPenetration?'near':'normal';
       if(managed(p))s.ammunition.lastHitAt=now;
       s.shockSeconds=Math.min(r.shock.maxSeconds,s.shockSeconds+r.shock[classification+'Seconds']);
       let fault=null;
@@ -2514,7 +2553,7 @@ const TacticalFireControl=(()=>{
       const error=Math.abs(diff(Math.atan2(c.pose.y-u.y,c.pose.x-u.x),u.turret));
       if(error>f.alignmentTolerance)return{reason:'aligning',d,c};
       if(faultActive(s,'fireControl',now))return{reason:'fcs-fault',d,c};
-      if(managed(p)&&s.ammunition.incident.safetyUntil>now+1e-9)return{reason:'ammo-safety',d,c};
+      if(managed(p)&&(s.ammunition.incident?.safetyUntil??0)>now+1e-9)return{reason:'ammo-safety',d,c};
       if(s.ammo<=0)return{reason:'out-of-ammo',d,c};
       if(!s.loaded)return{reason:managed(p)&&!validLoadTask(p,s)&&s.ammunition.preference!=='auto'&&!loadChoice(p,s)?'selected-ammo-unavailable':'reloading',d,c};
       return{reason:null,d,c};
@@ -2657,14 +2696,14 @@ const TacticalFireControl=(()=>{
       const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
       const inspection=inspect(u,currentTime);
       const aimPenalty=observationPenalty(p,s,currentTime,u);
-      const ammoState=managed(p)?s.ammunition:null,task=ammoState?.task,taskDuration=task?(task.stage==='prepare'?p.ammunition.sections[task.source].prepareSeconds/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):task.stage==='replenish'?p.ammunition.replenish.seconds[task.source]/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):reloadSeconds(p,s,u)):null;
+      const ammoState=managed(p)?s.ammunition:null,task=ammoState?.task,taskDuration=task?(task.stage==='prepare'?p.ammunition.sections[task.source].prepareSeconds/(automaticLoader(p)?1:Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1)):task.stage==='replenish'?p.ammunition.replenish.seconds[task.source]/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):reloadSeconds(p,s,u)):null;
       const incident=ammoState?.incident,incidentView=incident?{active:incident.safetyUntil>currentTime+1e-9,safetyUntil:incident.safetyUntil,remaining:Math.max(0,incident.safetyUntil-currentTime),last:incident.last?clone(incident.last):null,history:clone(incident.history),lostTotals:{...incident.lostTotals}}:null;
       const ammunition=ammoState?{managed:true,loadedAmmoId:ammoState.loadedAmmoId,preference:ammoState.preference,supported:[...p.ammunition.supported],total:ammunitionTotal(s),totals:Object.fromEntries(p.ammunition.supported.map(id=>[id,ammunitionTotal(s,id)])),sections:Object.fromEntries(Object.entries(ammoState.sections).map(([section,counts])=>[section,{capacity:p.ammunition.sections[section].capacity,total:sectionTotal(ammoState,section),counts:{...counts}}])),task:task?{purpose:task.purpose,ammoId:task.ammoId,source:task.source,stage:task.stage,progress:task.progress,paused:!!task.paused,pauseReason:task.pauseReason??null,remaining:task.paused?null:Math.max(0,(1-task.progress)*(taskDuration||0))}:null,engageable:engageableAmmo(p,s),incident:incidentView}:null;
       return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':inspection.reason||s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
         canFire:same&&!inspection.reason&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
-        loading:{loaded:s.loaded,ammoId:currentAmmoId(p,s),progress:task?.purpose==='load'?task.progress:s.reloadProgress,stage:task?.purpose==='load'?task.stage:s.loaded?'loaded':'idle',estimatedSeconds:s.loaded?0:task?.purpose==='load'&&!task.paused?Math.max(0,(1-task.progress)*(taskDuration||0)):s.ammo>0&&!managed(p)?(1-s.reloadProgress)*reloadSeconds(p,s,u):null,currentWorkSeconds:reloadSeconds(p,s,u),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots,fatigueSeconds:s.fatigueSeconds,shockSeconds:s.shockSeconds},ammunition,
+        loading:{type:automaticLoader(p)?'automatic':'manual',loaded:s.loaded,ammoId:currentAmmoId(p,s),progress:task?.purpose==='load'?task.progress:s.reloadProgress,stage:task?.purpose==='load'?task.stage:s.loaded?'loaded':'idle',estimatedSeconds:s.loaded?0:task?.purpose==='load'&&!task.paused?Math.max(0,(1-task.progress)*(taskDuration||0)):s.ammo>0&&!managed(p)?(1-s.reloadProgress)*reloadSeconds(p,s,u):null,currentWorkSeconds:reloadSeconds(p,s,u),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots??0,fatigueSeconds:s.fatigueSeconds??0,shockSeconds:s.shockSeconds??0},ammunition,
         aimPenalty,
-        faults:Object.fromEntries(faultKinds.map(kind=>[kind,{active:faultActive(s,kind,currentTime),remaining:Math.max(0,s.faultUntil[kind]-currentTime)}])),
+        faults:Object.fromEntries(faultKinds.map(kind=>[kind,{active:faultActive(s,kind,currentTime),remaining:Math.max(0,(s.faultUntil?.[kind]??0)-currentTime)}])),
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
     function suppressAuto(u,value){const s=init(u,profileOf(u));s.autoSuppressed=!!value;if(value&&s.pending?.source==='auto')s.pending=null;return s.autoSuppressed;}
@@ -2926,7 +2965,7 @@ const TacticalCore = (() => {
   function createScenario(seed=7,options={}) {
     if(typeof seed==='object'){options=seed;seed=options.seed??7;}
     const scenarioId=options.scenarioId||'default';
-    if(!['default','t80u-armor','t80u-observation'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
+    if(!['default','t80u-armor','t80u-observation','t80u-fire'].includes(scenarioId))throw Error('지원하지 않는 시나리오: '+scenarioId);
     const units=[];
     const layout=scenarioId==='t80u-armor'?[
       ['A11','ALPHA 11',550,2750,-.10,'blue',ACTIVE_PROFILE_ID,-.10],
@@ -2937,11 +2976,14 @@ const TacticalCore = (() => {
       ['A11','ALPHA 11',550,2750,0,'blue',ACTIVE_PROFILE_ID,0],
       // The M1 starts behind the T-80U's initial commander and gunner FOV.
       ['U01','T-80U 관측 차량',950,2750,0,'red','T80U_1989',0]
+    ]:scenarioId==='t80u-fire'?[
+      ['A11','ALPHA 11',550,2750,0,'blue',ACTIVE_PROFILE_ID,0],
+      ['U01','T-80U 정지 교전 차량',950,2750,Math.PI,'red','T80U_1989',Math.PI]
     ]:[
       ['A11','ALPHA 11',550,2750,-.45,'blue',ACTIVE_PROFILE_ID,-.45],['A12','ALPHA 12',780,3060,-.45,'blue',ACTIVE_PROFILE_ID,-.45],
       ['T01','관측 표적 01',1150,2330,2.4,'red',ACTIVE_PROFILE_ID,2.4],['T02','관측 표적 02',1800,1650,2.5,'red',ACTIVE_PROFILE_ID,2.5],['T03','관측 표적 03',3020,2060,2.8,'red',ACTIVE_PROFILE_ID,2.8]
     ];
-    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId),capabilityMask=scenarioId==='t80u-armor'&&profileId==='T80U_1989'?{observation:false}:{};const u=makeTank(id,name,p.x,p.y,h,team,profileId,'auto',{capabilityMask});u.turret=turret;u.commander=turret;units.push(u);}
+    for(const [id,name,x,y,h,team,profileId,turret] of layout){const p=legalNear(x,y,units,profileId),capabilityMask=profileId==='T80U_1989'&&scenarioId==='t80u-armor'?{observation:false,fire:false}:profileId==='T80U_1989'&&scenarioId==='t80u-observation'?{fire:false}:{};const u=makeTank(id,name,p.x,p.y,h,team,profileId,'auto',{capabilityMask});u.turret=turret;u.commander=turret;units.push(u);}
     const scenario={id:scenarioId,time:0,seed,units,recordAIEvents:!!options.recordAIEvents,recordFireEvents:!!options.recordFireEvents,recordObservationEvents:!!options.recordObservationEvents};
     // Playable scenarios state the normal automatic policy explicitly too;
     // manual compatibility fixtures opt into hold when constructing a unit.
@@ -2986,6 +3028,7 @@ const TacticalCore = (() => {
     u.drive=TacticalMobility.create();u.drive.velocity=(u.reverse?-1:1)*(Number(u.speed)||0);u.speed=Math.abs(u.drive.velocity);return u.drive;
   }
   function mobilityView(u){
+    if(!can(u,'mobility'))return{requested:'고정',actual:'고정',requestMatches:true,gear:'고정',velocity:0,mode:'disabled',shiftCount:0};
     const d=ensureDrive(u),requested=d.requestedDirection<0?'후진':d.requestedDirection>0?'전진':'정지',actualDirection=Math.abs(d.velocity)>.015?Math.sign(d.velocity):d.selectedDirection;
     const actual=Math.abs(d.velocity)>.015?(d.velocity<0?'실제 후진':'실제 전진'):TacticalMobility.directionLabel(d);
     return{requested,actual,requestMatches:!d.pendingDirection&&d.requestedDirection===actualDirection,gear:TacticalMobility.gearLabel(d),velocity:d.velocity,mode:d.mode,shiftCount:d.shiftCount};
@@ -3059,7 +3102,10 @@ const TacticalCore = (() => {
     observationFor(s).advance(observers,dt,s.time,s.units);
     confirmObservedWrecks(s,observers);
     aiFor(s).advance(actors,dt,s.time);
-    fireFor(s).step(alive.filter(u=>can(u,'fire')),dt,s.time);
+    // A destroyed automatic-loader shooter still enters readiness cleanup once
+    // so its reserved round cannot remain a live task. Preserve the established
+    // manual-loader terminal snapshot; inspect() blocks every firing branch.
+    fireFor(s).step(s.units.filter(u=>can(u,'fire')&&(u.combat?.status!=='destroyed'||profileOf(u).fireControl.readiness.loading.type==='automatic')),dt,s.time);
   }
   const wreckRuntimes=new WeakMap();
   function wreckMap(s,team){if(!wreckRuntimes.has(s))wreckRuntimes.set(s,new Map());const all=wreckRuntimes.get(s);if(!all.has(team))all.set(team,new Map());return all.get(team);}
@@ -3135,7 +3181,7 @@ const TacticalCore = (() => {
         }
         return TacticalCombatState.publicRecord(record);
       },
-      onFireBlocked:(u,target,reason,now)=>{if(aiFor(s).fireBlocked(u,target,reason,now)){observationFor(s).releaseAutomatic(u,now,reason,target);return true;}return observationFor(s).retarget(u,target,reason,now);},
+      onFireBlocked:(u,target,reason,now)=>{if(can(u,'ai')&&aiFor(s).fireBlocked(u,target,reason,now)){observationFor(s).releaseAutomatic(u,now,reason,target);return true;}return observationFor(s).retarget(u,target,reason,now);},
       freshSight:(u,id)=>{
       const target=s.units.find(v=>v.id===id);if(!target)return{visible:false,reason:'fresh-sight-failed'};
       // A private destruction may physically stop a shot, but its public reason
@@ -4912,7 +4958,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   $('reset').onclick=()=>resetScenario();
   $('scenarioSelect').value=scenarioId;
-  $('scenarioSelect').onchange=()=>{const next=$('scenarioSelect').value;resetScenario(next,next==='t80u-armor'?'T-80U 방호시험 시나리오':next==='t80u-observation'?'T-80U 관측시험 시나리오':'기본 전투 시나리오');};
+  $('scenarioSelect').onchange=()=>{const next=$('scenarioSelect').value;resetScenario(next,next==='t80u-armor'?'T-80U 방호시험 시나리오':next==='t80u-observation'?'T-80U 관측시험 시나리오':next==='t80u-fire'?'T-80U 정지 교전시험 시나리오':'기본 전투 시나리오');};
   window.addEventListener('keydown',e=>{
     if(portraitBlocked){e.preventDefault();return;}
     if(e.code==='Escape'){if(lookPicking)setLookPicking(false);else setGuardPopup(false);return;}
@@ -5043,17 +5089,20 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     ui.setText($('motionState'),u.state);
     ui.setText($('combatSummary'),combat?'HP '+Math.round(combat.hp).toLocaleString()+' / '+Math.round(combat.maxHp).toLocaleString()+' · '+(destroyed?'격파':'생존'):'피해 모델 비활성');
     $('combatSummary').classList.toggle('destroyed',destroyed);
-    for(const id of ['move','reverse','stop','sight','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode','ammoSelect'])$(id).disabled=destroyed;
+    for(const id of ['move','reverse','stop'])$(id).disabled=destroyed||!C.can(u,'mobility');
+    for(const id of ['sight','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode','ammoSelect'])$(id).disabled=destroyed;
     const ammunition=firing.ammunition,sectionNames={ready:'즉응',semiReady:'준즉응',reserve:'예비'},taskNames={prepare:'탄 준비',reload:'장전',replenish:'즉응탄 보충'};
     if(ammunition){
+      for(const option of Array.from($('ammoSelect').options||[]))option.disabled=option.value!=='auto'&&!ammunition.supported.includes(option.value);
       $('ammoSelect').value=ammunition.preference;ui.setText($('ammoTotal'),ammunition.total+'발');ui.setText($('ammoLoaded'),'장전탄 '+(ammunition.loadedAmmoId||'없음')+' · 다음 '+(ammunition.preference==='auto'?'자동':ammunition.preference));
       const task=ammunition.task,taskTime=task&&!task.paused?' · '+Math.max(1,Math.ceil(task.remaining||0))+'초':task?' · 대기':'';
       ui.setText($('ammoTask'),task?(taskNames[task.stage]||taskNames[task.purpose])+' · '+task.ammoId+' / '+sectionNames[task.source]+(task.pauseReason==='ammo-safety'?' · 탄약고 화재 대응으로 일시정지 '+Math.max(1,Math.ceil(ammunition.incident.remaining))+'초':taskTime):'작업 없음');
-      const incident=ammunition.incident,lastIncident=incident.last,lostText=lastIncident?Object.entries(lastIncident.lost).filter(([,count])=>count).map(([id,count])=>id+' '+count).join(' / '):'',outcomeNames={ammoLoss:'탄약 일부 소실',isolatedFire:'격리 화재',fatal:'치명 사고'};
-      ui.setText($('ammoIncident'),incident.active?'활성 사고 · 탄약고 화재 대응 '+Math.max(1,Math.ceil(incident.remaining))+'초'+(lastIncident?' · '+sectionNames[lastIncident.section]+' '+lostText:''):lastIncident?'최근 '+outcomeNames[lastIncident.outcome]+' · '+sectionNames[lastIncident.section]+' · '+lostText+' · T+'+lastIncident.time.toFixed(1)+'초':'최근 탄약고 사고 없음');
+      const incident=ammunition.incident,lastIncident=incident?.last,lostText=lastIncident?Object.entries(lastIncident.lost).filter(([,count])=>count).map(([id,count])=>id+' '+count).join(' / '):'',outcomeNames={ammoLoss:'탄약 일부 소실',isolatedFire:'격리 화재',fatal:'치명 사고'};
+      ui.setText($('ammoIncident'),!incident?'':incident.active?'활성 사고 · 탄약고 화재 대응 '+Math.max(1,Math.ceil(incident.remaining))+'초'+(lastIncident?' · '+sectionNames[lastIncident.section]+' '+lostText:''):lastIncident?'최근 '+outcomeNames[lastIncident.outcome]+' · '+sectionNames[lastIncident.section]+' · '+lostText+' · T+'+lastIncident.time.toFixed(1)+'초':'최근 탄약고 사고 없음');
       if(lastIncident&&incidentToastIds.get(u.id)!==lastIncident.id){incidentToastIds.set(u.id,lastIncident.id);if(lastIncident.outcome==='ammoLoss')toast('탄약 일부 소실 · '+sectionNames[lastIncident.section]+' · '+lastIncident.lostCount+'발');}
+      ui.setHTML($('ammoHeaders'),'<th>구획</th>'+ammunition.supported.map(id=>'<th>'+id+'</th>').join(''));
       ui.setHTML($('ammoInventory'),Object.entries(ammunition.sections).map(([section,value])=>'<tr><th>'+sectionNames[section]+' '+value.total+'/'+value.capacity+'</th>'+ammunition.supported.map(id=>'<td>'+value.counts[id]+'</td>').join('')+'</tr>').join(''));
-    }else{ui.setText($('ammoTotal'),firing.ammo+'발');ui.setText($('ammoLoaded'),load.loaded?'장전탄 1':'장전탄 없음');ui.setText($('ammoTask'),load.loaded?'작업 없음':'장전 중');ui.setText($('ammoIncident'),'');ui.setHTML($('ammoInventory'),'');}
+    }else{for(const option of Array.from($('ammoSelect').options||[]))option.disabled=option.value!=='auto';ui.setText($('ammoTotal'),firing.ammo+'발');ui.setText($('ammoLoaded'),load.loaded?'장전탄 1':'장전탄 없음');ui.setText($('ammoTask'),load.loaded?'작업 없음':'장전 중');ui.setText($('ammoIncident'),'');ui.setHTML($('ammoHeaders'),'<th>구획</th>');ui.setHTML($('ammoInventory'),'');}
     const reaction=combat?.reactions,faultLines=[fcsFault.active?'사통 이상 '+Math.max(1,Math.ceil(fcsFault.remaining))+'초':'',reaction?.faults.mobility.active?'기동계 이상 '+Math.max(1,Math.ceil(reaction.faults.mobility.remaining))+'초':'',reaction?.faults.turretDrive.active?'포탑 구동 이상 '+Math.max(1,Math.ceil(reaction.faults.turretDrive.remaining))+'초':'',observationFaults.length?'관측장비 불안정 '+Math.max(1,Math.ceil(observationRemaining))+'초':''].filter(Boolean);
     ui.setText($('faultStatus'),faultLines.length?faultLines.join(' · '):'활성 일시 이상 없음');ui.setText($('crewStatus'),reaction?Object.entries(reaction.crew).map(([role,status])=>crewNames[role]+' '+severityNames[status]).join(' · '):'승무원 상태 비활성');
     ui.setText($('elevation'),C.heightAt(u.x,u.y).toFixed(1)+' m');
@@ -5102,7 +5151,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
     if((state.faultUntil?.fireControl||0)>sim.time)lines.push('사통 이상 '+seconds(state.faultUntil.fireControl)+'초');
     const reactions=C.combatView(u)?.reactions,drive=[];if(reactions?.faults.mobility.active)drive.push('기동계 '+Math.max(1,Math.ceil(reactions.faults.mobility.remaining))+'초');if(reactions?.faults.turretDrive.active)drive.push('포탑 '+Math.max(1,Math.ceil(reactions.faults.turretDrive.remaining))+'초');if(drive.length)lines.push(drive.join(' · '));
     const observationUntil=Math.max(state.faultUntil?.commander||0,state.faultUntil?.gunner||0);if(observationUntil>sim.time)lines.push('관측 불안정 '+seconds(observationUntil)+'초');
-    const task=state.ammunition?.task;if((state.ammunition?.incident?.safetyUntil||0)<=sim.time){if(task?.stage==='prepare')lines.push('탄 준비 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.sections[task.source].prepareSeconds/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');else if(task?.purpose==='replenish')lines.push(task.paused?'즉응탄 보충 대기':'즉응탄 보충 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.replenish.seconds[task.source]/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');}
+    const task=state.ammunition?.task;if((state.ammunition?.incident?.safetyUntil||0)<=sim.time){if(task?.stage==='prepare')lines.push('탄 준비 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.sections[task.source].prepareSeconds/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');else if(task?.purpose==='load'&&task.stage==='reload'&&C.profileOf(u).fireControl.readiness.loading.type==='automatic')lines.push('자동장전 '+Math.max(1,Math.ceil((1-task.progress)*C.profileOf(u).fireControl.readiness.reloadSeconds))+'초');else if(task?.purpose==='replenish')lines.push(task.paused?'즉응탄 보충 대기':'즉응탄 보충 '+task.ammoId+' · '+Math.max(1,Math.ceil((1-task.progress)*(C.profileOf(u).ammunition.replenish.seconds[task.source]/(u.hitReactionModifiers?.loaderEfficiency||1))))+'초');}
     return lines.slice(0,2);
   }
   function drawTank(u){
@@ -5303,7 +5352,7 @@ if(typeof module!=='undefined')module.exports=TacticalEffects;
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP22',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP23',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       scenarioId,time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

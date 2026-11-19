@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111b19">
-<title>TACTICAL — {{MAP_TITLE}} v0.4 WIP22</title>
+<title>TACTICAL — {{MAP_TITLE}} v0.4 WIP23</title>
 <style>
 {{STYLES}}
 </style>
 </head>
 <body>
 <div class="app" id="app">
-<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">{{MAP_SUBTITLE}}</div><div class="header-spacer"></div><span class="version">v0.4 / WIP22</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
+<header><div class="brand-mark" aria-hidden="true">⌖</div><div class="brand">TACTICAL</div><div class="subtitle" id="mapSubtitle">{{MAP_SUBTITLE}}</div><div class="header-spacer"></div><span class="version">v0.4 / WIP23</span><button class="top-button" id="pause" aria-label="일시정지" title="일시정지 · Space">Ⅱ</button><button class="top-button" id="speed" title="배속 변경">1×</button><button class="top-button" id="fullscreen" aria-label="전체화면" title="전체화면 · F"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></header>
 <div class="workspace">
 <main class="map-wrap" id="mapWrap">
 <canvas id="map" tabindex="0" aria-label="전술 지도. 전차 탭으로 선택, 지면 탭으로 이동. 드래그로 지도 이동, 두 손가락으로 확대."></canvas>
@@ -28,13 +28,13 @@
 <aside class="sidebar" aria-label="명령 및 선택 차량 정보">
 <section class="command-panel" aria-label="전술 명령">
 <div class="section-label"><span>COMMAND</span><button class="reset compact" id="reset">초기화 ↺</button></div>
-<div class="command-group scenario-command"><label for="scenarioSelect"><b>시나리오</b></label><select id="scenarioSelect"><option value="default">기본 전투</option><option value="t80u-armor">T-80U 방호시험</option><option value="t80u-observation">T-80U 관측시험</option></select></div>
+<div class="command-group scenario-command"><label for="scenarioSelect"><b>시나리오</b></label><select id="scenarioSelect"><option value="default">기본 전투</option><option value="t80u-armor">T-80U 방호시험</option><option value="t80u-observation">T-80U 관측시험</option><option value="t80u-fire">T-80U 정지 교전시험</option></select></div>
 <div class="command-group map-command-group"><b>지도</b><div class="map-tools"><button id="terrainMode" aria-label="지형 강조" aria-pressed="false" title="고도·사면과 능선·골짜기 강조"><svg viewBox="0 0 24 24"><path d="m3 17 5-7 4 4 4-8 5 11M3 20h18"/></svg><span>지형</span></button><button id="zoomIn" aria-label="지도 확대">＋</button><button id="zoomOut" aria-label="지도 축소">－</button><button id="fit" aria-label="지도 전체 보기" title="지도 전체 보기">맞춤</button><button class="active" id="contours" aria-pressed="true" title="등고선 표시">등고선</button></div></div>
 <div class="command-group"><b>기동</b><div class="command-row"><button class="command active" id="move" aria-pressed="true">이동</button><button class="command" id="reverse" aria-pressed="false">후진</button><button class="command" id="stop">정지</button></div></div>
 <div class="command-group"><b>관측</b><div class="command-row"><button class="command sight" id="sight" aria-pressed="false">시야 · 홀드</button><button class="command" id="guardMenu" aria-expanded="false" aria-controls="guardPopup">경계</button></div>
 <section class="guard-popup" id="guardPopup" aria-label="경계 명령" aria-hidden="true"><div class="guard-popup-title"><strong>경계 명령</strong><button id="guardClose" aria-label="경계 메뉴 닫기">×</button></div><label>장비 <select id="lookChannel"><option value="commander">전차장</option><option value="gunner">포수</option></select></label><div class="guard-actions"><button id="lookDirection" aria-pressed="false">방향 지정</button><button id="lookResume">자동 복귀</button></div><label class="guard-duration">유지 <select id="lookDuration"><option value="0" selected>해제까지</option><option value="5">5초</option><option value="10">10초</option><option value="30">30초</option></select></label></section></div>
 <div class="command-group"><b>사격</b><div class="command-row"><button id="fireMode" aria-pressed="true">자동</button><button id="cancelDesignation">지정 취소</button><button id="fire" disabled>단발 · G</button></div></div>
-<div class="command-group ammo-command"><label for="ammoSelect"><b>다음 탄종</b></label><select id="ammoSelect"><option value="auto">자동</option><option value="M829A2">M829A2</option><option value="M829A1">M829A1</option><option value="M830">M830</option></select></div>
+<div class="command-group ammo-command"><label for="ammoSelect"><b>다음 탄종</b></label><select id="ammoSelect"><option value="auto">자동</option><option value="M829A2">M829A2</option><option value="M829A1">M829A1</option><option value="M830">M830</option><option value="3BM42">3BM42</option></select></div>
 </section>
 <section class="selected-scroll" aria-label="선택 차량 정보">
 <div class="unit-picker"><label for="unitSelect">아군 선택</label><select id="unitSelect"></select></div>
@@ -42,7 +42,7 @@
 <div class="telemetry-main"><div class="speed"><span id="velocity">0</span><small>km/h</small></div><span class="motion-state" id="motionState">대기</span></div>
 <div class="combat-summary" id="combatSummary">HP 1,450 / 1,450 · 생존</div>
 <section class="engagement-panel" aria-label="교전 상태"><div class="engagement-line"><b>경계</b><output id="lookStatus">자동 경계</output></div><div class="engagement-line"><b>교전</b><output id="designationStatus">없음</output></div><div class="engagement-line"><b>사격</b><output id="fireState">표적 미확보</output></div><output class="flight-state" id="readinessState"></output><output class="flight-state" id="flightState"></output></section>
-<section class="ammo-panel"><div class="section-label"><span>AMMUNITION</span><span id="ammoTotal">42발</span></div><div id="ammoLoaded"></div><div id="ammoTask"></div><div id="ammoIncident"></div><table><thead><tr><th>구획</th><th>M829A2</th><th>M829A1</th><th>M830</th></tr></thead><tbody id="ammoInventory"></tbody></table></section>
+<section class="ammo-panel"><div class="section-label"><span>AMMUNITION</span><span id="ammoTotal">42발</span></div><div id="ammoLoaded"></div><div id="ammoTask"></div><div id="ammoIncident"></div><table><thead><tr id="ammoHeaders"><th>구획</th><th>M829A2</th><th>M829A1</th><th>M830</th></tr></thead><tbody id="ammoInventory"></tbody></table></section>
 <section class="status-panel"><div class="section-label"><span>차량 · 승무원 상태</span></div><div id="faultStatus"></div><div id="crewStatus"></div></section>
 <div class="metrics"><div><div class="metric-label">표고</div><div class="metric-value" id="elevation">—</div></div><div><div class="metric-label">경사</div><div class="metric-value" id="slope">—</div></div><div><div class="metric-label">방위</div><div class="metric-value" id="heading">—</div></div><div><div class="metric-label">지표</div><div class="metric-value" id="surface">—</div></div></div>
 <div class="route-panel" id="routeInfo">지면을 탭해서 <strong>이동 경로</strong>를 지정해봐.</div>

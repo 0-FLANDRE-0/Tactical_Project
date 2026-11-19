@@ -1,0 +1,90 @@
+{
+  "version": "0.4-WIP23",
+  "date": "2026-11-18",
+  "node": "v24.22.1",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "baselineRef": "origin/main",
+  "scope": "Fixed 0.05s core steps on the actual 4km Rasdorf map; no rendering. Existing scenarios compare one seeded 90s run byte-for-byte after normalized numeric state. The new fire trial reports three 90s runs.",
+  "comparisons": {
+    "default": {
+      "seconds": 90,
+      "seed": 7,
+      "exact": true
+    },
+    "t80u-armor": {
+      "seconds": 90,
+      "seed": 7,
+      "exact": true
+    },
+    "t80u-observation": {
+      "seconds": 90,
+      "seed": 7,
+      "exact": true
+    }
+  },
+  "performance": {
+    "default": {
+      "baseline": {
+        "ticks": 1800,
+        "medianMs": 0.219608,
+        "p95Ms": 0.741747,
+        "maxMs": 14.323108
+      },
+      "current": {
+        "ticks": 1800,
+        "medianMs": 0.217705,
+        "p95Ms": 0.760345,
+        "maxMs": 36.121073
+      }
+    },
+    "t80u-armor": {
+      "baseline": {
+        "ticks": 1800,
+        "medianMs": 0.043165,
+        "p95Ms": 0.117325,
+        "maxMs": 0.539185
+      },
+      "current": {
+        "ticks": 1800,
+        "medianMs": 0.04013,
+        "p95Ms": 0.129783,
+        "maxMs": 0.712584
+      }
+    },
+    "t80u-observation": {
+      "baseline": {
+        "ticks": 1800,
+        "medianMs": 0.051597,
+        "p95Ms": 0.224305,
+        "maxMs": 0.741958
+      },
+      "current": {
+        "ticks": 1800,
+        "medianMs": 0.041632,
+        "p95Ms": 0.197145,
+        "maxMs": 0.635969
+      }
+    },
+    "t80u-fire": {
+      "current": {
+        "ticks": 5400,
+        "medianMs": 0.034452,
+        "p95Ms": 0.141391,
+        "maxMs": 1.766837
+      },
+      "trials": 3,
+      "secondsPerTrial": 90
+    }
+  },
+  "fireTrial": {
+    "shots": 13,
+    "ammo": 0,
+    "observation": {
+      "queries": 1800,
+      "candidates": 1800,
+      "samples": 2067,
+      "rayQueries": 3404,
+      "rayCacheHits": 15199
+    }
+  }
+}

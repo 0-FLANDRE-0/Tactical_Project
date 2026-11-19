@@ -219,6 +219,9 @@
         "stationaryHoldSeconds": 0.35
       },
       "readiness": {
+        "loading": {
+          "type": "manual"
+        },
         "reloadSeconds": 5.98,
         "reloadMaxSeconds": 14,
         "fatigue": {

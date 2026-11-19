@@ -1,0 +1,218 @@
+{
+  "version": "0.4-WIP23",
+  "date": "2026-11-18",
+  "branch": "feat/wip23-t80u-fire-autoloader",
+  "base": "a8ef6eb64c5c802c4deaeac1618a788e0bb1caff",
+  "implementationCommit": "819656ac9a2c395549b65ec0a928f1e7e448b2ed",
+  "scope": {
+    "implemented": [
+      "T80U_1989 stationary fire-capable profile using 2A46M-1 and 3BM42",
+      "profile-registry separation of observation, fire, mobility and TacticalAI capabilities",
+      "six-second automatic loader independent of manual-loader crew state",
+      "3BM42 penetration, ricochet and 125mm direct-damage data",
+      "attacker-ammunition-owned hit reaction and ammunition-incident policy lookup",
+      "t80u-fire seeded standalone scenario and friendly automatic-loader information panel",
+      "deterministic flight, impact and post-launch resolution across pause, reset and shooter destruction",
+      "standalone HTML and reproducible ZIP package"
+    ],
+    "excluded": [
+      "T-80U mobility, patrol and engagement TacticalAI",
+      "T-80U crew, module and ammunition-incident damage",
+      "Kontakt-5 depletion or explosion",
+      "T-80U ammunition replenishment and alternate ammunition types",
+      "coaxial machine gun, NSVT, smoke and gun elevation",
+      "night, thermal, weather and magnification"
+    ]
+  },
+  "adoptedValues": {
+    "automaticLoaderSeconds": 6,
+    "initialAmmunition": {
+      "loaded": 1,
+      "ready": 12,
+      "total": 13,
+      "vehicleCapacity": 45
+    },
+    "fireControl": {
+      "aimSeconds": 1.6,
+      "aimToleranceDeg": 1.5,
+      "maxRangeM": 2000,
+      "fireHeightM": 2.05,
+      "dispersionMils": 0.3,
+      "muzzleVelocityMps": 1700,
+      "memoryRetention": 0.94,
+      "leadError": 0.12,
+      "stabilizationError": 0.03,
+      "stationarySpeedMps": 0.1,
+      "stationarySeconds": 0.35
+    },
+    "ammo": "data/ammunition/3BM42.json"
+  },
+  "seed7FlowSeconds": {
+    "detected": 1.05,
+    "identified": 7.45,
+    "gunnerAcquired": 7.5,
+    "firstFire": 9.05,
+    "subsequentFireInterval": 6,
+    "lastFire": 81.05,
+    "shots": 13
+  },
+  "commands": [
+    {
+      "command": "node --check src/vehicle-profiles.js && node --check src/combat-state.js && node --check src/fire-control.js && node --check src/sim-core.js && node --check src/app.js && node --check scripts/benchmark_wip23.cjs && node --check tests/wip23-browser.test.cjs",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "command": "node --test --test-concurrency=2 tests/*.test.cjs",
+      "status": "passed",
+      "passed": 388,
+      "failed": 0,
+      "durationMs": 85238.421315,
+      "includesActualChromium": true
+    },
+    {
+      "command": "node --test tests/wip23-t80u-fire.test.cjs",
+      "status": "passed",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "command": "node tests/wip23-browser.test.cjs",
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "browser": "Chromium 156.0.8078.79",
+      "note": "also included in the full Node run"
+    },
+    {
+      "command": "python3 -m unittest -v tests/terrain_readability_test.py",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "command": "python3 -m unittest -v tests/battlefield_dem_validation_test.py",
+      "status": "not-run",
+      "reason": "ModuleNotFoundError: osgeo in the default Python interpreter"
+    },
+    {
+      "command": "python3 tests/source_quality.py",
+      "status": "not-run",
+      "reason": "ModuleNotFoundError: osgeo in the default Python interpreter"
+    },
+    {
+      "command": "/usr/bin/python3 -m unittest -v tests.battlefield_dem_validation_test",
+      "status": "passed",
+      "passed": 4,
+      "failed": 0,
+      "note": "system GDAL Python"
+    },
+    {
+      "command": "/usr/bin/python3 tests/source_quality.py",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0,
+      "note": "system GDAL Python"
+    },
+    {
+      "command": "node scripts/benchmark_los_shared_compare.cjs --worker optimized /tmp/wip23-los.json",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/benchmark_wip23.cjs",
+      "status": "passed",
+      "report": "tests/releases/WIP23-performance.json"
+    },
+    {
+      "command": "node scripts/export_vehicle_profile.cjs && python3 build.py && python3 scripts/package_release.py WIP23 (twice)",
+      "status": "passed",
+      "byteReproducible": true,
+      "zipExtractMatchesDist": true
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  ],
+  "performance": {
+    "report": "tests/releases/WIP23-performance.json",
+    "baselineRef": "origin/main",
+    "baselineComparisons": {
+      "seconds": 90,
+      "seed": 7,
+      "defaultExact": true,
+      "t80uArmorExact": true,
+      "t80uObservationExact": true
+    },
+    "t80uFire": {
+      "trials": 3,
+      "secondsPerTrial": 90,
+      "medianMs": 0.034452,
+      "p95Ms": 0.141391,
+      "maxMs": 1.766837,
+      "shots": 13,
+      "remainingAmmo": 0,
+      "observationQueries": 1800,
+      "rayQueries": 3404,
+      "rayCacheHits": 15199
+    }
+  },
+  "browserEvidence": {
+    "report": "tests/releases/WIP23-browser-evidence.json",
+    "screenshots": [
+      "tests/releases/WIP23-t80u-fire-flight-desktop.png",
+      "tests/releases/WIP23-t80u-fire-impact-desktop.png",
+      "tests/releases/WIP23-t80u-friendly-mobile-dpr1.png",
+      "tests/releases/WIP23-t80u-friendly-mobile-dpr2.png"
+    ],
+    "viewports": [
+      "1440x900 DPR1",
+      "844x390 DPR1",
+      "844x390 DPR2",
+      "390x844 DPR2"
+    ],
+    "verified": [
+      "T-80U fire, projectile flight and impact",
+      "pause, reset and hidden-enemy information boundary",
+      "friendly automatic-loader status without loader crew fields",
+      "mobile controls and portrait block/restore"
+    ],
+    "physicalMobileTested": false
+  },
+  "artifacts": {
+    "html": {
+      "path": "Tactical_v0.4_WIP23.html",
+      "bytes": 8548773,
+      "sha256": "13661e496d497e78fe2c2204fc5c2b3c1c2d9ae17f82df1effb915edf0a25878"
+    },
+    "dist": {
+      "path": "dist/index.html",
+      "bytes": 8548773,
+      "sha256": "13661e496d497e78fe2c2204fc5c2b3c1c2d9ae17f82df1effb915edf0a25878"
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP23.zip",
+      "bytes": 1696179,
+      "compressedHtmlBytes": 1696033,
+      "crc32": "34fb2652",
+      "sha256": "6a30fb534953b410eac5f1ab4de704465ad16192e74b954b0774407d457d297d",
+      "entries": [
+        "Tactical_v0.4_WIP23.html"
+      ]
+    },
+    "checksums": "SHA256SUMS_WIP23.txt"
+  },
+  "limitations": [
+    "T-80U is intentionally stationary and has no TacticalAI in WIP23.",
+    "T-80U stores only the 13 rounds required for the WIP23 trial; vehicle capacity remains 45 and replenishment is disabled.",
+    "Headless Chromium and core CPU measurements are not physical-device FPS or thermal evidence.",
+    "The default Python interpreter lacked osgeo; the GDAL-dependent suites passed with /usr/bin/python3."
+  ],
+  "notPerformed": [
+    "main branch merge",
+    "public release deployment",
+    "physical mobile-device test"
+  ]
+}

@@ -7,13 +7,18 @@ const TacticalCombatState=(()=>{
   const diff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
   const clone=v=>JSON.parse(JSON.stringify(v));
   function deepFreeze(o){for(const v of Object.values(o))if(v&&typeof v==='object'&&!Object.isFrozen(v))deepFreeze(v);return Object.freeze(o);}
+  const DAMAGE_MULTIPLIERS={
+    'apfsds-120mm':{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'},
+    'apfsds-125mm':{points:[[0,.65],[.09,1.04],[.18,1.07],[.77,.65],[.90,.35],[.96,.25]],outsidePolicy:'clamp'},
+    direct:{points:[[0,1],[1,1]],outsidePolicy:'clamp'}
+  };
   const AMMUNITION=deepFreeze({
     M829A2:{
       id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
       hitReactionPolicyId:'tank-ke/M829A2',ammoIncidentPolicyId:'tank-ammo-incident/M829A2',
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[675,570,390],[635,535,365]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
-      damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'},
+      damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
       nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
     },
     M829A1:{
@@ -23,7 +28,7 @@ const TacticalCombatState=(()=>{
         [600,505,345],[595,503.643216080402,344.09547738693465],[590,497.61306532663315,340.0753768844221],
         [580,490.0753768844221,335.0502512562814],[570,482.53768844221105,330.0251256281407],[560,475,325]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
-      damageMultiplier:{points:[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]],outsidePolicy:'clamp'},
+      damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
       nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
     },
     M830:{
@@ -31,8 +36,16 @@ const TacticalCombatState=(()=>{
       hitReactionPolicyId:'tank-heat/M830',ammoIncidentPolicyId:'tank-ammo-incident/M830',
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[480,415,240],[480,415,240]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[65,72,77],chances:[0,.5,1],comparison:'roll<chance'},
-      damageMultiplier:{points:[[0,1],[1,1]],outsidePolicy:'clamp'},
+      damageMultiplierId:'direct',damageMultiplier:DAMAGE_MULTIPLIERS.direct,
       nearNonPenetration:false,armoredBlastRadiusM:0
+    },
+    '3BM42':{
+      id:'3BM42',name:'3BM42 Mango',kind:'KE',calibreMm:125,baseDamage:370,muzzleVelocity:1700,
+      hitReactionPolicyId:'tank-ke/3BM42',ammoIncidentPolicyId:'tank-ammo-incident/3BM42',
+      penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[505,425,280],[450,380,250]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
+      damageMultiplierId:'apfsds-125mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-125mm'],
+      nearNonPenetration:false
     }
   });
   const ammunitionRegistry=Object.freeze({
@@ -51,6 +64,7 @@ const TacticalCombatState=(()=>{
       const ammo=ammunitionRegistry.get(policy.ammoId);
       if(ammo.hitReactionPolicyId!==policyId)throw Error('피격 반응 효과 정책 ID 연결 오류: '+p.id+'.'+policyId);
     }
+    for(const ammoId of ammunitionRegistry.ids()){const ammo=ammunitionRegistry.get(ammoId),policy=config.policies?.[ammo.hitReactionPolicyId];if(!policy||policy.ammoId!==ammoId)throw Error('피격 반응 효과 정책 누락: '+p.id+'.'+ammoId);}
     return'active';
   }
   function validateProfileRegistry(registry){
@@ -75,11 +89,15 @@ const TacticalCombatState=(()=>{
     if(config.enabled!==true||config.victimProfileId!==p.id)throw Error('탄약고 사고 활성 연결 오류: '+(p?.id??'unknown'));
     if(p.ammunition?.enabled!==true)throw Error('탄약고 사고 재고 연결 오류: '+p.id);
     const supported=p.ammunition.supported||[],entries=Object.entries(config.policies||{});
-    if(entries.length!==supported.length)throw Error('탄약고 사고 정책 수 오류: '+p.id);
+    if(!entries.length)throw Error('탄약고 사고 정책 수 오류: '+p.id);
+    for(const[policyId,policy]of entries){
+      if(!policy||typeof policy.ammoId!=='string'||!ammunitionRegistry.has(policy.ammoId))throw Error('탄약고 사고 탄약 레지스트리 연결 오류: '+p.id+'.'+policyId);
+      if(ammunitionRegistry.get(policy.ammoId).ammoIncidentPolicyId!==policyId)throw Error('탄약고 사고 정책 ID 연결 오류: '+p.id+'.'+policy.ammoId);
+    }
+    for(const ammoId of ammunitionRegistry.ids()){const ammo=ammunitionRegistry.get(ammoId),policy=config.policies?.[ammo.ammoIncidentPolicyId];if(!policy||policy.ammoId!==ammoId)throw Error('탄약고 사고 공격탄 정책 누락: '+p.id+'.'+ammoId);}
     for(const ammoId of supported){
-      if(!ammunitionRegistry.has(ammoId))throw Error('탄약고 사고 탄약 레지스트리 연결 오류: '+p.id+'.'+ammoId);
-      const ammo=ammunitionRegistry.get(ammoId),policyId=ammo.ammoIncidentPolicyId,policy=config.policies?.[policyId];
-      if(!policy||policy.ammoId!==ammoId)throw Error('탄약고 사고 정책 ID 연결 오류: '+p.id+'.'+ammoId);
+      const ammo=ammunitionRegistry.get(ammoId),policy=config.policies?.[ammo.ammoIncidentPolicyId];
+      if(!policy||policy.ammoId!==ammoId)throw Error('탄약고 사고 지원탄 정책 연결 오류: '+p.id+'.'+ammoId);
       if(!Object.hasOwn(config.storedAmmoResponse||{},ammoId))throw Error('탄약고 사고 저장탄 연결 오류: '+p.id+'.'+ammoId);
     }
     for(const section of ['ready','semiReady','reserve'])if(config.compartments?.[section]?.capacity!==p.ammunition.sections?.[section]?.capacity)throw Error('탄약고 사고 구획 용량 연결 오류: '+p.id+'.'+section);
@@ -277,7 +295,7 @@ const TacticalCombatState=(()=>{
       if(!target){mark(id);return remember({applied:false,reason:'target-unavailable',id,time:now});}
       const profile=validateProfile(profileOf(target)),state=initUnit(target,profile);
       if(state.status==='destroyed'){mark(id);return remember({applied:false,reason:'target-destroyed',id,time:now,targetId:target.id,hpBefore:state.hp,hpAfter:state.hp,damage:0,destroyed:false});}
-      const legacyAmmo=profile.capabilities?.fire===false?null:profile.weapons?.mainGun?.ammunitionId,ammoId=event.ammoId||legacyAmmo;
+      const ammoId=event.ammoId;
       if(!ammoId)throw Error('공격 탄약 ID 누락');
       let eraRoll=event.eraRoll;
       if(event.hit&&eraRoll===undefined){const ammo=ammunitionRegistry.get(ammoId),incidence=incidenceDeg(event.origin,event.pose,event.zone,event.side),ricochet=event.ricochetRoll<ricochetChance(ammo,incidence),coverage=profile.combat.era?.zones?.[event.zone]?.coverage??0;if(!ricochet&&coverage>0)eraRoll=random(id+':'+target.id+':wip21:era',0x1f83d9ab);}
@@ -298,6 +316,6 @@ const TacticalCombatState=(()=>{
   const publicRecord=r=>r?Object.freeze({reason:r.reason,hit:!!r.hit,zone:r.zone??null,side:r.side??null,ricochet:!!r.ricochet,ricochetChance:r.ricochetChance??0,ricochetRoll:r.ricochetRoll??null,penetrated:!!r.penetrated,incidenceDeg:r.incidenceDeg,penetration:r.penetration,protection:r.eraProfile?null:r.protection,protectionDeficit:r.eraProfile?null:r.protectionDeficit,nearNonPenetration:!!r.nearNonPenetration,residualRatio:r.residualRatio,multiplier:r.multiplier,baseDamage:r.baseDamage,damage:r.damage,hpBefore:r.hpBefore,hpAfter:r.hpAfter,maxHp:r.maxHp,destroyed:!!r.destroyed}):null;
   const loadedProfiles=typeof VEHICLE_PROFILES!=='undefined'?VEHICLE_PROFILES:typeof require==='function'?require('./vehicle-profiles.js'):null;
   if(loadedProfiles?.registry)validateProfileRegistry(loadedProfiles.registry);
-  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,resolveAmmoIncident,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateAmmoIncidentBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,ZONES,ALLOWED_CREW_ROLES});
+  return Object.freeze({create,initUnit,initHitReactions,resolveHitReaction,applyResolvedHitReaction,resolveAmmoIncident,hitReactionModifiers,hitReactionView,validateProfile,validateHitReactionBindings,validateAmmunitionBindings,validateAmmoIncidentBindings,validateProfileRegistry,evaluate,penetrationAt,ricochetChance,multiplierAt,nearDamageAt,incidenceDeg,publicRecord,ammunitionRegistry,AMMUNITION,DAMAGE_MULTIPLIERS:deepFreeze(DAMAGE_MULTIPLIERS),ZONES,ALLOWED_CREW_ROLES});
 })();
 if(typeof module!=='undefined')module.exports=TacticalCombatState;

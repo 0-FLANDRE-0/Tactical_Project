@@ -13,12 +13,12 @@ const TacticalFireControl=(()=>{
   const active=s=>['designated','waiting','acquiring','acquired'].includes(s?.status);
   function mission(u){const o=u.observation;return active(o?.designation)?o.designation:active(o?.tracking)?o.tracking:null;}
   const managed=p=>p.ammunition?.enabled===true;
+  const automaticLoader=p=>p.fireControl?.readiness?.loading?.type==='automatic';
   const cloneCounts=value=>Object.fromEntries(Object.entries(value).map(([id,count])=>[id,count]));
   function initAmmunition(s,p){
     if(!managed(p))return null;
-    if(!s.ammunition){const a=p.ammunition;s.ammunition={preference:a.initial.preference,loadedAmmoId:a.initial.loaded,sections:Object.fromEntries(Object.entries(a.initial.sections).map(([section,counts])=>[section,cloneCounts(counts)])),task:null,lastShotAt:-Infinity,lastHitAt:-Infinity,incident:{safetyUntil:0,last:null,history:[],lostTotals:Object.fromEntries(a.supported.map(id=>[id,0]))}};}
-    const incident=s.ammunition.incident??={safetyUntil:0,last:null,history:[],lostTotals:Object.fromEntries(p.ammunition.supported.map(id=>[id,0]))};
-    incident.safetyUntil??=0;incident.last??=null;incident.history??=[];incident.lostTotals??=Object.fromEntries(p.ammunition.supported.map(id=>[id,0]));for(const id of p.ammunition.supported)incident.lostTotals[id]??=0;
+    if(!s.ammunition){const a=p.ammunition;s.ammunition={preference:a.initial.preference,loadedAmmoId:a.initial.loaded,sections:Object.fromEntries(Object.entries(a.initial.sections).map(([section,counts])=>[section,cloneCounts(counts)])),task:null,lastShotAt:-Infinity,lastHitAt:-Infinity};}
+    if(p.ammoIncidents?.enabled===true){const incident=s.ammunition.incident??={safetyUntil:0,last:null,history:[],lostTotals:Object.fromEntries(p.ammunition.supported.map(id=>[id,0]))};incident.safetyUntil??=0;incident.last??=null;incident.history??=[];incident.lostTotals??=Object.fromEntries(p.ammunition.supported.map(id=>[id,0]));for(const id of p.ammunition.supported)incident.lostTotals[id]??=0;}
     return s.ammunition;
   }
   function taskRound(task){return task&&task.reserved?1:0;}
@@ -39,21 +39,21 @@ const TacticalFireControl=(()=>{
   function engageableAmmo(p,s){return managed(p)?!!s.ammunition.loadedAmmoId||validLoadTask(p,s)||!!loadChoice(p,s):s.ammo>0;}
   function syncAmmo(p,s){if(!managed(p))return s.ammo;s.loaded=!!s.ammunition.loadedAmmoId;s.loadedAmmoId=s.ammunition.loadedAmmoId;s.ammo=ammunitionTotal(s);s.engageableAmmo=engageableAmmo(p,s);return s.ammo;}
   function init(u,p,mode='auto'){
-    if(!u.fireControl)u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
+    if(!u.fireControl){u.fireControl={status:'no-target',reason:'no-target',targetKey:null,aimProgress:0,aimElapsed:0,layTime:0,ammo:p.fireControl.testRounds,
       shotCount:0,pending:null,lastShot:null,hitChance:null,zoneProbabilities:null,previousSample:null,targetMotion:0,targetVelocity:{x:0,y:0},breakdown:null,fireMode:mode,lineProbeTarget:null,lineProbePose:null,lineProbeBlocked:false,lineProbeResult:null,lineProbeRequest:null,lineProbeCandidateRevision:null,lineProbeQueries:0,stationaryElapsed:0,autoSuppressed:false,lastRejection:null,
-      loaded:true,reloadProgress:1,reloadStartedAt:null,reloadCompletedAt:0,readyIdleSeconds:0,burstShots:0,fatigueSeconds:0,shockSeconds:0,faultUntil:{fireControl:0,commander:0,gunner:0},lastReaction:null};
+      loaded:true,reloadProgress:1,reloadStartedAt:null,reloadCompletedAt:0,readyIdleSeconds:0};if(!automaticLoader(p))Object.assign(u.fireControl,{burstShots:0,fatigueSeconds:0,shockSeconds:0,faultUntil:{fireControl:0,commander:0,gunner:0},lastReaction:null});}
     const s=u.fireControl;s.fireMode??=mode;s.lineProbeTarget??=null;s.lineProbePose??=null;s.lineProbeBlocked??=false;s.lineProbeResult??=null;s.lineProbeRequest??=null;s.lineProbeCandidateRevision??=null;s.lineProbeQueries??=0;s.stationaryElapsed??=0;s.autoSuppressed??=false;s.lastRejection??=null;
-    s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;initAmmunition(s,p);syncAmmo(p,s);return s;
+    s.loaded??=s.ammo>0;s.reloadProgress??=s.loaded?1:0;s.reloadStartedAt??=null;s.reloadCompletedAt??=0;s.readyIdleSeconds??=0;if(!automaticLoader(p)){s.burstShots??=0;s.fatigueSeconds??=0;s.shockSeconds??=0;s.faultUntil??={fireControl:0,commander:0,gunner:0};for(const kind of faultKinds)s.faultUntil[kind]??=0;s.lastReaction??=null;}initAmmunition(s,p);syncAmmo(p,s);return s;
   }
   const readiness=p=>p.fireControl.readiness;
-  function reloadSeconds(p,s,u=null){const r=readiness(p),efficiency=u?.hitReactionModifiers?.loaderEfficiency??1;return Math.min(r.reloadMaxSeconds,clamp(r.reloadSeconds+s.fatigueSeconds+s.shockSeconds,r.reloadSeconds,r.reloadMaxSeconds)/Math.max(Number.MIN_VALUE,efficiency));}
+  function reloadSeconds(p,s,u=null){const r=readiness(p);if(automaticLoader(p))return r.reloadSeconds;const efficiency=u?.hitReactionModifiers?.loaderEfficiency??1;return Math.min(r.reloadMaxSeconds,clamp(r.reloadSeconds+s.fatigueSeconds+s.shockSeconds,r.reloadSeconds,r.reloadMaxSeconds)/Math.max(Number.MIN_VALUE,efficiency));}
   function faultActive(s,kind,now){return Number.isFinite(s?.faultUntil?.[kind])&&s.faultUntil[kind]>now+1e-9;}
   function observationPenalty(p,s,now,u=null){
-    const f=readiness(p).temporaryFault,active=faultActive(s,'commander',now)||faultActive(s,'gunner',now);
+    const f=readiness(p).temporaryFault,active=!!f&&(faultActive(s,'commander',now)||faultActive(s,'gunner',now));
     const crewRate=u?.hitReactionModifiers?.gunnerAimRate??1,crewSigma=u?.hitReactionModifiers?.gunnerSigma??1;
     return{active:active||crewRate<1||crewSigma>1,aimRateMultiplier:Math.min(active?f.observationAimRateMultiplier:1,crewRate),errorSigmaMultiplier:Math.max(active?f.observationSigmaMultiplier:1,crewSigma)};
   }
-  function faultChance(p,damage){const f=readiness(p).temporaryFault;return clamp(f.baseChance+f.damageScaleChance*clamp((Number(damage)||0)/f.damageReference,0,1),f.baseChance,f.baseChance+f.damageScaleChance);}
+  function faultChance(p,damage){const f=readiness(p).temporaryFault;if(!f)return 0;return clamp(f.baseChance+f.damageScaleChance*clamp((Number(damage)||0)/f.damageReference,0,1),f.baseChance,f.baseChance+f.damageScaleChance);}
   function faultDuration(p,roll){const [lo,hi]=readiness(p).temporaryFault.durationSeconds;return lo+(hi-lo)*clamp(roll,0,1);}
   function faultKind(p,roll){let cumulative=0;for(const kind of faultKinds){cumulative+=readiness(p).temporaryFault.kinds[kind];if(roll<cumulative)return kind;}return faultKinds.at(-1);}
   function cancelAmmoTask(p,s,purpose=null){const a=s.ammunition,task=a?.task;if(!task||purpose&&task.purpose!==purpose)return false;if(task.reserved)a.sections[task.source][task.ammoId]++;a.task=null;s.reloadProgress=a.loadedAmmoId?1:0;s.reloadStartedAt=null;syncAmmo(p,s);return true;}
@@ -64,13 +64,13 @@ const TacticalFireControl=(()=>{
     const ids=a.preference==='auto'?p.ammunition.autoPriority:[a.preference,...p.ammunition.autoPriority.filter(id=>id!==a.preference)];
     for(const ammoId of ids){if(a.sections.ready[ammoId]>=rule.targets[ammoId])continue;for(const source of rule.sourcePriority)if(a.sections[source][ammoId]>0)return{ammoId,source};}return null;
   }
-  function canReplenish(u,p,s,now){const a=s.ammunition,rule=p.ammunition.replenish;return!!a.loadedAmmoId&&Math.abs(u.drive?.velocity??u.speed??0)<=rule.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=rule.idleSeconds-1e-9&&!currentThreat(u)&&!!replenishChoice(p,s);}
+  function canReplenish(u,p,s,now){const a=s.ammunition,rule=p.ammunition.replenish;if(rule?.enabled===false)return false;return!!a.loadedAmmoId&&Math.abs(u.drive?.velocity??u.speed??0)<=rule.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=rule.idleSeconds-1e-9&&!currentThreat(u)&&!!replenishChoice(p,s);}
   function beginReplenish(p,s,now){const a=s.ammunition,choice=replenishChoice(p,s);if(!choice)return null;a.sections[choice.source][choice.ammoId]--;a.task={purpose:'replenish',ammoId:choice.ammoId,source:choice.source,reserved:true,stage:'replenish',progress:0,startedAt:now,paused:false};syncAmmo(p,s);return a.task;}
   function advanceManagedReadiness(u,p,s,dt,now){
-    const a=s.ammunition,r=readiness(p),efficiency=Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1);
-    s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
+    const a=s.ammunition,r=readiness(p),manual=!automaticLoader(p),efficiency=manual?Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):1;
+    if(manual)s.shockSeconds=Math.max(0,s.shockSeconds-r.shock.recoveryPerSecond*dt);
     if(u.combat?.status==='destroyed'){cancelAmmoTask(p,s);syncAmmo(p,s);return;}
-    if(a.incident.safetyUntil>now+1e-9){if(a.task){a.task.paused=true;a.task.pauseReason='ammo-safety';}if(a.loadedAmmoId){s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}syncAmmo(p,s);return;}
+    if((a.incident?.safetyUntil??0)>now+1e-9){if(a.task){a.task.paused=true;a.task.pauseReason='ammo-safety';}if(a.loadedAmmoId){s.readyIdleSeconds+=dt;if(manual){s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}}syncAmmo(p,s);return;}
     if(a.task?.pauseReason==='ammo-safety'){a.task.paused=false;delete a.task.pauseReason;}
     if(!a.loadedAmmoId){
       if(a.task?.purpose==='replenish')cancelAmmoTask(p,s,'replenish');
@@ -86,7 +86,7 @@ const TacticalFireControl=(()=>{
       }
       syncAmmo(p,s);return;
     }
-    s.readyIdleSeconds+=dt;s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;
+    s.readyIdleSeconds+=dt;if(manual){s.fatigueSeconds=Math.max(0,s.fatigueSeconds-r.fatigue.recoveryPerSecond*dt);if(s.readyIdleSeconds+1e-9>=r.fatigue.burstResetSeconds)s.burstShots=0;}
     if(a.task?.purpose==='replenish'){
       const allowed=Math.abs(u.drive?.velocity??u.speed??0)<=p.ammunition.replenish.stationarySpeedMps+1e-9&&now-Math.max(a.lastShotAt,a.lastHitAt)>=p.ammunition.replenish.idleSeconds-1e-9&&!currentThreat(u);
       a.task.paused=!allowed;
@@ -102,8 +102,8 @@ const TacticalFireControl=(()=>{
     else{s.reloadProgress=0;s.reloadStartedAt=null;s.readyIdleSeconds=0;}
   }
   function consumeLoaded(u,p,s,now){
-    if(!s.loaded||s.ammo<=0)return false;const r=readiness(p);if(managed(p)){const a=s.ammunition;if(!a.loadedAmmoId)return false;a.loadedAmmoId=null;a.lastShotAt=now;}s.loaded=false;s.reloadProgress=0;s.reloadStartedAt=s.ammo>1?now:null;s.reloadCompletedAt=null;s.readyIdleSeconds=0;s.burstShots++;
-    if(s.burstShots>=r.fatigue.startsAtShot)s.fatigueSeconds=Math.min(r.fatigue.maxSeconds,s.fatigueSeconds+r.fatigue.perShotSeconds);return true;
+    if(!s.loaded||s.ammo<=0)return false;const r=readiness(p);if(managed(p)){const a=s.ammunition;if(!a.loadedAmmoId)return false;a.loadedAmmoId=null;a.lastShotAt=now;}s.loaded=false;s.reloadProgress=0;s.reloadStartedAt=s.ammo>1?now:null;s.reloadCompletedAt=null;s.readyIdleSeconds=0;
+    if(!automaticLoader(p)){s.burstShots++;if(s.burstShots>=r.fatigue.startsAtShot)s.fatigueSeconds=Math.min(r.fatigue.maxSeconds,s.fatigueSeconds+r.fatigue.perShotSeconds);}return true;
   }
   function motionReady(u,p,s=init(u,p)){const m=p.fireControl.movement;return m.fireOnMove||Math.abs(u.drive?.velocity??u.speed??0)<=m.stationarySpeedMps+1e-9&&s.stationaryElapsed+1e-9>=m.stationaryHoldSeconds;}
   function currentAmmoId(p,s){return managed(p)?s.ammunition.loadedAmmoId||s.ammunition.task?.ammoId||null:p.weapons.mainGun.ammunitionId??null;}
@@ -244,7 +244,7 @@ const TacticalFireControl=(()=>{
     function roll(shot,kind){onDecisionRoll?.(kind,shot.id);return random(shot.shooterId+':'+shot.number+':'+kind,seed);}
     const reactionRoll=(shot,kind)=>random(shot.shooterId+':'+shot.number+':reaction:'+kind,seed^0x243f6a88);
     function react(target,record,now,forced=null){
-      if(!target||!record?.applied||!record.hit)return null;const p=profileOf(target),s=init(target,p),r=readiness(p),classification=record.penetrated?'penetration':record.nearNonPenetration?'near':'normal';
+      if(!target||!record?.applied||!record.hit)return null;const p=profileOf(target),r=readiness(p);if(!r.shock||!r.temporaryFault)return null;const s=init(target,p),classification=record.penetrated?'penetration':record.nearNonPenetration?'near':'normal';
       if(managed(p))s.ammunition.lastHitAt=now;
       s.shockSeconds=Math.min(r.shock.maxSeconds,s.shockSeconds+r.shock[classification+'Seconds']);
       let fault=null;
@@ -287,7 +287,7 @@ const TacticalFireControl=(()=>{
       const error=Math.abs(diff(Math.atan2(c.pose.y-u.y,c.pose.x-u.x),u.turret));
       if(error>f.alignmentTolerance)return{reason:'aligning',d,c};
       if(faultActive(s,'fireControl',now))return{reason:'fcs-fault',d,c};
-      if(managed(p)&&s.ammunition.incident.safetyUntil>now+1e-9)return{reason:'ammo-safety',d,c};
+      if(managed(p)&&(s.ammunition.incident?.safetyUntil??0)>now+1e-9)return{reason:'ammo-safety',d,c};
       if(s.ammo<=0)return{reason:'out-of-ammo',d,c};
       if(!s.loaded)return{reason:managed(p)&&!validLoadTask(p,s)&&s.ammunition.preference!=='auto'&&!loadChoice(p,s)?'selected-ammo-unavailable':'reloading',d,c};
       return{reason:null,d,c};
@@ -430,14 +430,14 @@ const TacticalFireControl=(()=>{
       const p=profileOf(u),s=init(u,p),same=!key||key===s.targetKey,readyToMoveFire=motionReady(u,p,s);
       const inspection=inspect(u,currentTime);
       const aimPenalty=observationPenalty(p,s,currentTime,u);
-      const ammoState=managed(p)?s.ammunition:null,task=ammoState?.task,taskDuration=task?(task.stage==='prepare'?p.ammunition.sections[task.source].prepareSeconds/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):task.stage==='replenish'?p.ammunition.replenish.seconds[task.source]/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):reloadSeconds(p,s,u)):null;
+      const ammoState=managed(p)?s.ammunition:null,task=ammoState?.task,taskDuration=task?(task.stage==='prepare'?p.ammunition.sections[task.source].prepareSeconds/(automaticLoader(p)?1:Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1)):task.stage==='replenish'?p.ammunition.replenish.seconds[task.source]/Math.max(Number.MIN_VALUE,u?.hitReactionModifiers?.loaderEfficiency??1):reloadSeconds(p,s,u)):null;
       const incident=ammoState?.incident,incidentView=incident?{active:incident.safetyUntil>currentTime+1e-9,safetyUntil:incident.safetyUntil,remaining:Math.max(0,incident.safetyUntil-currentTime),last:incident.last?clone(incident.last):null,history:clone(incident.history),lostTotals:{...incident.lostTotals}}:null;
       const ammunition=ammoState?{managed:true,loadedAmmoId:ammoState.loadedAmmoId,preference:ammoState.preference,supported:[...p.ammunition.supported],total:ammunitionTotal(s),totals:Object.fromEntries(p.ammunition.supported.map(id=>[id,ammunitionTotal(s,id)])),sections:Object.fromEntries(Object.entries(ammoState.sections).map(([section,counts])=>[section,{capacity:p.ammunition.sections[section].capacity,total:sectionTotal(ammoState,section),counts:{...counts}}])),task:task?{purpose:task.purpose,ammoId:task.ammoId,source:task.source,stage:task.stage,progress:task.progress,paused:!!task.paused,pauseReason:task.pauseReason??null,remaining:task.paused?null:Math.max(0,(1-task.progress)*(taskDuration||0))}:null,engageable:engageableAmmo(p,s),incident:incidentView}:null;
       return{status:s.status,reason:s.status==='ready'&&!readyToMoveFire?'must-stop':inspection.reason||s.reason,targetKey:s.targetKey,aimProgress:s.aimProgress,layTime:s.layTime,targetVelocity:{...s.targetVelocity},ammo:s.ammo,mode:s.fireMode,pending:!!s.pending,pendingSource:s.pending?.source??null,
         canFire:same&&!inspection.reason&&s.status==='ready'&&!s.pending&&s.hitChance>0&&readyToMoveFire,motionReady:readyToMoveFire,stationaryElapsed:s.stationaryElapsed,autoSuppressed:s.autoSuppressed,hitChance:same?s.hitChance:null,zoneProbabilities:same&&s.zoneProbabilities?{...s.zoneProbabilities}:null,
-        loading:{loaded:s.loaded,ammoId:currentAmmoId(p,s),progress:task?.purpose==='load'?task.progress:s.reloadProgress,stage:task?.purpose==='load'?task.stage:s.loaded?'loaded':'idle',estimatedSeconds:s.loaded?0:task?.purpose==='load'&&!task.paused?Math.max(0,(1-task.progress)*(taskDuration||0)):s.ammo>0&&!managed(p)?(1-s.reloadProgress)*reloadSeconds(p,s,u):null,currentWorkSeconds:reloadSeconds(p,s,u),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots,fatigueSeconds:s.fatigueSeconds,shockSeconds:s.shockSeconds},ammunition,
+        loading:{type:automaticLoader(p)?'automatic':'manual',loaded:s.loaded,ammoId:currentAmmoId(p,s),progress:task?.purpose==='load'?task.progress:s.reloadProgress,stage:task?.purpose==='load'?task.stage:s.loaded?'loaded':'idle',estimatedSeconds:s.loaded?0:task?.purpose==='load'&&!task.paused?Math.max(0,(1-task.progress)*(taskDuration||0)):s.ammo>0&&!managed(p)?(1-s.reloadProgress)*reloadSeconds(p,s,u):null,currentWorkSeconds:reloadSeconds(p,s,u),chamber:s.loaded&&s.ammo>0?1:0,stored:Math.max(0,s.ammo-(s.loaded&&s.ammo>0?1:0)),burstShots:s.burstShots??0,fatigueSeconds:s.fatigueSeconds??0,shockSeconds:s.shockSeconds??0},ammunition,
         aimPenalty,
-        faults:Object.fromEntries(faultKinds.map(kind=>[kind,{active:faultActive(s,kind,currentTime),remaining:Math.max(0,s.faultUntil[kind]-currentTime)}])),
+        faults:Object.fromEntries(faultKinds.map(kind=>[kind,{active:faultActive(s,kind,currentTime),remaining:Math.max(0,(s.faultUntil?.[kind]??0)-currentTime)}])),
         inFlight:flights.filter(v=>v.shooter===u).map(v=>({id:v.id,impactAt:v.impactAt,remaining:Math.max(0,v.impactAt-currentTime)})),breakdown:same&&s.breakdown?JSON.parse(JSON.stringify(s.breakdown)):null,shotCount:s.shotCount,lastShot:s.lastShot?JSON.parse(JSON.stringify(s.lastShot)):null};
     }
     function suppressAuto(u,value){const s=init(u,profileOf(u));s.autoSuppressed=!!value;if(value&&s.pending?.source==='auto')s.pending=null;return s.autoSuppressed;}

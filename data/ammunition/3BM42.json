@@ -1,0 +1,89 @@
+{
+  "ammunition": {
+    "id": "3BM42",
+    "name": "3BM42 Mango",
+    "kind": "KE",
+    "calibreMm": 125,
+    "baseDamage": 370,
+    "muzzleVelocity": 1700,
+    "hitReactionPolicyId": "tank-ke/3BM42",
+    "ammoIncidentPolicyId": "tank-ammo-incident/3BM42",
+    "penetration": {
+      "rangesM": [
+        10,
+        2000
+      ],
+      "anglesDeg": [
+        0,
+        30,
+        60
+      ],
+      "values": [
+        [
+          505,
+          425,
+          280
+        ],
+        [
+          450,
+          380,
+          250
+        ]
+      ],
+      "parallelLimitDeg": 90,
+      "outsidePolicy": "clamp"
+    },
+    "ricochet": {
+      "anglesDeg": [
+        78,
+        80,
+        81
+      ],
+      "chances": [
+        0,
+        0.5,
+        1
+      ],
+      "comparison": "roll<chance"
+    },
+    "damageMultiplierId": "apfsds-125mm",
+    "damageMultiplier": {
+      "points": [
+        [
+          0,
+          0.65
+        ],
+        [
+          0.09,
+          1.04
+        ],
+        [
+          0.18,
+          1.07
+        ],
+        [
+          0.77,
+          0.65
+        ],
+        [
+          0.9,
+          0.35
+        ],
+        [
+          0.96,
+          0.25
+        ]
+      ],
+      "outsidePolicy": "clamp"
+    },
+    "nearNonPenetration": false
+  },
+  "status": "active WIP23 game data",
+  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20/WIP23 plus attacker-owned near-nonpenetration policy",
+  "limits": [
+    "WIP23 10/2000m by 0/30/60deg game table and 125mm APFSDS damage curve",
+    "Near-nonpenetration HP damage is explicitly disabled",
+    "Victim-specific hit-reaction and ammunition-incident rates live only on an explicitly bound vehicle profile",
+    "No additional velocity damage multiplier"
+  ]
+}
