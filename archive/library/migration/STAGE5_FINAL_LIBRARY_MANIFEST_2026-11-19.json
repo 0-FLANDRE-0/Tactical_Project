@@ -3,7 +3,7 @@
   "created_date": "2026-11-19",
   "repository": "0-FLANDRE-0/Tactical_Project",
   "status": "five_stage_library_canonical_index_complete",
-  "tree_before_manifest_creation": "b08079c7f1be3d242863ed68810219e4f61c45a4",
+  "tree_before_manifest_creation": "85a704e29544d7e77423482e16f0d9a84ea8dc27",
   "manifest_excludes_itself": true,
   "baseline": {
     "branch": "archive-library-baseline-2026-11-19",
@@ -132,8 +132,8 @@
     },
     {
       "path": "archive/library/CANONICAL_RULES.md",
-      "git_blob_sha": "70249a0dc8e6eb06913b07d52db1effc51cbc661",
-      "size_bytes": 6591,
+      "git_blob_sha": "73cfcad8f7b4844d12c7333c96d4abfc5ec93c90",
+      "size_bytes": 6621,
       "domain": "CANONICAL_RULES.md"
     },
     {
@@ -276,14 +276,14 @@
     },
     {
       "path": "archive/library/systems/armor/ANTI_ERA.md",
-      "git_blob_sha": "b22f35b44706ad996ab988aacae9b47538703623",
-      "size_bytes": 7193,
+      "git_blob_sha": "0e30f179f796f5e78188e4ad09f6fbec898ee1ea",
+      "size_bytes": 7317,
       "domain": "systems"
     },
     {
       "path": "archive/library/systems/armor/ARAT_TUSK_I_II.md",
-      "git_blob_sha": "d5508d4cee8cb5d30d5c6466dd399ebcbbca9735",
-      "size_bytes": 5184,
+      "git_blob_sha": "86304cbae7ee624bb8fb8fe36a779eeed09960b3",
+      "size_bytes": 6151,
       "domain": "systems"
     },
     {
@@ -300,8 +300,8 @@
     },
     {
       "path": "archive/library/systems/armor/README.md",
-      "git_blob_sha": "2b46de3c2eadf4ccde6d50ef97ab228279274453",
-      "size_bytes": 978,
+      "git_blob_sha": "c62455090204613ec3fc8afe1375dd7c23e0939e",
+      "size_bytes": 1038,
       "domain": "systems"
     },
     {
@@ -492,8 +492,8 @@
     },
     {
       "path": "archive/library/vehicles/tanks/modern/M1A2C.md",
-      "git_blob_sha": "8b165f1dbef66ea618e27d9bee87862a64a0caeb",
-      "size_bytes": 4269,
+      "git_blob_sha": "3a882f13aba008c7a74289ff4a255283379352e8",
+      "size_bytes": 5008,
       "domain": "vehicles"
     },
     {
