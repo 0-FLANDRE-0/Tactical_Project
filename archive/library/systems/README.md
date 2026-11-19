@@ -9,7 +9,7 @@
 - [Anti-ERA 탄종·ERA별 감쇄 및 다층 ERA 최외곽만 적용](armor/ANTI_ERA.md)
 - [Trophy HV 좌우 독립 APS](aps/TROPHY_HV.md)
 - [T-90M Arena-M APS — 포탑 추종 4구획×3발·총 12발·140ms·차탄 0.25초·45~1,000m/s](aps/ARENA_M_T90M.md)
-- [T-14M Afghanit APS — 포탑 전방 ±60°·좌우 5발·170ms·차탄 0.3초·50~1,700m/s·KE 관통력 최대 38% 감쇄](aps/AFGHANIT_T14M.md)
+- [T-14M Afghanit APS — 포탑 전방 ±60°·좌우 5발·90ms·차탄 0.2초·50~1,700m/s·KE 관통력 최대 38% 감쇄](aps/AFGHANIT_T14M.md)
 
 ## 전투·피해
 - [105/120/125mm APFSDS 피해·과관통 곡선과 APDS 예외](combat/APFSDS_DAMAGE_CURVES.md)
