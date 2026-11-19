@@ -3,7 +3,7 @@
 | 계층 | 문서 | 게임 상태 |
 |---|---|---|
 | 7구역·Kontakt ERA | [피복률 소모](SEVEN_ZONE_AND_KONTAKT_ERA.md) | K1 +5(+380), K5 **+120(+460)** 전 피복 부위 통일; 피복률 %p 손실 유지 |
-| **Relikt (렐릭트)** | [ERA 추가 방호력 규격](ANTI_ERA.md) | **KE +240/CE +560** 확정, A2 18.6%·A3 47.6% 확정, 장착 차량·피복률·소모량·나머지 탄종별 Anti-ERA 미정 |
+| **Relikt (렐릭트)** | [ERA 추가 방호력 규격](ANTI_ERA.md) | **KE +240/CE +560** 공통 확정, A2 18.6%·A3 47.6%; [T-90M(2026)](../../vehicles/tanks/modern/T-90M_2026.md) 장착·부위별 피복률·소모량 및 측면 이중층 확정, 타 차량·일반 규칙·나머지 탄종 대응 미정 |
 | BDD·D-Tech | [독립 장갑 HP](NON_EXPLOSIVE_ADDON_ARMOR.md) | 고정 피복률, 잔존 하한 25/40% |
 | 현대 2A8 모듈러 | [장갑 HP와 하한](LEOPARD_2A8_MODULAR_ARMOR.md) | 5부위 독립 HP, 하한 42.5% |
 | **M1A2C TUSK I/II** | [ARAT-1/ARAT-2 ERA 규칙](ARAT_TUSK_I_II.md) | 교체형 ERA, 차체 피복 85%·TUSK II 포탑 65%, 포탑 별도 소모·AP 비피복 손실 0, 탠덤의 Anti-ERA 대응력은 ARAT-2에만 적용 |
