@@ -10,7 +10,7 @@
 | M1A2 1992/1998 | [후속 전차](vehicles/tanks/post-1989/M1A2_1992_1998.md) | 1989 본편에 자동 편입 금지 |
 | Leopard 2A8 | [현대 전차](vehicles/tanks/modern/LEOPARD_2A8.md) | 부위별 기본·모듈러 KE/CE·HP·Trophy 장착 제원은 차량 문서 우선 |
 | **M1A2C (SEP v3)** | [현대 전차](vehicles/tanks/modern/M1A2C.md) | 고정 7구역 장갑, TUSK I/II 선택별 장착·방호력은 차량 문서 우선; **ARAT 피복률 소모·탠덤 층별 효과**는 [ARAT 시스템](systems/armor/ARAT_TUSK_I_II.md) 우선 |
-| **T-14M (125mm 기본형)** | [현대 전차](vehicles/tanks/modern/T-14M.md) | **1,500 HP 및 기본장갑 7구역 확정**; 증가장갑·ERA 병용 방향 확정. 두 방호 계층의 추가 KE/CE·피복률·내구도 및 합산 순서는 별도 미정 |
+| **T-14M (125mm 기본형)** | [현대 전차](vehicles/tanks/modern/T-14M.md) | **1,500 HP·기본장갑 7구역·증가장갑 4구역 추가 KE/CE 및 피복률·내구도 0 시 최소 잔존 38.5% 확정**. ERA는 증가장갑 위에 배치, **게임 판정 순서 증가장갑 → ERA**. ERA 고유 KE/CE·피복률·소모량과 증가장갑 최대 HP/피해 감쇄 등은 미정 |
 | 전차포·일반 탄약 KE/CE·기본 HP·탄속 | [탄약 카탈로그](ammunition/README.md) | 국가·구경·탄종별 개별 파일 소유 |
 | **현대 러시아 125mm APFSDS 3BM59/60/69/70** | [현대 러시아 125mm 정본](ammunition/modern/APFSDS_125MM.md) | DM73·M829A4와 같은 현대 별도 탄약 영역. KE·기본 HP·포구초속은 해당 파일 소유; 1989년 소련 125mm 문서와 분리 |
 | TOW, MILAN, Hellfire, BMP·Mi-24·소련 125mm 포발사 미사일 | [미사일 카탈로그](ammunition/README.md) | 미사일 자체 성능은 미사일 문서가 우선, 차량은 발사대 호환만 참조 |
