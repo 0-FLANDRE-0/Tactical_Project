@@ -3,7 +3,7 @@
   "created_date": "2026-11-19",
   "repository": "0-FLANDRE-0/Tactical_Project",
   "status": "five_stage_library_canonical_index_complete",
-  "tree_before_manifest_creation": "85a704e29544d7e77423482e16f0d9a84ea8dc27",
+  "tree_before_manifest_creation": "48ac5b17b51802ca329d1ddcc6c63bf8f7155d03",
   "manifest_excludes_itself": true,
   "baseline": {
     "branch": "archive-library-baseline-2026-11-19",
@@ -282,14 +282,14 @@
     },
     {
       "path": "archive/library/systems/armor/ARAT_TUSK_I_II.md",
-      "git_blob_sha": "86304cbae7ee624bb8fb8fe36a779eeed09960b3",
-      "size_bytes": 6151,
+      "git_blob_sha": "f9e26e4c37e9776ea6134489c9011b549c4292ee",
+      "size_bytes": 6150,
       "domain": "systems"
     },
     {
       "path": "archive/library/systems/armor/LEOPARD_2A8_MODULAR_ARMOR.md",
-      "git_blob_sha": "a01b9c2a1a76bd84448231e726fe9f81ab29aa1c",
-      "size_bytes": 5025,
+      "git_blob_sha": "9cd83631f41bbe20dc2e151add17e103e06ae32d",
+      "size_bytes": 5024,
       "domain": "systems"
     },
     {
@@ -306,8 +306,8 @@
     },
     {
       "path": "archive/library/systems/armor/SEVEN_ZONE_AND_KONTAKT_ERA.md",
-      "git_blob_sha": "37544e5b53744bac5c21aa67c9c5ab03f3fc0030",
-      "size_bytes": 7223,
+      "git_blob_sha": "3441b641ae549ad945c18d63e19f71adbf00dc77",
+      "size_bytes": 9515,
       "domain": "systems"
     },
     {
@@ -450,8 +450,8 @@
     },
     {
       "path": "archive/library/vehicles/tanks/1989/NVA.md",
-      "git_blob_sha": "aaeec9c24aaebb960c1bd81a3fe4219733dde024",
-      "size_bytes": 7273,
+      "git_blob_sha": "9467146b9e403c607bde0ce858229226ba1b4ac2",
+      "size_bytes": 7269,
       "domain": "vehicles"
     },
     {
@@ -462,8 +462,8 @@
     },
     {
       "path": "archive/library/vehicles/tanks/1989/SOVIET.md",
-      "git_blob_sha": "941ed614bc7c6265174a40ce48bc88a62437be78",
-      "size_bytes": 13644,
+      "git_blob_sha": "6db2f5ea285327506e14055163ead45507d64149",
+      "size_bytes": 14182,
       "domain": "vehicles"
     },
     {
@@ -474,32 +474,32 @@
     },
     {
       "path": "archive/library/vehicles/tanks/1989/US.md",
-      "git_blob_sha": "639bf1c2bc8a5f6046b79a20bcf39a591f79bdf9",
-      "size_bytes": 2150,
+      "git_blob_sha": "c86cbac6f3f7daa409bcc87b5c9bc5957a2a01b4",
+      "size_bytes": 2146,
       "domain": "vehicles"
     },
     {
       "path": "archive/library/vehicles/tanks/1989/WEST_GERMANY.md",
-      "git_blob_sha": "038562f4697c30988ef40b02bde2055637518412",
-      "size_bytes": 6737,
+      "git_blob_sha": "911de41dcf252ac7ff59dccaab199cb50d5ec77b",
+      "size_bytes": 6736,
       "domain": "vehicles"
     },
     {
       "path": "archive/library/vehicles/tanks/modern/LEOPARD_2A8.md",
-      "git_blob_sha": "d8624195e569bfed423aa3799ec1b654f5a1ad29",
-      "size_bytes": 8249,
+      "git_blob_sha": "6455d3a475111a5d8d4d6a9e3e9f2c1311beb2cf",
+      "size_bytes": 8248,
       "domain": "vehicles"
     },
     {
       "path": "archive/library/vehicles/tanks/modern/M1A2C.md",
-      "git_blob_sha": "3a882f13aba008c7a74289ff4a255283379352e8",
-      "size_bytes": 5008,
+      "git_blob_sha": "d6bb80afba0f1912304cc3ca51a4a75d4c0008c7",
+      "size_bytes": 5003,
       "domain": "vehicles"
     },
     {
       "path": "archive/library/vehicles/tanks/post-1989/M1A2_1992_1998.md",
-      "git_blob_sha": "aedaa1950d90fd19881e4316fa7cf6a868990b22",
-      "size_bytes": 3499,
+      "git_blob_sha": "68ef4a265d186bea577075470722be7bf90ceaba",
+      "size_bytes": 3497,
       "domain": "vehicles"
     },
     {
