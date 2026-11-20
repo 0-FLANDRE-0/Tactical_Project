@@ -32,6 +32,8 @@
 
 - [**미국 M163 VADS — M113A2 차체·20mm M168 단일 AP-I·AI 가변 점사·대공 사거리 1.2/1.5km**](1989/air_defense/M163_VADS.md) — 2026-11-20 확정 설계값, 레이더 세부 수치·포탑 방호는 후속
 
+- [**서독 Flakpanzer Gepard — 35mm KDA 2문·650 HP·7구역 장갑·대공 유효 3.5km/최대 4km**](1989/air_defense/GEPARD.md) — [35mm 탄약](../ammunition/autocannon/GEPARD_35MM.md) · [대공형/범용형 실제 3:1 탄띠](../presets/1989/GEPARD_BELTS.md)
+
 ## 1989 공격헬기
 
 - [AH-64A Apache](1989/air/AH64A.md) · [AGM-114A Hellfire](../ammunition/missiles/AGM_114A_HELLFIRE.md)
