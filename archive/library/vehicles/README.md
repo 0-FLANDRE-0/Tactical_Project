@@ -28,6 +28,10 @@
 | APC 추가형 | [BTR-60PB·M113G·Fuchs·BTR-50PK·MT-LB](1989/apc/APC_ADDITIONAL.md) |
 | 정찰차량 | [BRDM-2·Luchs·BRM-1K·M3/M3A1 Bradley](1989/recon/RECON_VEHICLES.md) |
 
+## 1989 자주대공포
+
+- [**미국 M163 VADS — M113A2 차체·20mm M168 단일 AP-I·AI 가변 점사·대공 사거리 1.2/1.5km**](1989/air_defense/M163_VADS.md) — 2026-11-20 확정 설계값, 레이더 세부 수치·포탑 방호는 후속
+
 ## 1989 공격헬기
 
 - [AH-64A Apache](1989/air/AH64A.md) · [AGM-114A Hellfire](../ammunition/missiles/AGM_114A_HELLFIRE.md)
