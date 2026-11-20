@@ -13,12 +13,13 @@
 
 ## 전투·피해
 - [105/120/125mm APFSDS 피해·과관통 곡선과 APDS 예외](combat/APFSDS_DAMAGE_CURVES.md)
-- [입사각·도탄·HEAT 신관](combat/ANGLE_RICOCHET_FUZE.md)
+- [지상 입사각·도탄·HEAT 신관 / **모든 공중장비 입사각 생략·거리별 0°값**](combat/ANGLE_RICOCHET_FUZE.md)
 - [발사→착탄 2단계와 장갑구역](combat/TWO_STAGE_HIT.md)
 - [기관포 피해 정책](combat/AUTOCANNON_DAMAGE.md)
 - [모든 공중장비·모든 탄종 **비관통 직격**, AP계열 **과관통** 시 기본 피해 최소 25%](combat/AIR_TARGET_DAMAGE.md)
 - [HEP 30mm 파공·30~120mm 스폴/비파공 감쇄, HE-FRAG·APERS 피해 경로](combat/HEP_HEFRAG_APERS.md)
 - [게파르트 DM21 지상/공중 폭발 피해곡선, DM13A1 신관·DM23 KE](../ammunition/autocannon/GEPARD_35MM.md) — HEP와 구분
+- [IFV 고폭탄 공통 **지상 급감·공중 완만 감쇄** 곡선](combat/IFV_HE_DAMAGE_CURVES.md) — 20/25/30/73mm HE, 탄종별 기본 HP·CE값 불변, 상세 매핑 미정
 - [모듈·승무원·탄약고 사고](combat/MODULE_CREW_AMMO_INCIDENTS.md)
 - [잔해·관측/선택](combat/WRECK_VISIBILITY.md)
 
