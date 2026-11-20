@@ -14,6 +14,8 @@
 | 전차포·일반 탄약 KE/CE·기본 HP·탄속 | [탄약 카탈로그](ammunition/README.md) | 국가·구경·탄종별 개별 파일 소유 |
 | **1989 게파르트·M163 자주대공포** | [자주대공포 카탈로그](vehicles/README.md) | 게파르트 [장갑·650HP·35mm KDA 2문·교전거리](vehicles/1989/air_defense/GEPARD.md), [35mm 탄약 KE/HP·DM21 지상/공중 곡선](ammunition/autocannon/GEPARD_35MM.md), [대공형/범용형 실제 탄띠 배열](presets/1989/GEPARD_BELTS.md)을 분리 관리. [M163](vehicles/1989/air_defense/M163_VADS.md)은 기존 독립 정본 유지 |
 | **공중 직격 기본 피해 최소 25%** | [공중 표적 피해 정본](systems/combat/AIR_TARGET_DAMAGE.md) | **2026-11-21 최신 확정:** 모든 공중장비 대상 **전 탄종 비관통 직격** 및 **AP계열 과관통 감쇄** 모두 기본 HP 피해 25% 하한. 지상 비적용; 도탄·신관 불발 별도 |
+| **공중장비 입사각 판정 생략** | [입사각·도탄/공중 예외](systems/combat/ANGLE_RICOCHET_FUZE.md) | **2026-11-21 사용자 최신 확정:** 헬기·고정익·공중장비 **전부** 입사각·각도별 관통력·각도 도탄 생략, 탄종별 **거리별 0° KE/CE** 사용. 거리·명중/산포·비행시간은 유지, 지상장갑 판정은 변경 없음 |
+| **IFV 고폭탄 지상·공중 피해곡선 공통화** | [DM21 기준 IFV HE 공통정본](systems/combat/IFV_HE_DAMAGE_CURVES.md) | **2026-11-21 사용자 최신 확정:** IFV 고폭탄은 DM21과 **동일한 지상·공중 구분 및 감쇄 형태**를 사용. **기본 HP·기존 탄종별 CE 판정값 유지**, CE 기준점 대응·보간 공식은 미정 |
 | **현대 러시아 125mm APFSDS 3BM59/60/69/70** | [현대 러시아 125mm 정본](ammunition/modern/APFSDS_125MM.md) | DM73·M829A4와 같은 현대 별도 탄약 영역. KE·기본 HP·포구초속은 해당 파일 소유; 1989년 소련 125mm 문서와 분리 |
 | TOW, MILAN, Hellfire, BMP·Mi-24·소련 125mm 포발사 미사일 | [미사일 카탈로그](ammunition/README.md) | 미사일 자체 성능은 미사일 문서가 우선, 차량은 발사대 호환만 참조 |
 | 1989 32×3 적재 프리셋 | [96개 정형 JSON](presets/1989/TANK_LOADOUTS_96.json) 및 [읽기용 표](presets/1989/README.md) | 원본 54개 공유 템플릿은 [보존본](presets/1989/SOURCE_TEMPLATES_54.md) |
