@@ -14,6 +14,11 @@
 | 동독 NVA 100/125mm | [NVA 탄약](cannon/NVA.md) |
 | 전차별 기본 지급 탄종 | [NATO·소련 기본 탄종 연결](cannon/DEFAULT_TANK_AMMO.md) |
 
+## 1989 자주대공포·기관포 탄약
+
+- [서독 게파르트 **35mm KDA DM21 HEI / DM13A1 SAPHEI-T / DM23 APDS-T**](autocannon/GEPARD_35MM.md) — 6거리×3각도 KE 관통력 이미지 수치, DM21 지상·공중 별도 CE 피해곡선, DM13A1 신관·외부 폭발, DM23 과관통. [차량 정본](../vehicles/1989/air_defense/GEPARD.md) · [탄띠 프리셋](../presets/1989/GEPARD_BELTS.md).
+- [미국 M163 20mm M168 AP-I](../vehicles/1989/air_defense/M163_VADS.md) — 해당 차량 정본에 관통력/속도/기본 피해 기록.
+
 ## 후속 시대 / 현대 APFSDS
 
 - [현대 120mm 탄약 — DM53~DM73 · M829A2/A3/A4 · M830A1 (미국 A2/A3/A4 5거리 탄속·관통력·Anti-ERA 확정)](modern/APFSDS_120MM.md)
