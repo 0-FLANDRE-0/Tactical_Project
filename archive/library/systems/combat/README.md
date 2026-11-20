@@ -6,6 +6,7 @@
 | 경사관통·도탄·신관 | [각도 및 신관](ANGLE_RICOCHET_FUZE.md) | WIP 부분 구현과 미정 구분 |
 | 발사·착탄 2단계 | [명중·구역 모델](TWO_STAGE_HIT.md) | 과거 설계와 후속 구현 구분 |
 | 기관포 피해 | [기관포 원칙](AUTOCANNON_DAMAGE.md) | 치명타 없음 확정, 곡선 미정 |
+| **공중 유닛 비관통 피해** | [최소 25% 공통 규칙](AIR_TARGET_DAMAGE.md) | 2026-11-20 사용자 확정, 코드 미구현 |
 | HEP/HE-FRAG/APERS | [특수탄 피해](HEP_HEFRAG_APERS.md) | 직접 파공·스폴·플레셰트 분리 |
 | 모듈·승무원·탄약고 | [상태·사고](MODULE_CREW_AMMO_INCIDENTS.md) | 영구 모듈 파괴 미도입, 시험 전용 구분 |
 | 잔해 | [가시성·선택](WRECK_VISIBILITY.md) | 사용자 확정·WIP 당시 범위 |
