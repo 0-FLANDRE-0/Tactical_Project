@@ -15,7 +15,7 @@
 | **역사 자료실** | [history/](history/README.md) | WIP 지시서·구형 제원·폐기 아이디어·초기 시제품 |
 | **보조 색인** | [indexes/ 공격헬기](indexes/AIRCRAFT_1989.md) | 헬기 현황·비교 자료 |
 | **1989 자주대공포** | [게파르트 차량](vehicles/1989/air_defense/GEPARD.md) · [M163 VADS](vehicles/1989/air_defense/M163_VADS.md) | 35mm KDA 탄약·[실제 혼합 탄띠](presets/1989/GEPARD_BELTS.md), M168 AP-I, 공중 표적 규칙 |
-| **2026-11-21 최신 공통 피해** | [공중 비관통 최소 25%](systems/combat/AIR_TARGET_DAMAGE.md) | 폭발성·대공탄·기관총/중기관총탄만 적용; HEP 고유 스폴과 구분 |
+| **2026-11-21 최신 공통 피해** | [공중 비관통 최소 25%](systems/combat/AIR_TARGET_DAMAGE.md) | **모든 공중장비·전 탄종 비관통 직격 / AP 과관통 최소 25%**; HEP 고유 스폴과 별개 |
 
 ## 반드시 구분할 사항
 
