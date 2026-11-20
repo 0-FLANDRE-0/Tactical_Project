@@ -14,6 +14,7 @@
 | **ERA·추가장갑·APS** | [장갑 시스템](library/systems/armor/README.md) · [Trophy HV](library/systems/aps/TROPHY_HV.md) | K1/K5·ARAT TUSK 소모, BDD/D-Tech·2A8 장갑 HP, Anti-ERA, 좌우 독립 요격 |
 | **명중·관통·피해·장전** | [공통 시스템](library/systems/README.md) | APFSDS 과관통 곡선, 도탄, HEP/HE-FRAG, 모듈, 보급 |
 | **IFV·APC·정찰차·헬기** | [차량별 상세](library/vehicles/README.md) | Bradley, BMP, Marder, APC, Mi-24, AH-64A |
+| **자주대공포·35mm 탄약** | [M163·게파르트](library/vehicles/README.md) · [게파르트 35mm 탄약](library/ammunition/autocannon/GEPARD_35MM.md) · [3:1 탄띠](library/presets/1989/GEPARD_BELTS.md) | M163 기존 정본, 게파르트 650 HP·2문·유효 3.5/최대 4km, DM21 지상/공중 피해 분리 |
 | **보병·전장 시스템** | [보병](library/units/README.md) · [지도/LOS/AI](library/systems/maps/LARGE_MAP_LOS_AND_AI.md) | 미정·시험값을 사용자 확정값과 분리 |
 | **세계관·작업 이력** | [대체역사 원안](library/world/README.md) · [WIP/구형 이력 자료실](library/history/README.md) | 1989년 OOB 원안, WIP09~22 기록, 과거 시제품 보존 |
 
