@@ -14,8 +14,8 @@
 - [M1A2 (1992·1998) 2종](tanks/post-1989/M1A2_1992_1998.md) — 1989년 본편에 포함하지 않음
 - [M1A2C (SEP v3)](tanks/modern/M1A2C.md) — 7구역 고정장갑, TUSK I/II 교체형 ARAT, 최대 HP 미정
 - [Leopard 2A8](tanks/modern/LEOPARD_2A8.md) — 1,450 HP, 모듈러 증가장갑, Trophy HV 좌·우 독립
-- [T-90M (2026)](tanks/modern/T-90M_2026.md) — **1,450 HP**, 기본장갑 7구역, Relikt 전면/상부 +240(+560), **차체·포탑 측면 2겹 +320(+980)**, 부위별 피복률·AP/HEAT/HE 소모율 확정, **측면 Anti-ERA 최외곽만 적용**, [Arena-M APS](../systems/aps/ARENA_M_T90M.md) **4방향×3발·140ms·0.25초·45~1,000m/s**, 교차 방어 가능(구획별 상세각·성공률 미정)
-- [T-14M 아르마타](tanks/modern/T-14M.md) — **1,500 HP**, 기본장갑 7구역·증가장갑 4구역 KE/CE·피복률·독립 HP(**1,150/700/250/550**)·탄종별 감쇄·**잔존 38.5%**, **Malakhit ERA** 일반형·차체 측면 이중층 KE/CE·피복률 및 **바깥층만 Anti-ERA 적용** 확정. **증가장갑 → ERA 판정**, [명중 계층별 소모 규칙](../systems/armor/T14M_MALAKHIT_ERA.md). [Afghanit APS](../systems/aps/AFGHANIT_T14M.md) 전방 ±60°·좌우 5발·90ms·0.2초 차탄 대기·50~1,700m/s·KE 관통력 최대 38% 감쇄 및 **무인포탑 차량 HP 피해 50% 감쇄**
+- [T-90M (2026)](tanks/modern/T-90M_2026.md) — **1,450 HP**, 기본장갑 7구역, Relikt 전면/상부 +240(+560), **차체·포탑 측면 2겹 +220(+1020)**, 부위별 피복률·AP/HEAT/HE 소모율 확정, **측면 Anti-ERA 최외곽만 적용**, [Arena-M APS](../systems/aps/ARENA_M_T90M.md) **4방향×3발·140ms·0.25초·45~1,000m/s**, 교차 방어 가능(구획별 상세각·성공률 미정)
+- [T-14M 아르마타](tanks/modern/T-14M.md) — **1,500 HP**, 기본장갑 7구역·증가장갑 4구역 KE/CE·피복률·독립 HP(**1,150/700/250/550**)·탄종별 감쇄·**잔존 38.5%**, **Malakhit ERA** 일반형 +275(+630)·차체 측면 이중층 **+260(+1210)**·피복률 및 **바깥층만 Anti-ERA 적용** 확정. **증가장갑 → ERA 판정**, [명중 계층별 소모 규칙](../systems/armor/T14M_MALAKHIT_ERA.md). [Afghanit APS](../systems/aps/AFGHANIT_T14M.md) 전방 ±60°·좌우 5발·90ms·0.2초 차탄 대기·50~1,700m/s·KE 관통력 최대 38% 감쇄 및 **무인포탑 차량 HP 피해 50% 감쇄**
 
 ## 1989 장갑차·정찰
 
