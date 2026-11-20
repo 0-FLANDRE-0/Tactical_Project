@@ -16,6 +16,7 @@
 - [입사각·도탄·HEAT 신관](combat/ANGLE_RICOCHET_FUZE.md)
 - [발사→착탄 2단계와 장갑구역](combat/TWO_STAGE_HIT.md)
 - [기관포 피해 정책](combat/AUTOCANNON_DAMAGE.md)
+- [헬기·공중유닛 비관통 명중 시 기본 탄약 HP 피해 최소 25%](combat/AIR_TARGET_DAMAGE.md)
 - [HEP·HE-FRAG·APERS 피해 경로](combat/HEP_HEFRAG_APERS.md)
 - [모듈·승무원·탄약고 사고](combat/MODULE_CREW_AMMO_INCIDENTS.md)
 - [잔해·관측/선택](combat/WRECK_VISIBILITY.md)
