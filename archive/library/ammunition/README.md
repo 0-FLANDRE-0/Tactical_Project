@@ -7,7 +7,7 @@
 | 국적·구경 | 이관 문서 |
 |---|---|
 | 미국 105mm | [US 105mm](cannon/US_105.md) |
-| 미국 120mm | [US 120mm — M829~M829A4 (A3/A4 2026-11-19 확정)](cannon/US_120.md) |
+| 미국 120mm | [US 120mm — M829~M829A4 (A4 10m 690/590/415, 2km 635/545/380 최신 확정)](cannon/US_120.md) |
 | 서독 105mm | [West Germany 105mm](cannon/WEST_GERMANY_105.md) |
 | 서독 120mm (1989) | [West Germany 120mm](cannon/WEST_GERMANY_120_1989.md) |
 | 소련 125mm | [Soviet 125mm](cannon/SOVIET_125.md) |
