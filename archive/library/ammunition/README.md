@@ -18,7 +18,7 @@
 
 - [DM53 / DM53A1 / DM63 / DM63A1 / DM73 · M829A2/A3/A4 Anti-ERA](modern/APFSDS_120MM.md)
 - [현대 러시아 125mm APFSDS — 3BM59/60 스비네츠 · 3BM69/70 바쿠움](modern/APFSDS_125MM.md) — 2km 0°/30°/60° KE, 기본 차량 HP, 포구초속 확정(3BM60 **1,660m/s**). **1989년 소련탄과 별도 관리**, Anti-ERA·10m KE·차량별 적재 미정.
-- **Anti-ERA:** 탄약이 ERA의 추가 KE 방호력을 일부 감쇄하는 능력; ERA 피복률 소모와 별개. DM53~DM63은 Kontakt-5급, DM63A1은 Relikt급에도 부분 대응, DM73은 한 단계 더 높은 대응. **M829A1은 Anti-ERA 없음(감쇄율 0%)**, **M829A2×Kontakt-5 38.5%**, **M829A3×Kontakt-5 74.8%**, **M829A2×Relikt 18.6%**, **M829A3×Relikt 47.6%**가 사용자 확정됐으며 [시스템 정본](../systems/armor/ANTI_ERA.md)을 따른다. **M829A4×K5 89.8%·×Relikt 67.5%는 검토 후보(미확정)**이고, 그 외 탄약×ERA 조합의 정량 감쇄율·범위는 미정이다.
+- **Anti-ERA 최신 확정(2026-11-20):** 미국 M829A1은 **0%**, M829A2/A3/A4의 **Kontakt-5 38.5% / 74.8% / 89.8%**, **Relikt 18.6% / 47.6% / 62.5%**, **Malakhit 2.0% / 26.2% / 54.8%** 모두 확정. 이전 **A4×Relikt 67.5% 후보 폐기**. 효과는 ERA 추가 KE에만 적용하고, T-14M 측면 2겹은 최외곽 한 층만 감쇄한다. 기타 독일 현대탄·미지정 ERA 조합은 개별 미정. 수치·산식은 [Anti-ERA 시스템 정본](../systems/armor/ANTI_ERA.md), 말라킷 측면 계산은 [T-14M ERA 정본](../systems/armor/T14M_MALAKHIT_ERA.md) 참조.
 - [근거리 0~10m KE 29종 3각도 이관본](references/NEAR_ZERO_10M_KE.md) — 원본 29종의 게임용 10m/2km 표와 추정·검토 메모 보존.
 
 ## 미사일
