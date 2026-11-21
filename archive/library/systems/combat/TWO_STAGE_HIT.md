@@ -4,7 +4,7 @@
 
 > **4단계 이관본.** 확정 규칙과 당시 시험값/미정 조건을 구분하고, 5단계 정본 전환 전까지 기존 원본문서가 우선한다. 이관으로 게임 코드의 구현 범위가 늘어나지는 않음.
 
-**원본:** [2026-11-07 당시 명중 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md). 이력상 구상/선택지와 WIP10 구현을 구분. **탄약별 최신 각도·도탄/HEAT 신관 판정은** [후속 문서](ANGLE_RICOCHET_FUZE.md)의 조건 및 구현 범위 확인. 내부 세부 장갑면은 [미확정 아이디어](../../history/proposals/ARMOR_SUBZONES.md).
+**원본:** [2026-11-07 당시 명중 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md). 이력상 구상/선택지와 WIP10 구현을 구분. **탄약별 최신 각도·도탄/HEAT 신관 판정은** [후속 문서](ANGLE_RICOCHET_FUZE.md)의 조건 및 구현 범위 확인. 내부 세부 장갑면은 [미확정 아이디어](../../../tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md).
 
 # TACTICAL — 발사·착탄 2단계 명중 판정과 360° 확률 장갑 구역 모델
 
