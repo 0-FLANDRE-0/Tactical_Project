@@ -26,6 +26,7 @@
 ## 운용·지도·항공
 - [장전·탄약 이동·보급/비용/편성](logistics/RELOAD_AMMO_SUPPLY.md)
 - [1989 전차 96개 프리셋](../presets/1989/README.md)
+- [공중 레이더 수색·탐지·추적 공통 정본](air/RADAR_SEARCH_TRACKING.md) — **엔진 전지적 위치와 유닛 인식 분리**; 표적별 피탐지 기반값, 레이더별 거리·LOS·성능 보정, **게파르트 15km**, 추적/광학 정보·명중률 분리
 - [항공 투입·방공·레이더 LOS](air/AIR_ENTRY_RADAR_AA.md)
 - [지도 크기·LOS·경로탐색·분대 AI](maps/LARGE_MAP_LOS_AND_AI.md)
 
