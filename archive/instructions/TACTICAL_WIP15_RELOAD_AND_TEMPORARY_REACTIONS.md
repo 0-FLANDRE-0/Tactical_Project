@@ -17,8 +17,8 @@
 
 - `src/fire-control.js`, `src/combat-state.js`, `src/sim-core.js`, `src/observation.js`, `src/tactical-ai.js`, `src/app.js`
 - `src/vehicle-profiles.js`, `data/vehicles/M1A2.json`, `data/vehicles/M1A2_1998.json`, `data/ammunition/M829A2.json`, `scripts/export_vehicle_profile.cjs`
-- [장전·탄약 구획의 장기 구상 §12](../../archive/ammo/README.md), [게임 HP 피해 메모 §7-E·7-F·9](../../archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md)
-- [WIP14 구현](../ENEMY_AI_FIRE_MOVEMENT_WIP14.md), [WIP14 병합 검토](../reviews/WIP14_MERGE_REVIEW_2026-11-09.md), [경계·교전 UI](../UI_AND_GUARD_WIP11C.md), [WIP12 효과](../COMBAT_EFFECTS_AND_RICOCHET_WIP12.md)
+- [장전·탄약 구획 현행 설계](../library/systems/logistics/RELOAD_AMMO_SUPPLY.md), [게임 HP 피해 메모 §7-E·7-F·9](../../archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md)
+- [WIP14 구현](../../docs/ENEMY_AI_FIRE_MOVEMENT_WIP14.md), [WIP14 병합 검토](../../docs/reviews/WIP14_MERGE_REVIEW_2026-11-09.md), [경계·교전 UI](../../docs/UI_AND_GUARD_WIP11C.md), [WIP12 효과](../../docs/COMBAT_EFFECTS_AND_RICOCHET_WIP12.md)
 
 현재 `shotIntervalSeconds:1`·`nextShotAt`은 시험용 발사 간격이다. 이를 실제 장전과 혼동하지 않는다. 현재 M829A2는 기준 피해 405와 관통 후 연속 배율·과관통 감소를 이미 적용하며, 비관통 HP 피해는 0이다. 피해 적용의 기존 발사 ID 중복 방지와 공개 정보 경계를 먼저 확인한다.
 
