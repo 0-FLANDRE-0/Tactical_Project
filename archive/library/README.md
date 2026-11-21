@@ -16,6 +16,7 @@
 | **보조 색인** | [indexes/ 공격헬기](indexes/AIRCRAFT_1989.md) | 헬기 현황·비교 자료 |
 | **1989 자주대공포** | [게파르트 차량](vehicles/1989/air_defense/GEPARD.md) · [M163 VADS](vehicles/1989/air_defense/M163_VADS.md) | 35mm KDA 탄약·[실제 혼합 탄띠](presets/1989/GEPARD_BELTS.md), M168 AP-I, 공중 표적 규칙 |
 | **2026-11-21 공중 레이더 최신 정본** | [수색·탐지·추적 공통 규칙](systems/air/RADAR_SEARCH_TRACKING.md) · [게파르트](vehicles/1989/air_defense/GEPARD.md) | 수색 존재 인지 vs 추적/광학 정밀 정보, 항공유닛 피탐지 기반값+관측자/LOS 보정, **게파르트 15km 수색**, 거리별 탐지율 감소; 코드 미구현 |
+| **2026-11-21 대공포 발당 명중률·쉴카 준비** | [게파르트/M163 명중률 잠정안](systems/air/AA_GUN_HIT_PROBABILITY.md) · [ZSU-23-4 준비표](vehicles/1989/air_defense/ZSU23_4_SHILKA_PREP.md) | 게파르트 거리별 발당 확률 시험범위, M163 근거리 안정성·거리/오차 민감도만 채택; 쉴카 실물 참고와 게임 미정값 분리, 본편 코드 미반영 |
 | **2026-11-21 최신 공통 피해** | [공중 비관통 최소 25%](systems/combat/AIR_TARGET_DAMAGE.md) | **모든 공중장비·전 탄종 비관통 직격 / AP 과관통 최소 25%**; HEP 고유 스폴과 별개 |
 | **2026-11-21 IFV HE·공중 입사각 최신 확정** | [IFV 공통 고폭곡선](systems/combat/IFV_HE_DAMAGE_CURVES.md) · [공중 입사각 생략](systems/combat/ANGLE_RICOCHET_FUZE.md) | 35mm DM21의 지상/공중 감쇄 형태 공유, 모든 공중장비는 0° KE/CE 판정; 본편 코드 미구현 |
 
