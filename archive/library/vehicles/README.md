@@ -35,7 +35,7 @@
 - [**서독 Flakpanzer Gepard — 35mm KDA 2문·650 HP·7구역 장갑·대공 유효 3.5km/최대 4km**](1989/air_defense/GEPARD.md) — [35mm 탄약](../ammunition/autocannon/GEPARD_35MM.md) · [대공형/범용형 실제 3:1 탄띠](../presets/1989/GEPARD_BELTS.md) · [수색레이더 최대 15km·공통 추적 규칙](../systems/air/RADAR_SEARCH_TRACKING.md)
 - [**ZSU-23-4 Shilka — 7구역 20/15/10/15/15/10/15 KE(CE)·450HP·23mm 4문·API 55HP/HE 108HP·3:1 고정 탄띠**](1989/air_defense/ZSU23_4_SHILKA.md) — [사용자 이미지 KE/워썬더 CE 및 탄속](../ammunition/autocannon/M163_SHILKA_AA_20_23MM.md); **문당 900RPM·합계 3,600RPM / 대공 유효 2.5km·최대 3km 확정**. **M163보다 낮은 명중 안정성·신뢰성 방향** 채택; **4문 각 500발, 총 2,000발 전량 즉응탄(HE 1,500/AP 500), 준즉응탄 없음 확정**. 레이더 탐지거리·명중률 수치·고장률·외부 재보급 시간은 미정. [이전 자료 검토표](1989/air_defense/ZSU23_4_SHILKA_PREP.md)
 
-- [**9K35M2 스트렐라-10M2 — MT-LB 계열 단거리 SAM 차량**](1989/air_defense/STRELA_10M2.md) — **325HP**, 7구역 **15/10/5/5/5/5/5 RHAe**, **즉응 4발 + 내부 예비 4발 = 총 8발** 확정. [9M37 / 9M37M](../ammunition/missiles/9M37_9M37M_STRELA10.md) **무기동·약한 기동 기준 기본 명중률 75~100% / 85~100%**, 급기동 시 추가 감소. IRCCM 환경 범위 별도 정본, 코드 미구현.
+- [**9K35M2 스트렐라-10M2 — MT-LB 계열 단거리 SAM 차량**](1989/air_defense/STRELA_10M2.md) — **325HP**, 7구역 **15/10/5/5/5/5/5 RHAe**, **즉응 4발+예비 4발=8발**. [9M37/9M37M 시커 정본](../ammunition/missiles/9M37_9M37M_STRELA10.md): **발사 전 광학/IR 자동 선택·발사 후 고정**, 광학 모드 저고도 명중률 **8~16%**, IRCCM ON/OFF와 플레어 저항성 분리. 코드 미구현.
 
 ## 1989 공격헬기
 
@@ -43,5 +43,6 @@
 - [**소련 초기형 2K22 / 2S6 Tunguska — 30mm 2A38 쌍열×2기/5,000RPM/1,936발·대공 유효 3km/최대 4km·9M311 4발**](1989/air_defense/2S6_TUNGUSKA.md) — [30mm AP-T 83/HEF-T 129/HEF-I 152HP](../ammunition/autocannon/TUNGUSKA_30MM_2A38.md), [4발 고정 탄띠](../presets/1989/TUNGUSKA_2A38_BELT.md), [9M311 SAM 30 CE·직격 415/근접 185~285HP](../ammunition/missiles/9M311_SAM.md); **7구역 KE(CE) 15/10/10/15/10/10/15 RHAe·차량 최대 425HP 확정**(알루미늄은 실차 재질 설명). 레이더 수치·신관 확률·신뢰도 수치는 미정. **런타임 미구현**.
 
 - [Mi-24D·V·P Hind](1989/air/MI24_D_V_P.md) · [Mi-24 탑재 대전차유도미사일](../ammunition/missiles/MI24_ATGM.md)
+- [**Mi-24D/V/P 방어 장비 — ASO-2V 소구경 플레어·Lipa**](1989/air/MI24_D_V_P.md) — D **128발**, V/P **192발**, **발당 18.5%**. [Lipa·기만체 상세](../systems/air/MI24_FLARE_LIPA.md): **90% 초기 시험값**, **IRCCM ON 모드에는 무효**.
 
 **공통 전투 시스템 정본**은 [시스템 카탈로그](../systems/README.md), **구형 자료**는 [이력 자료실](../history/README.md)에서 구분한다. 게임 코드 구현 사실은 별도 확인.
