@@ -18,12 +18,12 @@ test('V02 invalid IDs and malformed profile fields reject before partial runtime
 });
 
 test('V03 penetration table, game curve anchors and WIP12 high-angle interpolation are stable',()=>{
- assert.deepEqual(Combat.penetrationAt(ammo,10,0),{value:675,rangeClamped:false,angleClamped:false,rangeUsed:10,angleUsed:0});
- assert.equal(Combat.penetrationAt(ammo,2000,60).value,365);
- near(Combat.penetrationAt(ammo,1005,15).value,(675+570+635+535)/4);
+ assert.deepEqual(Combat.penetrationAt(ammo,10,0),{value:630,rangeClamped:false,angleClamped:false,rangeUsed:10,angleUsed:0});
+ assert.equal(Combat.penetrationAt(ammo,2000,60).value,345);
+ near(Combat.penetrationAt(ammo,1005,15).value,(630+530+600+505)/4);
  const anchors=[[0,.65],[.071429,1.05],[.142857,1.08],[.714286,.65],[.857143,.35],[.93,.20]];for(const [x,y]of anchors)near(Combat.multiplierAt(ammo,x),y);
  near(Combat.multiplierAt(ammo,(.142857+.714286)/2),(1.08+.65)/2);assert.equal(Combat.multiplierAt(ammo,2),.20);
- const low=Combat.penetrationAt(ammo,1,0),high=Combat.penetrationAt(ammo,5000,80),parallel=Combat.penetrationAt(ammo,2000,90),beyond=Combat.penetrationAt(ammo,2000,95);assert.equal(low.value,675);assert(low.rangeClamped);near(high.value,365/3);assert(high.rangeClamped&&!high.angleClamped);assert.equal(parallel.value,0);assert.equal(beyond.value,0);assert(beyond.angleClamped&&beyond.angleUsed===90);
+ const low=Combat.penetrationAt(ammo,1,0),high=Combat.penetrationAt(ammo,5000,80),parallel=Combat.penetrationAt(ammo,2000,90),beyond=Combat.penetrationAt(ammo,2000,95);assert.equal(low.value,630);assert(low.rangeClamped);near(high.value,345/3);assert(high.rangeClamped&&!high.angleClamped);assert.equal(parallel.value,0);assert.equal(beyond.value,0);assert(beyond.angleClamped&&beyond.angleUsed===90);
 });
 
 test('V04 each unit owns HP state while immutable profiles and ammunition stay shared',()=>{

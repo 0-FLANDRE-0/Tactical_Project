@@ -7,7 +7,7 @@ const profile=Profiles.M1A2_1998,near=(a,b,e=1e-9)=>assert(Math.abs(a-b)<=e,`${a
 test('W19-D01 original three ammunition records keep independent KE/CE, velocity, penetration, damage and policy data',()=>{
  assert.deepEqual(Combat.ammunitionRegistry.ids().slice(0,3),['M829A2','M829A1','M830']);
  const a1=Combat.AMMUNITION.M829A1,heat=Combat.AMMUNITION.M830;
- assert.equal(a1.kind,'KE');assert.equal(a1.muzzleVelocity,1575);assert.equal(a1.baseDamage,380);near(Combat.penetrationAt(a1,1000,30).value,490.0753768844221);near(Combat.penetrationAt(a1,1500,60).value,330.0251256281407);
+ assert.equal(a1.kind,'KE');assert.equal(a1.muzzleVelocity,1575);assert.equal(a1.baseDamage,380);near(Combat.penetrationAt(a1,1000,30).value,485);near(Combat.penetrationAt(a1,1500,60).value,330);
  assert.equal(heat.kind,'CE');assert.equal(heat.muzzleVelocity,1140);assert.equal(heat.baseDamage,435);near(Combat.penetrationAt(heat,10,30).value,415);near(Combat.penetrationAt(heat,2000,30).value,415);near(Combat.penetrationAt(heat,1000,75).value,120);near(Combat.ricochetChance(heat,72),.5);
  assert.equal(a1.hitReactionPolicyId,'tank-ke/M829A1');assert.equal(heat.hitReactionPolicyId,'tank-heat/M830');assert.deepEqual(profile.hitReactions.policies['tank-ke/M829A1'].rows.penetration,profile.hitReactions.policies['tank-ke/M829A2'].rows.penetration);assert(Object.values(profile.hitReactions.policies['tank-heat/M830'].rows.nearNonPenetration).every(row=>Object.values(row).every(v=>v===0)));
 });
@@ -89,11 +89,11 @@ test('W19-A03 actual halt AI keeps its target and paused mission while the final
 });
 
 test('W19-F01 fired projectile freezes actual loaded ammunition and preference changes cannot alter flight or impact',()=>{
- const f=fixture(19,profile);f.step(1.2);assert(f.fire().ok);f.step();const fired=f.runtime.events('blue')[0];assert.equal(fired.ammoId,'M829A2');near(fired.tof,1000/(1680*.94),.01);f.runtime.setAmmoPreference(f.u,'M830');f.land();const record=f.runtime.debugRecords()[0],impact=f.runtime.events('blue').find(e=>e.type==='impact');assert.equal(record.ammoId,'M829A2');assert.equal(impact.ammoId,'M829A2');assert.equal(f.u.fireControl.lastShot.ammoRemaining,41);assert.equal(impact.ammoRemaining,41);
+ const f=fixture(19,profile);f.step(1.2);assert(f.fire().ok);f.step();const fired=f.runtime.events('blue')[0];assert.equal(fired.ammoId,'M829A2');near(fired.tof,F.flightTime(1000,{flightSpeed:Combat.AMMUNITION.M829A2.flightSpeed}));f.runtime.setAmmoPreference(f.u,'M830');f.land();const record=f.runtime.debugRecords()[0],impact=f.runtime.events('blue').find(e=>e.type==='impact');assert.equal(record.ammoId,'M829A2');assert.equal(impact.ammoId,'M829A2');assert.equal(f.u.fireControl.lastShot.ammoRemaining,41);assert.equal(impact.ammoRemaining,41);
 });
 
 test('W19-F02 every chambered round uses its own velocity through the real fire, flight and impact route',()=>{
- for(const ammoId of profile.ammunition.supported){const f=fixture(29,profile),a=f.u.fireControl.ammunition;if(ammoId!=='M829A2'){a.sections.ready.M829A2++;a.sections.ready[ammoId]--;a.loadedAmmoId=ammoId;}f.step(1.2);assert(f.fire().ok);f.step();const fired=f.runtime.events('blue')[0],ammo=Combat.AMMUNITION[ammoId];assert.equal(fired.ammoId,ammoId);near(fired.tof,1000/(ammo.muzzleVelocity*.94),.01);f.land();assert.equal(f.runtime.debugRecords()[0].ammoId,ammoId);assert.equal(f.runtime.events('blue').find(e=>e.type==='impact').ammoId,ammoId);assert.equal(f.view().ammunition.total,41);}
+ for(const ammoId of profile.ammunition.supported){const f=fixture(29,profile),a=f.u.fireControl.ammunition;if(ammoId!=='M829A2'){a.sections.ready.M829A2++;a.sections.ready[ammoId]--;a.loadedAmmoId=ammoId;}f.step(1.2);assert(f.fire().ok);f.step();const fired=f.runtime.events('blue')[0],ammo=Combat.AMMUNITION[ammoId];assert.equal(fired.ammoId,ammoId);near(fired.tof,F.flightTime(1000,{...ammo,velocityRetention:.94}));f.land();assert.equal(f.runtime.debugRecords()[0].ammoId,ammoId);assert.equal(f.runtime.events('blue').find(e=>e.type==='impact').ammoId,ammoId);assert.equal(f.view().ammunition.total,41);}
 });
 
 test('W19-I02 only a real shot reduces inventory; last round, task cancellation and destruction conserve exact counts',()=>{

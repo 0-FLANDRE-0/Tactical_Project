@@ -415,7 +415,8 @@
     targetId=null;
     trails.length=0;
     accumulator=0;
-    setPaused(false);
+    portraitPausedBefore=false;
+    setPaused(portraitBlocked);
     setReverse(false);
     releaseSight();
     timeScale=1;
@@ -535,6 +536,10 @@
     const friendlies=sim.units.filter(v=>v.team==='blue'),living=friendlies.filter(alive);
     for(const option of $('unitSelect').children){const unit=friendlies.find(v=>v.id===option.value);option.disabled=!alive(unit);option.textContent=unit?unit.name+' · '+unit.state+' · '+Math.round(unit.speed*3.6)+' km/h':option.textContent;}
     $('unitSelect').value=u?.id??'';
+    const era=C.eraView(u);
+    $('eraSummary').hidden=!era;
+    ui.setText($('eraSummary'),era?era.type+' 잔여 피복 · '+Object.entries(era.coverage)
+      .map(([zone,value])=>zoneNames[zone]+' '+Math.round(value*100)+'%').join(' / '):'');
     if(!u){
       for(const id of ['move','reverse','stop','sight','fire','guardMenu','lookChannel','lookDirection','lookResume','designateTarget','cancelDesignation','fireMode','ammoSelect'])$(id).disabled=true;
       ui.setText($('unitName'),'선택 차량 없음');ui.setText($('unitType'),living.length?'위 선택 메뉴에서 아군을 선택':'아군 차량 전멸');ui.setText($('velocity'),'0');ui.setText($('motionState'),'—');
@@ -823,7 +828,7 @@
   }
   // Detached snapshots include friendly telemetry and public contacts only.
   window.__TACTICAL__={
-    version:'0.4-WIP23',core:C,snapshot:()=>JSON.parse(JSON.stringify({
+    version:'0.4-WIP24',core:C,snapshot:()=>JSON.parse(JSON.stringify({
       scenarioId,time:sim.time,selected,targetId,paused,timeScale,sightHeld,reverseMode,showContours,terrainMode,camera,units:sim.units.filter(u=>u.team==='blue').map(snapshotUnit),contacts:C.contacts(sim),frameCount,lookPicking,guardPopupOpen,portraitBlocked,look:lookView(),firing:selectedUnit()?C.fireStatus(sim,selectedUnit(),targetId):null,shots:C.fireEvents(sim,'blue'),effects:C.effectEvents(sim),effectStats:effectRenderer.stats()
     }
     )),command:(x,y,reverse=false)=>{if(portraitBlocked)return{ok:false,reason:'portrait-blocked'};

@@ -107,7 +107,28 @@ const TacticalFireControl=(()=>{
   }
   function motionReady(u,p,s=init(u,p)){const m=p.fireControl.movement;return m.fireOnMove||Math.abs(u.drive?.velocity??u.speed??0)<=m.stationarySpeedMps+1e-9&&s.stationaryElapsed+1e-9>=m.stationaryHoldSeconds;}
   function currentAmmoId(p,s){return managed(p)?s.ammunition.loadedAmmoId||s.ammunition.task?.ammoId||null:p.weapons.mainGun.ammunitionId??null;}
-  function fireSettings(p,s,ammoId=currentAmmoId(p,s)){const ammo=ammoId&&Combat.ammunitionRegistry.has(ammoId)?Combat.ammunitionRegistry.get(ammoId):null;return ammo?{...p.fireControl,muzzleVelocity:ammo.muzzleVelocity}:p.fireControl;}
+  function fireSettings(p,s,ammoId=currentAmmoId(p,s)){
+    const ammo=ammoId&&Combat.ammunitionRegistry.has(ammoId)?Combat.ammunitionRegistry.get(ammoId):null;
+    return ammo?{...p.fireControl,muzzleVelocity:ammo.muzzleVelocity,flightSpeed:ammo.flightSpeed}:p.fireControl;
+  }
+  function flightTime(range,f){
+    if(!f.flightSpeed)return range/(f.muzzleVelocity*f.velocityRetention);
+    const {rangesM,valuesMps}=f.flightSpeed;
+    let time=Math.min(range,rangesM[0])/valuesMps[0];
+    // Integrate dt = dx / v(x) along each linear segment to the aim point.
+    for(let i=1;i<rangesM.length&&range>rangesM[i-1];i++){
+      const d=Math.min(range,rangesM[i])-rangesM[i-1];
+      const start=valuesMps[i-1],slope=(valuesMps[i]-start)/(rangesM[i]-rangesM[i-1]);
+      time+=slope===0?d/start:Math.log1p(slope*d/start)/slope;
+    }
+    // An in-flight target can move past the final node. Extend only the
+    // elapsed-time calculation at terminal speed until extrapolation is set.
+    return time+Math.max(0,range-rangesM.at(-1))/valuesMps.at(-1);
+  }
+  function effectiveFlightSpeed(range,f){
+    if(!f.flightSpeed)return f.muzzleVelocity*f.velocityRetention;
+    return range>0?range/flightTime(range,f):f.muzzleVelocity;
+  }
   // Fictional RTS error budget. Target manoeuvre is represented only by the
   // difference between predicted and actual pose at impact, never twice here.
   function normalCdf(x){
@@ -118,7 +139,7 @@ const TacticalFireControl=(()=>{
   }
   function errorBudget(observer,pose,f,targetVelocity={x:0,y:0},layTime=0,errorSigmaMultiplier=1){
     const dx=pose.x-observer.x,dy=pose.y-observer.y,range=Math.hypot(dx,dy),safeRange=Math.max(1e-9,range),beta=Math.atan2(dy,dx);
-    const vx=targetVelocity.x||0,vy=targetVelocity.y||0,cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=range/(f.muzzleVelocity*f.velocityRetention);
+    const vx=targetVelocity.x||0,vy=targetVelocity.y||0,cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=flightTime(range,f);
     const disp=f.dispersionMrad,lay=f.layMinMrad+(f.layStartMrad-f.layMinMrad)*Math.exp(-Math.max(0,layTime)/f.layTauSeconds);
     const rng=1000*GRAVITY*f.rangeErrorM/(2*f.muzzleVelocity**2),lead=1000*f.leadResidual*cross*tof/safeRange,own=f.stabMradPerMps*Math.abs(observer.speed||0);
     const multiplier=Number.isFinite(errorSigmaMultiplier)&&errorSigmaMultiplier>0?errorSigmaMultiplier:1;
@@ -193,7 +214,7 @@ const TacticalFireControl=(()=>{
     const pose=sight?.gone?{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}:sight?.pose||{...shot.pose,x:shot.predicted.x,y:shot.predicted.y};
     const rects=sight?.gone?[]:presentedRects(shot.origin,pose,sight||shot.fireExposure,shot.fireControl);
     const ex=Math.cos(shot.beta),ey=Math.sin(shot.beta),px=-ey,py=ex,dx=pose.x-shot.predicted.x,dy=pose.y-shot.predicted.y;
-    const lateral=dx*px+dy*py,radial=dx*ex+dy*ey,range=Math.hypot(pose.x-shot.origin.x,pose.y-shot.origin.y),vavg=shot.fireControl.muzzleVelocity*shot.fireControl.velocityRetention;
+    const lateral=dx*px+dy*py,radial=dx*ex+dy*ey,range=Math.hypot(pose.x-shot.origin.x,pose.y-shot.origin.y),vavg=effectiveFlightSpeed(range,shot.fireControl);
     const dz=-GRAVITY*range*radial/(2*vavg*vavg),mu={x:shot.aim.x-lateral,z:shot.aim.z+dz},sx=shot.sigma.x/1000*range,sz=shot.sigma.z/1000*range;
     let pHull=0,pTurret=0;
     for(const rect of rects){const p=rectProbability(rect,mu,sx,sz);if(rect.part==='hull')pHull=p;else pTurret=p;}
@@ -216,7 +237,7 @@ const TacticalFireControl=(()=>{
   function marchImpact(shot,pose,point,environment){
     const heightAt=environment?.heightAt||(()=>0),buildingAt=environment?.buildingAt||(()=>null),world=environment?.world||{w:Infinity,h:Infinity};
     const px=-Math.sin(shot.beta),py=Math.cos(shot.beta),qx=pose.x+point.x*px,qy=pose.y+point.x*py,dx=qx-shot.origin.x,dy=qy-shot.origin.y,total=Math.hypot(dx,dy),ux=total?dx/total:Math.cos(shot.beta),uy=total?dy/total:Math.sin(shot.beta);
-    const h0=heightAt(shot.origin.x,shot.origin.y)+shot.fireEye,hq=heightAt(pose.x,pose.y)+point.z,vavg=shot.fireControl.muzzleVelocity*shot.fireControl.velocityRetention;
+    const h0=heightAt(shot.origin.x,shot.origin.y)+shot.fireEye,hq=heightAt(pose.x,pose.y)+point.z,vavg=effectiveFlightSpeed(total,shot.fireControl);
     const boundary=Math.min(ux>0?(world.w-shot.origin.x)/ux:ux<0?-shot.origin.x/ux:Infinity,uy>0?(world.h-shot.origin.y)/uy:uy<0?-shot.origin.y/uy:Infinity);
     const requested=total+shot.fireControl.impact.maxBeyondM,limit=Math.max(0,Math.min(requested,boundary));
     const state=s=>{const x=shot.origin.x+ux*s,y=shot.origin.y+uy*s,z=pathHeight(h0,hq,s,total,vavg),building=buildingAt(x,y);if(building&&building.roof>=z)return{kind:'building',x,y,z};if(z<=heightAt(x,y))return{kind:'ground',x,y,z};return null;};
@@ -446,6 +467,6 @@ const TacticalFireControl=(()=>{
     const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
     return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,probe,setMode,setAmmoPreference,view,cancel,suppressAuto,react,ammoIncidentSnapshot,applyAmmoIncident,emitCombatEffect,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,proportionalLoss,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,flightTime,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,proportionalLoss,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;

@@ -22,6 +22,7 @@
 | 21 | T-80U 모델·장갑 | [지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) |
 | 22 | T-80U 관측·포탑 선회 | [지시서](TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md) |
 | 23 | T-80U 정지 사격·자동장전 | [지시서](TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER.md) |
+| 24 | 장갑 동기화·Kontakt ERA 소모 | [지시서](TACTICAL_WIP24_ARMOR_SYNC_AND_ERA_DEPLETION.md) |
 
 ## 구현 기록과 당시 상태
 

@@ -3,7 +3,7 @@ function ready(seed=17){const f=fixture('flat',{target:{x:1000,y:1000},seed});f.
 function fireAndLand(f,{hide=false}={}){const key=f.contact().key,before=f.t.combat.hp;assert(f.C.requestFire(f.s,f.u,key).ok);assert.equal(f.t.combat.hp,before);f.step();const fired=f.C.fireEvents(f.s).find(e=>e.type==='fired'&&!f.__seen?.has(e.id));f.__seen??=new Set();f.__seen.add(fired.id);if(hide){f.u.turret+=Math.PI;f.u.commander+=Math.PI;}while(f.s.time<fired.impactAt+.051)f.step();return{before,after:f.t.combat.hp,impact:f.C.fireEvents(f.s).find(e=>e.type==='impact'&&e.id===fired.id),internal:f.C.fireDebugRecords(f.s).find(e=>e.id===fired.id)};}
 
 test('V05 real core applies no launch damage and exactly one impact-time damage',()=>{
- const f=ready(),r=fireAndLand(f);assert.equal(r.internal.result,'hit');assert(r.after<r.before);assert.equal(r.impact.combat.damage,r.before-r.after);const hp=r.after;for(let i=0;i<20;i++){f.C.fireEvents(f.s);f.C.fireStatus(f.s,f.u);f.C.combatView(f.t);}assert.equal(f.t.combat.hp,hp);assert.equal(f.C.combatEvents(f.s).length,1);
+ const f=ready(),r=fireAndLand(f);assert.equal(r.internal.result,'hit');assert(r.after<r.before);assert(Math.abs(r.impact.combat.damage-(r.before-r.after))<1e-9);const hp=r.after;for(let i=0;i<20;i++){f.C.fireEvents(f.s);f.C.fireStatus(f.s,f.u);f.C.combatView(f.t);}assert.equal(f.t.combat.hp,hp);assert.equal(f.C.combatEvents(f.s).length,1);
 });
 
 test('V08 an unobserved resolved hit still damages internally without public armour or HP leakage',()=>{
