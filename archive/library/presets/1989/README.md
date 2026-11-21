@@ -3,7 +3,8 @@
 > **2026-11-19 5단계 정본 전환 완료 — 원본 비교 통과.** 원본 공유 템플릿 **18개 × 3 = 54개 행**을 **차량 32종 × 3 = 96개 행**으로 확장. 모든 구획 발수 합계를 검산했고 **원본 32개 차량 최대 HP 목록과 차명 집합을 대조**했다. 프리셋 수치 변경·게임 코드 수정 없음. [전차 원본](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md) · [탄약 원본 §11](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/ammo/README.md)
 
 - **정형 데이터:** [`TANK_LOADOUTS_96.json`](TANK_LOADOUTS_96.json). **현행 정본은 이 JSON과 본 문서**, 기존 `archive/ammo/README.md`는 레거시 출처 기록.
-- **자주대공포 별도 탄띠(96개 전차 프리셋에 포함하지 않음):** [M163·ZSU-23-4 HE×3+AP×1 단일 고정 탄띠](AA_FIXED_BELTS_M163_SHILKA.md), [게파르트 전용 탄띠/DM23 별도](GEPARD_BELTS.md). M163 총 2,100발(즉응 1,031·준즉응 1,069), 쉴카 총 적재량 미정. 기존 `TANK_LOADOUTS_96.json` 불변.
+- **자주대공포 별도 탄띠(96개 전차 프리셋에 포함하지 않음):** [M163·ZSU-23-4 HE×3+AP×1 단일 고정 탄띠](AA_FIXED_BELTS_M163_SHILKA.md), [게파르트 전용 탄띠/DM23 별도](GEPARD_BELTS.md). M163 총 2,100발(즉응 1,031·준즉응 1,069), **쉴카 2,000발 전량 즉응(포 4문×500발)**. 기존 `TANK_LOADOUTS_96.json` 불변.
+- **2S6 퉁구스카 기관포 별도 고정 탄띠:** [HEF-I→HEF-T→HEF-I→AP-T](TUNGUSKA_2A38_BELT.md) — 총 **1,936발**, HEF-I 968/HEF-T 484/AP-T 484, [30mm 탄약 정본](../../ammunition/autocannon/TUNGUSKA_30MM_2A38.md). 기존 전차 96개 JSON 미변경.
 - **수량 표기:** 소련/NVA = AP/HEAT/HE/ATGM, NATO = AP/HEAT/HEP. 준즉응탄이 없는 곳은 —로 표시. 표의 개별 차량은 원본에서 같은 편성 템플릿을 공유하던 형식을 풀어 쓴 것임.
 
 | 진영 | 차량 형식 | 프리셋 | 즉응탄 | 준즉응탄 | 예비탄 | 총탄 |
