@@ -19,6 +19,7 @@
 - [모든 공중장비·모든 탄종 **비관통 직격**, AP계열 **과관통** 시 기본 피해 최소 25%](combat/AIR_TARGET_DAMAGE.md)
 - [HEP 30mm 파공·30~120mm 스폴/비파공 감쇄, HE-FRAG·APERS 피해 경로](combat/HEP_HEFRAG_APERS.md)
 - [게파르트 DM21 지상/공중 폭발 피해곡선, DM13A1 신관·DM23 KE](../ammunition/autocannon/GEPARD_35MM.md) — HEP와 구분
+- [M163·쉴카 **20/23mm AP·HE 탄약 정본**](../ammunition/autocannon/M163_SHILKA_AA_20_23MM.md) — **AP-I 38/HEI-T 68/API-T 55/HEFI-T 108HP**, 3:1 고정 탄띠, 공중 최소 피해/정확한 CE 매핑 미정
 - [IFV 고폭탄 공통 **지상 급감·공중 완만 감쇄** 곡선](combat/IFV_HE_DAMAGE_CURVES.md) — **20/25/30mm 기관포 HE 적용**, **73mm 그롬 OG-15V 제외**, 탄종별 기본 HP·CE값 불변, 상세 매핑 미정
 - [모듈·승무원·탄약고 사고](combat/MODULE_CREW_AMMO_INCIDENTS.md)
 - [잔해·관측/선택](combat/WRECK_VISIBILITY.md)
