@@ -17,6 +17,7 @@
 ## 1989 자주대공포·기관포 탄약
 
 - [서독 게파르트 **35mm KDA DM21 HEI / DM13A1 SAPHEI-T / DM23 APDS-T**](autocannon/GEPARD_35MM.md) — 6거리×3각도 KE 관통력 이미지 수치, DM21 지상·공중 별도 CE 피해곡선, DM13A1 신관·외부 폭발, DM23 과관통. [차량 정본](../vehicles/1989/air_defense/GEPARD.md) · [탄띠 프리셋](../presets/1989/GEPARD_BELTS.md).
+- [소련 초기형 2S6 **30mm 2A38 AP-T 83HP / HEF-T 129HP / HEF-I 152HP**](autocannon/TUNGUSKA_30MM_2A38.md) — 워썬더 0° KE/CE 6거리 자료, **5,000RPM·1,936발·HEF-I→HEF-T→HEF-I→AP-T**; [퉁구스카 차량](../vehicles/1989/air_defense/2S6_TUNGUSKA.md) · [탄띠](../presets/1989/TUNGUSKA_2A38_BELT.md).
 - [미국 M163 M168 20mm **AP-I 38HP + HEI-T 68HP / 쉴카 AZP-23 23mm API-T 55HP + HEFI-T 108HP**](autocannon/M163_SHILKA_AA_20_23MM.md) — 각 탄종 사용자 이미지/워썬더 거리별 KE/CE, **3 HE:1 AP 단일 고정 탄띠**. [M163](../vehicles/1989/air_defense/M163_VADS.md) · [쉴카](../vehicles/1989/air_defense/ZSU23_4_SHILKA.md) · [탄띠](../presets/1989/AA_FIXED_BELTS_M163_SHILKA.md).
 
 ## 후속 시대 / 현대 APFSDS
@@ -27,6 +28,8 @@
 - [근거리 0~10m KE 29종 3각도 이관본](references/NEAR_ZERO_10M_KE.md) — 원본 29종의 게임용 10m/2km 표와 추정·검토 메모 보존.
 
 ## 미사일
+
+- **최초 본격 1989 방공미사일 설계:** [초기형 **9M311 SAM**](missiles/9M311_SAM.md) — **30 CE 거리 무관, 직격 415HP, 근접신관 성공 시 185~285HP 기본 폭발 피해**, 대상 CE 방호·폭발 거리 감쇄, 조건부 근접신관 발동 확률(수치 미정), **SACLOS/무선 지령 유도**, 초기 2S6 **4발**. [차량 정본](../vehicles/1989/air_defense/2S6_TUNGUSKA.md).
 
 | 계열 | 이관 문서 | 주요 구분 |
 |---|---|---|
