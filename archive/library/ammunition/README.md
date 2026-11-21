@@ -10,7 +10,7 @@
 | 미국 120mm (1989) | [US 120mm — M829·M829A1·M830 (M829 계열 5거리 KE·탄속 확정)](cannon/US_120.md) |
 | 서독 105mm | [West Germany 105mm](cannon/WEST_GERMANY_105.md) |
 | 서독 120mm (1989) | [West Germany 120mm — DM33·DM33A1 5거리 KE·탄속 2026-11-20 갱신, DM33A1 피해 366 HP](cannon/WEST_GERMANY_120_1989.md) |
-| 소련 125mm | [Soviet 125mm — 3BM15/3BM32/3BM42 5거리 KE 관통력·비행속도(2026-11-22 최신), 피해 유지](cannon/SOVIET_125.md) |
+| 소련 125mm | [Soviet 125mm — 3BM15/3BM22/3BM32/3BM42 5거리 KE 관통력·비행속도(2026-11-22 최신), 피해 유지](cannon/SOVIET_125.md) |
 | 동독 NVA 100/125mm | [NVA 탄약](cannon/NVA.md) |
 | 전차별 기본 지급 탄종 | [NATO·소련 기본 탄종 연결](cannon/DEFAULT_TANK_AMMO.md) |
 
