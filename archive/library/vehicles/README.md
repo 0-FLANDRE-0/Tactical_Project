@@ -38,7 +38,7 @@
 ## 1989 공격헬기
 
 - [AH-64A Apache](1989/air/AH64A.md) · [AGM-114A Hellfire](../ammunition/missiles/AGM_114A_HELLFIRE.md)
-- [**소련 초기형 2K22 / 2S6 Tunguska — 30mm 2A38 쌍열×2기/5,000RPM/1,936발·대공 유효 3km/최대 4km·9M311 4발**](1989/air_defense/2S6_TUNGUSKA.md) — [30mm AP-T 83/HEF-T 129/HEF-I 152HP](../ammunition/autocannon/TUNGUSKA_30MM_2A38.md), [4발 고정 탄띠](../presets/1989/TUNGUSKA_2A38_BELT.md), [9M311 SAM 30 CE·직격 415/근접 185~285HP](../ammunition/missiles/9M311_SAM.md); **알루미늄 장갑, 7구역 KE(CE) 15/10/10/15/10/10/15mm RHAe 및 차량 최대 425HP 확정**. 레이더 수치·신관 확률·신뢰도 수치는 미정. **런타임 미구현**.
+- [**소련 초기형 2K22 / 2S6 Tunguska — 30mm 2A38 쌍열×2기/5,000RPM/1,936발·대공 유효 3km/최대 4km·9M311 4발**](1989/air_defense/2S6_TUNGUSKA.md) — [30mm AP-T 83/HEF-T 129/HEF-I 152HP](../ammunition/autocannon/TUNGUSKA_30MM_2A38.md), [4발 고정 탄띠](../presets/1989/TUNGUSKA_2A38_BELT.md), [9M311 SAM 30 CE·직격 415/근접 185~285HP](../ammunition/missiles/9M311_SAM.md); **7구역 KE(CE) 15/10/10/15/10/10/15 RHAe·차량 최대 425HP 확정**(알루미늄은 실차 재질 설명). 레이더 수치·신관 확률·신뢰도 수치는 미정. **런타임 미구현**.
 
 - [Mi-24D·V·P Hind](1989/air/MI24_D_V_P.md) · [Mi-24 탑재 대전차유도미사일](../ammunition/missiles/MI24_ATGM.md)
 
