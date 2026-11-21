@@ -1,29 +1,31 @@
-# 작업 지시서 백업
+# TACTICAL — WIP 작업 지시서 원본 목록
 
-작업 AI에게 전달한 지시서와 기준표 스크립트의 원본 사본 및 목차. WIP11 지시서는 `docs/`의 원본 사본을 가리킨다. 구현 결과는 각 PR 브랜치의 `docs/` 구현 문서와 `tests/releases/WIP*-validation.json`을 본다.
+> **이 폴더는 과거 작업 AI에게 전달된 지시서의 보관소다.** WIP 문서의 명령문·당시 테스트/병합 상태는 **현재 코드 구현 상태나 최신 게임 제원 확정**을 뜻하지 않는다. 제원은 [현행 라이브러리](../library/README.md)를 우선한다.
 
-| 단계 | 지시서 | 기준표 스크립트 | 구현 PR | 상태 (2026-11-18) |
-|---|---|---|---|---|
-| WIP23 T-80U(1989) 정지 사격·3BM42·6초 자동장전 | [원본 지시서](TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER.md) | — | `feat/wip23-t80u-fire-autoloader` | 구현·실제 코어/Chromium 검증 완료 · PR/병합 대기 · 기동/AI 제외 |
-| WIP22 T-80U(1989) 자체 관측·인계·선회 | [원본 지시서](TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md) | — | `feat/wip22-t80u-observation-traverse` | 구현·검증 완료 · PR 검토/병합 대기 · 125mm 무장/기동 제외 |
-| WIP21 T-80U(1989) 모델·장갑 통합과 피격시험 | [원본 지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) | — | `feat/wip21-t80u-model-armor` | 작성자 구현·검증 완료 · PR 검토 대기 · ERA 방호만 적용, 소모/손상 없음 |
-| WIP20 M1A2(1998) 전용 탄약고 사고 | [원본 지시서](TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) | — | `feat/wip20-ammunition-incidents` | 최종 3633952 독립 재검증 통과 · main 병합 (2026-11-14) · M1A2_1998 전용 시험 설정 |
-| WIP19 탄약 운용·3종 탄약과 우측 명령/선택 정보 패널 | [원본 지시서](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) | — | `feat/wip19-ammunition-command-panel` | 최종 5bf1bb5 독립 재검증 통과 · main 병합 (2026-11-14) · M1A2_1998 전용 시험 설정 |
-| WIP18 일시 기능 이상·승무원 경중상 | [원본 지시서](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) | — | `feat/wip18-hit-reactions` | 최종 6c5e4f3 독립 재검증 통과 · main 병합 (2026-11-13) · M1A2_1998 전용 시험 설정 |
-| WIP17 가변 맵 크기 지원 기반 | [원본 지시서](TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) | — | `feat/wip17-variable-map-foundation` | 최종 624d80d 독립 재검증 통과 · main 병합 (2026-11-13) · 실제 8×8 지도 제작 제외 |
-| WIP16 적 AI 교전 판단·표적 선택·행동 안정화 | [기본 지시서](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) · [능선 캐시 보완](TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md) · [halt 재확인 보완](TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md) | — | PR #15 | 최종 47f9e07 독립 재검증 통과 · main 병합 |
-| WIP15 가변 장전·피격 동요·장비 일시 이상 | [기본 지시서](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) · [관측 이상 수정](TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md) | — | PR #14 | 최종 5a0b516 독립 재검증 통과 · main 병합 |
-| WIP09 명중 확률 | [TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md](TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md) | [wip09_hit_reference.py](wip09_hit_reference.py) | #5 | 검토 통과 · main 병합 |
-| WIP10 발사·비행·착탄 | [TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md](TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md) | [wip10_hit_reference.py](wip10_hit_reference.py) | #6 | 검토 통과 · main 병합 |
-| WIP11A 피해·격파 | [TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md](../../docs/TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md) | — | #9 | 검토 통과 · main 병합 |
-| WIP11B 잔해·기본 자동교전 | [TACTICAL_WIP11B_WRECK_AND_AUTO_ENGAGEMENT_INSTRUCTIONS.md](../../docs/TACTICAL_WIP11B_WRECK_AND_AUTO_ENGAGEMENT_INSTRUCTIONS.md) | — | #9 | 검토 통과 · main 병합 |
-| WIP11C UI·경계 임무 | [TACTICAL_WIP11C_UI_AND_GUARD_INSTRUCTIONS.md](../../docs/TACTICAL_WIP11C_UI_AND_GUARD_INSTRUCTIONS.md) | — | #9 | 검토 통과 · main 병합 |
-| WIP11D 지형 판독성 | [TACTICAL_WIP11D_TERRAIN_READABILITY.md](TACTICAL_WIP11D_TERRAIN_READABILITY.md) | — | #9 | 검토 통과 · main 병합 |
-| WIP11E 9표본 LOS 중복 조회 최적화 | [TACTICAL_WIP11E_LOS_OPTIMIZATION.md](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) | — | #10 | 재검증 통과 · main 병합 |
-| WIP12 사격 이펙트·미관측 사격·도탄 | [TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md](TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) | — | main 6e5a510 | 최종 수정·재검증 완료 · main 병합 |
-| WIP13 경량 구동·자동변속·제동·조향 | [TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md](TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md) | — | 최종 구현 94652dc | 조향 보완·재검증 통과 · main 병합 |
-| WIP14 적 경로 이동·기본 AI·사격 시 이동 정책 | [TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md](TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md) | — | 최종 구현 3da0c4f | 임무 수명·재관측 보완 및 재검증 통과 · main 병합 |
+## 원본 지시서 찾기
 
-- 스크립트는 표준 라이브러리만 사용한다. `python3 wip10_hit_reference.py`로 기준값 표를 출력한다.
-- WIP10 사본의 SHA-256은 지시서 `4e469d69…`, 스크립트 `142e5001…`로 PR #6 검증 기록(`tests/releases/WIP10-validation.json`)과 같다.
-- 모든 계수는 게임 튜닝값이며 실제 사통장치·탄약 성능이 아니다.
+| WIP | 작업 내용 | 원본 |
+|---|---|---|
+| 09 | 명중 확률 | [지시서](TACTICAL_WIP09_HIT_PROBABILITY_INSTRUCTIONS.md) · [참조 스크립트](wip09_hit_reference.py) |
+| 10 | 발사·비행·착탄 | [지시서](TACTICAL_WIP10_FLIGHT_IMPACT_INSTRUCTIONS.md) · [참조 스크립트](wip10_hit_reference.py) |
+| 11A~C | 피해·격파 / 잔해·자동교전 / UI·경계 | [11A](../../docs/TACTICAL_WIP11A_IMPLEMENTATION_INSTRUCTIONS.md) · [11B](../../docs/TACTICAL_WIP11B_WRECK_AND_AUTO_ENGAGEMENT_INSTRUCTIONS.md) · [11C](../../docs/TACTICAL_WIP11C_UI_AND_GUARD_INSTRUCTIONS.md) (원본 위치: `docs/`) |
+| 11D~E | 지형 판독성 / LOS 최적화 | [11D](TACTICAL_WIP11D_TERRAIN_READABILITY.md) · [11E](TACTICAL_WIP11E_LOS_OPTIMIZATION.md) |
+| 12 | 사격 이펙트·도탄 | [지시서](TACTICAL_WIP12_EFFECTS_AND_RICOCHET.md) |
+| 13 | 경량 구동·변속·조향 | [지시서](TACTICAL_WIP13_LIGHTWEIGHT_MOBILITY.md) |
+| 14 | 적 이동·전투 AI | [지시서](TACTICAL_WIP14_ENEMY_AI_AND_FIRE_MOVEMENT.md) |
+| 15 | 가변 장전·일시 이상 | [기본](TACTICAL_WIP15_RELOAD_AND_TEMPORARY_REACTIONS.md) · [관측 이상 수정](TACTICAL_WIP15_OBSERVATION_FAULT_REVISION.md) |
+| 16 | 교전 판단·행동 안정화 | [기본](TACTICAL_WIP16_ENGAGEMENT_DECISIONS.md) · [검토 보완](TACTICAL_WIP16_REVIEW_CORRECTIONS_ADDA7BF.md) · [능선 캐시](TACTICAL_WIP16_RIDGE_CACHE_CORRECTION_311EC5B.md) · [정지 확인](TACTICAL_WIP16_HALT_PROBE_CORRECTION_2D68725.md) |
+| 17 | 가변 지도 크기 | [지시서](TACTICAL_WIP17_VARIABLE_MAP_FOUNDATION.md) |
+| 18 | 피격 반응·승무원 부상 | [지시서](TACTICAL_WIP18_HIT_REACTIONS_AND_CREW_INJURIES.md) |
+| 19 | 탄약·명령 패널 | [지시서](TACTICAL_WIP19_AMMUNITION_AND_COMMAND_PANEL.md) |
+| 20 | M1A2 탄약고 사고 | [지시서](TACTICAL_WIP20_M1A2_AMMUNITION_INCIDENTS.md) |
+| 21 | T-80U 모델·장갑 | [지시서](TACTICAL_WIP21_T80U_MODEL_AND_ARMOR.md) |
+| 22 | T-80U 관측·포탑 선회 | [지시서](TACTICAL_WIP22_T80U_OBSERVATION_AND_TRAVERSE.md) |
+| 23 | T-80U 정지 사격·자동장전 | [지시서](TACTICAL_WIP23_T80U_FIRE_AND_AUTOLOADER.md) |
+
+## 구현 기록과 당시 상태
+
+- **2026-11-18 당시 PR·시험·병합 상태표:** [정리 이전 지시서 목차 원문](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-stage3-baseline-2026-11-21/archive/instructions/README.md). 이 표는 역사 기록이며 오늘의 main 상태가 아님.
+- **2026-11-15 당시 상태 복사본:** [중복 색인 원본](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-stage3-baseline-2026-11-21/archive/library/history/implementation/README.md). 중복 파일은 현행 `archive/library/history/`에서 정리했다.
+- **현재 코드 반영 여부:** 개별 PR, `docs/` 구현 설명 및 `tests/releases/WIP*-validation.json` 등에서 **별도로 확인**. 이 목차는 최신 테스트 통과나 병합 여부를 주장하지 않는다.
+- WIP09·10의 Python 스크립트는 당시 계산 기준의 참고 코드다. 실제 장비 공식 제원이 아닌 게임 튜닝값과 혼동하지 않는다.
