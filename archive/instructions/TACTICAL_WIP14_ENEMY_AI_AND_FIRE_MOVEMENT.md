@@ -25,7 +25,7 @@
 
 - `src/sim-core.js`, `src/mobility.js`, `src/observation.js`, `src/fire-control.js`, `src/app.js`
 - `src/vehicle-profiles.js`, `data/vehicles/M1A2.json`, `data/vehicles/M1A2_1998.json`, `scripts/export_vehicle_profile.cjs`
-- [WIP13 구현](../MOBILITY_WIP13.md), [WIP13 병합 검토](../reviews/WIP13_MERGE_REVIEW_2026-11-09.md), [기존 자동교전](../WRECK_AND_AUTO_ENGAGEMENT_WIP11B.md), [경계·교전 임무](../UI_AND_GUARD_WIP11C.md), [WIP12 효과](../COMBAT_EFFECTS_AND_RICOCHET_WIP12.md)
+- [WIP13 구현](../../docs/MOBILITY_WIP13.md), [WIP13 병합 검토](../../docs/reviews/WIP13_MERGE_REVIEW_2026-11-09.md), [기존 자동교전](../../docs/WRECK_AND_AUTO_ENGAGEMENT_WIP11B.md), [경계·교전 임무](../../docs/UI_AND_GUARD_WIP11C.md), [WIP12 효과](../../docs/COMBAT_EFFECTS_AND_RICOCHET_WIP12.md)
 - `archive/NEXT_STEPS_2026-11-07.md`와 성능/AI 아카이브는 현재 구현·제안·미정을 구분해서 읽는다. 그 안의 장기 구상을 이번 필수 기능으로 확대하지 않는다.
 
 ## 3. 기본 임무와 교전 반응의 분리
