@@ -30,10 +30,10 @@
 
 ## 1989 자주대공포
 
-- [**미국 M163 VADS — M113A2 차체·20mm M168 단일 AP-I·AI 가변 점사·대공 사거리 1.2/1.5km**](1989/air_defense/M163_VADS.md) — 2026-11-20 확정 설계값, 레이더 세부 수치·포탑 방호는 후속
+- [**미국 M163 VADS — M113A2 400HP·20mm M168 HEI-T 68HP / AP-I 38HP·3:1 고정 탄띠·AI 가변 점사·대공 유효 1.2km/최대 1.5km**](1989/air_defense/M163_VADS.md) — [20mm/23mm 탄약 상세](../ammunition/autocannon/M163_SHILKA_AA_20_23MM.md), 레이더·포탑 방호 수치 미정
 
 - [**서독 Flakpanzer Gepard — 35mm KDA 2문·650 HP·7구역 장갑·대공 유효 3.5km/최대 4km**](1989/air_defense/GEPARD.md) — [35mm 탄약](../ammunition/autocannon/GEPARD_35MM.md) · [대공형/범용형 실제 3:1 탄띠](../presets/1989/GEPARD_BELTS.md) · [수색레이더 최대 15km·공통 추적 규칙](../systems/air/RADAR_SEARCH_TRACKING.md)
-- [**ZSU-23-4 Shilka — 1989 차량 설계 준비표(미확정)**](1989/air_defense/ZSU23_4_SHILKA_PREP.md) — 23mm 4문·Gun Dish 실물 참고 자료, 구형/23-4M 수색모드 차이·탄약·사거리·장갑·HP **게임 수치 전부 추후 결정**
+- [**ZSU-23-4 Shilka — 7구역 20/15/10/15/15/10/15 KE(CE)·450HP·23mm 4문·API 55HP/HE 108HP·3:1 고정 탄띠**](1989/air_defense/ZSU23_4_SHILKA.md) — [사용자 이미지 KE/워썬더 CE 및 탄속](../ammunition/autocannon/M163_SHILKA_AA_20_23MM.md); **게임 발사속도·적재·대공거리·레이더/명중률 미정**. [이전 자료 검토표](1989/air_defense/ZSU23_4_SHILKA_PREP.md)
 
 ## 1989 공격헬기
 
