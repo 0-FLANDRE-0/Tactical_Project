@@ -15,7 +15,7 @@
 
 - `src/tactical-ai.js`, `src/observation.js`, `src/fire-control.js`, `src/sim-core.js`, `src/app.js`, `src/vehicle-profiles.js`
 - `tests/tactical-ai.test.cjs`, `tests/wip11b-wreck-auto.test.cjs`, `tests/wip11c-ui-guard.test.cjs`, `tests/wip15-core.test.cjs`, `tests/wip15-readiness.test.cjs`, `tests/wip15-browser.test.cjs`
-- [WIP14 구현](../ENEMY_AI_FIRE_MOVEMENT_WIP14.md), [WIP15 구현](../RELOAD_AND_TEMPORARY_REACTIONS_WIP15.md), [WIP15 병합 검토](../reviews/WIP15_MERGE_REVIEW_2026-11-09.md), [진행 메모](../../archive/NEXT_STEPS_2026-11-07.md)
+- [WIP14 구현](../../docs/ENEMY_AI_FIRE_MOVEMENT_WIP14.md), [WIP15 구현](../../docs/RELOAD_AND_TEMPORARY_REACTIONS_WIP15.md), [WIP15 병합 검토](../../docs/reviews/WIP15_MERGE_REVIEW_2026-11-09.md), [진행 메모](../../archive/NEXT_STEPS_2026-11-07.md)
 
 ## 2. 현재 동작과 이번에 바꿀 부분
 
