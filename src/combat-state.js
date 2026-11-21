@@ -18,7 +18,8 @@ const TacticalCombatState=(()=>{
     M829A2:{
       id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
       hitReactionPolicyId:'tank-ke/M829A2',ammoIncidentPolicyId:'tank-ammo-incident/M829A2',
-      eraFamily:'APFSDS',antiEra:{'Kontakt-5':{kind:'KE',reduction:.502,source:'archive/library/systems/armor/ANTI_ERA.md'}},
+      eraFamily:'APFSDS',antiEra:{'Kontakt-5':{kind:'KE',reduction:.385,source:'archive/library/systems/armor/ANTI_ERA.md'}},
+      flightSpeed:{rangesM:[10,500,1000,1500,2000],valuesMps:[1680,1651,1622,1594,1566]},
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[630,530,365],[600,505,345]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
@@ -28,9 +29,9 @@ const TacticalCombatState=(()=>{
       id:'M829A1',name:'M829A1',kind:'KE',baseDamage:380,muzzleVelocity:1575,
       eraFamily:'APFSDS',
       hitReactionPolicyId:'tank-ke/M829A1',ammoIncidentPolicyId:'tank-ammo-incident/M829A1',
-      penetration:{rangesM:[10,100,500,1000,1500,2000],anglesDeg:[0,30,60],values:[
-        [600,505,345],[595,503.643216080402,344.09547738693465],[590,497.61306532663315,340.0753768844221],
-        [580,490.0753768844221,335.0502512562814],[570,482.53768844221105,330.0251256281407],[560,475,325]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      flightSpeed:{rangesM:[10,500,1000,1500,2000],valuesMps:[1575,1541,1506,1473,1440]},
+      penetration:{rangesM:[10,500,1000,1500,2000],anglesDeg:[0,30,60],values:[
+        [600,505,350],[587,494,343],[576,485,336],[565,476,330],[555,467,325]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
       nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
@@ -67,7 +68,18 @@ const TacticalCombatState=(()=>{
         throw Error('Anti-ERA 정책 오류: '+ammo.id+'/'+type);
     }
   }
-  for(const ammo of Object.values(AMMUNITION))validateAmmoEraPolicy(ammo);
+  function validateFlightSpeed(ammo){
+    if(!Object.hasOwn(ammo,'flightSpeed'))return;
+    const {rangesM,valuesMps}=ammo.flightSpeed??{};
+    if(!Array.isArray(rangesM)||!Array.isArray(valuesMps)||rangesM.length<2||
+      rangesM.length!==valuesMps.length||valuesMps[0]!==ammo.muzzleVelocity||
+      !rangesM.every((v,i)=>Number.isFinite(v)&&v>(rangesM[i-1]??0))||
+      !valuesMps.every(v=>Number.isFinite(v)&&v>0))throw Error('탄약 거리별 탄속 오류: '+ammo.id);
+  }
+  for(const ammo of Object.values(AMMUNITION)){
+    validateAmmoEraPolicy(ammo);
+    validateFlightSpeed(ammo);
+  }
   function validateHitReactionBindings(p){
     const config=p?.hitReactions;
     if(!config)return'not-participant';

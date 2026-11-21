@@ -20,7 +20,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
       fs.readFileSync(dist,'utf8').replace('<script id="app-code">',`<script>{
         const create=TacticalCore.createScenario;
         TacticalCore.createScenario=(seed,options)=>{
-          const s=create(seed,{...options,recordObservationEvents:true,recordFireEvents:true});
+          const s=create(options?.scenarioId==='t80u-fire'?8:seed,{...options,recordObservationEvents:true,recordFireEvents:true});
           if(${friendly}&&s.id==='t80u-fire')for(const u of s.units)u.team=u.profileId==='T80U_1989'?'blue':'red';
           window.wip24Scenario=s;return s;
         };
@@ -42,14 +42,15 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
   });
   try{
     const page=await open({width:1440,height:900});
-    await advance(page,124); // In flight before the 6.50s impact.
+    await advance(page,124); // In flight before the 6.35s impact.
     await page.evaluate(()=>window.__TACTICAL__.mapView(950,2750,12));
     await advance(page,6);
     const covered=await state(page);
     assert.equal(covered.version,'0.4-WIP24');assert.equal(covered.eraHidden,true);
     assert(covered.contacts.some(c=>c.identified&&c.current&&c.artId==='T80U'));
     assert(covered.effects.some(e=>e.kind==='impact'));
-    assert.equal(covered.hp,1400);assert.equal(covered.coverage.turretFront,.71);
+    assert.equal(covered.hp,1400-covered.privateHits[0].damage);
+    assert(Math.abs(covered.coverage.turretFront-.80)<1e-9);
     await page.screenshot({path:path.join(out,'WIP24-covered-impact.png')});
 
     await page.locator('#pause').click();
@@ -57,9 +58,9 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
     await page.locator('#pause').click();
     await advance(page,120);
     const gap=await state(page),[first,second]=gap.privateHits;
-    assert.equal(first.zone,second.zone);assert(first.eraApplied&&!first.penetrated);
-    assert(!second.eraApplied&&second.penetrated&&second.damage>0);
-    assert.equal(gap.hp,1400-second.damage);
+    assert.equal(first.zone,second.zone);assert(first.eraApplied&&first.penetrated);
+    assert(!second.eraApplied&&second.penetrated&&second.damage>first.damage);
+    assert.equal(gap.hp,covered.hp-second.damage);
     const onCanvas=await page.evaluate(()=>{
       const A=window.__TACTICAL__,u=window.wip24Scenario.units[1],p=A.worldToScreen(u.x,u.y);
       const box=document.querySelector('#map').getBoundingClientRect();return{x:box.left+p.x,y:box.top+p.y};
@@ -70,7 +71,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
     const publicData=JSON.stringify([gap.publicEvents,gap.contacts,gap.effects]);
     for(const key of ['coverageBefore','coverageAfter','eraRoll','eraBonus','antiEraReduction','eraCoverage'])assert(!publicData.includes(key));
     await page.screenshot({path:path.join(out,'WIP24-gap-penetration.png')});
-    evidence.fight={seed:7,shooterPose:gap.shooterPose,targetPose:gap.drivePose,covered:first,gap:second};
+    evidence.fight={seed:8,shooterPose:gap.shooterPose,targetPose:gap.drivePose,covered:first,gap:second};
 
     const beforeReset=await state(page);
     await page.locator('#reset').click();
@@ -95,7 +96,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
       await friendly.evaluate(()=>window.__TACTICAL__.mapView(950,2750,12));
       await advance(friendly,140);
       const final=await state(friendly);
-      assert.equal(final.eraHidden,false);assert.match(final.eraText,/포탑 전 71%/);
+      assert.equal(final.eraHidden,false);assert.match(final.eraText,/포탑 전 80%/);
       assert(Math.abs(final.canvasScale-dpr)<.03);assert(final.overflow<=0);
       await friendly.locator('#eraSummary').scrollIntoViewIfNeeded();
       assert(await friendly.locator('#eraSummary').isVisible());

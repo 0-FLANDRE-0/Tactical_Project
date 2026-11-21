@@ -1,5 +1,5 @@
 {
-  "baselineRef": "551aa9a09a5661ba65bc142a45aba39aba1663f3",
+  "baselineRef": "907e2cc89ba4fcdbe3eaef91be96250522f21d55",
   "seed": 7,
   "seconds": 90,
   "cpu": "AMD EPYC 9V74 80-Core Processor",
@@ -53,8 +53,8 @@
         },
         "core": {
           "samples": 1800,
-          "medianMs": 0.24685100000010607,
-          "p95Ms": 1.0037470000002031
+          "medianMs": 0.2545949999999948,
+          "p95Ms": 1.0014850000000024
         }
       },
       "current": {
@@ -66,24 +66,24 @@
           {
             "id": "A11",
             "hp": 0,
-            "destroyedAt": 77.44999999999774,
+            "destroyedAt": 77.34999999999775,
             "shots": 10
           },
           {
             "id": "A12",
             "hp": 0,
-            "destroyedAt": 57.49999999999887,
+            "destroyedAt": 57.399999999998876,
             "shots": 4
           },
           {
             "id": "T01",
-            "hp": 113.74351654064986,
+            "hp": 112.69873933456921,
             "destroyedAt": null,
             "shots": 7
           },
           {
             "id": "T02",
-            "hp": 311.35719787923153,
+            "hp": 309.03134239156475,
             "destroyedAt": null,
             "shots": 6
           },
@@ -95,22 +95,26 @@
           }
         ],
         "observation": {
-          "queries": 4048,
-          "candidates": 7257,
-          "samples": 7257,
-          "rayQueries": 44668,
-          "rayCacheHits": 20645
+          "queries": 4046,
+          "candidates": 7243,
+          "samples": 7243,
+          "rayQueries": 44581,
+          "rayCacheHits": 20606
         },
         "core": {
           "samples": 1800,
-          "medianMs": 0.2313650000000962,
-          "p95Ms": 0.8390309999999772
+          "medianMs": 0.23979299999996329,
+          "p95Ms": 0.7951110000001336
         }
       },
-      "firstImpactTick": 82,
+      "firstImpactTick": {
+        "baseline": 82,
+        "current": 81
+      },
+      "sharedOpeningTicks": 81,
       "openingEqual": true,
       "holdTerminalEqual": true,
-      "combatPoseObsEqual": true
+      "combatPoseObsEqual": false
     },
     "t80u-armor": {
       "baseline": {
@@ -153,8 +157,8 @@
         },
         "core": {
           "samples": 1800,
-          "medianMs": 0.03135699999984354,
-          "p95Ms": 0.10900300000002972
+          "medianMs": 0.03079600000000937,
+          "p95Ms": 0.11253499999975247
         }
       },
       "current": {
@@ -197,11 +201,15 @@
         },
         "core": {
           "samples": 1800,
-          "medianMs": 0.03246899999976449,
-          "p95Ms": 0.12813199999982317
+          "medianMs": 0.03070499999967069,
+          "p95Ms": 0.10209999999960928
         }
       },
-      "firstImpactTick": 114,
+      "firstImpactTick": {
+        "baseline": 114,
+        "current": 114
+      },
+      "sharedOpeningTicks": 114,
       "openingEqual": true,
       "holdTerminalEqual": true,
       "combatPoseObsEqual": false
@@ -235,8 +243,8 @@
         },
         "core": {
           "samples": 1800,
-          "medianMs": 0.04567799999995259,
-          "p95Ms": 0.17678299999988667
+          "medianMs": 0.04697900000019217,
+          "p95Ms": 0.18956900000011956
         }
       },
       "current": {
@@ -267,11 +275,15 @@
         },
         "core": {
           "samples": 1800,
-          "medianMs": 0.05267900000035297,
-          "p95Ms": 0.17157600000064122
+          "medianMs": 0.0606500000003507,
+          "p95Ms": 0.179595000000063
         }
       },
-      "firstImpactTick": null,
+      "firstImpactTick": {
+        "baseline": null,
+        "current": null
+      },
+      "sharedOpeningTicks": 1800,
       "openingEqual": true,
       "holdTerminalEqual": true,
       "combatPoseObsEqual": true
@@ -305,13 +317,13 @@
         },
         "core": {
           "samples": 1800,
-          "medianMs": 0.05019499999980326,
-          "p95Ms": 0.20132100000046194
+          "medianMs": 0.04294299999946816,
+          "p95Ms": 0.478874999999789
         }
       },
       "current": {
-        "impacts": 13,
-        "hits": 13,
+        "impacts": 7,
+        "hits": 7,
         "penetrations": 4,
         "survivors": 1,
         "units": [
@@ -319,29 +331,33 @@
             "id": "A11",
             "hp": 1450,
             "destroyedAt": null,
-            "shots": 7
+            "shots": 4
           },
           {
             "id": "U01",
             "hp": 0,
-            "destroyedAt": 44.5999999999996,
-            "shots": 6
+            "destroyedAt": 24.450000000000212,
+            "shots": 3
           }
         ],
         "observation": {
-          "queries": 1346,
-          "candidates": 1346,
-          "samples": 1536,
-          "rayQueries": 2603,
-          "rayCacheHits": 11221
+          "queries": 1144,
+          "candidates": 1144,
+          "samples": 1282,
+          "rayQueries": 2180,
+          "rayCacheHits": 9358
         },
         "core": {
           "samples": 1800,
-          "medianMs": 0.03864700000031007,
-          "p95Ms": 0.1528680000001259
+          "medianMs": 0.03193699999974342,
+          "p95Ms": 0.11575099999936356
         }
       },
-      "firstImpactTick": 129,
+      "firstImpactTick": {
+        "baseline": 129,
+        "current": 128
+      },
+      "sharedOpeningTicks": 128,
       "openingEqual": true,
       "holdTerminalEqual": true,
       "combatPoseObsEqual": false
@@ -352,25 +368,25 @@
     "baseline": {
       "withoutERA": {
         "samples": 50,
-        "medianMs": 0.005746700000001207,
-        "p95Ms": 0.00790311666666715
+        "medianMs": 0.004279749999996815,
+        "p95Ms": 0.007247220833392021
       },
       "coveredERA": {
         "samples": 50,
-        "medianMs": 0.005242812499996793,
-        "p95Ms": 0.011290416666675658
+        "medianMs": 0.005055787500039818,
+        "p95Ms": 0.007333570833327485
       }
     },
     "current": {
       "withoutERA": {
         "samples": 50,
-        "medianMs": 0.006017583333315694,
-        "p95Ms": 0.010296345833334422
+        "medianMs": 0.00607574583331143,
+        "p95Ms": 0.010054645833361065
       },
       "coveredERA": {
         "samples": 50,
-        "medianMs": 0.007990029166637668,
-        "p95Ms": 0.013196879166669836
+        "medianMs": 0.007383120833340703,
+        "p95Ms": 0.009596716666677215
       }
     }
   },
@@ -392,21 +408,21 @@
       "default": {
         "samples": 900,
         "medianMs": 0.19999999995343387,
-        "p95Ms": 0.4000000001396984
+        "p95Ms": 0.40000000002328306
       },
       "t80u-armor": {
         "samples": 900,
         "medianMs": 0.5,
-        "p95Ms": 0.6999999999534339
+        "p95Ms": 0.7000000000698492
       },
       "t80u-observation": {
         "samples": 900,
-        "medianMs": 0.20000000018626451,
-        "p95Ms": 0.4000000001396984
+        "medianMs": 0.2999999999301508,
+        "p95Ms": 0.5999999999767169
       },
       "t80u-fire": {
         "samples": 900,
-        "medianMs": 0.30000000004656613,
+        "medianMs": 0.2999999999301508,
         "p95Ms": 0.5
       }
     },
@@ -414,16 +430,16 @@
       "default": {
         "samples": 900,
         "medianMs": 0.19999999995343387,
-        "p95Ms": 0.4000000001396984
+        "p95Ms": 0.5
       },
       "t80u-armor": {
         "samples": 900,
         "medianMs": 0.5,
-        "p95Ms": 0.7000000001862645
+        "p95Ms": 0.7000000000698492
       },
       "t80u-observation": {
         "samples": 900,
-        "medianMs": 0.2999999998137355,
+        "medianMs": 0.2999999999301508,
         "p95Ms": 0.5
       },
       "t80u-fire": {
@@ -434,60 +450,64 @@
     }
   },
   "gameFixture": {
+    "firstM829A2ImpactSeconds": {
+      "baseline": 6.499999999999985,
+      "current": 6.449999999999985
+    },
     "armorHistory": [
       {
         "applied": true,
         "id": "A11-shot-1",
-        "time": 6.499999999999985,
+        "time": 6.449999999999985,
         "targetId": "U01",
         "ammoId": "M829A2",
-        "reason": "non-penetration",
+        "reason": "penetrated",
         "hit": true,
         "zone": "turretFront",
         "side": null,
         "ricochet": false,
         "ricochetChance": 0,
         "ricochetRoll": 0.9680732463020831,
-        "penetrated": false,
+        "penetrated": true,
         "incidenceDeg": 0,
         "penetration": 624.2090502512563,
         "baseProtection": 530,
-        "protection": 637.0699999999999,
-        "protectionDeficit": 12.860949748743678,
+        "protection": 603.8,
+        "protectionDeficit": 0,
         "eraProfile": true,
         "eraEligible": true,
         "eraCoverage": 0.95,
         "eraRoll": 0.44717402663081884,
         "eraApplied": true,
-        "eraBonus": 107.07,
-        "nearNonPenetration": true,
-        "nearDamageChance": 0.3,
-        "nearDamageRoll": 0.8018994936719537,
-        "residualRatio": 0,
-        "multiplier": 0,
+        "eraBonus": 73.8,
+        "nearNonPenetration": false,
+        "nearDamageChance": 0,
+        "nearDamageRoll": null,
+        "residualRatio": 0.032695857650640064,
+        "multiplier": 0.8330957042693587,
         "baseDamage": 405,
-        "computedDamage": 0,
-        "normalDamage": 0,
+        "computedDamage": 337.40376022909027,
+        "normalDamage": 337.40376022909027,
         "incidentDamage": 0,
-        "damage": 0,
+        "damage": 337.40376022909027,
         "hpBefore": 1400,
-        "normalHpAfter": 1400,
-        "hpAfter": 1400,
+        "normalHpAfter": 1062.5962397709097,
+        "hpAfter": 1062.5962397709097,
         "maxHp": 1400,
         "destroyed": false,
         "eraType": "Kontakt-5",
         "coverageBefore": 0.95,
-        "coverageAfter": 0.71,
-        "coverageLoss": 0.24,
-        "eraBonusBefore": 215,
-        "antiEraReduction": 0.502,
+        "coverageAfter": 0.7999999999999999,
+        "coverageLoss": 0.15000000000000002,
+        "eraBonusBefore": 120,
+        "antiEraReduction": 0.385,
         "hitReaction": null,
         "ammoIncident": null
       },
       {
         "applied": true,
         "id": "A11-shot-2",
-        "time": 12.500000000000043,
+        "time": 12.450000000000042,
         "targetId": "U01",
         "ammoId": "M829A2",
         "reason": "penetrated",
@@ -501,42 +521,42 @@
         "incidenceDeg": 0,
         "penetration": 624.2090502512563,
         "baseProtection": 530,
-        "protection": 530,
+        "protection": 603.8,
         "protectionDeficit": 0,
         "eraProfile": true,
         "eraEligible": true,
-        "eraCoverage": 0.71,
+        "eraCoverage": 0.7999999999999999,
         "eraRoll": 0.7657296403776854,
-        "eraApplied": false,
-        "eraBonus": 0,
+        "eraApplied": true,
+        "eraBonus": 73.8,
         "nearNonPenetration": false,
         "nearDamageChance": 0,
         "nearDamageRoll": null,
-        "residualRatio": 0.15092547955422192,
-        "multiplier": 1.0739284736890928,
+        "residualRatio": 0.032695857650640064,
+        "multiplier": 0.8330957042693587,
         "baseDamage": 405,
-        "computedDamage": 434.9410318440826,
-        "normalDamage": 434.9410318440826,
+        "computedDamage": 337.40376022909027,
+        "normalDamage": 337.40376022909027,
         "incidentDamage": 0,
-        "damage": 434.9410318440826,
-        "hpBefore": 1400,
-        "normalHpAfter": 965.0589681559175,
-        "hpAfter": 965.0589681559175,
+        "damage": 337.40376022909027,
+        "hpBefore": 1062.5962397709097,
+        "normalHpAfter": 725.1924795418195,
+        "hpAfter": 725.1924795418195,
         "maxHp": 1400,
         "destroyed": false,
         "eraType": "Kontakt-5",
-        "coverageBefore": 0.71,
-        "coverageAfter": 0.71,
-        "coverageLoss": 0,
-        "eraBonusBefore": 0,
-        "antiEraReduction": null,
+        "coverageBefore": 0.7999999999999999,
+        "coverageAfter": 0.6499999999999999,
+        "coverageLoss": 0.15000000000000002,
+        "eraBonusBefore": 120,
+        "antiEraReduction": 0.385,
         "hitReaction": null,
         "ammoIncident": null
       },
       {
         "applied": true,
         "id": "A11-shot-3",
-        "time": 18.500000000000128,
+        "time": 18.450000000000127,
         "targetId": "U01",
         "ammoId": "M829A2",
         "reason": "penetrated",
@@ -550,231 +570,84 @@
         "incidenceDeg": 0,
         "penetration": 624.2090502512563,
         "baseProtection": 500,
-        "protection": 607.0699999999999,
+        "protection": 573.8,
         "protectionDeficit": 0,
         "eraProfile": true,
         "eraEligible": true,
         "eraCoverage": 0.9,
         "eraRoll": 0.28864484652876854,
         "eraApplied": true,
-        "eraBonus": 107.07,
+        "eraBonus": 73.8,
         "nearNonPenetration": false,
         "nearDamageChance": 0,
         "nearDamageRoll": null,
-        "residualRatio": 0.027457228062229347,
-        "multiplier": 0.8037595545911568,
+        "residualRatio": 0.08075667956266523,
+        "multiplier": 1.0539176567575734,
         "baseDamage": 405,
-        "computedDamage": 325.5226196094185,
-        "normalDamage": 325.5226196094185,
+        "computedDamage": 426.83665098681723,
+        "normalDamage": 426.83665098681723,
         "incidentDamage": 0,
-        "damage": 325.5226196094185,
-        "hpBefore": 965.0589681559175,
-        "normalHpAfter": 639.536348546499,
-        "hpAfter": 639.536348546499,
+        "damage": 426.83665098681723,
+        "hpBefore": 725.1924795418195,
+        "normalHpAfter": 298.35582855500223,
+        "hpAfter": 298.35582855500223,
         "maxHp": 1400,
         "destroyed": false,
         "eraType": "Kontakt-5",
         "coverageBefore": 0.9,
-        "coverageAfter": 0.66,
-        "coverageLoss": 0.24,
-        "eraBonusBefore": 215,
-        "antiEraReduction": 0.502,
+        "coverageAfter": 0.75,
+        "coverageLoss": 0.15000000000000002,
+        "eraBonusBefore": 120,
+        "antiEraReduction": 0.385,
         "hitReaction": null,
         "ammoIncident": null
       },
       {
         "applied": true,
         "id": "A11-shot-4",
-        "time": 24.500000000000213,
+        "time": 24.450000000000212,
         "targetId": "U01",
         "ammoId": "M829A2",
-        "reason": "non-penetration",
+        "reason": "penetrated",
         "hit": true,
         "zone": "turretFront",
         "side": null,
         "ricochet": false,
         "ricochetChance": 0,
         "ricochetRoll": 0.33602628856897354,
-        "penetrated": false,
+        "penetrated": true,
         "incidenceDeg": 0,
         "penetration": 624.2090502512563,
         "baseProtection": 530,
-        "protection": 637.0699999999999,
-        "protectionDeficit": 12.860949748743678,
+        "protection": 603.8,
+        "protectionDeficit": 0,
         "eraProfile": true,
         "eraEligible": true,
-        "eraCoverage": 0.71,
+        "eraCoverage": 0.6499999999999999,
         "eraRoll": 0.645987939555198,
         "eraApplied": true,
-        "eraBonus": 107.07,
-        "nearNonPenetration": true,
-        "nearDamageChance": 0.3,
-        "nearDamageRoll": 0.4154534798581153,
-        "residualRatio": 0,
-        "multiplier": 0,
-        "baseDamage": 405,
-        "computedDamage": 0,
-        "normalDamage": 0,
-        "incidentDamage": 0,
-        "damage": 0,
-        "hpBefore": 639.536348546499,
-        "normalHpAfter": 639.536348546499,
-        "hpAfter": 639.536348546499,
-        "maxHp": 1400,
-        "destroyed": false,
-        "eraType": "Kontakt-5",
-        "coverageBefore": 0.71,
-        "coverageAfter": 0.47,
-        "coverageLoss": 0.24,
-        "eraBonusBefore": 215,
-        "antiEraReduction": 0.502,
-        "hitReaction": null,
-        "ammoIncident": null
-      },
-      {
-        "applied": true,
-        "id": "A11-shot-5",
-        "time": 30.850000000000303,
-        "targetId": "U01",
-        "ammoId": "M829A2",
-        "reason": "penetrated",
-        "hit": true,
-        "zone": "hullFront",
-        "side": null,
-        "ricochet": false,
-        "ricochetChance": 0,
-        "ricochetRoll": 0.4977973191998899,
-        "penetrated": true,
-        "incidenceDeg": 0,
-        "penetration": 624.2090502512563,
-        "baseProtection": 500,
-        "protection": 607.0699999999999,
-        "protectionDeficit": 0,
-        "eraProfile": true,
-        "eraEligible": true,
-        "eraCoverage": 0.66,
-        "eraRoll": 0.1750114425085485,
-        "eraApplied": true,
-        "eraBonus": 107.07,
+        "eraBonus": 73.8,
         "nearNonPenetration": false,
         "nearDamageChance": 0,
         "nearDamageRoll": null,
-        "residualRatio": 0.027457228062229347,
-        "multiplier": 0.8037595545911568,
+        "residualRatio": 0.032695857650640064,
+        "multiplier": 0.8330957042693587,
         "baseDamage": 405,
-        "computedDamage": 325.5226196094185,
-        "normalDamage": 325.5226196094185,
+        "computedDamage": 337.40376022909027,
+        "normalDamage": 298.35582855500223,
         "incidentDamage": 0,
-        "damage": 325.5226196094185,
-        "hpBefore": 639.536348546499,
-        "normalHpAfter": 314.0137289370805,
-        "hpAfter": 314.0137289370805,
-        "maxHp": 1400,
-        "destroyed": false,
-        "eraType": "Kontakt-5",
-        "coverageBefore": 0.66,
-        "coverageAfter": 0.42000000000000004,
-        "coverageLoss": 0.24,
-        "eraBonusBefore": 215,
-        "antiEraReduction": 0.502,
-        "hitReaction": null,
-        "ammoIncident": null
-      },
-      {
-        "applied": true,
-        "id": "A11-shot-6",
-        "time": 37.550000000000004,
-        "targetId": "U01",
-        "ammoId": "M829A2",
-        "reason": "non-penetration",
-        "hit": true,
-        "zone": "turretFront",
-        "side": null,
-        "ricochet": false,
-        "ricochetChance": 0,
-        "ricochetRoll": 0.6616299890447408,
-        "penetrated": false,
-        "incidenceDeg": 0,
-        "penetration": 624.2090502512563,
-        "baseProtection": 530,
-        "protection": 637.0699999999999,
-        "protectionDeficit": 12.860949748743678,
-        "eraProfile": true,
-        "eraEligible": true,
-        "eraCoverage": 0.47,
-        "eraRoll": 0.18908888683654368,
-        "eraApplied": true,
-        "eraBonus": 107.07,
-        "nearNonPenetration": true,
-        "nearDamageChance": 0.3,
-        "nearDamageRoll": 0.7865236448124051,
-        "residualRatio": 0,
-        "multiplier": 0,
-        "baseDamage": 405,
-        "computedDamage": 0,
-        "normalDamage": 0,
-        "incidentDamage": 0,
-        "damage": 0,
-        "hpBefore": 314.0137289370805,
-        "normalHpAfter": 314.0137289370805,
-        "hpAfter": 314.0137289370805,
-        "maxHp": 1400,
-        "destroyed": false,
-        "eraType": "Kontakt-5",
-        "coverageBefore": 0.47,
-        "coverageAfter": 0.22999999999999998,
-        "coverageLoss": 0.24,
-        "eraBonusBefore": 215,
-        "antiEraReduction": 0.502,
-        "hitReaction": null,
-        "ammoIncident": null
-      },
-      {
-        "applied": true,
-        "id": "A11-shot-7",
-        "time": 44.5999999999996,
-        "targetId": "U01",
-        "ammoId": "M829A2",
-        "reason": "penetrated",
-        "hit": true,
-        "zone": "turretFront",
-        "side": null,
-        "ricochet": false,
-        "ricochetChance": 0,
-        "ricochetRoll": 0.8458649427630007,
-        "penetrated": true,
-        "incidenceDeg": 0,
-        "penetration": 624.2090502512563,
-        "baseProtection": 530,
-        "protection": 530,
-        "protectionDeficit": 0,
-        "eraProfile": true,
-        "eraEligible": true,
-        "eraCoverage": 0.22999999999999998,
-        "eraRoll": 0.37805433734320104,
-        "eraApplied": false,
-        "eraBonus": 0,
-        "nearNonPenetration": false,
-        "nearDamageChance": 0,
-        "nearDamageRoll": null,
-        "residualRatio": 0.15092547955422192,
-        "multiplier": 1.0739284736890928,
-        "baseDamage": 405,
-        "computedDamage": 434.9410318440826,
-        "normalDamage": 314.0137289370805,
-        "incidentDamage": 0,
-        "damage": 314.0137289370805,
-        "hpBefore": 314.0137289370805,
+        "damage": 298.35582855500223,
+        "hpBefore": 298.35582855500223,
         "normalHpAfter": 0,
         "hpAfter": 0,
         "maxHp": 1400,
         "destroyed": true,
         "eraType": "Kontakt-5",
-        "coverageBefore": 0.22999999999999998,
-        "coverageAfter": 0.22999999999999998,
-        "coverageLoss": 0,
-        "eraBonusBefore": 0,
-        "antiEraReduction": null,
+        "coverageBefore": 0.6499999999999999,
+        "coverageAfter": 0.4999999999999999,
+        "coverageLoss": 0.15000000000000002,
+        "eraBonusBefore": 120,
+        "antiEraReduction": 0.385,
         "hitReaction": null,
         "ammoIncident": null
       }

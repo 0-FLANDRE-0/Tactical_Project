@@ -80,7 +80,7 @@
     "nearNonPenetration": false
   },
   "status": "active WIP24 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20/WIP23 plus attacker-owned near-nonpenetration policy",
+  "source": "archive/library/ammunition/cannon/SOVIET_125.md",
   "limits": [
     "WIP23 10/2000m by 0/30/60deg game table and 125mm APFSDS damage curve",
     "Near-nonpenetration HP damage is explicitly disabled",

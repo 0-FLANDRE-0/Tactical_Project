@@ -7,11 +7,11 @@ const VEHICLE_PROFILES=(()=>{
   const zones=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
   const eraPolicies=freeze({
     'Kontakt-1':{defaultBonus:{ke:5,ce:380},loss:{
-      HEAT:{covered:.25,gap:.125},APFSDS:{covered:.12,gap:0},
-      HEP:{covered:.32,gap:.16},HE:{covered:.40,gap:.20}}},
-    'Kontakt-5':{defaultBonus:{ke:215,ce:560},loss:{
-      HEAT:{covered:.32,gap:.16},APFSDS:{covered:.24,gap:0},
-      HEP:{covered:.40,gap:.20},HE:{covered:.52,gap:.26}}}
+      HEAT:{covered:.20,gap:.10},APFSDS:{covered:.08,gap:0},
+      HEP:{covered:.35,gap:.175},HE:{covered:.35,gap:.175}}},
+    'Kontakt-5':{defaultBonus:{ke:120,ce:460},loss:{
+      HEAT:{covered:.25,gap:.125},APFSDS:{covered:.15,gap:0},
+      HEP:{covered:.35,gap:.175},HE:{covered:.35,gap:.175}}}
   });
   const eraFamilies=Object.freeze({HEAT:'HEAT',ATGM:'HEAT',APFSDS:'APFSDS',APDS:'APFSDS',HEP:'HEP',HESH:'HEP',HE:'HE','HE-FRAG':'HE'});
   const validCoverage=v=>Number.isFinite(v)&&v>=0&&v<=1;
@@ -159,6 +159,7 @@ const VEHICLE_PROFILES=(()=>{
   // It intentionally owns no mobility, AI, human-loader fatigue, crew reaction,
   // temporary-fault or ammunition-incident configuration.
   const T80U_SCALE=7.012/874;
+  const k5Bonus=eraPolicies['Kontakt-5'].defaultBonus;
   const T80U_1989={
     id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 정지 교전 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
     capabilities:{target:true,mobility:false,observation:true,fire:true,ai:false},
@@ -198,9 +199,9 @@ const VEHICLE_PROFILES=(()=>{
       hullFront:{ke:500,ce:690},hullSide:{ke:75,ce:85},hullRear:{ke:40,ce:40},
       turretFront:{ke:530,ce:730},turretSide:{ke:305,ce:390},turretRear:{ke:70,ce:70},upper:{ke:45,ce:45}},
       era:{type:'Kontakt-5',comparison:'roll<coverage',consumable:true,zones:{
-        hullFront:{coverage:.90,ke:215,ce:560},hullSide:{coverage:.50,ke:110,ce:560},hullRear:{coverage:0,ke:0,ce:0},
-        turretFront:{coverage:.95,ke:215,ce:560},turretSide:{coverage:.45,ke:215,ce:560},turretRear:{coverage:0,ke:0,ce:0},
-        upper:{coverage:.45,ke:215,ce:560}}}}
+        hullFront:{coverage:.90,...k5Bonus},hullSide:{coverage:.50,...k5Bonus},hullRear:{coverage:0,ke:0,ce:0},
+        turretFront:{coverage:.95,...k5Bonus},turretSide:{coverage:.45,...k5Bonus},turretRear:{coverage:0,ke:0,ce:0},
+        upper:{coverage:.45,...k5Bonus}}}}
   };
   T80U_1989.navigation.radius=Math.ceil((Math.hypot(T80U_1989.model.hullLength/2,T80U_1989.model.width/2)+T80U_1989.navigation.clearanceMargin)*100)/100;
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}

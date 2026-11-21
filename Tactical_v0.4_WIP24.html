@@ -941,11 +941,11 @@ const VEHICLE_PROFILES=(()=>{
   const zones=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
   const eraPolicies=freeze({
     'Kontakt-1':{defaultBonus:{ke:5,ce:380},loss:{
-      HEAT:{covered:.25,gap:.125},APFSDS:{covered:.12,gap:0},
-      HEP:{covered:.32,gap:.16},HE:{covered:.40,gap:.20}}},
-    'Kontakt-5':{defaultBonus:{ke:215,ce:560},loss:{
-      HEAT:{covered:.32,gap:.16},APFSDS:{covered:.24,gap:0},
-      HEP:{covered:.40,gap:.20},HE:{covered:.52,gap:.26}}}
+      HEAT:{covered:.20,gap:.10},APFSDS:{covered:.08,gap:0},
+      HEP:{covered:.35,gap:.175},HE:{covered:.35,gap:.175}}},
+    'Kontakt-5':{defaultBonus:{ke:120,ce:460},loss:{
+      HEAT:{covered:.25,gap:.125},APFSDS:{covered:.15,gap:0},
+      HEP:{covered:.35,gap:.175},HE:{covered:.35,gap:.175}}}
   });
   const eraFamilies=Object.freeze({HEAT:'HEAT',ATGM:'HEAT',APFSDS:'APFSDS',APDS:'APFSDS',HEP:'HEP',HESH:'HEP',HE:'HE','HE-FRAG':'HE'});
   const validCoverage=v=>Number.isFinite(v)&&v>=0&&v<=1;
@@ -1093,6 +1093,7 @@ const VEHICLE_PROFILES=(()=>{
   // It intentionally owns no mobility, AI, human-loader fatigue, crew reaction,
   // temporary-fault or ammunition-incident configuration.
   const T80U_SCALE=7.012/874;
+  const k5Bonus=eraPolicies['Kontakt-5'].defaultBonus;
   const T80U_1989={
     id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 정지 교전 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
     capabilities:{target:true,mobility:false,observation:true,fire:true,ai:false},
@@ -1132,9 +1133,9 @@ const VEHICLE_PROFILES=(()=>{
       hullFront:{ke:500,ce:690},hullSide:{ke:75,ce:85},hullRear:{ke:40,ce:40},
       turretFront:{ke:530,ce:730},turretSide:{ke:305,ce:390},turretRear:{ke:70,ce:70},upper:{ke:45,ce:45}},
       era:{type:'Kontakt-5',comparison:'roll<coverage',consumable:true,zones:{
-        hullFront:{coverage:.90,ke:215,ce:560},hullSide:{coverage:.50,ke:110,ce:560},hullRear:{coverage:0,ke:0,ce:0},
-        turretFront:{coverage:.95,ke:215,ce:560},turretSide:{coverage:.45,ke:215,ce:560},turretRear:{coverage:0,ke:0,ce:0},
-        upper:{coverage:.45,ke:215,ce:560}}}}
+        hullFront:{coverage:.90,...k5Bonus},hullSide:{coverage:.50,...k5Bonus},hullRear:{coverage:0,ke:0,ce:0},
+        turretFront:{coverage:.95,...k5Bonus},turretSide:{coverage:.45,...k5Bonus},turretRear:{coverage:0,ke:0,ce:0},
+        upper:{coverage:.45,...k5Bonus}}}}
   };
   T80U_1989.navigation.radius=Math.ceil((Math.hypot(T80U_1989.model.hullLength/2,T80U_1989.model.width/2)+T80U_1989.navigation.clearanceMargin)*100)/100;
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
@@ -1988,7 +1989,8 @@ const TacticalCombatState=(()=>{
     M829A2:{
       id:'M829A2',name:'M829A2',kind:'KE',baseDamage:405,muzzleVelocity:1680,
       hitReactionPolicyId:'tank-ke/M829A2',ammoIncidentPolicyId:'tank-ammo-incident/M829A2',
-      eraFamily:'APFSDS',antiEra:{'Kontakt-5':{kind:'KE',reduction:.502,source:'archive/library/systems/armor/ANTI_ERA.md'}},
+      eraFamily:'APFSDS',antiEra:{'Kontakt-5':{kind:'KE',reduction:.385,source:'archive/library/systems/armor/ANTI_ERA.md'}},
+      flightSpeed:{rangesM:[10,500,1000,1500,2000],valuesMps:[1680,1651,1622,1594,1566]},
       penetration:{rangesM:[10,2000],anglesDeg:[0,30,60],values:[[630,530,365],[600,505,345]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
@@ -1998,9 +2000,9 @@ const TacticalCombatState=(()=>{
       id:'M829A1',name:'M829A1',kind:'KE',baseDamage:380,muzzleVelocity:1575,
       eraFamily:'APFSDS',
       hitReactionPolicyId:'tank-ke/M829A1',ammoIncidentPolicyId:'tank-ammo-incident/M829A1',
-      penetration:{rangesM:[10,100,500,1000,1500,2000],anglesDeg:[0,30,60],values:[
-        [600,505,345],[595,503.643216080402,344.09547738693465],[590,497.61306532663315,340.0753768844221],
-        [580,490.0753768844221,335.0502512562814],[570,482.53768844221105,330.0251256281407],[560,475,325]],parallelLimitDeg:90,outsidePolicy:'clamp'},
+      flightSpeed:{rangesM:[10,500,1000,1500,2000],valuesMps:[1575,1541,1506,1473,1440]},
+      penetration:{rangesM:[10,500,1000,1500,2000],anglesDeg:[0,30,60],values:[
+        [600,505,350],[587,494,343],[576,485,336],[565,476,330],[555,467,325]],parallelLimitDeg:90,outsidePolicy:'clamp'},
       ricochet:{anglesDeg:[78,80,81],chances:[0,.5,1],comparison:'roll<chance'},
       damageMultiplierId:'apfsds-120mm',damageMultiplier:DAMAGE_MULTIPLIERS['apfsds-120mm'],
       nearNonPenetration:{maxDeficit:15,chance:.30,damagePoints:[[0,120],[5,80],[10,35],[15,0]]}
@@ -2037,7 +2039,18 @@ const TacticalCombatState=(()=>{
         throw Error('Anti-ERA 정책 오류: '+ammo.id+'/'+type);
     }
   }
-  for(const ammo of Object.values(AMMUNITION))validateAmmoEraPolicy(ammo);
+  function validateFlightSpeed(ammo){
+    if(!Object.hasOwn(ammo,'flightSpeed'))return;
+    const {rangesM,valuesMps}=ammo.flightSpeed??{};
+    if(!Array.isArray(rangesM)||!Array.isArray(valuesMps)||rangesM.length<2||
+      rangesM.length!==valuesMps.length||valuesMps[0]!==ammo.muzzleVelocity||
+      !rangesM.every((v,i)=>Number.isFinite(v)&&v>(rangesM[i-1]??0))||
+      !valuesMps.every(v=>Number.isFinite(v)&&v>0))throw Error('탄약 거리별 탄속 오류: '+ammo.id);
+  }
+  for(const ammo of Object.values(AMMUNITION)){
+    validateAmmoEraPolicy(ammo);
+    validateFlightSpeed(ammo);
+  }
   function validateHitReactionBindings(p){
     const config=p?.hitReactions;
     if(!config)return'not-participant';
@@ -2432,7 +2445,28 @@ const TacticalFireControl=(()=>{
   }
   function motionReady(u,p,s=init(u,p)){const m=p.fireControl.movement;return m.fireOnMove||Math.abs(u.drive?.velocity??u.speed??0)<=m.stationarySpeedMps+1e-9&&s.stationaryElapsed+1e-9>=m.stationaryHoldSeconds;}
   function currentAmmoId(p,s){return managed(p)?s.ammunition.loadedAmmoId||s.ammunition.task?.ammoId||null:p.weapons.mainGun.ammunitionId??null;}
-  function fireSettings(p,s,ammoId=currentAmmoId(p,s)){const ammo=ammoId&&Combat.ammunitionRegistry.has(ammoId)?Combat.ammunitionRegistry.get(ammoId):null;return ammo?{...p.fireControl,muzzleVelocity:ammo.muzzleVelocity}:p.fireControl;}
+  function fireSettings(p,s,ammoId=currentAmmoId(p,s)){
+    const ammo=ammoId&&Combat.ammunitionRegistry.has(ammoId)?Combat.ammunitionRegistry.get(ammoId):null;
+    return ammo?{...p.fireControl,muzzleVelocity:ammo.muzzleVelocity,flightSpeed:ammo.flightSpeed}:p.fireControl;
+  }
+  function flightTime(range,f){
+    if(!f.flightSpeed)return range/(f.muzzleVelocity*f.velocityRetention);
+    const {rangesM,valuesMps}=f.flightSpeed;
+    let time=Math.min(range,rangesM[0])/valuesMps[0];
+    // Integrate dt = dx / v(x) along each linear segment to the aim point.
+    for(let i=1;i<rangesM.length&&range>rangesM[i-1];i++){
+      const d=Math.min(range,rangesM[i])-rangesM[i-1];
+      const start=valuesMps[i-1],slope=(valuesMps[i]-start)/(rangesM[i]-rangesM[i-1]);
+      time+=slope===0?d/start:Math.log1p(slope*d/start)/slope;
+    }
+    // An in-flight target can move past the final node. Extend only the
+    // elapsed-time calculation at terminal speed until extrapolation is set.
+    return time+Math.max(0,range-rangesM.at(-1))/valuesMps.at(-1);
+  }
+  function effectiveFlightSpeed(range,f){
+    if(!f.flightSpeed)return f.muzzleVelocity*f.velocityRetention;
+    return range>0?range/flightTime(range,f):f.muzzleVelocity;
+  }
   // Fictional RTS error budget. Target manoeuvre is represented only by the
   // difference between predicted and actual pose at impact, never twice here.
   function normalCdf(x){
@@ -2443,7 +2477,7 @@ const TacticalFireControl=(()=>{
   }
   function errorBudget(observer,pose,f,targetVelocity={x:0,y:0},layTime=0,errorSigmaMultiplier=1){
     const dx=pose.x-observer.x,dy=pose.y-observer.y,range=Math.hypot(dx,dy),safeRange=Math.max(1e-9,range),beta=Math.atan2(dy,dx);
-    const vx=targetVelocity.x||0,vy=targetVelocity.y||0,cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=range/(f.muzzleVelocity*f.velocityRetention);
+    const vx=targetVelocity.x||0,vy=targetVelocity.y||0,cross=Math.abs(-Math.sin(beta)*vx+Math.cos(beta)*vy),tof=flightTime(range,f);
     const disp=f.dispersionMrad,lay=f.layMinMrad+(f.layStartMrad-f.layMinMrad)*Math.exp(-Math.max(0,layTime)/f.layTauSeconds);
     const rng=1000*GRAVITY*f.rangeErrorM/(2*f.muzzleVelocity**2),lead=1000*f.leadResidual*cross*tof/safeRange,own=f.stabMradPerMps*Math.abs(observer.speed||0);
     const multiplier=Number.isFinite(errorSigmaMultiplier)&&errorSigmaMultiplier>0?errorSigmaMultiplier:1;
@@ -2518,7 +2552,7 @@ const TacticalFireControl=(()=>{
     const pose=sight?.gone?{...shot.pose,x:shot.predicted.x,y:shot.predicted.y}:sight?.pose||{...shot.pose,x:shot.predicted.x,y:shot.predicted.y};
     const rects=sight?.gone?[]:presentedRects(shot.origin,pose,sight||shot.fireExposure,shot.fireControl);
     const ex=Math.cos(shot.beta),ey=Math.sin(shot.beta),px=-ey,py=ex,dx=pose.x-shot.predicted.x,dy=pose.y-shot.predicted.y;
-    const lateral=dx*px+dy*py,radial=dx*ex+dy*ey,range=Math.hypot(pose.x-shot.origin.x,pose.y-shot.origin.y),vavg=shot.fireControl.muzzleVelocity*shot.fireControl.velocityRetention;
+    const lateral=dx*px+dy*py,radial=dx*ex+dy*ey,range=Math.hypot(pose.x-shot.origin.x,pose.y-shot.origin.y),vavg=effectiveFlightSpeed(range,shot.fireControl);
     const dz=-GRAVITY*range*radial/(2*vavg*vavg),mu={x:shot.aim.x-lateral,z:shot.aim.z+dz},sx=shot.sigma.x/1000*range,sz=shot.sigma.z/1000*range;
     let pHull=0,pTurret=0;
     for(const rect of rects){const p=rectProbability(rect,mu,sx,sz);if(rect.part==='hull')pHull=p;else pTurret=p;}
@@ -2541,7 +2575,7 @@ const TacticalFireControl=(()=>{
   function marchImpact(shot,pose,point,environment){
     const heightAt=environment?.heightAt||(()=>0),buildingAt=environment?.buildingAt||(()=>null),world=environment?.world||{w:Infinity,h:Infinity};
     const px=-Math.sin(shot.beta),py=Math.cos(shot.beta),qx=pose.x+point.x*px,qy=pose.y+point.x*py,dx=qx-shot.origin.x,dy=qy-shot.origin.y,total=Math.hypot(dx,dy),ux=total?dx/total:Math.cos(shot.beta),uy=total?dy/total:Math.sin(shot.beta);
-    const h0=heightAt(shot.origin.x,shot.origin.y)+shot.fireEye,hq=heightAt(pose.x,pose.y)+point.z,vavg=shot.fireControl.muzzleVelocity*shot.fireControl.velocityRetention;
+    const h0=heightAt(shot.origin.x,shot.origin.y)+shot.fireEye,hq=heightAt(pose.x,pose.y)+point.z,vavg=effectiveFlightSpeed(total,shot.fireControl);
     const boundary=Math.min(ux>0?(world.w-shot.origin.x)/ux:ux<0?-shot.origin.x/ux:Infinity,uy>0?(world.h-shot.origin.y)/uy:uy<0?-shot.origin.y/uy:Infinity);
     const requested=total+shot.fireControl.impact.maxBeyondM,limit=Math.max(0,Math.min(requested,boundary));
     const state=s=>{const x=shot.origin.x+ux*s,y=shot.origin.y+uy*s,z=pathHeight(h0,hq,s,total,vavg),building=buildingAt(x,y);if(building&&building.roof>=z)return{kind:'building',x,y,z};if(z<=heightAt(x,y))return{kind:'ground',x,y,z};return null;};
@@ -2771,7 +2805,7 @@ const TacticalFireControl=(()=>{
     const publicEffects=(since=-Infinity)=>effects.filter(e=>e.time>=since&&e.expiresAt>=currentTime).map(e=>clone(e));
     return{step,resolveImpacts:(units,now)=>{currentTime=now;pruneEffects(now);finishDue(units,now);},request,probe,setMode,setAmmoPreference,view,cancel,suppressAuto,react,ammoIncidentSnapshot,applyAmmoIncident,emitCombatEffect,events:publicEvents,effects:publicEffects,effectStats:()=>({queued:effects.length,limit:256}),debugRecords:()=>debug?clone(records):[]};
   }
-  return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,proportionalLoss,zones:Object.freeze(zones)});
+  return Object.freeze({create,init,motionReady,reloadSeconds,faultChance,faultDuration,faultKind,observationPenalty,normalCdf,flightTime,errorBudget,presentedRects,rectProbability,estimate,distribution,sideFor,reflectedHeading,resolve,impactEvaluation,sampleImpactPlane,pathHeight,marchImpact,impactLocation,proportionalLoss,zones:Object.freeze(zones)});
 })();
 if(typeof module!=='undefined')module.exports=TacticalFireControl;
 

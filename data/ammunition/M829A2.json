@@ -11,9 +11,25 @@
     "antiEra": {
       "Kontakt-5": {
         "kind": "KE",
-        "reduction": 0.502,
+        "reduction": 0.385,
         "source": "archive/library/systems/armor/ANTI_ERA.md"
       }
+    },
+    "flightSpeed": {
+      "rangesM": [
+        10,
+        500,
+        1000,
+        1500,
+        2000
+      ],
+      "valuesMps": [
+        1680,
+        1651,
+        1622,
+        1594,
+        1566
+      ]
     },
     "penetration": {
       "rangesM": [
@@ -107,9 +123,9 @@
     }
   },
   "status": "active WIP24 game data",
-  "source": "archive/library/ammunition/cannon/US_120.md",
+  "source": "archive/library/ammunition/modern/APFSDS_120MM.md",
   "limits": [
-    "WIP24 10/2000m penetration nodes, linear interpolation and explicit Kontakt-5 KE bonus reduction",
+    "10/2000m penetration nodes, five distance-speed anchors and explicit Kontakt-5 KE bonus reduction",
     "Existing ricochet, damage and near-nonpenetration rules",
     "Victim-specific hit-reaction and ammunition-incident rates live only on an explicitly bound vehicle profile",
     "No additional velocity damage multiplier"

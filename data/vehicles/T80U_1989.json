@@ -268,13 +268,13 @@
         "zones": {
           "hullFront": {
             "coverage": 0.9,
-            "ke": 215,
-            "ce": 560
+            "ke": 120,
+            "ce": 460
           },
           "hullSide": {
             "coverage": 0.5,
-            "ke": 110,
-            "ce": 560
+            "ke": 120,
+            "ce": 460
           },
           "hullRear": {
             "coverage": 0,
@@ -283,13 +283,13 @@
           },
           "turretFront": {
             "coverage": 0.95,
-            "ke": 215,
-            "ce": 560
+            "ke": 120,
+            "ce": 460
           },
           "turretSide": {
             "coverage": 0.45,
-            "ke": 215,
-            "ce": 560
+            "ke": 120,
+            "ce": 460
           },
           "turretRear": {
             "coverage": 0,
@@ -298,8 +298,8 @@
           },
           "upper": {
             "coverage": 0.45,
-            "ke": 215,
-            "ce": 560
+            "ke": 120,
+            "ce": 460
           }
         }
       }

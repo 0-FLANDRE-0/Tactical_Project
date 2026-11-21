@@ -95,7 +95,8 @@ test('WIP22 a real observed lethal impact freezes the commander independently fr
  for(let i=0;i<1200;i++)core.step(s,.05);
  const contact=core.contacts(s).find(c=>c.current&&c.identified);assert(contact);assert(core.designate(s,blue,contact.key));target.combat.hp=1;
  let shots=0;for(let i=0;i<4000&&target.combat.status!=='destroyed';i++){
-   if(core.fireStatus(s,blue,contact.key).canFire){assert(core.requestFire(s,blue,contact.key).ok);shots++;}
+   // Wait for naturally separated headings before starting the lethal flight.
+   if(delta(target.commander,target.turret)>2*Math.PI/3&&core.fireStatus(s,blue,contact.key).canFire){assert(core.requestFire(s,blue,contact.key).ok);shots++;}
    core.step(s,.05);
  }
  assert(shots>0);assert.equal(target.combat.status,'destroyed');assert(delta(target.commander,target.turret)>Math.PI/2,'fixture must distinguish the two headings');

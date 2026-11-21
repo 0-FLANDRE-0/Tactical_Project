@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),cp=require('node:child_process');
 const {performance}=require('node:perf_hooks'),assert=require('node:assert/strict'),{chromium}=require('playwright');
 const root=path.resolve(__dirname,'..'),seed=7,seconds=90;
-const baselineRef=process.env.WIP24_BASELINE_REF||'551aa9a09a5661ba65bc142a45aba39aba1663f3';
+const baselineRef=process.env.WIP24_BASELINE_REF||'907e2cc89ba4fcdbe3eaef91be96250522f21d55';
 const html={
   baseline:cp.execFileSync('git',['show',baselineRef+':dist/index.html'],{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024}),
   current:fs.readFileSync(path.join(root,'dist/index.html'),'utf8')
@@ -104,20 +104,22 @@ async function renderRun(browser,source){
   for(const id of ids){
     const a=liveRun(versions.baseline.C,id),b=liveRun(versions.current.C,id);
     const holdA=liveRun(versions.baseline.C,id,true),holdB=liveRun(versions.current.C,id,true);
-    assert.deepEqual(b.opening,a.opening,id+' before first impact');
+    const sharedOpeningTicks=Math.min(a.opening.length,b.opening.length);
+    assert.deepEqual(b.opening.slice(0,sharedOpeningTicks),a.opening.slice(0,sharedOpeningTicks),id+' before either first impact');
     assert.deepEqual(holdB.terminal,holdA.terminal,id+' hold controls');
     assert.equal(holdB.summary.impacts,0);
     if(id==='t80u-observation')assert.equal(b.summary.impacts,0);
     const separateGeometry=id==='t80u-fire';
     if(separateGeometry){
-      const key=r=>[r.id,r.time,r.hit,r.zone,r.ricochet,r.ricochetRoll];
+      const key=r=>[r.id,r.hit,r.zone,r.ricochet,r.ricochetRoll];
       const firstOld=a.events.find(r=>r.ammoId==='M829A2'),firstNew=b.events.find(r=>r.ammoId==='M829A2');
       assert.deepEqual(key(firstNew),key(firstOld));assert.equal(firstNew.eraRoll,firstOld.eraRoll);
+      gameFixture.firstM829A2ImpactSeconds={baseline:firstOld.time,current:firstNew.time};
       gameFixture.armorHistory=b.events.filter(r=>r.ammoId==='M829A2'&&r.hit);
       gameFixture.firstReturnFire=b.events.find(r=>r.ammoId==='3BM42')?.time??null;
     }
     cases[id]={baseline:{...a.summary,core:a.core},current:{...b.summary,core:b.core},
-      firstImpactTick:a.firstImpactTick,openingEqual:true,holdTerminalEqual:true,
+      firstImpactTick:{baseline:a.firstImpactTick,current:b.firstImpactTick},sharedOpeningTicks,openingEqual:true,holdTerminalEqual:true,
       combatPoseObsEqual:JSON.stringify(a.terminal)===JSON.stringify(b.terminal)};
   }
   const isolated={};

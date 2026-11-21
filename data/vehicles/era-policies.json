@@ -29,44 +29,44 @@
       },
       "loss": {
         "HEAT": {
-          "covered": 0.25,
-          "gap": 0.125
+          "covered": 0.2,
+          "gap": 0.1
         },
         "APFSDS": {
-          "covered": 0.12,
+          "covered": 0.08,
           "gap": 0
         },
         "HEP": {
-          "covered": 0.32,
-          "gap": 0.16
+          "covered": 0.35,
+          "gap": 0.175
         },
         "HE": {
-          "covered": 0.4,
-          "gap": 0.2
+          "covered": 0.35,
+          "gap": 0.175
         }
       }
     },
     "Kontakt-5": {
       "defaultBonus": {
-        "ke": 215,
-        "ce": 560
+        "ke": 120,
+        "ce": 460
       },
       "loss": {
         "HEAT": {
-          "covered": 0.32,
-          "gap": 0.16
+          "covered": 0.25,
+          "gap": 0.125
         },
         "APFSDS": {
-          "covered": 0.24,
+          "covered": 0.15,
           "gap": 0
         },
         "HEP": {
-          "covered": 0.4,
-          "gap": 0.2
+          "covered": 0.35,
+          "gap": 0.175
         },
         "HE": {
-          "covered": 0.52,
-          "gap": 0.26
+          "covered": 0.35,
+          "gap": 0.175
         }
       }
     }
