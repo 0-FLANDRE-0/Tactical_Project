@@ -14,12 +14,12 @@
 
 | 자료 | 이번에 적용할 내용 |
 |---|---|
-| [탄약 기준표](../../archive/ammo/README.md) 상단 구경별 곡선, §6·§7·§11·§12 | 3BM42 기본 피해, 125mm 곡선, T-80U(1989) 대표탄, 적재와 자동장전 설계 |
+| [125mm 탄약](../library/ammunition/cannon/SOVIET_125.md) · [96개 적재](../library/presets/1989/README.md) · [장전 규칙](../library/systems/logistics/RELOAD_AMMO_SUPPLY.md) | 3BM42 기본 피해, 125mm 곡선, T-80U(1989) 대표탄, 적재와 자동장전 설계 |
 | [영거리 KE 기준표](../../archive/ammo/NEAR_ZERO_10M_KE_PENETRATION_2026-11-08.md) | 3BM42의 10m/2km 3각도 관통력 |
 | [입사각·도탄 규칙](../../archive/combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md) | 선택 피격면 기준 입사각, 고각 선형 연장과 3BM42 도탄각 |
 | [관통·피해 메모](../../archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md) | 최신 갱신 기록과 구경별 잔여 관통력 곡선. 과거 본문의 ‘미정’은 후속 확정 기록과 구분 |
-| [WIP22 구현](../T80U_OBSERVATION_AND_TRAVERSE_WIP22.md), [독립 검토](../reviews/WIP22_MERGE_REVIEW_2026-11-15.md), [관측 자료 노트](../../data/vehicles/references/t80u/observation_reference_notes.md) | T-80U 자체 관측·선회·연속 인계·포수 확보와 격파 자세 보존 |
-| [WIP19 탄약 운용](../AMMUNITION_AND_COMMAND_PANEL_WIP19.md), [WIP20 사고](../AMMUNITION_INCIDENTS_WIP20.md) | 실제 장전탄/예약탄 소유권과 M1A2 전용 피해 정책 |
+| [WIP22 구현](../../docs/T80U_OBSERVATION_AND_TRAVERSE_WIP22.md), [독립 검토](../../docs/reviews/WIP22_MERGE_REVIEW_2026-11-15.md), [관측 자료 노트](../../data/vehicles/references/t80u/observation_reference_notes.md) | T-80U 자체 관측·선회·연속 인계·포수 확보와 격파 자세 보존 |
+| [WIP19 탄약 운용](../../docs/AMMUNITION_AND_COMMAND_PANEL_WIP19.md), [WIP20 사고](../../docs/AMMUNITION_INCIDENTS_WIP20.md) | 실제 장전탄/예약탄 소유권과 M1A2 전용 피해 정책 |
 
 중심 코드는 `src/vehicle-profiles.js`, `src/observation.js`, `src/fire-control.js`, `src/combat-state.js`, `src/sim-core.js`다. `src/vehicle-geometry.js`, `src/t80u-art-adapter.js`, `src/effects.js`, `src/app.js`, 공개 사본/Worker/프로파일 내보내기도 함께 확인한다. 아카이브 전체나 과거 지시서는 이번 범위를 자동 확대하는 명령이 아니다.
 
