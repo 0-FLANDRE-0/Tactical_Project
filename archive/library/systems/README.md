@@ -30,6 +30,7 @@
 - [장전·탄약 이동·보급/비용/편성](logistics/RELOAD_AMMO_SUPPLY.md)
 - [1989 전차 96개 프리셋](../presets/1989/README.md)
 - [공중 레이더 수색·탐지·추적 공통 정본](air/RADAR_SEARCH_TRACKING.md) — **엔진 전지적 위치와 유닛 인식 분리**; 표적별 피탐지 기반값, 레이더별 거리·LOS·성능 보정, **게파르트 15km**, 추적/광학 정보·명중률 분리
+- [**항공 기만체·미사일 IRCCM/ECCM 확률 설계**](air/COUNTERMEASURES_FLARE_IRCCM_ECCM.md) — **대/중/소 플레어 구분, 발당 독립 기만 판정, IRCCM 곱셈 감쇄, 항공기 상대 방향/전방위 시커 보정** 확정; 실제 구경별 확률·쿨타임·ECCM 함수 미정, 코드 미구현
 - [자주대공포 **발당 명중률 잠정 시험안**](air/AA_GUN_HIT_PROBABILITY.md) — **게파르트 500m~4km 제안 범위**, M163 근거리 안정성·거리/오차 민감도(정량 미정); 사격·탐지·점사 확률 구분, 코드 미구현
 - [항공 투입·방공·레이더 LOS](air/AIR_ENTRY_RADAR_AA.md)
 - [지도 크기·LOS·경로탐색·분대 AI](maps/LARGE_MAP_LOS_AND_AI.md)
