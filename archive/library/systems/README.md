@@ -31,7 +31,8 @@
 - [1989 전차 96개 프리셋](../presets/1989/README.md)
 - [공중 레이더 수색·탐지·추적 공통 정본](air/RADAR_SEARCH_TRACKING.md) — **엔진 전지적 위치와 유닛 인식 분리**; 표적별 피탐지 기반값, 레이더별 거리·LOS·성능 보정, **게파르트 15km**, 추적/광학 정보·명중률 분리
 - [**항공 플레어 저항성(%)·IRCCM ON/OFF·ECCM 확률 설계**](air/COUNTERMEASURES_FLARE_IRCCM_ECCM.md) — **플레어 발당 독립 기만 판정** 및 플레어 저항성에 의한 곱셈 감쇄, **IRCCM ON이면 Lipa 무효**, ECCM 추후 설계. **9M37/9M37M 발사 전 시커 모드**와 구별; 미구현.
-- [**Mi-24 ASO-2V 소구경 플레어·Lipa 능동 IR 교란**](air/MI24_FLARE_LIPA.md) — D **4×32=128발**, V/P **6×32=192발**, 소구경 기본 기만 **18.5%/발**, Lipa **90% 시험 후보·IRCCM OFF일 때만 1회 판정**.
+- [**Mi-24 ASO-2V 소구경 플레어·Lipa 능동 IR 교란**](air/MI24_FLARE_LIPA.md) — D **4×32=128발·Lipa 없음**, V/P **6×32=192발·Lipa 기본 장착**, 소구경 **18.5%/발**, Lipa **90% 사용자 채택 게임값**, IRCCM OFF 미사일에 1회 기만 판정.
+- [**AH-64A 중구경 플레어·AN/ALQ-144 디스코볼**](air/AH64A_FLARE_ALQ144.md) — **중구경 플레어 30발·34.6%/발**, **AN/ALQ-144 상시 90%**, IRCCM ON이면 교란 무시. 2D 평면 360도, 미사일당 최대 1회.
 - [자주대공포 **발당 명중률 잠정 시험안**](air/AA_GUN_HIT_PROBABILITY.md) — **게파르트 500m~4km 제안 범위**, M163 근거리 안정성·거리/오차 민감도(정량 미정); 사격·탐지·점사 확률 구분, 코드 미구현
 - [항공 투입·방공·레이더 LOS](air/AIR_ENTRY_RADAR_AA.md)
 - [지도 크기·LOS·경로탐색·분대 AI](maps/LARGE_MAP_LOS_AND_AI.md)
