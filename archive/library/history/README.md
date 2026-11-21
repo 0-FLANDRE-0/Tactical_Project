@@ -5,12 +5,14 @@
 ## 과거 문서 바로가기
 
 - **WIP09~23 지시서와 보완 지시:** [원본 지시서의 단일 목차](../../instructions/README.md)
-- **2026-11-07 진행/미정 스냅샷:** [당시 진행 메모](progress/NEXT_STEPS_2026_11_07.md)
-- **미채택 장갑 세분화 제안:** [원안](proposals/ARMOR_SUBZONES.md)
+- **2026-11-07 진행/미정 스냅샷:** [당시 진행 메모](../../NEXT_STEPS_2026-11-07.md)
+- **미채택 장갑 세분화 제안:** [원안](../../tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md)
 - **폐기된 통합 제원 기록:** [구형 자료 안내](legacy/README.md)
 - **96개 최종 편성 이전 대기갑 프리셋:** [오래된 편성 원본](legacy/OLD_ANTITANK_PRESETS.md)
 
 ## WIP 실행 파일·원본 복구
+
+- **2026-11-21 4단계:** 2026-11-07 진행 메모·장갑 세부면 구상의 `history/` 중복 이관본 2개를 삭제하고, 위 링크는 원본으로 통합. [4단계 시작 전 전체 백업](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-cleanup-stage4-baseline-2026-11-21)에 중복 이관본까지 보존. 2026-11-19 이관 manifest의 구 경로는 **당시 목록**이지 현행 경로가 아니다.
 
 - **과거 HTML·ZIP·JS·SVG·PNG·Python의 원본 및 크기/해시:** [2026-11-19 백업 목록](../migration/BASELINE_FILE_MANIFEST_2026-11-19.json).
 - **코드·도면 폴더:** [`archive/art/`](../../art/), [WIP06 실행 스냅샷](../../Tactical_v0.4_WIP06.html), [당시 Python 기준표](../../instructions/README.md).
