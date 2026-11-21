@@ -1,5 +1,7 @@
 # TACTICAL 1989 — 7구역 내부 세부 장갑면·확률 판정 아이디어 메모
 
+> **2026-11-21 아카이브 정리 안내:** 여기는 **미채택/미확정 과거 구상**이다. 실제 채택된 7구역 제원·피격 판정은 [현행 차량·시스템 정본](../library/README.md)을 우선한다. 내용을 복제하던 라이브러리 이관본은 삭제했으며 [정리 전 백업](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-stage4-baseline-2026-11-21/archive/library/history/proposals/ARMOR_SUBZONES.md)에서 복원할 수 있다.
+
 > **기록일:** 2026-11-07 (KST)
 > **상태:** **검토 중인 설계 아이디어 / 미확정.** 이번 대화에서 “대충 이런 식으로 해보면 어떨까”라고 논의한 내용을 보존한다. 확정 규칙·계산식·수치표·구현 지시서가 아니다.
 > **기준 데이터:** [전차 32종의 현행 7구역 방호력](README.md) · [탄약 32종×3=96개 프리셋](../ammo/README.md)
