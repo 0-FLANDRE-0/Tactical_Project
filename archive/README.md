@@ -28,7 +28,8 @@
 
 - [5단계 최종 검증/이관 보고서](library/migration/STAGE5_FINAL_VALIDATION_2026-11-19.md) · [단계별 작업·감사 기록](library/README.md)
 - [정리 이전 보존 브랜치](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-library-baseline-2026-11-19) — 기준 SHA `1593dc2`.
-- **레거시 원본:** [구형 통합 전차 기준표](tanks/README.md) · [구형 통합 탄약 기준표](ammo/README.md) · [Bradley/TOW 옛 통합 문서](vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) · [과거 지시서](instructions/README.md). **전부 보존**, 새 정본으로 들어가는 안내를 제공한다.
+- **2026-11-21 아카이브 정리 1단계:** [작업 직전 전체 복구 브랜치](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-cleanup-baseline-2026-11-21) (기준 `dc1a833f`). 최신 정본에 대체된 구형 안내 표지와 쉴카 준비표 2개를 삭제하고, 쉴카의 유용한 실물형식 참고·출처는 차량 정본에 유지.
+- **레거시 원본:** [구형 통합 전차 기준표](tanks/README.md) · [구형 통합 탄약 기준표](ammo/README.md) · [Bradley/TOW 옛 통합 문서](vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md) · [과거 지시서](instructions/README.md). **현행 정본과 직접 겹치지 않는 주요 원본은 유지**, 새 정본으로 들어가는 안내를 제공한다.
 - [원본 63개 파일 SHA 목록](library/migration/BASELINE_FILE_MANIFEST_2026-11-19.json) · [3단계 이관 파일 목록](library/migration/STAGE3_LIBRARY_MANIFEST_2026-11-19.json) · [4단계 이관 파일 목록](library/migration/STAGE4_SYSTEM_HISTORY_MANIFEST_2026-11-19.json).
 
 > **원칙:** 한 데이터의 실제 수정은 [정본 소유권 규칙](library/CANONICAL_RULES.md)에 따라 수행하고, 다른 문서에서는 연결 링크만 갱신한다. 소스 원본·과거 시행착오를 사실 확인 없이 삭제하거나 미정 게임 수치를 임의로 채우지 않는다.
