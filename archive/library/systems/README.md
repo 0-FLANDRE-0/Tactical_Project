@@ -15,10 +15,12 @@
 - [105/120/125mm APFSDS 피해·과관통 곡선과 APDS 예외](combat/APFSDS_DAMAGE_CURVES.md)
 - [지상 입사각·도탄·HEAT 신관 / **모든 공중장비 입사각 생략·거리별 0°값**](combat/ANGLE_RICOCHET_FUZE.md)
 - [발사→착탄 2단계와 장갑구역](combat/TWO_STAGE_HIT.md)
+- [**모든 탄약 2km 이후 거리별 관통력 감쇄**](combat/RANGE_PENETRATION_EXTRAPOLATION.md) — 기존 노드와 0~2km 감쇄 추세 기반 원거리 강화 감쇄, **거리무관 개별 탄종 예외** 및 수치 함수 미정
 - [기관포 피해 정책](combat/AUTOCANNON_DAMAGE.md)
 - [모든 공중장비·모든 탄종 **비관통 직격**, AP계열 **과관통** 시 기본 피해 최소 25%](combat/AIR_TARGET_DAMAGE.md)
 - [HEP 30mm 파공·30~120mm 스폴/비파공 감쇄, HE-FRAG·APERS 피해 경로](combat/HEP_HEFRAG_APERS.md)
 - [게파르트 DM21 지상/공중 폭발 피해곡선, DM13A1 신관·DM23 KE](../ammunition/autocannon/GEPARD_35MM.md) — HEP와 구분
+- [퉁구스카 **30mm 2A38 탄약**](../ammunition/autocannon/TUNGUSKA_30MM_2A38.md) · [9M311 SAM](../ammunition/missiles/9M311_SAM.md) — 기본 HP 및 CE, 직격/근접신관 분리·신관 확률 미정
 - [M163·쉴카 **20/23mm AP·HE 탄약 정본**](../ammunition/autocannon/M163_SHILKA_AA_20_23MM.md) — **AP-I 38/HEI-T 68/API-T 55/HEFI-T 108HP**, 3:1 고정 탄띠, 공중 최소 피해/정확한 CE 매핑 미정
 - [IFV 고폭탄 공통 **지상 급감·공중 완만 감쇄** 곡선](combat/IFV_HE_DAMAGE_CURVES.md) — **20/25/30mm 기관포 HE 적용**, **73mm 그롬 OG-15V 제외**, 탄종별 기본 HP·CE값 불변, 상세 매핑 미정
 - [모듈·승무원·탄약고 사고](combat/MODULE_CREW_AMMO_INCIDENTS.md)
