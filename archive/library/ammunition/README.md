@@ -17,7 +17,7 @@
 ## 1989 자주대공포·기관포 탄약
 
 - [서독 게파르트 **35mm KDA DM21 HEI / DM13A1 SAPHEI-T / DM23 APDS-T**](autocannon/GEPARD_35MM.md) — 6거리×3각도 KE 관통력 이미지 수치, DM21 지상·공중 별도 CE 피해곡선, DM13A1 신관·외부 폭발, DM23 과관통. [차량 정본](../vehicles/1989/air_defense/GEPARD.md) · [탄띠 프리셋](../presets/1989/GEPARD_BELTS.md).
-- [미국 M163 20mm M168 AP-I](../vehicles/1989/air_defense/M163_VADS.md) — 해당 차량 정본에 관통력/속도/기본 피해 기록.
+- [미국 M163 M168 20mm **AP-I 38HP + HEI-T 68HP / 쉴카 AZP-23 23mm API-T 55HP + HEFI-T 108HP**](autocannon/M163_SHILKA_AA_20_23MM.md) — 각 탄종 사용자 이미지/워썬더 거리별 KE/CE, **3 HE:1 AP 단일 고정 탄띠**. [M163](../vehicles/1989/air_defense/M163_VADS.md) · [쉴카](../vehicles/1989/air_defense/ZSU23_4_SHILKA.md) · [탄띠](../presets/1989/AA_FIXED_BELTS_M163_SHILKA.md).
 
 ## 후속 시대 / 현대 APFSDS
 
