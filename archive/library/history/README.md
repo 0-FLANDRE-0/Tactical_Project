@@ -1,38 +1,21 @@
-# 변경 이력·WIP·미채택 제안 자료실
+# TACTICAL — 과거 설계·구현 기록 출입구
 
-> **4단계 이력 영역.** 구형 코드·HTML, 구현 지시서, 옛 제안은 **데이터베이스의 현행 확정 제원과 분리**하여 보존한다. 아래 역사 자료는 기준일 당시 상태·서술을 담은 **스냅샷**으로만 사용. 기준 백업 [`1593dc2`](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-library-baseline-2026-11-19)에서 이전 상태 확인 가능.
+> 이 폴더는 **당시 기록을 찾는 경로**다. 현행 게임 제원·규칙은 [라이브러리 본문](../README.md)을 우선하고, 예전 WIP 지시서가 곧 현재 코드 상태를 뜻하지는 않는다.
 
-## 이력 출입구
+## 과거 문서 바로가기
 
-- [WIP09~22 지시서·과거 PR·당시 상태 목록](implementation/README.md) — 현재 main 구현 상태와 구별
-- [2026-11-07 진행 기록·당시 미정](progress/NEXT_STEPS_2026_11_07.md) — 현재 진행도로 사용하지 않음
-- [미채택 내부 장갑면 세분화 아이디어](proposals/ARMOR_SUBZONES.md) — 기본 7구역 확정값과 구별
-- [구형 통합 전차·탄약 문서 폐기 안내](legacy/README.md)
-- [최종 96개 프리셋 이전의 구형 대기갑 단일 편성](legacy/OLD_ANTITANK_PRESETS.md)
-- [방호·관통·피해 최신 시스템 이관본](../systems/README.md)
+- **WIP09~23 지시서와 보완 지시:** [원본 지시서의 단일 목차](../../instructions/README.md)
+- **2026-11-07 진행/미정 스냅샷:** [당시 진행 메모](../../NEXT_STEPS_2026-11-07.md)
+- **미채택 장갑 세분화 제안:** [원안](../../tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md)
+- **폐기된 통합 제원 기록:** [구형 자료 안내](legacy/README.md)
+- **96개 최종 편성 이전 대기갑 프리셋:** [오래된 편성 원본](legacy/OLD_ANTITANK_PRESETS.md)
 
-## 원본 WIP 실행 스냅샷·도면·참조 스크립트 17개
+## WIP 실행 파일·원본 복구
 
-다음 파일들은 **1단계 원본 manifest를 기준으로 보존 중인 비-Markdown 자산**이다. **지금 라이브러리에 바이트 복제하거나 코드 재빌드를 수행한 것이 아니라 기존 Git 파일로 연결**한다. 수치의 현행 정본/실제 게임 작동 결과라고 단정하지 않는다.
+- **2026-11-21 4단계:** 2026-11-07 진행 메모·장갑 세부면 구상의 `history/` 중복 이관본 2개를 삭제하고, 위 링크는 원본으로 통합. [4단계 시작 전 전체 백업](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-cleanup-stage4-baseline-2026-11-21)에 중복 이관본까지 보존. 2026-11-19 이관 manifest의 구 경로는 **당시 목록**이지 현행 경로가 아니다.
 
-| 원본 파일 | 원본 크기 | 원본 Blob SHA 앞 12자리 |
-|---|---:|---|
-| [`art/abrams-topview.js`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/art/abrams-topview.js) | 24.4 KiB | `a87cfbd3ba67` |
-| [`art/M1_Abrams_TopView.html`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/art/M1_Abrams_TopView.html) | 52.0 KiB | `06a99a015fbb` |
-| [`art/ring_overlay_7916.png`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/art/ring_overlay_7916.png) | 533.8 KiB | `e7cf85812851` |
-| [`art/viewer.template.html`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/art/viewer.template.html) | 27.7 KiB | `3e99a1aecd18` |
-| [`instructions/wip09_hit_reference.py`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/instructions/wip09_hit_reference.py) | 3.6 KiB | `aeb3f31cd999` |
-| [`instructions/wip10_hit_reference.py`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/instructions/wip10_hit_reference.py) | 4.7 KiB | `2b098f381f68` |
-| [`M1A2_before_proportion_fix.svg`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/M1A2_before_proportion_fix.svg) | 32.5 KiB | `c74e1c4cb129` |
-| [`M1A2_WIP04_top_view.svg`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/M1A2_WIP04_top_view.svg) | 31.1 KiB | `e3b8e11ee2f6` |
-| [`Tactical_v0.4_WIP01_source_and_backup.zip`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/Tactical_v0.4_WIP01_source_and_backup.zip) | 93.1 KiB | `34499961ad7f` |
-| [`Tactical_v0.4_WIP01.html`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/Tactical_v0.4_WIP01.html) | 60.7 KiB | `fa9a2d6fc754` |
-| [`Tactical_v0.4_WIP02.html`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/Tactical_v0.4_WIP02.html) | 7503.7 KiB | `ab4e702c9250` |
-| [`Tactical_v0.4_WIP03.html`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/Tactical_v0.4_WIP03.html) | 7985.6 KiB | `823eac8df97d` |
-| [`Tactical_v0.4_WIP04.html`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/Tactical_v0.4_WIP04.html) | 8035.3 KiB | `e201fb957750` |
-| [`Tactical_v0.4_WIP06.html`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/Tactical_v0.4_WIP06.html) | 8039.3 KiB | `82c85a625e2a` |
-| [`WIP02_terrain_renderer.js`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/WIP02_terrain_renderer.js) | 4.7 KiB | `10520c016679` |
-| [`WIP04_initial_m1a2-art.js`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/WIP04_initial_m1a2-art.js) | 11.1 KiB | `d8613cdde044` |
-| [`WIP04_m1a2-art.js`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/WIP04_m1a2-art.js) | 11.1 KiB | `2c13d906a3b3` |
+- **과거 HTML·ZIP·JS·SVG·PNG·Python의 원본 및 크기/해시:** [2026-11-19 백업 목록](../migration/BASELINE_FILE_MANIFEST_2026-11-19.json).
+- **코드·도면 폴더:** [`archive/art/`](../../art/), [WIP06 실행 스냅샷](../../Tactical_v0.4_WIP06.html), [당시 Python 기준표](../../instructions/README.md).
+- **중복됐던 2026-11-15 WIP 상태 목록:** [3단계 정리 전 원문](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-stage3-baseline-2026-11-21/archive/library/history/implementation/README.md). 이제 `archive/instructions/README.md`만 목차로 유지.
 
-**보존 원칙:** WIP HTML/JS/ZIP/SVG/PNG/Python을 단순히 과거 버전이라는 이유로 삭제하지 않는다. 현재 소스 코드와 비교는 5단계에서 별도 검토하며, 이전 대화에서 제안한 가상의 확률/스펙을 사용자 채택값으로 승격하지 않는다.
+**주의:** 이력 속 확정/미정·구현 대기/병합 상태는 기록 날짜 기준이다. 현재 정본이나 실행 결과로 자동 승격시키지 않는다.

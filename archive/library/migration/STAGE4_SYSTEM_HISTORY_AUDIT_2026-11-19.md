@@ -33,7 +33,7 @@
 ### 주의: 게임 설계값과 코드 구현 상태는 다른 축
 
 - **사용자 확정 게임 규칙이라고 바로 구현 완료는 아니다.** 예: Trophy HV 독립 발사기와 모듈러 증가장갑, 범용 1989 전차 탄종 공통 곡선의 모든 엔진 경로 적용을 이번 작업에서 주장하지 않는다.
-- **WIP 지시서 작성 당시 상태는 후속 PR 결과와 다를 수 있다.** [지시서 이력색인](../history/implementation/README.md)은 원래 **2026-11-15 시점의 표**를 보존하고, 현재 main 코드·검증 아티팩트와의 직접 대조는 5단계로 넘긴다.
+- **WIP 지시서 작성 당시 상태는 후속 PR 결과와 다를 수 있다.** [당시 지시서 이력색인 보존본](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-stage3-baseline-2026-11-21/archive/library/history/implementation/README.md)은 원래 **2026-11-15 시점의 표**를 보존하고, 현재 main 코드·검증 아티팩트와의 직접 대조는 5단계로 넘긴다.
 - **세계관 전력 보유량**은 [대체역사 원안](../world/1989/WW3_FORCE_INVENTORY_DRAFT.md)으로 보존하고 공식 확정 실제 편제라는 주장을 하지 않는다.
 - **WIP HTML/SVG/JS/ZIP/PNG/Python 17개 원본 파일**은 [역사 자산 목록](../history/README.md)에만 링크하고 원위치에 보존했다. 사용자 확정 게임 제원과 과거 시제품의 숫자를 섞지 않았다.
 

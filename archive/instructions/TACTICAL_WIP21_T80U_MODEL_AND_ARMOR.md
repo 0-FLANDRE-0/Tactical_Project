@@ -14,11 +14,11 @@
 | 자료 | 이번 용도 |
 |---|---|
 | [수정 모델](../../src/art/t80u-topview.js) | 실제 연결할 벡터와 회전축. **첫 버전 `54f5e3b`의 형상을 사용하지 않는다** |
-| [외형 설명](../T80U_ART_STUDY.md), [형상 수정 기록](../T80U_ART_CORRECTION.md) | 주포 외경, 차체/포탑 ERA, 해치·엔진 데크 수정과 근사 범위 |
+| [외형 설명](../../docs/T80U_ART_STUDY.md), [형상 수정 기록](../../docs/T80U_ART_CORRECTION.md) | 주포 외경, 차체/포탑 ERA, 해치·엔진 데크 수정과 근사 범위 |
 | [정렬·출처 메타데이터](../../data/vehicles/references/t80u/proportion_review.json) | 원본 좌표·균일 축척·회전축과 확인되지 않은 부분 |
 | [부위별 대조 화면](../../dist/qa/T80U_ReferenceCheck.html), [모델 미리보기](../../dist/qa/T80U_TopView.html) | 게임 연결 전후 동일 형상 확인 |
-| [차량 아카이브](../../archive/tanks/README.md) | T-80U(1989) 기본 7구역·K5·피복률·HP. 아래 표가 이번 적용값 |
-| [탄약 아카이브](../../archive/ammo/README.md), `src/combat-state.js` | 기존 3종 탄과 정상 피해 규칙 유지. 아카이브 125mm 탄약은 이번에 등록하지 않음 |
+| [T-80U(1989) 차량 정본](../library/vehicles/tanks/1989/SOVIET.md) | T-80U(1989) 기본 7구역·K5·피복률·HP. 아래 표가 이번 적용값 |
+| [소련 125mm 탄약 정본](../library/ammunition/cannon/SOVIET_125.md), `src/combat-state.js` | 기존 3종 탄과 정상 피해 규칙 유지. 아카이브 125mm 탄약은 이번에 등록하지 않음 |
 | `src/vehicle-profiles.js`, `sim-core.js`, `observation.js`, `app.js` | 프로파일·생성·공개 사본·도안 선택 연결 |
 | `src/fire-control.js`, `combat-state.js`, `vehicle-geometry.js` | 발사자/피격자 구분, 피격과 회전 좌표, ERA 방호 연결 |
 | `build.py`, `src/page.html`, 내장 Worker/Node 로더, `scripts/export_vehicle_profile.cjs` | 새 의존성과 내보내기·배포 연결 |

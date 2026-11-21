@@ -1,8 +1,10 @@
 # 명중→비행→착탄 2단계 / 360° 장갑 구역 확률 모델
 
+> **2026-11-21 공중 표적 최신 예외:** 이 문서의 **360°/7구역 피격면 확률·상대 입사각**은 **지상 차량의 장갑 판정**을 위한 모델이다. **헬기/고정익 등 모든 공중장비는 입사각 판정 자체를 생략**하고 각 탄종의 **거리별 0° 관통·효과 수치**와 해당 기체의 단일 KE(CE)를 비교한다. **각도 기반 도탄·경사보정·각도 신관 실패는 공중에 미적용**. 비행시간·3D 경사거리·관측/명중·표적 운동은 유지. [각도 공통 정본](ANGLE_RICOCHET_FUZE.md) · [공중 피해 공통 정본](AIR_TARGET_DAMAGE.md)을 최신 적용 기준으로 우선한다. 과거 WIP 코드가 이미 공중 생략을 구현했다는 뜻은 아님.
+
 > **4단계 이관본.** 확정 규칙과 당시 시험값/미정 조건을 구분하고, 5단계 정본 전환 전까지 기존 원본문서가 우선한다. 이관으로 게임 코드의 구현 범위가 늘어나지는 않음.
 
-**원본:** [2026-11-07 당시 명중 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md). 이력상 구상/선택지와 WIP10 구현을 구분. **탄약별 최신 각도·도탄/HEAT 신관 판정은** [후속 문서](ANGLE_RICOCHET_FUZE.md)의 조건 및 구현 범위 확인. 내부 세부 장갑면은 [미확정 아이디어](../../history/proposals/ARMOR_SUBZONES.md).
+**원본:** [2026-11-07 당시 명중 설계](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/combat/TWO_STAGE_HIT_AND_360_ARMOR_RESOLUTION_DESIGN_2026-11-07.md). 이력상 구상/선택지와 WIP10 구현을 구분. **탄약별 최신 각도·도탄/HEAT 신관 판정은** [후속 문서](ANGLE_RICOCHET_FUZE.md)의 조건 및 구현 범위 확인. 내부 세부 장갑면은 [미확정 아이디어](../../../tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md).
 
 # TACTICAL — 발사·착탄 2단계 명중 판정과 360° 확률 장갑 구역 모델
 

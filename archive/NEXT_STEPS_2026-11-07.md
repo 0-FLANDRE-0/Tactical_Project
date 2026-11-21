@@ -1,4 +1,6 @@
-# TACTICAL — 현재 상태와 다음 단계 (2026-11-07)
+# TACTICAL — 2026-11-07~14 진행 스냅샷 (현재 진행 상황 아님)
+
+> **2026-11-21 아카이브 정리 안내:** 원래 제목은 「TACTICAL — 현재 상태와 다음 단계 (2026-11-07)」. 이 글은 **과거 WIP 진행 상태·당시 제안·미정 기록**이지 현재 할 일 목록이나 현행 확정 제원이 아니다. 현재 제원은 [정본 라이브러리](library/README.md), 당시 WIP 지시서는 [지시서 목차](instructions/README.md)를 사용한다. 동일 내용을 복제했던 라이브러리 이관본은 4단계에서 제거했고 [정리 전 백업](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-stage4-baseline-2026-11-21/archive/library/history/progress/NEXT_STEPS_2026_11_07.md)에 남겼다.
 
 > **기록일:** 2026-11-07 (KST) · **최종 갱신:** 2026-11-14 (WIP20 독립 재검증 후 main 통합)
 > **성격:** 작업 순서·결정 대기 항목·아카이브 정리 목록을 모아둔 **진행 관리 메모**. 새 수치를 확정하지 않으며, 전차·탄약 기준표의 값을 바꾸지 않는다.

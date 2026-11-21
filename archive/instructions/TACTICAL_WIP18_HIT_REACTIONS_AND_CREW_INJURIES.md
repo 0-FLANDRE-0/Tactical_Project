@@ -17,8 +17,8 @@
 
 먼저 읽을 자료:
 
-- [최신 모듈·승무원·탄약고 정책](../../archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md), [WIP15 구현](../RELOAD_AND_TEMPORARY_REACTIONS_WIP15.md), [WIP16 구현](../ENGAGEMENT_DECISIONS_WIP16.md), [WIP17 병합 검토](../reviews/WIP17_MERGE_REVIEW_2026-11-13.md)
-- [기관포 전용 정책](../../archive/combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md), [차량별 생존성 방향](../../archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md), [장전·탄약 구획 설계 §12](../../archive/ammo/README.md#12-장전탄약고-간-이동-예정-시스템)
+- [최신 모듈·승무원·탄약고 정책](../../archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md), [WIP15 구현](../../docs/RELOAD_AND_TEMPORARY_REACTIONS_WIP15.md), [WIP16 구현](../../docs/ENGAGEMENT_DECISIONS_WIP16.md), [WIP17 병합 검토](../../docs/reviews/WIP17_MERGE_REVIEW_2026-11-13.md)
+- [기관포 전용 정책](../../archive/combat/AUTOCANNON_PENETRATION_DAMAGE_POLICY_2026-11-13.md), [차량별 생존성 방향](../../archive/vehicles/USAREUR_IFV_CFV_ROSTER_PLAN_2026-11-12.md), [장전·탄약 구획 현행 설계](../library/systems/logistics/RELOAD_AMMO_SUPPLY.md)
 - `src/combat-state.js`, `src/fire-control.js`, `src/vehicle-profiles.js`, `src/mobility.js`, `src/observation.js`, `src/sim-core.js`, `src/app.js`, 데이터 내보내기·HTML 빌드·내장 Worker·Node 로더·직접 코어 생성 경로
 
 ## 2. 사건 계약과 무기별 규칙

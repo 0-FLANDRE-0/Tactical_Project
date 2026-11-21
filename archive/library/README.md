@@ -1,37 +1,35 @@
-# TACTICAL — 정식 장비·탄약·전투 시스템 라이브러리
+# TACTICAL — 게임 설계 정본 라이브러리
 
-> **개편 완료: 2026-11-19 · 5/5단계.** 이곳이 **게임 설계 제원·규칙의 현행 정식 탐색/수정 진입점**이다. 과거 단계 문서의 ‘정본 전환 전/이관본’은 **발행 당시 진행 상태**를 뜻한다. 상세한 충돌·미정/잠정/코드 상태는 [정본 우선순위](CANONICAL_RULES.md)를 따른다.
+> **현재 제원·규칙의 공식 진입점.** 숫자는 각 차량·탄약·시스템 파일 한 곳에서 관리하며 색인에는 중복 기재하지 않는다. [정본 책임과 우선순위](CANONICAL_RULES.md).
 
-## 데이터 카탈로그
+## 분야별 탐색
 
-| 영역 | 바로가기 | 주요 내용 |
-|---|---|---|
-| **차량** | [vehicles/](vehicles/README.md) | 1989 전차 32종, 후속 M1A2 2종, 현대 M1A2C·2A8·T-14M, IFV/APC/정찰·헬기 |
-| **탄약·미사일** | [ammunition/](ammunition/README.md) | 1989 미·독·소·동독 탄약, 현대 날탄, TOW/MILAN/Hellfire 등 |
-| **전투·방호 시스템** | [systems/](systems/README.md) | ERA·Anti-ERA·TUSK I/II ARAT·모듈러 증가장갑·Trophy, 관통/피해곡선/도탄/장전 |
-| **96개 적재 프리셋** | [presets/](presets/README.md) | 1989 32종×3개, 원본 공유 템플릿 54행 검산본 |
-| **보병·개별 유닛** | [units/](units/README.md) | 보병/분대 설계·검토값 |
-| **세계관** | [world/](world/README.md) | 1989년 6월 20일 대체역사 개전·전력 편제 원안 |
-| **역사 자료실** | [history/](history/README.md) | WIP 지시서·구형 제원·폐기 아이디어·초기 시제품 |
-| **보조 색인** | [indexes/ 공격헬기](indexes/AIRCRAFT_1989.md) | 헬기 현황·비교 자료 |
+| 자료 | 정본 |
+|---|---|
+| 차량·1989 전차 32종·현대 전차·헬기·대공차량 | [차량 카탈로그](vehicles/README.md) |
+| 전차포탄·대공포탄·미사일 | [탄약 카탈로그](ammunition/README.md) |
+| ERA·APS·레이더·명중·관통·피해·보급 | [시스템 카탈로그](systems/README.md) |
+| 1989 전차 96개 적재 편성 | [프리셋](presets/1989/README.md) · [JSON](presets/1989/TANK_LOADOUTS_96.json) |
+| 보병·개별 유닛 | [유닛](units/README.md) |
+| 1989 대체역사 | [세계관](world/README.md) |
+| WIP·구형 수치·폐기 제안 | [이력](history/README.md) |
+| 항공기 비교 | [보조 색인](indexes/AIRCRAFT_1989.md) |
 
-## 반드시 구분할 사항
+## 1989 자주대공포·대공 미사일 바로가기
 
-- **게임용 KE·CE 관통력, 탄약별 기본 차량 피해 HP, 실제 차량 최대 HP, 추가장갑 독립 HP**는 각각 다른 수치.
-- **ERA 피복률 %p 소모**와 **Anti-ERA 방호 효과 감쇄**, **비폭발성 증가장갑 내구도**, **Trophy HV 요격탄·대기시간**은 별도 계층.
-- **1989 본편 / 1990년 이후 / 현대 장비** 시대 분리, 실제 게임 코드와 사용자 설계 확정/잠정 분리.
-- **미정은 절대로 임의 숫자로 채우지 않는다.** [정식 정본 소유권·우선순위](CANONICAL_RULES.md) 참고.
+- **기관포 차량:** [게파르트](vehicles/1989/air_defense/GEPARD.md) · [M163](vehicles/1989/air_defense/M163_VADS.md) · [쉴카](vehicles/1989/air_defense/ZSU23_4_SHILKA.md) · [퉁구스카](vehicles/1989/air_defense/2S6_TUNGUSKA.md)
+- **미사일 차량:** [스트렐라-10M2](vehicles/1989/air_defense/STRELA_10M2.md) · [채퍼럴](vehicles/1989/air_defense/M48_CHAPARRAL.md) · [롤란드 2](vehicles/1989/air_defense/ROLAND_2_MARDER.md)
+- **대공 포탄:** [20/23mm](ammunition/autocannon/M163_SHILKA_AA_20_23MM.md) · [35mm](ammunition/autocannon/GEPARD_35MM.md) · [30mm](ammunition/autocannon/TUNGUSKA_30MM_2A38.md)
+- **대공 미사일:** [9M311](ammunition/missiles/9M311_SAM.md) · [9M37/9M37M](ammunition/missiles/9M37_9M37M_STRELA10.md) · [MIM-72](ammunition/missiles/MIM72_A_C_E_G_CHAPARRAL.md) · [롤란드 2/3](ammunition/missiles/ROLAND_2_3_SAM.md)
 
-## 이관 검증·기록
+## 공통 전투 판정 바로가기
 
-| 단계 | 수행 내용 | 상태 |
-|---|---|---|
-| 1 | [정리 전 원본 63개 파일 백업·해시 인벤토리](migration/STAGE1_BASELINE_AND_INVENTORY_2026-11-19.md) | **완료** |
-| 2 | [기존 Markdown 46개 역할·정본 책임·충돌 감사](migration/STAGE2_CANONICAL_SOURCE_AUDIT_2026-11-19.md) | **완료** |
-| 3 | [차량·탄약·미사일·프리셋 36개 파일 이관](migration/STAGE3_MIGRATION_VERIFICATION_2026-11-19.md) | **완료** |
-| 4 | [방호·전투 시스템, 세계관·이력 28개 파일 분리](migration/STAGE4_SYSTEM_HISTORY_AUDIT_2026-11-19.md) | **완료** |
-| 5 | [최종 원본 대조·링크 복구·정본 전환·레거시 안내](migration/STAGE5_FINAL_VALIDATION_2026-11-19.md) | **완료** |
+- [수색·추적 레이더](systems/air/RADAR_SEARCH_TRACKING.md) · [플레어·IRCCM](systems/air/COUNTERMEASURES_FLARE_IRCCM_ECCM.md) · [대공포 명중률](systems/air/AA_GUN_HIT_PROBABILITY.md)
+- [공중 표적 피해](systems/combat/AIR_TARGET_DAMAGE.md) · [IFV HE 피해](systems/combat/IFV_HE_DAMAGE_CURVES.md) · [도탄·입사각](systems/combat/ANGLE_RICOCHET_FUZE.md) · [2km 이후 관통력](systems/combat/RANGE_PENETRATION_EXTRAPOLATION.md)
 
-**원본 보존:** [변경 전 백업 브랜치](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-library-baseline-2026-11-19) · [원본 SHA 목록](migration/BASELINE_FILE_MANIFEST_2026-11-19.json) · [5단계 최종 이관 목록](migration/STAGE5_FINAL_LIBRARY_MANIFEST_2026-11-19.json).
+## 읽을 때 주의할 것
 
-> **기존 원본문서와 시제품은 삭제하지 않았다.** 현재 사용자는 이 새 카탈로그를 사용하면 되고, 원본의 과거 수치/당시 구현 메모는 비교·증빙에만 이용한다. **게임 코드 및 원래 1989년 프리셋은 이번 정리로 변경되지 않았다.**
+- KE/CE 관통·방호, 차량 최대 HP, 탄약 기본 피해 HP, 추가장갑 HP 및 ERA %p는 별개.
+- **사용자 확정·잠정·미정·이력**과 **게임 코드 실제 구현**은 별도. 1989·후속·현대는 구별한다.
+- [2026-11-19 원본 이관 검증](migration/STAGE5_FINAL_VALIDATION_2026-11-19.md) · [2026-11-21 1단계 이전 백업](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-cleanup-baseline-2026-11-21) · [2단계 이전 백업](https://github.com/0-FLANDRE-0/Tactical_Project/tree/archive-cleanup-stage2-baseline-2026-11-21)
+- [구형 전차 문서 안내](../tanks/README.md) · [구형 탄약 문서 안내](../ammo/README.md): 과거 원문은 2단계 백업에서 조회.

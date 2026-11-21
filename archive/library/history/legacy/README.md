@@ -1,6 +1,6 @@
 # 폐기된 통합 전차·탄약 문서 / 후속 결정을 우선하는 오래된 설계
 
-> **자료용 안내.** [2026-11-06 통합 설계 폐기 표식](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md)은 더 이상 장갑·탄약 데이터 정본이 아니다. 옛 내용을 재등장시키지 않고 과거 커밋으로만 추적.
+> **자료용 안내.** 2026-11-06 작성된 구형 통합 제원 안내 파일은 현행 정본과 중복되어 2026-11-21 아카이브 정리 1단계에서 main에서 삭제했다. [정리 전 보존본](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-baseline-2026-11-21/archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md)으로 원문 확인 가능. 과거 수치를 현행 정본으로 재적용하지 않는다.
 
 [**최종 96개 편성 이전 구형 대기갑 프리셋 §9~10**](OLD_ANTITANK_PRESETS.md)
 

@@ -58,7 +58,7 @@
 | [`M1A2_WIP04_top_view.svg`](../../M1A2_WIP04_top_view.svg) | 31.1 KiB | `e3b8e11ee2f6` |
 | [`NEXT_STEPS_2026-11-07.md`](../../NEXT_STEPS_2026-11-07.md) | 42.6 KiB | `5e3d82fe34d2` |
 | [`README.md`](../../README.md) | 20.2 KiB | `ac443d60d62b` |
-| [`TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md`](../../TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md) | 0.9 KiB | `ef8710751c10` |
+| [`TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md`](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-baseline-2026-11-21/archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md) | 0.9 KiB | `ef8710751c10` |
 | [`Tactical_v0.4_WIP01_source_and_backup.zip`](../../Tactical_v0.4_WIP01_source_and_backup.zip) | 93.1 KiB | `34499961ad7f` |
 | [`Tactical_v0.4_WIP01.html`](../../Tactical_v0.4_WIP01.html) | 60.7 KiB | `fa9a2d6fc754` |
 | [`Tactical_v0.4_WIP02.html`](../../Tactical_v0.4_WIP02.html) | 7503.7 KiB | `ab4e702c9250` |

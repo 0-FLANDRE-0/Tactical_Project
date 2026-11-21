@@ -13,7 +13,7 @@
 - **제외:** 화재·유폭/특수 즉사, 외부 재보급 차량·포인트·전투 전 덱/적재 편집, 수동 강제 탈탄·승무원 교대/치료/사망·자동장전 차량, 기관포/미사일/보병·비장갑 신규 유닛, 실제 8×8 지도. 세계관 편제·다른 차량의 확정 수치와 1989년 96개 적재 프리셋은 바꾸지 않는다.
 - 아래 혼합량·용량·준비/보충 시간·탄약별 미확정 부분의 임시 규칙은 **실차 적재·운용 성능이 아닌 조정 가능한 게임 시험 제안**이다. 사용자 확정값이나 실제 운용 제원으로 보고하지 않는다.
 
-읽을 자료: [탄약 기준·구획 설계](../../archive/ammo/README.md), [A1 피해·M830 시험 후보](../../archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md), [입사각·도탄·HEAT 신관](../../archive/combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md), [WIP15](../RELOAD_AND_TEMPORARY_REACTIONS_WIP15.md), [WIP18](../HIT_REACTIONS_AND_CREW_INJURIES_WIP18.md), [WIP18 병합 검토](../reviews/WIP18_MERGE_REVIEW_2026-11-13.md). 주요 코드는 `vehicle-profiles.js`, `combat-state.js`, `fire-control.js`, `tactical-ai.js`, `sim-core.js`, `app.js`, `page.html`, `styles.css`와 내보내기·빌드·로더·검증 경로다.
+읽을 자료: [탄약 기준·구획 설계](../../archive/ammo/README.md), [A1 피해·M830 시험 후보](../../archive/combat/PENETRATION_DAMAGE_AND_VEHICLE_HP_CONCEPT_2026-11-07.md), [입사각·도탄·HEAT 신관](../../archive/combat/ANGLE_PENETRATION_RICOCHET_AND_HEAT_FUZE_RULES_2026-11-08.md), [WIP15](../../docs/RELOAD_AND_TEMPORARY_REACTIONS_WIP15.md), [WIP18](../../docs/HIT_REACTIONS_AND_CREW_INJURIES_WIP18.md), [WIP18 병합 검토](../../docs/reviews/WIP18_MERGE_REVIEW_2026-11-13.md). 주요 코드는 `vehicle-profiles.js`, `combat-state.js`, `fire-control.js`, `tactical-ai.js`, `sim-core.js`, `app.js`, `page.html`, `styles.css`와 내보내기·빌드·로더·검증 경로다.
 
 ## 2. 탄약별 판정·비행·피격 반응
 

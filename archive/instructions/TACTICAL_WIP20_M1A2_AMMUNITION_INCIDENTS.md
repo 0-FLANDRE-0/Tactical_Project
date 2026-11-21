@@ -11,7 +11,7 @@
 - 기존 관통·HP·과관통/근접 비관통·WIP15 이상/피로·WIP18 부상·WIP19 탄종/작업·WIP16 AI와 공개 정보 경계를 유지한다. 승무원 피해는 계속 우측 선택 정보에만 표시한다.
 - **제외:** 영구 모듈 HP/파괴/수리, 승무원 사망·치료·교체, 일반 엔진 화재/연료·연속 화염 피해, 외부 재보급·강제 탈탄·적재 편집, 연쇄 유폭·주변 유닛 폭발 피해, 신규 차종/무기/지도와 1989년 편제·96개 프리셋 변경. 이번 격리 화재는 탄약고 사고 상태와 유한한 사격 중단이다.
 
-읽을 자료: [WIP19 구현](../AMMUNITION_AND_COMMAND_PANEL_WIP19.md), [WIP19 병합 검토](../reviews/WIP19_MERGE_REVIEW_2026-11-14.md), [모듈·승무원·탄약고 정책](../../archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md), [탄약 기준](../../archive/ammo/README.md), [WIP18 구현](../HIT_REACTIONS_AND_CREW_INJURIES_WIP18.md), [잔해·공개 규칙](../../archive/combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md). 주요 경로는 `src/vehicle-profiles.js`, `combat-state.js`, `fire-control.js`, `sim-core.js`, `tactical-ai.js`, `app.js`, `effects.js`와 내보내기·빌드·로더·Worker·검증이다.
+읽을 자료: [WIP19 구현](../../docs/AMMUNITION_AND_COMMAND_PANEL_WIP19.md), [WIP19 병합 검토](../../docs/reviews/WIP19_MERGE_REVIEW_2026-11-14.md), [모듈·승무원·탄약고 정책](../../archive/combat/TEMPORARY_MODULE_CREW_AMMO_DESIGN_UPDATE_2026-11-12.md), [탄약 기준](../../archive/ammo/README.md), [WIP18 구현](../../docs/HIT_REACTIONS_AND_CREW_INJURIES_WIP18.md), [잔해·공개 규칙](../../archive/combat/WRECK_VISIBILITY_AND_SELECTION_RULES_2026-11-08.md). 주요 경로는 `src/vehicle-profiles.js`, `combat-state.js`, `fire-control.js`, `sim-core.js`, `tactical-ai.js`, `app.js`, `effects.js`와 내보내기·빌드·로더·Worker·검증이다.
 
 ## 2. 설정·바인딩 계약
 

@@ -5,17 +5,19 @@
 # TACTICAL 1989 — 공격헬기 전체 설계 현황 (2026-11-15)
 
 > **상태:** 이 문서는 현재까지 대화에서 실제 설계한 **AH-64A Apache / Mi-24D·V·P 4기종**을 한데 모은 **색인·핵심 비교표**다. 전 기종 실제 역사 배치 확정 명세나 게임 코드 구현 보고가 아니다. 다른 헬기 기종을 임의 추가하지 않는다.
-> **상세 명세(우선):** [AH-64A](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/AH64A_APACHE_WEAPONS_AND_DAMAGE_2026-11-14.md), [Mi-24D/V/P](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/MI24_D_V_P_HIND_WEAPONS_AND_DAMAGE_2026-11-15.md). 충돌 시 사용자 최신 결정과 각 상세 문서의 해당 탄종값을 우선하며, 이 표는 요약용이다.
+> **상세 명세(우선):** [AH-64A](../vehicles/1989/air/AH64A.md), [Mi-24D/V/P](../vehicles/1989/air/MI24_D_V_P.md). 충돌 시 사용자 최신 결정과 각 상세 문서의 해당 탄종값을 우선하며, 이 표는 요약용이다.
 > **공통 항공 시스템:** [전술지도·외부 작전 공역, 증원·진입점·ETA, 방공/레이더 LOS](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/air/AIR_ENTRY_AIR_DEFENSE_IFV_AA_RULES_2026-11-14.md).
+
+> **2026-11-21 최신 사용자 HP 정정:** AH-64A **325 HP**(기존 300), Mi-24D/V/P 전부 **400 HP**(기존 325). 장갑은 AH-64A 20(20), Mi-24 25(25) 유지. 아래 HP 표는 최신값이며 원본 2026-11-15 요약표의 옛 값보다 우선한다. 상세 정본은 [아파치](../vehicles/1989/air/AH64A.md) / [Mi-24](../vehicles/1989/air/MI24_D_V_P.md).
 
 ## 1. 기체 확정값
 
 | 기체 | 최대 HP | 단일 장갑 KE(CE), mm | 기본 기관포/기관총 | 대전차 미사일 분류 |
 |---|---:|---:|---|---|
-| **AH-64A Apache** | **300** | **20(20)** | 30mm M230 / M789 HEDP | AGM-114A Hellfire |
-| **Mi-24D Hind** | **325** | **25(25)** | 12.7mm Yak-B | 9M17P/MP Falanga |
-| **Mi-24V Hind** | **325** | **25(25)** | 12.7mm Yak-B | 9M114 계열, 희귀 9M120 |
-| **Mi-24P Hind** | **325** | **25(25)** | 30mm GSh-30-2K (동체 우측 고정식) | 9M114 계열, 희귀 9M120 |
+| **AH-64A Apache** | **325** | **20(20)** | 30mm M230 / M789 HEDP | AGM-114A Hellfire |
+| **Mi-24D Hind** | **400** | **25(25)** | 12.7mm Yak-B | 9M17P/MP Falanga |
+| **Mi-24V Hind** | **400** | **25(25)** | 12.7mm Yak-B | 9M114 계열, 희귀 9M120 |
+| **Mi-24P Hind** | **400** | **25(25)** | 30mm GSh-30-2K (동체 우측 고정식) | 9M114 계열, 희귀 9M120 |
 
 - 헬기는 전차 7구역 대신 **기체 단일 KE(CE) 방호값**. 기체 부위별 로터·엔진·조종석 HP는 도입 결정하지 않음.
 - Mi-24의 실기체 수송칸(최대 8명)은 참고 특성. 게임상 동시 장착 무장/병력/기동 제약·수송 AI는 아직 미정.

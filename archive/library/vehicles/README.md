@@ -14,7 +14,8 @@
 - [M1A2 (1992·1998) 2종](tanks/post-1989/M1A2_1992_1998.md) — 1989년 본편에 포함하지 않음
 - [M1A2C (SEP v3)](tanks/modern/M1A2C.md) — 7구역 고정장갑, TUSK I/II 교체형 ARAT, 최대 HP 미정
 - [Leopard 2A8](tanks/modern/LEOPARD_2A8.md) — 1,450 HP, 모듈러 증가장갑, Trophy HV 좌·우 독립
-- [T-14M 아르마타](tanks/modern/T-14M.md) — **1,500 HP**, 기본장갑 7구역·증가장갑 4구역 KE/CE·피복률·독립 HP(**1,150/700/250/550**)·탄종별 감쇄·**잔존 38.5%**, **Malakhit ERA** 일반형·차체 측면 이중층 KE/CE·피복률 확정. **증가장갑 → ERA 판정**, [명중 계층별 소모 규칙](../systems/armor/T14M_MALAKHIT_ERA.md). [Afghanit APS](../systems/aps/AFGHANIT_T14M.md) 전방 ±60°·좌우 5발·225ms·0초 차탄 대기·50~1,700m/s·KE 관통력 최대 38% 감쇄 및 **무인포탑 차량 HP 피해 50% 감쇄**
+- [T-90M (2026)](tanks/modern/T-90M_2026.md) — **1,450 HP**, 기본장갑 7구역, Relikt 전면/상부 +240(+560), **차체·포탑 측면 2겹 +220(+1020)**, 부위별 피복률·AP/HEAT/HE 소모율 확정, **측면 Anti-ERA 최외곽만 적용**, [Arena-M APS](../systems/aps/ARENA_M_T90M.md) **4방향×3발·140ms·0.25초·45~1,000m/s**, 교차 방어 가능(구획별 상세각·성공률 미정)
+- [T-14M 아르마타](tanks/modern/T-14M.md) — **1,500 HP**, 기본장갑 7구역·증가장갑 4구역 KE/CE·피복률·독립 HP(**1,150/700/250/550**)·탄종별 감쇄·**잔존 38.5%**, **Malakhit ERA** 일반형 +275(+630)·차체 측면 이중층 **+260(+1210)**·피복률 및 **바깥층만 Anti-ERA 적용** 확정. **증가장갑 → ERA 판정**, [명중 계층별 소모 규칙](../systems/armor/T14M_MALAKHIT_ERA.md). [Afghanit APS](../systems/aps/AFGHANIT_T14M.md) 전방 ±60°·좌우 5발·90ms·0.2초 차탄 대기·50~1,700m/s·KE 관통력 최대 38% 감쇄 및 **무인포탑 차량 HP 피해 50% 감쇄**
 
 ## 1989 장갑차·정찰
 
@@ -27,9 +28,23 @@
 | APC 추가형 | [BTR-60PB·M113G·Fuchs·BTR-50PK·MT-LB](1989/apc/APC_ADDITIONAL.md) |
 | 정찰차량 | [BRDM-2·Luchs·BRM-1K·M3/M3A1 Bradley](1989/recon/RECON_VEHICLES.md) |
 
+## 1989 자주대공포
+
+- [**미국 M163 VADS — M113A2 400HP·20mm M168 HEI-T 68HP / AP-I 38HP·3:1 고정 탄띠·AI 가변 점사·대공 유효 1.2km/최대 1.5km**](1989/air_defense/M163_VADS.md) — [20mm/23mm 탄약 상세](../ammunition/autocannon/M163_SHILKA_AA_20_23MM.md), 레이더·포탑 방호 수치 미정
+
+- [**서독 Flakpanzer Gepard — 35mm KDA 2문·650 HP·7구역 장갑·대공 유효 3.5km/최대 4km**](1989/air_defense/GEPARD.md) — [35mm 탄약](../ammunition/autocannon/GEPARD_35MM.md) · [대공형/범용형 실제 3:1 탄띠](../presets/1989/GEPARD_BELTS.md) · [수색레이더 최대 15km·공통 추적 규칙](../systems/air/RADAR_SEARCH_TRACKING.md)
+- [**ZSU-23-4 Shilka — 7구역 20/15/10/15/15/10/15 KE(CE)·450HP·23mm 4문·API 55HP/HE 108HP·3:1 고정 탄띠**](1989/air_defense/ZSU23_4_SHILKA.md) — [사용자 이미지 KE/워썬더 CE 및 탄속](../ammunition/autocannon/M163_SHILKA_AA_20_23MM.md); **문당 900RPM·합계 3,600RPM / 대공 유효 2.5km·최대 3km 확정**. **M163보다 낮은 명중 안정성·신뢰성 방향** 채택; **4문 각 500발, 총 2,000발 전량 즉응탄(HE 1,500/AP 500), 준즉응탄 없음 확정**. 레이더 탐지거리·명중률 수치·고장률·외부 재보급 시간은 미정.
+
+- [**9K35M2 스트렐라-10M2 — MT-LB 계열 단거리 SAM 차량**](1989/air_defense/STRELA_10M2.md) — **325HP**, 7구역 **15/10/5/5/5/5/5 RHAe**, **즉응 4발+예비 4발=8발**. [9M37/9M37M 시커 정본](../ammunition/missiles/9M37_9M37M_STRELA10.md): **발사 전 광학/IR 자동 선택·발사 후 고정**, 광학 모드 저고도 명중률 **8~16%**, IRCCM ON/OFF와 플레어 저항성 분리. **9M37/9M37M 25 CE·직격 375HP·근접 기본 140~245HP** 채택; 신관 반경·작동률·거리 감쇄는 개별 미정. 코드 미구현.
+- [**M48 Chaparral / M730 단거리 SAM 차량 정본**](1989/air_defense/M48_CHAPARRAL.md) — **285HP·7구역 KE(CE) 5/0/0/5/5/5/0 RHAe·즉응 4발+예비 8발=총 12발**. [MIM-72A/C/E/G 미사일](../ammunition/missiles/MIM72_A_C_E_G_CHAPARRAL.md): A **345HP 직격/근접 110~280**, C/E/G **360HP/130~245**, 공통 **25 CE**; 명중률·플레어 저항성·IRCCM/모터 각 형식별 구분. 코드 미구현.
+- [**서독 Marder 차체 Roland 2 자주방공차량 정본**](1989/air_defense/ROLAND_2_MARDER.md) — **525HP·7구역 KE(CE) 35/25/20/10/5/5/5 RHAe·즉응 2발+차내 예비 8발=총 10발**. [Roland 2/3 미사일 정본](../ammunition/missiles/ROLAND_2_3_SAM.md): 최대 사거리 **6.3/8km**, 거리무관 **30/35 CE**, 직격 **395/420HP**, 근접 기본 **155~295/180~325HP**. 지상 광학/레이더 추적+무선 지령유도, 기존 9M311 공통 분기 재활용. 기본 명중률·추적성능/신관 세부 미정, Roland 3 1989 지급량 미정. 코드 미구현.
+
 ## 1989 공격헬기
 
-- [AH-64A Apache](1989/air/AH64A.md) · [AGM-114A Hellfire](../ammunition/missiles/AGM_114A_HELLFIRE.md)
+- [AH-64A Apache](1989/air/AH64A.md) · [AGM-114A Hellfire](../ammunition/missiles/AGM_114A_HELLFIRE.md) — **325HP·20(20) RHAe**, [중구경 플레어 30발·34.6%/발·AN/ALQ-144 90% 기본 장착](../systems/air/AH64A_FLARE_ALQ144.md), **일반 3발 연속/긴급 5발 연속**.
+- [**소련 초기형 2K22 / 2S6 Tunguska — 30mm 2A38 쌍열×2기/5,000RPM/1,936발·대공 유효 3km/최대 4km·9M311 4발**](1989/air_defense/2S6_TUNGUSKA.md) — [30mm AP-T 83/HEF-T 129/HEF-I 152HP](../ammunition/autocannon/TUNGUSKA_30MM_2A38.md), [4발 고정 탄띠](../presets/1989/TUNGUSKA_2A38_BELT.md), [9M311 SAM 30 CE·직격 415/근접 185~285HP](../ammunition/missiles/9M311_SAM.md); **7구역 KE(CE) 15/10/10/15/10/10/15 RHAe·차량 최대 425HP 확정**(알루미늄은 실차 재질 설명). 레이더 수치·신관 확률·신뢰도 수치는 미정. **런타임 미구현**.
+
 - [Mi-24D·V·P Hind](1989/air/MI24_D_V_P.md) · [Mi-24 탑재 대전차유도미사일](../ammunition/missiles/MI24_ATGM.md)
+- [**Mi-24D/V/P 방어 장비 — ASO-2V 소구경 플레어·Lipa**](1989/air/MI24_D_V_P.md) — D **128발·Lipa 없음**, V/P **192발·Lipa 기본 장착**, **발당 18.5%, 일반 2발×4회=8발/긴급 2발×8회=16발**. [Lipa·기만체 상세](../systems/air/MI24_FLARE_LIPA.md): **90% 사용자 채택 게임값**, **IRCCM ON이면 무효**.
 
 **공통 전투 시스템 정본**은 [시스템 카탈로그](../systems/README.md), **구형 자료**는 [이력 자료실](../history/README.md)에서 구분한다. 게임 코드 구현 사실은 별도 확인.

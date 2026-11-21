@@ -46,7 +46,7 @@
 | 항공기 4종·APC/IFV/CFV/정찰 | [air/](../../air/), [vehicles/](../../vehicles/) | `vehicles/1989/` | 장비 제원 채택, 임시 제안 무기, 보급·편성 미정 상태를 개별 필드로 유지 |
 | 보병, 지도/LOS, 항공 진입/대공, 세계관 | [infantry/](../../infantry/), [performance/](../../performance/), [air/](../../air/), [world/](../../world/) | `units/`, `systems/`, `world/` | 대체역사 세계관의 추정/원안은 **확정 장비 성능**으로 승격시키지 않음 |
 | WIP09~WIP22 지시서 및 당시 진행 메모 | [instructions/](../../instructions/), [NEXT_STEPS](../../NEXT_STEPS_2026-11-07.md) | `history/implementation/` | 요청 시점의 ‘구현 대기’와 최신 main의 ‘병합 완료’를 자동 동일시하지 않음 |
-| 폐기·이전 설계·미확정 아이디어 | [구형 안내](../../TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md), [armor 아이디어](../../tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md) | `history/legacy/`, `history/proposals/` | 새 확정 사양으로 복원·자동 반영 금지 |
+| 폐기·이전 설계·미확정 아이디어 | [구형 안내](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-baseline-2026-11-21/archive/TACTICAL_1989_NATO_ARMOR_AMMO_DESIGN_ARCHIVE_2026-11-06.md), [armor 아이디어](../../tanks/ARMOR_SUBZONES_AND_PROBABILITY_IDEAS_2026-11-07.md) | `history/legacy/`, `history/proposals/` | 새 확정 사양으로 복원·자동 반영 금지 |
 
 ## 3. 확인된 불일치·중복·주의사항 등록부
 

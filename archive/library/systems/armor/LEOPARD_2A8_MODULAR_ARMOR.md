@@ -34,7 +34,7 @@
 - **최소 잔존 추가 방호력 하한: 42.5%**. 본 문서에서 사용자의 '최대 잔존 42.5%' 표현을 기존 BDD/D-Tech와 같은 **장갑 HP 0일 때의 최소 잔존 방호력(floor)**으로 기록한다. 증가장갑 HP가 0이어도 피복 지점에는 해당 부위의 **원래 추가 KE/CE 방호력의 42.5%**가 남는다. 일반적인 장갑 HP 상태에선 그 이상도 유지 가능하므로 '잔존 방호력 상한 42.5%'가 아님.
 - **잔존 방호력 계산:** `armor_hp_ratio = current_addon_hp / max_addon_hp`; `addon_multiplier = 0.425 + 0.575 × armor_hp_ratio`; **피복 지점 실효 KE(CE) = 기본 KE(CE) + 증가장갑 추가 KE(CE) × addon_multiplier**. 비피복 지점은 기본장갑만 적용. 해당 부위의 장갑 HP와 피복 여부는 별개이고, 피복률은 고정이다.
 - **부위별 독립:** 차체 전면·측면, 포탑 전면·측면, 통합 상부 각자 HP를 따로 관리한다. 미장착 후면에는 추가장갑 HP를 만들지 않는다.
-- **피격 손실 공식:** 기존 [§1-B BDD/D-Tech 모델](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md#1-b-bdd--d-technologie-비폭발성-추가장갑의-부위별-hp감쇄율--2026-11-19)에 준해 `addon_hp_loss = ammo_armor_damage_basis × (1 − reduction) × hit_factor`를 설계 적용한다. 피복 지점 **1.0**, 빈 지점에서 실제 기폭한 **HEAT/ATGM·HEP/HESH·HE/HE-FRAG 0.5**, 빈 지점 **APFSDS/APDS 0**. 동일 피격에 피복·빈 지점 손실을 중복 계산하지 않는다.
+- **피격 손실 공식:** 기존 [§1-B BDD/D-Tech 모델](NON_EXPLOSIVE_ADDON_ARMOR.md)에 준해 `addon_hp_loss = ammo_armor_damage_basis × (1 − reduction) × hit_factor`를 설계 적용한다. 피복 지점 **1.0**, 빈 지점에서 실제 기폭한 **HEAT/ATGM·HEP/HESH·HE/HE-FRAG 0.5**, 빈 지점 **APFSDS/APDS 0**. 동일 피격에 피복·빈 지점 손실을 중복 계산하지 않는다.
 - **비관통 폭발 및 판정 순서:** 폭발탄이 실제로 기폭했다면 비관통도 증가장갑 HP를 감쇄 후 손상시킨다. **피격 직전 장갑 HP로 먼저 관통/차량 HP 피해를 판정한 뒤 증가장갑 HP를 감소**시킨다. 차량 자체 1,450 HP와 증가장갑 HP는 합산하지 않는다. HEP 스폴과 차량 직접 관통 피해를 증가장갑 HP 계산에 중복 합산하지 않는다.
 - **기존 모델과의 구분:** 이 항목은 Leopard 2 KVT의 D-Tech(최저 40%·별도 감쇄율)와 구별되는 **현대 2A8용 모듈러 증가장갑**이다. 상부까지 증가장갑 부위 HP를 갖는 점도 다르다.
 - **미정:** 증가장갑 수리/복구, 미기폭 조건의 세부 판정, 정수 반올림 및 피복 지점 공간 분포.

@@ -2,7 +2,7 @@
 
 > **4단계 시스템 이관본 · 확정값/미정 구분 보존.** 원본 파일은 그대로 두며, 5단계 전체 검증 전까지 원본이 정식 정본. 아래는 **TACTICAL용 게임 방호 모델**이지 실차 공식 제원·구현 완료 보고가 아님.
 
-**기준 원본:** [전차 아카이브 §1-B](https://github.com/0-FLANDRE-0/Tactical_Project/blob/main/archive/tanks/README.md). 아래 구형 단일 HP는 **폐기값**임을 원문대로 보존하되 게임 설계에서 사용하지 않는다. 현대 2A8의 별도 계층은 [모듈러 증가장갑](LEOPARD_2A8_MODULAR_ARMOR.md) 참조.
+**당시 기준 원문(2단계 이전 보존본):** [전차 아카이브 §1-B](https://github.com/0-FLANDRE-0/Tactical_Project/blob/archive-cleanup-stage2-baseline-2026-11-21/archive/tanks/README.md#1-b-bdd--d-technologie-비폭발성-추가장갑의-부위별-hp감쇄율--2026-11-19). 아래 구형 단일 HP는 **폐기값**임을 원문대로 보존하되 게임 설계에서 사용하지 않는다. 현대 2A8의 별도 계층은 [모듈러 증가장갑](LEOPARD_2A8_MODULAR_ARMOR.md) 참조.
 
 ### 1-B. BDD / D-Technologie 비폭발성 추가장갑의 부위별 HP·감쇄율 — 2026-11-19
 

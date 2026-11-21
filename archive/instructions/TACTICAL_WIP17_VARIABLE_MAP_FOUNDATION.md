@@ -17,7 +17,7 @@
 - `scripts/build_battlefield.py`, `scripts/bake_navigation.cjs`, `scripts/build_contours.py`, `scripts/build_terrain_readability.py`, `scripts/package_release.py`
 - `data/rasdorf_4km.json`, `data/contours.json`, `data/terrain-readability.json`, 현재 내장 지도/파생자료와 검증 스크립트
 - `tests/load.cjs`, `tests/helpers/observation-core-fixture.cjs`, 지도·가시성·Worker·지형·소스 검사 및 코어를 직접 조립하는 독립 스크립트
-- [대형 지도 아카이브](../../archive/performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md), [WIP16 구현](../ENGAGEMENT_DECISIONS_WIP16.md), [WIP16 병합 검토](../reviews/WIP16_MERGE_REVIEW_2026-11-12.md)
+- [대형 지도 아카이브](../../archive/performance/LARGE_MAP_PATHFINDING_LOS_AND_SQUAD_AI_2026-11-08.md), [WIP16 구현](../../docs/ENGAGEMENT_DECISIONS_WIP16.md), [WIP16 병합 검토](../../docs/reviews/WIP16_MERGE_REVIEW_2026-11-12.md)
 
 아카이브의 9×12 후보·전체 OODA·제병협동·대규모 최적화는 이번 필수 작업이 아니다. WIP17은 기능 기반이며 실제 8×8 지도 제공이나 모바일 성능 보장을 뜻하지 않는다.
 
