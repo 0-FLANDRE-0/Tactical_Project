@@ -8,7 +8,7 @@
 |---|---|
 | 미국 105mm | [US 105mm — M392A2·M728 APDS 및 M735·M774·M833·M900 APFSDS 5거리 KE·비행속도 확정(2026-11-22), 기본 피해 346/358/342/338/347/359HP 유지](cannon/US_105.md) |
 | 미국 120mm (1989) | [US 120mm — M829·M829A1·M830 (M829 계열 5거리 KE·탄속 확정)](cannon/US_120.md) |
-| 서독 105mm | [West Germany 105mm — DM13 APDS 5거리 KE·비행속도 확정(2026-11-22), 기본 피해 346HP 유지](cannon/WEST_GERMANY_105.md) |
+| 서독 105mm | [West Germany 105mm — DM13 APDS 확정·DM23 APFSDS(M111 Hetz 채택형) 5거리 KE·비행속도 후속 지정(2026-11-22), 기본 피해 346/345HP 유지; DM23 감쇄율 정합성 확인 필요](cannon/WEST_GERMANY_105.md) |
 | 서독 120mm (1989) | [West Germany 120mm — DM33·DM33A1 5거리 KE·탄속 2026-11-20 갱신, DM33A1 피해 366 HP](cannon/WEST_GERMANY_120_1989.md) |
 | 소련 125mm | [Soviet 125mm — 소련 APFSDS 6종 5거리 KE 관통력·비행속도(2026-11-22 최신), 피해 유지](cannon/SOVIET_125.md) |
 | 동독 NVA 100/125mm | [NVA 탄약](cannon/NVA.md) |
