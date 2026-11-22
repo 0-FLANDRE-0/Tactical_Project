@@ -6,7 +6,7 @@
 
 | 국적·구경 | 이관 문서 |
 |---|---|
-| 미국 105mm | [US 105mm — M392A2·M728 APDS 및 M735·M774 APFSDS 5거리 KE·비행속도 확정(2026-11-22), 기본 피해 346/358/342/338HP 유지](cannon/US_105.md) |
+| 미국 105mm | [US 105mm — M392A2·M728 APDS 및 M735·M774·M833 APFSDS 5거리 KE·비행속도 확정(2026-11-22), 기본 피해 346/358/342/338/347HP 유지](cannon/US_105.md) |
 | 미국 120mm (1989) | [US 120mm — M829·M829A1·M830 (M829 계열 5거리 KE·탄속 확정)](cannon/US_120.md) |
 | 서독 105mm | [West Germany 105mm](cannon/WEST_GERMANY_105.md) |
 | 서독 120mm (1989) | [West Germany 120mm — DM33·DM33A1 5거리 KE·탄속 2026-11-20 갱신, DM33A1 피해 366 HP](cannon/WEST_GERMANY_120_1989.md) |
