@@ -9,7 +9,7 @@
 | 미국 105mm | [US 105mm — M392A2·M728 APDS 및 M735·M774·M833·M900 APFSDS 5거리 KE·비행속도 확정(2026-11-22), 기본 피해 346/358/342/338/347/359HP 유지](cannon/US_105.md) |
 | 미국 120mm (1989) | [US 120mm — M829·M829A1·M830 (M829 계열 5거리 KE·탄속 확정)](cannon/US_120.md) |
 | 서독 105mm | [West Germany 105mm — DM13 APDS·DM23 APFSDS(M111)·DM33 APFSDS(M413) 5거리 KE·비행속도 확정(2026-11-22), 기본 피해 346/345/342HP 유지; DM33 속도는 2019년 사격표 재인용](cannon/WEST_GERMANY_105.md) |
-| 서독 120mm (1989) | [West Germany 120mm — DM13·DM23·DM23A1 5거리 KE·탄속 2026-11-22 확정(DM23A1은 DM23보다 0°/30°/60° +10/+8/+5 KE, 동일 탄속 2km 1,539m/s), DM33·DM33A1 탄속 동일 5노드 확정(2km 공통 1,530m/s·7.27%)](cannon/WEST_GERMANY_120_1989.md) |
+| 서독 120mm (1989) | [West Germany 120mm — DM13·DM23·DM23A1 5거리 KE·탄속 2026-11-22 확정(DM23A1은 DM23보다 0°/30°/60° +10/+8/+5 KE, 동일 탄속 2km 1,539m/s), DM33·DM33A1 탄속 동일 5노드 확정(2km 공통 1,530m/s·7.27%); DM43 L/44 5거리 KE·탄속 확정(1,660→1,565m/s, 374HP 유지) 및 L/55 운용 참조 프로필(1,740→1,640m/s, 10m/2km KE 별도) 추가](cannon/WEST_GERMANY_120_1989.md) |
 | 소련 125mm | [Soviet 125mm — 소련 APFSDS 6종 5거리 KE 관통력·비행속도(2026-11-22 최신), 피해 유지](cannon/SOVIET_125.md) |
 | 동독 NVA 100/125mm | [NVA 탄약](cannon/NVA.md) |
 | 전차별 기본 지급 탄종 | [NATO·소련 기본 탄종 연결](cannon/DEFAULT_TANK_AMMO.md) |
