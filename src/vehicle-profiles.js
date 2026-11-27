@@ -4,6 +4,33 @@
  * modelling choices, not measured or manufacturer-certified specifications. */
 const VEHICLE_PROFILES=(()=>{
   const mph=v=>v*.44704,inch=v=>v*.0254;
+  const zones=Object.freeze(['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper']);
+  const eraPolicies=freeze({
+    'Kontakt-1':{defaultBonus:{ke:5,ce:380},loss:{
+      HEAT:{covered:.20,gap:.10},APFSDS:{covered:.08,gap:0},
+      HEP:{covered:.35,gap:.175},HE:{covered:.35,gap:.175}}},
+    'Kontakt-5':{defaultBonus:{ke:120,ce:460},loss:{
+      HEAT:{covered:.25,gap:.125},APFSDS:{covered:.15,gap:0},
+      HEP:{covered:.35,gap:.175},HE:{covered:.35,gap:.175}}}
+  });
+  const eraFamilies=Object.freeze({HEAT:'HEAT',ATGM:'HEAT',APFSDS:'APFSDS',APDS:'APFSDS',HEP:'HEP',HESH:'HEP',HE:'HE','HE-FRAG':'HE'});
+  const validCoverage=v=>Number.isFinite(v)&&v>=0&&v<=1;
+  function validateEra(era){
+    if(!Object.hasOwn(eraPolicies,era?.type)||era.comparison!=='roll<coverage'||era.consumable!==true||
+      Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류');
+    for(const zone of zones){
+      const row=Object.hasOwn(era.zones,zone)&&era.zones[zone];
+      if(!row||!validCoverage(row.coverage)||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+zone);
+    }
+  }
+  function coverageAfter(type,family,before,covered){
+    if(!Object.hasOwn(eraPolicies,type)||!Object.hasOwn(eraFamilies,family))throw Error('ERA 소모 정책 오류');
+    if(!validCoverage(before)||typeof covered!=='boolean')throw Error('ERA 피복률 값 오류');
+    const loss=eraPolicies[type].loss[eraFamilies[family]][covered?'covered':'gap'];
+    if(!validCoverage(loss))throw Error('ERA 소모량 값 오류');
+    return Math.max(0,before-loss);
+  }
+  const eraPolicy=Object.freeze({zones,types:eraPolicies,families:eraFamilies,validCoverage,validateEra,coverageAfter});
   const M1A2={
     id:'M1A2',name:'M1A2 Abrams',variant:'M1A2 기본형',crew:4,
     capabilities:{target:true,mobility:true,observation:true,fire:true,ai:true},
@@ -88,13 +115,12 @@ const VEHICLE_PROFILES=(()=>{
       turretRear:{ready:.40,semiReady:.25,reserve:0,none:.35},
       upper:{ready:.15,semiReady:.15,reserve:.10,none:.60}}};
   M1A2_1998.combat={maxHp:1450,armor:{
-    hullFront:{ke:390,ce:720},hullSide:{ke:120,ce:280},hullRear:{ke:40,ce:40},
+    hullFront:{ke:390,ce:720},hullSide:{ke:90,ce:130},hullRear:{ke:40,ce:40},
     turretFront:{ke:720,ce:1150},turretSide:{ke:340,ce:630},turretRear:{ke:55,ce:55},upper:{ke:40,ce:40}
   }};
   // WIP18 game-trial values. This block is deliberately attached only to the
   // 1998 trial profile; the M1A2 baseline and future vehicles stay disabled
   // until they receive their own explicit susceptibility and policy data.
-  const zones=['hullFront','hullSide','hullRear','turretFront','turretSide','turretRear','upper'];
   const allowedCrewRoles=['driver','commander','gunner','loader'];
   const reactionCategories=['temporaryFault','crewLight','crewSerious'];
   const probabilities=(temporaryFault,crewLight,crewSerious)=>({temporaryFault,crewLight,crewSerious});
@@ -133,6 +159,7 @@ const VEHICLE_PROFILES=(()=>{
   // It intentionally owns no mobility, AI, human-loader fatigue, crew reaction,
   // temporary-fault or ammunition-incident configuration.
   const T80U_SCALE=7.012/874;
+  const k5Bonus=eraPolicies['Kontakt-5'].defaultBonus;
   const T80U_1989={
     id:'T80U_1989',name:'T-80U',variant:'T-80U (1989 정지 교전 시험 구성)',crew:3,crewRoles:['commander','gunner','driver'],artId:'T80U',
     capabilities:{target:true,mobility:false,observation:true,fire:true,ai:false},
@@ -169,12 +196,12 @@ const VEHICLE_PROFILES=(()=>{
     exposure:{hullAlong:[-2.45,0,2.45],hullHeights:[.75,1.35],turretAlong:[-.85,0,.85],turretHeight:2.05},
     navigation:{clearanceMargin:.25},
     combat:{maxHp:1400,armor:{
-      hullFront:{ke:500,ce:690},hullSide:{ke:115,ce:120},hullRear:{ke:40,ce:40},
-      turretFront:{ke:575,ce:740},turretSide:{ke:305,ce:390},turretRear:{ke:70,ce:70},upper:{ke:45,ce:45}},
-      era:{comparison:'roll<coverage',consumable:false,zones:{
-        hullFront:{coverage:.90,ke:215,ce:560},hullSide:{coverage:.50,ke:215,ce:560},hullRear:{coverage:0,ke:0,ce:0},
-        turretFront:{coverage:.95,ke:215,ce:560},turretSide:{coverage:.45,ke:215,ce:560},turretRear:{coverage:0,ke:0,ce:0},
-        upper:{coverage:.45,ke:215,ce:560}}}}
+      hullFront:{ke:500,ce:690},hullSide:{ke:75,ce:85},hullRear:{ke:40,ce:40},
+      turretFront:{ke:530,ce:730},turretSide:{ke:305,ce:390},turretRear:{ke:70,ce:70},upper:{ke:45,ce:45}},
+      era:{type:'Kontakt-5',comparison:'roll<coverage',consumable:true,zones:{
+        hullFront:{coverage:.90,...k5Bonus},hullSide:{coverage:.50,...k5Bonus},hullRear:{coverage:0,ke:0,ce:0},
+        turretFront:{coverage:.95,...k5Bonus},turretSide:{coverage:.45,...k5Bonus},turretRear:{coverage:0,ke:0,ce:0},
+        upper:{coverage:.45,...k5Bonus}}}}
   };
   T80U_1989.navigation.radius=Math.ceil((Math.hypot(T80U_1989.model.hullLength/2,T80U_1989.model.width/2)+T80U_1989.navigation.clearanceMargin)*100)/100;
   function freeze(o){for(const v of Object.values(o))if(v&&typeof v==='object')freeze(v);return Object.freeze(o);}
@@ -204,7 +231,7 @@ const VEHICLE_PROFILES=(()=>{
       if(p.combat){
         if(!Number.isFinite(p.combat.maxHp)||p.combat.maxHp<=0)throw Error('전투 HP 값 오류: '+id);
         for(const zone of zones)for(const kind of ['ke','ce'])if(!Number.isFinite(p.combat.armor?.[zone]?.[kind])||p.combat.armor[zone][kind]<0)throw Error('장갑 값 오류: '+id+'.'+zone+'.'+kind);
-        const era=p.combat.era;if(era){if(era.comparison!=='roll<coverage'||era.consumable!==false||Object.keys(era.zones||{}).length!==zones.length)throw Error('ERA 설정 오류: '+id);for(const zone of zones){const row=era.zones[zone];if(!row||!Number.isFinite(row.coverage)||row.coverage<0||row.coverage>1||!['ke','ce'].every(k=>Number.isFinite(row[k])&&row[k]>=0))throw Error('ERA 설정 오류: '+id+'.'+zone);}}
+        if(p.combat.era)validateEra(p.combat.era);
       }
       if(caps.observation){
         const s=p.sensors;
@@ -307,7 +334,7 @@ const VEHICLE_PROFILES=(()=>{
     const registry=Object.freeze({ids:()=>ids,list:()=>ids.map(id=>profiles[id]),has:id=>Object.hasOwn(profiles,id),
       get(id){if(!Object.hasOwn(profiles,id))throw Error('등록되지 않은 차량: '+id);return profiles[id];},create:createRegistry});
     // Preserve the legacy M1A2 lookup for old tools/oracle; runtime uses registry.
-    Object.defineProperty(profiles,'registry',{value:registry,enumerable:false});
+    Object.defineProperties(profiles,{registry:{value:registry},eraPolicy:{value:eraPolicy}});
     return Object.freeze(profiles);
   }
   return createRegistry([M1A2,M1A2_1998,T80U_1989]);

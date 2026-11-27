@@ -436,6 +436,7 @@ header{
   font:11px ui-monospace,monospace
 }
 .combat-summary.destroyed{color:#f0b08e;border-color:#805343;background:#38271f}
+.era-summary{color:#bbcbb8;font-size:10px;line-height:1.5;margin:0 0 8px}
 .metrics{
   display:grid;
   grid-template-columns:1fr 1fr;

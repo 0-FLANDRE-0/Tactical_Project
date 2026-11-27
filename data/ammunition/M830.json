@@ -5,6 +5,7 @@
     "kind": "CE",
     "baseDamage": 435,
     "muzzleVelocity": 1140,
+    "eraFamily": "HEAT",
     "hitReactionPolicyId": "tank-heat/M830",
     "ammoIncidentPolicyId": "tank-ammo-incident/M830",
     "penetration": {
@@ -62,8 +63,8 @@
     "nearNonPenetration": false,
     "armoredBlastRadiusM": 0
   },
-  "status": "active WIP23 game data",
-  "source": "archive/ammo and archive/combat tables cited by WIP19/WIP20/WIP23 plus attacker-owned near-nonpenetration policy",
+  "status": "active WIP24 game data",
+  "source": "archive/library/ammunition/cannon/US_120.md",
   "limits": [
     "CE protection only, no range falloff in the trial table",
     "Fixed penetration multiplier 1; nonpenetration, ricochet and armored blast damage are zero",

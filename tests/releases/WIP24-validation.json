@@ -1,0 +1,129 @@
+{
+  "version": "0.4-WIP24",
+  "date": "2026-11-21",
+  "branch": "feat/wip24-armor-sync-era-depletion",
+  "base": "907e2cc89ba4fcdbe3eaef91be96250522f21d55",
+  "instructionRevision": "1132251ab29f34ac1b12d1ee387f99a9bb842acd",
+  "initialImplementationCommit": "28b3b358b7c07c155325c6876c433c85e1f2da2b",
+  "priorReviewHead": "7144f59c3adbbe69a2d8cc8be60a261161dc9e4a",
+  "implementationCommit": "df0b75c9ff7b5c9d3293461426fdc62eeaff9b3d",
+  "canonicalSources": {
+    "revision": "907e2cc89ba4fcdbe3eaef91be96250522f21d55",
+    "files": [
+      "archive/library/ammunition/cannon/US_120.md",
+      "archive/library/ammunition/modern/APFSDS_120MM.md",
+      "archive/library/ammunition/cannon/SOVIET_125.md",
+      "archive/library/ammunition/references/NEAR_ZERO_10M_KE.md",
+      "archive/library/systems/armor/SEVEN_ZONE_AND_KONTAKT_ERA.md",
+      "archive/library/systems/armor/ANTI_ERA.md",
+      "archive/library/vehicles/tanks/post-1989/M1A2_1992_1998.md",
+      "archive/library/vehicles/tanks/1989/SOVIET.md",
+      "archive/library/vehicles/tanks/1989/UPPER_ARMOR.md"
+    ],
+    "synced": [
+      "Kontakt-5 uniform bonus KE +120 / CE +460",
+      "Kontakt-1/5 covered and gap loss by ammunition family",
+      "M829A2 Kontakt-5 added-KE reduction 0.385",
+      "M829A1 revised five-node penetration table",
+      "M829A1/A2 five-node velocity profiles integrated into game flight time"
+    ]
+  },
+  "tests": [
+    {
+      "command": "node --test --test-concurrency=2 tests/*.test.cjs",
+      "result": "passed",
+      "passed": 397,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 93502.475548,
+      "includesActualChromium": true
+    },
+    {
+      "testFile": "tests/wip24-era-depletion.test.cjs",
+      "result": "passed",
+      "passed": 8,
+      "countedInFullSuite": true
+    },
+    {
+      "testFile": "tests/wip24-browser.test.cjs",
+      "result": "passed",
+      "countedInFullSuite": true,
+      "browser": "Chromium 156.0.8078.79",
+      "viewports": ["1440x900 DPR1", "844x390 DPR1", "844x390 DPR2", "390x844 DPR2"],
+      "evidence": "tests/releases/WIP24-browser-evidence.json"
+    },
+    {
+      "command": "/usr/bin/python3 -m unittest discover -s tests -p '*_test.py' -v",
+      "result": "passed",
+      "passed": 11,
+      "failed": 0
+    },
+    {
+      "command": "/usr/bin/python3 tests/source_quality.py",
+      "result": "passed",
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "command": "node scripts/benchmark_los_shared_compare.cjs --worker optimized /tmp/tactical-wip24-sync-los.json",
+      "result": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/benchmark_wip24.cjs",
+      "result": "passed",
+      "report": "tests/releases/WIP24-performance.json"
+    },
+    {
+      "command": "node scripts/export_vehicle_profile.cjs && python3 build.py && python3 scripts/package_release.py WIP24",
+      "result": "passed",
+      "byteReproducibleAcrossTwoBuilds": true,
+      "includesExports": true
+    },
+    {
+      "command": "sha256sum -c SHA256SUMS_WIP24.txt && unzip -t Tactical_v0.4_WIP24.zip && unzip -p Tactical_v0.4_WIP24.zip | cmp - dist/index.html",
+      "result": "passed"
+    }
+  ],
+  "stationaryDuel": {
+    "map": "Rasdorf 4x4km",
+    "scenario": "t80u-fire",
+    "seed": 8,
+    "blueM1A2Pose": [550, 2750, 0],
+    "redT80UPose": [950, 2750, 3.141592653589793],
+    "firstCoveredImpactSeconds": 6.35,
+    "firstCoveredZone": "turretFront",
+    "firstEffectiveKE": 603.8,
+    "firstCoverageBefore": 0.95,
+    "firstCoverageAfter": 0.80,
+    "firstDamage": 337.40376022909027,
+    "gapImpactSeconds": 12.35,
+    "gapEffectiveKE": 530,
+    "gapDamage": 434.9410318440826,
+    "redDestroyedAtSeconds": 24.35
+  },
+  "artifacts": {
+    "html": {
+      "paths": ["Tactical_v0.4_WIP24.html", "dist/index.html"],
+      "bytes": 8553725,
+      "sha256": "ce1c9477e75b03852ac622d2d21ff68461b7c5417ba8f2244c0241057c53a552"
+    },
+    "zip": {
+      "path": "Tactical_v0.4_WIP24.zip",
+      "entries": ["Tactical_v0.4_WIP24.html"],
+      "bytes": 1698057,
+      "compressedHTMLBytes": 1697911,
+      "crc32": "168c38c8",
+      "sha256": "1429f9e81695ba65b0bf8ccb86f103ec4931416709e325588989bef50cc3a761"
+    },
+    "checksums": "SHA256SUMS_WIP24.txt"
+  },
+  "notes": [
+    "The archived original instruction matches its main-branch blob byte-for-byte.",
+    "Runtime changes apply to M1A2_1998, T80U_1989 and the listed existing game ammunition. Kontakt-1 and unregistered munition families were exercised in policy tests.",
+    "Only M829A2/Kontakt-5 has an active Anti-ERA reduction entry. Other ERA designs remain in the library.",
+    "The velocity lookup is piecewise linear. Flight time integrates inverse speed. For the existing beyond-target calculation only, the final speed is used past the last known node. No penetration extrapolation or extra damage multiplier was added.",
+    "Two initial timing fixture failures were corrected and passed on the full rerun. The WIP12 delayed frame spans the scheduled impact and the WIP22 lethal fixture waits for distinct turret and commander headings.",
+    "The isolated impact and headless renderer results measure code execution on the host. Physical-device performance and controls were not measured."
+  ]
+}
